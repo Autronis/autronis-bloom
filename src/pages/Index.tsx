@@ -2,13 +2,18 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Play } from "lucide-react";
+import DomainsSection from "@/components/home/DomainsSection";
+import ProcessSection from "@/components/home/ProcessSection";
+import CaseStudiesPreview from "@/components/home/CaseStudiesPreview";
+import DemoBlock from "@/components/home/DemoBlock";
+import FAQSection from "@/components/home/FAQSection";
+import FinalCTA from "@/components/home/FinalCTA";
 
 const Index = () => {
   return (
     <Layout>
       {/* Hero */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-        {/* Background circuit animation */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/4 left-0 w-full circuit-line animate-data-pulse" />
           <div className="absolute top-1/2 left-0 w-full circuit-line animate-data-pulse [animation-delay:1s]" />
@@ -70,6 +75,13 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <DomainsSection />
+      <ProcessSection />
+      <CaseStudiesPreview />
+      <DemoBlock />
+      <FAQSection />
+      <FinalCTA />
     </Layout>
   );
 };

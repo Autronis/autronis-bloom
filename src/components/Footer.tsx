@@ -9,9 +9,9 @@ const Footer = () => {
           {/* Brand */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2">
-              <img src="/logo.png" alt="AutronisGroup" className="h-8 w-auto" />
+              <img src="/logo.png" alt="Autronis" className="h-8 w-auto" />
               <span className="text-lg font-bold">
-                Autronis<span className="text-primary">Group</span>
+                Autronis
               </span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -76,7 +76,7 @@ const Footer = () => {
 
         {/* Bottom bar */}
         <div className="mt-12 pt-6 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} AutronisGroup. Alle rechten voorbehouden.</p>
+          <p>© {new Date().getFullYear()} Autronis. Alle rechten voorbehouden.</p>
           <div className="flex gap-4">
             <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
             <Link to="/cookies" className="hover:text-foreground transition-colors">Cookies</Link>

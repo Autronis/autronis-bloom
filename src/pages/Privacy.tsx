@@ -6,7 +6,7 @@ const Privacy = () => (
       <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
         <h1 className="text-3xl font-bold mb-8">Privacybeleid</h1>
         <div className="space-y-6 text-sm text-muted-foreground leading-relaxed">
-          <p>AutronisGroup respecteert uw privacy en verwerkt persoonsgegevens in overeenstemming met de Algemene Verordening Gegevensbescherming (AVG).</p>
+          <p>Autronis respecteert uw privacy en verwerkt persoonsgegevens in overeenstemming met de Algemene Verordening Gegevensbescherming (AVG).</p>
           <h2 className="text-lg font-semibold text-foreground">Welke gegevens verzamelen wij?</h2>
           <p>Wij verzamelen alleen de gegevens die u zelf aan ons verstrekt via onze contactformulieren: naam, emailadres, bedrijfsnaam, en eventuele aanvullende informatie die u deelt.</p>
           <h2 className="text-lg font-semibold text-foreground">Waarvoor gebruiken wij uw gegevens?</h2>

@@ -24,6 +24,7 @@ const Index = () => {
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-3xl">
+            <p className="text-sm font-semibold text-primary mb-4 tracking-widest uppercase">Gedreven door technologie. Gebouwd voor transformatie.</p>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
               Stop met handmatig werk.{" "}
               <span className="text-gradient">Start met schalen.</span>

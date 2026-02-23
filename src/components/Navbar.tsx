@@ -40,9 +40,9 @@ const Navbar = () => {
       <nav className="container mx-auto flex items-center justify-between h-16 px-4 lg:px-8">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
-          <img src="/logo.png" alt="AutronisGroup" className="h-9 w-auto" />
+          <img src="/logo.png" alt="Autronis" className="h-9 w-auto" />
           <span className="text-lg font-bold tracking-tight hidden sm:inline">
-            Autronis<span className="text-primary">Group</span>
+            Autronis
           </span>
         </Link>
 

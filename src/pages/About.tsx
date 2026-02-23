@@ -22,7 +22,7 @@ const About = () => {
               Systemen die <span className="text-gradient">tot leven komen</span>
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-              AutronisGroup is opgericht met één missie: bedrijven bevrijden van repetitief handmatig werk. Wij geloven dat elk proces dat voorspelbaar is, geautomatiseerd kan worden.
+              Autronis is opgericht met één missie: bedrijven bevrijden van repetitief handmatig werk. Wij geloven dat elk proces dat voorspelbaar is, geautomatiseerd kan worden.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
               Ons team combineert diepgaande technische expertise met business-inzicht. We bouwen geen tools om het bouwen — we bouwen oplossingen die direct meetbaar impact leveren op uw operatie.

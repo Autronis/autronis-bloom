@@ -10,7 +10,7 @@ const FinalCTA = () => {
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none -translate-y-8">
         <motion.svg
           viewBox="0 0 200 180"
-          className="w-[400px] sm:w-[500px] lg:w-[600px] h-auto opacity-[0.13]"
+          className="w-[400px] sm:w-[500px] lg:w-[600px] h-auto opacity-[0.18]"
           initial={{ scale: 0.08 }}
           whileInView={{ scale: 1 }}
           viewport={{ amount: 0.1 }}

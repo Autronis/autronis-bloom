@@ -1,57 +1,34 @@
 
 
-# AutronisGroup Marketing Website — Updated Color & Build Plan
+## Plan: Aurora Achtergrond + Optellende Statistieken
 
-## Color System (derived from logo)
-- **Primary background**: Near-black (#0A0A0A / #111111)
-- **Foreground/text**: White (#FFFFFF) + muted gray (#A1A1AA)
-- **Accent**: Turquoise from logo center ring — **#16BBAD** as primary accent, with lighter variant (#4DD8CB) for hover glows and darker variant (#0E8A7F) for pressed states
-- **Circuit/line elements**: Black (#1A1A1A) on dark backgrounds, with turquoise pulse accents
-- **Cards/surfaces**: Dark gray (#18181B) with subtle borders
+### Wat gaan we doen
 
-## Logo Usage
-- The uploaded butterfly-gear-circuit logo will be used as the site logo in navigation and footer
-- The circuit-wing motif will inspire background SVG patterns (hero section, section dividers)
+1. **Circuit-line strepen verwijderen** uit de Hero sectie en de FinalCTA sectie — deze worden vervangen door subtielere animaties.
 
-## Build Order (Phase 1 — Foundation)
+2. **Aurora/Gradient Mesh achtergrond** toevoegen aan de Hero sectie:
+   - Twee tot drie grote, zachte turquoise blobs die langzaam van positie en vorm veranderen met `framer-motion`
+   - Zeer lage opacity (5-10%) zodat het subtiel blijft en niet afleidt
+   - Vloeiende beweging over 8-12 seconden cycli
 
-### Step 1: Design System & Global Styles
-- Update CSS variables to the dark theme color system above
-- Set up typography (Inter font), spacing scale, button variants with turquoise glow
-- Add animation keyframes (pulse, fade-up, gear-rotate) with `prefers-reduced-motion` support
+3. **Animated Counter** component maken voor de statistieken (500+, 50+, 98%):
+   - Telt op van 0 naar het eindgetal wanneer de statistieken in beeld scrollen
+   - Gebruikt `framer-motion`'s `useInView` en `useSpring` voor vloeiende telling
+   - Duurt ongeveer 2 seconden per counter
 
-### Step 2: Sticky Navigation
-- Logo (uploaded image) on the left
-- Nav links: Home, Services, Case Studies, Demo, Over Ons, Resources, Contact
-- Primary CTA button: "Plan Automation Scan" (turquoise)
-- Language switcher with flag icons (NL active, EN placeholder)
-- Transparent → solid on scroll transition
-- Mobile hamburger menu
+4. **Aanpasbaarheid**: Beide animaties krijgen props zodat je kleuren, snelheid en intensiteit later makkelijk kunt wijzigen.
 
-### Step 3: Footer
-- 4-column layout with logo, links, social icons, newsletter placeholder
-- Legal links (Privacy, Cookies)
+### Technische Details
 
-### Step 4: Home Page — Hero
-- Bold Dutch headline + outcome-driven subhead
-- Two CTAs: "Plan Automation Scan" (turquoise fill) + "Bekijk 2-min demo" (outlined)
-- Circuit-line data-pulse SVG animation in background
-- Proof strip: metric counters + client logo placeholders
+**Nieuwe bestanden:**
+- `src/components/home/AuroraBackground.tsx` — Herbruikbaar aurora component met props voor `intensity`, `speed`, en `colors`
+- `src/components/home/AnimatedCounter.tsx` — Counter component met props voor `target`, `duration`, `suffix`
 
-### Step 5: Home Page — Remaining Sections
-- "Wat we automatiseren" — 6 domain cards with icons
-- "Hoe het werkt" — 4-step process timeline
-- Case study preview — 3 cards with outcomes
-- Demo block — video placeholder + CTA
-- FAQ — 8–10 accordion items (Dutch)
-- Final CTA block
+**Aangepaste bestanden:**
+- `src/pages/Index.tsx` — Circuit-lines vervangen door `AuroraBackground`, statistieken vervangen door `AnimatedCounter`
+- `src/components/home/FinalCTA.tsx` — Circuit-lines vervangen door `AuroraBackground`
 
-### Step 6: Core Pages
-- /services, /case-studies, /case-studies/[slug], /demo, /book (with pre-qualification form), /about, /resources, /resources/[slug], /contact, /privacy, /cookies
-
-### Step 7: Polish & Interactivity
-- Chatbot widget placeholder (turquoise bubble)
-- Event tracking hooks (console.log)
-- Scroll animations, button microinteractions
-- SEO meta tags (Dutch), OpenGraph, lazy-loading
+**Aanpasbare props:**
+- Aurora: `intensity` (opacity 0-1), `speed` (seconden per cyclus), `colors` (array van HSL kleuren)
+- Counter: `target` (eindgetal), `duration` (ms), `suffix` (bijv. "+", "%")
 

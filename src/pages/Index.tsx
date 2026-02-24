@@ -8,6 +8,7 @@ import CaseStudiesPreview from "@/components/home/CaseStudiesPreview";
 import DemoBlock from "@/components/home/DemoBlock";
 import FAQSection from "@/components/home/FAQSection";
 import FinalCTA from "@/components/home/FinalCTA";
+import MetamorphosisAnimation from "@/components/home/MetamorphosisAnimation";
 
 const Index = () => {
   return (
@@ -23,6 +24,7 @@ const Index = () => {
         </div>
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10 flex-1 flex items-center pb-32 sm:pb-28">
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 w-full">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold text-primary mb-4 tracking-widest uppercase">Gedreven door technologie. Gebouwd voor transformatie.</p>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
@@ -46,6 +48,10 @@ const Index = () => {
                 </Link>
               </Button>
             </div>
+          </div>
+          <div className="hidden lg:flex">
+            <MetamorphosisAnimation />
+          </div>
           </div>
         </div>
 

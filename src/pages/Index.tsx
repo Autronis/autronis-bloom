@@ -20,45 +20,43 @@ const Index = () => {
       <section className="relative min-h-screen flex flex-col overflow-hidden">
         <AuroraBackground />
 
-        <div className="container mx-auto px-4 lg:px-8 relative z-10 flex-1 flex items-center pb-32 sm:pb-28">
-          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 w-full">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold text-primary mb-4 tracking-widest uppercase">Gedreven door technologie. Gebouwd voor transformatie.</p>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
-              Stop met handmatig werk.{" "}
-              <span className="text-gradient">Start met schalen.</span>
-            </h1>
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mb-8 leading-relaxed">
-              Wij bouwen AI-gedreven automatiseringen die uw processen versnellen, fouten elimineren en uw team laten focussen op wat écht telt.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg">
-                <Link to="/book">
-                  Plan Automation Scan
-                  <ArrowRight size={18} />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link to="/demo">
-                  <Play size={16} />
-                  Bekijk 2-min demo
-                </Link>
-              </Button>
+        <div className="container mx-auto px-4 lg:px-8 relative z-10 flex-1 flex flex-col justify-center pb-32 sm:pb-28">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-16 w-full">
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-primary mb-4 tracking-widest uppercase">Gedreven door technologie. Gebouwd voor transformatie.</p>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
+                Stop met handmatig werk.{" "}
+                <span className="text-gradient">Start met schalen.</span>
+              </h1>
+              <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mb-8 leading-relaxed">
+                Wij bouwen AI-gedreven automatiseringen die uw processen versnellen, fouten elimineren en uw team laten focussen op wat écht telt.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button asChild size="lg">
+                  <Link to="/book">
+                    Plan Automation Scan
+                    <ArrowRight size={18} />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="lg">
+                  <Link to="/demo">
+                    <Play size={16} />
+                    Bekijk 2-min demo
+                  </Link>
+                </Button>
+              </div>
             </div>
-
-            {/* Metamorphosis animation - full width below CTAs */}
-            <div className="mt-12 w-full flex items-center justify-center opacity-[0.08] pointer-events-none">
-              <div className="scale-[3] sm:scale-[4] lg:scale-[5]">
-                <MetamorphosisAnimation />
+            <div className="hidden lg:flex flex-shrink-0 self-center">
+              <div className="relative w-64 h-64 xl:w-72 xl:h-72 rounded-2xl overflow-hidden border border-border/50">
+                <img src={teamPhoto} alt="Autronis team" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
               </div>
             </div>
           </div>
-          <div className="hidden lg:flex flex-shrink-0">
-            <div className="relative w-72 h-72 xl:w-80 xl:h-80 rounded-2xl overflow-hidden border border-border/50">
-              <img src={teamPhoto} alt="Autronis team" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
-            </div>
-          </div>
+
+          {/* Metamorphosis animation - horizontal, full width below content */}
+          <div className="mt-8 w-full flex items-center justify-center opacity-[0.07] pointer-events-none">
+            <MetamorphosisAnimation />
           </div>
         </div>
 

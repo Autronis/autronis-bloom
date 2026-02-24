@@ -95,10 +95,11 @@ const Cocoon = () => (
 
 const Butterfly = () => (
   <g>
+    {/* Left wing — pivots from the body (x=0) so it stays attached */}
     <motion.g
-      style={{ originX: "0px", originY: "2px" }}
-      animate={{ scaleX: [1, 0.28, 1], rotate: [0, -4, 0] }}
-      transition={{ duration: 0.34, repeat: Infinity, ease: "easeInOut" }}
+      style={{ transformOrigin: "0px 6px" }}
+      animate={{ scaleX: [1, 0.2, 1] }}
+      transition={{ duration: 0.38, repeat: Infinity, ease: "easeInOut" }}
     >
       <path
         d="M0 2 Q-16 -32 -50 -28 Q-58 -8 -38 7 Q-20 16 0 10"
@@ -115,10 +116,11 @@ const Butterfly = () => (
       <circle cx={-29} cy={-13} r={4} fill={PRIMARY} opacity={0.35} />
     </motion.g>
 
+    {/* Right wing — pivots from the body (x=0) so it stays attached */}
     <motion.g
-      style={{ originX: "0px", originY: "2px" }}
-      animate={{ scaleX: [1, 0.28, 1], rotate: [0, 4, 0] }}
-      transition={{ duration: 0.34, repeat: Infinity, ease: "easeInOut" }}
+      style={{ transformOrigin: "0px 6px" }}
+      animate={{ scaleX: [1, 0.2, 1] }}
+      transition={{ duration: 0.38, repeat: Infinity, ease: "easeInOut" }}
     >
       <path
         d="M0 2 Q16 -32 50 -28 Q58 -8 38 7 Q20 16 0 10"

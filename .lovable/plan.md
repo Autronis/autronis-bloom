@@ -1,34 +1,55 @@
 
 
-## Plan: Aurora Achtergrond + Optellende Statistieken
+## Metamorphose-animatie: Horizontale reis met lichtspoor
 
-### Wat gaan we doen
+### Concept
 
-1. **Circuit-line strepen verwijderen** uit de Hero sectie en de FinalCTA sectie — deze worden vervangen door subtielere animaties.
+De animatie wordt een **horizontale reis van links naar rechts** over de volle breedte van de container. De rups begint links, kruipt naar het midden waar hij een cocon vormt, en de vlinder verschijnt en vliegt naar rechts. Een subtiel **lichtspoor** volgt elke fase.
 
-2. **Aurora/Gradient Mesh achtergrond** toevoegen aan de Hero sectie:
-   - Twee tot drie grote, zachte turquoise blobs die langzaam van positie en vorm veranderen met `framer-motion`
-   - Zeer lage opacity (5-10%) zodat het subtiel blijft en niet afleidt
-   - Vloeiende beweging over 8-12 seconden cycli
+De hele cyclus speelt als een doorlopende lineaire reis, niet als 3 losse stages die in- en uitfaden.
 
-3. **Animated Counter** component maken voor de statistieken (500+, 50+, 98%):
-   - Telt op van 0 naar het eindgetal wanneer de statistieken in beeld scrollen
-   - Gebruikt `framer-motion`'s `useInView` en `useSpring` voor vloeiende telling
-   - Duurt ongeveer 2 seconden per counter
+### Visueel verloop
 
-4. **Aanpasbaarheid**: Beide animaties krijgen props zodat je kleuren, snelheid en intensiteit later makkelijk kunt wijzigen.
+```text
+Links                    Midden                   Rechts
+  [rups kruipt -->]   [cocon pulseert]   [vlinder vliegt -->]
+  ~~~trail~~~          ....glow....        ***sparkles***
+```
 
-### Technische Details
+1. **Fase 1 (0-4s)**: Rups verschijnt links, kruipt naar het midden met golvende segmenten. Achter hem blijft een subtiel teal lichtspoor dat langzaam vervaagt.
+2. **Fase 2 (4-7s)**: Rups krimpt samen tot een cocon in het midden. Het lichtspoor dooft uit. De cocon pulseert zachtjes.
+3. **Fase 3 (7-12s)**: Cocon breekt open, vlinder ontvouwt vleugels en vliegt naar rechts. Achter de vlinder dwarrelen kleine lichtdeeltjes (2-3 kleine cirkels die uitfaden).
+4. **Reset (12s)**: Alles fade out, cyclus herstart.
 
-**Nieuwe bestanden:**
-- `src/components/home/AuroraBackground.tsx` — Herbruikbaar aurora component met props voor `intensity`, `speed`, en `colors`
-- `src/components/home/AnimatedCounter.tsx` — Counter component met props voor `target`, `duration`, `suffix`
+### Technische details
 
-**Aangepaste bestanden:**
-- `src/pages/Index.tsx` — Circuit-lines vervangen door `AuroraBackground`, statistieken vervangen door `AnimatedCounter`
-- `src/components/home/FinalCTA.tsx` — Circuit-lines vervangen door `AuroraBackground`
+**Bestand:** `src/components/home/MetamorphosisAnimation.tsx` (volledig herschrijven)
 
-**Aanpasbare props:**
-- Aurora: `intensity` (opacity 0-1), `speed` (seconden per cyclus), `colors` (array van HSL kleuren)
-- Counter: `target` (eindgetal), `duration` (ms), `suffix` (bijv. "+", "%")
+**Aanpak:**
+- Gebruik `framer-motion` `useAnimationControls()` om de fases sequentieel te sturen in plaats van `setInterval`
+- De SVG viewBox wordt breed (bijv. `0 0 800 120`) om de volle horizontale ruimte te benutten
+- Container: `w-full max-w-4xl h-32` (breder dan nu)
 
+**Rups:**
+- 6 segmenten die als groep `translateX` animeren van `x: 0` naar `x: 300`
+- Golvende `cy` animatie per segment (wave-effect)
+- Trail: 4-5 kleine cirkels achter de rups met `opacity` die afneemt van 0.3 naar 0
+
+**Cocon:**
+- Rups-segmenten morphen samen tot 1 ellips op `cx: 400` (midden)
+- Zachte `scale` en `opacity` puls
+- Subtiele glow ring eromheen
+
+**Vlinder:**
+- Verschijnt uit cocon op `cx: 400`, vleugels ontvouwen (scale van 0 naar 1)
+- Vlinder beweegt naar `x: 700` (rechts)
+- Vleugels klappen zachtjes (path morph, zoals nu)
+- Sparkle trail: 3 kleine cirkels die achterblijven en uitfaden met `scale` + `opacity` animatie
+
+**Timing:**
+- Totale cyclus: ~12 seconden (rustig tempo)
+- Overgang tussen fases is vloeiend, geen harde cuts
+
+**Geen wijzigingen aan:**
+- `src/pages/Index.tsx` (container en opacity blijven hetzelfde)
+- Andere bestanden

@@ -219,7 +219,7 @@ const MetamorphosisAnimation = () => {
         y: 104,
         scaleX: 0.18,
         scaleY: 1.28,
-        opacity: 0.12,
+        opacity: 0,
         transition: { duration: 1.15, ease: "easeInOut" },
       }),
       cocoonControls.start({
@@ -230,6 +230,7 @@ const MetamorphosisAnimation = () => {
       }),
     ]);
 
+    caterpillarControls.set({ opacity: 0 });
     await new Promise((resolve) => setTimeout(resolve, 1800));
 
     // 3) Vlinder komt uit cocon en vliegt weg

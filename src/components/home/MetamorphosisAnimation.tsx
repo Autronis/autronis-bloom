@@ -1,5 +1,5 @@
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const VIEW_WIDTH = 1200;
 const VIEW_HEIGHT = 180;
@@ -196,11 +196,13 @@ const MetamorphosisAnimation = () => {
   const caterpillarControls = useAnimationControls();
   const cocoonControls = useAnimationControls();
   const butterflyControls = useAnimationControls();
+  const [phase, setPhase] = useState<0 | 1 | 2>(0);
 
   const runCycle = useCallback(async () => {
     caterpillarControls.set({ x: -230, y: 112, opacity: 1, scaleX: 1, scaleY: 1 });
     cocoonControls.set({ x: CENTER_X, y: 102, opacity: 0, scaleX: 0.4, scaleY: 0.4 });
     butterflyControls.set({ x: CENTER_X, y: 102, opacity: 0, scale: 0.1, rotate: -4 });
+    setPhase(0);
 
     // 1) Rups kruipt van links naar midden
     await caterpillarControls.start({
@@ -209,7 +211,8 @@ const MetamorphosisAnimation = () => {
       transition: { duration: 4.2, ease: "linear" },
     });
 
-    // 2) Rups trekt samen terwijl cocon op exact dezelfde plek vormt
+    // 2) Rups trekt samen terwijl cocon vormt
+    setPhase(1);
     await Promise.all([
       caterpillarControls.start({
         x: CENTER_X,
@@ -229,7 +232,8 @@ const MetamorphosisAnimation = () => {
 
     await new Promise((resolve) => setTimeout(resolve, 1800));
 
-    // 3) Vlinder komt uit cocon en vliegt echt weg uit beeld
+    // 3) Vlinder komt uit cocon en vliegt weg
+    setPhase(2);
     await Promise.all([
       cocoonControls.start({
         opacity: 0,
@@ -281,8 +285,10 @@ const MetamorphosisAnimation = () => {
     };
   }, [butterflyControls, caterpillarControls, cocoonControls, prefersReducedMotion, runCycle]);
 
+  const labels = ["Analyse", "Ontwikkeling", "Transformatie"];
+
   return (
-    <div className="relative w-full h-32 sm:h-36 overflow-hidden">
+    <div className="relative w-full h-36 sm:h-40 overflow-hidden">
       <svg viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`} className="w-full h-full" preserveAspectRatio="none">
         <motion.g animate={caterpillarControls}>
           <Caterpillar />
@@ -296,6 +302,20 @@ const MetamorphosisAnimation = () => {
           <Butterfly />
         </motion.g>
       </svg>
+
+      {/* Phase label — centered, subtle */}
+      <div className="absolute inset-x-0 bottom-0 flex justify-center">
+        <motion.p
+          key={phase}
+          className="text-[10px] sm:text-xs tracking-[0.25em] uppercase text-muted-foreground/70 font-medium"
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          {labels[phase]}
+        </motion.p>
+      </div>
     </div>
   );
 };

@@ -93,49 +93,82 @@ const Cocoon = () => (
   </g>
 );
 
+const FLAP_DURATION = 0.4;
+const FLAP_TRANSITION = { duration: FLAP_DURATION, repeat: Infinity, ease: "easeInOut" as const };
+
 const Butterfly = () => (
   <g>
-    {/* Left wing — pivots from the body (x=0) so it stays attached */}
-    <motion.g
-      style={{ transformOrigin: "0px 6px" }}
-      animate={{ scaleX: [1, 0.2, 1] }}
-      transition={{ duration: 0.38, repeat: Infinity, ease: "easeInOut" }}
-    >
-      <path
-        d="M0 2 Q-16 -32 -50 -28 Q-58 -8 -38 7 Q-20 16 0 10"
-        fill={PRIMARY_SOFT}
-        stroke={PRIMARY}
-        strokeWidth={1}
-      />
-      <path
-        d="M0 10 Q-18 18 -33 34 Q-30 45 -16 38 Q-6 24 0 14"
-        fill={PRIMARY_FAINT}
-        stroke={PRIMARY}
-        strokeWidth={1}
-      />
-      <circle cx={-29} cy={-13} r={4} fill={PRIMARY} opacity={0.35} />
-    </motion.g>
+    {/* Left upper wing — path morph for flap, always starts at M0 (attached to body) */}
+    <motion.path
+      fill={PRIMARY_SOFT}
+      stroke={PRIMARY}
+      strokeWidth={1}
+      animate={{
+        d: [
+          "M0 2 Q-16 -32 -50 -28 Q-58 -8 -38 7 Q-20 16 0 10",
+          "M0 2 Q-3 -30 -8 -26 Q-10 -6 -6 7 Q-3 14 0 10",
+          "M0 2 Q-16 -32 -50 -28 Q-58 -8 -38 7 Q-20 16 0 10",
+        ],
+      }}
+      transition={FLAP_TRANSITION}
+    />
+    {/* Left lower wing */}
+    <motion.path
+      fill={PRIMARY_FAINT}
+      stroke={PRIMARY}
+      strokeWidth={1}
+      animate={{
+        d: [
+          "M0 10 Q-18 18 -33 34 Q-30 45 -16 38 Q-6 24 0 14",
+          "M0 10 Q-3 16 -5 30 Q-4 40 -2 34 Q-1 22 0 14",
+          "M0 10 Q-18 18 -33 34 Q-30 45 -16 38 Q-6 24 0 14",
+        ],
+      }}
+      transition={FLAP_TRANSITION}
+    />
+    {/* Left wing spot */}
+    <motion.circle
+      fill={PRIMARY}
+      opacity={0.35}
+      animate={{ cx: [-29, -5, -29], cy: [-13, -12, -13], r: [4, 1, 4] }}
+      transition={FLAP_TRANSITION}
+    />
 
-    {/* Right wing — pivots from the body (x=0) so it stays attached */}
-    <motion.g
-      style={{ transformOrigin: "0px 6px" }}
-      animate={{ scaleX: [1, 0.2, 1] }}
-      transition={{ duration: 0.38, repeat: Infinity, ease: "easeInOut" }}
-    >
-      <path
-        d="M0 2 Q16 -32 50 -28 Q58 -8 38 7 Q20 16 0 10"
-        fill={PRIMARY_SOFT}
-        stroke={PRIMARY}
-        strokeWidth={1}
-      />
-      <path
-        d="M0 10 Q18 18 33 34 Q30 45 16 38 Q6 24 0 14"
-        fill={PRIMARY_FAINT}
-        stroke={PRIMARY}
-        strokeWidth={1}
-      />
-      <circle cx={29} cy={-13} r={4} fill={PRIMARY} opacity={0.35} />
-    </motion.g>
+    {/* Right upper wing */}
+    <motion.path
+      fill={PRIMARY_SOFT}
+      stroke={PRIMARY}
+      strokeWidth={1}
+      animate={{
+        d: [
+          "M0 2 Q16 -32 50 -28 Q58 -8 38 7 Q20 16 0 10",
+          "M0 2 Q3 -30 8 -26 Q10 -6 6 7 Q3 14 0 10",
+          "M0 2 Q16 -32 50 -28 Q58 -8 38 7 Q20 16 0 10",
+        ],
+      }}
+      transition={FLAP_TRANSITION}
+    />
+    {/* Right lower wing */}
+    <motion.path
+      fill={PRIMARY_FAINT}
+      stroke={PRIMARY}
+      strokeWidth={1}
+      animate={{
+        d: [
+          "M0 10 Q18 18 33 34 Q30 45 16 38 Q6 24 0 14",
+          "M0 10 Q3 16 5 30 Q4 40 2 34 Q1 22 0 14",
+          "M0 10 Q18 18 33 34 Q30 45 16 38 Q6 24 0 14",
+        ],
+      }}
+      transition={FLAP_TRANSITION}
+    />
+    {/* Right wing spot */}
+    <motion.circle
+      fill={PRIMARY}
+      opacity={0.35}
+      animate={{ cx: [29, 5, 29], cy: [-13, -12, -13], r: [4, 1, 4] }}
+      transition={FLAP_TRANSITION}
+    />
 
     <ellipse cx={0} cy={6} rx={2.8} ry={16} fill={BODY} stroke={PRIMARY} strokeWidth={1} />
     <path d="M-1 -8 Q-7 -22 -12 -28" fill="none" stroke={PRIMARY} strokeWidth={1.1} strokeLinecap="round" />

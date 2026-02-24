@@ -289,7 +289,7 @@ const MetamorphosisAnimation = () => {
 
   return (
     <div className="relative w-full h-36 sm:h-40 overflow-hidden">
-      <svg viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`} className="w-full h-full" preserveAspectRatio="none">
+      <svg viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`} className="w-full h-full" preserveAspectRatio="none" overflow="hidden" style={{ overflow: "hidden" }}>
         <motion.g animate={caterpillarControls}>
           <Caterpillar />
         </motion.g>

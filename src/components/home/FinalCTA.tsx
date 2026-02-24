@@ -7,7 +7,7 @@ const FinalCTA = () => {
   return (
     <section className="py-24 border-t border-border relative overflow-hidden">
       {/* Butterfly silhouette background — centered behind text */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none -translate-y-8">
         <motion.svg
           viewBox="0 0 200 180"
           className="w-[400px] sm:w-[500px] lg:w-[600px] h-auto opacity-[0.13]"

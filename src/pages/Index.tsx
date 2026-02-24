@@ -11,6 +11,7 @@ import FinalCTA from "@/components/home/FinalCTA";
 import MetamorphosisAnimation from "@/components/home/MetamorphosisAnimation";
 import AuroraBackground from "@/components/home/AuroraBackground";
 import AnimatedCounter from "@/components/home/AnimatedCounter";
+import teamPhoto from "@/assets/autronis_team_foto.png";
 
 const Index = () => {
   return (
@@ -45,15 +46,25 @@ const Index = () => {
               </Button>
             </div>
           </div>
-          <div className="hidden lg:flex">
-            <MetamorphosisAnimation />
+          <div className="hidden lg:flex flex-shrink-0">
+            <div className="relative w-72 h-72 xl:w-80 xl:h-80 rounded-2xl overflow-hidden border border-border/50">
+              <img src={teamPhoto} alt="Autronis team" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+            </div>
           </div>
           </div>
         </div>
 
-        {/* Proof strip */}
-        <div className="border-t border-border bg-background/80 backdrop-blur-sm mt-auto">
-          <div className="container mx-auto px-4 lg:px-8 py-4 sm:py-6">
+        {/* Proof strip with metamorphosis animation */}
+        <div className="border-t border-border bg-background/80 backdrop-blur-sm mt-auto relative overflow-hidden">
+          {/* Background metamorphosis animation - subtle, full width */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-[0.06] pointer-events-none">
+            <div className="scale-[2.5] sm:scale-[3] lg:scale-[4]">
+              <MetamorphosisAnimation />
+            </div>
+          </div>
+
+          <div className="container mx-auto px-4 lg:px-8 py-6 sm:py-8 relative z-10">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-8">
               <div className="flex gap-6 sm:gap-10 items-center">
                 <div>

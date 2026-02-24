@@ -55,7 +55,7 @@ const Index = () => {
           </div>
 
           {/* Metamorphosis animation - horizontal, full width below content */}
-          <div className="mt-8 w-full flex items-center justify-center opacity-[0.12] pointer-events-none">
+          <div className="mt-8 w-full flex items-center justify-center opacity-[0.22] pointer-events-none">
             <MetamorphosisAnimation />
           </div>
         </div>

@@ -41,7 +41,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
           <img src="/logo.png" alt="Autronis" className="h-9 w-auto" />
-          <span className="text-lg font-bold tracking-tight hidden sm:inline">
+          <span className="text-lg font-bold tracking-tight">
             Autronis
           </span>
         </Link>

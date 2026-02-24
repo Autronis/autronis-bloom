@@ -2,48 +2,21 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-import AuroraBackground from "@/components/home/AuroraBackground";
 
 const ButterflyBg = () => (
   <motion.svg
     viewBox="0 0 200 180"
-    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] sm:w-[360px] lg:w-[440px] h-auto pointer-events-none"
-    initial={{ scale: 0.3, opacity: 0 }}
-    whileInView={{ scale: 1, opacity: 0.07 }}
+    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[420px] lg:w-[520px] h-auto pointer-events-none"
+    initial={{ scale: 0.15, opacity: 0 }}
+    whileInView={{ scale: 1, opacity: 0.08 }}
     viewport={{ once: false, amount: 0.5 }}
-    transition={{ duration: 2, ease: "easeOut" }}
+    transition={{ duration: 2.5, ease: "easeOut" }}
   >
-    {/* Upper left wing */}
-    <path
-      d="M100 90 Q60 20 20 40 Q10 60 40 80 Q60 90 100 90"
-      fill="hsl(var(--primary))"
-      stroke="hsl(var(--primary))"
-      strokeWidth={0.5}
-    />
-    {/* Upper right wing */}
-    <path
-      d="M100 90 Q140 20 180 40 Q190 60 160 80 Q140 90 100 90"
-      fill="hsl(var(--primary))"
-      stroke="hsl(var(--primary))"
-      strokeWidth={0.5}
-    />
-    {/* Lower left wing */}
-    <path
-      d="M100 90 Q60 100 30 130 Q25 150 60 140 Q80 120 100 100"
-      fill="hsl(var(--primary) / 0.7)"
-      stroke="hsl(var(--primary))"
-      strokeWidth={0.5}
-    />
-    {/* Lower right wing */}
-    <path
-      d="M100 90 Q140 100 170 130 Q175 150 140 140 Q120 120 100 100"
-      fill="hsl(var(--primary) / 0.7)"
-      stroke="hsl(var(--primary))"
-      strokeWidth={0.5}
-    />
-    {/* Body */}
-    <ellipse cx={100} cy={95} rx={3.5} ry={22} fill="hsl(var(--foreground) / 0.6)" />
-    {/* Antennae */}
+    <path d="M100 90 Q60 20 20 40 Q10 60 40 80 Q60 90 100 90" fill="hsl(var(--primary))" />
+    <path d="M100 90 Q140 20 180 40 Q190 60 160 80 Q140 90 100 90" fill="hsl(var(--primary))" />
+    <path d="M100 90 Q60 100 30 130 Q25 150 60 140 Q80 120 100 100" fill="hsl(var(--primary) / 0.7)" />
+    <path d="M100 90 Q140 100 170 130 Q175 150 140 140 Q120 120 100 100" fill="hsl(var(--primary) / 0.7)" />
+    <ellipse cx={100} cy={95} rx={3.5} ry={22} fill="hsl(var(--foreground) / 0.5)" />
     <path d="M98 74 Q90 58 84 50" fill="none" stroke="hsl(var(--primary))" strokeWidth={1} strokeLinecap="round" />
     <path d="M102 74 Q110 58 116 50" fill="none" stroke="hsl(var(--primary))" strokeWidth={1} strokeLinecap="round" />
   </motion.svg>
@@ -52,8 +25,6 @@ const ButterflyBg = () => (
 const FinalCTA = () => {
   return (
     <section className="py-24 border-t border-border relative overflow-hidden">
-      <AuroraBackground intensity={0.05} speed={12} />
-
       <ButterflyBg />
 
       <div className="container mx-auto px-4 lg:px-8 text-center relative z-10">

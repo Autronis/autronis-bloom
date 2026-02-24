@@ -9,7 +9,7 @@ import DemoBlock from "@/components/home/DemoBlock";
 import FAQSection from "@/components/home/FAQSection";
 import FinalCTA from "@/components/home/FinalCTA";
 import MetamorphosisAnimation from "@/components/home/MetamorphosisAnimation";
-import AuroraBackground from "@/components/home/AuroraBackground";
+
 import AnimatedCounter from "@/components/home/AnimatedCounter";
 import teamPhoto from "@/assets/autronis_team_foto.png";
 
@@ -18,7 +18,7 @@ const Index = () => {
     <Layout>
       {/* Hero */}
       <section className="relative min-h-screen flex flex-col overflow-hidden">
-        <AuroraBackground />
+        
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10 flex-1 flex flex-col justify-center pb-32 sm:pb-28">
           <div className="flex flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-16 w-full">

@@ -16,13 +16,13 @@ const FinalCTA = () => {
           viewport={{ amount: 0.1 }}
           transition={{ duration: 2.5, ease: "easeOut" }}
         >
-          <path d="M100 90 Q60 20 20 40 Q10 60 40 80 Q60 90 100 90" fill="hsl(174, 78%, 55%)" />
-          <path d="M100 90 Q140 20 180 40 Q190 60 160 80 Q140 90 100 90" fill="hsl(174, 78%, 55%)" />
-          <path d="M100 90 Q60 100 30 130 Q25 150 60 140 Q80 120 100 100" fill="hsl(174, 64%, 45%)" />
-          <path d="M100 90 Q140 100 170 130 Q175 150 140 140 Q120 120 100 100" fill="hsl(174, 64%, 45%)" />
-          <ellipse cx={100} cy={95} rx={3.5} ry={22} fill="hsl(174, 50%, 60%)" />
-          <path d="M98 74 Q90 58 84 50" fill="none" stroke="hsl(174, 78%, 55%)" strokeWidth={1} strokeLinecap="round" />
-          <path d="M102 74 Q110 58 116 50" fill="none" stroke="hsl(174, 78%, 55%)" strokeWidth={1} strokeLinecap="round" />
+          <path d="M100 90 Q60 20 20 40 Q10 60 40 80 Q60 90 100 90" fill="hsl(var(--anim-wing))" />
+          <path d="M100 90 Q140 20 180 40 Q190 60 160 80 Q140 90 100 90" fill="hsl(var(--anim-wing))" />
+          <path d="M100 90 Q60 100 30 130 Q25 150 60 140 Q80 120 100 100" fill="hsl(var(--anim-wing-soft))" />
+          <path d="M100 90 Q140 100 170 130 Q175 150 140 140 Q120 120 100 100" fill="hsl(var(--anim-wing-soft))" />
+          <ellipse cx={100} cy={95} rx={3.5} ry={22} fill="hsl(var(--anim-body))" />
+          <path d="M98 74 Q90 58 84 50" fill="none" stroke="hsl(var(--anim-wing))" strokeWidth={1} strokeLinecap="round" />
+          <path d="M102 74 Q110 58 116 50" fill="none" stroke="hsl(var(--anim-wing))" strokeWidth={1} strokeLinecap="round" />
         </motion.svg>
       </div>
 

@@ -6,57 +6,126 @@ const TEAL_LIGHT = "hsl(174, 64%, 56%)";
 const TEAL_DARK = "hsl(174, 40%, 22%)";
 const BODY_DARK = "hsl(220, 15%, 20%)";
 
+// Caterpillar faces RIGHT (head on right side)
+const CaterpillarGroup = () => (
+  <g>
+    {[5, 4, 3, 2, 1, 0].map((i) => (
+      <motion.ellipse
+        key={`seg-${i}`}
+        cx={i * 18}
+        cy={0}
+        rx={10}
+        ry={8}
+        fill={`hsl(174, ${60 + i * 3}%, ${30 + i * 4}%)`}
+        stroke={TEAL}
+        strokeWidth={0.8}
+        animate={{ cy: [0, -4, 0] }}
+        transition={{ duration: 0.5, repeat: Infinity, delay: (5 - i) * 0.08, ease: "easeInOut" }}
+      />
+    ))}
+    {/* Head is rightmost segment (i=5, cx=90) — eye on right */}
+    <circle cx={94} cy={-5} r={2.2} fill="hsl(0,0%,96%)" />
+    <circle cx={94} cy={-5} r={1} fill={BODY_DARK} />
+    {/* Antennae pointing right-forward */}
+    <line x1={96} y1={-6} x2={104} y2={-16} stroke={TEAL} strokeWidth={1} strokeLinecap="round" />
+    <line x1={92} y1={-8} x2={98} y2={-18} stroke={TEAL} strokeWidth={1} strokeLinecap="round" />
+    <circle cx={104} cy={-17} r={1.5} fill={TEAL_LIGHT} />
+    <circle cx={98} cy={-19} r={1.5} fill={TEAL_LIGHT} />
+    {/* Legs */}
+    {[1, 2, 3, 4].map((i) => (
+      <motion.line
+        key={`leg-${i}`}
+        x1={i * 18} y1={7} x2={i * 18} y2={15}
+        stroke={TEAL_DARK} strokeWidth={1} strokeLinecap="round"
+        animate={{ y2: [15, 12, 15] }}
+        transition={{ duration: 0.5, repeat: Infinity, delay: i * 0.08 }}
+      />
+    ))}
+  </g>
+);
+
+const ButterflyGroup = () => (
+  <g>
+    {/* Upper left wing */}
+    <motion.path
+      d="M0 0 Q-25 -35 -50 -22 Q-56 -8 -38 2 Q-22 6 0 0"
+      fill="hsl(174, 78%, 35%)" stroke={TEAL} strokeWidth={0.8}
+      animate={{ d: [
+        "M0 0 Q-25 -35 -50 -22 Q-56 -8 -38 2 Q-22 6 0 0",
+        "M0 0 Q-18 -28 -42 -20 Q-50 -6 -35 3 Q-20 6 0 0",
+        "M0 0 Q-25 -35 -50 -22 Q-56 -8 -38 2 Q-22 6 0 0"
+      ]}}
+      transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+    />
+    {/* Upper right wing */}
+    <motion.path
+      d="M0 0 Q25 -35 50 -22 Q56 -8 38 2 Q22 6 0 0"
+      fill="hsl(174, 78%, 35%)" stroke={TEAL} strokeWidth={0.8}
+      animate={{ d: [
+        "M0 0 Q25 -35 50 -22 Q56 -8 38 2 Q22 6 0 0",
+        "M0 0 Q18 -28 42 -20 Q50 -6 35 3 Q20 6 0 0",
+        "M0 0 Q25 -35 50 -22 Q56 -8 38 2 Q22 6 0 0"
+      ]}}
+      transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+    />
+    {/* Lower wings */}
+    <path d="M0 2 Q-20 10 -35 26 Q-36 34 -22 30 Q-10 20 0 10" fill="hsl(174, 64%, 30%)" stroke={TEAL} strokeWidth={0.8} />
+    <path d="M0 2 Q20 10 35 26 Q36 34 22 30 Q10 20 0 10" fill="hsl(174, 64%, 30%)" stroke={TEAL} strokeWidth={0.8} />
+    {/* Wing spots */}
+    <circle cx={-30} cy={-16} r={4} fill={TEAL_LIGHT} opacity={0.4} />
+    <circle cx={30} cy={-16} r={4} fill={TEAL_LIGHT} opacity={0.4} />
+    {/* Body */}
+    <ellipse cx={0} cy={4} rx={2.5} ry={14} fill={BODY_DARK} stroke={TEAL} strokeWidth={0.8} />
+    {/* Antennae */}
+    <path d="M-2 -9 Q-8 -20 -12 -24" fill="none" stroke={TEAL} strokeWidth={1} strokeLinecap="round" />
+    <path d="M2 -9 Q8 -20 12 -24" fill="none" stroke={TEAL} strokeWidth={1} strokeLinecap="round" />
+    <circle cx={-12} cy={-25} r={1.8} fill={TEAL_LIGHT} />
+    <circle cx={12} cy={-25} r={1.8} fill={TEAL_LIGHT} />
+  </g>
+);
+
 const MetamorphosisAnimation = () => {
-  const caterpillarControls = useAnimationControls();
-  const cocoonControls = useAnimationControls();
-  const butterflyControls = useAnimationControls();
-  const trailControls = useAnimationControls();
-  const sparkleControls = useAnimationControls();
+  const caterpillar = useAnimationControls();
+  const cocoon = useAnimationControls();
+  const butterfly = useAnimationControls();
+  const trail = useAnimationControls();
+  const sparkles = useAnimationControls();
 
   const runCycle = useCallback(async () => {
-    // Reset all
-    caterpillarControls.set({ opacity: 0, x: 0 });
-    cocoonControls.set({ opacity: 0, scale: 0.3 });
-    butterflyControls.set({ opacity: 0, x: 0, scale: 0 });
-    trailControls.set({ opacity: 0 });
-    sparkleControls.set({ opacity: 0 });
+    // Reset
+    caterpillar.set({ x: -120, opacity: 1 });
+    cocoon.set({ opacity: 0, scale: 0.2 });
+    butterfly.set({ x: 0, opacity: 0, scale: 0 });
+    trail.set({ opacity: 0 });
+    sparkles.set({ opacity: 0 });
 
-    // Phase 1: Caterpillar crawls from left to center (0-4s)
-    caterpillarControls.start({ opacity: 1, transition: { duration: 0.5 } });
-    trailControls.start({ opacity: 1, transition: { duration: 0.8 } });
-    await caterpillarControls.start({
-      x: 280,
-      transition: { duration: 3.5, ease: "easeInOut" },
+    // Phase 1: Caterpillar enters from left, crawls to center
+    trail.start({ opacity: 0.6, transition: { duration: 1 } });
+    await caterpillar.start({
+      x: 350,
+      transition: { duration: 4, ease: "linear" },
     });
 
-    // Phase 2: Caterpillar shrinks into cocoon (4-7s)
-    trailControls.start({ opacity: 0, transition: { duration: 1.5 } });
-    caterpillarControls.start({
-      opacity: 0,
-      scale: 0.3,
-      transition: { duration: 1 },
-    });
-    cocoonControls.start({ opacity: 1, scale: 1, transition: { duration: 1 } });
-    await new Promise((r) => setTimeout(r, 2000));
+    // Phase 2: Caterpillar morphs into cocoon
+    trail.start({ opacity: 0, transition: { duration: 1 } });
+    caterpillar.start({ opacity: 0, transition: { duration: 0.8 } });
+    await cocoon.start({ opacity: 1, scale: 1, transition: { duration: 0.8 } });
+    // Cocoon holds
+    await new Promise((r) => setTimeout(r, 2200));
 
-    // Phase 3: Butterfly emerges and flies right (7-12s)
-    cocoonControls.start({ opacity: 0, scale: 1.3, transition: { duration: 0.8 } });
-    await butterflyControls.start({
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 1, ease: "easeOut" },
+    // Phase 3: Butterfly emerges and flies off right
+    cocoon.start({ opacity: 0, scale: 1.4, transition: { duration: 0.6 } });
+    await butterfly.start({ opacity: 1, scale: 1, transition: { duration: 0.8 } });
+    sparkles.start({ opacity: 1, transition: { duration: 0.3 } });
+    await butterfly.start({
+      x: 500,
+      transition: { duration: 3, ease: [0.4, 0, 1, 1] },
     });
-    sparkleControls.start({ opacity: 1, transition: { duration: 0.3 } });
-    await butterflyControls.start({
-      x: 280,
-      transition: { duration: 3, ease: "easeIn" },
-    });
+    // Butterfly exits screen
+    sparkles.start({ opacity: 0, transition: { duration: 0.5 } });
 
-    // Fade out everything
-    butterflyControls.start({ opacity: 0, transition: { duration: 0.8 } });
-    sparkleControls.start({ opacity: 0, transition: { duration: 0.8 } });
-    await new Promise((r) => setTimeout(r, 1200));
-  }, [caterpillarControls, cocoonControls, butterflyControls, trailControls, sparkleControls]);
+    await new Promise((r) => setTimeout(r, 800));
+  }, [caterpillar, cocoon, butterfly, trail, sparkles]);
 
   useEffect(() => {
     let cancelled = false;
@@ -69,146 +138,65 @@ const MetamorphosisAnimation = () => {
     return () => { cancelled = true; };
   }, [runCycle]);
 
+  // viewBox: 800 wide. Center = 400. Caterpillar starts off-screen left, ends center ~400.
+  // Butterfly starts at center ~400, flies to ~900 (off-screen right).
   return (
-    <div className="relative w-full max-w-4xl h-32 flex items-center justify-center">
-      <svg viewBox="0 0 800 120" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
-        {/* Trail dots behind caterpillar */}
-        <motion.g animate={trailControls}>
-          {[0, 1, 2, 3, 4].map((i) => (
-            <motion.circle
-              key={`trail-${i}`}
-              cx={60 + i * 12}
-              cy={60}
-              r={3 - i * 0.4}
-              fill={TEAL_LIGHT}
-              opacity={0.3 - i * 0.06}
-            />
-          ))}
-        </motion.g>
-
-        {/* Caterpillar group */}
-        <motion.g animate={caterpillarControls} style={{ originX: "80px", originY: "60px" }}>
-          {[0, 1, 2, 3, 4, 5].map((i) => (
-            <motion.ellipse
-              key={`seg-${i}`}
-              cx={80 + i * 20}
-              cy={60}
-              rx={11}
-              ry={9}
-              fill={`hsl(174, ${60 + i * 3}%, ${30 + i * 4}%)`}
-              stroke={TEAL}
-              strokeWidth={0.8}
-              animate={{ cy: [60, 55, 60] }}
-              transition={{ duration: 0.5, repeat: Infinity, delay: i * 0.08, ease: "easeInOut" }}
-            />
-          ))}
-          {/* Eye */}
-          <circle cx={76} cy={54} r={2.5} fill="hsl(0,0%,96%)" />
-          <circle cx={76} cy={54} r={1.2} fill={BODY_DARK} />
-          {/* Antennae */}
-          <line x1={73} y1={50} x2={66} y2={38} stroke={TEAL} strokeWidth={1.2} strokeLinecap="round" />
-          <line x1={80} y1={50} x2={77} y2={36} stroke={TEAL} strokeWidth={1.2} strokeLinecap="round" />
-          <circle cx={66} cy={37} r={1.8} fill={TEAL_LIGHT} />
-          <circle cx={77} cy={35} r={1.8} fill={TEAL_LIGHT} />
-          {/* Legs */}
+    <div className="relative w-full max-w-4xl h-28 flex items-center justify-center overflow-hidden">
+      <svg viewBox="0 0 800 100" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
+        {/* Trail behind caterpillar */}
+        <motion.g animate={trail}>
           {[0, 1, 2, 3].map((i) => (
-            <motion.line
-              key={`leg-${i}`}
-              x1={90 + i * 20} y1={68} x2={90 + i * 20} y2={78}
-              stroke={TEAL_DARK} strokeWidth={1.2} strokeLinecap="round"
-              animate={{ y2: [78, 75, 78] }}
-              transition={{ duration: 0.5, repeat: Infinity, delay: i * 0.08 }}
+            <motion.circle
+              key={`t-${i}`}
+              cx={40 + i * 14}
+              cy={50}
+              r={2.5 - i * 0.5}
+              fill={TEAL_LIGHT}
+              opacity={0.25 - i * 0.05}
             />
           ))}
         </motion.g>
 
-        {/* Cocoon at center */}
-        <motion.g animate={cocoonControls} style={{ originX: "400px", originY: "60px" }}>
-          <line x1={400} y1={10} x2={400} y2={30} stroke={TEAL} strokeWidth={0.8} />
+        {/* Caterpillar — translate moves the whole group */}
+        <motion.g animate={caterpillar} style={{ translateY: 50 }}>
+          <CaterpillarGroup />
+        </motion.g>
+
+        {/* Cocoon at center (cx=400) */}
+        <motion.g animate={cocoon} style={{ originX: "400px", originY: "50px" }}>
+          <line x1={400} y1={5} x2={400} y2={22} stroke={TEAL} strokeWidth={0.8} />
           <motion.ellipse
-            cx={400} cy={65} rx={22} ry={38}
-            fill={TEAL_DARK} stroke={TEAL} strokeWidth={1.2}
-            animate={{ ry: [38, 36, 38], rx: [22, 23, 22] }}
+            cx={400} cy={52} rx={18} ry={32}
+            fill={TEAL_DARK} stroke={TEAL} strokeWidth={1}
+            animate={{ ry: [32, 30, 32], rx: [18, 19, 18] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           />
-          {/* Glow pulse */}
           <motion.ellipse
-            cx={400} cy={65} rx={18} ry={30}
-            fill="none" stroke={TEAL} strokeWidth={0.8}
-            animate={{ opacity: [0.1, 0.4, 0.1], rx: [18, 21, 18], ry: [30, 33, 30] }}
+            cx={400} cy={52} rx={14} ry={26}
+            fill="none" stroke={TEAL} strokeWidth={0.6}
+            animate={{ opacity: [0.1, 0.35, 0.1] }}
             transition={{ duration: 2, repeat: Infinity }}
           />
-          {/* Texture lines */}
-          {[0, 1, 2].map((i) => (
-            <motion.path
-              key={`tex-${i}`}
-              d={`M ${384 + i} ${45 + i * 14} Q 400 ${42 + i * 14} ${416 - i} ${45 + i * 14}`}
-              fill="none" stroke={TEAL} strokeWidth={0.5} opacity={0.3}
-              animate={{ opacity: [0.2, 0.5, 0.2] }}
-              transition={{ duration: 2, repeat: Infinity, delay: i * 0.4 }}
-            />
-          ))}
         </motion.g>
 
         {/* Sparkle trail behind butterfly */}
-        <motion.g animate={sparkleControls}>
+        <motion.g animate={sparkles}>
           {[0, 1, 2].map((i) => (
             <motion.circle
-              key={`sparkle-${i}`}
-              cx={410 + i * 18}
-              cy={55 + (i % 2 === 0 ? -8 : 8)}
-              r={2.5 - i * 0.5}
+              key={`s-${i}`}
+              cx={390 - i * 16}
+              cy={45 + (i % 2 === 0 ? -6 : 6)}
+              r={2 - i * 0.4}
               fill={TEAL_LIGHT}
-              animate={{ opacity: [0.5, 0, 0.5], scale: [1, 1.5, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.3 }}
+              animate={{ opacity: [0.4, 0, 0.4], r: [2 - i * 0.4, 3.5 - i * 0.4, 2 - i * 0.4] }}
+              transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.25 }}
             />
           ))}
         </motion.g>
 
-        {/* Butterfly group */}
-        <motion.g animate={butterflyControls} style={{ originX: "400px", originY: "60px" }}>
-          {/* Upper left wing */}
-          <motion.path
-            d="M400 60 Q370 20 340 35 Q332 50 355 62 Q370 66 400 60"
-            fill="hsl(174, 78%, 35%)" stroke={TEAL} strokeWidth={0.8}
-            animate={{ d: [
-              "M400 60 Q370 20 340 35 Q332 50 355 62 Q370 66 400 60",
-              "M400 60 Q378 30 350 38 Q338 52 358 63 Q374 66 400 60",
-              "M400 60 Q370 20 340 35 Q332 50 355 62 Q370 66 400 60"
-            ]}}
-            transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
-          />
-          {/* Upper right wing */}
-          <motion.path
-            d="M400 60 Q430 20 460 35 Q468 50 445 62 Q430 66 400 60"
-            fill="hsl(174, 78%, 35%)" stroke={TEAL} strokeWidth={0.8}
-            animate={{ d: [
-              "M400 60 Q430 20 460 35 Q468 50 445 62 Q430 66 400 60",
-              "M400 60 Q422 30 450 38 Q462 52 442 63 Q426 66 400 60",
-              "M400 60 Q430 20 460 35 Q468 50 445 62 Q430 66 400 60"
-            ]}}
-            transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
-          />
-          {/* Lower left wing */}
-          <motion.path
-            d="M400 62 Q375 70 355 88 Q352 98 370 92 Q385 82 400 70"
-            fill="hsl(174, 64%, 30%)" stroke={TEAL} strokeWidth={0.8}
-          />
-          {/* Lower right wing */}
-          <motion.path
-            d="M400 62 Q425 70 445 88 Q448 98 430 92 Q415 82 400 70"
-            fill="hsl(174, 64%, 30%)" stroke={TEAL} strokeWidth={0.8}
-          />
-          {/* Wing details */}
-          <circle cx={365} cy={42} r={5} fill={TEAL_LIGHT} opacity={0.4} />
-          <circle cx={435} cy={42} r={5} fill={TEAL_LIGHT} opacity={0.4} />
-          {/* Body */}
-          <ellipse cx={400} cy={63} rx={3} ry={16} fill={BODY_DARK} stroke={TEAL} strokeWidth={0.8} />
-          {/* Antennae */}
-          <path d="M398 48 Q392 36 386 32" fill="none" stroke={TEAL} strokeWidth={1.2} strokeLinecap="round" />
-          <path d="M402 48 Q408 36 414 32" fill="none" stroke={TEAL} strokeWidth={1.2} strokeLinecap="round" />
-          <circle cx={386} cy={31} r={2} fill={TEAL_LIGHT} />
-          <circle cx={414} cy={31} r={2} fill={TEAL_LIGHT} />
+        {/* Butterfly — starts at center (400), flies right */}
+        <motion.g animate={butterfly} style={{ translateX: 400, translateY: 50 }}>
+          <ButterflyGroup />
         </motion.g>
       </svg>
     </div>

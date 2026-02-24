@@ -307,7 +307,7 @@ const MetamorphosisAnimation = () => {
       <div className="absolute inset-x-0 bottom-0 flex justify-center">
         <motion.p
           key={phase}
-          className="text-[10px] sm:text-xs tracking-[0.25em] uppercase text-muted-foreground/70 font-medium"
+          className="text-[10px] sm:text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium"
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}

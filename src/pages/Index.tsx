@@ -13,7 +13,7 @@ const Index = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+      <section className="relative min-h-screen flex flex-col overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/4 left-0 w-full circuit-line animate-data-pulse" />
           <div className="absolute top-1/2 left-0 w-full circuit-line animate-data-pulse [animation-delay:1s]" />
@@ -22,7 +22,7 @@ const Index = () => {
           <div className="absolute bottom-20 left-20 w-48 h-48 rounded-full bg-primary/5 blur-[80px]" />
         </div>
 
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+        <div className="container mx-auto px-4 lg:px-8 relative z-10 flex-1 flex items-center pb-32 sm:pb-28">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold text-primary mb-4 tracking-widest uppercase">Gedreven door technologie. Gebouwd voor transformatie.</p>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
@@ -50,24 +50,24 @@ const Index = () => {
         </div>
 
         {/* Proof strip */}
-        <div className="absolute bottom-0 left-0 right-0 border-t border-border bg-background/80 backdrop-blur-sm">
-          <div className="container mx-auto px-4 lg:px-8 py-6">
-            <div className="flex flex-wrap items-center justify-between gap-8">
-              <div className="flex gap-10 items-center">
+        <div className="border-t border-border bg-background/80 backdrop-blur-sm mt-auto">
+          <div className="container mx-auto px-4 lg:px-8 py-4 sm:py-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-8">
+              <div className="flex gap-6 sm:gap-10 items-center">
                 <div>
-                  <p className="text-2xl font-bold text-primary">500+</p>
+                  <p className="text-xl sm:text-2xl font-bold text-primary">500+</p>
                   <p className="text-xs text-muted-foreground">Uur bespaard</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-primary">50+</p>
+                  <p className="text-xl sm:text-2xl font-bold text-primary">50+</p>
                   <p className="text-xs text-muted-foreground">Automatiseringen</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-primary">98%</p>
+                  <p className="text-xl sm:text-2xl font-bold text-primary">98%</p>
                   <p className="text-xs text-muted-foreground">Klanttevredenheid</p>
                 </div>
               </div>
-              <div className="flex gap-6 items-center opacity-30">
+              <div className="hidden md:flex gap-6 items-center opacity-30">
                 {["Client A", "Client B", "Client C", "Client D"].map((name) => (
                   <div key={name} className="h-6 w-20 bg-muted-foreground/20 rounded" title={name} />
                 ))}

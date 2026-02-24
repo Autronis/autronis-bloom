@@ -9,19 +9,15 @@ import DemoBlock from "@/components/home/DemoBlock";
 import FAQSection from "@/components/home/FAQSection";
 import FinalCTA from "@/components/home/FinalCTA";
 import MetamorphosisAnimation from "@/components/home/MetamorphosisAnimation";
+import AuroraBackground from "@/components/home/AuroraBackground";
+import AnimatedCounter from "@/components/home/AnimatedCounter";
 
 const Index = () => {
   return (
     <Layout>
       {/* Hero */}
       <section className="relative min-h-screen flex flex-col overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-0 w-full circuit-line animate-data-pulse" />
-          <div className="absolute top-1/2 left-0 w-full circuit-line animate-data-pulse [animation-delay:1s]" />
-          <div className="absolute top-3/4 left-0 w-full circuit-line animate-data-pulse [animation-delay:2s]" />
-          <div className="absolute top-20 right-20 w-64 h-64 rounded-full bg-primary/5 blur-[100px]" />
-          <div className="absolute bottom-20 left-20 w-48 h-48 rounded-full bg-primary/5 blur-[80px]" />
-        </div>
+        <AuroraBackground />
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10 flex-1 flex items-center pb-32 sm:pb-28">
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 w-full">
@@ -61,15 +57,21 @@ const Index = () => {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-8">
               <div className="flex gap-6 sm:gap-10 items-center">
                 <div>
-                  <p className="text-xl sm:text-2xl font-bold text-primary">500+</p>
+                  <p className="text-xl sm:text-2xl font-bold text-primary">
+                    <AnimatedCounter target={500} suffix="+" />
+                  </p>
                   <p className="text-xs text-muted-foreground">Uur bespaard</p>
                 </div>
                 <div>
-                  <p className="text-xl sm:text-2xl font-bold text-primary">50+</p>
+                  <p className="text-xl sm:text-2xl font-bold text-primary">
+                    <AnimatedCounter target={50} suffix="+" />
+                  </p>
                   <p className="text-xs text-muted-foreground">Automatiseringen</p>
                 </div>
                 <div>
-                  <p className="text-xl sm:text-2xl font-bold text-primary">98%</p>
+                  <p className="text-xl sm:text-2xl font-bold text-primary">
+                    <AnimatedCounter target={98} suffix="%" />
+                  </p>
                   <p className="text-xs text-muted-foreground">Klanttevredenheid</p>
                 </div>
               </div>

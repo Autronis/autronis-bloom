@@ -234,20 +234,21 @@ const MetamorphosisAnimation = () => {
 
     // 3) Vlinder komt uit cocon en vliegt weg
     setPhase(2);
-    await Promise.all([
-      cocoonControls.start({
-        opacity: 0,
-        scaleX: 0.55,
-        scaleY: 1.35,
-        transition: { duration: 0.65, ease: "easeIn" },
-      }),
-      butterflyControls.start({
-        opacity: 1,
-        scale: 1,
-        y: 90,
-        transition: { duration: 0.8, ease: "easeOut" },
-      }),
-    ]);
+    cocoonControls.start({
+      opacity: 0,
+      scaleX: 0.1,
+      scaleY: 0.1,
+      transition: { duration: 0.5, ease: "easeIn" },
+    });
+    await butterflyControls.start({
+      opacity: 1,
+      scale: 1,
+      y: 90,
+      transition: { duration: 0.8, ease: "easeOut" },
+    });
+    // Ensure cocoon is fully gone
+    cocoonControls.set({ opacity: 0 });
+    caterpillarControls.set({ opacity: 0 });
 
     await butterflyControls.start({
       x: VIEW_WIDTH + 260,

@@ -45,6 +45,13 @@ const Index = () => {
                 </Link>
               </Button>
             </div>
+
+            {/* Metamorphosis animation - full width below CTAs */}
+            <div className="mt-12 w-full flex items-center justify-center opacity-[0.08] pointer-events-none">
+              <div className="scale-[3] sm:scale-[4] lg:scale-[5]">
+                <MetamorphosisAnimation />
+              </div>
+            </div>
           </div>
           <div className="hidden lg:flex flex-shrink-0">
             <div className="relative w-72 h-72 xl:w-80 xl:h-80 rounded-2xl overflow-hidden border border-border/50">
@@ -55,14 +62,8 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Proof strip with metamorphosis animation */}
+        {/* Proof strip */}
         <div className="border-t border-border bg-background/80 backdrop-blur-sm mt-auto relative overflow-hidden">
-          {/* Background metamorphosis animation - subtle, full width */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-[0.06] pointer-events-none">
-            <div className="scale-[2.5] sm:scale-[3] lg:scale-[4]">
-              <MetamorphosisAnimation />
-            </div>
-          </div>
 
           <div className="container mx-auto px-4 lg:px-8 py-6 sm:py-8 relative z-10">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-8">

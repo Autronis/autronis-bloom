@@ -44,7 +44,7 @@ const DomainsSection = () => {
             Elke afdeling. Elk proces. <span className="text-gradient">Geautomatiseerd.</span>
           </h2>
           <p className="text-muted-foreground">
-            Wij analyseren workflows en bouwen maatwerk automatiseringen die direct impact maken op tijd, kosten en schaalbaarheid.
+            Wij analyseren processen en bouwen maatwerk automatiseringen die direct impact maken op tijd, kosten en schaalbaarheid.
           </p>
         </div>
 

@@ -18,7 +18,7 @@ const services = [
       "CRM-synchronisatie tussen marketing en sales tools",
       "Geautomatiseerde rapportages over pipeline en conversie",
     ],
-    tools: "Tools die we vaak inzetten: HubSpot, Salesforce, Pipedrive, Mailchimp, Lemlist, LinkedIn tools en maatwerk API-koppelingen.",
+    tools: "Tools die we vaak inzetten: HubSpot, Salesforce, Pipedrive, Mailchimp, Lemlist, Instantly, LinkedIn tools en maatwerk API-koppelingen.",
   },
   {
     icon: Settings,
@@ -54,7 +54,7 @@ const services = [
       "Periodieke financiële rapportages zonder spreadsheets",
       "Onkostendeclaraties en budgetbewaking",
     ],
-    tools: "Niet gelimiteerd tot deze tools: Exact, Twinfield, Xero, QuickBooks, custom ERP-systemen.",
+    tools: "Voorbeelden van platformen die we vaak inzetten: Exact, Twinfield, Xero, QuickBooks en custom ERP-systemen.",
   },
   {
     icon: Table,
@@ -66,7 +66,7 @@ const services = [
       "Rapportages die zichzelf genereren uit meerdere bronnen",
       "Excel-afhankelijkheden elimineren zonder uw team te verstoren",
     ],
-    tools: "Wij werken met Google Sheets, Excel, Airtable, databases en maatwerk koppelingen.",
+    tools: "Wij werken met Google Sheets, Excel, Airtable, Supabase, databases en maatwerk koppelingen.",
   },
   {
     icon: BarChart3,
@@ -83,19 +83,19 @@ const services = [
   {
     icon: Target,
     title: "Lead Generatie Systemen",
-    description: "Systematisch nieuwe leads vinden, kwalificeren en opwarmen. Van LinkedIn outreach tot volledige prospecting pipelines.",
+    description: "Systematisch nieuwe leads vinden, kwalificeren en opwarmen. Van geautomatiseerde outreach tot volledige prospecting pipelines die uw salesteam voeden met gekwalificeerde leads.",
     examples: [
-      "Geautomatiseerde LinkedIn outreach en connectie-flows",
-      "Lead kwalificatie en scoring op basis van criteria",
-      "Multi-channel prospecting (email, LinkedIn, telefoon)",
+      "Geautomatiseerde outreach en connectie-flows via meerdere kanalen",
+      "Lead kwalificatie en scoring op basis van uw ideale klantprofiel",
+      "Multi-channel prospecting (email, social, telefoon)",
       "Verrijking van leads met bedrijfs- en contactdata",
     ],
-    tools: "Wij werken met uw bestaande tools: LinkedIn Sales Navigator, Apollo, Lemlist, Hunter en maatwerk integraties.",
+    tools: "Wij werken met uw bestaande tools en bouwen maatwerk integraties voor lead generatie en prospecting.",
   },
   {
     icon: Brain,
     title: "AI-gedreven Automatisering",
-    description: "Kunstmatige intelligentie geïntegreerd in uw dagelijkse workflows. Van documentverwerking tot slimme beslissingen — AI als werkpaard, niet als buzzword.",
+    description: "Kunstmatige intelligentie geïntegreerd in uw dagelijkse workflows. Van documentverwerking tot slimme beslissingen — met de mogelijkheid om mensen in de loop te houden waar dat nodig is.",
     examples: [
       "AI-gestuurde documentverwerking en data-extractie",
       "Slimme e-mail classificatie en automatisch antwoorden",

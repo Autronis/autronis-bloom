@@ -35,7 +35,7 @@ const Contact = () => {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">Email *</Label>
-                      <Input id="email" type="email" placeholder="u@bedrijf.nl" required />
+                      <Input id="email" type="email" placeholder="uw@bedrijf.nl" required />
                     </div>
                   </div>
                   <div className="space-y-2">

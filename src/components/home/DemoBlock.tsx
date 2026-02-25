@@ -13,7 +13,7 @@ const DemoBlock = () => {
               Zie automatisering in actie
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              In twee minuten laten we zien hoe een volledig geautomatiseerde workflow eruitziet — van trigger tot resultaat. Geen slides, geen theorie, pure output.
+              In twee minuten laten we zien hoe een volledig geautomatiseerde workflow eruitziet — van trigger tot resultaat.
             </p>
             <Button asChild size="lg">
               <Link to="/demo">

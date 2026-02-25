@@ -16,7 +16,7 @@ const faqs = [
   },
   {
     q: "Zijn jullie gebonden aan specifieke tools?",
-    a: "Nee. Wij zijn volledig tool-agnostisch. We werken met uw bestaande stack en kiezen altijd de technologie die het beste past bij uw situatie — geen vendor lock-in.",
+    a: "Nee. Wij zijn volledig tool-agnostisch. We werken met uw bestaande stack en kiezen altijd de technologie die het beste past bij uw situatie.",
   },
   {
     q: "Is mijn data veilig?",

@@ -5,7 +5,7 @@ const steps = [
     icon: Search,
     step: "01",
     title: "Analyse",
-    description: "Wij brengen uw processen, tools en knelpunten in kaart tijdens een grondige automation scan. Geen aannames — data en observatie.",
+    description: "Wij brengen uw processen, tools en knelpunten in kaart tijdens een grondige automation scan.",
   },
   {
     icon: FileText,

@@ -1,16 +1,16 @@
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Zap, Shield, Users, Target } from "lucide-react";
+import { ArrowRight, Target, Shield, Users, Handshake } from "lucide-react";
 import { useState } from "react";
 import fotoSyb from "@/assets/foto_syb.jpg";
 import fotoSem from "@/assets/foto_sem.jpg";
 
 const values = [
   { icon: Target, title: "Resultaatgericht", description: "We meten succes in besparde uren, minder fouten en snellere processen — niet in opgeleverde features." },
-  { icon: Zap, title: "Engineering-first", description: "Elke automatisering is gebouwd op solide architectuur, goed gedocumenteerd en schaalbaar." },
-  { icon: Shield, title: "Transparant", description: "Geen verborgen kosten, geen black boxes. U begrijpt wat we bouwen en waarom." },
-  { icon: Users, title: "Partnership", description: "Wij zijn geen leverancier maar uw automation partner. Uw succes is ons succes." },
+  { icon: Shield, title: "Transparant", description: "Geen verborgen kosten, geen black boxes. U begrijpt wat we bouwen en waarom. Alles is gedocumenteerd en overdraagbaar." },
+  { icon: Users, title: "Persoonlijk", description: "Geen accountmanagers, geen tussenlagen. U werkt direct met de engineers die uw systemen ontwerpen en bouwen." },
+  { icon: Handshake, title: "Langetermijn partnership", description: "Wij zijn geen leverancier maar uw automation partner. Uw groei is onze groei — we denken mee, ook na oplevering." },
 ];
 
 const team = [
@@ -43,7 +43,6 @@ const TeamCard = ({ member }: { member: typeof team[0] }) => {
           alt={member.name}
           className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
         />
-        {/* Hover overlay */}
         <div
           className={`absolute inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center p-6 transition-opacity duration-300 ${
             hovered ? "opacity-100" : "opacity-0"
@@ -75,6 +74,9 @@ const About = () => {
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed mb-4">
               Autronis is opgericht met één missie: bedrijven bevrijden van repetitief handmatig werk. Wij geloven dat elk proces dat voorspelbaar is, geautomatiseerd kan worden.
+            </p>
+            <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+              Wij zijn Sem en Syb uit de Achterhoek. Geen groot bureau. Geen accountmanagers. U werkt direct met de bouwers — de mensen die uw systemen ontwerpen, bouwen en optimaliseren.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
               Ons team combineert diepgaande technische expertise met business-inzicht. We bouwen geen tools om het bouwen — we bouwen oplossingen die direct meetbaar impact leveren op uw operatie.

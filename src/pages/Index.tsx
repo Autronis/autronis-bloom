@@ -20,7 +20,7 @@ const Index = () => {
       {/* Hero */}
       <section className="relative min-h-[80vh] sm:min-h-screen flex flex-col overflow-hidden">
         <div className="container mx-auto px-4 lg:px-8 relative z-10 flex-1 flex flex-col justify-center pb-16 sm:pb-28">
-          <div className="flex flex-row items-center gap-4 sm:gap-8 lg:gap-16 w-full">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-8 lg:gap-16 w-full">
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-primary mb-4 tracking-widest uppercase">Automation & AI agency voor MKB</p>
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-4 sm:mb-6">
@@ -46,9 +46,9 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Team photo - always beside text */}
-            <div className="flex-shrink-0 self-center">
-              <div className="relative w-28 h-36 sm:w-44 sm:h-56 lg:w-64 lg:h-80 xl:w-72 xl:h-[24rem] rounded-2xl overflow-hidden">
+            {/* Team photo - hidden on mobile, visible from sm */}
+            <div className="hidden sm:flex flex-shrink-0 self-center">
+              <div className="relative w-44 h-56 lg:w-64 lg:h-80 xl:w-72 xl:h-[24rem] rounded-2xl overflow-hidden">
                 <img src={teamPhoto} alt="Autronis team" className="w-full h-full object-cover object-[center_10%]" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 dark:from-background via-transparent to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-r from-background/20 dark:from-background/40 via-transparent to-transparent" />

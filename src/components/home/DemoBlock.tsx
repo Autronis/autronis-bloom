@@ -4,7 +4,7 @@ import { Play } from "lucide-react";
 
 const DemoBlock = () => {
   return (
-    <section className="py-24 border-t border-border">
+    <section className="py-12 sm:py-24 border-t border-border">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>

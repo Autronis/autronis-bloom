@@ -29,9 +29,9 @@ const steps = [
 
 const ProcessSection = () => {
   return (
-    <section className="py-24 border-t border-border">
+    <section className="py-12 sm:py-24 border-t border-border">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
           <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Hoe we werken</p>
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
             Van analyse tot resultaat in vier stappen

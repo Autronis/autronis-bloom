@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 const FinalCTA = () => {
   return (
-    <section className="py-24 border-t border-border relative overflow-hidden">
+    <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
       {/* Butterfly silhouette background — centered behind text */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none -translate-y-8">
         <motion.svg

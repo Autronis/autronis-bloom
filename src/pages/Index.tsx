@@ -47,7 +47,7 @@ const Index = () => {
             </div>
             <div className="hidden lg:flex flex-shrink-0 self-center">
               <div className="relative w-64 h-80 xl:w-72 xl:h-[24rem] rounded-2xl overflow-hidden">
-                <img src={teamPhoto} alt="Autronis team" className="w-full h-full object-cover object-[center_15%]" />
+                <img src={teamPhoto} alt="Autronis team" className="w-full h-full object-cover object-[center_10%]" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-transparent" />
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10" />

@@ -11,7 +11,7 @@ import FinalCTA from "@/components/home/FinalCTA";
 import MetamorphosisAnimation from "@/components/home/MetamorphosisAnimation";
 
 import AnimatedCounter from "@/components/home/AnimatedCounter";
-import teamPhoto from "@/assets/autronis_team_foto.png";
+import teamPhoto from "@/assets/autronis_foto_samen.jpg";
 
 const Index = () => {
   return (

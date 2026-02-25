@@ -2,6 +2,9 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Zap, Shield, Users, Target } from "lucide-react";
+import { useState } from "react";
+import fotoSyb from "@/assets/foto_syb.jpg";
+import fotoSem from "@/assets/foto_sem.jpg";
 
 const values = [
   { icon: Target, title: "Resultaatgericht", description: "We meten succes in besparde uren, minder fouten en snellere processen — niet in opgeleverde features." },
@@ -9,6 +12,55 @@ const values = [
   { icon: Shield, title: "Transparant", description: "Geen verborgen kosten, geen black boxes. U begrijpt wat we bouwen en waarom." },
   { icon: Users, title: "Partnership", description: "Wij zijn geen leverancier maar uw automation partner. Uw succes is ons succes." },
 ];
+
+const team = [
+  {
+    name: "Syb Sprenkeler",
+    role: "Co-founder",
+    photo: fotoSyb,
+    description: "Syb heeft een scherp oog voor technische details en is de drijvende kracht achter de bouw. Hij denkt altijd een stap verder en zorgt dat elk systeem niet alleen werkt maar ook schaalbaar en toekomstbestendig is.",
+  },
+  {
+    name: "Sem Gijsberts",
+    role: "Co-founder",
+    photo: fotoSem,
+    description: "Sem bouwt mee, denkt vooruit en houdt overzicht. Van het eerste klantgesprek tot het opgeleverde systeem — hij is betrokken bij elke stap en zorgt dat niets tussen wal en schip valt.",
+  },
+];
+
+const TeamCard = ({ member }: { member: typeof team[0] }) => {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <div
+      className="relative rounded-xl border border-border bg-card overflow-hidden group cursor-pointer"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div className="aspect-[3/4] relative overflow-hidden">
+        <img
+          src={member.photo}
+          alt={member.name}
+          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+        />
+        {/* Hover overlay */}
+        <div
+          className={`absolute inset-0 bg-background/90 backdrop-blur-sm flex items-center justify-center p-6 transition-opacity duration-300 ${
+            hovered ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <p className="text-sm text-muted-foreground leading-relaxed text-center">
+            {member.description}
+          </p>
+        </div>
+      </div>
+      <div className="p-4 text-center">
+        <p className="font-semibold">{member.name}</p>
+        <p className="text-sm text-muted-foreground">{member.role}</p>
+      </div>
+    </div>
+  );
+};
 
 const About = () => {
   return (
@@ -45,16 +97,12 @@ const About = () => {
             </div>
           </div>
 
-          {/* Team placeholder */}
+          {/* Team */}
           <div className="mb-20">
             <h2 className="text-2xl font-bold mb-8">Het team</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {["Founder & CEO", "Lead Engineer", "Automation Architect", "Client Success"].map((role) => (
-                <div key={role} className="rounded-xl border border-border bg-card p-6 text-center">
-                  <div className="w-16 h-16 rounded-full bg-muted mx-auto mb-3" />
-                  <p className="text-sm font-medium">Naam</p>
-                  <p className="text-xs text-muted-foreground">{role}</p>
-                </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl">
+              {team.map((member) => (
+                <TeamCard key={member.name} member={member} />
               ))}
             </div>
           </div>

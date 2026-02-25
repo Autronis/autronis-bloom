@@ -18,7 +18,7 @@ const AnimatedCounter = ({
   className = "",
 }: AnimatedCounterProps) => {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const isInView = useInView(ref, { once: true, margin: "0px" });
   const motionValue = useMotionValue(0);
   const spring = useSpring(motionValue, {
     duration,

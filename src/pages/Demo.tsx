@@ -41,7 +41,7 @@ const Demo = () => {
             </div>
 
             <div className="mt-12">
-              <p className="text-muted-foreground mb-4">Overtuigd? Laten we kijken wat we voor ú kunnen automatiseren.</p>
+              <p className="text-muted-foreground mb-4">Overtuigd? Laten we kijken wat we voor u kunnen automatiseren.</p>
               <Button asChild size="lg">
                 <Link to="/book">Plan Automation Scan <ArrowRight size={18} /></Link>
               </Button>

@@ -1,36 +1,36 @@
 import { Link } from "react-router-dom";
-import { TrendingUp, Settings, Headphones, Calculator, BarChart3, UserPlus } from "lucide-react";
+import { TrendingUp, Settings, Headphones, Calculator, BarChart3, UserPlus, Brain } from "lucide-react";
 
 const domains = [
   {
     icon: TrendingUp,
     title: "Sales & Marketing",
-    description: "Automatiseer leadgeneratie, follow-ups en campagnebeheer. Meer deals, minder handwerk.",
+    description: "Lead scoring, follow-ups en campagnebeheer volledig geautomatiseerd. Meer deals sluiten met minder handwerk.",
   },
   {
     icon: Settings,
     title: "Operations",
-    description: "Stroomlijn workflows, goedkeuringsprocessen en interne communicatie met slimme automatisering.",
+    description: "Interne workflows, goedkeuringsprocessen en cross-team communicatie stroomlijnen met slimme automatisering.",
   },
   {
     icon: Headphones,
     title: "Klantenservice",
-    description: "AI-chatbots, ticket routing en slimme escalatie voor snellere responstijden.",
+    description: "AI-chatbots, intelligente ticket routing en SLA-monitoring voor snellere en consistentere support.",
   },
   {
     icon: Calculator,
     title: "Finance & Backoffice",
-    description: "Factuurverwerking, reconciliatie en rapportage — foutloos en op autopilot.",
+    description: "Factuurverwerking, reconciliatie en rapportage — foutloos en volledig op autopilot.",
   },
   {
     icon: BarChart3,
-    title: "Data & Rapportage",
-    description: "Real-time dashboards, geautomatiseerde rapportages en datavalidatie zonder spreadsheets.",
+    title: "Dashboards & Data",
+    description: "Real-time dashboards, geautomatiseerde rapportages en datavalidatie — zonder handmatige spreadsheets.",
   },
   {
-    icon: UserPlus,
-    title: "Onboarding",
-    description: "Klant- en medewerker-onboarding volledig geautomatiseerd met persoonlijke flows.",
+    icon: Brain,
+    title: "AI Automatisering",
+    description: "Documentverwerking, slimme e-mails, chatbots en AI-gestuurde beslissingen geïntegreerd in uw workflows.",
   },
 ];
 
@@ -41,10 +41,10 @@ const DomainsSection = () => {
         <div className="text-center max-w-2xl mx-auto mb-16">
           <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Wat we automatiseren</p>
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            Elk proces. Elke afdeling. Volledig geautomatiseerd.
+            Elke afdeling. Elk proces. <span className="text-gradient">Geautomatiseerd.</span>
           </h2>
           <p className="text-muted-foreground">
-            Van sales tot finance — wij identificeren en automatiseren de processen die uw groei remmen.
+            Wij analyseren workflows en bouwen maatwerk automatiseringen die direct impact maken op tijd, kosten en schaalbaarheid.
           </p>
         </div>
 

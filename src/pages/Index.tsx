@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Play } from "lucide-react";
 import DomainsSection from "@/components/home/DomainsSection";
 import ProcessSection from "@/components/home/ProcessSection";
+import WhyAutronisSection from "@/components/home/WhyAutronisSection";
 import CaseStudiesPreview from "@/components/home/CaseStudiesPreview";
 import DemoBlock from "@/components/home/DemoBlock";
 import FAQSection from "@/components/home/FAQSection";
@@ -18,18 +19,16 @@ const Index = () => {
     <Layout>
       {/* Hero */}
       <section className="relative min-h-screen flex flex-col overflow-hidden">
-        
-
         <div className="container mx-auto px-4 lg:px-8 relative z-10 flex-1 flex flex-col justify-center pb-32 sm:pb-28">
           <div className="flex flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-16 w-full">
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-primary mb-4 tracking-widest uppercase">Gedreven door technologie. Gebouwd voor transformatie.</p>
+              <p className="text-sm font-semibold text-primary mb-4 tracking-widest uppercase">Automation & AI agency voor MKB</p>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
                 Stop met handmatig werk.{" "}
-                <span className="text-gradient">Start met schalen.</span>
+                <span className="text-gradient">Start met schaalbare systemen.</span>
               </h1>
               <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mb-8 leading-relaxed">
-                Wij bouwen AI-gedreven automatiseringen die uw processen versnellen, fouten elimineren en uw team laten focussen op wat écht telt.
+                Wij bouwen automatiseringen en AI-systemen die processen versnellen, fouten elimineren en bedrijven laten groeien — zonder extra personeel.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button asChild size="lg">
@@ -41,7 +40,7 @@ const Index = () => {
                 <Button asChild variant="outline" size="lg">
                   <Link to="/demo">
                     <Play size={16} />
-                    Bekijk 2-min demo
+                    Bekijk demo
                   </Link>
                 </Button>
               </div>
@@ -54,7 +53,7 @@ const Index = () => {
             </div>
           </div>
 
-          {/* Metamorphosis animation - horizontal, full width below content */}
+          {/* Metamorphosis animation */}
           <div className="mt-8 w-full flex items-center justify-center opacity-[0.30] pointer-events-none">
             <MetamorphosisAnimation />
           </div>
@@ -62,10 +61,15 @@ const Index = () => {
 
         {/* Proof strip */}
         <div className="border-t border-border bg-background/80 backdrop-blur-sm mt-auto relative overflow-hidden">
-
           <div className="container mx-auto px-4 lg:px-8 py-6 sm:py-8 relative z-10">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-8">
               <div className="flex gap-6 sm:gap-10 items-center">
+                <div>
+                  <p className="text-xl sm:text-2xl font-bold text-primary">
+                    <AnimatedCounter target={50} suffix="+" />
+                  </p>
+                  <p className="text-xs text-muted-foreground">Automatiseringen gebouwd</p>
+                </div>
                 <div>
                   <p className="text-xl sm:text-2xl font-bold text-primary">
                     <AnimatedCounter target={500} suffix="+" />
@@ -74,21 +78,10 @@ const Index = () => {
                 </div>
                 <div>
                   <p className="text-xl sm:text-2xl font-bold text-primary">
-                    <AnimatedCounter target={50} suffix="+" />
-                  </p>
-                  <p className="text-xs text-muted-foreground">Automatiseringen</p>
-                </div>
-                <div>
-                  <p className="text-xl sm:text-2xl font-bold text-primary">
                     <AnimatedCounter target={98} suffix="%" />
                   </p>
                   <p className="text-xs text-muted-foreground">Klanttevredenheid</p>
                 </div>
-              </div>
-              <div className="hidden md:flex gap-6 items-center opacity-30">
-                {["Client A", "Client B", "Client C", "Client D"].map((name) => (
-                  <div key={name} className="h-6 w-20 bg-muted-foreground/20 rounded" title={name} />
-                ))}
               </div>
             </div>
           </div>
@@ -97,6 +90,7 @@ const Index = () => {
 
       <DomainsSection />
       <ProcessSection />
+      <WhyAutronisSection />
       <CaseStudiesPreview />
       <DemoBlock />
       <FAQSection />

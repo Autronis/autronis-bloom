@@ -8,15 +8,15 @@ import {
 const faqs = [
   {
     q: "Wat kost een automatiseringsproject?",
-    a: "De kosten worden bepaald na de Automation Scan, op basis van de complexiteit en doorlooptijd van uw project. Zo betaalt u alleen voor wat u nodig heeft — geen standaardpakketten.",
+    a: "De investering hangt af van de complexiteit en scope van uw project. Na de Automation Scan ontvangt u een transparante offerte — geen standaardpakketten, u betaalt alleen voor wat u nodig heeft.",
   },
   {
     q: "Hoe lang duurt een gemiddeld project?",
     a: "De meeste projecten lopen van 2 tot 8 weken, afhankelijk van de scope. Na de scan ontvangt u een realistisch tijdspad met duidelijke milestones.",
   },
   {
-    q: "Welke tools en platformen ondersteunen jullie?",
-    a: "We werken met alle gangbare platformen: CRM's (HubSpot, Salesforce), ERP-systemen, boekhoudsoftware, communicatietools en custom API's. Geen integratie is te complex.",
+    q: "Zijn jullie gebonden aan specifieke tools?",
+    a: "Nee. Wij zijn volledig tool-agnostisch. We werken met uw bestaande stack en kiezen altijd de technologie die het beste past bij uw situatie — geen vendor lock-in.",
   },
   {
     q: "Is mijn data veilig?",
@@ -24,7 +24,7 @@ const faqs = [
   },
   {
     q: "Wie is eigenaar van de gebouwde oplossing?",
-    a: "U. Alle automatiseringen, workflows en integraties die wij bouwen zijn volledig uw eigendom. Inclusief documentatie en overdracht.",
+    a: "U. Alle automatiseringen, workflows en integraties die wij bouwen zijn volledig uw eigendom. Inclusief documentatie, broncode en volledige overdracht.",
   },
   {
     q: "Wat als ik al bestaande systemen en processen heb?",
@@ -32,15 +32,11 @@ const faqs = [
   },
   {
     q: "Bieden jullie support na oplevering?",
-    a: "Ja. Na go-live monitoren we de automatiseringen en bieden we support voor optimalisatie. We laten u niet vallen na lancering.",
+    a: "Ja. Na go-live monitoren we de automatiseringen en bieden we support voor optimalisatie. We zijn uw langetermijn automation partner — niet een eenmalige leverancier.",
   },
   {
     q: "Voor welke bedrijfsgrootte is dit geschikt?",
-    a: "Onze oplossingen zijn het meest impactvol voor MKB- en midmarket-bedrijven (10–500 medewerkers) die klaar zijn om te schalen zonder evenredig meer mensen aan te nemen.",
-  },
-  {
-    q: "Kan ik eerst een demo zien voordat ik een scan plan?",
-    a: "Zeker. Bekijk onze 2-minuten demo om te zien hoe een geautomatiseerde workflow eruitziet. Daarna kunt u altijd een vrijblijvende scan inplannen.",
+    a: "Onze oplossingen zijn het meest impactvol voor MKB-bedrijven (10–500 medewerkers) die klaar zijn om te schalen zonder evenredig meer mensen aan te nemen.",
   },
 ];
 

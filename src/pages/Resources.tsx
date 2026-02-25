@@ -34,7 +34,9 @@ const Resources = () => {
           <div className="max-w-2xl mb-12">
             <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Resources</p>
             <h1 className="text-4xl sm:text-5xl font-bold mb-4">Inzichten & gidsen</h1>
-            <p className="text-lg text-muted-foreground">Praktische kennis over automatisering, AI en operationele efficiëntie.</p>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Praktische inzichten over automatisering en AI voor MKB-bedrijven. Geen vage theorie — concrete kennis die u direct kunt toepassen.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -4,26 +4,26 @@ const steps = [
   {
     icon: Search,
     step: "01",
-    title: "Audit",
-    description: "We analyseren uw huidige processen, tools en knelpunten in een grondige automation scan.",
+    title: "Analyse",
+    description: "Wij brengen uw processen, tools en knelpunten in kaart tijdens een grondige automation scan. Geen aannames — data en observatie.",
   },
   {
     icon: FileText,
     step: "02",
-    title: "Blauwdruk",
-    description: "U ontvangt een helder plan met prioriteiten, verwachte impact en een realistisch tijdspad.",
+    title: "Blueprint",
+    description: "U ontvangt een helder automatiseringsplan met prioriteiten, verwachte ROI en een realistisch tijdspad.",
   },
   {
     icon: Wrench,
     step: "03",
     title: "Bouw & Integratie",
-    description: "We bouwen de automatiseringen en integreren ze naadloos met uw bestaande systemen.",
+    description: "Wij bouwen de automatiseringen en integreren ze naadloos met uw bestaande systemen. Geen verstoringen, geen downtime.",
   },
   {
     icon: Rocket,
     step: "04",
     title: "Lancering & Optimalisatie",
-    description: "Go-live met monitoring, continue optimalisatie en support zodat alles blijft draaien.",
+    description: "Go-live met monitoring, continue optimalisatie en directe support. Wij laten u niet vallen na oplevering.",
   },
 ];
 
@@ -32,17 +32,16 @@ const ProcessSection = () => {
     <section className="py-24 border-t border-border">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Hoe het werkt</p>
+          <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Hoe we werken</p>
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
             Van analyse tot resultaat in vier stappen
           </h2>
           <p className="text-muted-foreground">
-            Een bewezen aanpak die complexiteit omzet in werkende automatisering.
+            Een bewezen aanpak die complexiteit omzet in werkende, schaalbare automatisering.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
-          {/* Connector line (desktop) */}
           <div className="hidden md:block absolute top-14 left-[12.5%] right-[12.5%] h-px bg-border">
             <div className="absolute inset-0 circuit-line animate-data-pulse" />
           </div>

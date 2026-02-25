@@ -45,11 +45,11 @@ const TeamCard = ({ member }: { member: typeof team[0] }) => {
         />
         {/* Hover overlay */}
         <div
-          className={`absolute inset-0 bg-background/90 backdrop-blur-sm flex items-center justify-center p-6 transition-opacity duration-300 ${
+          className={`absolute inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center p-6 transition-opacity duration-300 ${
             hovered ? "opacity-100" : "opacity-0"
           }`}
         >
-          <p className="text-sm text-muted-foreground leading-relaxed text-center">
+          <p className="text-sm text-white leading-relaxed text-center">
             {member.description}
           </p>
         </div>

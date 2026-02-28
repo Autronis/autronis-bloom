@@ -1,55 +1,106 @@
 
 
-## Metamorphose-animatie: Horizontale reis met lichtspoor
+## Autronis Website Restructure — Implementation Plan
 
-### Concept
+This is a comprehensive redesign shifting positioning from "AI agency" to "system architecture & automation partner." The plan covers all 11 sections from the prompt.
 
-De animatie wordt een **horizontale reis van links naar rechts** over de volle breedte van de container. De rups begint links, kruipt naar het midden waar hij een cocon vormt, en de vlinder verschijnt en vliegt naar rechts. Een subtiel **lichtspoor** volgt elke fase.
+---
 
-De hele cyclus speelt als een doorlopende lineaire reis, niet als 3 losse stages die in- en uitfaden.
-
-### Visueel verloop
+### Technical Architecture
 
 ```text
-Links                    Midden                   Rechts
-  [rups kruipt -->]   [cocon pulseert]   [vlinder vliegt -->]
-  ~~~trail~~~          ....glow....        ***sparkles***
+PAGES (new/modified):
+  /              → Index.tsx (full rewrite of sections)
+  /services      → Services.tsx (restructured into 4 categories + tool stack)
+  /process       → Process.tsx (NEW — full process page)
+  /team          → Team.tsx (NEW — dedicated team page)
+  /about         → About.tsx (updated)
+
+COMPONENTS (new/modified/deleted):
+  DELETE: MetamorphosisAnimation.tsx, AuroraBackground.tsx
+  NEW:   HeroBackground.tsx (flowing wave canvas/SVG animation)
+         ProblemSolutionSection.tsx
+         StatisticsBlock.tsx (replaces proof strip)
+         ServicePillars.tsx (3 pillars for home)
+         TeamBlock.tsx (full-width founders section)
+         SecurityBlock.tsx
+         ToolStackBlock.tsx
+  MODIFY: ProcessSection.tsx (5 phases + hover glow)
+          WhyAutronisSection.tsx (4 new pillars)
+          FinalCTA.tsx (remove butterfly SVG)
+          Navbar.tsx (add Process + Team links)
+          Footer.tsx (update copy + links)
 ```
 
-1. **Fase 1 (0-4s)**: Rups verschijnt links, kruipt naar het midden met golvende segmenten. Achter hem blijft een subtiel teal lichtspoor dat langzaam vervaagt.
-2. **Fase 2 (4-7s)**: Rups krimpt samen tot een cocon in het midden. Het lichtspoor dooft uit. De cocon pulseert zachtjes.
-3. **Fase 3 (7-12s)**: Cocon breekt open, vlinder ontvouwt vleugels en vliegt naar rechts. Achter de vlinder dwarrelen kleine lichtdeeltjes (2-3 kleine cirkels die uitfaden).
-4. **Reset (12s)**: Alles fade out, cyclus herstart.
+---
 
-### Technische details
+### Implementation Steps
 
-**Bestand:** `src/components/home/MetamorphosisAnimation.tsx` (volledig herschrijven)
+**Step 1 — Hero Background Animation**
+Create `src/components/home/HeroBackground.tsx`: a full-screen absolute-positioned SVG/canvas animation with slow-moving flowing light waves on a deep black base. Uses framer-motion for smooth sine-wave paths with turquoise (#23C6B7) glow accents. Stays behind content with `z-0`. No particles, no grids. Architectural, systemic feel inspired by image-13.
 
-**Aanpak:**
-- Gebruik `framer-motion` `useAnimationControls()` om de fases sequentieel te sturen in plaats van `setInterval`
-- De SVG viewBox wordt breed (bijv. `0 0 800 120`) om de volle horizontale ruimte te benutten
-- Container: `w-full max-w-4xl h-32` (breder dan nu)
+**Step 2 — Rewrite Hero Section (Index.tsx)**
+- Remove team photo, MetamorphosisAnimation import, AnimatedCounter import
+- Centered layout with strong typographic hierarchy
+- New headline, subtext, single CTA "Plan een Automation Scan"
+- HeroBackground behind content
+- Dark background base
 
-**Rups:**
-- 6 segmenten die als groep `translateX` animeren van `x: 0` naar `x: 300`
-- Golvende `cy` animatie per segment (wave-effect)
-- Trail: 4-5 kleine cirkels achter de rups met `opacity` die afneemt van 0.3 naar 0
+**Step 3 — Statistics Block**
+Replace proof strip with new `StatisticsBlock.tsx`: 3-column dark cards with subtle turquoise glow border. Metrics: "50+" workflows, "500+" uur, "Groeiende MKB-bedrijven". Uses AnimatedCounter for the numeric ones. Premium card design inspired by image-11.
 
-**Cocon:**
-- Rups-segmenten morphen samen tot 1 ellips op `cx: 400` (midden)
-- Zachte `scale` en `opacity` puls
-- Subtiele glow ring eromheen
+**Step 4 — Problem → Solution Section**
+New `ProblemSolutionSection.tsx` with two halves:
+- PROBLEEM: label, headline, body, 3 structured card blocks (Gefragmenteerde systemen, Handmatige afhankelijkheid, Gebrek aan realtime inzicht)
+- OPLOSSING: label, headline, body, 3 pillar cards (Process Automation, System Integrations, Data & Reporting)
+- CTA with microcopy (30 min intake / Concrete optimalisaties / Inzicht in verwachte impact)
+- Dark subtle gradient background, no heavy animation
 
-**Vlinder:**
-- Verschijnt uit cocon op `cx: 400`, vleugels ontvouwen (scale van 0 naar 1)
-- Vlinder beweegt naar `x: 700` (rechts)
-- Vleugels klappen zachtjes (path morph, zoals nu)
-- Sparkle trail: 3 kleine cirkels die achterblijven en uitfaden met `scale` + `opacity` animatie
+**Step 5 — Services Pillars on Home**
+Replace `DomainsSection.tsx` with `ServicePillars.tsx`: only 3 strategic pillars (Process Automation, System Integrations, Data & Reporting). Short descriptions. CTA: "Bekijk onze services →"
 
-**Timing:**
-- Totale cyclus: ~12 seconden (rustig tempo)
-- Overgang tussen fases is vloeiend, geen harde cuts
+**Step 6 — Process Section (Home version)**
+Rewrite `ProcessSection.tsx`: label "AANPAK", 5 phases (Analyse & Prioritering, Architectuur & Blueprint, Bouw & Integratie, Validatie & Overdracht, Monitoring & Optimalisatie). Hover: subtle turquoise glow/flood effect on each phase card. Security line underneath. CTA: "Bekijk ons volledige proces →"
 
-**Geen wijzigingen aan:**
-- `src/pages/Index.tsx` (container en opacity blijven hetzelfde)
-- Andere bestanden
+**Step 7 — Why Autronis**
+Rewrite `WhyAutronisSection.tsx` with 4 new pillars: Architectuur vóór automatisering, Meetbare impact, Direct met de bouwers, Eigendom & controle. Mature tone, no fluff headlines.
+
+**Step 8 — Team Block on Home**
+New `TeamBlock.tsx`: full-width section using the existing team photo. Headline "Werk met de mensen die het bouwen." Body text. Primary CTA "Plan een kennismaking", secondary link "Bekijk ons team →"
+
+**Step 9 — Security Block**
+New `SecurityBlock.tsx`: 5 items (minimale toegangsrechten, logging & monitoring, AVG-proof aanpak, geen vendor lock-in, documentatie & overdracht). Enterprise confidence tone. Minimal design with icon list.
+
+**Step 10 — FinalCTA Update**
+Remove butterfly SVG animation. Update copy to match new positioning. Keep clean CTA.
+
+**Step 11 — Index.tsx Assembly**
+New section order: Hero → Statistics → Problem/Solution → Service Pillars → Process → Why Autronis → Team Block → Case Studies → Security → FAQ → Final CTA. Remove DemoBlock from homepage.
+
+**Step 12 — Services Page Restructure**
+- New hero copy as specified
+- Add `ToolStackBlock.tsx` after hero (title, sub, API line)
+- Restructure 14 services into 4 categories: Revenue & Sales, Operations & Workflow, Finance & Reporting, Customer & Service
+- Professional grouped layout
+
+**Step 13 — New Process Page (`/process`)**
+Full standalone process page with label "AANPAK", all 5 phases with deliverables expanded. CTA at bottom.
+
+**Step 14 — New Team Page (`/team`)**
+Dedicated team page with founder cards (reuse existing photos), descriptions, and CTA.
+
+**Step 15 — Routing & Navigation Updates**
+- `App.tsx`: add routes for `/process` and `/team`
+- `Navbar.tsx`: update nav links (add "Ons Proces", replace "Over Ons" with dropdown or separate "Team" link, remove "Demo" from main nav)
+- `Footer.tsx`: update copy from "AI-gedreven automatiseringen" to system partner language, update links
+
+**Step 16 — Theme & Styling**
+- Ensure dark mode is default and looks premium
+- Update `FinalCTA` background
+- Remove MetamorphosisAnimation.tsx file
+- Remove AuroraBackground.tsx file
+- Clean up unused animation CSS variables (anim-wing, anim-wing-soft, anim-body)
+
+**Step 17 — Mobile Responsiveness**
+All new components built mobile-first. Statistics cards stack vertically. Problem/Solution cards stack. Process phases become vertical timeline on mobile. Team block adjusts image sizing.
+

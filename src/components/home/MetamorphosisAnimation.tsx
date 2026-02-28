@@ -5,6 +5,16 @@ const VIEW_WIDTH = 1200;
 const VIEW_HEIGHT = 180;
 const CENTER_X = VIEW_WIDTH / 2;
 
+const useIsMobile = () => {
+  const [mobile, setMobile] = useState(window.innerWidth < 640);
+  useEffect(() => {
+    const handler = () => setMobile(window.innerWidth < 640);
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
+  return mobile;
+};
+
 const PRIMARY = "hsl(var(--primary))";
 const PRIMARY_SOFT = "hsl(var(--primary) / 0.55)";
 const PRIMARY_FAINT = "hsl(var(--primary) / 0.22)";
@@ -192,30 +202,36 @@ const Butterfly = () => (
 
 const MetamorphosisAnimation = () => {
   const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile();
 
   const caterpillarControls = useAnimationControls();
   const cocoonControls = useAnimationControls();
   const butterflyControls = useAnimationControls();
   const [phase, setPhase] = useState<0 | 1 | 2>(0);
 
+  const mobileVW = 500;
+  const mobileCenter = mobileVW / 2;
+  const cx = isMobile ? mobileCenter : CENTER_X;
+  const vw = isMobile ? mobileVW : VIEW_WIDTH;
+
   const runCycle = useCallback(async () => {
-    caterpillarControls.set({ x: -230, y: 112, opacity: 1, scaleX: 1, scaleY: 1 });
-    cocoonControls.set({ x: CENTER_X, y: 102, opacity: 0, scaleX: 0.4, scaleY: 0.4 });
-    butterflyControls.set({ x: CENTER_X, y: 102, opacity: 0, scale: 0.1, rotate: -4 });
+    caterpillarControls.set({ x: isMobile ? -80 : -230, y: 112, opacity: 1, scaleX: 1, scaleY: 1 });
+    cocoonControls.set({ x: cx, y: 102, opacity: 0, scaleX: 0.4, scaleY: 0.4 });
+    butterflyControls.set({ x: cx, y: 102, opacity: 0, scale: 0.1, rotate: -4 });
     setPhase(0);
 
     // 1) Rups kruipt van links naar midden
     await caterpillarControls.start({
-      x: CENTER_X - 22,
+      x: cx - 22,
       y: 112,
-      transition: { duration: 4.2, ease: "linear" },
+      transition: { duration: isMobile ? 2.5 : 4.2, ease: "linear" },
     });
 
     // 2) Rups trekt samen terwijl cocon vormt
     setPhase(1);
     await Promise.all([
       caterpillarControls.start({
-        x: CENTER_X,
+        x: cx,
         y: 104,
         scaleX: 0.18,
         scaleY: 1.28,
@@ -247,30 +263,29 @@ const MetamorphosisAnimation = () => {
       y: 90,
       transition: { duration: 0.8, ease: "easeOut" },
     });
-    // Ensure cocoon is fully gone
     cocoonControls.set({ opacity: 0 });
     caterpillarControls.set({ opacity: 0 });
 
     await butterflyControls.start({
-      x: VIEW_WIDTH + 260,
+      x: vw + 120,
       y: -18,
       scale: 0.72,
       rotate: 10,
       opacity: 0,
       transition: {
-        duration: 3.2,
+        duration: isMobile ? 2 : 3.2,
         ease: [0.25, 0.1, 0.8, 1],
       },
     });
 
     await new Promise((resolve) => setTimeout(resolve, 700));
-  }, [butterflyControls, caterpillarControls, cocoonControls]);
+  }, [butterflyControls, caterpillarControls, cocoonControls, isMobile, cx, vw]);
 
   useEffect(() => {
     if (prefersReducedMotion) {
-      caterpillarControls.set({ x: CENTER_X - 200, y: 112, opacity: 0.35 });
-      cocoonControls.set({ x: CENTER_X, y: 102, opacity: 0.5, scaleX: 1, scaleY: 1 });
-      butterflyControls.set({ x: CENTER_X + 180, y: 84, opacity: 0.35, scale: 0.9 });
+      caterpillarControls.set({ x: cx - 200, y: 112, opacity: 0.35 });
+      cocoonControls.set({ x: cx, y: 102, opacity: 0.5, scaleX: 1, scaleY: 1 });
+      butterflyControls.set({ x: cx + 180, y: 84, opacity: 0.35, scale: 0.9 });
       return;
     }
 
@@ -285,13 +300,13 @@ const MetamorphosisAnimation = () => {
     return () => {
       cancelled = true;
     };
-  }, [butterflyControls, caterpillarControls, cocoonControls, prefersReducedMotion, runCycle]);
+  }, [butterflyControls, caterpillarControls, cocoonControls, prefersReducedMotion, runCycle, cx]);
 
   const labels = ["Analyse", "Ontwikkeling", "Transformatie"];
 
   return (
     <div className="relative w-full h-28 sm:h-40 overflow-hidden">
-      <svg viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`} className="w-full h-full" preserveAspectRatio="none" overflow="hidden" style={{ overflow: "hidden" }}>
+      <svg viewBox={`0 0 ${vw} ${VIEW_HEIGHT}`} className="w-full h-full" preserveAspectRatio="xMidYMid meet" overflow="hidden" style={{ overflow: "hidden" }}>
         <motion.g animate={caterpillarControls}>
           <Caterpillar />
         </motion.g>

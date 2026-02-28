@@ -15,6 +15,8 @@ import About from "./pages/About";
 import Resources from "./pages/Resources";
 import ResourceDetail from "./pages/ResourceDetail";
 import Contact from "./pages/Contact";
+import Process from "./pages/Process";
+import Team from "./pages/Team";
 import Privacy from "./pages/Privacy";
 import Cookies from "./pages/Cookies";
 import NotFound from "./pages/NotFound";
@@ -37,6 +39,8 @@ const App = () => (
             <Route path="/demo" element={<Demo />} />
             <Route path="/book" element={<Book />} />
             <Route path="/about" element={<About />} />
+            <Route path="/process" element={<Process />} />
+            <Route path="/team" element={<Team />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/resources/:slug" element={<ResourceDetail />} />
             <Route path="/contact" element={<Contact />} />

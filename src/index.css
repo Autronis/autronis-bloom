@@ -48,9 +48,6 @@
     --accent-light: 174 64% 44%;
     --accent-dark: 174 78% 25%;
 
-    --anim-wing: 174 80% 22%;
-    --anim-wing-soft: 174 65% 30%;
-    --anim-body: 210 25% 18%;
   }
 
   .dark {
@@ -96,9 +93,6 @@
     --accent-light: 174 64% 56%;
     --accent-dark: 174 78% 30%;
 
-    --anim-wing: 174 78% 55%;
-    --anim-wing-soft: 174 64% 45%;
-    --anim-body: 220 15% 20%;
   }
 }
 

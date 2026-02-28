@@ -8,9 +8,9 @@ import { useTheme } from "next-themes";
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
+  { label: "Ons Proces", href: "/process" },
   { label: "Case Studies", href: "/case-studies" },
-  { label: "Demo", href: "/demo" },
-  { label: "Over Ons", href: "/about" },
+  { label: "Team", href: "/team" },
   { label: "Resources", href: "/resources" },
   { label: "Contact", href: "/contact" },
 ];
@@ -40,15 +40,11 @@ const Navbar = () => {
       }`}
     >
       <nav className="container mx-auto flex items-center justify-between h-16 px-4 lg:px-8">
-        {/* Logo */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
           <img src="/logo.png" alt="Autronis" className="h-9 w-auto" />
-          <span className="text-lg font-bold tracking-tight">
-            Autronis
-          </span>
+          <span className="text-lg font-bold tracking-tight">Autronis</span>
         </Link>
 
-        {/* Desktop nav */}
         <div className="hidden lg:flex items-center gap-1">
           {navLinks.map((link) => (
             <Link
@@ -65,9 +61,7 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* Right section */}
         <div className="flex items-center gap-3">
-          {/* Theme toggle */}
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
@@ -76,22 +70,15 @@ const Navbar = () => {
             {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
-          {/* Language switcher */}
           <div className="hidden md:flex items-center gap-1 text-xs text-muted-foreground">
-            <button className="px-2 py-1 rounded bg-primary/10 text-primary font-semibold">
-              NL
-            </button>
-            <button className="px-2 py-1 rounded hover:bg-muted transition-colors opacity-50 cursor-not-allowed" title="Binnenkort beschikbaar">
-              EN
-            </button>
+            <button className="px-2 py-1 rounded bg-primary/10 text-primary font-semibold">NL</button>
+            <button className="px-2 py-1 rounded hover:bg-muted transition-colors opacity-50 cursor-not-allowed" title="Binnenkort beschikbaar">EN</button>
           </div>
 
-          {/* CTA */}
           <Button asChild size="sm" className="hidden sm:inline-flex">
             <Link to="/book">Plan Automation Scan</Link>
           </Button>
 
-          {/* Mobile toggle */}
           <button
             className="lg:hidden p-2 text-foreground"
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -102,7 +89,6 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -126,12 +112,8 @@ const Navbar = () => {
                 </Link>
               ))}
               <div className="flex items-center gap-2 px-4 py-2">
-                <button className="px-2 py-1 rounded bg-primary/10 text-primary text-xs font-semibold">
-                  NL
-                </button>
-                <button className="px-2 py-1 rounded text-xs text-muted-foreground opacity-50 cursor-not-allowed">
-                  EN
-                </button>
+                <button className="px-2 py-1 rounded bg-primary/10 text-primary text-xs font-semibold">NL</button>
+                <button className="px-2 py-1 rounded text-xs text-muted-foreground opacity-50 cursor-not-allowed">EN</button>
               </div>
               <Button asChild size="lg" className="mt-2">
                 <Link to="/book">Plan Automation Scan</Link>

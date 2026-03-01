@@ -21,15 +21,14 @@ const HeroBackground = () => {
     let time = 0;
     const lineCount = 10;
 
-    // Fewer, subtler dots
     const dots: GlowDot[] = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 8; i++) {
       dots.push({
         lineIndex: Math.floor(Math.random() * lineCount),
         t: Math.random(),
         speed: 0.0002 + Math.random() * 0.0004,
         radius: 1.5 + Math.random() * 2,
-        opacity: 0.15 + Math.random() * 0.2,
+        opacity: 0.12 + Math.random() * 0.15,
       });
     }
 
@@ -46,11 +45,12 @@ const HeroBackground = () => {
     window.addEventListener("resize", resize);
 
     const getWaveY = (x: number, lineIdx: number, h: number) => {
+      // Lines packed into a tighter vertical band (30%-70% of height)
       const t_pos = (lineIdx + 1) / (lineCount + 1);
-      const yBase = h * (0.12 + t_pos * 0.76);
+      const yBase = h * (0.3 + t_pos * 0.4);
       const freq = 0.0018 + (lineIdx % 3) * 0.0008;
       const speed = 0.12 + (lineIdx % 4) * 0.04;
-      const amp = 12 + Math.sin(lineIdx * 1.1) * 8;
+      const amp = 10 + Math.sin(lineIdx * 1.1) * 6;
       return (
         yBase +
         Math.sin(x * freq + time * speed) * amp +
@@ -72,12 +72,10 @@ const HeroBackground = () => {
 
       ctx.clearRect(0, 0, w, h);
 
-      // Ambient glow spots
       drawGlow(w * 0.2, h * 0.4, 300, 0.03 + Math.sin(time * 0.3) * 0.01);
       drawGlow(w * 0.8, h * 0.6, 250, 0.025 + Math.sin(time * 0.4 + 1) * 0.01);
       drawGlow(w * 0.5, h * 0.3, 350, 0.02 + Math.sin(time * 0.2 + 2) * 0.01);
 
-      // Draw wave lines
       for (let i = 0; i < lineCount; i++) {
         const opacity = i % 2 === 0 ? 0.1 : 0.05;
         const lineWidth = i % 3 === 0 ? 1 : 0.5;
@@ -94,7 +92,6 @@ const HeroBackground = () => {
         ctx.stroke();
       }
 
-      // Draw subtle glow dots
       for (const dot of dots) {
         dot.t += dot.speed;
         if (dot.t > 1) dot.t -= 1;
@@ -102,15 +99,13 @@ const HeroBackground = () => {
         const xPos = dot.t * w;
         const yPos = getWaveY(xPos, dot.lineIndex, h);
 
-        // Soft glow
         const dotGrad = ctx.createRadialGradient(xPos, yPos, 0, xPos, yPos, dot.radius * 5);
-        dotGrad.addColorStop(0, `hsla(174, 78%, 55%, ${dot.opacity * 0.35})`);
-        dotGrad.addColorStop(0.5, `hsla(174, 78%, 45%, ${dot.opacity * 0.1})`);
+        dotGrad.addColorStop(0, `hsla(174, 78%, 55%, ${dot.opacity * 0.3})`);
+        dotGrad.addColorStop(0.5, `hsla(174, 78%, 45%, ${dot.opacity * 0.08})`);
         dotGrad.addColorStop(1, "hsla(174, 78%, 41%, 0)");
         ctx.fillStyle = dotGrad;
         ctx.fillRect(xPos - dot.radius * 5, yPos - dot.radius * 5, dot.radius * 10, dot.radius * 10);
 
-        // Dot center
         ctx.beginPath();
         ctx.arc(xPos, yPos, dot.radius, 0, Math.PI * 2);
         ctx.fillStyle = `hsla(174, 78%, 60%, ${dot.opacity})`;

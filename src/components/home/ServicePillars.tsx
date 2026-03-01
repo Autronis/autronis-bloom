@@ -1,29 +1,49 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Cog, Link2, PieChart } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
+import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import GlowCard from "@/components/GlowCard";
 
-const pillars = [
+const services = [
   {
-    icon: Cog,
     title: "Process Automation",
-    description:
-      "Terugkerende processen worden geautomatiseerd zodat uw team zich focust op werk dat er toe doet. Van goedkeuringsflows tot volledige order pipelines.",
+    intro: "Terugkerende processen worden geautomatiseerd zodat uw team zich focust op werk dat ertoe doet.",
+    bullets: [
+      "Goedkeuringsflows en notificaties",
+      "Order- en facturatiepipelines",
+      "Onboarding- en offboardingprocessen",
+      "Taakroutering en escalaties",
+    ],
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop",
   },
   {
-    icon: Link2,
     title: "System Integrations",
-    description:
-      "Uw CRM, boekhouding, operations en maatwerksystemen gekoppeld via API's. Data stroomt automatisch en consistent — zonder handmatige tussenstappen.",
+    intro: "Uw CRM, boekhouding, operations en maatwerksystemen gekoppeld via API's.",
+    bullets: [
+      "Bi-directionele datasynchronisatie",
+      "API-koppelingen met CRM, ERP en finance",
+      "Webhook-gebaseerde event triggers",
+      "Foutafhandeling en retry-logica",
+    ],
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop",
   },
   {
-    icon: PieChart,
     title: "Data & Reporting",
-    description:
-      "Realtime dashboards en geautomatiseerde rapportages. Altijd actueel inzicht in prestaties, knelpunten en kansen — zonder handmatig werk.",
+    intro: "Realtime dashboards en geautomatiseerde rapportages — altijd actueel inzicht.",
+    bullets: [
+      "Geconsolideerde data uit meerdere bronnen",
+      "Realtime KPI-dashboards",
+      "Geautomatiseerde wekelijkse rapportages",
+      "Anomaly detection en alerts",
+    ],
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
   },
 ];
 
 const ServicePillars = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   return (
     <section className="py-12 sm:py-24 border-t border-border">
       <div className="container mx-auto px-4 lg:px-8">
@@ -42,30 +62,68 @@ const ServicePillars = () => {
           </ScrollRevealItem>
         </ScrollReveal>
 
-        <ScrollReveal className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
-          {pillars.map((p) => (
-            <ScrollRevealItem key={p.title}>
-              <div className="rounded-xl border border-border bg-card p-6 sm:p-8 transition-all duration-300 hover:border-primary/30 hover:shadow-[0_0_30px_hsl(174_78%_41%/0.08)]">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
-                  <p.icon size={20} />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">{p.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {p.description}
-                </p>
-              </div>
-            </ScrollRevealItem>
-          ))}
-        </ScrollReveal>
+        <div className="space-y-8 sm:space-y-12 mb-12">
+          {services.map((s, i) => {
+            const isEven = i % 2 === 0;
+            return (
+              <ScrollReveal key={s.title}>
+                <ScrollRevealItem>
+                  <GlowCard
+                    className="rounded-xl border border-border bg-card"
+                    isAnyHovered={hoveredIndex !== null}
+                    isHovered={hoveredIndex === i}
+                    onHover={() => setHoveredIndex(i)}
+                    onLeave={() => setHoveredIndex(null)}
+                  >
+                    <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-6 sm:gap-8`}>
+                      {/* Text */}
+                      <div className="flex-1 p-6 sm:p-8 flex flex-col justify-center">
+                        <h3 className="text-xl sm:text-2xl font-bold mb-2">{s.title}</h3>
+                        <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{s.intro}</p>
+                        <ul className="space-y-2">
+                          {s.bullets.map((b) => (
+                            <li key={b} className="flex items-start gap-2 text-sm text-muted-foreground">
+                              <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
+                              {b}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      {/* Image */}
+                      <div className="flex-1 min-h-[220px] sm:min-h-[280px]">
+                        <img
+                          src={s.image}
+                          alt={s.title}
+                          className="w-full h-full object-cover rounded-b-xl md:rounded-b-none transition-transform duration-300"
+                          style={{
+                            borderTopRightRadius: isEven ? "0.75rem" : undefined,
+                            borderBottomRightRadius: isEven ? "0.75rem" : undefined,
+                            borderTopLeftRadius: !isEven ? "0.75rem" : undefined,
+                            borderBottomLeftRadius: !isEven ? "0.75rem" : undefined,
+                            transform: hoveredIndex === i ? "scale(1.02)" : "scale(1)",
+                          }}
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
+                  </GlowCard>
+                </ScrollRevealItem>
+              </ScrollReveal>
+            );
+          })}
+        </div>
 
         <ScrollReveal className="text-center">
           <ScrollRevealItem>
-            <Link
-              to="/services"
-              className="text-sm text-primary hover:underline inline-flex items-center gap-1"
-            >
-              Bekijk onze services <ArrowRight size={14} />
-            </Link>
+            <Button asChild size="lg">
+              <Link to="/services">
+                Bekijk onze services
+                <ArrowRight size={18} />
+              </Link>
+            </Button>
+            <p className="text-xs text-muted-foreground mt-3">
+              Ontdek hoe wij uw processen, systemen en data-inzichten structureel verbeteren.
+            </p>
           </ScrollRevealItem>
         </ScrollReveal>
       </div>

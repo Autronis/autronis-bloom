@@ -72,11 +72,11 @@ const StatCard = ({
           <stat.icon size={16} />
         </div>
         {stat.value !== null ? (
-          <p className="text-2xl sm:text-3xl font-bold text-primary mb-1">
+          <p className="text-xl sm:text-2xl font-bold text-primary mb-1">
             <AnimatedCounter target={stat.value} duration={850} suffix={stat.suffix} />
           </p>
         ) : (
-          <p className="text-2xl sm:text-3xl font-bold text-primary mb-1">✓</p>
+          <p className="text-xl sm:text-2xl font-bold text-primary mb-1">✓</p>
         )}
         <p className="text-xs text-muted-foreground">{stat.label}</p>
       </div>

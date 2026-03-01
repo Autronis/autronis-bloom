@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Layers, Users, BarChart3, Cog, Link2, PieChart } from "lucide-react";
 import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { useInView } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import GlowCard from "@/components/GlowCard";
 
 const problems = [
   {
@@ -62,7 +63,6 @@ const StrikeThroughText = () => {
       <span className={`transition-colors duration-300 ${isHovered ? "text-primary brightness-125" : ""}`}>
         "te weinig capaciteit"
       </span>
-      {/* SVG strikethrough overlay */}
       <svg
         className="absolute left-0 top-1/2 w-full pointer-events-none"
         style={{ height: "6px", transform: "translateY(-50%)" }}
@@ -90,6 +90,9 @@ const StrikeThroughText = () => {
 };
 
 const ProblemSolutionSection = () => {
+  const [problemHovered, setProblemHovered] = useState<number | null>(null);
+  const [solutionHovered, setSolutionHovered] = useState<number | null>(null);
+
   return (
     <section className="py-12 sm:py-24 border-t border-border">
       <div className="container mx-auto px-4 lg:px-8">
@@ -111,9 +114,15 @@ const ProblemSolutionSection = () => {
             </ScrollRevealItem>
           </ScrollReveal>
           <ScrollReveal className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {problems.map((p) => (
+            {problems.map((p, i) => (
               <ScrollRevealItem key={p.title}>
-                <div className="rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/20">
+                <GlowCard
+                  className="rounded-xl border border-border bg-card p-6"
+                  isAnyHovered={problemHovered !== null}
+                  isHovered={problemHovered === i}
+                  onHover={() => setProblemHovered(i)}
+                  onLeave={() => setProblemHovered(null)}
+                >
                   <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center text-destructive mb-4">
                     <p.icon size={20} />
                   </div>
@@ -121,7 +130,7 @@ const ProblemSolutionSection = () => {
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     {p.description}
                   </p>
-                </div>
+                </GlowCard>
               </ScrollRevealItem>
             ))}
           </ScrollReveal>
@@ -144,9 +153,15 @@ const ProblemSolutionSection = () => {
             </ScrollRevealItem>
           </ScrollReveal>
           <ScrollReveal className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
-            {solutions.map((s) => (
+            {solutions.map((s, i) => (
               <ScrollRevealItem key={s.title}>
-                <div className="rounded-xl border border-primary/20 bg-card p-6 transition-all duration-300 hover:border-primary/40 hover:shadow-[0_0_30px_hsl(174_78%_41%/0.08)]">
+                <GlowCard
+                  className="rounded-xl border border-primary/20 bg-card p-6"
+                  isAnyHovered={solutionHovered !== null}
+                  isHovered={solutionHovered === i}
+                  onHover={() => setSolutionHovered(i)}
+                  onLeave={() => setSolutionHovered(null)}
+                >
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
                     <s.icon size={20} />
                   </div>
@@ -154,12 +169,11 @@ const ProblemSolutionSection = () => {
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     {s.description}
                   </p>
-                </div>
+                </GlowCard>
               </ScrollRevealItem>
             ))}
           </ScrollReveal>
 
-          {/* CTA */}
           <ScrollReveal className="text-center">
             <ScrollRevealItem>
               <Button asChild size="lg">

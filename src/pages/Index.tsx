@@ -16,7 +16,7 @@ import SecurityBlock from "@/components/home/SecurityBlock";
 import FAQSection from "@/components/home/FAQSection";
 import FinalCTA from "@/components/home/FinalCTA";
 
-const rotatingWords = ["groei", "processen", "systemen", "organisatie", "schaalbaarheid"];
+const rotatingWords = ["groei", "processen", "systemen", "datastromen", "schaalbare groei"];
 
 const Index = () => {
   const [wordIndex, setWordIndex] = useState(0);
@@ -38,23 +38,20 @@ const Index = () => {
             <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase">
               Automation & System Architecture
             </p>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.2] tracking-tight mb-6 whitespace-nowrap">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.3] tracking-tight mb-6">
               Breng structuur in je{" "}
-              <span className="inline-block relative align-baseline" style={{ minWidth: "2.5em", verticalAlign: "baseline" }}>
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={wordIndex}
-                    initial={{ opacity: 0, y: 14 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -14 }}
-                    transition={{ duration: 0.45, ease: "easeOut" }}
-                    className="inline-block text-primary"
-                  >
-                    {rotatingWords[wordIndex]}
-                  </motion.span>
-                </AnimatePresence>
-              </span>
-              .
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={wordIndex}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -14 }}
+                  transition={{ duration: 0.45, ease: "easeOut" }}
+                  className="inline-block text-primary"
+                >
+                  {rotatingWords[wordIndex]}.
+                </motion.span>
+              </AnimatePresence>
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
               Wij transformeren processen tot slimme systemen die schaalbaar en beheersbaar blijven.

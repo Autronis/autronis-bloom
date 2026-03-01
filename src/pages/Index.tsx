@@ -38,15 +38,15 @@ const Index = () => {
             <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase">
               Automation & System Architecture
             </p>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.2] tracking-tight mb-6 whitespace-nowrap">
               Breng structuur in je{" "}
-              <span className="inline-block relative align-bottom overflow-hidden" style={{ minWidth: "3ch" }}>
+              <span className="inline-block relative align-baseline" style={{ minWidth: "2.5em", verticalAlign: "baseline" }}>
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={wordIndex}
-                    initial={{ opacity: 0, y: 16 }}
+                    initial={{ opacity: 0, y: 14 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -16 }}
+                    exit={{ opacity: 0, y: -14 }}
                     transition={{ duration: 0.45, ease: "easeOut" }}
                     className="inline-block text-primary"
                   >

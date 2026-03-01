@@ -4,9 +4,9 @@ import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import GlowCard from "@/components/GlowCard";
-import serviceAutomation from "@/assets/service_automation.png";
-import serviceIntegration from "@/assets/service_integration.png";
-import serviceData from "@/assets/service_data.png";
+import serviceAutomation from "@/assets/service_automation_gen.png";
+import serviceIntegration from "@/assets/service_integration_gen.png";
+import serviceData from "@/assets/service_data_gen.png";
 
 const services = [
   {

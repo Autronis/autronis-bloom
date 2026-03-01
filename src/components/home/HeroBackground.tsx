@@ -47,7 +47,7 @@ const HeroBackground = () => {
     const getWaveY = (x: number, lineIdx: number, h: number) => {
       const t_pos = (lineIdx + 1) / (lineCount + 1);
       // Spread lines across 32% of viewport height (34% to 66%)
-      const yBase = h * (0.34 + t_pos * 0.32);
+      const yBase = h * (0.28 + t_pos * 0.44);
       const freq = 0.0018 + (lineIdx % 3) * 0.0008;
       const speed = 0.12 + (lineIdx % 4) * 0.04;
       const amp = 10 + Math.sin(lineIdx * 1.1) * 6;

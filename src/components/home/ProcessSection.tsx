@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { ArrowRight, ShieldCheck, Search, PenTool, Wrench, CheckCircle, BarChart3 } from "lucide-react";
 import { useState, useRef, useCallback, useEffect } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
@@ -121,13 +122,13 @@ const ProcessSection = () => {
       const progress = Math.max(0, Math.min(1, (viewportH - rect.top) / (sectionHeight + viewportH * 0.5)));
       setScrollProgress(progress);
 
-      // Determine active card based on which is 40-60% in viewport
+      // Determine active card: compute how far each card's center is through the viewport
       let newActive = 0;
       cardRefs.current.forEach((ref, i) => {
         if (!ref) return;
         const cardRect = ref.getBoundingClientRect();
         const cardCenter = cardRect.top + cardRect.height / 2;
-        if (cardCenter < viewportH * 0.6 && cardCenter > viewportH * 0.2) {
+        if (cardCenter < viewportH * 0.65) {
           newActive = i;
         }
       });
@@ -216,12 +217,15 @@ const ProcessSection = () => {
 
         <ScrollReveal className="text-center">
           <ScrollRevealItem>
-            <Link
-              to="/process"
-              className="text-sm text-primary hover:underline inline-flex items-center gap-1"
-            >
-              Bekijk ons volledige proces <ArrowRight size={14} />
-            </Link>
+            <Button asChild size="lg">
+              <Link to="/process">
+                Bekijk ons volledige proces
+                <ArrowRight size={18} />
+              </Link>
+            </Button>
+            <p className="text-xs text-muted-foreground mt-3">
+              Onze bewezen methodiek van analyse tot continue optimalisatie.
+            </p>
           </ScrollRevealItem>
         </ScrollReveal>
       </div>

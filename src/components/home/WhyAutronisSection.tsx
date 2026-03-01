@@ -87,8 +87,42 @@ const WhyAutronisSection = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section className="py-12 sm:py-24 border-t border-border">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
+      {/* Grid background with more activity */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `
+            linear-gradient(hsl(174 78% 30% / 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, hsl(174 78% 30% / 0.05) 1px, transparent 1px)
+          `,
+          backgroundSize: "50px 50px",
+        }}
+      />
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {[
+          { x: "12%", y: "18%" },
+          { x: "82%", y: "30%" },
+          { x: "45%", y: "72%" },
+          { x: "68%", y: "12%" },
+          { x: "28%", y: "58%" },
+          { x: "90%", y: "65%" },
+          { x: "55%", y: "88%" },
+        ].map((pos, i) => (
+          <div
+            key={i}
+            className="absolute w-1.5 h-1.5 rounded-full bg-primary/15 animate-pulse"
+            style={{
+              left: pos.x,
+              top: pos.y,
+              animationDelay: `${i * 0.4}s`,
+              animationDuration: "3s",
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <ScrollReveal className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
           <ScrollRevealItem>
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Cog, Link2, PieChart } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import GlowCard from "@/components/GlowCard";
@@ -10,6 +10,7 @@ import serviceData from "@/assets/service_data_gen.png";
 
 const services = [
   {
+    icon: Cog,
     title: "Process Automation",
     intro: "Terugkerende processen worden geautomatiseerd zodat uw team zich focust op werk dat ertoe doet.",
     bullets: [
@@ -21,6 +22,7 @@ const services = [
     image: serviceAutomation,
   },
   {
+    icon: Link2,
     title: "System Integrations",
     intro: "Uw CRM, boekhouding, operations en maatwerksystemen gekoppeld via API's.",
     bullets: [
@@ -32,6 +34,7 @@ const services = [
     image: serviceIntegration,
   },
   {
+    icon: PieChart,
     title: "Data & Reporting",
     intro: "Realtime dashboards en geautomatiseerde rapportages — altijd actueel inzicht.",
     bullets: [
@@ -81,7 +84,12 @@ const ServicePillars = () => {
                     <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-6 sm:gap-8`}>
                       {/* Text */}
                       <div className="flex-1 p-6 sm:p-8 flex flex-col justify-center">
-                        <h3 className="text-xl sm:text-2xl font-bold mb-2">{s.title}</h3>
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                            <s.icon size={18} />
+                          </div>
+                          <h3 className="text-xl sm:text-2xl font-bold">{s.title}</h3>
+                        </div>
                         <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{s.intro}</p>
                         <ul className="space-y-2">
                           {s.bullets.map((b) => (

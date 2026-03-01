@@ -1,4 +1,5 @@
 import { Blocks, BarChart3, Users, ShieldCheck } from "lucide-react";
+import { useState, useCallback } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 const reasons = [
@@ -28,7 +29,63 @@ const reasons = [
   },
 ];
 
+const ReasonCard = ({
+  reason,
+  index,
+  hoveredIndex,
+  onHover,
+  onLeave,
+}: {
+  reason: (typeof reasons)[0];
+  index: number;
+  hoveredIndex: number | null;
+  onHover: () => void;
+  onLeave: () => void;
+}) => {
+  const [glowPos, setGlowPos] = useState({ x: 0, y: 0 });
+  const isHovered = hoveredIndex === index;
+  const isAnyHovered = hoveredIndex !== null;
+  const Icon = reason.icon;
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setGlowPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  }, []);
+
+  return (
+    <div
+      onMouseEnter={onHover}
+      onMouseLeave={onLeave}
+      onMouseMove={handleMouseMove}
+      className="relative rounded-xl border border-border bg-card p-6 overflow-hidden transition-all duration-[300ms] ease-out"
+      style={{
+        transform: isHovered ? "scale(1.01) translateY(-4px)" : "scale(1) translateY(0)",
+        opacity: isAnyHovered && !isHovered ? 0.88 : 1,
+        borderColor: isHovered ? "hsl(var(--primary) / 0.4)" : undefined,
+      }}
+    >
+      {isHovered && (
+        <div
+          className="absolute pointer-events-none inset-0 z-0"
+          style={{
+            background: `radial-gradient(200px circle at ${glowPos.x}px ${glowPos.y}px, hsl(174 78% 41% / 0.1), transparent 70%)`,
+          }}
+        />
+      )}
+      <div className="relative z-10">
+        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
+          <Icon size={20} />
+        </div>
+        <h3 className="font-semibold mb-2">{reason.title}</h3>
+        <p className="text-sm text-muted-foreground leading-relaxed">{reason.description}</p>
+      </div>
+    </div>
+  );
+};
+
 const WhyAutronisSection = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   return (
     <section className="py-12 sm:py-24 border-t border-border">
       <div className="container mx-auto px-4 lg:px-8">
@@ -43,18 +100,16 @@ const WhyAutronisSection = () => {
           </ScrollRevealItem>
         </ScrollReveal>
 
-        <ScrollReveal className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          {reasons.map((r) => (
+        <ScrollReveal className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto" staggerChildren={0.08}>
+          {reasons.map((r, i) => (
             <ScrollRevealItem key={r.title}>
-              <div className="rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/20">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
-                  <r.icon size={20} />
-                </div>
-                <h3 className="font-semibold mb-2">{r.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {r.description}
-                </p>
-              </div>
+              <ReasonCard
+                reason={r}
+                index={i}
+                hoveredIndex={hoveredIndex}
+                onHover={() => setHoveredIndex(i)}
+                onLeave={() => setHoveredIndex(null)}
+              />
             </ScrollRevealItem>
           ))}
         </ScrollReveal>

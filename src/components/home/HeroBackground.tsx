@@ -19,16 +19,16 @@ const HeroBackground = () => {
 
     let animationId: number;
     let time = 0;
-    const lineCount = 14;
+    const lineCount = 16;
 
     const dots: GlowDot[] = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 10; i++) {
       dots.push({
         lineIndex: Math.floor(Math.random() * lineCount),
         t: Math.random(),
-        speed: 0.0002 + Math.random() * 0.0003,
-        radius: 1.2 + Math.random() * 1.5,
-        opacity: 0.06 + Math.random() * 0.08,
+        speed: 0.0002 + Math.random() * 0.0004,
+        radius: 1.5 + Math.random() * 2,
+        opacity: 0.08 + Math.random() * 0.1,
       });
     }
 
@@ -47,10 +47,10 @@ const HeroBackground = () => {
     const getWaveY = (x: number, lineIdx: number, h: number) => {
       // Lines packed into a tighter vertical band (30%-70% of height)
       const t_pos = (lineIdx + 1) / (lineCount + 1);
-      const yBase = h * (0.38 + t_pos * 0.24);
+      const yBase = h * (0.4 + t_pos * 0.18);
       const freq = 0.0018 + (lineIdx % 3) * 0.0008;
       const speed = 0.12 + (lineIdx % 4) * 0.04;
-      const amp = 10 + Math.sin(lineIdx * 1.1) * 6;
+      const amp = 8 + Math.sin(lineIdx * 1.1) * 5;
       return (
         yBase +
         Math.sin(x * freq + time * speed) * amp +
@@ -78,7 +78,7 @@ const HeroBackground = () => {
 
       for (let i = 0; i < lineCount; i++) {
         const opacity = i % 2 === 0 ? 0.1 : 0.05;
-        const lineWidth = i % 3 === 0 ? 1 : 0.5;
+        const lineWidth = i % 3 === 0 ? 1.5 : 0.8;
 
         ctx.beginPath();
         ctx.strokeStyle = `hsla(174, 78%, 41%, ${opacity})`;

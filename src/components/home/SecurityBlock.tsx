@@ -1,15 +1,65 @@
-import { ShieldCheck, Activity, Scale, KeyRound, FileText } from "lucide-react";
+import { KeyRound, FileText, Activity, Scale } from "lucide-react";
+import { useState, useCallback } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 const items = [
   { icon: KeyRound, label: "Minimale toegangsrechten" },
+  { icon: FileText, label: "Volledige documentatie" },
   { icon: Activity, label: "Logging & monitoring" },
   { icon: Scale, label: "AVG-proof aanpak" },
-  { icon: ShieldCheck, label: "Geen vendor lock-in" },
-  { icon: FileText, label: "Documentatie & overdracht" },
 ];
 
+const SecurityCard = ({
+  item,
+  index,
+  hoveredIndex,
+  onHover,
+  onLeave,
+}: {
+  item: (typeof items)[0];
+  index: number;
+  hoveredIndex: number | null;
+  onHover: () => void;
+  onLeave: () => void;
+}) => {
+  const [glowPos, setGlowPos] = useState({ x: 0, y: 0 });
+  const isHovered = hoveredIndex === index;
+  const isAnyHovered = hoveredIndex !== null;
+  const Icon = item.icon;
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setGlowPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  }, []);
+
+  return (
+    <div
+      onMouseEnter={onHover}
+      onMouseLeave={onLeave}
+      onMouseMove={handleMouseMove}
+      className="relative flex items-center gap-3 rounded-lg border border-border bg-card px-5 py-4 overflow-hidden transition-all duration-[300ms] ease-out"
+      style={{
+        opacity: isAnyHovered && !isHovered ? 0.88 : 1,
+        borderColor: isHovered ? "hsl(var(--primary) / 0.4)" : undefined,
+      }}
+    >
+      {isHovered && (
+        <div
+          className="absolute pointer-events-none inset-0 z-0"
+          style={{
+            background: `radial-gradient(150px circle at ${glowPos.x}px ${glowPos.y}px, hsl(174 78% 41% / 0.1), transparent 70%)`,
+          }}
+        />
+      )}
+      <Icon size={16} className="text-primary shrink-0 relative z-10" />
+      <span className="text-sm text-foreground relative z-10">{item.label}</span>
+    </div>
+  );
+};
+
 const SecurityBlock = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   return (
     <section className="py-12 sm:py-20 border-t border-border">
       <div className="container mx-auto px-4 lg:px-8">
@@ -27,15 +77,16 @@ const SecurityBlock = () => {
             </p>
           </ScrollRevealItem>
           <ScrollRevealItem>
-            <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
-              {items.map((item) => (
-                <div
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {items.map((item, i) => (
+                <SecurityCard
                   key={item.label}
-                  className="flex items-center gap-2.5 rounded-lg border border-border bg-card px-4 py-3 text-sm"
-                >
-                  <item.icon size={16} className="text-primary shrink-0" />
-                  <span className="text-foreground">{item.label}</span>
-                </div>
+                  item={item}
+                  index={i}
+                  hoveredIndex={hoveredIndex}
+                  onHover={() => setHoveredIndex(i)}
+                  onLeave={() => setHoveredIndex(null)}
+                />
               ))}
             </div>
           </ScrollRevealItem>

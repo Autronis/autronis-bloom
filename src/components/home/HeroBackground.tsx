@@ -19,16 +19,16 @@ const HeroBackground = () => {
 
     let animationId: number;
     let time = 0;
-    const lineCount = 10;
+    const lineCount = 14;
 
     const dots: GlowDot[] = [];
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 5; i++) {
       dots.push({
         lineIndex: Math.floor(Math.random() * lineCount),
         t: Math.random(),
-        speed: 0.0002 + Math.random() * 0.0004,
-        radius: 1.5 + Math.random() * 2,
-        opacity: 0.12 + Math.random() * 0.15,
+        speed: 0.0002 + Math.random() * 0.0003,
+        radius: 1.2 + Math.random() * 1.5,
+        opacity: 0.06 + Math.random() * 0.08,
       });
     }
 
@@ -47,7 +47,7 @@ const HeroBackground = () => {
     const getWaveY = (x: number, lineIdx: number, h: number) => {
       // Lines packed into a tighter vertical band (30%-70% of height)
       const t_pos = (lineIdx + 1) / (lineCount + 1);
-      const yBase = h * (0.3 + t_pos * 0.4);
+      const yBase = h * (0.38 + t_pos * 0.24);
       const freq = 0.0018 + (lineIdx % 3) * 0.0008;
       const speed = 0.12 + (lineIdx % 4) * 0.04;
       const amp = 10 + Math.sin(lineIdx * 1.1) * 6;

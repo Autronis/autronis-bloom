@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import fotoSyb from "@/assets/foto_syb.jpg";
 import fotoSem from "@/assets/foto_sem.jpg";
-
+import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 const team = [
   {
@@ -63,39 +63,44 @@ const Team = () => {
       <section className="pt-16 pb-24">
         <div className="container mx-auto px-4 lg:px-8">
           {/* Hero */}
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
-              Team
-            </p>
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight">
-              Werk met de mensen die het bouwen.
-            </h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Wij zijn geen doorgeefluik tussen accountmanagers en developers. U werkt
-              direct met de engineers die uw systemen ontwerpen, bouwen en optimaliseren.
-            </p>
-          </div>
-
+          <ScrollReveal className="max-w-3xl mx-auto text-center mb-16">
+            <ScrollRevealItem>
+              <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
+                Team
+              </p>
+              <h1 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight">
+                Werk met de mensen die het bouwen.
+              </h1>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Wij zijn geen doorgeefluik tussen accountmanagers en developers. U werkt
+                direct met de engineers die uw systemen ontwerpen, bouwen en optimaliseren.
+              </p>
+            </ScrollRevealItem>
+          </ScrollReveal>
 
           {/* Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto mb-20">
+          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto mb-20">
             {team.map((member) => (
-              <TeamCard key={member.name} member={member} />
+              <ScrollRevealItem key={member.name}>
+                <TeamCard member={member} />
+              </ScrollRevealItem>
             ))}
-          </div>
+          </ScrollReveal>
 
           {/* CTA */}
-          <div className="text-center">
-            <h2 className="text-2xl font-bold mb-3">Klaar om samen te werken?</h2>
-            <p className="text-muted-foreground mb-6">
-              Laten we kennismaken en kijken hoe we uw processen kunnen verbeteren.
-            </p>
-            <Button asChild size="lg">
-              <Link to="/book">
-                Plan een kennismaking <ArrowRight size={18} />
-              </Link>
-            </Button>
-          </div>
+          <ScrollReveal className="text-center">
+            <ScrollRevealItem>
+              <h2 className="text-2xl font-bold mb-3">Klaar om samen te werken?</h2>
+              <p className="text-muted-foreground mb-6">
+                Laten we kennismaken en kijken hoe we uw processen kunnen verbeteren.
+              </p>
+              <Button asChild size="lg">
+                <Link to="/book">
+                  Plan een kennismaking <ArrowRight size={18} />
+                </Link>
+              </Button>
+            </ScrollRevealItem>
+          </ScrollReveal>
         </div>
       </section>
     </Layout>

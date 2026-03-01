@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, ShieldCheck, ChevronRight } from "lucide-react";
 import { useState } from "react";
+import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 const phases = [
   {
@@ -41,21 +42,23 @@ const ProcessSection = () => {
   return (
     <section className="py-12 sm:py-24 border-t border-border">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
-          <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
-            Aanpak
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Hoe wij werken</h2>
-          <p className="text-muted-foreground">
-            Een gestructureerde aanpak van analyse tot optimalisatie. Geen losse
-            automatiseringen, maar systemen die duurzaam en schaalbaar functioneren.
-          </p>
-        </div>
+        <ScrollReveal className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
+          <ScrollRevealItem>
+            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
+              Aanpak
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Hoe wij werken</h2>
+            <p className="text-muted-foreground">
+              Een gestructureerde aanpak van analyse tot optimalisatie. Geen losse
+              automatiseringen, maar systemen die duurzaam en schaalbaar functioneren.
+            </p>
+          </ScrollRevealItem>
+        </ScrollReveal>
 
         {/* Desktop: horizontal with arrows */}
-        <div className="hidden lg:flex items-start gap-2 mb-10">
+        <ScrollReveal className="hidden lg:flex items-start gap-2 mb-10" staggerChildren={0.08}>
           {phases.map((phase, index) => (
-            <div key={phase.step} className="flex items-start flex-1">
+            <ScrollRevealItem key={phase.step} className="flex items-start flex-1">
               <div
                 className={`rounded-xl border bg-card p-6 transition-all duration-300 cursor-pointer flex-1 ${
                   activePhase === index
@@ -81,49 +84,56 @@ const ProcessSection = () => {
                   />
                 </div>
               )}
-            </div>
+            </ScrollRevealItem>
           ))}
-        </div>
+        </ScrollReveal>
 
         {/* Mobile: vertical cards */}
-        <div className="lg:hidden space-y-4 mb-10">
+        <ScrollReveal className="lg:hidden space-y-4 mb-10" staggerChildren={0.08}>
           {phases.map((phase, index) => (
-            <div
-              key={phase.step}
-              className="rounded-xl border border-border bg-card p-6 transition-all duration-300 active:border-primary/40"
-              onClick={() => setActivePhase(activePhase === index ? null : index)}
-            >
-              <div className="flex items-center gap-3 mb-2">
-                <p className="text-xs font-bold text-primary">{phase.step}</p>
-                <h3 className="font-semibold text-sm">{phase.title}</h3>
-                {index < phases.length - 1 && (
-                  <ArrowRight size={14} className="ml-auto text-muted-foreground/30" />
-                )}
+            <ScrollRevealItem key={phase.step}>
+              <div
+                className="rounded-xl border border-border bg-card p-6 transition-all duration-300 active:border-primary/40"
+                onClick={() => setActivePhase(activePhase === index ? null : index)}
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  <p className="text-xs font-bold text-primary">{phase.step}</p>
+                  <h3 className="font-semibold text-sm">{phase.title}</h3>
+                  {index < phases.length - 1 && (
+                    <ArrowRight size={14} className="ml-auto text-muted-foreground/30" />
+                  )}
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  {phase.description}
+                </p>
               </div>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                {phase.description}
-              </p>
-            </div>
+            </ScrollRevealItem>
           ))}
-        </div>
+        </ScrollReveal>
 
         {/* Security line */}
-        <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground mb-8">
-          <ShieldCheck size={14} className="text-primary" />
-          <span>
-            Beveiliging en datakwaliteit zijn geïntegreerd in elke fase — met minimale
-            toegangsrechten, logging en volledige documentatie.
-          </span>
-        </div>
+        <ScrollReveal>
+          <ScrollRevealItem>
+            <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground mb-8">
+              <ShieldCheck size={14} className="text-primary" />
+              <span>
+                Beveiliging en datakwaliteit zijn geïntegreerd in elke fase — met minimale
+                toegangsrechten, logging en volledige documentatie.
+              </span>
+            </div>
+          </ScrollRevealItem>
+        </ScrollReveal>
 
-        <div className="text-center">
-          <Link
-            to="/process"
-            className="text-sm text-primary hover:underline inline-flex items-center gap-1"
-          >
-            Bekijk ons volledige proces <ArrowRight size={14} />
-          </Link>
-        </div>
+        <ScrollReveal className="text-center">
+          <ScrollRevealItem>
+            <Link
+              to="/process"
+              className="text-sm text-primary hover:underline inline-flex items-center gap-1"
+            >
+              Bekijk ons volledige proces <ArrowRight size={14} />
+            </Link>
+          </ScrollRevealItem>
+        </ScrollReveal>
       </div>
     </section>
   );

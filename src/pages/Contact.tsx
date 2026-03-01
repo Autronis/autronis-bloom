@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 import { ArrowRight, Mail, Linkedin, Clock } from "lucide-react";
 import { useState } from "react";
+import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 const Contact = () => {
   const [sent, setSent] = useState(false);
@@ -13,15 +14,17 @@ const Contact = () => {
     <Layout>
       <section className="pt-16 pb-24">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-2xl mx-auto text-center mb-12">
-            <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Contact</p>
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4">Laten we kennismaken</h1>
-            <p className="text-muted-foreground leading-relaxed">
-              Wilt u automatiseren, opschalen of sparren over de mogelijkheden? Stuur ons een bericht of plan direct een vrijblijvende Automation Scan.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            <div>
+          <ScrollReveal className="max-w-2xl mx-auto text-center mb-12">
+            <ScrollRevealItem>
+              <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Contact</p>
+              <h1 className="text-4xl sm:text-5xl font-bold mb-4">Laten we kennismaken</h1>
+              <p className="text-muted-foreground leading-relaxed">
+                Wilt u automatiseren, opschalen of sparren over de mogelijkheden? Stuur ons een bericht of plan direct een vrijblijvende Automation Scan.
+              </p>
+            </ScrollRevealItem>
+          </ScrollReveal>
+          <ScrollReveal className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <ScrollRevealItem>
               {sent ? (
                 <div className="rounded-xl border border-primary/30 bg-primary/5 p-8 text-center">
                   <p className="text-lg font-semibold mb-2">Bericht verstuurd!</p>
@@ -55,29 +58,31 @@ const Contact = () => {
                   <Button type="submit" size="lg">Verstuur bericht <ArrowRight size={18} /></Button>
                 </form>
               )}
-            </div>
+            </ScrollRevealItem>
 
-            <div className="flex flex-col justify-center space-y-6">
-              <div className="rounded-xl border border-border bg-card p-6">
-                <h3 className="font-semibold mb-3">Liever direct plannen?</h3>
-                <p className="text-sm text-muted-foreground mb-4">Een Automation Scan is de snelste manier om te ontdekken wat wij voor u kunnen automatiseren. Vrijblijvend en concreet.</p>
-                <Button asChild className="w-full">
-                  <Link to="/book">Plan Automation Scan <ArrowRight size={14} /></Link>
-                </Button>
-              </div>
-              <div className="rounded-xl border border-border bg-card p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <Clock size={16} className="text-primary" />
-                  <h3 className="font-semibold">Reactie binnen 24 uur</h3>
+            <ScrollRevealItem>
+              <div className="flex flex-col justify-center space-y-6">
+                <div className="rounded-xl border border-border bg-card p-6">
+                  <h3 className="font-semibold mb-3">Liever direct plannen?</h3>
+                  <p className="text-sm text-muted-foreground mb-4">Een Automation Scan is de snelste manier om te ontdekken wat wij voor u kunnen automatiseren. Vrijblijvend en concreet.</p>
+                  <Button asChild className="w-full">
+                    <Link to="/book">Plan Automation Scan <ArrowRight size={14} /></Link>
+                  </Button>
                 </div>
-                <p className="text-sm text-muted-foreground">Wij reageren op elke aanvraag binnen één werkdag. Geen wachtrijen, geen formulieren — gewoon snel en persoonlijk contact.</p>
+                <div className="rounded-xl border border-border bg-card p-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Clock size={16} className="text-primary" />
+                    <h3 className="font-semibold">Reactie binnen 24 uur</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Wij reageren op elke aanvraag binnen één werkdag. Geen wachtrijen, geen formulieren — gewoon snel en persoonlijk contact.</p>
+                </div>
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2"><Mail size={16} className="text-primary" /> info@autronisgroup.com</div>
+                  <div className="flex items-center gap-2"><Linkedin size={16} className="text-primary" /> linkedin.com/company/autronisgroup</div>
+                </div>
               </div>
-              <div className="space-y-3 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2"><Mail size={16} className="text-primary" /> info@autronisgroup.com</div>
-                <div className="flex items-center gap-2"><Linkedin size={16} className="text-primary" /> linkedin.com/company/autronisgroup</div>
-              </div>
-            </div>
-          </div>
+            </ScrollRevealItem>
+          </ScrollReveal>
         </div>
       </section>
     </Layout>

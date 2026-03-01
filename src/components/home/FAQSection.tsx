@@ -43,12 +43,44 @@ const faqs = [
 
 const FAQSection = () => {
   return (
-    <section className="py-12 sm:py-24 border-t border-border">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
+      {/* Grid background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `
+            linear-gradient(hsl(174 78% 30% / 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, hsl(174 78% 30% / 0.05) 1px, transparent 1px)
+          `,
+          backgroundSize: "50px 50px",
+        }}
+      />
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {[
+          { x: "12%", y: "20%", delay: 0.3 },
+          { x: "85%", y: "35%", delay: 1.1 },
+          { x: "40%", y: "75%", delay: 0.7 },
+          { x: "70%", y: "10%", delay: 1.9 },
+          { x: "25%", y: "60%", delay: 0.5 },
+        ].map((pos, i) => (
+          <div
+            key={i}
+            className="absolute w-1.5 h-1.5 rounded-full bg-primary/12 animate-pulse"
+            style={{
+              left: pos.x,
+              top: pos.y,
+              animationDelay: `${pos.delay}s`,
+              animationDuration: "3.5s",
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="max-w-3xl mx-auto">
           <ScrollReveal className="text-center mb-12">
             <ScrollRevealItem>
-              <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">FAQ</p>
+              <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">FAQ</p>
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">Veelgestelde vragen</h2>
               <p className="text-muted-foreground">
                 Alles wat u wilt weten over onze aanpak, proces en samenwerking.
@@ -62,9 +94,9 @@ const FAQSection = () => {
                 <ScrollRevealItem key={i}>
                   <AccordionItem
                     value={`faq-${i}`}
-                    className="border border-border rounded-lg px-5 data-[state=open]:border-primary/30 transition-colors"
+                    className="border border-border rounded-lg px-5 data-[state=open]:border-primary/30 hover:border-primary/20 transition-all duration-300 hover:shadow-[0_0_20px_hsl(174_78%_41%/0.06)]"
                   >
-                    <AccordionTrigger className="text-left text-sm font-medium hover:no-underline">
+                    <AccordionTrigger className="text-left text-sm font-medium hover:no-underline hover:text-primary transition-colors duration-200">
                       {faq.q}
                     </AccordionTrigger>
                     <AccordionContent className="text-sm text-muted-foreground leading-relaxed">

@@ -90,8 +90,40 @@ const CaseStudiesPreview = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section className="py-12 sm:py-24 border-t border-border">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
+      {/* Grid background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `
+            linear-gradient(hsl(174 78% 30% / 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, hsl(174 78% 30% / 0.05) 1px, transparent 1px)
+          `,
+          backgroundSize: "50px 50px",
+        }}
+      />
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {[
+          { x: "15%", y: "25%", delay: 0 },
+          { x: "80%", y: "18%", delay: 1.4 },
+          { x: "50%", y: "80%", delay: 0.6 },
+          { x: "30%", y: "65%", delay: 2.1 },
+          { x: "90%", y: "50%", delay: 0.9 },
+        ].map((pos, i) => (
+          <div
+            key={i}
+            className="absolute w-1.5 h-1.5 rounded-full bg-primary/12 animate-pulse"
+            style={{
+              left: pos.x,
+              top: pos.y,
+              animationDelay: `${pos.delay}s`,
+              animationDuration: "3.5s",
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <ScrollReveal className="text-center mb-12">
           <ScrollRevealItem>
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Case Studies</p>

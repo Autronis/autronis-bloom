@@ -52,7 +52,7 @@ const ServicePillars = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
-      {/* Subtle background activity (no grid) */}
+      {/* Subtle background activity (no grid, just floating dots + faint lines) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
           { x: "25%", y: "20%", delay: 0 },
@@ -60,10 +60,12 @@ const ServicePillars = () => {
           { x: "85%", y: "55%", delay: 0.6 },
           { x: "15%", y: "75%", delay: 1.4 },
           { x: "55%", y: "85%", delay: 2 },
+          { x: "40%", y: "40%", delay: 0.3 },
+          { x: "92%", y: "30%", delay: 1.8 },
         ].map((pos, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 rounded-full bg-primary/8 animate-pulse"
+            className="absolute w-1 h-1 rounded-full bg-primary/10 animate-pulse"
             style={{
               left: pos.x,
               top: pos.y,
@@ -72,6 +74,15 @@ const ServicePillars = () => {
             }}
           />
         ))}
+        {/* Faint connecting lines */}
+        <svg className="absolute inset-0 w-full h-full" style={{ opacity: 0.04 }}>
+          <line x1="25%" y1="20%" x2="70%" y2="15%" stroke="hsl(174 78% 41%)" strokeWidth="0.5" strokeDasharray="4 8">
+            <animate attributeName="stroke-dashoffset" values="0;-24" dur="5s" repeatCount="indefinite" />
+          </line>
+          <line x1="85%" y1="55%" x2="55%" y2="85%" stroke="hsl(174 78% 41%)" strokeWidth="0.5" strokeDasharray="4 8">
+            <animate attributeName="stroke-dashoffset" values="0;-24" dur="4s" begin="1s" repeatCount="indefinite" />
+          </line>
+        </svg>
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
@@ -122,18 +133,23 @@ const ServicePillars = () => {
                           ))}
                         </ul>
                       </div>
-                      {/* Image */}
-                      <div className="flex-1 min-h-[220px] sm:min-h-[280px]">
+                      {/* Image with background color blend */}
+                      <div className="flex-1 min-h-[220px] sm:min-h-[280px] relative overflow-hidden">
+                        <div
+                          className="absolute inset-0"
+                          style={{ backgroundColor: "hsl(var(--card))" }}
+                        />
                         <img
                           src={s.image}
                           alt={s.title}
-                          className="w-full h-full object-cover rounded-b-xl md:rounded-b-none transition-transform duration-300"
+                          className="w-full h-full object-cover relative z-[1] transition-transform duration-300"
                           style={{
                             borderTopRightRadius: isEven ? "0.75rem" : undefined,
                             borderBottomRightRadius: isEven ? "0.75rem" : undefined,
                             borderTopLeftRadius: !isEven ? "0.75rem" : undefined,
                             borderBottomLeftRadius: !isEven ? "0.75rem" : undefined,
                             transform: hoveredIndex === i ? "scale(1.02)" : "scale(1)",
+                            mixBlendMode: "lighten",
                           }}
                           loading="lazy"
                         />

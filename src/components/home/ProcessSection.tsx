@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, ShieldCheck } from "lucide-react";
+import { ArrowRight, ShieldCheck, ChevronRight } from "lucide-react";
+import { useState } from "react";
 
 const phases = [
   {
@@ -35,6 +36,8 @@ const phases = [
 ];
 
 const ProcessSection = () => {
+  const [activePhase, setActivePhase] = useState<number | null>(null);
+
   return (
     <section className="py-12 sm:py-24 border-t border-border">
       <div className="container mx-auto px-4 lg:px-8">
@@ -49,14 +52,54 @@ const ProcessSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-10">
-          {phases.map((phase) => (
+        {/* Desktop: horizontal with arrows */}
+        <div className="hidden lg:flex items-start gap-2 mb-10">
+          {phases.map((phase, index) => (
+            <div key={phase.step} className="flex items-start flex-1">
+              <div
+                className={`rounded-xl border bg-card p-6 transition-all duration-300 cursor-pointer flex-1 ${
+                  activePhase === index
+                    ? "border-primary/60 shadow-[0_0_40px_hsl(174_78%_41%/0.15)] bg-primary/5"
+                    : "border-border hover:border-primary/40 hover:shadow-[0_0_30px_hsl(174_78%_41%/0.1)]"
+                }`}
+                onMouseEnter={() => setActivePhase(index)}
+                onMouseLeave={() => setActivePhase(null)}
+              >
+                <p className="text-xs font-bold text-primary mb-2">{phase.step}</p>
+                <h3 className="font-semibold mb-2 text-sm">{phase.title}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  {phase.description}
+                </p>
+              </div>
+              {index < phases.length - 1 && (
+                <div className="flex items-center px-1 pt-10 shrink-0">
+                  <ChevronRight
+                    size={18}
+                    className={`transition-colors duration-300 ${
+                      activePhase === index ? "text-primary" : "text-muted-foreground/30"
+                    }`}
+                  />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Mobile: vertical cards */}
+        <div className="lg:hidden space-y-4 mb-10">
+          {phases.map((phase, index) => (
             <div
               key={phase.step}
-              className="rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/40 hover:shadow-[0_0_30px_hsl(174_78%_41%/0.1)] group"
+              className="rounded-xl border border-border bg-card p-6 transition-all duration-300 active:border-primary/40"
+              onClick={() => setActivePhase(activePhase === index ? null : index)}
             >
-              <p className="text-xs font-bold text-primary mb-2">{phase.step}</p>
-              <h3 className="font-semibold mb-2 text-sm">{phase.title}</h3>
+              <div className="flex items-center gap-3 mb-2">
+                <p className="text-xs font-bold text-primary">{phase.step}</p>
+                <h3 className="font-semibold text-sm">{phase.title}</h3>
+                {index < phases.length - 1 && (
+                  <ArrowRight size={14} className="ml-auto text-muted-foreground/30" />
+                )}
+              </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
                 {phase.description}
               </p>

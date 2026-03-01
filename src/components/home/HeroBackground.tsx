@@ -1,5 +1,13 @@
 import { useEffect, useRef } from "react";
 
+interface GlowDot {
+  lineIndex: number;
+  t: number; // 0-1 position along line
+  speed: number;
+  radius: number;
+  opacity: number;
+}
+
 const HeroBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -11,6 +19,19 @@ const HeroBackground = () => {
 
     let animationId: number;
     let time = 0;
+    const lineCount = 18;
+
+    // Create glow dots
+    const dots: GlowDot[] = [];
+    for (let i = 0; i < 25; i++) {
+      dots.push({
+        lineIndex: Math.floor(Math.random() * lineCount),
+        t: Math.random(),
+        speed: 0.0003 + Math.random() * 0.0006,
+        radius: 2 + Math.random() * 3,
+        opacity: 0.3 + Math.random() * 0.4,
+      });
+    }
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio, 2);
@@ -24,28 +45,17 @@ const HeroBackground = () => {
     resize();
     window.addEventListener("resize", resize);
 
-    const drawWave = (
-      yBase: number,
-      amplitude: number,
-      frequency: number,
-      speed: number,
-      opacity: number,
-      lineWidth: number
-    ) => {
-      const w = window.innerWidth;
-      ctx.beginPath();
-      ctx.strokeStyle = `hsla(174, 78%, 41%, ${opacity})`;
-      ctx.lineWidth = lineWidth;
-
-      for (let x = 0; x <= w; x += 2) {
-        const y =
-          yBase +
-          Math.sin(x * frequency + time * speed) * amplitude +
-          Math.sin(x * frequency * 0.5 + time * speed * 0.7) * amplitude * 0.5;
-        if (x === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.stroke();
+    const getWaveY = (x: number, lineIdx: number, h: number) => {
+      const t_pos = (lineIdx + 1) / (lineCount + 1);
+      const yBase = h * (0.1 + t_pos * 0.8);
+      const freq = 0.0018 + (lineIdx % 3) * 0.0008;
+      const speed = 0.12 + (lineIdx % 4) * 0.04;
+      const amp = 12 + Math.sin(lineIdx * 1.1) * 8;
+      return (
+        yBase +
+        Math.sin(x * freq + time * speed) * amp +
+        Math.sin(x * freq * 0.5 + time * speed * 0.7) * amp * 0.4
+      );
     };
 
     const drawGlow = (x: number, y: number, radius: number, opacity: number) => {
@@ -62,25 +72,53 @@ const HeroBackground = () => {
 
       ctx.clearRect(0, 0, w, h);
 
-      // Subtle ambient glow — keep as-is
+      // Ambient glow spots
       drawGlow(w * 0.2, h * 0.4, 300, 0.03 + Math.sin(time * 0.3) * 0.01);
       drawGlow(w * 0.8, h * 0.6, 250, 0.025 + Math.sin(time * 0.4 + 1) * 0.01);
       drawGlow(w * 0.5, h * 0.3, 350, 0.02 + Math.sin(time * 0.2 + 2) * 0.01);
 
-      // Denser wave lines with more contrast and system-like feel
-      const lineCount = 12;
+      // Draw dense wave lines
       for (let i = 0; i < lineCount; i++) {
-        const t = (i + 1) / (lineCount + 1);
-        const yBase = h * (0.15 + t * 0.7);
-        const amp = 15 + Math.sin(i * 1.2) * 10;
-        const freq = 0.002 + (i % 3) * 0.001;
-        const speed = 0.15 + (i % 4) * 0.05;
-        const opacity = i % 2 === 0 ? 0.14 : 0.07;
-        const width = i % 3 === 0 ? 1.5 : 0.8;
-        drawWave(yBase, amp, freq, speed, opacity, width);
+        const opacity = i % 2 === 0 ? 0.13 : 0.06;
+        const lineWidth = i % 3 === 0 ? 1.2 : 0.6;
+
+        ctx.beginPath();
+        ctx.strokeStyle = `hsla(174, 78%, 41%, ${opacity})`;
+        ctx.lineWidth = lineWidth;
+
+        for (let x = 0; x <= w; x += 2) {
+          const y = getWaveY(x, i, h);
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
       }
 
-      time += 0.008; // Very slow movement
+      // Draw glow dots traveling along lines
+      for (const dot of dots) {
+        // Move dot back and forth
+        dot.t += dot.speed;
+        if (dot.t > 1) dot.t -= 1;
+
+        const xPos = dot.t * w;
+        const yPos = getWaveY(xPos, dot.lineIndex, h);
+
+        // Dot glow
+        const dotGrad = ctx.createRadialGradient(xPos, yPos, 0, xPos, yPos, dot.radius * 6);
+        dotGrad.addColorStop(0, `hsla(174, 78%, 55%, ${dot.opacity * 0.5})`);
+        dotGrad.addColorStop(0.5, `hsla(174, 78%, 45%, ${dot.opacity * 0.15})`);
+        dotGrad.addColorStop(1, "hsla(174, 78%, 41%, 0)");
+        ctx.fillStyle = dotGrad;
+        ctx.fillRect(xPos - dot.radius * 6, yPos - dot.radius * 6, dot.radius * 12, dot.radius * 12);
+
+        // Solid dot center
+        ctx.beginPath();
+        ctx.arc(xPos, yPos, dot.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(174, 78%, 60%, ${dot.opacity})`;
+        ctx.fill();
+      }
+
+      time += 0.008;
       animationId = requestAnimationFrame(animate);
     };
 

@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Layers, Users, BarChart3, Cog, Link2, PieChart } from "lucide-react";
+import { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 const problems = [
@@ -45,6 +47,48 @@ const solutions = [
   },
 ];
 
+const StrikeThroughText = () => {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: false, amount: 0.5 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <span
+      ref={ref}
+      className="relative inline-block cursor-default"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <span className={`transition-colors duration-300 ${isHovered ? "text-primary brightness-125" : ""}`}>
+        "te weinig capaciteit"
+      </span>
+      {/* SVG strikethrough overlay */}
+      <svg
+        className="absolute left-0 top-1/2 w-full pointer-events-none"
+        style={{ height: "6px", transform: "translateY(-50%)" }}
+        viewBox="0 0 100 6"
+        preserveAspectRatio="none"
+      >
+        <line
+          x1="0"
+          y1="3"
+          x2="100"
+          y2="3"
+          stroke={isHovered ? "hsl(174, 78%, 55%)" : "hsl(174, 78%, 41%)"}
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeDasharray="100"
+          strokeDashoffset={isInView ? "0" : "100"}
+          style={{
+            transition: "stroke-dashoffset 700ms ease-out, stroke 300ms ease-out",
+            filter: isHovered ? "drop-shadow(0 0 4px hsl(174, 78%, 41%))" : "none",
+          }}
+        />
+      </svg>
+    </span>
+  );
+};
+
 const ProblemSolutionSection = () => {
   return (
     <section className="py-12 sm:py-24 border-t border-border">
@@ -57,7 +101,7 @@ const ProblemSolutionSection = () => {
                 Probleem
               </p>
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-                Het probleem is niet "te weinig capaciteit".
+                Het probleem is niet <StrikeThroughText />.
               </h2>
               <p className="text-muted-foreground leading-relaxed">
                 Veel groeiende organisaties denken dat ze meer mensen nodig hebben om bij te

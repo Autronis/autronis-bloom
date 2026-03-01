@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import fotoSyb from "@/assets/foto_syb.jpg";
 import fotoSem from "@/assets/foto_sem.jpg";
-import teamPhoto from "@/assets/autronis_foto_samen.jpg";
+
 
 const team = [
   {
@@ -76,14 +76,6 @@ const Team = () => {
             </p>
           </div>
 
-          {/* Team photo */}
-          <div className="mb-16 rounded-2xl overflow-hidden aspect-[21/9]">
-            <img
-              src={teamPhoto}
-              alt="Autronis team"
-              className="w-full h-full object-cover object-[center_10%]"
-            />
-          </div>
 
           {/* Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto mb-20">

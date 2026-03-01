@@ -26,14 +26,10 @@ const Index = () => {
               Automation & System Architecture
             </p>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
-              Wij ontwerpen en implementeren automatiserings- en datasystemen die
-              terugkerende taken elimineren, fouten verminderen en organisaties laten
-              groeien —{" "}
-              <span className="text-gradient">zonder extra personeelsdruk.</span>
+              Breng structuur in je groei.
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
-              Geen losse automatiseringen, maar schaalbare systemen waarin processen, data
-              en integraties logisch samenwerken.
+              Wij transformeren processen tot slimme systemen die schaalbaar en beheersbaar blijven.
             </p>
             <Button asChild size="lg">
               <Link to="/book">

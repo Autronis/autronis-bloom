@@ -51,8 +51,30 @@ const ServicePillars = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section className="py-12 sm:py-24 border-t border-border">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
+      {/* Subtle background activity (no grid) */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {[
+          { x: "25%", y: "20%", delay: 0 },
+          { x: "70%", y: "15%", delay: 1 },
+          { x: "85%", y: "55%", delay: 0.6 },
+          { x: "15%", y: "75%", delay: 1.4 },
+          { x: "55%", y: "85%", delay: 2 },
+        ].map((pos, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 rounded-full bg-primary/8 animate-pulse"
+            style={{
+              left: pos.x,
+              top: pos.y,
+              animationDelay: `${pos.delay}s`,
+              animationDuration: "4s",
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <ScrollReveal className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
           <ScrollRevealItem>
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">

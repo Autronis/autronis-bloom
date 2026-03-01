@@ -19,7 +19,7 @@ const HeroBackground = () => {
 
     let animationId: number;
     let time = 0;
-    const lineCount = 14;
+    const lineCount = 10;
 
     const dots: GlowDot[] = [];
     for (let i = 0; i < 14; i++) {
@@ -46,10 +46,11 @@ const HeroBackground = () => {
 
     const getWaveY = (x: number, lineIdx: number, h: number) => {
       const t_pos = (lineIdx + 1) / (lineCount + 1);
-      const yBase = h * (0.38 + t_pos * 0.22);
+      // Spread lines across 32% of viewport height (34% to 66%)
+      const yBase = h * (0.34 + t_pos * 0.32);
       const freq = 0.0018 + (lineIdx % 3) * 0.0008;
       const speed = 0.12 + (lineIdx % 4) * 0.04;
-      const amp = 8 + Math.sin(lineIdx * 1.1) * 5;
+      const amp = 10 + Math.sin(lineIdx * 1.1) * 6;
       return (
         yBase +
         Math.sin(x * freq + time * speed) * amp +

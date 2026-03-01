@@ -94,7 +94,7 @@ const WhyAutronisSection = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
-      {/* Subtle background activity (no grid, just some floating dots) */}
+      {/* Subtle background activity */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
           { x: "15%", y: "20%", delay: 0 },
@@ -143,20 +143,13 @@ const WhyAutronisSection = () => {
           ))}
         </ScrollReveal>
 
-        {/* Team photo + CTA block */}
+        {/* Team photo + CTA block — no heading/subtext, just cards flow into photo */}
         <ScrollReveal>
           <ScrollRevealItem>
             <div className="rounded-2xl border border-border bg-card overflow-hidden">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-                {/* Text side */}
+                {/* CTA side */}
                 <div className="p-8 sm:p-12 flex flex-col justify-center">
-                  <h3 className="text-2xl sm:text-3xl font-bold mb-4 leading-tight">
-                    Klaar om te zien hoe het werkt voor uw bedrijf?
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed mb-8">
-                    Plan een vrijblijvend gesprek. Wij brengen uw workflows in kaart,
-                    identificeren de quick wins en laten zien hoe het pad naar productie eruitziet.
-                  </p>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <Button asChild size="lg">
                       <Link to="/book">
@@ -178,7 +171,7 @@ const WhyAutronisSection = () => {
                   </div>
                 </div>
 
-                {/* Image side */}
+                {/* Image side with gradient overlay blending into card bg */}
                 <div ref={imgRef} className="relative min-h-[300px] lg:min-h-0">
                   <motion.img
                     src={teamFoto}
@@ -188,6 +181,20 @@ const WhyAutronisSection = () => {
                     animate={imgInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.03 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}
                     loading="lazy"
+                  />
+                  {/* Gradient overlay to blend into card */}
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background: "linear-gradient(to right, hsl(var(--card)) 0%, hsl(var(--card) / 0.6) 15%, transparent 40%)",
+                    }}
+                  />
+                  {/* Bottom gradient */}
+                  <div
+                    className="absolute inset-0 pointer-events-none lg:hidden"
+                    style={{
+                      background: "linear-gradient(to bottom, hsl(var(--card)) 0%, transparent 30%)",
+                    }}
                   />
                 </div>
               </div>

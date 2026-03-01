@@ -52,37 +52,32 @@ const ServicePillars = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
-      {/* Subtle background activity (no grid, just floating dots + faint lines) */}
+      {/* Blurred bubbles background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
-          { x: "25%", y: "20%", delay: 0 },
-          { x: "70%", y: "15%", delay: 1 },
-          { x: "85%", y: "55%", delay: 0.6 },
-          { x: "15%", y: "75%", delay: 1.4 },
-          { x: "55%", y: "85%", delay: 2 },
-          { x: "40%", y: "40%", delay: 0.3 },
-          { x: "92%", y: "30%", delay: 1.8 },
-        ].map((pos, i) => (
+          { x: "15%", y: "20%", size: 200, opacity: 0.03, delay: 0 },
+          { x: "80%", y: "15%", size: 180, opacity: 0.025, delay: 1.2 },
+          { x: "50%", y: "50%", size: 240, opacity: 0.02, delay: 0.6 },
+          { x: "25%", y: "75%", size: 160, opacity: 0.035, delay: 1.8 },
+          { x: "70%", y: "80%", size: 190, opacity: 0.025, delay: 2.2 },
+          { x: "90%", y: "40%", size: 150, opacity: 0.03, delay: 0.4 },
+        ].map((b, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 rounded-full bg-primary/10 animate-pulse"
+            className="absolute rounded-full animate-pulse"
             style={{
-              left: pos.x,
-              top: pos.y,
-              animationDelay: `${pos.delay}s`,
-              animationDuration: "4s",
+              left: b.x,
+              top: b.y,
+              width: b.size,
+              height: b.size,
+              background: `radial-gradient(circle, hsl(174 78% 41% / ${b.opacity}), transparent 70%)`,
+              filter: "blur(40px)",
+              animationDelay: `${b.delay}s`,
+              animationDuration: "6s",
+              transform: "translate(-50%, -50%)",
             }}
           />
         ))}
-        {/* Faint connecting lines */}
-        <svg className="absolute inset-0 w-full h-full" style={{ opacity: 0.04 }}>
-          <line x1="25%" y1="20%" x2="70%" y2="15%" stroke="hsl(174 78% 41%)" strokeWidth="0.5" strokeDasharray="4 8">
-            <animate attributeName="stroke-dashoffset" values="0;-24" dur="5s" repeatCount="indefinite" />
-          </line>
-          <line x1="85%" y1="55%" x2="55%" y2="85%" stroke="hsl(174 78% 41%)" strokeWidth="0.5" strokeDasharray="4 8">
-            <animate attributeName="stroke-dashoffset" values="0;-24" dur="4s" begin="1s" repeatCount="indefinite" />
-          </line>
-        </svg>
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
@@ -133,11 +128,11 @@ const ServicePillars = () => {
                           ))}
                         </ul>
                       </div>
-                      {/* Image with background color blend */}
+                      {/* Image with darker background blend */}
                       <div className="flex-1 min-h-[220px] sm:min-h-[280px] relative overflow-hidden">
                         <div
                           className="absolute inset-0"
-                          style={{ backgroundColor: "hsl(var(--card))" }}
+                          style={{ backgroundColor: "hsl(192, 25%, 8%)" }}
                         />
                         <img
                           src={s.image}

@@ -36,7 +36,7 @@ const Index = () => {
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase">
-              Automation & System Architecture
+              Systeemarchitectuur & Automatisering
             </p>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.3] tracking-tight mb-6">
               Breng structuur in je

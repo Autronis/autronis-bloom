@@ -272,7 +272,7 @@ const ProcessSection = () => {
               </Link>
             </Button>
             <p className="text-xs text-muted-foreground mt-3">
-              Onze bewezen methodiek van analyse tot continue optimalisatie.
+              Onze bewezen methodiek: van analyse tot continue optimalisatie.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>

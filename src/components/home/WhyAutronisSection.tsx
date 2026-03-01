@@ -94,24 +94,28 @@ const WhyAutronisSection = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
-      {/* Subtle background activity */}
+      {/* Blurred bubbles background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
-          { x: "15%", y: "20%", delay: 0 },
-          { x: "80%", y: "35%", delay: 1.5 },
-          { x: "50%", y: "70%", delay: 0.8 },
-          { x: "30%", y: "85%", delay: 2 },
-          { x: "70%", y: "15%", delay: 0.4 },
-          { x: "90%", y: "60%", delay: 1.2 },
-        ].map((pos, i) => (
+          { x: "10%", y: "15%", size: 180, opacity: 0.03, delay: 0 },
+          { x: "75%", y: "25%", size: 220, opacity: 0.025, delay: 1.5 },
+          { x: "40%", y: "70%", size: 160, opacity: 0.035, delay: 0.8 },
+          { x: "85%", y: "65%", size: 200, opacity: 0.02, delay: 2 },
+          { x: "20%", y: "85%", size: 140, opacity: 0.03, delay: 1.2 },
+        ].map((b, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 rounded-full bg-primary/10 animate-pulse"
+            className="absolute rounded-full animate-pulse"
             style={{
-              left: pos.x,
-              top: pos.y,
-              animationDelay: `${pos.delay}s`,
-              animationDuration: "4s",
+              left: b.x,
+              top: b.y,
+              width: b.size,
+              height: b.size,
+              background: `radial-gradient(circle, hsl(174 78% 41% / ${b.opacity}), transparent 70%)`,
+              filter: "blur(40px)",
+              animationDelay: `${b.delay}s`,
+              animationDuration: "6s",
+              transform: "translate(-50%, -50%)",
             }}
           />
         ))}
@@ -129,24 +133,25 @@ const WhyAutronisSection = () => {
           </ScrollRevealItem>
         </ScrollReveal>
 
-        <ScrollReveal className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto mb-16 sm:mb-20" staggerChildren={0.08}>
-          {reasons.map((r, i) => (
-            <ScrollRevealItem key={r.title}>
-              <ReasonCard
-                reason={r}
-                index={i}
-                hoveredIndex={hoveredIndex}
-                onHover={() => setHoveredIndex(i)}
-                onLeave={() => setHoveredIndex(null)}
-              />
-            </ScrollRevealItem>
-          ))}
-        </ScrollReveal>
-
-        {/* Team photo + CTA block — no heading/subtext, just cards flow into photo */}
+        {/* Single big block: cards + team photo */}
         <ScrollReveal>
           <ScrollRevealItem>
-            <div className="rounded-2xl border border-border bg-card overflow-hidden">
+            <div className="rounded-2xl border border-border bg-card overflow-hidden max-w-5xl mx-auto">
+              {/* Cards grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-6 sm:p-8">
+                {reasons.map((r, i) => (
+                  <ReasonCard
+                    key={r.title}
+                    reason={r}
+                    index={i}
+                    hoveredIndex={hoveredIndex}
+                    onHover={() => setHoveredIndex(i)}
+                    onLeave={() => setHoveredIndex(null)}
+                  />
+                ))}
+              </div>
+
+              {/* Team photo + CTAs */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 {/* CTA side */}
                 <div className="p-8 sm:p-12 flex flex-col justify-center">
@@ -171,7 +176,7 @@ const WhyAutronisSection = () => {
                   </div>
                 </div>
 
-                {/* Image side with gradient overlay blending into card bg */}
+                {/* Image side */}
                 <div ref={imgRef} className="relative min-h-[300px] lg:min-h-0">
                   <motion.img
                     src={teamFoto}
@@ -182,14 +187,13 @@ const WhyAutronisSection = () => {
                     transition={{ duration: 0.7, ease: "easeOut" }}
                     loading="lazy"
                   />
-                  {/* Gradient overlay to blend into card */}
+                  {/* Gradient overlay */}
                   <div
                     className="absolute inset-0 pointer-events-none"
                     style={{
                       background: "linear-gradient(to right, hsl(var(--card)) 0%, hsl(var(--card) / 0.6) 15%, transparent 40%)",
                     }}
                   />
-                  {/* Bottom gradient */}
                   <div
                     className="absolute inset-0 pointer-events-none lg:hidden"
                     style={{

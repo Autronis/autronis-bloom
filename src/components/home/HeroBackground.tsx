@@ -62,34 +62,32 @@ const HeroBackground = () => {
 
       ctx.clearRect(0, 0, w, h);
 
-      // Subtle ambient glow spots
+      // Subtle ambient glow — keep as-is
       drawGlow(w * 0.2, h * 0.4, 300, 0.03 + Math.sin(time * 0.3) * 0.01);
       drawGlow(w * 0.8, h * 0.6, 250, 0.025 + Math.sin(time * 0.4 + 1) * 0.01);
       drawGlow(w * 0.5, h * 0.3, 350, 0.02 + Math.sin(time * 0.2 + 2) * 0.01);
 
-      // Flowing wave lines
-      const waves = [
-        { yBase: h * 0.25, amp: 30, freq: 0.003, speed: 0.4, opacity: 0.08, width: 1.5 },
-        { yBase: h * 0.35, amp: 40, freq: 0.002, speed: 0.3, opacity: 0.12, width: 2 },
-        { yBase: h * 0.5, amp: 25, freq: 0.004, speed: 0.5, opacity: 0.06, width: 1 },
-        { yBase: h * 0.65, amp: 35, freq: 0.0025, speed: 0.35, opacity: 0.1, width: 1.5 },
-        { yBase: h * 0.8, amp: 20, freq: 0.0035, speed: 0.45, opacity: 0.05, width: 1 },
-      ];
+      // Denser wave lines with more contrast and system-like feel
+      const lineCount = 12;
+      for (let i = 0; i < lineCount; i++) {
+        const t = (i + 1) / (lineCount + 1);
+        const yBase = h * (0.15 + t * 0.7);
+        const amp = 15 + Math.sin(i * 1.2) * 10;
+        const freq = 0.002 + (i % 3) * 0.001;
+        const speed = 0.15 + (i % 4) * 0.05;
+        const opacity = i % 2 === 0 ? 0.14 : 0.07;
+        const width = i % 3 === 0 ? 1.5 : 0.8;
+        drawWave(yBase, amp, freq, speed, opacity, width);
+      }
 
-      waves.forEach((wave) => {
-        drawWave(wave.yBase, wave.amp, wave.freq, wave.speed, wave.opacity, wave.width);
-      });
-
-      time += 0.016;
+      time += 0.008; // Very slow movement
       animationId = requestAnimationFrame(animate);
     };
 
-    // Check reduced motion
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (!motionQuery.matches) {
       animate();
     } else {
-      // Draw static frame
       time = 0;
       const w = window.innerWidth;
       const h = window.innerHeight;

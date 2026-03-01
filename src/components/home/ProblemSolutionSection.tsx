@@ -60,7 +60,13 @@ const StrikeThroughText = () => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <span className={`transition-colors duration-300 ${isHovered ? "text-primary brightness-125" : ""}`}>
+      <span
+        className="transition-all duration-500"
+        style={{
+          opacity: isInView ? 0.5 : 1,
+          color: isHovered ? "hsl(174, 78%, 55%)" : undefined,
+        }}
+      >
         "te weinig capaciteit"
       </span>
       <svg
@@ -80,8 +86,8 @@ const StrikeThroughText = () => {
           strokeDasharray="100"
           strokeDashoffset={isInView ? "0" : "100"}
           style={{
-            transition: "stroke-dashoffset 700ms ease-out, stroke 300ms ease-out",
-            filter: isHovered ? "drop-shadow(0 0 4px hsl(174, 78%, 41%))" : "none",
+            transition: "stroke-dashoffset 800ms cubic-bezier(0.23, 1, 0.32, 1), stroke 300ms ease-out",
+            filter: isHovered ? "drop-shadow(0 0 6px hsl(174, 78%, 41%))" : "none",
           }}
         />
       </svg>

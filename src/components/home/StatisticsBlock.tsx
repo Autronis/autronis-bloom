@@ -50,7 +50,7 @@ const StatCard = ({
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       onMouseMove={handleMouseMove}
-      className="relative rounded-lg border border-border bg-card p-4 sm:p-5 text-center overflow-hidden transition-all duration-[280ms] ease-out"
+      className="relative rounded-lg border border-border bg-card p-3 sm:p-4 text-center overflow-hidden transition-all duration-[280ms] ease-out"
       style={{
         transform: isHovered ? "scale(1.05) translateY(-4px)" : "scale(1) translateY(0)",
         opacity: isAnyHovered && !isHovered ? 0.88 : 1,
@@ -68,17 +68,17 @@ const StatCard = ({
       )}
 
       <div className="relative z-10">
-        <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center text-primary mx-auto mb-3">
-          <stat.icon size={16} />
+        <div className="w-7 h-7 rounded-md bg-primary/10 flex items-center justify-center text-primary mx-auto mb-2">
+          <stat.icon size={14} />
         </div>
         {stat.value !== null ? (
-          <p className="text-xl sm:text-2xl font-bold text-primary mb-1">
+          <p className="text-lg sm:text-xl font-bold text-primary mb-0.5">
             <AnimatedCounter target={stat.value} duration={850} suffix={stat.suffix} />
           </p>
         ) : (
-          <p className="text-xl sm:text-2xl font-bold text-primary mb-1">✓</p>
+          <p className="text-lg sm:text-xl font-bold text-primary mb-0.5">✓</p>
         )}
-        <p className="text-xs text-muted-foreground">{stat.label}</p>
+        <p className="text-[11px] text-muted-foreground">{stat.label}</p>
       </div>
     </div>
   );
@@ -88,7 +88,7 @@ const StatisticsBlock = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto">
       {stats.map((stat, i) => (
         <StatCard
           key={stat.label}

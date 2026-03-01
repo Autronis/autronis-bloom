@@ -4,6 +4,9 @@ import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import GlowCard from "@/components/GlowCard";
+import serviceAutomation from "@/assets/service_automation.png";
+import serviceIntegration from "@/assets/service_integration.png";
+import serviceData from "@/assets/service_data.png";
 
 const services = [
   {
@@ -15,7 +18,7 @@ const services = [
       "Onboarding- en offboardingprocessen",
       "Taakroutering en escalaties",
     ],
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop",
+    image: serviceAutomation,
   },
   {
     title: "System Integrations",
@@ -26,7 +29,7 @@ const services = [
       "Webhook-gebaseerde event triggers",
       "Foutafhandeling en retry-logica",
     ],
-    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop",
+    image: serviceIntegration,
   },
   {
     title: "Data & Reporting",
@@ -37,7 +40,7 @@ const services = [
       "Geautomatiseerde wekelijkse rapportages",
       "Anomaly detection en alerts",
     ],
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
+    image: serviceData,
   },
 ];
 

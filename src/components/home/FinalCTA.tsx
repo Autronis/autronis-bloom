@@ -6,98 +6,18 @@ import { useInView } from "framer-motion";
 
 const FinalCTA = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   useEffect(() => {
-    if (!isInView || !canvasRef.current) return;
+    if (!isInView || !svgRef.current) return;
 
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const dpr = Math.min(window.devicePixelRatio, 2);
-    const w = 400;
-    const h = 400;
-    canvas.width = w * dpr;
-    canvas.height = h * dpr;
-    ctx.scale(dpr, dpr);
+    const butterfly = svgRef.current.querySelector("#cta-butterfly") as SVGGElement;
+    if (!butterfly) return;
 
     let startTime: number | null = null;
-    const duration = 3000;
+    const duration = 2500;
     let animId: number;
-
-    const drawButterfly = (scale: number, opacity: number, wingAngle: number) => {
-      ctx.clearRect(0, 0, w, h);
-      ctx.save();
-      ctx.translate(w / 2, h / 2);
-      ctx.scale(scale, scale);
-      ctx.globalAlpha = opacity;
-
-      // Glow
-      const glow = ctx.createRadialGradient(0, 0, 0, 0, 0, 60);
-      glow.addColorStop(0, "hsla(174, 78%, 41%, 0.12)");
-      glow.addColorStop(1, "hsla(174, 78%, 41%, 0)");
-      ctx.fillStyle = glow;
-      ctx.fillRect(-60, -60, 120, 120);
-
-      // Wings with flapping
-      const flapScale = Math.cos(wingAngle);
-
-      // Left wing
-      ctx.save();
-      ctx.scale(flapScale, 1);
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.bezierCurveTo(-15, -25, -35, -30, -25, -5);
-      ctx.bezierCurveTo(-35, 10, -20, 25, 0, 10);
-      ctx.fillStyle = "hsla(174, 78%, 41%, 0.3)";
-      ctx.fill();
-      // Inner detail
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.bezierCurveTo(-8, -15, -20, -18, -14, -3);
-      ctx.bezierCurveTo(-18, 5, -10, 12, 0, 5);
-      ctx.fillStyle = "hsla(174, 78%, 41%, 0.15)";
-      ctx.fill();
-      ctx.restore();
-
-      // Right wing
-      ctx.save();
-      ctx.scale(flapScale, 1);
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.bezierCurveTo(15, -25, 35, -30, 25, -5);
-      ctx.bezierCurveTo(35, 10, 20, 25, 0, 10);
-      ctx.fillStyle = "hsla(174, 78%, 41%, 0.3)";
-      ctx.fill();
-      // Inner detail
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.bezierCurveTo(8, -15, 20, -18, 14, -3);
-      ctx.bezierCurveTo(18, 5, 10, 12, 0, 5);
-      ctx.fillStyle = "hsla(174, 78%, 41%, 0.15)";
-      ctx.fill();
-      ctx.restore();
-
-      // Body
-      ctx.beginPath();
-      ctx.ellipse(0, 2, 1.5, 10, 0, 0, Math.PI * 2);
-      ctx.fillStyle = "hsla(174, 78%, 41%, 0.5)";
-      ctx.fill();
-
-      // Antennae
-      ctx.beginPath();
-      ctx.moveTo(-1, -8);
-      ctx.quadraticCurveTo(-5, -18, -7, -20);
-      ctx.moveTo(1, -8);
-      ctx.quadraticCurveTo(5, -18, 7, -20);
-      ctx.strokeStyle = "hsla(174, 78%, 41%, 0.4)";
-      ctx.lineWidth = 0.8;
-      ctx.stroke();
-
-      ctx.restore();
-    };
 
     const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
@@ -107,41 +27,77 @@ const FinalCTA = () => {
       // Ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
 
-      // Scale from tiny to full
-      const scale = 0.3 + eased * 3.5;
-      const opacity = Math.min(progress * 2.5, 1);
-      const wingAngle = elapsed * 0.008;
+      // Scale from small to large
+      const scale = 0.2 + eased * 1.8;
+      const opacity = Math.min(progress * 3, 1);
 
-      drawButterfly(scale, opacity, wingAngle);
+      butterfly.setAttribute("transform", `scale(${scale})`);
+      butterfly.style.opacity = String(opacity);
 
       if (progress < 1) {
         animId = requestAnimationFrame(animate);
-      } else {
-        // Continue wing flapping after growth is done
-        const continueFlap = (ts: number) => {
-          const wing = ts * 0.005;
-          drawButterfly(scale, 1, wing);
-          animId = requestAnimationFrame(continueFlap);
-        };
-        animId = requestAnimationFrame(continueFlap);
       }
     };
 
     animId = requestAnimationFrame(animate);
-
     return () => cancelAnimationFrame(animId);
   }, [isInView]);
 
   return (
     <section ref={sectionRef} className="py-16 sm:py-28 border-t border-border relative overflow-hidden">
-      {/* Centered butterfly canvas behind CTA */}
+      {/* Centered static butterfly that scales up */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <canvas
-          ref={canvasRef}
-          className="w-[400px] h-[400px] opacity-80"
-          style={{ width: 400, height: 400 }}
+        <svg
+          ref={svgRef}
+          width="300"
+          height="300"
+          viewBox="-50 -50 100 100"
+          className="opacity-80"
           aria-hidden="true"
-        />
+        >
+          <g id="cta-butterfly" style={{ opacity: 0, transformOrigin: "center" }}>
+            {/* Glow */}
+            <circle cx="0" cy="0" r="40" fill="hsl(174, 78%, 41%)" fillOpacity="0.05" />
+
+            {/* Left wing upper */}
+            <path
+              d="M 0 0 C -10 -20, -30 -25, -22 -5 C -28 5, -15 18, 0 8 Z"
+              fill="hsl(174, 78%, 41%)"
+              fillOpacity="0.2"
+            />
+            {/* Left wing inner */}
+            <path
+              d="M 0 0 C -6 -12, -18 -15, -13 -3 C -16 3, -8 10, 0 4 Z"
+              fill="hsl(174, 78%, 41%)"
+              fillOpacity="0.1"
+            />
+
+            {/* Right wing upper */}
+            <path
+              d="M 0 0 C 10 -20, 30 -25, 22 -5 C 28 5, 15 18, 0 8 Z"
+              fill="hsl(174, 78%, 41%)"
+              fillOpacity="0.2"
+            />
+            {/* Right wing inner */}
+            <path
+              d="M 0 0 C 6 -12, 18 -15, 13 -3 C 16 3, 8 10, 0 4 Z"
+              fill="hsl(174, 78%, 41%)"
+              fillOpacity="0.1"
+            />
+
+            {/* Body */}
+            <ellipse cx="0" cy="2" rx="1.2" ry="8" fill="hsl(174, 78%, 41%)" fillOpacity="0.35" />
+
+            {/* Antennae */}
+            <path
+              d="M -1 -6 Q -4 -14 -6 -16 M 1 -6 Q 4 -14 6 -16"
+              stroke="hsl(174, 78%, 41%)"
+              strokeOpacity="0.3"
+              strokeWidth="0.6"
+              fill="none"
+            />
+          </g>
+        </svg>
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 text-center relative z-10">

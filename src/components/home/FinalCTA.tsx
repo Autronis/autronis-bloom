@@ -1,103 +1,65 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { useRef, useEffect } from "react";
-import { useInView } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
 const FinalCTA = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const svgRef = useRef<SVGSVGElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-
-  useEffect(() => {
-    if (!isInView || !svgRef.current) return;
-
-    const butterfly = svgRef.current.querySelector("#cta-butterfly") as SVGGElement;
-    if (!butterfly) return;
-
-    let startTime: number | null = null;
-    const duration = 2500;
-    let animId: number;
-
-    const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-
-      // Ease out cubic
-      const eased = 1 - Math.pow(1 - progress, 3);
-
-      // Scale from small to large
-      const scale = 0.2 + eased * 1.8;
-      const opacity = Math.min(progress * 3, 1);
-
-      butterfly.setAttribute("transform", `scale(${scale})`);
-      butterfly.style.opacity = String(opacity);
-
-      if (progress < 1) {
-        animId = requestAnimationFrame(animate);
-      }
-    };
-
-    animId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animId);
-  }, [isInView]);
+  const isInView = useInView(sectionRef, { once: false, amount: 0.4 });
 
   return (
     <section ref={sectionRef} className="py-16 sm:py-28 border-t border-border relative overflow-hidden">
-      {/* Centered static butterfly that scales up */}
+      {/* Large butterfly silhouette behind text */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <svg
-          ref={svgRef}
-          width="300"
-          height="300"
-          viewBox="-50 -50 100 100"
-          className="opacity-80"
+        <motion.svg
+          width="500"
+          height="400"
+          viewBox="-60 -50 120 100"
+          className="max-w-[90vw]"
           aria-hidden="true"
+          initial={{ scale: 0.15, opacity: 0 }}
+          animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0.15, opacity: 0 }}
+          transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <g id="cta-butterfly" style={{ opacity: 0, transformOrigin: "center" }}>
-            {/* Glow */}
-            <circle cx="0" cy="0" r="40" fill="hsl(174, 78%, 41%)" fillOpacity="0.05" />
+          {/* Left wing */}
+          <path
+            d="M 0 0 C -8 -30, -45 -45, -40 -10 C -50 10, -35 40, 0 15 Z"
+            fill="hsl(174, 78%, 41%)"
+            fillOpacity="0.18"
+          />
+          {/* Left wing detail */}
+          <path
+            d="M 0 0 C -5 -18, -28 -28, -24 -6 C -30 6, -20 24, 0 9 Z"
+            fill="hsl(174, 78%, 41%)"
+            fillOpacity="0.1"
+          />
 
-            {/* Left wing upper */}
-            <path
-              d="M 0 0 C -10 -20, -30 -25, -22 -5 C -28 5, -15 18, 0 8 Z"
-              fill="hsl(174, 78%, 41%)"
-              fillOpacity="0.2"
-            />
-            {/* Left wing inner */}
-            <path
-              d="M 0 0 C -6 -12, -18 -15, -13 -3 C -16 3, -8 10, 0 4 Z"
-              fill="hsl(174, 78%, 41%)"
-              fillOpacity="0.1"
-            />
+          {/* Right wing */}
+          <path
+            d="M 0 0 C 8 -30, 45 -45, 40 -10 C 50 10, 35 40, 0 15 Z"
+            fill="hsl(174, 78%, 41%)"
+            fillOpacity="0.18"
+          />
+          {/* Right wing detail */}
+          <path
+            d="M 0 0 C 5 -18, 28 -28, 24 -6 C 30 6, 20 24, 0 9 Z"
+            fill="hsl(174, 78%, 41%)"
+            fillOpacity="0.1"
+          />
 
-            {/* Right wing upper */}
-            <path
-              d="M 0 0 C 10 -20, 30 -25, 22 -5 C 28 5, 15 18, 0 8 Z"
-              fill="hsl(174, 78%, 41%)"
-              fillOpacity="0.2"
-            />
-            {/* Right wing inner */}
-            <path
-              d="M 0 0 C 6 -12, 18 -15, 13 -3 C 16 3, 8 10, 0 4 Z"
-              fill="hsl(174, 78%, 41%)"
-              fillOpacity="0.1"
-            />
+          {/* Body */}
+          <ellipse cx="0" cy="3" rx="2" ry="14" fill="hsl(174, 78%, 41%)" fillOpacity="0.25" />
 
-            {/* Body */}
-            <ellipse cx="0" cy="2" rx="1.2" ry="8" fill="hsl(174, 78%, 41%)" fillOpacity="0.35" />
-
-            {/* Antennae */}
-            <path
-              d="M -1 -6 Q -4 -14 -6 -16 M 1 -6 Q 4 -14 6 -16"
-              stroke="hsl(174, 78%, 41%)"
-              strokeOpacity="0.3"
-              strokeWidth="0.6"
-              fill="none"
-            />
-          </g>
-        </svg>
+          {/* Antennae */}
+          <path
+            d="M -1.5 -10 Q -6 -22 -9 -26 M 1.5 -10 Q 6 -22 9 -26"
+            stroke="hsl(174, 78%, 41%)"
+            strokeOpacity="0.2"
+            strokeWidth="1"
+            fill="none"
+          />
+        </motion.svg>
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 text-center relative z-10">

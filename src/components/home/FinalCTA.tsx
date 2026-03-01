@@ -10,54 +10,104 @@ const FinalCTA = () => {
 
   return (
     <section ref={sectionRef} className="py-16 sm:py-28 border-t border-border relative overflow-hidden">
-      {/* Large butterfly silhouette behind text */}
+      {/* Abstract butterfly silhouette */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <motion.svg
-          width="500"
-          height="400"
-          viewBox="-60 -50 120 100"
+          width="600"
+          height="500"
+          viewBox="-70 -60 140 120"
           className="max-w-[90vw]"
           aria-hidden="true"
           initial={{ scale: 0.15, opacity: 0 }}
           animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0.15, opacity: 0 }}
           transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* Left wing */}
-          <path
-            d="M 0 0 C -8 -30, -45 -45, -40 -10 C -50 10, -35 40, 0 15 Z"
+          {/* Left wing - breathing animation */}
+          <motion.path
+            d="M 0 0 C -10 -35, -50 -50, -45 -12 C -55 12, -38 45, 0 18 Z"
             fill="hsl(174, 78%, 41%)"
-            fillOpacity="0.18"
+            fillOpacity="0.14"
+            animate={{
+              d: [
+                "M 0 0 C -10 -35, -50 -50, -45 -12 C -55 12, -38 45, 0 18 Z",
+                "M 0 0 C -12 -38, -55 -48, -48 -10 C -58 14, -40 48, 0 20 Z",
+                "M 0 0 C -10 -35, -50 -50, -45 -12 C -55 12, -38 45, 0 18 Z",
+              ],
+            }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
           />
-          {/* Left wing detail */}
-          <path
-            d="M 0 0 C -5 -18, -28 -28, -24 -6 C -30 6, -20 24, 0 9 Z"
+          {/* Left wing inner */}
+          <motion.path
+            d="M 0 0 C -6 -20, -30 -30, -26 -7 C -32 8, -22 28, 0 11 Z"
             fill="hsl(174, 78%, 41%)"
-            fillOpacity="0.1"
+            fillOpacity="0.08"
+            animate={{
+              d: [
+                "M 0 0 C -6 -20, -30 -30, -26 -7 C -32 8, -22 28, 0 11 Z",
+                "M 0 0 C -7 -22, -33 -28, -28 -5 C -34 10, -24 30, 0 13 Z",
+                "M 0 0 C -6 -20, -30 -30, -26 -7 C -32 8, -22 28, 0 11 Z",
+              ],
+            }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
           />
 
-          {/* Right wing */}
-          <path
-            d="M 0 0 C 8 -30, 45 -45, 40 -10 C 50 10, 35 40, 0 15 Z"
+          {/* Right wing - breathing animation */}
+          <motion.path
+            d="M 0 0 C 10 -35, 50 -50, 45 -12 C 55 12, 38 45, 0 18 Z"
             fill="hsl(174, 78%, 41%)"
-            fillOpacity="0.18"
+            fillOpacity="0.14"
+            animate={{
+              d: [
+                "M 0 0 C 10 -35, 50 -50, 45 -12 C 55 12, 38 45, 0 18 Z",
+                "M 0 0 C 12 -38, 55 -48, 48 -10 C 58 14, 40 48, 0 20 Z",
+                "M 0 0 C 10 -35, 50 -50, 45 -12 C 55 12, 38 45, 0 18 Z",
+              ],
+            }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
           />
-          {/* Right wing detail */}
-          <path
-            d="M 0 0 C 5 -18, 28 -28, 24 -6 C 30 6, 20 24, 0 9 Z"
+          {/* Right wing inner */}
+          <motion.path
+            d="M 0 0 C 6 -20, 30 -30, 26 -7 C 32 8, 22 28, 0 11 Z"
             fill="hsl(174, 78%, 41%)"
-            fillOpacity="0.1"
+            fillOpacity="0.08"
+            animate={{
+              d: [
+                "M 0 0 C 6 -20, 30 -30, 26 -7 C 32 8, 22 28, 0 11 Z",
+                "M 0 0 C 7 -22, 33 -28, 28 -5 C 34 10, 24 30, 0 13 Z",
+                "M 0 0 C 6 -20, 30 -30, 26 -7 C 32 8, 22 28, 0 11 Z",
+              ],
+            }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
           />
 
-          {/* Body */}
-          <ellipse cx="0" cy="3" rx="2" ry="14" fill="hsl(174, 78%, 41%)" fillOpacity="0.25" />
+          {/* Body - pulse */}
+          <motion.ellipse
+            cx="0"
+            cy="3"
+            rx="2.5"
+            ry="16"
+            fill="hsl(174, 78%, 41%)"
+            fillOpacity="0.18"
+            animate={{ fillOpacity: [0.18, 0.28, 0.18] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          />
 
           {/* Antennae */}
           <path
-            d="M -1.5 -10 Q -6 -22 -9 -26 M 1.5 -10 Q 6 -22 9 -26"
+            d="M -1.5 -12 Q -7 -25 -10 -30 M 1.5 -12 Q 7 -25 10 -30"
             stroke="hsl(174, 78%, 41%)"
-            strokeOpacity="0.2"
-            strokeWidth="1"
+            strokeOpacity="0.15"
+            strokeWidth="0.8"
             fill="none"
+          />
+
+          {/* Subtle rotation wrapper */}
+          <animateTransform
+            attributeName="transform"
+            type="rotate"
+            values="0 0 3;2 0 3;0 0 3;-2 0 3;0 0 3"
+            dur="9s"
+            repeatCount="indefinite"
           />
         </motion.svg>
       </div>

@@ -1,6 +1,10 @@
-import { Blocks, BarChart3, Users, ShieldCheck } from "lucide-react";
-import { useState, useCallback } from "react";
+import { Blocks, BarChart3, Users, ShieldCheck, ArrowRight } from "lucide-react";
+import { useState, useCallback, useRef } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { motion, useInView } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import teamFoto from "@/assets/autronis_team_foto.png";
 
 const reasons = [
   {
@@ -85,38 +89,29 @@ const ReasonCard = ({
 
 const WhyAutronisSection = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const imgRef = useRef<HTMLDivElement>(null);
+  const imgInView = useInView(imgRef, { once: true, amount: 0.3 });
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
-      {/* Grid background with more activity */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `
-            linear-gradient(hsl(174 78% 30% / 0.05) 1px, transparent 1px),
-            linear-gradient(90deg, hsl(174 78% 30% / 0.05) 1px, transparent 1px)
-          `,
-          backgroundSize: "50px 50px",
-        }}
-      />
+      {/* Subtle background activity (no grid, just some floating dots) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
-          { x: "12%", y: "18%" },
-          { x: "82%", y: "30%" },
-          { x: "45%", y: "72%" },
-          { x: "68%", y: "12%" },
-          { x: "28%", y: "58%" },
-          { x: "90%", y: "65%" },
-          { x: "55%", y: "88%" },
+          { x: "15%", y: "20%", delay: 0 },
+          { x: "80%", y: "35%", delay: 1.5 },
+          { x: "50%", y: "70%", delay: 0.8 },
+          { x: "30%", y: "85%", delay: 2 },
+          { x: "70%", y: "15%", delay: 0.4 },
+          { x: "90%", y: "60%", delay: 1.2 },
         ].map((pos, i) => (
           <div
             key={i}
-            className="absolute w-1.5 h-1.5 rounded-full bg-primary/15 animate-pulse"
+            className="absolute w-1 h-1 rounded-full bg-primary/10 animate-pulse"
             style={{
               left: pos.x,
               top: pos.y,
-              animationDelay: `${i * 0.4}s`,
-              animationDuration: "3s",
+              animationDelay: `${pos.delay}s`,
+              animationDuration: "4s",
             }}
           />
         ))}
@@ -134,7 +129,7 @@ const WhyAutronisSection = () => {
           </ScrollRevealItem>
         </ScrollReveal>
 
-        <ScrollReveal className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto" staggerChildren={0.08}>
+        <ScrollReveal className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto mb-16 sm:mb-20" staggerChildren={0.08}>
           {reasons.map((r, i) => (
             <ScrollRevealItem key={r.title}>
               <ReasonCard
@@ -146,6 +141,58 @@ const WhyAutronisSection = () => {
               />
             </ScrollRevealItem>
           ))}
+        </ScrollReveal>
+
+        {/* Team photo + CTA block */}
+        <ScrollReveal>
+          <ScrollRevealItem>
+            <div className="rounded-2xl border border-border bg-card overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                {/* Text side */}
+                <div className="p-8 sm:p-12 flex flex-col justify-center">
+                  <h3 className="text-2xl sm:text-3xl font-bold mb-4 leading-tight">
+                    Klaar om te zien hoe het werkt voor uw bedrijf?
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed mb-8">
+                    Plan een vrijblijvend gesprek. Wij brengen uw workflows in kaart,
+                    identificeren de quick wins en laten zien hoe het pad naar productie eruitziet.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Button asChild size="lg">
+                      <Link to="/book">
+                        Plan een kennismaking
+                        <ArrowRight size={18} />
+                      </Link>
+                    </Button>
+                    <Button
+                      asChild
+                      size="lg"
+                      variant="outline"
+                      className="border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors duration-300"
+                    >
+                      <Link to="/team">
+                        Bekijk ons team
+                        <ArrowRight size={18} />
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Image side */}
+                <div ref={imgRef} className="relative min-h-[300px] lg:min-h-0">
+                  <motion.img
+                    src={teamFoto}
+                    alt="Autronis team - Sem en Syb"
+                    className="w-full h-full object-cover"
+                    initial={{ opacity: 0, scale: 1.03 }}
+                    animate={imgInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.03 }}
+                    transition={{ duration: 0.7, ease: "easeOut" }}
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+          </ScrollRevealItem>
         </ScrollReveal>
       </div>
     </section>

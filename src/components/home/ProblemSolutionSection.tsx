@@ -61,9 +61,9 @@ const StrikeThroughText = () => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <span
-        className="transition-all duration-500"
+        className="transition-all duration-[1200ms]"
         style={{
-          opacity: isInView ? 0.5 : 1,
+          opacity: isInView ? 0.4 : 1,
           color: isHovered ? "hsl(174, 78%, 55%)" : undefined,
         }}
       >
@@ -71,23 +71,27 @@ const StrikeThroughText = () => {
       </span>
       <svg
         className="absolute left-0 top-1/2 w-full pointer-events-none"
-        style={{ height: "6px", transform: "translateY(-50%)" }}
-        viewBox="0 0 100 6"
+        style={{ height: "8px", transform: "translateY(-50%)" }}
+        viewBox="0 0 100 8"
         preserveAspectRatio="none"
       >
         <line
           x1="0"
-          y1="3"
+          y1="4"
           x2="100"
-          y2="3"
+          y2="4"
           stroke={isHovered ? "hsl(174, 78%, 55%)" : "hsl(174, 78%, 41%)"}
-          strokeWidth="2.5"
+          strokeWidth="3"
           strokeLinecap="round"
           strokeDasharray="100"
           strokeDashoffset={isInView ? "0" : "100"}
           style={{
-            transition: "stroke-dashoffset 800ms cubic-bezier(0.23, 1, 0.32, 1), stroke 300ms ease-out",
-            filter: isHovered ? "drop-shadow(0 0 6px hsl(174, 78%, 41%))" : "none",
+            transition: "stroke-dashoffset 1500ms cubic-bezier(0.25, 0.46, 0.45, 0.94), stroke 300ms ease-out",
+            filter: isHovered
+              ? "drop-shadow(0 0 8px hsl(174, 78%, 41%))"
+              : isInView
+              ? "drop-shadow(0 0 3px hsl(174, 78%, 41% / 0.4))"
+              : "none",
           }}
         />
       </svg>
@@ -100,8 +104,41 @@ const ProblemSolutionSection = () => {
   const [solutionHovered, setSolutionHovered] = useState<number | null>(null);
 
   return (
-    <section className="py-12 sm:py-24 border-t border-border">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
+      {/* Grid background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `
+            linear-gradient(hsl(174 78% 30% / 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, hsl(174 78% 30% / 0.05) 1px, transparent 1px)
+          `,
+          backgroundSize: "50px 50px",
+        }}
+      />
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {[
+          { x: "18%", y: "12%", delay: 0 },
+          { x: "75%", y: "28%", delay: 1.3 },
+          { x: "42%", y: "65%", delay: 0.7 },
+          { x: "88%", y: "72%", delay: 1.8 },
+          { x: "10%", y: "80%", delay: 0.4 },
+          { x: "60%", y: "90%", delay: 2.2 },
+        ].map((pos, i) => (
+          <div
+            key={i}
+            className="absolute w-1.5 h-1.5 rounded-full bg-primary/15 animate-pulse"
+            style={{
+              left: pos.x,
+              top: pos.y,
+              animationDelay: `${pos.delay}s`,
+              animationDuration: "3s",
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* PROBLEEM */}
         <div className="mb-16 sm:mb-24">
           <ScrollReveal className="text-center max-w-2xl mx-auto mb-10">

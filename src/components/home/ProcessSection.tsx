@@ -42,7 +42,6 @@ const phases = [
   },
 ];
 
-/* ── Timeline card with glow ── */
 const TimelineCard = ({
   phase,
   index,
@@ -106,33 +105,44 @@ const TimelineCard = ({
 
 const ProcessSection = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const timelineRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [fillHeight, setFillHeight] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const sectionHeight = rect.height;
+      if (!sectionRef.current || !timelineRef.current) return;
       const viewportH = window.innerHeight;
 
-      // Progress: 0 when section top enters viewport, 1 when section bottom exits
-      const progress = Math.max(0, Math.min(1, (viewportH - rect.top) / (sectionHeight + viewportH * 0.5)));
-      setScrollProgress(progress);
+      // Calculate fill height based on active card positions
+      let newActive = -1;
+      let targetFillHeight = 0;
 
-      // Determine active card: compute how far each card's center is through the viewport
-      let newActive = 0;
       cardRefs.current.forEach((ref, i) => {
         if (!ref) return;
         const cardRect = ref.getBoundingClientRect();
         const cardCenter = cardRect.top + cardRect.height / 2;
-        if (cardCenter < viewportH * 0.65) {
+        // Card becomes active when its center passes 60% of viewport
+        if (cardCenter < viewportH * 0.6) {
           newActive = i;
         }
       });
+
+      // Calculate fill height to reach the active node
+      if (newActive >= 0 && timelineRef.current) {
+        const timelineRect = timelineRef.current.getBoundingClientRect();
+        const activeCard = cardRefs.current[newActive];
+        if (activeCard) {
+          const activeRect = activeCard.getBoundingClientRect();
+          // Fill to the center of the active node (which is at the top of the card + ~20px for the node center)
+          targetFillHeight = activeRect.top + 20 - timelineRect.top;
+        }
+      }
+
       setActiveIndex(newActive);
+      setFillHeight(Math.max(0, targetFillHeight));
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -141,8 +151,40 @@ const ProcessSection = () => {
   }, []);
 
   return (
-    <section className="py-12 sm:py-24 border-t border-border" ref={sectionRef}>
-      <div className="container mx-auto px-4 lg:px-8">
+    <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden" ref={sectionRef}>
+      {/* Grid background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `
+            linear-gradient(hsl(174 78% 30% / 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, hsl(174 78% 30% / 0.05) 1px, transparent 1px)
+          `,
+          backgroundSize: "50px 50px",
+        }}
+      />
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {[
+          { x: "20%", y: "15%", delay: 0.5 },
+          { x: "78%", y: "40%", delay: 1.2 },
+          { x: "45%", y: "85%", delay: 0.8 },
+          { x: "85%", y: "70%", delay: 1.6 },
+          { x: "12%", y: "60%", delay: 2 },
+        ].map((pos, i) => (
+          <div
+            key={i}
+            className="absolute w-1.5 h-1.5 rounded-full bg-primary/12 animate-pulse"
+            style={{
+              left: pos.x,
+              top: pos.y,
+              animationDelay: `${pos.delay}s`,
+              animationDuration: "3.5s",
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <ScrollReveal className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
           <ScrollRevealItem>
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
@@ -156,12 +198,15 @@ const ProcessSection = () => {
         </ScrollReveal>
 
         {/* Timeline layout */}
-        <div className="relative max-w-3xl mx-auto">
+        <div className="relative max-w-3xl mx-auto" ref={timelineRef}>
           {/* Vertical line (left) */}
           <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-border hidden sm:block">
             <div
-              className="w-full bg-primary transition-all duration-200"
-              style={{ height: `${scrollProgress * 100}%` }}
+              className="w-full bg-primary rounded-full"
+              style={{
+                height: `${fillHeight}px`,
+                transition: "height 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+              }}
             />
           </div>
 
@@ -176,11 +221,14 @@ const ProcessSection = () => {
                 {/* Node */}
                 <div className="hidden sm:flex flex-col items-center shrink-0 relative z-10">
                   <div
-                    className={`w-10 h-10 rounded-full border-2 flex items-center justify-center text-xs font-bold transition-all duration-300 ${
-                      activeIndex >= i
-                        ? "border-primary bg-primary text-primary-foreground shadow-[0_0_14px_hsl(174_78%_41%/0.4)]"
-                        : "border-border bg-card text-muted-foreground"
-                    }`}
+                    className="w-10 h-10 rounded-full border-2 flex items-center justify-center text-xs font-bold"
+                    style={{
+                      borderColor: activeIndex >= i ? "hsl(var(--primary))" : "hsl(var(--border))",
+                      backgroundColor: activeIndex >= i ? "hsl(var(--primary))" : "hsl(var(--card))",
+                      color: activeIndex >= i ? "hsl(var(--primary-foreground))" : "hsl(var(--muted-foreground))",
+                      boxShadow: activeIndex >= i ? "0 0 16px hsl(174 78% 41% / 0.45)" : "none",
+                      transition: "all 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                    }}
                   >
                     {phase.step}
                   </div>

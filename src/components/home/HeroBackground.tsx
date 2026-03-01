@@ -19,7 +19,7 @@ const HeroBackground = () => {
 
     let animationId: number;
     let time = 0;
-    const lineCount = 18;
+    const lineCount = 14;
 
     const dots: GlowDot[] = [];
     for (let i = 0; i < 14; i++) {
@@ -45,9 +45,8 @@ const HeroBackground = () => {
     window.addEventListener("resize", resize);
 
     const getWaveY = (x: number, lineIdx: number, h: number) => {
-      // Lines packed into a tighter vertical band (30%-70% of height)
       const t_pos = (lineIdx + 1) / (lineCount + 1);
-      const yBase = h * (0.42 + t_pos * 0.14);
+      const yBase = h * (0.38 + t_pos * 0.22);
       const freq = 0.0018 + (lineIdx % 3) * 0.0008;
       const speed = 0.12 + (lineIdx % 4) * 0.04;
       const amp = 8 + Math.sin(lineIdx * 1.1) * 5;
@@ -77,8 +76,8 @@ const HeroBackground = () => {
       drawGlow(w * 0.5, h * 0.3, 350, 0.02 + Math.sin(time * 0.2 + 2) * 0.01);
 
       for (let i = 0; i < lineCount; i++) {
-        const opacity = i % 2 === 0 ? 0.12 : 0.06;
-        const lineWidth = i % 3 === 0 ? 2.5 : 1.4;
+        const opacity = i % 2 === 0 ? 0.14 : 0.07;
+        const lineWidth = i % 3 === 0 ? 3.5 : 2;
 
         ctx.beginPath();
         ctx.strokeStyle = `hsla(174, 78%, 41%, ${opacity})`;

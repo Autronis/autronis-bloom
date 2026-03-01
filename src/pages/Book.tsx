@@ -33,15 +33,15 @@ const Book = () => {
     <Layout>
       <section className="pt-16 pb-24">
         <div className="container mx-auto px-4 lg:px-8">
+          <div className="max-w-2xl mx-auto text-center mb-12">
+            <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Plan uw scan</p>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4">Plan uw Automation Scan</h1>
+            <p className="text-muted-foreground">
+              Vul het formulier in zodat we uw scan goed kunnen voorbereiden. We nemen binnen 24 uur contact op.
+            </p>
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            {/* Form */}
             <div>
-              <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Plan uw scan</p>
-              <h1 className="text-3xl sm:text-4xl font-bold mb-4">Plan uw Automation Scan</h1>
-              <p className="text-muted-foreground mb-8">
-                Vul het formulier in zodat we uw scan goed kunnen voorbereiden. We nemen binnen 24 uur contact op.
-              </p>
-
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">

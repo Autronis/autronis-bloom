@@ -16,20 +16,14 @@ import SecurityBlock from "@/components/home/SecurityBlock";
 import FAQSection from "@/components/home/FAQSection";
 import FinalCTA from "@/components/home/FinalCTA";
 
-const headlines = [
-  "Breng structuur in je groei.",
-  "Breng structuur in je processen.",
-  "Breng structuur in je systemen.",
-  "Breng structuur in je organisatie.",
-  "Breng structuur in je schaalbaarheid.",
-];
+const rotatingWords = ["groei", "processen", "systemen", "organisatie", "schaalbaarheid"];
 
 const Index = () => {
-  const [headlineIndex, setHeadlineIndex] = useState(0);
+  const [wordIndex, setWordIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setHeadlineIndex((prev) => (prev + 1) % headlines.length);
+      setWordIndex((prev) => (prev + 1) % rotatingWords.length);
     }, 3500);
     return () => clearInterval(interval);
   }, []);
@@ -37,41 +31,49 @@ const Index = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="relative min-h-[80vh] sm:min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-[80vh] sm:min-h-screen flex flex-col items-center justify-center overflow-hidden">
         <HeroBackground />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase">
               Automation & System Architecture
             </p>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.1] tracking-tight mb-6 h-[1.2em] relative">
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={headlineIndex}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
-                  className="block"
-                >
-                  {headlines[headlineIndex]}
-                </motion.span>
-              </AnimatePresence>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
+              Breng structuur in je{" "}
+              <span className="inline-block relative align-bottom overflow-hidden" style={{ minWidth: "3ch" }}>
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={wordIndex}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -16 }}
+                    transition={{ duration: 0.45, ease: "easeOut" }}
+                    className="inline-block text-primary"
+                  >
+                    {rotatingWords[wordIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
+              .
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
               Wij transformeren processen tot slimme systemen die schaalbaar en beheersbaar blijven.
             </p>
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="mb-12">
               <Link to="/book">
                 Plan een Automation Scan
                 <ArrowRight size={18} />
               </Link>
             </Button>
+
+            {/* Statistics directly under CTA */}
+            <StatisticsBlock />
           </div>
         </div>
       </section>
 
-      <StatisticsBlock />
+
+
       <ProblemSolutionSection />
       <ServicePillars />
       <ProcessSection />

@@ -13,14 +13,15 @@ const Contact = () => {
     <Layout>
       <section className="pt-16 pb-24">
         <div className="container mx-auto px-4 lg:px-8">
+          <div className="max-w-2xl mx-auto text-center mb-12">
+            <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Contact</p>
+            <h1 className="text-4xl sm:text-5xl font-bold mb-4">Laten we kennismaken</h1>
+            <p className="text-muted-foreground leading-relaxed">
+              Wilt u automatiseren, opschalen of sparren over de mogelijkheden? Stuur ons een bericht of plan direct een vrijblijvende Automation Scan.
+            </p>
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
-              <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Contact</p>
-              <h1 className="text-4xl sm:text-5xl font-bold mb-4">Laten we kennismaken</h1>
-              <p className="text-muted-foreground mb-8 leading-relaxed">
-                Wilt u automatiseren, opschalen of sparren over de mogelijkheden? Stuur ons een bericht of plan direct een vrijblijvende Automation Scan.
-              </p>
-
               {sent ? (
                 <div className="rounded-xl border border-primary/30 bg-primary/5 p-8 text-center">
                   <p className="text-lg font-semibold mb-2">Bericht verstuurd!</p>

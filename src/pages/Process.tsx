@@ -72,7 +72,7 @@ const Process = () => {
       <section className="pt-16 pb-24">
         <div className="container mx-auto px-4 lg:px-8">
           {/* Hero */}
-          <div className="max-w-3xl mb-20">
+          <div className="max-w-3xl mx-auto text-center mb-20">
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
               Aanpak
             </p>

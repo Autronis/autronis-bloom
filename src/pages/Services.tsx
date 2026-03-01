@@ -89,7 +89,7 @@ const Services = () => {
       {/* Hero */}
       <section className="pt-16 pb-12">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-3xl">
+          <div className="max-w-3xl mx-auto text-center">
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
               Services
             </p>

@@ -5,6 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import AnimatedBubbles from "@/components/home/AnimatedBubbles";
 
 const faqs = [
   {
@@ -44,17 +45,14 @@ const faqs = [
 const FAQSection = () => {
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
-      {/* Grid background */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `
-            linear-gradient(hsl(174 78% 30% / 0.035) 1px, transparent 1px),
-            linear-gradient(90deg, hsl(174 78% 30% / 0.035) 1px, transparent 1px)
-          `,
-          backgroundSize: "50px 50px",
-        }}
-      />
+      {/* Bubbles background */}
+      <AnimatedBubbles bubbles={[
+        { x: "12%", y: "30%", size: 200, opacity: 0.09, delay: 0.4 },
+        { x: "80%", y: "20%", size: 260, opacity: 0.1, delay: 1.3 },
+        { x: "50%", y: "75%", size: 220, opacity: 0.08, delay: 0.8 },
+        { x: "25%", y: "60%", size: 180, opacity: 0.11, delay: 1.9 },
+        { x: "70%", y: "50%", size: 240, opacity: 0.09, delay: 0.6 },
+      ]} />
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
           { x: "12%", y: "20%", delay: 0.3 },

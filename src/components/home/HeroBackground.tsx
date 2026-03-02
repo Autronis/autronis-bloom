@@ -72,13 +72,13 @@ const HeroBackground = () => {
 
       ctx.clearRect(0, 0, w, h);
 
-      drawGlow(w * 0.2, h * 0.4, 300, 0.03 + Math.sin(time * 0.3) * 0.01);
-      drawGlow(w * 0.8, h * 0.6, 250, 0.025 + Math.sin(time * 0.4 + 1) * 0.01);
-      drawGlow(w * 0.5, h * 0.3, 350, 0.02 + Math.sin(time * 0.2 + 2) * 0.01);
+      drawGlow(w * 0.2, h * 0.4, 400, 0.02 + Math.sin(time * 0.3) * 0.008);
+      drawGlow(w * 0.8, h * 0.6, 350, 0.018 + Math.sin(time * 0.4 + 1) * 0.008);
+      drawGlow(w * 0.5, h * 0.3, 450, 0.015 + Math.sin(time * 0.2 + 2) * 0.008);
 
       for (let i = 0; i < lineCount; i++) {
-        const opacity = i % 2 === 0 ? 0.14 : 0.07;
-        const lineWidth = i % 3 === 0 ? 3.5 : 2;
+        const opacity = i % 2 === 0 ? 0.07 : 0.035;
+        const lineWidth = i % 3 === 0 ? 2.5 : 1.5;
 
         ctx.beginPath();
         ctx.strokeStyle = `hsla(174, 78%, 41%, ${opacity})`;

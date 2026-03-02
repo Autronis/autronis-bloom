@@ -118,33 +118,31 @@ const movingDashStyle = `
 
 /* ── Sticky Fase Rail with progress bar ── */
 const StickyPhaseRail = ({ activeIndex, fillPercent }: { activeIndex: number; fillPercent: number }) => (
-  <div className="hidden lg:flex sticky top-28 w-[200px] shrink-0 self-start">
-    <div className="relative flex">
-      {/* Progress bar track */}
-      <div className="relative w-[3px] shrink-0 mr-5 rounded-full" style={{ backgroundColor: "hsl(var(--border) / 0.15)" }}>
-        {/* Turquoise fill */}
-        <div
-          className="absolute inset-x-0 top-0 rounded-full bg-primary"
-          style={{
-            height: `${fillPercent}%`,
-            transition: "height 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-          }}
-        />
-        {/* Moving dash overlay on active segment */}
-        <div
-          className="absolute inset-x-0 top-0 rounded-full pointer-events-none"
-          style={{
-            height: `${fillPercent}%`,
-            backgroundImage: "linear-gradient(180deg, transparent 0px, hsl(174 78% 41% / 0.3) 2px, transparent 4px)",
-            backgroundSize: "3px 10px",
-            animation: "flowDash 4s linear infinite",
-            transition: "height 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-          }}
-        />
-      </div>
+  <div className="hidden lg:block w-[200px] shrink-0 relative">
+    {/* Full-height progress track spanning the entire timeline */}
+    <div className="absolute left-0 top-0 bottom-0 w-[3px] rounded-full" style={{ backgroundColor: "hsl(var(--border) / 0.15)" }}>
+      <div
+        className="absolute inset-x-0 top-0 rounded-full bg-primary"
+        style={{
+          height: `${fillPercent}%`,
+          transition: "height 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        }}
+      />
+      <div
+        className="absolute inset-x-0 top-0 rounded-full pointer-events-none"
+        style={{
+          height: `${fillPercent}%`,
+          backgroundImage: "linear-gradient(180deg, transparent 0px, hsl(174 78% 41% / 0.3) 2px, transparent 4px)",
+          backgroundSize: "3px 10px",
+          animation: "flowDash 4s linear infinite",
+          transition: "height 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        }}
+      />
+    </div>
 
-      {/* Phase labels */}
-      <div className="flex flex-col justify-between" style={{ gap: "28px" }}>
+    {/* Sticky labels container */}
+    <div className="sticky top-28 pl-5">
+      <div className="flex flex-col" style={{ gap: "20px" }}>
         {phases.map((phase, i) => {
           const isCurrent = i === activeIndex;
           const isActive = i <= activeIndex;
@@ -155,7 +153,7 @@ const StickyPhaseRail = ({ activeIndex, fillPercent }: { activeIndex: number; fi
                 const el = document.querySelector(`[data-phase="${i}"]`);
                 el?.scrollIntoView({ behavior: "smooth", block: "center" });
               }}
-              className="text-left transition-all duration-400 ease-out group"
+              className="text-left transition-all duration-300 ease-out"
             >
               <p
                 className="uppercase tracking-[0.14em] transition-all duration-300"

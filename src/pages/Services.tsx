@@ -340,16 +340,16 @@ const PillarCard = ({
                     key={cat.title}
                     className="rounded-lg bg-muted/40 p-4 transition-all duration-300 ease-out cursor-default overflow-hidden min-w-0"
                     style={{
-                      border: "1px solid hsl(174, 78%, 41%, 0.35)",
-                      boxShadow: "0 0 12px hsl(174, 78%, 41%, 0.15), 0 0 24px hsl(174, 78%, 41%, 0.06), inset 0 0 10px hsl(174, 78%, 41%, 0.03)",
+                      border: "1px solid hsl(174, 78%, 41%, 0.15)",
+                      boxShadow: "0 0 8px hsl(174, 78%, 41%, 0.04)",
                     }}
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: catIdx * 0.08, duration: 0.4 }}
                     whileHover={{
-                      scale: 1.03,
-                      borderColor: "hsl(174, 78%, 41%, 0.6)",
-                      boxShadow: "0 0 18px hsl(174, 78%, 41%, 0.3), 0 0 36px hsl(174, 78%, 41%, 0.12), inset 0 0 15px hsl(174, 78%, 41%, 0.05)",
+                      scale: 1.02,
+                      borderColor: "hsl(174, 78%, 41%, 0.3)",
+                      boxShadow: "0 0 12px hsl(174, 78%, 41%, 0.08)",
                     }}
                   >
                     <h3 className="text-[0.925rem] font-bold text-foreground mb-3 flex items-center gap-2">

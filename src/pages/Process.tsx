@@ -11,7 +11,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import AmbientLight from "@/components/AmbientLight";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
@@ -108,7 +108,38 @@ const introPoints = [
   { icon: TrendingUp, text: "Schaalbaar vanaf dag één" },
 ];
 
-/* ── Phase card with label left of line ── */
+/* ── Sticky side nav ── */
+const StickyPhaseNav = ({ activeIndex }: { activeIndex: number }) => (
+  <div className="hidden lg:block sticky top-32 w-16 shrink-0">
+    <div className="flex flex-col gap-6">
+      {phases.map((phase, i) => {
+        const isActive = i <= activeIndex;
+        const isCurrent = i === activeIndex;
+        return (
+          <button
+            key={phase.step}
+            onClick={() => {
+              const el = document.querySelector(`[data-phase="${i}"]`);
+              el?.scrollIntoView({ behavior: "smooth", block: "center" });
+            }}
+            className="text-left transition-all duration-300 ease-out"
+            style={{
+              color: isActive ? "hsl(174, 78%, 41%)" : "hsl(var(--muted-foreground))",
+              opacity: isCurrent ? 1 : isActive ? 0.8 : 0.4,
+              fontSize: isCurrent ? "0.875rem" : "0.75rem",
+              fontWeight: isCurrent ? 700 : 600,
+              letterSpacing: "0.12em",
+            }}
+          >
+            {phase.step}
+          </button>
+        );
+      })}
+    </div>
+  </div>
+);
+
+/* ── Phase card ── */
 const PhaseCard = ({
   phase,
   index,
@@ -122,101 +153,116 @@ const PhaseCard = ({
   const isCurrent = index === activeIndex;
 
   return (
-    <div className="relative grid grid-cols-[80px_40px_1fr] sm:grid-cols-[120px_40px_1fr] items-start phase-item" data-index={index}>
-      {/* Left: Fase label */}
-      <div className="flex items-center h-10 justify-end pr-4">
-        <span
-          className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] transition-colors duration-300"
-          style={{
-            color: isActive ? "hsl(174, 78%, 41%)" : undefined,
-            opacity: isActive ? 1 : 0.5,
-          }}
-        >
-          Fase {phase.step}
-        </span>
-      </div>
-
-      {/* Center: Node */}
+    <div
+      className="relative grid grid-cols-[40px_1fr] sm:grid-cols-[48px_1fr] items-start"
+      data-phase={index}
+    >
+      {/* Node column */}
       <div className="flex flex-col items-center shrink-0 relative">
-        <motion.div
-          className="w-4 h-4 rounded-full border-2 relative z-10 mt-3"
-          animate={{
-            scale: isCurrent ? 1.12 : 1,
+        {/* Node */}
+        <div
+          className="w-5 h-5 rounded-full border-2 relative z-10 mt-5 transition-all duration-300 ease-out"
+          style={{
+            transform: isCurrent ? "scale(1.2)" : "scale(1)",
             borderColor: isActive ? "hsl(174, 78%, 41%)" : "hsl(var(--border))",
             backgroundColor: isActive ? "hsl(174, 78%, 41%)" : "hsl(var(--card))",
             boxShadow: isCurrent
-              ? "0 0 12px hsl(174 78% 41% / 0.5)"
+              ? "0 0 10px hsl(174 78% 41% / 0.4), 0 0 20px hsl(174 78% 41% / 0.15)"
               : "none",
           }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
         />
-        {/* Line segment */}
+        {/* Line segment to next node */}
         {index < phases.length - 1 && (
-          <div className="w-[2px] flex-1 bg-border/40 relative overflow-hidden">
-            <motion.div
-              className="absolute inset-x-0 top-0 bg-primary"
-              animate={{ height: isActive ? "100%" : "0%" }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+          <div className="w-[2px] flex-1 relative" style={{ backgroundColor: "hsl(var(--border) / 0.15)" }}>
+            <div
+              className="absolute inset-x-0 top-0 bg-primary transition-all duration-500 ease-out"
+              style={{ height: isActive ? "100%" : "0%" }}
             />
           </div>
         )}
       </div>
 
-      {/* Right: Content card */}
+      {/* Content card */}
       <motion.div
-        className="rounded-xl border border-border bg-card p-5 sm:p-6 mb-8 ml-3 sm:ml-4 cursor-default"
-        initial={{ opacity: 0, x: 24 }}
+        className="rounded-xl border mb-10 ml-4 sm:ml-5 p-5 sm:p-6 cursor-default transition-all duration-300 ease-out"
+        initial={{ opacity: 0, x: 32 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{
-          duration: 0.35,
-          delay: 0.05,
+          duration: 0.3,
           ease: [0.23, 1, 0.32, 1],
         }}
-        whileHover={{
-          y: -4,
-          scale: 1.01,
-          borderColor: "hsl(174, 78%, 41%, 0.4)",
-          boxShadow:
-            "0 0 24px hsl(174, 78%, 41%, 0.1), inset 0 0 12px hsl(174, 78%, 41%, 0.03)",
+        style={{
+          backgroundColor: isCurrent
+            ? "hsl(var(--card))"
+            : "hsl(var(--card) / 0.7)",
+          borderColor: isCurrent
+            ? "hsl(174, 78%, 41%, 0.3)"
+            : "hsl(var(--border))",
+          boxShadow: isCurrent
+            ? "0 4px 20px hsl(174 78% 41% / 0.08), 0 1px 6px hsl(0 0% 0% / 0.06)"
+            : "none",
+          transform: isCurrent ? "scale(1.02)" : "scale(1)",
         }}
-        style={{ transition: "border-color 0.3s, box-shadow 0.3s" }}
       >
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
-          <h3 className="text-base sm:text-lg font-bold">{phase.title}</h3>
-          <span className="text-[10px] sm:text-xs text-muted-foreground bg-muted px-2.5 py-0.5 rounded-full shrink-0 self-start">
-            {phase.timing}
-          </span>
-        </div>
+        {/* Subtle grid overlay when active */}
+        {isCurrent && (
+          <div
+            className="absolute inset-0 rounded-xl pointer-events-none transition-opacity duration-500"
+            style={{
+              backgroundImage:
+                "linear-gradient(hsl(174 78% 41% / 0.03) 1px, transparent 1px), linear-gradient(90deg, hsl(174 78% 41% / 0.03) 1px, transparent 1px)",
+              backgroundSize: "20px 20px",
+              opacity: 0.5,
+            }}
+          />
+        )}
 
-        <motion.p
-          className="text-sm text-muted-foreground mb-4 leading-relaxed"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 0.3 }}
-        >
-          {phase.description}
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.25, duration: 0.3 }}
-        >
-          <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-2 font-semibold">
-            Deliverables
+        <div className="relative z-10">
+          {/* Mobile phase label */}
+          <p
+            className="text-[10px] font-bold uppercase tracking-[0.15em] mb-2 lg:hidden transition-colors duration-300"
+            style={{ color: isActive ? "hsl(174, 78%, 41%)" : "hsl(var(--muted-foreground))" }}
+          >
+            Fase {phase.step}
           </p>
-          <ul className="space-y-1.5">
-            {phase.deliverables.map((d) => (
-              <li key={d} className="text-sm text-foreground/80 flex items-start gap-2">
-                <span className="text-primary mt-0.5 shrink-0">▸</span>
-                {d}
-              </li>
-            ))}
-          </ul>
-        </motion.div>
+
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+            <h3 className="text-base sm:text-lg font-bold">{phase.title}</h3>
+            <span className="text-[10px] sm:text-xs text-muted-foreground bg-muted px-2.5 py-0.5 rounded-full shrink-0 self-start">
+              {phase.timing}
+            </span>
+          </div>
+
+          <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+            {phase.description}
+          </p>
+
+          <div>
+            <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-2 font-semibold">
+              Deliverables
+            </p>
+            <ul className="space-y-1.5">
+              {phase.deliverables.map((d, dIdx) => (
+                <motion.li
+                  key={d}
+                  className="text-sm text-foreground/80 flex items-start gap-2"
+                  initial={{ opacity: 0, x: 12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    delay: 0.1 + dIdx * 0.08,
+                    duration: 0.3,
+                    ease: [0.23, 1, 0.32, 1],
+                  }}
+                >
+                  <span className="text-primary mt-0.5 shrink-0">▸</span>
+                  {d}
+                </motion.li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </motion.div>
     </div>
   );
@@ -227,29 +273,28 @@ const Process = () => {
   const timelineRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(-1);
 
-  useEffect(() => {
-    const items = document.querySelectorAll(".phase-item");
-    if (!items.length) return;
+  const updateActivePhase = useCallback(() => {
+    const viewportH = window.innerHeight;
+    let newActive = -1;
 
-    const observers: IntersectionObserver[] = [];
-    items.forEach((el) => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const idx = parseInt(el.getAttribute("data-index") || "0");
-              setActiveIndex((prev) => Math.max(prev, idx));
-            }
-          });
-        },
-        { threshold: 0.4, rootMargin: "0px 0px -20% 0px" }
-      );
-      observer.observe(el);
-      observers.push(observer);
+    phases.forEach((_, i) => {
+      const el = document.querySelector(`[data-phase="${i}"]`);
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const center = rect.top + rect.height / 2;
+      if (center < viewportH * 0.6) {
+        newActive = i;
+      }
     });
 
-    return () => observers.forEach((o) => o.disconnect());
+    setActiveIndex(newActive);
   }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", updateActivePhase, { passive: true });
+    updateActivePhase();
+    return () => window.removeEventListener("scroll", updateActivePhase);
+  }, [updateActivePhase]);
 
   return (
     <section className="pt-16 pb-24 relative overflow-hidden">
@@ -313,16 +358,27 @@ const Process = () => {
           </ScrollRevealItem>
         </ScrollReveal>
 
-        {/* ── Timeline ── */}
-        <div ref={timelineRef} className="max-w-3xl mx-auto mb-20 relative">
-          {phases.map((phase, i) => (
-            <PhaseCard
-              key={phase.step}
-              phase={phase}
-              index={i}
-              activeIndex={activeIndex}
+        {/* ── Timeline with sticky nav ── */}
+        <div ref={timelineRef} className="max-w-4xl mx-auto mb-20 relative flex gap-8">
+          <StickyPhaseNav activeIndex={activeIndex} />
+
+          {/* Timeline column */}
+          <div className="flex-1 relative">
+            {/* Full baseline */}
+            <div
+              className="absolute left-[9px] sm:left-[11px] top-0 bottom-0 w-[2px] pointer-events-none"
+              style={{ backgroundColor: "hsl(var(--border) / 0.15)" }}
             />
-          ))}
+
+            {phases.map((phase, i) => (
+              <PhaseCard
+                key={phase.step}
+                phase={phase}
+                index={i}
+                activeIndex={activeIndex}
+              />
+            ))}
+          </div>
         </div>
 
         {/* ── Security & Reliability ── */}
@@ -338,9 +394,9 @@ const Process = () => {
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.08, duration: 0.4 }}
                   whileHover={{
-                    borderColor: "hsl(174, 78%, 41%, 0.35)",
+                    borderColor: "hsl(174, 78%, 41%, 0.25)",
                     boxShadow:
-                      "0 0 16px hsl(174, 78%, 41%, 0.1), 0 0 32px hsl(174, 78%, 41%, 0.05)",
+                      "0 0 12px hsl(174, 78%, 41%, 0.06)",
                   }}
                 >
                   <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3 group-hover:bg-primary/15 transition-colors">

@@ -80,7 +80,7 @@ const ServiceCard = ({
                 <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
                   <s.icon size={18} />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold">{s.title}</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold">{s.title}</h3>
               </div>
               <p className="text-sm text-muted-foreground mb-5 leading-relaxed">{s.intro}</p>
 
@@ -93,17 +93,25 @@ const ServiceCard = ({
                   {s.impact.map((item, idx) => (
                     <motion.div
                       key={item.title}
-                      className="flex items-start gap-2.5 p-2.5 rounded-lg bg-primary/[0.04] hover:bg-primary/[0.08] transition-colors duration-200 group"
+                      className="flex items-start gap-2.5 p-3 rounded-lg bg-primary/[0.04] hover:bg-primary/[0.08] transition-all duration-200 group"
+                      style={{
+                        border: "1px solid hsl(174, 78%, 41%, 0.2)",
+                        boxShadow: "0 0 8px hsl(174, 78%, 41%, 0.08)",
+                      }}
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: idx * 0.08, duration: 0.4 }}
+                      whileHover={{
+                        borderColor: "hsl(174, 78%, 41%, 0.45)",
+                        boxShadow: "0 0 12px hsl(174, 78%, 41%, 0.15), inset 0 0 8px hsl(174, 78%, 41%, 0.03)",
+                      }}
                     >
                       <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
                         <CheckCircle2 size={12} className="text-primary" />
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-foreground leading-tight">{item.title}</p>
+                        <p className="text-sm font-semibold text-foreground leading-tight">{item.title}</p>
                         <p className="text-xs text-muted-foreground mt-0.5">{item.sub}</p>
                       </div>
                     </motion.div>

@@ -138,7 +138,7 @@ const WhyAutronisSection = () => {
               Waarom Autronis
             </p>
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Gebouwd op principes, niet op hype.
+              Van chaos naar controle.
             </h2>
           </ScrollRevealItem>
         </ScrollReveal>

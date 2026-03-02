@@ -222,9 +222,6 @@ const ServiceCard = ({
                     : { scale: 1, filter: "brightness(1)" }
                 }
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                style={{
-                  mixBlendMode: "lighten",
-                }}
                 loading="lazy"
               />
               {/* Edge gradient overlay */}

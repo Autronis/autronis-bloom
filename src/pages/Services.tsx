@@ -1,9 +1,9 @@
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown, CheckCircle2 } from "lucide-react";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import GlowCard from "@/components/GlowCard";
 
@@ -12,20 +12,30 @@ const pillars = [
     id: "procesautomatisering",
     title: "Procesautomatisering",
     subtitle: "Gestructureerde automatisering van operationele en commerciële processen.",
+    impact: [
+      "Minder handmatige verwerking",
+      "Kortere doorlooptijden",
+      "Minder fouten in processen",
+      "Meer voorspelbaarheid en controle",
+    ],
     categories: [
       {
+        emoji: "🗂",
         title: "Interne Workflow Automatisering",
         items: ["Goedkeuringsflows", "Taaktoewijzing", "Notificaties en escalaties", "Documentgeneratie"],
       },
       {
+        emoji: "💼",
         title: "Sales- en Orderautomatisering",
         items: ["Orderverwerking", "CRM-updates", "Facturatie workflows", "Leadopvolging"],
       },
       {
+        emoji: "🚀",
         title: "Onboarding & Offboarding",
         items: ["Accountcreatie", "Checklist automatisering", "Rolgebaseerde toegangsrechten", "E-signature integraties"],
       },
       {
+        emoji: "🛒",
         title: "E-commerce Automatisering",
         items: ["Voorraadbeheer", "Retourafhandeling", "Orderstatus synchronisatie", "Dynamische pricing"],
       },
@@ -35,20 +45,30 @@ const pillars = [
     id: "systeemintegraties",
     title: "Systeemintegraties",
     subtitle: "Betrouwbare koppelingen tussen kernsystemen voor consistente datastromen.",
+    impact: [
+      "Geen dubbele invoer",
+      "Betrouwbare datastromen",
+      "Realtime synchronisatie tussen systemen",
+      "Minder afhankelijkheid van spreadsheets",
+    ],
     categories: [
       {
+        emoji: "🔗",
         title: "API Koppelingen",
         items: ["REST API integraties", "Webhooks", "Event-based triggers", "Retry-logica"],
       },
       {
+        emoji: "💳",
         title: "CRM & Finance Integraties",
         items: ["CRM ↔ Boekhouding synchronisatie", "ERP koppelingen", "Grootboekkoppelingen", "Realtime data-uitwisseling"],
       },
       {
+        emoji: "🧩",
         title: "Legacy Systemen",
         items: ["Datamigraties", "Middleware implementatie", "Maatwerk API lagen", "Systeemmodernisering"],
       },
       {
+        emoji: "📊",
         title: "Monitoring & Logging",
         items: ["Foutdetectie", "Audit logging", "Datavalidatie", "Integratie monitoring"],
       },
@@ -58,20 +78,30 @@ const pillars = [
     id: "data-rapportage",
     title: "Data & Rapportage",
     subtitle: "Realtime inzicht en controle over uw bedrijfsdata.",
+    impact: [
+      "Realtime inzicht in prestaties",
+      "Snellere besluitvorming",
+      "Eén bron van waarheid",
+      "Minder handmatige rapportage",
+    ],
     categories: [
       {
+        emoji: "📈",
         title: "KPI Dashboards",
         items: ["Management dashboards", "Team dashboards", "Realtime visualisaties", "Performance monitoring"],
       },
       {
+        emoji: "📑",
         title: "Geautomatiseerde Rapportages",
         items: ["Wekelijkse exports", "PDF rapportages", "E-mail distributie", "Custom rapportageflows"],
       },
       {
+        emoji: "🗄",
         title: "Dataconsolidatie",
         items: ["Multi-source data", "Eén bron van waarheid", "Datamodel optimalisatie", "Datakwaliteitscontrole"],
       },
       {
+        emoji: "🚨",
         title: "Alerts & Monitoring",
         items: ["Anomaly detection", "Performance alerts", "SLA bewaking", "Datastroom monitoring"],
       },
@@ -167,6 +197,107 @@ const InteractiveGridBg = () => {
   );
 };
 
+const PillarSection = ({
+  pillar,
+  hoveredCards,
+  setHoveredCards,
+  sectionRef,
+}: {
+  pillar: (typeof pillars)[0];
+  hoveredCards: Record<string, number | null>;
+  setHoveredCards: React.Dispatch<React.SetStateAction<Record<string, number | null>>>;
+  sectionRef: (el: HTMLDivElement | null) => void;
+}) => {
+  const [expanded, setExpanded] = useState(false);
+  const hovered = hoveredCards[pillar.id] ?? null;
+
+  return (
+    <div ref={sectionRef} className="scroll-mt-24">
+      <ScrollReveal>
+        <ScrollRevealItem>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-2">{pillar.title}</h2>
+          <p className="text-muted-foreground mb-6">{pillar.subtitle}</p>
+        </ScrollRevealItem>
+      </ScrollReveal>
+
+      {/* Impact block */}
+      <ScrollReveal>
+        <ScrollRevealItem>
+          <div className="rounded-xl border border-border bg-card/50 p-6 mb-6">
+            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
+              Wat levert dit op?
+            </p>
+            <ul className="space-y-2">
+              {pillar.impact.map((item) => (
+                <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                  <CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </ScrollRevealItem>
+      </ScrollReveal>
+
+      {/* Toggle */}
+      <ScrollReveal>
+        <ScrollRevealItem>
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors duration-200 mb-6"
+          >
+            <span>{expanded ? "Verberg concrete toepassingen" : "Bekijk concrete toepassingen"}</span>
+            <ChevronDown
+              size={16}
+              className="transition-transform duration-300 ease-out"
+              style={{ transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}
+            />
+          </button>
+        </ScrollRevealItem>
+      </ScrollReveal>
+
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="overflow-hidden"
+          >
+            <ScrollReveal className="grid grid-cols-1 sm:grid-cols-2 gap-6" staggerChildren={0.06}>
+              {pillar.categories.map((cat, i) => (
+                <ScrollRevealItem key={cat.title}>
+                  <GlowCard
+                    className="rounded-xl border border-border bg-card p-6 h-full"
+                    isAnyHovered={hovered !== null}
+                    isHovered={hovered === i}
+                    onHover={() => setHoveredCards((prev) => ({ ...prev, [pillar.id]: i }))}
+                    onLeave={() => setHoveredCards((prev) => ({ ...prev, [pillar.id]: null }))}
+                  >
+                    <h3 className="font-semibold mb-3">
+                      <span className="mr-2 text-sm">{cat.emoji}</span>
+                      {cat.title}
+                    </h3>
+                    <ul className="space-y-1.5">
+                      {cat.items.map((item) => (
+                        <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </GlowCard>
+                </ScrollRevealItem>
+              ))}
+            </ScrollReveal>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
 const Services = () => {
   const [activeSection, setActiveSection] = useState(pillars[0].id);
   const [hoveredCards, setHoveredCards] = useState<Record<string, number | null>>({});
@@ -253,46 +384,15 @@ const Services = () => {
 
             {/* Content */}
             <div className="flex-1 space-y-20">
-              {pillars.map((pillar) => {
-                const hovered = hoveredCards[pillar.id] ?? null;
-                return (
-                  <div
-                    key={pillar.id}
-                    ref={(el) => (sectionRefs.current[pillar.id] = el)}
-                    className="scroll-mt-24"
-                  >
-                    <ScrollReveal>
-                      <ScrollRevealItem>
-                        <h2 className="text-2xl sm:text-3xl font-bold mb-2">{pillar.title}</h2>
-                        <p className="text-muted-foreground mb-8">{pillar.subtitle}</p>
-                      </ScrollRevealItem>
-                    </ScrollReveal>
-                    <ScrollReveal className="grid grid-cols-1 sm:grid-cols-2 gap-6" staggerChildren={0.06}>
-                      {pillar.categories.map((cat, i) => (
-                        <ScrollRevealItem key={cat.title}>
-                          <GlowCard
-                            className="rounded-xl border border-border bg-card p-6 h-full"
-                            isAnyHovered={hovered !== null}
-                            isHovered={hovered === i}
-                            onHover={() => setHoveredCards((prev) => ({ ...prev, [pillar.id]: i }))}
-                            onLeave={() => setHoveredCards((prev) => ({ ...prev, [pillar.id]: null }))}
-                          >
-                            <h3 className="font-semibold mb-3">{cat.title}</h3>
-                            <ul className="space-y-1.5">
-                              {cat.items.map((item) => (
-                                <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
-                                  {item}
-                                </li>
-                              ))}
-                            </ul>
-                          </GlowCard>
-                        </ScrollRevealItem>
-                      ))}
-                    </ScrollReveal>
-                  </div>
-                );
-              })}
+              {pillars.map((pillar) => (
+                <PillarSection
+                  key={pillar.id}
+                  pillar={pillar}
+                  hoveredCards={hoveredCards}
+                  setHoveredCards={setHoveredCards}
+                  sectionRef={(el) => (sectionRefs.current[pillar.id] = el)}
+                />
+              ))}
             </div>
           </div>
         </div>

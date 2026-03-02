@@ -420,7 +420,7 @@ const Services = () => {
     <Layout>
       {/* Hero */}
       <section className="relative pt-16 pb-20 overflow-hidden">
-        <InteractiveGridBg />
+        <InteractiveBubbles />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <motion.div
             className="max-w-3xl mx-auto text-center"
@@ -446,7 +446,8 @@ const Services = () => {
       </section>
 
       {/* Tool icons marquee */}
-      <section className="py-16 border-t border-border overflow-hidden">
+      <section className="py-16 border-t border-border overflow-hidden relative">
+        <InteractiveBubbles />
         <div className="container mx-auto px-4 lg:px-8 text-center mb-10">
           <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Integraties</p>
           <h2 className="text-2xl sm:text-3xl font-bold mb-3">Werkt met uw huidige stack</h2>

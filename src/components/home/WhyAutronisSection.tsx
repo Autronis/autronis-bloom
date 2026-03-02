@@ -61,8 +61,9 @@ const ReasonCard = ({
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       onMouseMove={handleMouseMove}
-      className="relative rounded-xl border border-border bg-background p-6 overflow-hidden transition-all duration-[300ms] ease-out"
+      className="relative rounded-xl border border-border p-6 overflow-hidden transition-all duration-[300ms] ease-out"
       style={{
+        backgroundColor: "hsl(192, 22%, 17%)",
         transform: isHovered ? "scale(1.01) translateY(-4px)" : "scale(1) translateY(0)",
         opacity: isAnyHovered && !isHovered ? 0.88 : 1,
         borderColor: isHovered ? "hsl(var(--primary) / 0.4)" : undefined,
@@ -94,25 +95,25 @@ const WhyAutronisSection = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
-      {/* More visible blurred bubbles */}
+      {/* Blurred bubbles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
-          { x: "10%", y: "15%", size: 260, opacity: 0.07, delay: 0 },
-          { x: "75%", y: "25%", size: 300, opacity: 0.06, delay: 1.5 },
-          { x: "40%", y: "70%", size: 220, opacity: 0.08, delay: 0.8 },
-          { x: "85%", y: "65%", size: 260, opacity: 0.05, delay: 2 },
-          { x: "20%", y: "85%", size: 200, opacity: 0.07, delay: 1.2 },
-          { x: "55%", y: "40%", size: 180, opacity: 0.06, delay: 2.5 },
+          { x: "10%", y: "15%", size: 280, opacity: 0.09, delay: 0 },
+          { x: "75%", y: "25%", size: 320, opacity: 0.08, delay: 1.5 },
+          { x: "40%", y: "70%", size: 240, opacity: 0.1, delay: 0.8 },
+          { x: "85%", y: "65%", size: 280, opacity: 0.07, delay: 2 },
+          { x: "20%", y: "85%", size: 220, opacity: 0.09, delay: 1.2 },
+          { x: "55%", y: "40%", size: 200, opacity: 0.08, delay: 2.5 },
         ].map((b, i) => (
           <motion.div
             key={i}
             className="absolute rounded-full"
             animate={{
-              scale: [1, 1.4, 1],
-              opacity: [b.opacity, b.opacity * 1.6, b.opacity],
+              scale: [1, 1.5, 1],
+              opacity: [b.opacity, b.opacity * 1.8, b.opacity],
             }}
             transition={{
-              duration: 5 + i * 0.6,
+              duration: 4 + i * 0.5,
               repeat: Infinity,
               ease: "easeInOut",
               delay: b.delay,
@@ -142,15 +143,13 @@ const WhyAutronisSection = () => {
           </ScrollRevealItem>
         </ScrollReveal>
 
-        {/* Wide block: cards side-by-side with photo */}
         <ScrollReveal>
           <ScrollRevealItem>
             <div className="rounded-2xl border border-border bg-card overflow-hidden max-w-6xl mx-auto">
-              {/* Main content: cards left, image right */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 {/* Left: cards + CTAs */}
                 <div className="p-6 sm:p-8 flex flex-col justify-between">
-                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                     {reasons.map((r, i) => (
                       <ReasonCard
                         key={r.title}
@@ -162,7 +161,7 @@ const WhyAutronisSection = () => {
                       />
                     ))}
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-3 mt-2">
+                  <div className="flex flex-col sm:flex-row gap-3">
                     <Button asChild size="lg">
                       <Link to="/book">
                         Plan een kennismaking
@@ -185,24 +184,22 @@ const WhyAutronisSection = () => {
 
                 {/* Right: Team photo */}
                 <div ref={imgRef} className="relative min-h-[400px] lg:min-h-0">
-                   <motion.img
+                  <motion.img
                     src={teamFoto}
                     alt="Autronis team - Sem en Syb"
                     className="w-full h-full object-cover"
-                    style={{ filter: "brightness(0.85)" }}
+                    style={{ filter: "brightness(0.82)" }}
                     initial={{ opacity: 0, scale: 1.03 }}
                     animate={imgInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.03 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}
                     loading="lazy"
                   />
-                  {/* Gradient overlay left edge */}
                   <div
                     className="absolute inset-0 pointer-events-none"
                     style={{
                       background: "linear-gradient(to right, hsl(var(--card)) 0%, hsl(var(--card) / 0.4) 12%, transparent 35%)",
                     }}
                   />
-                  {/* Mobile top gradient */}
                   <div
                     className="absolute inset-0 pointer-events-none lg:hidden"
                     style={{

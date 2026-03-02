@@ -9,60 +9,71 @@ import GlowCard from "@/components/GlowCard";
 
 const pillars = [
   {
-    id: "revenue",
-    title: "Revenue & Sales Automation",
-    services: [
+    id: "procesautomatisering",
+    title: "Procesautomatisering",
+    subtitle: "Gestructureerde automatisering van operationele en commerciële processen.",
+    categories: [
       {
-        title: "Sales & Marketing Automatisering",
-        description: "Lead scoring, follow-up sequences, CRM-synchronisatie en pipeline rapportages.",
+        title: "Interne Workflow Automatisering",
+        items: ["Goedkeuringsflows", "Taaktoewijzing", "Notificaties en escalaties", "Documentgeneratie"],
       },
       {
-        title: "Lead Generatie Systemen",
-        description: "Geautomatiseerde outreach, lead kwalificatie en multi-channel prospecting.",
+        title: "Sales- en Orderautomatisering",
+        items: ["Orderverwerking", "CRM-updates", "Facturatie workflows", "Leadopvolging"],
+      },
+      {
+        title: "Onboarding & Offboarding",
+        items: ["Accountcreatie", "Checklist automatisering", "Rolgebaseerde toegangsrechten", "E-signature integraties"],
       },
       {
         title: "E-commerce Automatisering",
-        description: "Orderverwerking, voorraadbeheer, retourafhandeling en dynamische pricing.",
+        items: ["Voorraadbeheer", "Retourafhandeling", "Orderstatus synchronisatie", "Dynamische pricing"],
       },
     ],
   },
   {
-    id: "operations",
-    title: "Operations & Workflow Automation",
-    services: [
+    id: "systeemintegraties",
+    title: "Systeemintegraties",
+    subtitle: "Betrouwbare koppelingen tussen kernsystemen voor consistente datastromen.",
+    categories: [
       {
-        title: "Operations Automatisering",
-        description: "Goedkeuringsflows, taaktoewijzing, notificaties en documentgeneratie.",
+        title: "API Koppelingen",
+        items: ["REST API integraties", "Webhooks", "Event-based triggers", "Retry-logica"],
       },
       {
-        title: "Onboarding Automatisering",
-        description: "Klant- en medewerker-onboarding met checklists, account-creatie en e-signatures.",
+        title: "CRM & Finance Integraties",
+        items: ["CRM ↔ Boekhouding synchronisatie", "ERP koppelingen", "Grootboekkoppelingen", "Realtime data-uitwisseling"],
       },
       {
-        title: "API & Systeemkoppelingen",
-        description: "CRM, boekhouding, webshop en legacy systemen verbonden via API's en webhooks.",
+        title: "Legacy Systemen",
+        items: ["Datamigraties", "Middleware implementatie", "Maatwerk API lagen", "Systeemmodernisering"],
+      },
+      {
+        title: "Monitoring & Logging",
+        items: ["Foutdetectie", "Audit logging", "Datavalidatie", "Integratie monitoring"],
       },
     ],
   },
   {
-    id: "finance",
-    title: "Finance, Reporting & Integrations",
-    services: [
+    id: "data-rapportage",
+    title: "Data & Rapportage",
+    subtitle: "Realtime inzicht en controle over uw bedrijfsdata.",
+    categories: [
       {
-        title: "Finance & Backoffice Automatisering",
-        description: "Factuurverwerking, reconciliatie, onkostendeclaraties en budgetbewaking.",
+        title: "KPI Dashboards",
+        items: ["Management dashboards", "Team dashboards", "Realtime visualisaties", "Performance monitoring"],
       },
       {
-        title: "Dashboards & Inzichten",
-        description: "Real-time KPI dashboards met data uit meerdere bronnen en afwijkingsdetectie.",
+        title: "Geautomatiseerde Rapportages",
+        items: ["Wekelijkse exports", "PDF rapportages", "E-mail distributie", "Custom rapportageflows"],
       },
       {
-        title: "Automatische Rapportages",
-        description: "Wekelijkse en maandelijkse rapportages op autopilot naar stakeholders.",
+        title: "Dataconsolidatie",
+        items: ["Multi-source data", "Eén bron van waarheid", "Datamodel optimalisatie", "Datakwaliteitscontrole"],
       },
       {
-        title: "Excel & Spreadsheet Automatisering",
-        description: "Van rommelige spreadsheets naar gestructureerde, geautomatiseerde processen.",
+        title: "Alerts & Monitoring",
+        items: ["Anomaly detection", "Performance alerts", "SLA bewaking", "Datastroom monitoring"],
       },
     ],
   },
@@ -100,13 +111,12 @@ const InteractiveGridBg = () => {
       const h = canvas.offsetHeight;
       ctx.clearRect(0, 0, w, h);
 
-      // Draw grid lines - no mouse interaction
       for (let x = 0; x <= w; x += spacing) {
         const offsetX = Math.sin(time * 0.3 + x * 0.01) * 2;
         ctx.beginPath();
         ctx.moveTo(x + offsetX, 0);
         ctx.lineTo(x + offsetX, h);
-         ctx.strokeStyle = `hsla(174, 78%, 41%, 0.025)`;
+        ctx.strokeStyle = `hsla(174, 78%, 41%, 0.035)`;
         ctx.lineWidth = 0.5;
         ctx.stroke();
       }
@@ -115,12 +125,11 @@ const InteractiveGridBg = () => {
         ctx.beginPath();
         ctx.moveTo(0, y + offsetY);
         ctx.lineTo(w, y + offsetY);
-        ctx.strokeStyle = `hsla(174, 78%, 41%, 0.025)`;
+        ctx.strokeStyle = `hsla(174, 78%, 41%, 0.035)`;
         ctx.lineWidth = 0.5;
         ctx.stroke();
       }
 
-      // Draw nodes at intersections - subtle pulse, no hover
       for (let x = 0; x <= w; x += spacing) {
         for (let y = 0; y <= h; y += spacing) {
           const ox = Math.sin(time * 0.3 + x * 0.01) * 2;
@@ -129,7 +138,7 @@ const InteractiveGridBg = () => {
           const ny = y + oy;
           const pulse = Math.sin(time * 0.5 + x * 0.02 + y * 0.02) * 0.5 + 0.5;
           const radius = 1 + pulse * 0.5;
-          const opacity = 0.04 + pulse * 0.04;
+          const opacity = 0.05 + pulse * 0.05;
 
           ctx.beginPath();
           ctx.arc(nx, ny, radius, 0, Math.PI * 2);
@@ -159,7 +168,7 @@ const InteractiveGridBg = () => {
 };
 
 const Services = () => {
-  const [activeSection, setActiveSection] = useState("revenue");
+  const [activeSection, setActiveSection] = useState(pillars[0].id);
   const [hoveredCards, setHoveredCards] = useState<Record<string, number | null>>({});
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
@@ -254,12 +263,13 @@ const Services = () => {
                   >
                     <ScrollReveal>
                       <ScrollRevealItem>
-                        <h2 className="text-2xl sm:text-3xl font-bold mb-8">{pillar.title}</h2>
+                        <h2 className="text-2xl sm:text-3xl font-bold mb-2">{pillar.title}</h2>
+                        <p className="text-muted-foreground mb-8">{pillar.subtitle}</p>
                       </ScrollRevealItem>
                     </ScrollReveal>
                     <ScrollReveal className="grid grid-cols-1 sm:grid-cols-2 gap-6" staggerChildren={0.06}>
-                      {pillar.services.map((service, i) => (
-                        <ScrollRevealItem key={service.title}>
+                      {pillar.categories.map((cat, i) => (
+                        <ScrollRevealItem key={cat.title}>
                           <GlowCard
                             className="rounded-xl border border-border bg-card p-6 h-full"
                             isAnyHovered={hovered !== null}
@@ -267,10 +277,15 @@ const Services = () => {
                             onHover={() => setHoveredCards((prev) => ({ ...prev, [pillar.id]: i }))}
                             onLeave={() => setHoveredCards((prev) => ({ ...prev, [pillar.id]: null }))}
                           >
-                            <h3 className="font-semibold mb-2">{service.title}</h3>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                              {service.description}
-                            </p>
+                            <h3 className="font-semibold mb-3">{cat.title}</h3>
+                            <ul className="space-y-1.5">
+                              {cat.items.map((item) => (
+                                <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
+                                  {item}
+                                </li>
+                              ))}
+                            </ul>
                           </GlowCard>
                         </ScrollRevealItem>
                       ))}
@@ -297,7 +312,6 @@ const Services = () => {
           </p>
         </div>
 
-        {/* Row 1 - moves right */}
         <div className="relative mb-4 overflow-hidden">
           <div className="flex animate-[marquee-right_30s_linear_infinite] gap-4 w-max">
             {[...toolIcons, ...toolIcons].map((tool, i) => (
@@ -311,7 +325,6 @@ const Services = () => {
           </div>
         </div>
 
-        {/* Row 2 - moves left */}
         <div className="relative overflow-hidden">
           <div className="flex animate-[marquee-left_25s_linear_infinite] gap-4 w-max">
             {[...toolIcons.slice().reverse(), ...toolIcons.slice().reverse()].map((tool, i) => (

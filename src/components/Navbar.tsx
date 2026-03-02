@@ -33,16 +33,29 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-background/95 backdrop-blur-md border-b border-border shadow-lg"
-          : "bg-transparent"
+          ? "bg-background/80 backdrop-blur-xl border-b border-border/50 shadow-lg"
+          : "bg-transparent border-b border-transparent"
       }`}
     >
-      <nav className="container mx-auto flex items-center justify-between h-16 px-4 lg:px-8">
+      <nav
+        className="container mx-auto flex items-center justify-between px-4 lg:px-8 transition-all duration-500"
+        style={{ height: scrolled ? "56px" : "64px" }}
+      >
         <Link to="/" className="flex items-center gap-2 shrink-0">
-          <img src="/logo.png" alt="Autronis" className="h-9 w-auto" />
-          <span className="text-lg font-bold tracking-tight">Autronis</span>
+          <img
+            src="/logo.png"
+            alt="Autronis"
+            className="w-auto transition-all duration-500"
+            style={{ height: scrolled ? "28px" : "36px" }}
+          />
+          <span
+            className="font-bold tracking-tight transition-all duration-500"
+            style={{ fontSize: scrolled ? "1rem" : "1.125rem" }}
+          >
+            Autronis
+          </span>
         </Link>
 
         <div className="hidden lg:flex items-center gap-1">
@@ -61,7 +74,7 @@ const Navbar = () => {
           ))}
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"

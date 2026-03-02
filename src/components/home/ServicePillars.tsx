@@ -16,7 +16,7 @@ const services = [
     intro: "Wij automatiseren terugkerende processen zodat werk doorloopt zonder handmatige tussenstappen.",
     bullets: [
       "Goedkeuringsflows en notificaties",
-      "Order- en facturatiepipelines",
+      "Order- en facturatieprocessen",
       "Onboarding- en offboardingprocessen",
       "Taakroutering en escalaties",
     ],
@@ -24,25 +24,25 @@ const services = [
   },
   {
     icon: Link2,
-    title: "System Integrations",
-    intro: "Uw CRM, boekhouding, operations en maatwerksystemen gekoppeld via API's.",
+    title: "Systeemintegraties",
+    intro: "Wij koppelen systemen via API's zodat data automatisch en consistent stroomt.",
     bullets: [
+      "API-koppelingen tussen CRM, ERP en finance",
+      "Webhooks en event triggers",
       "Bi-directionele datasynchronisatie",
-      "API-koppelingen met CRM, ERP en finance",
-      "Webhook-gebaseerde event triggers",
-      "Foutafhandeling en retry-logica",
+      "Foutafhandeling en monitoring",
     ],
     image: serviceIntegration,
   },
   {
     icon: PieChart,
-    title: "Data & Reporting",
-    intro: "Realtime dashboards en geautomatiseerde rapportages — altijd actueel inzicht.",
+    title: "Data & Rapportage",
+    intro: "Realtime dashboards en geautomatiseerde rapportages voor volledig inzicht.",
     bullets: [
-      "Geconsolideerde data uit meerdere bronnen",
-      "Realtime KPI-dashboards",
-      "Geautomatiseerde wekelijkse rapportages",
-      "Anomaly detection en alerts",
+      "KPI dashboards",
+      "Geautomatiseerde rapportages",
+      "Dataconsolidatie uit meerdere bronnen",
+      "Alerts en afwijkingsdetectie",
     ],
     image: serviceData,
   },
@@ -53,27 +53,27 @@ const ServicePillars = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
-      {/* More visible blurred bubbles */}
+      {/* Blurred bubbles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
-          { x: "15%", y: "20%", size: 280, opacity: 0.07, delay: 0 },
-          { x: "80%", y: "15%", size: 240, opacity: 0.06, delay: 1.2 },
-          { x: "50%", y: "50%", size: 320, opacity: 0.05, delay: 0.6 },
-          { x: "25%", y: "75%", size: 220, opacity: 0.07, delay: 1.8 },
-          { x: "70%", y: "80%", size: 260, opacity: 0.06, delay: 2.2 },
-          { x: "90%", y: "40%", size: 200, opacity: 0.07, delay: 0.4 },
-          { x: "5%", y: "55%", size: 180, opacity: 0.05, delay: 3 },
-          { x: "60%", y: "30%", size: 200, opacity: 0.04, delay: 1.6 },
+          { x: "15%", y: "20%", size: 300, opacity: 0.09, delay: 0 },
+          { x: "80%", y: "15%", size: 260, opacity: 0.08, delay: 1.2 },
+          { x: "50%", y: "50%", size: 340, opacity: 0.07, delay: 0.6 },
+          { x: "25%", y: "75%", size: 240, opacity: 0.09, delay: 1.8 },
+          { x: "70%", y: "80%", size: 280, opacity: 0.08, delay: 2.2 },
+          { x: "90%", y: "40%", size: 220, opacity: 0.09, delay: 0.4 },
+          { x: "5%", y: "55%", size: 200, opacity: 0.07, delay: 3 },
+          { x: "60%", y: "30%", size: 220, opacity: 0.06, delay: 1.6 },
         ].map((b, i) => (
           <motion.div
             key={i}
             className="absolute rounded-full"
             animate={{
-              scale: [1, 1.3, 1],
-              opacity: [b.opacity, b.opacity * 1.5, b.opacity],
+              scale: [1, 1.4, 1],
+              opacity: [b.opacity, b.opacity * 1.8, b.opacity],
             }}
             transition={{
-              duration: 5 + i * 0.5,
+              duration: 4 + i * 0.4,
               repeat: Infinity,
               ease: "easeInOut",
               delay: b.delay,
@@ -139,17 +139,17 @@ const ServicePillars = () => {
                           ))}
                         </ul>
                       </div>
-                      {/* Image with site-matching background + glow animation */}
-                      <div className="flex-1 min-h-[220px] sm:min-h-[280px] relative overflow-hidden">
+                      {/* Image */}
+                      <div className="flex-1 min-h-[220px] sm:min-h-[280px] relative overflow-hidden rounded-xl">
                         <div
                           className="absolute inset-0"
-                          style={{ backgroundColor: "hsl(192, 25%, 12%)" }}
+                          style={{ backgroundColor: "hsl(192, 25%, 7%)" }}
                         />
-                        {/* Subtle pulsing glow on image */}
+                        {/* Subtle pulsing glow */}
                         <motion.div
                           className="absolute inset-0 z-[2] pointer-events-none"
                           animate={{
-                            opacity: [0, 0.15, 0],
+                            opacity: [0, 0.18, 0],
                           }}
                           transition={{
                             duration: 4,
@@ -158,7 +158,7 @@ const ServicePillars = () => {
                             delay: i * 1.3,
                           }}
                           style={{
-                            background: "radial-gradient(ellipse at center, hsl(174 78% 41% / 0.12), transparent 70%)",
+                            background: "radial-gradient(ellipse at center, hsl(174 78% 41% / 0.15), transparent 70%)",
                           }}
                         />
                         <motion.img
@@ -172,21 +172,24 @@ const ServicePillars = () => {
                           }
                           transition={{ duration: 0.5, ease: "easeOut" }}
                           style={{
-                            borderTopRightRadius: isEven ? "0.75rem" : undefined,
-                            borderBottomRightRadius: isEven ? "0.75rem" : undefined,
-                            borderTopLeftRadius: !isEven ? "0.75rem" : undefined,
-                            borderBottomLeftRadius: !isEven ? "0.75rem" : undefined,
                             mixBlendMode: "lighten",
                           }}
                           loading="lazy"
                         />
-                        {/* Edge gradient overlay for smooth transition */}
+                        {/* Edge gradient overlay - seamless blend */}
                         <div
                           className="absolute inset-0 z-[3] pointer-events-none"
                           style={{
                             background: isEven
-                              ? "linear-gradient(to right, hsl(var(--card)) 0%, transparent 20%)"
-                              : "linear-gradient(to left, hsl(var(--card)) 0%, transparent 20%)",
+                              ? "linear-gradient(to right, hsl(var(--card)) 0%, transparent 25%)"
+                              : "linear-gradient(to left, hsl(var(--card)) 0%, transparent 25%)",
+                          }}
+                        />
+                        {/* Top/bottom fade for seamless edges */}
+                        <div
+                          className="absolute inset-0 z-[3] pointer-events-none"
+                          style={{
+                            background: "linear-gradient(to bottom, hsl(var(--card)) 0%, transparent 8%, transparent 92%, hsl(var(--card)) 100%)",
                           }}
                         />
                       </div>

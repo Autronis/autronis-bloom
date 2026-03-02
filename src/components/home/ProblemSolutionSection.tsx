@@ -106,6 +106,17 @@ const ProblemSolutionSection = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
+      {/* Grid background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `
+            linear-gradient(hsl(174 78% 30% / 0.035) 1px, transparent 1px),
+            linear-gradient(90deg, hsl(174 78% 30% / 0.035) 1px, transparent 1px)
+          `,
+          backgroundSize: "50px 50px",
+        }}
+      />
       {/* Bubbles background */}
       <AnimatedBubbles />
       <div className="absolute inset-0 pointer-events-none overflow-hidden">

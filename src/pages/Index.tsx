@@ -10,7 +10,7 @@ import ProblemSolutionSection from "@/components/home/ProblemSolutionSection";
 import ServicePillars from "@/components/home/ServicePillars";
 import ProcessSection from "@/components/home/ProcessSection";
 import WhyAutronisSection from "@/components/home/WhyAutronisSection";
-
+import ROIPreview from "@/components/home/ROIPreview";
 import CaseStudiesPreview from "@/components/home/CaseStudiesPreview";
 import SecurityBlock from "@/components/home/SecurityBlock";
 import FAQSection from "@/components/home/FAQSection";
@@ -76,7 +76,7 @@ const Index = () => {
       <ServicePillars />
       <ProcessSection />
       <WhyAutronisSection />
-      
+      <ROIPreview />
       <CaseStudiesPreview />
       <SecurityBlock />
       <FAQSection />

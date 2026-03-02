@@ -526,8 +526,21 @@ const Services = () => {
             </div>
           </div>
 
-          {/* Bottom CTA — inside same section so bubbles continue */}
-          <div className="text-center mt-24">
+          {/* ROI reference */}
+          <div className="mt-16 text-center border-t border-border pt-12">
+            <p className="text-sm text-muted-foreground mb-2">
+              Elke implementatie wordt vooraf onderbouwd met een impact- en ROI-analyse.
+            </p>
+            <Link
+              to="/impact-roi"
+              className="text-sm text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
+            >
+              Bekijk hoe wij ROI berekenen <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          {/* Bottom CTA */}
+          <div className="text-center mt-16">
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">Uw proces staat er niet tussen?</h2>
             <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
               Wij automatiseren elk voorspelbaar proces. Plan een vrijblijvende scan en ontdek wat er mogelijk is.

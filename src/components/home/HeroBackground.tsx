@@ -23,7 +23,7 @@ const HeroBackground = () => {
 
     const dots: GlowDot[] = [];
     const usedLines = new Set<number>();
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 5; i++) {
       let line: number;
       if (usedLines.size < lineCount) {
         do { line = Math.floor(Math.random() * lineCount); } while (usedLines.has(line));
@@ -34,7 +34,7 @@ const HeroBackground = () => {
       dots.push({
         lineIndex: line,
         t: Math.random(),
-        speed: 0.00012 + Math.random() * 0.0003,
+        speed: 0.00008 + Math.random() * 0.00018,
         radius: 2 + Math.random() * 2.5,
         opacity: 0.1 + Math.random() * 0.12,
       });
@@ -56,14 +56,14 @@ const HeroBackground = () => {
       const t_pos = (lineIdx + 1) / (lineCount + 1);
       // Spread lines across 32% of viewport height (34% to 66%)
       const yBase = h * (0.28 + t_pos * 0.44);
-      const freq = 0.003 + (lineIdx % 3) * 0.0012;
-      const speed = 0.12 + (lineIdx % 4) * 0.04;
+      const freq = 0.003 + (lineIdx % 3) * 0.0005;
+      const speed = 0.1 + (lineIdx % 4) * 0.015;
       const amp = 24 + Math.sin(lineIdx * 1.1) * 14;
       return (
         yBase +
         Math.sin(x * freq + time * speed) * amp +
-        Math.sin(x * freq * 0.5 + time * speed * 0.7) * amp * 0.55 +
-        Math.cos(x * freq * 0.3 + time * speed * 0.4 + lineIdx) * amp * 0.3
+        Math.sin(x * freq * 0.5 + time * speed * 0.8) * amp * 0.55 +
+        Math.cos(x * freq * 0.3 + time * speed * 0.6 + lineIdx * 0.3) * amp * 0.3
       );
     };
 

@@ -168,6 +168,17 @@ const ProcessSection = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden" ref={sectionRef}>
+      {/* Grid background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `
+            linear-gradient(hsl(174 78% 30% / var(--grid-opacity, 0.035)) 1px, transparent 1px),
+            linear-gradient(90deg, hsl(174 78% 30% / var(--grid-opacity, 0.035)) 1px, transparent 1px)
+          `,
+          backgroundSize: "50px 50px",
+        }}
+      />
       {/* Bubbles background */}
       <AnimatedBubbles bubbles={[
         { x: "10%", y: "15%", size: 260, opacity: 0.1, delay: 0 },

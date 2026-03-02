@@ -103,18 +103,23 @@ const InteractiveGridBg = () => {
     resize();
     window.addEventListener("resize", resize);
 
+    const isDark = document.documentElement.classList.contains('dark');
+    const boost = isDark ? 1 : 2.5;
+
     let time = 0;
     const animate = () => {
       const w = canvas.offsetWidth;
       const h = canvas.offsetHeight;
       ctx.clearRect(0, 0, w, h);
 
+      const lineOpacity = 0.035 * boost;
+
       for (let x = 0; x <= w; x += spacing) {
         const offsetX = Math.sin(time * 0.3 + x * 0.01) * 2;
         ctx.beginPath();
         ctx.moveTo(x + offsetX, 0);
         ctx.lineTo(x + offsetX, h);
-        ctx.strokeStyle = `hsla(174, 78%, 41%, 0.035)`;
+        ctx.strokeStyle = `hsla(174, 78%, 35%, ${lineOpacity})`;
         ctx.lineWidth = 0.5;
         ctx.stroke();
       }
@@ -123,7 +128,7 @@ const InteractiveGridBg = () => {
         ctx.beginPath();
         ctx.moveTo(0, y + offsetY);
         ctx.lineTo(w, y + offsetY);
-        ctx.strokeStyle = `hsla(174, 78%, 41%, 0.035)`;
+        ctx.strokeStyle = `hsla(174, 78%, 35%, ${lineOpacity})`;
         ctx.lineWidth = 0.5;
         ctx.stroke();
       }
@@ -136,11 +141,11 @@ const InteractiveGridBg = () => {
           const ny = y + oy;
           const pulse = Math.sin(time * 0.5 + x * 0.02 + y * 0.02) * 0.5 + 0.5;
           const radius = 1 + pulse * 0.5;
-          const opacity = 0.05 + pulse * 0.05;
+          const opacity = (0.05 + pulse * 0.05) * boost;
 
           ctx.beginPath();
           ctx.arc(nx, ny, radius, 0, Math.PI * 2);
-          ctx.fillStyle = `hsla(174, 78%, 41%, ${opacity})`;
+          ctx.fillStyle = `hsla(174, 78%, 35%, ${opacity})`;
           ctx.fill();
         }
       }
@@ -176,13 +181,16 @@ const InteractiveBubbles = () => {
 
     let animId: number;
 
+    const isDark = document.documentElement.classList.contains('dark');
+    const boost = isDark ? 1 : 2.5;
+
     const bubbles = Array.from({ length: 7 }, (_, i) => ({
       x: Math.random(),
       y: Math.random(),
       baseSize: 80 + Math.random() * 140,
       speed: 0.0003 + Math.random() * 0.0004,
       phase: Math.random() * Math.PI * 2,
-      opacity: 0.015 + Math.random() * 0.02,
+      opacity: (0.015 + Math.random() * 0.02) * boost,
     }));
 
     const resize = () => {

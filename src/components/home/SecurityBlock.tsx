@@ -53,8 +53,13 @@ const SecurityCard = ({
           }}
         />
       )}
-      <Icon size={16} className="text-primary shrink-0 relative z-10" />
-      <span className="text-sm text-foreground relative z-10">{item.label}</span>
+      <Icon size={18} className="text-primary shrink-0 relative z-10" />
+      <span className="text-sm font-semibold text-foreground relative z-10">{item.label}</span>
+      {/* Underline on hover */}
+      <span
+        className="absolute bottom-2.5 left-5 right-5 h-px bg-primary/40 scale-x-0 transition-transform duration-300 origin-left z-10"
+        style={{ transform: isHovered ? "scaleX(1)" : "scaleX(0)" }}
+      />
     </div>
   );
 };

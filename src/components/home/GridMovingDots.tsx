@@ -8,21 +8,31 @@ interface GridDot {
   duration: number;
   delay: number;
   reverse?: boolean;
-  endLineIndex?: number; // for diagonal: which perpendicular line to end on
+  endLineIndex?: number;
 }
 
 const defaultDots: GridDot[] = [
-  { axis: "x", lineIndex: 3, duration: 16, delay: 0 },
-  { axis: "x", lineIndex: 7, duration: 20, delay: 2, reverse: true },
-  { axis: "x", lineIndex: 10, duration: 18, delay: 5 },
-  { axis: "x", lineIndex: 5, duration: 22, delay: 8, reverse: true },
-  { axis: "y", lineIndex: 4, duration: 20, delay: 1 },
-  { axis: "y", lineIndex: 9, duration: 17, delay: 4, reverse: true },
-  { axis: "y", lineIndex: 14, duration: 19, delay: 3 },
-  { axis: "y", lineIndex: 2, duration: 21, delay: 6, reverse: true },
-  { axis: "diagonal", lineIndex: 2, endLineIndex: 8, duration: 14, delay: 0 },
-  { axis: "diagonal", lineIndex: 10, endLineIndex: 3, duration: 16, delay: 4, reverse: true },
-  { axis: "diagonal", lineIndex: 6, endLineIndex: 12, duration: 18, delay: 7 },
+  // Horizontal
+  { axis: "x", lineIndex: 2, duration: 14, delay: 0 },
+  { axis: "x", lineIndex: 4, duration: 18, delay: 2, reverse: true },
+  { axis: "x", lineIndex: 6, duration: 16, delay: 5 },
+  { axis: "x", lineIndex: 8, duration: 20, delay: 1, reverse: true },
+  { axis: "x", lineIndex: 10, duration: 15, delay: 7 },
+  { axis: "x", lineIndex: 12, duration: 22, delay: 3, reverse: true },
+  { axis: "x", lineIndex: 3, duration: 19, delay: 9 },
+  // Vertical
+  { axis: "y", lineIndex: 3, duration: 18, delay: 1 },
+  { axis: "y", lineIndex: 6, duration: 15, delay: 4, reverse: true },
+  { axis: "y", lineIndex: 9, duration: 20, delay: 2 },
+  { axis: "y", lineIndex: 12, duration: 17, delay: 6, reverse: true },
+  { axis: "y", lineIndex: 15, duration: 19, delay: 0 },
+  { axis: "y", lineIndex: 2, duration: 21, delay: 8, reverse: true },
+  { axis: "y", lineIndex: 18, duration: 16, delay: 3 },
+  // Diagonal
+  { axis: "diagonal", lineIndex: 1, endLineIndex: 7, duration: 12, delay: 0 },
+  { axis: "diagonal", lineIndex: 8, endLineIndex: 2, duration: 14, delay: 3, reverse: true },
+  { axis: "diagonal", lineIndex: 4, endLineIndex: 10, duration: 16, delay: 6 },
+  { axis: "diagonal", lineIndex: 12, endLineIndex: 5, duration: 13, delay: 9, reverse: true },
 ];
 
 const GridMovingDots = ({ dots = defaultDots }: { dots?: GridDot[] }) => (
@@ -41,18 +51,18 @@ const GridMovingDots = ({ dots = defaultDots }: { dots?: GridDot[] }) => (
             key={i}
             className="absolute"
             style={{
-              width: 4,
-              height: 4,
+              width: 3.5,
+              height: 3.5,
               borderRadius: "50%",
-              background: "hsl(174 78% 45% / 0.3)",
-              boxShadow: "0 0 6px hsl(174 78% 45% / 0.2), 0 0 12px hsl(174 78% 45% / 0.08)",
+              background: "hsl(174 78% 45% / 0.25)",
+              boxShadow: "0 0 5px hsl(174 78% 45% / 0.15), 0 0 10px hsl(174 78% 45% / 0.06)",
               left: 0,
               top: 0,
             }}
             animate={{
               x: [startX, endX],
               y: [startY, endY],
-              opacity: [0, 0.5, 0.5, 0],
+              opacity: [0, 0.45, 0.45, 0],
             }}
             transition={{
               duration: dot.duration,
@@ -69,19 +79,19 @@ const GridMovingDots = ({ dots = defaultDots }: { dots?: GridDot[] }) => (
           key={i}
           className="absolute"
           style={{
-            width: 4,
-            height: 4,
+            width: 3.5,
+            height: 3.5,
             borderRadius: "50%",
-            background: "hsl(174 78% 45% / 0.3)",
-            boxShadow: "0 0 6px hsl(174 78% 45% / 0.2), 0 0 12px hsl(174 78% 45% / 0.08)",
+            background: "hsl(174 78% 45% / 0.25)",
+            boxShadow: "0 0 5px hsl(174 78% 45% / 0.15), 0 0 10px hsl(174 78% 45% / 0.06)",
             ...(dot.axis === "x"
               ? { top: pos, left: 0 }
               : { left: pos, top: 0 }),
           }}
           animate={
             dot.axis === "x"
-              ? { x: dot.reverse ? ["100vw", "-10px"] : ["-10px", "100vw"], opacity: [0, 0.5, 0.5, 0] }
-              : { y: dot.reverse ? ["100%", "-10px"] : ["-10px", "100%"], opacity: [0, 0.5, 0.5, 0] }
+              ? { x: dot.reverse ? ["100vw", "-10px"] : ["-10px", "100vw"], opacity: [0, 0.45, 0.45, 0] }
+              : { y: dot.reverse ? ["100%", "-10px"] : ["-10px", "100%"], opacity: [0, 0.45, 0.45, 0] }
           }
           transition={{
             duration: dot.duration,

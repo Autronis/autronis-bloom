@@ -148,7 +148,7 @@ const WhyAutronisSection = () => {
             <div className="rounded-2xl border border-border bg-card overflow-hidden max-w-6xl mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 {/* Left: cards + CTAs */}
-                <div className="p-6 sm:p-8 flex flex-col justify-between">
+                <div className="p-6 sm:p-8 flex flex-col">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                     {reasons.map((r, i) => (
                       <ReasonCard

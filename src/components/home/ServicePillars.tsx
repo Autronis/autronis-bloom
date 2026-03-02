@@ -195,10 +195,7 @@ const ServiceCard = ({
             </div>
             {/* Image */}
             <div className="flex-1 min-h-[220px] sm:min-h-[280px] relative overflow-hidden rounded-xl">
-              <div
-                className="absolute inset-0"
-                style={{ backgroundColor: "hsl(192, 25%, 10%)" }}
-              />
+              <div className="absolute inset-0 bg-background" />
               {/* Subtle pulsing glow */}
               <motion.div
                 className="absolute inset-0 z-[2] pointer-events-none"

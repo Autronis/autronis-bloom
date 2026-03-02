@@ -87,8 +87,8 @@ const HeroBackground = () => {
       drawGlow(w * 0.5, h * 0.3, 450, 0.015 + Math.sin(time * 0.2 + 2) * 0.008);
 
       for (let i = 0; i < lineCount; i++) {
-        const opacity = i % 2 === 0 ? 0.1 : 0.05;
-        const lineWidth = i % 3 === 0 ? 4.5 : 3;
+        const opacity = i % 2 === 0 ? 0.05 : 0.03;
+        const lineWidth = i % 3 === 0 ? 3.5 : 2.5;
 
         ctx.beginPath();
         ctx.strokeStyle = `hsla(174, 78%, 41%, ${opacity})`;

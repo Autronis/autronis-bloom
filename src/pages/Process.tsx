@@ -9,6 +9,11 @@ import {
   Search,
   Brain,
   TrendingUp,
+  Clock,
+  DollarSign,
+  AlertTriangle,
+  Users,
+  Target,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
@@ -19,62 +24,81 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 const phases = [
   {
     step: "01",
+    emoji: "🧠",
     title: "Analyse & Architectuur",
     timing: "Week 1",
     description:
-      "We analyseren processen, knelpunten en datastructuur. Geen aannames — alleen onderbouwde keuzes.",
+      "We analyseren processen, systemen en datastromen en definiëren een onderbouwde automatiseringsstrategie. Besluiten worden gebaseerd op impact-, risico- en ROI-berekeningen.",
     deliverables: [
       "Procesmapping",
       "Systeemanalyse",
-      "Automatiseringskansen met impactscore",
+      "Impact- en ROI-analyse",
+      "Businesscase per automatiseringskans",
+      "Scope-definitie",
+      "Risicoanalyse",
     ],
   },
   {
     step: "02",
-    title: "Design & Structuur",
+    emoji: "🏗",
+    title: "Ontwerp & Structuur",
     timing: "Week 1–2",
     description:
-      "We ontwerpen een schaalbare architectuur waarin systemen logisch samenwerken.",
+      "We ontwerpen een schaalbare en veilige architectuur waarin systemen logisch samenwerken en data gecontroleerd stroomt.",
     deliverables: [
-      "Technische architectuur",
+      "Technisch architectuurdocument",
       "Integratieschema",
-      "Datastromen ontwerp",
+      "Datastroomontwerp",
+      "Security- en toegangsmodel",
+      "Datagovernance-richtlijnen",
+      "Technische randvoorwaarden",
     ],
   },
   {
     step: "03",
-    title: "Build & Iteratie",
+    emoji: "⚙️",
+    title: "Bouw & Implementatie",
     timing: "Week 2–4",
     description:
-      "We bouwen modulair en testen continu. U ziet elke week voortgang.",
+      "We realiseren de automatiseringen modulair, gecontroleerd en volgens vastgestelde architectuurprincipes.",
     deliverables: [
-      "Werkende automatiseringen",
+      "Werkende automatiseringsflows",
       "Testomgeving",
-      "Live demo's",
+      "Logging en foutafhandeling",
+      "Versiebeheer en configuratiebeheer",
+      "Teststrategie en validatieverslagen",
     ],
   },
   {
     step: "04",
+    emoji: "🔍",
     title: "Validatie & Optimalisatie",
     timing: "Week 3–5",
     description:
-      "We testen edge cases, performance en stabiliteit voordat iets live gaat.",
+      "We testen stabiliteit, performance en uitzonderingssituaties voordat livegang plaatsvindt.",
     deliverables: [
-      "End-to-end test coverage",
-      "Logging & monitoring setup",
-      "Performance validatie",
+      "End-to-end testdekking",
+      "Monitoringconfiguratie",
+      "Performancevalidatie",
+      "Gebruikersacceptatietest",
+      "Failover- en fallbackstrategie",
+      "SLA-afstemming",
     ],
   },
   {
     step: "05",
+    emoji: "🚀",
     title: "Livegang & Overdracht",
     timing: "Week 4–6",
     description:
-      "Stabiele livegang met volledige documentatie en kennisoverdracht.",
+      "We realiseren een gecontroleerde livegang en dragen het systeem volledig overdraagbaar over.",
     deliverables: [
-      "Productie deployment",
-      "Documentatie",
-      "Training & overdracht",
+      "Productie-implementatie",
+      "Volledige technische documentatie",
+      "Operationeel overdrachtsmodel",
+      "Training & kennisoverdracht",
+      "Nazorgperiode",
+      "Governance- en eigenaarschapsoverdracht",
     ],
   },
 ];
@@ -103,20 +127,18 @@ const securityClaims = [
 ];
 
 const introPoints = [
-  { icon: Search, text: "Analyse met ROI-focus" },
-  { icon: Brain, text: "Architectuur vóór automatisering" },
-  { icon: TrendingUp, text: "Schaalbaar vanaf dag één" },
+  { icon: Search, text: "Doordachte analyse", sub: "Elke implementatie start met proces- en systeemanalyse inclusief impact- en ROI-berekening." },
+  { icon: Brain, text: "Architectuur vóór automatisering", sub: "Structuur en schaalbaarheid worden geborgd voordat er gebouwd wordt." },
+  { icon: Target, text: "Meetbare besluitvorming", sub: "Automatiseringen worden alleen gerealiseerd wanneer de zakelijke waarde aantoonbaar is." },
+  { icon: TrendingUp, text: "Schaalbaar vanaf dag één", sub: "Ontworpen om mee te groeien zonder lineaire personeelskosten." },
 ];
 
-/* ── Moving dash CSS for progress line ── */
-const movingDashStyle = `
-@keyframes flowDash {
-  0% { background-position: 0 0; }
-  100% { background-position: 0 40px; }
-}
-`;
-
-/* PhaseRail removed — labels integrated into PhaseCard grid */
+const valueItems = [
+  { icon: Clock, text: "Meetbare tijdsbesparing" },
+  { icon: DollarSign, text: "Structurele kostenreductie" },
+  { icon: AlertTriangle, text: "Minder operationeel risico" },
+  { icon: Users, text: "Schaalbaarheid zonder lineaire personeelsgroei" },
+];
 
 /* ── Phase card ── */
 const PhaseCard = ({
@@ -197,9 +219,8 @@ const PhaseCard = ({
         )}
       </div>
 
-      {/* Content card with depth layer */}
+      {/* Content card */}
       <div className="relative mb-10 ml-4 sm:ml-5">
-        {/* Depth shadow layer */}
         <div
           className="absolute inset-0 rounded-xl transform-gpu"
           style={{
@@ -209,7 +230,6 @@ const PhaseCard = ({
           }}
         />
 
-        {/* Spotlight behind card */}
         <div
           className="absolute inset-0 rounded-xl pointer-events-none transform-gpu"
           style={{
@@ -227,14 +247,9 @@ const PhaseCard = ({
           initial={{ opacity: 0, x: 32 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{
-            duration: 0.3,
-            ease: [0.23, 1, 0.32, 1],
-          }}
+          transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
           style={{
-            backgroundColor: isCurrent
-              ? "hsl(var(--card))"
-              : "hsl(var(--card) / 0.7)",
+            backgroundColor: isCurrent ? "hsl(var(--card))" : "hsl(var(--card) / 0.7)",
             borderColor: isCurrent
               ? "hsl(174, 78%, 41%, 0.25)"
               : isPast
@@ -252,7 +267,6 @@ const PhaseCard = ({
             boxShadow: "0 6px 24px hsl(174 78% 41% / 0.08), 0 2px 8px hsl(0 0% 0% / 0.05)",
           }}
         >
-
           <div className="relative z-10">
             {/* Mobile phase label */}
             <p
@@ -266,7 +280,10 @@ const PhaseCard = ({
             </p>
 
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
-              <h3 className="text-base sm:text-lg font-bold">{phase.title}</h3>
+              <h3 className="text-base sm:text-lg font-bold">
+                <span className="mr-2">{phase.emoji}</span>
+                {phase.title}
+              </h3>
               <span className="text-[10px] sm:text-xs text-muted-foreground bg-muted px-2.5 py-0.5 rounded-full shrink-0 self-start border-0">
                 {phase.timing}
               </span>
@@ -280,7 +297,7 @@ const PhaseCard = ({
               <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-2 font-semibold">
                 Deliverables
               </p>
-              <ul className="space-y-1.5">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
                 {phase.deliverables.map((d, dIdx) => (
                   <motion.li
                     key={d}
@@ -289,7 +306,7 @@ const PhaseCard = ({
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{
-                      delay: 0.1 + dIdx * 0.08,
+                      delay: 0.1 + dIdx * 0.06,
                       duration: 0.3,
                       ease: [0.23, 1, 0.32, 1],
                     }}
@@ -329,11 +346,9 @@ const Process = () => {
 
     setActiveIndex(newActive);
 
-    // Calculate rail fill percent
     if (newActive < 0) {
       setFillPercent(0);
     } else {
-      // Each phase = 1 segment, fill proportionally
       const totalSegments = phases.length - 1;
       setFillPercent(Math.min(100, (newActive / totalSegments) * 100));
     }
@@ -347,7 +362,6 @@ const Process = () => {
 
   return (
     <section className="pt-16 pb-24 relative overflow-hidden">
-      <style>{movingDashStyle}</style>
       <AmbientLight />
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Hero */}
@@ -359,17 +373,17 @@ const Process = () => {
           </ScrollRevealItem>
           <ScrollRevealItem>
             <h1 className="text-4xl sm:text-5xl font-bold mb-4 leading-tight">
-              Van analyse tot livegang
+              Van analyse naar schaalbare automatisering
             </h1>
           </ScrollRevealItem>
           <ScrollRevealItem>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Gestructureerd. Voorspelbaar. Schaalbaar.
+              Gestructureerd. Onderbouwd. Overdraagbaar.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>
 
-        {/* ── Intro block ── */}
+        {/* ── Intro block: Onze werkwijze ── */}
         <ScrollReveal className="max-w-3xl mx-auto mb-20">
           <ScrollRevealItem>
             <div
@@ -380,27 +394,34 @@ const Process = () => {
               }}
             >
               <h2 className="text-xl sm:text-2xl font-bold mb-3">
-                Onze manier van bouwen
+                Onze werkwijze
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed mb-6">
                 Wij combineren procesautomatisering, systeemintegraties en
                 data-architectuur tot één schaalbaar fundament. Geen losse
                 oplossingen — maar een robuuste structuur die met u meegroeit.
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {introPoints.map((point, idx) => (
                   <motion.div
                     key={point.text}
-                    className="flex items-center gap-3 p-3 rounded-lg bg-primary/[0.04] border border-primary/10"
+                    className="flex items-start gap-3 p-4 rounded-lg bg-card border border-border"
                     initial={{ opacity: 0, y: 12 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: idx * 0.1, duration: 0.4 }}
+                    whileHover={{
+                      borderColor: "hsl(174, 78%, 41%, 0.5)",
+                      boxShadow: "0 0 14px hsl(174, 78%, 41%, 0.1)",
+                    }}
                   >
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 mt-0.5">
                       <point.icon size={16} />
                     </div>
-                    <p className="text-sm font-medium">{point.text}</p>
+                    <div>
+                      <p className="text-sm font-bold mb-0.5">{point.text}</p>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{point.sub}</p>
+                    </div>
                   </motion.div>
                 ))}
               </div>
@@ -442,12 +463,10 @@ const Process = () => {
 
         {/* ── Timeline ── */}
         <div ref={timelineRef} className="max-w-4xl mx-auto mb-20 relative">
-          {/* Full-height baseline bar behind nodes */}
           <div
             className="absolute top-0 bottom-0 w-[2px] pointer-events-none left-[19px] sm:left-[23px] lg:left-[163px]"
             style={{ backgroundColor: "hsl(var(--border) / 0.15)" }}
           >
-            {/* Turquoise progress fill */}
             <div
               className="absolute inset-x-0 top-0 bg-primary rounded-full"
               style={{
@@ -466,7 +485,43 @@ const Process = () => {
           ))}
         </div>
 
-        
+        {/* ── Value block ── */}
+        <ScrollReveal className="max-w-3xl mx-auto mb-20">
+          <ScrollRevealItem>
+            <div className="text-center mb-8">
+              <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
+                Resultaat
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-bold">
+                Wat dit concreet oplevert
+              </h2>
+            </div>
+          </ScrollRevealItem>
+          <ScrollRevealItem>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {valueItems.map((item, idx) => (
+                <motion.div
+                  key={item.text}
+                  className="flex items-center gap-3 p-4 rounded-xl border border-border bg-card cursor-default"
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.08, duration: 0.4 }}
+                  whileHover={{
+                    borderColor: "hsl(174, 78%, 41%, 0.5)",
+                    boxShadow: "0 0 14px hsl(174, 78%, 41%, 0.1)",
+                    scale: 1.02,
+                  }}
+                >
+                  <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                    <item.icon size={18} />
+                  </div>
+                  <p className="text-sm font-semibold">{item.text}</p>
+                </motion.div>
+              ))}
+            </div>
+          </ScrollRevealItem>
+        </ScrollReveal>
 
         {/* ── CTA ── */}
         <ScrollReveal className="text-center">

@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, ShieldCheck } from "lucide-react";
-import AnimatedBubbles from "@/components/home/AnimatedBubbles";
+import AmbientLight from "@/components/AmbientLight";
 
 const phases = [
   {
@@ -71,7 +71,7 @@ const Process = () => {
   return (
     <Layout>
       <section className="pt-16 pb-24 relative overflow-hidden">
-        <AnimatedBubbles />
+        <AmbientLight />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           {/* Hero */}
           <div className="max-w-3xl mx-auto text-center mb-20">

@@ -51,12 +51,13 @@ const Navbar = () => {
         className="container mx-auto flex items-center justify-between px-4 lg:px-8 transition-all duration-500"
         style={{ height: scrolled ? "56px" : "64px" }}
       >
-        <Link to="/" className="flex items-center gap-2 shrink-0">
+        <Link to="/" className="flex items-center gap-2 shrink-0 min-w-[140px]">
           <img
             src="/logo.png"
             alt="Autronis"
-            className="w-auto transition-all duration-500"
+            className="w-auto transition-all duration-500 will-change-transform"
             style={{ height: scrolled ? "28px" : "36px" }}
+            fetchPriority="high"
           />
           <span
             className="font-bold tracking-tight transition-all duration-500"

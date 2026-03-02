@@ -188,30 +188,6 @@ const ProblemSolutionSection = () => {
             ))}
           </ScrollReveal>
 
-          <ScrollReveal className="text-center">
-            <ScrollRevealItem>
-              <Button asChild size="lg">
-                <Link to="/book">
-                  Plan een Automation Scan
-                  <ArrowRight size={18} />
-                </Link>
-              </Button>
-              <div className="flex flex-wrap justify-center gap-4 sm:gap-8 mt-5 text-sm text-muted-foreground">
-                <span className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  30 min intake
-                </span>
-                <span className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  Concrete optimalisaties
-                </span>
-                <span className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  Inzicht in verwachte impact
-                </span>
-              </div>
-            </ScrollRevealItem>
-          </ScrollReveal>
         </div>
       </div>
     </section>

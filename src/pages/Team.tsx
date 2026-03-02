@@ -6,6 +6,7 @@ import { useState } from "react";
 import fotoSyb from "@/assets/foto_syb.jpg";
 import fotoSem from "@/assets/foto_sem.jpg";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import AnimatedBubbles from "@/components/home/AnimatedBubbles";
 
 const team = [
   {
@@ -60,8 +61,9 @@ const TeamCard = ({ member }: { member: (typeof team)[0] }) => {
 const Team = () => {
   return (
     <Layout>
-      <section className="pt-16 pb-24">
-        <div className="container mx-auto px-4 lg:px-8">
+      <section className="pt-16 pb-24 relative overflow-hidden">
+        <AnimatedBubbles />
+        <div className="container mx-auto px-4 lg:px-8 relative z-10">
           {/* Hero */}
           <ScrollReveal className="max-w-3xl mx-auto text-center mb-16">
             <ScrollRevealItem>

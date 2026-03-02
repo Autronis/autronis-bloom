@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
+import AnimatedBubbles from "@/components/home/AnimatedBubbles";
 
 const Book = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -31,8 +32,9 @@ const Book = () => {
 
   return (
     <Layout>
-      <section className="pt-16 pb-24">
-        <div className="container mx-auto px-4 lg:px-8">
+      <section className="pt-16 pb-24 relative overflow-hidden">
+        <AnimatedBubbles />
+        <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-2xl mx-auto text-center mb-12">
             <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Plan uw scan</p>
             <h1 className="text-3xl sm:text-4xl font-bold mb-4">Plan uw Automation Scan</h1>

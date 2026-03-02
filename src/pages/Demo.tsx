@@ -2,12 +2,14 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Play, ArrowRight } from "lucide-react";
+import AnimatedBubbles from "@/components/home/AnimatedBubbles";
 
 const Demo = () => {
   return (
     <Layout>
-      <section className="pt-16 pb-24">
-        <div className="container mx-auto px-4 lg:px-8">
+      <section className="pt-16 pb-24 relative overflow-hidden">
+        <AnimatedBubbles />
+        <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center mb-12">
             <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Demo</p>
             <h1 className="text-4xl sm:text-5xl font-bold mb-4">Zie automatisering in actie</h1>

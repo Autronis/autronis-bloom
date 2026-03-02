@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useState, useCallback } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
-import AnimatedBubbles from "@/components/home/AnimatedBubbles";
 import GridMovingDots from "@/components/home/GridMovingDots";
 
 const caseStudies = [
@@ -104,19 +103,11 @@ const CaseStudiesPreview = () => {
           backgroundSize: "50px 50px",
         }}
       />
-      {/* Bubbles background */}
-      <AnimatedBubbles bubbles={[
-        { x: "15%", y: "25%", size: 240, opacity: 0.1, delay: 0.3 },
-        { x: "78%", y: "18%", size: 300, opacity: 0.08, delay: 1.5 },
-        { x: "45%", y: "70%", size: 200, opacity: 0.11, delay: 0.7 },
-        { x: "88%", y: "60%", size: 260, opacity: 0.09, delay: 2 },
-        { x: "30%", y: "85%", size: 180, opacity: 0.1, delay: 1.1 },
-      ]} />
       <GridMovingDots dots={[
-        { axis: "x", pos: "100px", duration: 20, delay: 1 },
-        { axis: "x", pos: "300px", duration: 25, delay: 4, reverse: true },
-        { axis: "y", pos: "250px", duration: 22, delay: 2 },
-        { axis: "y", pos: "550px", duration: 18, delay: 6, reverse: true },
+        { axis: "x", lineIndex: 2, duration: 20, delay: 1 },
+        { axis: "x", lineIndex: 6, duration: 25, delay: 4, reverse: true },
+        { axis: "y", lineIndex: 5, duration: 22, delay: 2 },
+        { axis: "y", lineIndex: 11, duration: 18, delay: 6, reverse: true },
       ]} />
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[

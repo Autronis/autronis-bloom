@@ -5,7 +5,6 @@ import { useRef, useState } from "react";
 import { useInView } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import GlowCard from "@/components/GlowCard";
-import AnimatedBubbles from "@/components/home/AnimatedBubbles";
 import GridMovingDots from "@/components/home/GridMovingDots";
 
 const problems = [
@@ -118,7 +117,6 @@ const ProblemSolutionSection = () => {
           backgroundSize: "50px 50px",
         }}
       />
-      <AnimatedBubbles />
       <GridMovingDots />
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[

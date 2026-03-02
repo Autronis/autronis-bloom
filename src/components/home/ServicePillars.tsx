@@ -69,7 +69,11 @@ const ServiceCard = ({
     <ScrollReveal key={s.title}>
       <ScrollRevealItem>
          <div
-          className="rounded-xl border border-border bg-card"
+          className="rounded-xl border border-border bg-card transition-all duration-500 ease-out"
+          style={{
+            borderColor: hoveredIndex === i ? "hsl(var(--primary) / 0.4)" : undefined,
+            boxShadow: hoveredIndex === i ? "0 0 20px hsl(var(--primary) / 0.15)" : "none",
+          }}
           onMouseEnter={() => setHoveredIndex(i)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
@@ -131,7 +135,7 @@ const ServiceCard = ({
               <motion.div
                 className="absolute inset-0 z-[2] pointer-events-none"
                 animate={{ opacity: hoveredIndex === i ? 0.18 : 0 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
                 style={{ background: "radial-gradient(ellipse at center, hsl(var(--primary) / 0.15), transparent 70%)" }}
               />
               <motion.img
@@ -143,7 +147,7 @@ const ServiceCard = ({
                     ? { scale: 1.06, filter: `brightness(calc(1.12 + (1 - var(--img-invert)) * 0.18)) saturate(1.1) invert(var(--img-invert)) hue-rotate(var(--img-hue))` }
                     : { scale: 1, filter: `brightness(calc(1 + (1 - var(--img-invert)) * 0.18)) saturate(1) invert(var(--img-invert)) hue-rotate(var(--img-hue))` }
                 }
-                transition={{ duration: 0.5, ease: "easeOut" }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
                 loading="lazy"
               />
               {/* Edge gradient overlay */}
@@ -163,7 +167,7 @@ const ServiceCard = ({
               <motion.div
                 className="absolute inset-0 z-[4] pointer-events-none"
                 animate={{ opacity: hoveredIndex === i ? 0.15 : 0 }}
-                transition={{ duration: 0.4 }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
                 style={{ background: "radial-gradient(ellipse at center, hsl(var(--primary) / 0.3), transparent 60%)" }}
               />
             </div>

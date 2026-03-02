@@ -263,8 +263,8 @@ const PhaseCard = ({
               ? "0 4px 20px hsl(174 78% 41% / 0.06), 0 1px 6px hsl(0 0% 0% / 0.04)"
               : "none",
             opacity: isPast ? 0.7 : 1,
-            transform: isCurrent ? "scale(1.02)" : "scale(1)",
-            transition: "all 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+            transform: isCurrent ? "scale(1.05)" : isPast ? "scale(0.98)" : "scale(1)",
+            transition: "all 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
           }}
           whileHover={{
             scale: 1.02,

@@ -62,7 +62,10 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 pt-6 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} Autronis. Alle rechten voorbehouden.</p>
+          <div className="flex flex-col gap-1">
+            <p>© {new Date().getFullYear()} Autronis. Alle rechten voorbehouden.</p>
+            <p className="text-muted-foreground/60">Architectuurgedreven automatisering met geïntegreerde beveiliging en datagovernance.</p>
+          </div>
           <div className="flex gap-4">
             <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
             <Link to="/cookies" className="hover:text-foreground transition-colors">Cookies</Link>

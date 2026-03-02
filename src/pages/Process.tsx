@@ -48,7 +48,7 @@ const phases = [
     title: "Ontwerp & Structuur",
     timing: "Week 1–2",
     description:
-      "We ontwerpen een schaalbare en veilige architectuur waarin systemen logisch samenwerken en data gecontroleerd stroomt.",
+      "We ontwerpen een schaalbare en veilige architectuur waarin systemen logisch samenwerken en data gecontroleerd stroomt. Beveiliging en datakwaliteit worden vanaf het ontwerp geborgd via role-based access, logging en datacontroles.",
     deliverables: [
       "Technisch architectuurdocument",
       "Integratieschema",
@@ -382,7 +382,7 @@ const Process = () => {
           </ScrollRevealItem>
           <ScrollRevealItem>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Gestructureerd. Onderbouwd. Overdraagbaar.
+              Wij ontwerpen en implementeren schaalbare automatiseringsarchitecturen waarin beveiliging, datakwaliteit en governance vanaf dag één zijn geïntegreerd.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>

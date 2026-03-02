@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, ChevronDown, CheckCircle2, Cog, Link2, PieChart, FolderOpen, Briefcase, Rocket, ShoppingCart, LinkIcon, CreditCard, Puzzle, BarChart3, LayoutDashboard, FileText, Database, AlertTriangle } from "lucide-react";
+import { ArrowRight, ChevronDown, CheckCircle2, Cog, Link2, PieChart, FolderOpen, Briefcase, Rocket, ShoppingCart, LinkIcon, CreditCard, Puzzle, BarChart3, LayoutDashboard, FileText, Database, AlertTriangle, ShieldCheck, Shield, Layers } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
@@ -514,6 +514,43 @@ const Services = () => {
                   pillar={pillar}
                   sectionRef={(el) => (sectionRefs.current[pillar.id] = el)}
                 />
+              ))}
+            </div>
+          </div>
+
+          {/* Standaard inbegrepen */}
+          <div className="mt-16 border-t border-border pt-12 max-w-3xl mx-auto">
+            <ScrollReveal className="text-center mb-8">
+              <ScrollRevealItem>
+                <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Kwaliteitsbasis</p>
+                <h2 className="text-2xl sm:text-3xl font-bold">Standaard inbegrepen</h2>
+              </ScrollRevealItem>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[
+                { icon: ShieldCheck, text: "Minimale toegangsrechten (least privilege)" },
+                { icon: BarChart3, text: "Logging & monitoring" },
+                { icon: FileText, text: "Volledige technische documentatie" },
+                { icon: Shield, text: "Datagovernance en AVG-afstemming" },
+                { icon: Layers, text: "Overdraagbare architectuur" },
+              ].map((item, idx) => (
+                <motion.div
+                  key={item.text}
+                  className="flex items-center gap-3 p-4 rounded-xl border border-border bg-card cursor-default"
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.06, duration: 0.4 }}
+                  whileHover={{
+                    borderColor: "hsl(174, 78%, 41%, 0.5)",
+                    boxShadow: "0 0 14px hsl(174, 78%, 41%, 0.1)",
+                  }}
+                >
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                    <item.icon size={16} />
+                  </div>
+                  <p className="text-sm text-foreground/80">{item.text}</p>
+                </motion.div>
               ))}
             </div>
           </div>

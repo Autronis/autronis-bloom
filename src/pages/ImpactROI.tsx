@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Clock, Users, TrendingUp, Calculator, Building2, ShoppingCart, FileText } from "lucide-react";
+import { ArrowRight, Clock, Users, TrendingUp, Calculator, Building2, ShoppingCart, FileText, Shield } from "lucide-react";
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
@@ -385,6 +385,32 @@ const ImpactROI = () => {
               <p className="text-sm text-muted-foreground text-center mt-10 max-w-2xl mx-auto leading-relaxed">
                 Tijdens de impactanalyse worden deze factoren vertaald naar een volledige businesscase inclusief risico-inschatting en terugverdientijd.
               </p>
+
+              {/* Security & controle blok */}
+              <div className="mt-12 max-w-3xl mx-auto rounded-xl border border-border bg-card p-6 sm:p-8">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                    <Shield size={20} />
+                  </div>
+                  <h3 className="text-lg font-bold text-foreground">Beveiliging en controle</h3>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  Beveiliging, toegangsbeheer en datakwaliteit zijn geïntegreerd in elke fase van onze aanpak. Besparing mag nooit ten koste gaan van controle, compliance of stabiliteit.
+                </p>
+                <ul className="space-y-2">
+                  {[
+                    "Minimale toegangsrechten (least privilege)",
+                    "Logging en monitoring standaard inbegrepen",
+                    "Volledige technische documentatie",
+                    "AVG-conforme implementatie",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </ScrollRevealItem>
           </ScrollReveal>
         </div>

@@ -23,7 +23,9 @@ const navLinks = [
 type NavItem = { label: string; href?: string; children?: { label: string; href: string }[] };
 
 const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState<boolean>(() =>
+    typeof window !== "undefined" ? window.scrollY > 40 : false
+  );
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = useLocation();
@@ -41,28 +43,23 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ${
         scrolled
-          ? "bg-background/80 backdrop-blur-xl border-b border-border/50 shadow-lg"
-          : "bg-transparent border-b border-transparent"
+          ? "bg-background/88 backdrop-blur-xl border-b border-border/50 shadow-lg"
+          : "bg-background/72 backdrop-blur-md border-b border-transparent"
       }`}
     >
       <nav
-        className="container mx-auto flex items-center justify-between px-4 lg:px-8 transition-all duration-500"
-        style={{ height: scrolled ? "56px" : "64px" }}
+        className="container mx-auto h-16 flex items-center justify-between px-4 lg:px-8"
       >
         <Link to="/" className="flex items-center gap-2 shrink-0 min-w-[140px]">
           <img
             src="/logo.png"
             alt="Autronis"
-            className="w-auto transition-all duration-500 will-change-transform"
-            style={{ height: scrolled ? "28px" : "36px" }}
+            className="w-auto h-8 transform-gpu"
             fetchPriority="high"
           />
-          <span
-            className="font-bold tracking-tight transition-all duration-500"
-            style={{ fontSize: scrolled ? "1rem" : "1.125rem" }}
-          >
+          <span className="font-bold tracking-tight text-[1.05rem]">
             Autronis
           </span>
         </Link>

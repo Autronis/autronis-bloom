@@ -120,7 +120,7 @@ const ServiceCard = ({
               </Button>
             </div>
             {/* Image */}
-            <div className="flex-1 min-h-[220px] sm:min-h-[280px] relative overflow-hidden rounded-xl bg-background">
+            <div className="flex-1 min-h-[220px] sm:min-h-[280px] relative overflow-hidden rounded-xl bg-white dark:bg-background">
               {/* Subtle pulsing glow */}
               <motion.div
                 className="absolute inset-0 z-[2] pointer-events-none"
@@ -131,7 +131,7 @@ const ServiceCard = ({
               <motion.img
                 src={s.image}
                 alt={s.title}
-                className="w-full h-full object-cover relative z-[1] dark:mix-blend-screen dark:opacity-100"
+                className="w-full h-full object-cover relative z-[1]"
                 animate={
                   hoveredIndex === i
                     ? { scale: 1.06, filter: "brightness(1.15) saturate(1.1)" }

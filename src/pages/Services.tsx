@@ -106,7 +106,7 @@ const InteractiveGridBg = () => {
         ctx.beginPath();
         ctx.moveTo(x + offsetX, 0);
         ctx.lineTo(x + offsetX, h);
-        ctx.strokeStyle = `hsla(174, 78%, 41%, 0.04)`;
+         ctx.strokeStyle = `hsla(174, 78%, 41%, 0.025)`;
         ctx.lineWidth = 0.5;
         ctx.stroke();
       }
@@ -115,7 +115,7 @@ const InteractiveGridBg = () => {
         ctx.beginPath();
         ctx.moveTo(0, y + offsetY);
         ctx.lineTo(w, y + offsetY);
-        ctx.strokeStyle = `hsla(174, 78%, 41%, 0.04)`;
+        ctx.strokeStyle = `hsla(174, 78%, 41%, 0.025)`;
         ctx.lineWidth = 0.5;
         ctx.stroke();
       }

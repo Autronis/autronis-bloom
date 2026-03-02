@@ -65,10 +65,11 @@ const SecurityBlock = () => {
       {/* Blurred bubbles background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
-          { x: "20%", y: "30%", size: 160, opacity: 0.03, delay: 0.5 },
-          { x: "70%", y: "20%", size: 200, opacity: 0.025, delay: 1.3 },
-          { x: "50%", y: "70%", size: 180, opacity: 0.03, delay: 0.9 },
-          { x: "85%", y: "60%", size: 140, opacity: 0.02, delay: 1.8 },
+          { x: "20%", y: "30%", size: 220, opacity: 0.06, delay: 0.5 },
+          { x: "70%", y: "20%", size: 260, opacity: 0.05, delay: 1.3 },
+          { x: "50%", y: "70%", size: 240, opacity: 0.06, delay: 0.9 },
+          { x: "85%", y: "60%", size: 200, opacity: 0.05, delay: 1.8 },
+          { x: "10%", y: "65%", size: 180, opacity: 0.06, delay: 2.2 },
         ].map((b, i) => (
           <div
             key={i}
@@ -79,9 +80,9 @@ const SecurityBlock = () => {
               width: b.size,
               height: b.size,
               background: `radial-gradient(circle, hsl(174 78% 41% / ${b.opacity}), transparent 70%)`,
-              filter: "blur(40px)",
+              filter: "blur(50px)",
               animationDelay: `${b.delay}s`,
-              animationDuration: "6s",
+              animationDuration: "5s",
               transform: "translate(-50%, -50%)",
             }}
           />

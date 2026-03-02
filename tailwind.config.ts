@@ -94,6 +94,14 @@ export default {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" },
         },
+        "marquee-right": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        "marquee-left": {
+          "0%": { transform: "translateX(-50%)" },
+          "100%": { transform: "translateX(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -102,6 +110,8 @@ export default {
         "pulse-glow": "pulse-glow 3s ease-in-out infinite",
         "data-pulse": "data-pulse 3s ease-in-out infinite",
         "gear-rotate": "gear-rotate 20s linear infinite",
+        "marquee-right": "marquee-right 30s linear infinite",
+        "marquee-left": "marquee-left 25s linear infinite",
       },
     },
   },

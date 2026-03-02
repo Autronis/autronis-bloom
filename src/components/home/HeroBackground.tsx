@@ -57,13 +57,14 @@ const HeroBackground = () => {
       // Spread lines across 32% of viewport height (34% to 66%)
       const yBase = h * (0.28 + t_pos * 0.44);
       const freq = 0.004 + (lineIdx % 3) * 0.0006;
-      const speed = 0.1 + (lineIdx % 4) * 0.015;
+      const speed = 0.08 + lineIdx * 0.025;
       const amp = 30 + Math.sin(lineIdx * 1.1) * 16;
+      const phase = lineIdx * 2.4;
       return (
         yBase +
-        Math.sin(x * freq + time * speed) * amp +
-        Math.sin(x * freq * 0.5 + time * speed * 0.8) * amp * 0.55 +
-        Math.cos(x * freq * 0.3 + time * speed * 0.6 + lineIdx * 0.3) * amp * 0.3
+        Math.sin(x * freq + time * speed + phase) * amp +
+        Math.sin(x * freq * 0.5 + time * speed * 0.8 + phase * 0.7) * amp * 0.55 +
+        Math.cos(x * freq * 0.3 + time * speed * 0.6 + phase * 1.3) * amp * 0.3
       );
     };
 

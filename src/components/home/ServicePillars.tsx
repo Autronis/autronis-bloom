@@ -128,11 +128,11 @@ const ServiceCard = ({
             </div>
             {/* Image */}
             <div className="flex-1 min-h-[220px] sm:min-h-[280px] relative overflow-hidden rounded-xl bg-white dark:bg-background">
-              {/* Subtle pulsing glow */}
+              {/* Glow only on hover */}
               <motion.div
                 className="absolute inset-0 z-[2] pointer-events-none"
-                animate={{ opacity: [0, 0.18, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: i * 1.3 }}
+                animate={{ opacity: hoveredIndex === i ? 0.18 : 0 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
                 style={{ background: "radial-gradient(ellipse at center, hsl(var(--primary) / 0.15), transparent 70%)" }}
               />
               <motion.img

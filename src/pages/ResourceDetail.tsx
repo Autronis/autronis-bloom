@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import AnimatedBubbles from "@/components/home/AnimatedBubbles";
 
 const articles: Record<string, { title: string; category: string; date: string; content: string[] }> = {
   "5-processen-die-elk-mkb-kan-automatiseren": {
@@ -52,7 +53,8 @@ const ResourceDetail = () => {
 
   return (
     <Layout>
-      <section className="pt-16 pb-24">
+      <section className="pt-16 pb-24 relative overflow-hidden">
+        <AnimatedBubbles />
         <div className="container mx-auto px-4 lg:px-8">
           <Link to="/resources" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-8">
             <ArrowLeft size={14} /> Alle resources

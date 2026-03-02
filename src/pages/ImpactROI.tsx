@@ -166,21 +166,20 @@ const ROIScanModule = () => {
                 <p className="text-sm text-muted-foreground">maanden</p>
               </div>
             </div>
-
-            <p className="text-xs text-muted-foreground mt-6 leading-relaxed">
-              Deze berekening is indicatief. Tijdens de analysefase wordt een volledige businesscase opgesteld inclusief risico- en impactanalyse.
-            </p>
-
-            <div className="mt-6">
-              <Button asChild size="lg">
-                <Link to="/book">
-                  Plan een impactanalyse
-                  <ArrowRight size={18} />
-                </Link>
-              </Button>
-            </div>
           </motion.div>
         )}
+
+        <div className="mt-8 pt-6 border-t border-border">
+          <p className="text-sm text-muted-foreground leading-relaxed mb-5">
+            Deze berekening is indicatief. Tijdens de analysefase wordt een volledige businesscase opgesteld inclusief risico- en impactanalyse.
+          </p>
+          <Button asChild size="lg">
+            <Link to="/book">
+              Plan een impactanalyse
+              <ArrowRight size={18} />
+            </Link>
+          </Button>
+        </div>
       </div>
     </div>
   );

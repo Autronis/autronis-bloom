@@ -182,7 +182,7 @@ const WhyAutronisSection = () => {
                 </div>
 
                 {/* Right: Team photo */}
-                <div ref={imgRef} className="relative min-h-[400px] lg:min-h-0">
+                <div ref={imgRef} className="relative min-h-[400px] lg:min-h-0 border-l border-border lg:border-l dark:border-border/50">
                   <motion.img
                     src={teamFoto}
                     alt="Autronis team - Sem en Syb"
@@ -195,13 +195,7 @@ const WhyAutronisSection = () => {
                   <div
                     className="absolute inset-0 pointer-events-none hidden dark:block"
                     style={{
-                      background: "linear-gradient(to right, hsl(var(--card)) 0%, hsl(var(--card) / 0.4) 12%, transparent 35%)",
-                    }}
-                  />
-                  <div
-                    className="absolute inset-0 pointer-events-none lg:hidden dark:block"
-                    style={{
-                      background: "linear-gradient(to bottom, hsl(var(--card)) 0%, transparent 30%)",
+                      background: "linear-gradient(to right, hsl(var(--card)) 0%, hsl(var(--card) / 0.3) 8%, transparent 25%)",
                     }}
                   />
                 </div>

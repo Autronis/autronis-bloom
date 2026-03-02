@@ -72,28 +72,43 @@ const TimelineCard = ({
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       onMouseMove={handleMouseMove}
-      className="relative rounded-xl border bg-card p-6 transition-all duration-[300ms] ease-out cursor-pointer overflow-hidden"
+      className="relative rounded-xl border bg-card p-6 cursor-pointer overflow-hidden"
       style={{
-        transform: isHovered ? "scale(1.01) translateY(-4px)" : "scale(1) translateY(0)",
+        transform: isActive
+          ? "scale(1.02) translateY(-2px)"
+          : isHovered
+          ? "scale(1.01) translateY(-4px)"
+          : "scale(1) translateY(0)",
         opacity: isAnyHovered && !isHovered ? 0.88 : 1,
-        borderColor: isHovered
+        borderColor: isActive
           ? "hsl(var(--primary) / 0.5)"
-          : isActive
-          ? "hsl(var(--primary) / 0.3)"
+          : isHovered
+          ? "hsl(var(--primary) / 0.5)"
           : undefined,
+        boxShadow: isActive
+          ? "0 0 24px hsl(174 78% 41% / 0.12), 0 4px 12px hsl(174 78% 41% / 0.08)"
+          : "none",
+        transition: "all 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
       }}
     >
-      {isHovered && (
+      {(isHovered || isActive) && (
         <div
           className="absolute pointer-events-none inset-0 transition-opacity duration-300 z-0"
           style={{
-            background: `radial-gradient(200px circle at ${glowPos.x}px ${glowPos.y}px, hsl(174 78% 41% / 0.12), transparent 70%)`,
+            background: isHovered
+              ? `radial-gradient(200px circle at ${glowPos.x}px ${glowPos.y}px, hsl(174 78% 41% / 0.12), transparent 70%)`
+              : "linear-gradient(135deg, hsl(174 78% 41% / 0.04), transparent 60%)",
           }}
         />
       )}
       <div className="relative z-10">
-        <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3">
-          <Icon size={18} />
+        <div
+          className="w-9 h-9 rounded-lg flex items-center justify-center mb-3 transition-all duration-500"
+          style={{
+            backgroundColor: isActive ? "hsl(var(--primary) / 0.15)" : "hsl(var(--primary) / 0.1)",
+          }}
+        >
+          <Icon size={18} className="text-primary" />
         </div>
         <p className="text-xs font-bold text-primary mb-1">Stap {phase.step}</p>
         <h3 className="font-semibold mb-2">{phase.title}</h3>

@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/accordion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import AnimatedBubbles from "@/components/home/AnimatedBubbles";
+import GridMovingDots from "@/components/home/GridMovingDots";
 
 const faqs = [
   {
@@ -63,6 +64,12 @@ const FAQSection = () => {
         { x: "50%", y: "75%", size: 220, opacity: 0.08, delay: 0.8 },
         { x: "25%", y: "60%", size: 180, opacity: 0.11, delay: 1.9 },
         { x: "70%", y: "50%", size: 240, opacity: 0.09, delay: 0.6 },
+      ]} />
+      <GridMovingDots dots={[
+        { axis: "x", pos: "200px", duration: 24, delay: 0 },
+        { axis: "y", pos: "300px", duration: 20, delay: 3, reverse: true },
+        { axis: "x", pos: "400px", duration: 19, delay: 5, reverse: true },
+        { axis: "y", pos: "600px", duration: 23, delay: 1 },
       ]} />
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[

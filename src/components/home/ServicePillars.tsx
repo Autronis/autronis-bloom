@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Cog, Link2, PieChart, ChevronDown, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Cog, Link2, PieChart, ChevronDown, CheckCircle2, FolderOpen, Briefcase, Rocket, ShoppingCart, LinkIcon, CreditCard, Puzzle, BarChart3, LayoutDashboard, FileText, Database, AlertTriangle } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import GlowCard from "@/components/GlowCard";
@@ -15,28 +15,16 @@ const services = [
     title: "Procesautomatisering",
     intro: "Wij automatiseren terugkerende processen zodat werk doorloopt zonder handmatige tussenstappen.",
     impact: [
-      "Tot 70% minder handmatige verwerkingstijd",
-      "Foutreductie door gestandaardiseerde workflows",
-      "Snellere doorlooptijden bij goedkeuringen en escalaties",
-      "Schaalbaarheid zonder extra personeel",
+      { title: "Tot 70% minder handmatige verwerkingstijd", sub: "Routinetaken worden volledig geautomatiseerd" },
+      { title: "Foutreductie door gestandaardiseerde workflows", sub: "Consistente uitvoering zonder menselijke fouten" },
+      { title: "Snellere doorlooptijden bij goedkeuringen", sub: "Escalaties en approvals verlopen automatisch" },
+      { title: "Schaalbaarheid zonder extra personeel", sub: "Groei zonder lineaire personeelskosten" },
     ],
     toepassingen: [
-      {
-        label: "Interne Workflow Automatisering",
-        items: ["Goedkeuringsflows", "Taaktoewijzing", "Notificaties en escalaties", "Documentgeneratie"],
-      },
-      {
-        label: "Sales- en Orderautomatisering",
-        items: ["Orderverwerking", "CRM-updates", "Facturatie workflows", "Leadopvolging"],
-      },
-      {
-        label: "Onboarding & Offboarding",
-        items: ["Accountcreatie", "Checklist automatisering", "Rolgebaseerde toegangsrechten", "E-signature integraties"],
-      },
-      {
-        label: "E-commerce Automatisering",
-        items: ["Voorraadbeheer", "Retourafhandeling", "Orderstatus synchronisatie", "Dynamische pricing"],
-      },
+      { icon: FolderOpen, title: "Interne Workflow Automatisering", items: ["Goedkeuringsflows", "Taaktoewijzing", "Notificaties en escalaties", "Documentgeneratie"] },
+      { icon: Briefcase, title: "Sales- en Orderautomatisering", items: ["Orderverwerking", "CRM-updates", "Facturatie workflows", "Leadopvolging"] },
+      { icon: Rocket, title: "Onboarding & Offboarding", items: ["Accountcreatie", "Checklist automatisering", "Rolgebaseerde toegangsrechten", "E-signature integraties"] },
+      { icon: ShoppingCart, title: "E-commerce Automatisering", items: ["Voorraadbeheer", "Retourafhandeling", "Orderstatus synchronisatie", "Dynamische pricing"] },
     ],
     image: serviceAutomation,
   },
@@ -45,28 +33,16 @@ const services = [
     title: "Systeemintegraties",
     intro: "Wij koppelen systemen via API's zodat data automatisch en consistent stroomt.",
     impact: [
-      "Eén consistente datastroom tussen alle kernsystemen",
-      "Eliminatie van dubbele data-invoer",
-      "Realtime synchronisatie zonder handmatige exports",
-      "Proactieve foutdetectie en logging",
+      { title: "Eén consistente datastroom tussen kernsystemen", sub: "Alle data synchroon en betrouwbaar" },
+      { title: "Eliminatie van dubbele data-invoer", sub: "Eénmalig invoeren, overal beschikbaar" },
+      { title: "Realtime synchronisatie zonder exports", sub: "Geen handmatige CSV- of Excel-exports meer" },
+      { title: "Proactieve foutdetectie en logging", sub: "Problemen worden gesignaleerd vóór ze escaleren" },
     ],
     toepassingen: [
-      {
-        label: "API Koppelingen",
-        items: ["REST API integraties", "Webhooks", "Event-based triggers", "Retry-logica"],
-      },
-      {
-        label: "CRM & Finance Integraties",
-        items: ["CRM ↔ Boekhouding synchronisatie", "ERP koppelingen", "Grootboekkoppelingen", "Realtime data-uitwisseling"],
-      },
-      {
-        label: "Legacy Systemen",
-        items: ["Datamigraties", "Middleware implementatie", "Maatwerk API lagen", "Systeemmodernisering"],
-      },
-      {
-        label: "Monitoring & Logging",
-        items: ["Foutdetectie", "Audit logging", "Datavalidatie", "Integratie monitoring"],
-      },
+      { icon: LinkIcon, title: "API Koppelingen", items: ["REST API integraties", "Webhooks", "Event-based triggers", "Retry-logica"] },
+      { icon: CreditCard, title: "CRM & Finance Integraties", items: ["CRM ↔ Boekhouding synchronisatie", "ERP koppelingen", "Grootboekkoppelingen", "Realtime data-uitwisseling"] },
+      { icon: Puzzle, title: "Legacy Systemen", items: ["Datamigraties", "Middleware implementatie", "Maatwerk API lagen", "Systeemmodernisering"] },
+      { icon: BarChart3, title: "Monitoring & Logging", items: ["Foutdetectie", "Audit logging", "Datavalidatie", "Integratie monitoring"] },
     ],
     image: serviceIntegration,
   },
@@ -75,28 +51,16 @@ const services = [
     title: "Data & Rapportage",
     intro: "Realtime dashboards en geautomatiseerde rapportages voor volledig inzicht.",
     impact: [
-      "Direct inzicht in KPI's en prestaties",
-      "Geautomatiseerde rapportages zonder handmatig werk",
-      "Eén bron van waarheid voor alle bedrijfsdata",
-      "Vroegtijdige detectie van afwijkingen en risico's",
+      { title: "Direct inzicht in KPI's en prestaties", sub: "Realtime dashboards altijd up-to-date" },
+      { title: "Geautomatiseerde rapportages zonder handmatig werk", sub: "Wekelijks, maandelijks of op maat" },
+      { title: "Eén bron van waarheid voor alle bedrijfsdata", sub: "Geen conflicterende spreadsheets meer" },
+      { title: "Vroegtijdige detectie van afwijkingen", sub: "Anomalieën worden direct gesignaleerd" },
     ],
     toepassingen: [
-      {
-        label: "KPI Dashboards",
-        items: ["Management dashboards", "Team dashboards", "Realtime visualisaties", "Performance monitoring"],
-      },
-      {
-        label: "Geautomatiseerde Rapportages",
-        items: ["Wekelijkse exports", "PDF rapportages", "E-mail distributie", "Custom rapportageflows"],
-      },
-      {
-        label: "Dataconsolidatie",
-        items: ["Multi-source data", "Eén bron van waarheid", "Datamodel optimalisatie", "Datakwaliteitscontrole"],
-      },
-      {
-        label: "Alerts & Monitoring",
-        items: ["Anomaly detection", "Performance alerts", "SLA bewaking", "Datastroom monitoring"],
-      },
+      { icon: LayoutDashboard, title: "KPI Dashboards", items: ["Management dashboards", "Team dashboards", "Realtime visualisaties", "Performance monitoring"] },
+      { icon: FileText, title: "Geautomatiseerde Rapportages", items: ["Wekelijkse exports", "PDF rapportages", "E-mail distributie", "Custom rapportageflows"] },
+      { icon: Database, title: "Dataconsolidatie", items: ["Multi-source data", "Eén bron van waarheid", "Datamodel optimalisatie", "Datakwaliteitscontrole"] },
+      { icon: AlertTriangle, title: "Alerts & Monitoring", items: ["Anomaly detection", "Performance alerts", "SLA bewaking", "Datastroom monitoring"] },
     ],
     image: serviceData,
   },
@@ -137,32 +101,45 @@ const ServiceCard = ({
               </div>
               <p className="text-sm text-muted-foreground mb-5 leading-relaxed">{s.intro}</p>
 
-              {/* Wat levert dit op? */}
+              {/* Wat levert dit op? - mini highlight blocks */}
               <div className="mb-5">
                 <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
                   Wat levert dit op?
                 </p>
-                <ul className="space-y-2">
-                  {s.impact.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0" />
-                      {item}
-                    </li>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {s.impact.map((item, idx) => (
+                    <motion.div
+                      key={item.title}
+                      className="flex items-start gap-2.5 p-2.5 rounded-lg bg-primary/[0.04] hover:bg-primary/[0.08] transition-colors duration-200 group"
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: idx * 0.08, duration: 0.4 }}
+                    >
+                      <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
+                        <CheckCircle2 size={12} className="text-primary" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-foreground leading-tight">{item.title}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">{item.sub}</p>
+                      </div>
+                    </motion.div>
                   ))}
-                </ul>
+                </div>
               </div>
 
-              {/* Expandable toggle */}
+              {/* Toggle control bar */}
               <button
                 onClick={() => setExpanded(!expanded)}
-                className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors duration-200 group self-start"
+                className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-all duration-200 group self-start relative py-1"
               >
-                <span>Bekijk concrete toepassingen</span>
+                <span>{expanded ? "Verberg concrete toepassingen" : "Bekijk concrete toepassingen"}</span>
                 <ChevronDown
                   size={16}
                   className="transition-transform duration-300 ease-out"
                   style={{ transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}
                 />
+                <span className="absolute bottom-0 left-0 h-px w-0 bg-primary/40 group-hover:w-full transition-all duration-300" />
               </button>
 
               <AnimatePresence>
@@ -176,8 +153,11 @@ const ServiceCard = ({
                   >
                     <div className="mt-4 space-y-4 pt-4 border-t border-border">
                       {s.toepassingen.map((cat) => (
-                        <div key={cat.label}>
-                          <p className="text-sm font-medium text-foreground mb-2">{cat.label}</p>
+                        <div key={cat.title}>
+                          <p className="text-sm font-medium text-foreground mb-2 flex items-center gap-2">
+                            <cat.icon size={14} className="text-primary" />
+                            {cat.title}
+                          </p>
                           <div className="grid grid-cols-2 gap-1.5">
                             {cat.items.map((item) => (
                               <span key={item} className="flex items-start gap-1.5 text-xs text-muted-foreground">
@@ -199,18 +179,9 @@ const ServiceCard = ({
               {/* Subtle pulsing glow */}
               <motion.div
                 className="absolute inset-0 z-[2] pointer-events-none"
-                animate={{
-                  opacity: [0, 0.18, 0],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: i * 1.3,
-                }}
-                style={{
-                  background: "radial-gradient(ellipse at center, hsl(174 78% 41% / 0.15), transparent 70%)",
-                }}
+                animate={{ opacity: [0, 0.18, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: i * 1.3 }}
+                style={{ background: "radial-gradient(ellipse at center, hsl(var(--primary) / 0.15), transparent 70%)" }}
               />
               <motion.img
                 src={s.image}
@@ -218,8 +189,8 @@ const ServiceCard = ({
                 className="w-full h-full object-cover relative z-[1]"
                 animate={
                   hoveredIndex === i
-                    ? { scale: 1.03, filter: "brightness(1.1)" }
-                    : { scale: 1, filter: "brightness(1)" }
+                    ? { scale: 1.06, filter: "brightness(1.15) saturate(1.1)" }
+                    : { scale: 1, filter: "brightness(1) saturate(1)" }
                 }
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 loading="lazy"
@@ -236,9 +207,14 @@ const ServiceCard = ({
               {/* Top/bottom fade */}
               <div
                 className="absolute inset-0 z-[3] pointer-events-none"
-                style={{
-                  background: "linear-gradient(to bottom, hsl(var(--card)) 0%, transparent 8%, transparent 92%, hsl(var(--card)) 100%)",
-                }}
+                style={{ background: "linear-gradient(to bottom, hsl(var(--card)) 0%, transparent 8%, transparent 92%, hsl(var(--card)) 100%)" }}
+              />
+              {/* Hover glow overlay */}
+              <motion.div
+                className="absolute inset-0 z-[4] pointer-events-none"
+                animate={{ opacity: hoveredIndex === i ? 0.15 : 0 }}
+                transition={{ duration: 0.4 }}
+                style={{ background: "radial-gradient(ellipse at center, hsl(var(--primary) / 0.3), transparent 60%)" }}
               />
             </div>
           </div>
@@ -256,36 +232,24 @@ const ServicePillars = () => {
       {/* Blurred bubbles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
-          { x: "15%", y: "20%", size: 300, opacity: 0.11, delay: 0 },
-          { x: "80%", y: "15%", size: 260, opacity: 0.1, delay: 1.2 },
-          { x: "50%", y: "50%", size: 340, opacity: 0.09, delay: 0.6 },
-          { x: "25%", y: "75%", size: 240, opacity: 0.11, delay: 1.8 },
-          { x: "70%", y: "80%", size: 280, opacity: 0.1, delay: 2.2 },
-          { x: "90%", y: "40%", size: 220, opacity: 0.11, delay: 0.4 },
-          { x: "5%", y: "55%", size: 200, opacity: 0.09, delay: 3 },
-          { x: "60%", y: "30%", size: 220, opacity: 0.08, delay: 1.6 },
-        ].map((b, i) => (
+          { x: "15%", y: "20%", size: 300, opacity: 0.08, delay: 0 },
+          { x: "80%", y: "15%", size: 260, opacity: 0.07, delay: 1.2 },
+          { x: "50%", y: "50%", size: 340, opacity: 0.06, delay: 0.6 },
+          { x: "25%", y: "75%", size: 240, opacity: 0.08, delay: 1.8 },
+          { x: "70%", y: "80%", size: 280, opacity: 0.07, delay: 2.2 },
+          { x: "90%", y: "40%", size: 220, opacity: 0.08, delay: 0.4 },
+          { x: "5%", y: "55%", size: 200, opacity: 0.06, delay: 3 },
+          { x: "60%", y: "30%", size: 220, opacity: 0.05, delay: 1.6 },
+        ].map((b, idx) => (
           <motion.div
-            key={i}
+            key={idx}
             className="absolute rounded-full"
-            animate={{
-              scale: [1, 1.4, 1],
-              opacity: [b.opacity, b.opacity * 1.8, b.opacity],
-            }}
-            transition={{
-              duration: 4 + i * 0.4,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: b.delay,
-            }}
+            animate={{ scale: [1, 1.4, 1], opacity: [b.opacity, b.opacity * 1.8, b.opacity] }}
+            transition={{ duration: 4 + idx * 0.4, repeat: Infinity, ease: "easeInOut", delay: b.delay }}
             style={{
-              left: b.x,
-              top: b.y,
-              width: b.size,
-              height: b.size,
-              background: `radial-gradient(circle, hsl(174 78% 41% / ${b.opacity}), transparent 70%)`,
-              filter: "blur(50px)",
-              transform: "translate(-50%, -50%)",
+              left: b.x, top: b.y, width: b.size, height: b.size,
+              background: `radial-gradient(circle, hsl(var(--primary) / ${b.opacity}), transparent 70%)`,
+              filter: "blur(50px)", transform: "translate(-50%, -50%)",
             }}
           />
         ))}
@@ -294,28 +258,17 @@ const ServicePillars = () => {
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <ScrollReveal className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
           <ScrollRevealItem>
-            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
-              Services
-            </p>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Drie pijlers. Één geïntegreerd systeem.
-            </h2>
+            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Services</p>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Drie pijlers. Één geïntegreerd systeem.</h2>
             <p className="text-muted-foreground">
-              Wij combineren procesautomatisering, systeemintegraties en data-inzichten tot
-              een schaalbare architectuur.
+              Wij combineren procesautomatisering, systeemintegraties en data-inzichten tot een schaalbare architectuur.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>
 
         <div className="space-y-8 sm:space-y-12 mb-12">
           {services.map((s, i) => (
-            <ServiceCard
-              key={s.title}
-              s={s}
-              i={i}
-              hoveredIndex={hoveredIndex}
-              setHoveredIndex={setHoveredIndex}
-            />
+            <ServiceCard key={s.title} s={s} i={i} hoveredIndex={hoveredIndex} setHoveredIndex={setHoveredIndex} />
           ))}
         </div>
 
@@ -323,8 +276,7 @@ const ServicePillars = () => {
           <ScrollRevealItem>
             <Button asChild size="lg">
               <Link to="/services">
-                Bekijk onze services
-                <ArrowRight size={18} />
+                Bekijk onze services <ArrowRight size={18} />
               </Link>
             </Button>
             <p className="text-xs text-muted-foreground mt-3">

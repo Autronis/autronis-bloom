@@ -1,8 +1,8 @@
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, ChevronDown, CheckCircle2 } from "lucide-react";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { ArrowRight, ChevronDown, CheckCircle2, FolderOpen, Briefcase, Rocket, ShoppingCart, LinkIcon, CreditCard, Puzzle, BarChart3, LayoutDashboard, FileText, Database, AlertTriangle } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import GlowCard from "@/components/GlowCard";
@@ -13,32 +13,16 @@ const pillars = [
     title: "Procesautomatisering",
     subtitle: "Gestructureerde automatisering van operationele en commerciële processen.",
     impact: [
-      "Minder handmatige verwerking",
-      "Kortere doorlooptijden",
-      "Minder fouten in processen",
-      "Meer voorspelbaarheid en controle",
+      { title: "Minder handmatige verwerking", sub: "Routinetaken volledig geautomatiseerd" },
+      { title: "Kortere doorlooptijden", sub: "Goedkeuringen en escalaties verlopen sneller" },
+      { title: "Minder fouten in processen", sub: "Gestandaardiseerde workflows elimineren variatie" },
+      { title: "Meer voorspelbaarheid en controle", sub: "Inzicht in elke processtap" },
     ],
     categories: [
-      {
-        emoji: "🗂",
-        title: "Interne Workflow Automatisering",
-        items: ["Goedkeuringsflows", "Taaktoewijzing", "Notificaties en escalaties", "Documentgeneratie"],
-      },
-      {
-        emoji: "💼",
-        title: "Sales- en Orderautomatisering",
-        items: ["Orderverwerking", "CRM-updates", "Facturatie workflows", "Leadopvolging"],
-      },
-      {
-        emoji: "🚀",
-        title: "Onboarding & Offboarding",
-        items: ["Accountcreatie", "Checklist automatisering", "Rolgebaseerde toegangsrechten", "E-signature integraties"],
-      },
-      {
-        emoji: "🛒",
-        title: "E-commerce Automatisering",
-        items: ["Voorraadbeheer", "Retourafhandeling", "Orderstatus synchronisatie", "Dynamische pricing"],
-      },
+      { icon: FolderOpen, title: "Interne Workflow Automatisering", items: ["Goedkeuringsflows", "Taaktoewijzing", "Notificaties en escalaties", "Documentgeneratie"] },
+      { icon: Briefcase, title: "Sales- en Orderautomatisering", items: ["Orderverwerking", "CRM-updates", "Facturatie workflows", "Leadopvolging"] },
+      { icon: Rocket, title: "Onboarding & Offboarding", items: ["Accountcreatie", "Checklist automatisering", "Rolgebaseerde toegangsrechten", "E-signature integraties"] },
+      { icon: ShoppingCart, title: "E-commerce Automatisering", items: ["Voorraadbeheer", "Retourafhandeling", "Orderstatus synchronisatie", "Dynamische pricing"] },
     ],
   },
   {
@@ -46,32 +30,16 @@ const pillars = [
     title: "Systeemintegraties",
     subtitle: "Betrouwbare koppelingen tussen kernsystemen voor consistente datastromen.",
     impact: [
-      "Geen dubbele invoer",
-      "Betrouwbare datastromen",
-      "Realtime synchronisatie tussen systemen",
-      "Minder afhankelijkheid van spreadsheets",
+      { title: "Geen dubbele invoer", sub: "Eénmalig invoeren, overal beschikbaar" },
+      { title: "Betrouwbare datastromen", sub: "Consistente synchronisatie zonder fouten" },
+      { title: "Realtime synchronisatie tussen systemen", sub: "Geen handmatige exports meer nodig" },
+      { title: "Minder afhankelijkheid van spreadsheets", sub: "Data leeft in geïntegreerde systemen" },
     ],
     categories: [
-      {
-        emoji: "🔗",
-        title: "API Koppelingen",
-        items: ["REST API integraties", "Webhooks", "Event-based triggers", "Retry-logica"],
-      },
-      {
-        emoji: "💳",
-        title: "CRM & Finance Integraties",
-        items: ["CRM ↔ Boekhouding synchronisatie", "ERP koppelingen", "Grootboekkoppelingen", "Realtime data-uitwisseling"],
-      },
-      {
-        emoji: "🧩",
-        title: "Legacy Systemen",
-        items: ["Datamigraties", "Middleware implementatie", "Maatwerk API lagen", "Systeemmodernisering"],
-      },
-      {
-        emoji: "📊",
-        title: "Monitoring & Logging",
-        items: ["Foutdetectie", "Audit logging", "Datavalidatie", "Integratie monitoring"],
-      },
+      { icon: LinkIcon, title: "API Koppelingen", items: ["REST API integraties", "Webhooks", "Event-based triggers", "Retry-logica"] },
+      { icon: CreditCard, title: "CRM & Finance Integraties", items: ["CRM ↔ Boekhouding synchronisatie", "ERP koppelingen", "Grootboekkoppelingen", "Realtime data-uitwisseling"] },
+      { icon: Puzzle, title: "Legacy Systemen", items: ["Datamigraties", "Middleware implementatie", "Maatwerk API lagen", "Systeemmodernisering"] },
+      { icon: BarChart3, title: "Monitoring & Logging", items: ["Foutdetectie", "Audit logging", "Datavalidatie", "Integratie monitoring"] },
     ],
   },
   {
@@ -79,32 +47,16 @@ const pillars = [
     title: "Data & Rapportage",
     subtitle: "Realtime inzicht en controle over uw bedrijfsdata.",
     impact: [
-      "Realtime inzicht in prestaties",
-      "Snellere besluitvorming",
-      "Eén bron van waarheid",
-      "Minder handmatige rapportage",
+      { title: "Realtime inzicht in prestaties", sub: "Dashboards altijd up-to-date" },
+      { title: "Snellere besluitvorming", sub: "Data-gedreven keuzes op basis van feiten" },
+      { title: "Eén bron van waarheid", sub: "Geen conflicterende bronnen meer" },
+      { title: "Minder handmatige rapportage", sub: "Geautomatiseerde exports en distributie" },
     ],
     categories: [
-      {
-        emoji: "📈",
-        title: "KPI Dashboards",
-        items: ["Management dashboards", "Team dashboards", "Realtime visualisaties", "Performance monitoring"],
-      },
-      {
-        emoji: "📑",
-        title: "Geautomatiseerde Rapportages",
-        items: ["Wekelijkse exports", "PDF rapportages", "E-mail distributie", "Custom rapportageflows"],
-      },
-      {
-        emoji: "🗄",
-        title: "Dataconsolidatie",
-        items: ["Multi-source data", "Eén bron van waarheid", "Datamodel optimalisatie", "Datakwaliteitscontrole"],
-      },
-      {
-        emoji: "🚨",
-        title: "Alerts & Monitoring",
-        items: ["Anomaly detection", "Performance alerts", "SLA bewaking", "Datastroom monitoring"],
-      },
+      { icon: LayoutDashboard, title: "KPI Dashboards", items: ["Management dashboards", "Team dashboards", "Realtime visualisaties", "Performance monitoring"] },
+      { icon: FileText, title: "Geautomatiseerde Rapportages", items: ["Wekelijkse exports", "PDF rapportages", "E-mail distributie", "Custom rapportageflows"] },
+      { icon: Database, title: "Dataconsolidatie", items: ["Multi-source data", "Eén bron van waarheid", "Datamodel optimalisatie", "Datakwaliteitscontrole"] },
+      { icon: AlertTriangle, title: "Alerts & Monitoring", items: ["Anomaly detection", "Performance alerts", "SLA bewaking", "Datastroom monitoring"] },
     ],
   },
 ];
@@ -220,31 +172,43 @@ const PillarSection = ({
         </ScrollRevealItem>
       </ScrollReveal>
 
-      {/* Impact block */}
+      {/* Impact block - mini highlight blocks */}
       <ScrollReveal>
         <ScrollRevealItem>
           <div className="rounded-xl border border-border bg-card/50 p-6 mb-6">
-            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
+            <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase">
               Wat levert dit op?
             </p>
-            <ul className="space-y-2">
-              {pillar.impact.map((item) => (
-                <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0" />
-                  {item}
-                </li>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {pillar.impact.map((item, idx) => (
+                <motion.div
+                  key={item.title}
+                  className="flex items-start gap-3 p-3 rounded-lg bg-primary/[0.04] hover:bg-primary/[0.08] hover:shadow-[0_0_15px_hsl(var(--primary)/0.08)] transition-all duration-200 group"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1, duration: 0.4 }}
+                >
+                  <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
+                    <CheckCircle2 size={13} className="text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-foreground leading-tight">{item.title}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{item.sub}</p>
+                  </div>
+                </motion.div>
               ))}
-            </ul>
+            </div>
           </div>
         </ScrollRevealItem>
       </ScrollReveal>
 
-      {/* Toggle */}
+      {/* Toggle control bar */}
       <ScrollReveal>
         <ScrollRevealItem>
           <button
             onClick={() => setExpanded(!expanded)}
-            className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors duration-200 mb-6"
+            className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-all duration-200 mb-6 relative py-1 group"
           >
             <span>{expanded ? "Verberg concrete toepassingen" : "Bekijk concrete toepassingen"}</span>
             <ChevronDown
@@ -252,6 +216,7 @@ const PillarSection = ({
               className="transition-transform duration-300 ease-out"
               style={{ transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}
             />
+            <span className="absolute bottom-0 left-0 h-px w-0 bg-primary/40 group-hover:w-full transition-all duration-300" />
           </button>
         </ScrollRevealItem>
       </ScrollReveal>
@@ -275,8 +240,8 @@ const PillarSection = ({
                     onHover={() => setHoveredCards((prev) => ({ ...prev, [pillar.id]: i }))}
                     onLeave={() => setHoveredCards((prev) => ({ ...prev, [pillar.id]: null }))}
                   >
-                    <h3 className="font-semibold mb-3">
-                      <span className="mr-2 text-sm">{cat.emoji}</span>
+                    <h3 className="font-semibold mb-3 flex items-center gap-2">
+                      <cat.icon size={15} className="text-primary" />
                       {cat.title}
                     </h3>
                     <ul className="space-y-1.5">
@@ -338,9 +303,7 @@ const Services = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
           >
-            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
-              Services
-            </p>
+            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Services</p>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
               Automatisering zonder complexiteit.
             </h1>
@@ -358,8 +321,32 @@ const Services = () => {
       </section>
 
       {/* Pillar sections with sticky nav */}
-      <section className="pb-24">
-        <div className="container mx-auto px-4 lg:px-8">
+      <section className="pb-24 relative overflow-hidden">
+        {/* Bubbles background below grid area */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {[
+            { x: "10%", y: "15%", size: 280, opacity: 0.06, delay: 0 },
+            { x: "85%", y: "20%", size: 240, opacity: 0.05, delay: 1.4 },
+            { x: "45%", y: "45%", size: 320, opacity: 0.05, delay: 0.8 },
+            { x: "20%", y: "70%", size: 260, opacity: 0.06, delay: 2 },
+            { x: "75%", y: "75%", size: 240, opacity: 0.05, delay: 2.6 },
+            { x: "55%", y: "85%", size: 200, opacity: 0.06, delay: 1 },
+          ].map((b, i) => (
+            <motion.div
+              key={i}
+              className="absolute rounded-full"
+              animate={{ scale: [1, 1.3, 1], opacity: [b.opacity, b.opacity * 1.6, b.opacity] }}
+              transition={{ duration: 5 + i * 0.5, repeat: Infinity, ease: "easeInOut", delay: b.delay }}
+              style={{
+                left: b.x, top: b.y, width: b.size, height: b.size,
+                background: `radial-gradient(circle, hsl(var(--primary) / ${b.opacity}), transparent 70%)`,
+                filter: "blur(50px)", transform: "translate(-50%, -50%)",
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="flex gap-12">
             {/* Sticky side nav (desktop) */}
             <nav className="hidden lg:block w-64 shrink-0">
@@ -401,24 +388,15 @@ const Services = () => {
       {/* Tool icons marquee */}
       <section className="py-16 border-t border-border overflow-hidden">
         <div className="container mx-auto px-4 lg:px-8 text-center mb-10">
-          <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
-            Integraties
-          </p>
-          <h2 className="text-2xl sm:text-3xl font-bold mb-3">
-            Werkt met uw huidige stack
-          </h2>
-          <p className="text-muted-foreground">
-            Heeft uw systeem een API? Dan kunnen wij integreren.
-          </p>
+          <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Integraties</p>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-3">Werkt met uw huidige stack</h2>
+          <p className="text-muted-foreground">Heeft uw systeem een API? Dan kunnen wij integreren.</p>
         </div>
 
         <div className="relative mb-4 overflow-hidden">
           <div className="flex animate-[marquee-right_30s_linear_infinite] gap-4 w-max">
             {[...toolIcons, ...toolIcons].map((tool, i) => (
-              <div
-                key={i}
-                className="flex items-center justify-center px-5 py-3 rounded-lg border border-border bg-card text-sm text-muted-foreground whitespace-nowrap hover:scale-105 hover:border-primary/30 hover:text-foreground transition-all duration-200"
-              >
+              <div key={i} className="flex items-center justify-center px-5 py-3 rounded-lg border border-border bg-card text-sm text-muted-foreground whitespace-nowrap hover:scale-105 hover:border-primary/30 hover:text-foreground transition-all duration-200">
                 {tool}
               </div>
             ))}
@@ -428,10 +406,7 @@ const Services = () => {
         <div className="relative overflow-hidden">
           <div className="flex animate-[marquee-left_25s_linear_infinite] gap-4 w-max">
             {[...toolIcons.slice().reverse(), ...toolIcons.slice().reverse()].map((tool, i) => (
-              <div
-                key={i}
-                className="flex items-center justify-center px-5 py-3 rounded-lg border border-border bg-card text-sm text-muted-foreground whitespace-nowrap hover:scale-105 hover:border-primary/30 hover:text-foreground transition-all duration-200"
-              >
+              <div key={i} className="flex items-center justify-center px-5 py-3 rounded-lg border border-border bg-card text-sm text-muted-foreground whitespace-nowrap hover:scale-105 hover:border-primary/30 hover:text-foreground transition-all duration-200">
                 {tool}
               </div>
             ))}
@@ -442,12 +417,9 @@ const Services = () => {
       {/* Bottom CTA */}
       <section className="pb-24">
         <div className="container mx-auto px-4 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-3">
-            Uw proces staat er niet tussen?
-          </h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-3">Uw proces staat er niet tussen?</h2>
           <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
-            Wij automatiseren elk voorspelbaar proces. Plan een vrijblijvende scan en
-            ontdek wat er mogelijk is.
+            Wij automatiseren elk voorspelbaar proces. Plan een vrijblijvende scan en ontdek wat er mogelijk is.
           </p>
           <Button asChild size="lg">
             <Link to="/book">

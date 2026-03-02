@@ -115,7 +115,7 @@ const InteractiveGridBg = () => {
       const h = canvas.offsetHeight;
       ctx.clearRect(0, 0, w, h);
 
-      const lineOpacity = isDark ? 0.055 : 0.035 * boost;
+      const lineOpacity = isDark ? 0.07 : 0.035 * boost;
 
       for (let x = 0; x <= w; x += spacing) {
         const offsetX = Math.sin(time * 0.3 + x * 0.01) * 2;

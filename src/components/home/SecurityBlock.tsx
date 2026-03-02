@@ -46,14 +46,6 @@ const SecurityCard = ({
         transform: isHovered ? "scale(1.06)" : "scale(1)",
       }}
     >
-      {isHovered && (
-        <div
-          className="absolute pointer-events-none inset-0 z-0"
-          style={{
-            background: `radial-gradient(150px circle at ${glowPos.x}px ${glowPos.y}px, hsl(174 78% 41% / 0.1), transparent 70%)`,
-          }}
-        />
-      )}
       <Icon size={16} className="text-primary shrink-0 relative z-10" />
       <span className="text-sm font-medium text-foreground relative z-10">{item.label}</span>
     </div>

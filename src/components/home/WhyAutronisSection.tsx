@@ -69,14 +69,6 @@ const ReasonCard = ({
         borderColor: isHovered ? "hsl(var(--primary) / 0.4)" : undefined,
       }}
     >
-      {isHovered && (
-        <div
-          className="absolute pointer-events-none inset-0 z-0"
-          style={{
-            background: `radial-gradient(200px circle at ${glowPos.x}px ${glowPos.y}px, hsl(174 78% 41% / 0.1), transparent 70%)`,
-          }}
-        />
-      )}
       <div className="relative z-10">
         <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
           <Icon size={20} />

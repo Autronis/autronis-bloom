@@ -86,22 +86,10 @@ const TimelineCard = ({
           : isHovered
           ? "hsl(var(--primary) / 0.5)"
           : undefined,
-        boxShadow: isActive
-          ? "0 0 24px hsl(174 78% 41% / 0.12), 0 4px 12px hsl(174 78% 41% / 0.08)"
-          : "none",
+        boxShadow: "none",
         transition: "all 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
       }}
     >
-      {(isHovered || isActive) && (
-        <div
-          className="absolute pointer-events-none inset-0 transition-opacity duration-300 z-0"
-          style={{
-            background: isHovered
-              ? `radial-gradient(200px circle at ${glowPos.x}px ${glowPos.y}px, hsl(174 78% 41% / 0.12), transparent 70%)`
-              : "linear-gradient(135deg, hsl(174 78% 41% / 0.04), transparent 60%)",
-          }}
-        />
-      )}
       <div className="relative z-10">
         <div
           className="w-9 h-9 rounded-lg flex items-center justify-center mb-3 transition-all duration-500"

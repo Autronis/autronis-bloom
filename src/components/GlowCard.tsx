@@ -37,17 +37,8 @@ const GlowCard = ({
         transform: isHovered && !noScale ? "scale(1.02) translateY(-4px)" : "scale(1) translateY(0)",
         opacity: isAnyHovered && !isHovered ? 0.88 : 1,
         borderColor: isHovered ? "hsl(var(--primary) / 0.6)" : undefined,
-        boxShadow: isHovered ? "0 0 15px hsl(var(--primary) / 0.25), 0 0 30px hsl(var(--primary) / 0.1), inset 0 0 15px hsl(var(--primary) / 0.05)" : "none",
       }}
     >
-      {isHovered && (
-        <div
-          className="absolute pointer-events-none inset-0 transition-opacity duration-300 z-0"
-          style={{
-            background: `radial-gradient(250px circle at ${glowPos.x}px ${glowPos.y}px, hsl(174 78% 41% / 0.1), transparent 70%)`,
-          }}
-        />
-      )}
       <div className="relative z-10">{children}</div>
     </div>
   );

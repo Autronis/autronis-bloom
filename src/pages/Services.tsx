@@ -333,19 +333,20 @@ const PillarCard = ({
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="overflow-hidden"
             >
-              <div className="space-y-5 pt-4 border-t border-border/50">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-border/50">
                 {pillar.categories.map((cat, catIdx) => (
                   <motion.div
                     key={cat.title}
+                    className="rounded-lg bg-muted/40 border border-border/30 p-4"
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: catIdx * 0.08, duration: 0.4 }}
                   >
-                    <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                      <cat.icon size={15} className="text-primary" />
+                    <h3 className="text-[0.925rem] font-bold text-foreground mb-3 flex items-center gap-2">
+                      <cat.icon size={16} className="text-primary" />
                       {cat.title}
                     </h3>
-                    <div className="grid grid-cols-2 gap-x-8 gap-y-1.5 pl-[23px]">
+                    <div className="space-y-1.5">
                       {cat.items.map((item) => (
                         <span key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
                           <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />

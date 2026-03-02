@@ -252,19 +252,6 @@ const PhaseCard = ({
             boxShadow: "0 6px 24px hsl(174 78% 41% / 0.08), 0 2px 8px hsl(0 0% 0% / 0.05)",
           }}
         >
-          {/* Subtle grid overlay when active */}
-          {isCurrent && (
-            <div
-              className="absolute inset-0 rounded-xl pointer-events-none"
-              style={{
-                backgroundImage:
-                  "linear-gradient(hsl(174 78% 41% / 0.025) 1px, transparent 1px), linear-gradient(90deg, hsl(174 78% 41% / 0.025) 1px, transparent 1px)",
-                backgroundSize: "24px 24px",
-                opacity: 1,
-                transition: "opacity 500ms ease-out",
-              }}
-            />
-          )}
 
           <div className="relative z-10">
             {/* Mobile phase label */}

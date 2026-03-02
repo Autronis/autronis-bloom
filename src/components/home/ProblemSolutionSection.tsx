@@ -118,27 +118,7 @@ const ProblemSolutionSection = () => {
         }}
       />
       <GridMovingDots />
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[
-          { x: "18%", y: "12%", delay: 0 },
-          { x: "75%", y: "28%", delay: 1.3 },
-          { x: "42%", y: "65%", delay: 0.7 },
-          { x: "88%", y: "72%", delay: 1.8 },
-          { x: "10%", y: "80%", delay: 0.4 },
-          { x: "60%", y: "90%", delay: 2.2 },
-        ].map((pos, i) => (
-          <div
-            key={i}
-            className="absolute w-1.5 h-1.5 rounded-full bg-primary/15 animate-pulse"
-            style={{
-              left: pos.x,
-              top: pos.y,
-              animationDelay: `${pos.delay}s`,
-              animationDuration: "3s",
-            }}
-          />
-        ))}
-      </div>
+
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* PROBLEEM */}

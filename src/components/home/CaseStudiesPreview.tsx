@@ -109,26 +109,7 @@ const CaseStudiesPreview = () => {
         { axis: "y", lineIndex: 5, duration: 22, delay: 2 },
         { axis: "y", lineIndex: 11, duration: 18, delay: 6, reverse: true },
       ]} />
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[
-          { x: "15%", y: "25%", delay: 0 },
-          { x: "80%", y: "18%", delay: 1.4 },
-          { x: "50%", y: "80%", delay: 0.6 },
-          { x: "30%", y: "65%", delay: 2.1 },
-          { x: "90%", y: "50%", delay: 0.9 },
-        ].map((pos, i) => (
-          <div
-            key={i}
-            className="absolute w-1.5 h-1.5 rounded-full bg-primary/12 animate-pulse"
-            style={{
-              left: pos.x,
-              top: pos.y,
-              animationDelay: `${pos.delay}s`,
-              animationDuration: "3.5s",
-            }}
-          />
-        ))}
-      </div>
+
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <ScrollReveal className="text-center mb-12">

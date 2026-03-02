@@ -176,14 +176,16 @@ const ServicePillars = () => {
       {/* Blurred bubbles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-100 dark:opacity-100" style={{ '--light-boost': 2.5 } as React.CSSProperties}>
         {[
-          { x: "15%", y: "20%", size: 300, opacity: 0.08, delay: 0 },
-          { x: "80%", y: "15%", size: 260, opacity: 0.07, delay: 1.2 },
-          { x: "50%", y: "50%", size: 340, opacity: 0.06, delay: 0.6 },
-          { x: "25%", y: "75%", size: 240, opacity: 0.08, delay: 1.8 },
-          { x: "70%", y: "80%", size: 280, opacity: 0.07, delay: 2.2 },
-          { x: "90%", y: "40%", size: 220, opacity: 0.08, delay: 0.4 },
-          { x: "5%", y: "55%", size: 200, opacity: 0.06, delay: 3 },
-          { x: "60%", y: "30%", size: 220, opacity: 0.05, delay: 1.6 },
+          { x: "15%", y: "20%", size: 320, opacity: 0.12, delay: 0 },
+          { x: "80%", y: "15%", size: 280, opacity: 0.11, delay: 1.2 },
+          { x: "50%", y: "50%", size: 360, opacity: 0.1, delay: 0.6 },
+          { x: "25%", y: "75%", size: 300, opacity: 0.12, delay: 1.8 },
+          { x: "70%", y: "80%", size: 320, opacity: 0.11, delay: 2.2 },
+          { x: "90%", y: "40%", size: 260, opacity: 0.12, delay: 0.4 },
+          { x: "5%", y: "55%", size: 240, opacity: 0.1, delay: 3 },
+          { x: "60%", y: "30%", size: 280, opacity: 0.11, delay: 1.6 },
+          { x: "40%", y: "10%", size: 240, opacity: 0.1, delay: 2.5 },
+          { x: "85%", y: "65%", size: 220, opacity: 0.12, delay: 0.8 },
         ].map((b, idx) => (
           <motion.div
             key={idx}

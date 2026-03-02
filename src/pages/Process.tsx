@@ -153,7 +153,7 @@ const PhaseCard = ({
         <p
           className="leading-tight transition-all duration-300 mt-0.5 text-right"
           style={{
-            fontSize: isCurrent ? "0.875rem" : "0.8rem",
+            fontSize: isCurrent ? "1rem" : "0.9rem",
             fontWeight: isCurrent ? 600 : 400,
             color: isCurrent ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground))",
             opacity: isCurrent ? 1 : isActive ? 0.65 : 0.35,
@@ -427,7 +427,16 @@ const Process = () => {
           <div
             className="absolute top-0 bottom-0 w-[2px] pointer-events-none left-[19px] sm:left-[23px] lg:left-[163px]"
             style={{ backgroundColor: "hsl(var(--border) / 0.15)" }}
-          />
+          >
+            {/* Turquoise progress fill */}
+            <div
+              className="absolute inset-x-0 top-0 bg-primary rounded-full"
+              style={{
+                height: `${fillPercent}%`,
+                transition: "height 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+              }}
+            />
+          </div>
           {phases.map((phase, i) => (
             <PhaseCard
               key={phase.step}

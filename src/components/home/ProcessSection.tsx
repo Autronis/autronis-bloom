@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ShieldCheck, Search, PenTool, Wrench, CheckCircle, BarChart3 } from "lucide-react";
 import { useState, useRef, useCallback, useEffect } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
-import GridMovingDots from "@/components/home/GridMovingDots";
+import AmbientLight from "@/components/AmbientLight";
 
 const phases = [
   {
@@ -168,24 +168,7 @@ const ProcessSection = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden" ref={sectionRef}>
-      {/* Grid background */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `
-            linear-gradient(hsl(174 78% 30% / var(--grid-opacity, 0.035)) 1px, transparent 1px),
-            linear-gradient(90deg, hsl(174 78% 30% / var(--grid-opacity, 0.035)) 1px, transparent 1px)
-          `,
-          backgroundSize: "50px 50px",
-        }}
-      />
-      <GridMovingDots dots={[
-        { axis: "x", lineIndex: 5, duration: 21, delay: 2 },
-        { axis: "x", lineIndex: 9, duration: 26, delay: 6, reverse: true },
-        { axis: "y", lineIndex: 7, duration: 23, delay: 0 },
-        { axis: "y", lineIndex: 3, duration: 18, delay: 4, reverse: true },
-        { axis: "x", lineIndex: 11, duration: 20, delay: 8 },
-      ]} />
+      <AmbientLight />
 
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">

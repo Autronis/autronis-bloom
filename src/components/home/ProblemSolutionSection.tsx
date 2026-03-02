@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import { useInView } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import GlowCard from "@/components/GlowCard";
-import GridMovingDots from "@/components/home/GridMovingDots";
+import AmbientLight from "@/components/AmbientLight";
 
 const problems = [
   {
@@ -106,18 +106,7 @@ const ProblemSolutionSection = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
-      {/* Grid background */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `
-            linear-gradient(hsl(174 78% 30% / var(--grid-opacity, 0.035)) 1px, transparent 1px),
-            linear-gradient(90deg, hsl(174 78% 30% / var(--grid-opacity, 0.035)) 1px, transparent 1px)
-          `,
-          backgroundSize: "50px 50px",
-        }}
-      />
-      <GridMovingDots />
+      <AmbientLight />
 
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">

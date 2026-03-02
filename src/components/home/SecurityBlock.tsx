@@ -39,10 +39,10 @@ const SecurityCard = ({
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       onMouseMove={handleMouseMove}
-      className="relative flex items-center gap-3 rounded-lg border border-border bg-card px-5 py-4 overflow-hidden transition-all duration-[300ms] ease-out"
+      className="relative flex items-center gap-3 rounded-lg border-2 border-primary/25 bg-card px-5 py-4 overflow-hidden transition-all duration-[300ms] ease-out"
       style={{
         opacity: isAnyHovered && !isHovered ? 0.88 : 1,
-        borderColor: isHovered ? "hsl(var(--primary) / 0.4)" : undefined,
+        borderColor: isHovered ? "hsl(var(--primary) / 0.5)" : undefined,
       }}
     >
       {isHovered && (
@@ -54,12 +54,7 @@ const SecurityCard = ({
         />
       )}
       <Icon size={18} className="text-primary shrink-0 relative z-10" />
-      <span className="text-sm font-semibold text-foreground relative z-10">{item.label}</span>
-      {/* Underline on hover */}
-      <span
-        className="absolute bottom-2.5 left-5 right-5 h-px bg-primary/40 scale-x-0 transition-transform duration-300 origin-left z-10"
-        style={{ transform: isHovered ? "scaleX(1)" : "scaleX(0)" }}
-      />
+      <span className="text-[0.925rem] font-semibold text-foreground relative z-10">{item.label}</span>
     </div>
   );
 };

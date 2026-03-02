@@ -4,7 +4,7 @@ import { ArrowRight, Cog, Link2, PieChart, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import AnimatedBubbles from "@/components/home/AnimatedBubbles";
-import GlowCard from "@/components/GlowCard";
+
 import { motion } from "framer-motion";
 import serviceAutomation from "@/assets/service_automation_gen.png";
 import serviceIntegration from "@/assets/service_integration_gen.png";
@@ -68,12 +68,10 @@ const ServiceCard = ({
   return (
     <ScrollReveal key={s.title}>
       <ScrollRevealItem>
-        <GlowCard
+         <div
           className="rounded-xl border border-border bg-card"
-          isAnyHovered={hoveredIndex !== null}
-          isHovered={hoveredIndex === i}
-          onHover={() => setHoveredIndex(i)}
-          onLeave={() => setHoveredIndex(null)}
+          onMouseEnter={() => setHoveredIndex(i)}
+          onMouseLeave={() => setHoveredIndex(null)}
         >
           <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-6 sm:gap-8`}>
             {/* Text */}
@@ -163,7 +161,7 @@ const ServiceCard = ({
               />
             </div>
           </div>
-        </GlowCard>
+        </div>
       </ScrollRevealItem>
     </ScrollReveal>
   );

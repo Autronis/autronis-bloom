@@ -186,21 +186,20 @@ const WhyAutronisSection = () => {
                   <motion.img
                     src={teamFoto}
                     alt="Autronis team - Sem en Syb"
-                    className="w-full h-full object-cover"
-                    style={{ filter: "brightness(0.82)" }}
+                    className="w-full h-full object-cover dark:brightness-[0.82] brightness-100"
                     initial={{ opacity: 0, scale: 1.03 }}
                     animate={imgInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.03 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}
                     loading="lazy"
                   />
                   <div
-                    className="absolute inset-0 pointer-events-none"
+                    className="absolute inset-0 pointer-events-none hidden dark:block"
                     style={{
                       background: "linear-gradient(to right, hsl(var(--card)) 0%, hsl(var(--card) / 0.4) 12%, transparent 35%)",
                     }}
                   />
                   <div
-                    className="absolute inset-0 pointer-events-none lg:hidden"
+                    className="absolute inset-0 pointer-events-none lg:hidden dark:block"
                     style={{
                       background: "linear-gradient(to bottom, hsl(var(--card)) 0%, transparent 30%)",
                     }}

@@ -64,22 +64,22 @@ const pillars = [
 ];
 
 const toolIcons = [
-  { name: "Make", logo: "https://cdn.simpleicons.org/make/6D00CC" },
-  { name: "Zapier", logo: "https://cdn.simpleicons.org/zapier/FF4A00" },
-  { name: "n8n", logo: "https://cdn.simpleicons.org/n8n/EA4B71" },
-  { name: "HubSpot", logo: "https://cdn.simpleicons.org/hubspot/FF7A59" },
-  { name: "Salesforce", logo: "https://cdn.simpleicons.org/salesforce/00A1E0" },
-  { name: "Slack", logo: "https://cdn.simpleicons.org/slack/4A154B" },
-  { name: "Notion", logo: "https://cdn.simpleicons.org/notion/000000" },
-  { name: "Airtable", logo: "https://cdn.simpleicons.org/airtable/18BFFF" },
-  { name: "Google Sheets", logo: "https://cdn.simpleicons.org/googlesheets/34A853" },
-  { name: "Stripe", logo: "https://cdn.simpleicons.org/stripe/635BFF" },
-  { name: "Shopify", logo: "https://cdn.simpleicons.org/shopify/7AB55C" },
-  { name: "Xero", logo: "https://cdn.simpleicons.org/xero/13B5EA" },
-  { name: "QuickBooks", logo: "https://cdn.simpleicons.org/quickbooks/2CA01C" },
-  { name: "Mailchimp", logo: "https://cdn.simpleicons.org/mailchimp/FFE01B" },
-  { name: "Twilio", logo: "https://cdn.simpleicons.org/twilio/F22F46" },
-  { name: "OpenAI", logo: "https://cdn.simpleicons.org/openai/412991" },
+  { name: "Make", logo: "https://img.logo.dev/make.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
+  { name: "Zapier", logo: "https://img.logo.dev/zapier.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
+  { name: "n8n", logo: "https://img.logo.dev/n8n.io?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
+  { name: "HubSpot", logo: "https://img.logo.dev/hubspot.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
+  { name: "Salesforce", logo: "https://img.logo.dev/salesforce.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
+  { name: "Slack", logo: "https://img.logo.dev/slack.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
+  { name: "Notion", logo: "https://img.logo.dev/notion.so?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
+  { name: "Airtable", logo: "https://img.logo.dev/airtable.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
+  { name: "Google Sheets", logo: "https://img.logo.dev/sheets.google.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
+  { name: "Stripe", logo: "https://img.logo.dev/stripe.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
+  { name: "Shopify", logo: "https://img.logo.dev/shopify.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
+  { name: "Xero", logo: "https://img.logo.dev/xero.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
+  { name: "QuickBooks", logo: "https://img.logo.dev/quickbooks.intuit.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
+  { name: "Mailchimp", logo: "https://img.logo.dev/mailchimp.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
+  { name: "Twilio", logo: "https://img.logo.dev/twilio.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
+  { name: "OpenAI", logo: "https://img.logo.dev/openai.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
 ];
 
 const InteractiveGridBg = () => {
@@ -176,13 +176,13 @@ const InteractiveBubbles = () => {
 
     let animId: number;
 
-    const bubbles = Array.from({ length: 10 }, (_, i) => ({
+    const bubbles = Array.from({ length: 7 }, (_, i) => ({
       x: Math.random(),
       y: Math.random(),
-      baseSize: 100 + Math.random() * 180,
+      baseSize: 80 + Math.random() * 140,
       speed: 0.0003 + Math.random() * 0.0004,
       phase: Math.random() * Math.PI * 2,
-      opacity: 0.02 + Math.random() * 0.03,
+      opacity: 0.015 + Math.random() * 0.02,
     }));
 
     const resize = () => {
@@ -443,27 +443,27 @@ const Services = () => {
         </div>
 
         <div className="relative mb-4 overflow-hidden">
-          <div className="flex animate-marquee-right gap-8 w-max items-center">
-            {[...toolIcons, ...toolIcons].map((tool, i) => (
+          <div className="flex animate-marquee-right gap-12 w-max items-center justify-center">
+            {[...toolIcons, ...toolIcons, ...toolIcons].map((tool, i) => (
               <div key={i} className="flex items-center justify-center hover:scale-110 transition-transform duration-200">
-                <img src={tool.logo} alt={tool.name} className="w-7 h-7 opacity-60 hover:opacity-100 transition-opacity duration-200" loading="lazy" />
+                <img src={tool.logo} alt={tool.name} className="w-10 h-10 rounded-lg opacity-70 hover:opacity-100 transition-opacity duration-200" loading="lazy" />
               </div>
             ))}
           </div>
         </div>
 
         <div className="relative overflow-hidden">
-          <div className="flex animate-marquee-left gap-8 w-max items-center">
-            {[...toolIcons.slice().reverse(), ...toolIcons.slice().reverse()].map((tool, i) => (
+          <div className="flex animate-marquee-left gap-12 w-max items-center justify-center">
+            {[...toolIcons.slice().reverse(), ...toolIcons.slice().reverse(), ...toolIcons.slice().reverse()].map((tool, i) => (
               <div key={i} className="flex items-center justify-center hover:scale-110 transition-transform duration-200">
-                <img src={tool.logo} alt={tool.name} className="w-7 h-7 opacity-60 hover:opacity-100 transition-opacity duration-200" loading="lazy" />
+                <img src={tool.logo} alt={tool.name} className="w-10 h-10 rounded-lg opacity-70 hover:opacity-100 transition-opacity duration-200" loading="lazy" />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Pillar sections with sticky nav */}
+      {/* Pillar sections + Bottom CTA wrapped together for continuous bubbles */}
       <section className="pb-24 relative overflow-hidden">
         <InteractiveBubbles />
 
@@ -501,14 +501,6 @@ const Services = () => {
                           : "text-muted-foreground hover:text-foreground opacity-50 hover:opacity-80"
                       }`}
                     >
-                      {/* Sliding indicator bar */}
-                      <span
-                        className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] rounded-full bg-primary-foreground transition-all duration-[250ms] ease-out"
-                        style={{
-                          height: isActive ? "55%" : "0%",
-                          opacity: isActive ? 1 : 0,
-                        }}
-                      />
                       {p.title}
                     </button>
                   );
@@ -527,21 +519,19 @@ const Services = () => {
               ))}
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Bottom CTA */}
-      <section className="pb-24">
-        <div className="container mx-auto px-4 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-3">Uw proces staat er niet tussen?</h2>
-          <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
-            Wij automatiseren elk voorspelbaar proces. Plan een vrijblijvende scan en ontdek wat er mogelijk is.
-          </p>
-          <Button asChild size="lg">
-            <Link to="/book">
-              Plan Automation Scan <ArrowRight size={18} />
-            </Link>
-          </Button>
+          {/* Bottom CTA — inside same section so bubbles continue */}
+          <div className="text-center mt-24">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-3">Uw proces staat er niet tussen?</h2>
+            <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
+              Wij automatiseren elk voorspelbaar proces. Plan een vrijblijvende scan en ontdek wat er mogelijk is.
+            </p>
+            <Button asChild size="lg">
+              <Link to="/book">
+                Plan Automation Scan <ArrowRight size={18} />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
     </Layout>

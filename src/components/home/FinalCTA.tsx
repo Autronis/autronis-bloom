@@ -13,10 +13,10 @@ const FinalCTA = () => {
       {/* Blurred bubbles - more visible */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
-          { x: "25%", y: "30%", size: 320, opacity: 0.1, delay: 0 },
-          { x: "75%", y: "50%", size: 280, opacity: 0.08, delay: 1 },
-          { x: "50%", y: "20%", size: 340, opacity: 0.07, delay: 1.5 },
-          { x: "15%", y: "70%", size: 240, opacity: 0.09, delay: 2 },
+          { x: "25%", y: "30%", size: 320, opacity: 0.12, delay: 0 },
+          { x: "75%", y: "50%", size: 280, opacity: 0.1, delay: 1 },
+          { x: "50%", y: "20%", size: 340, opacity: 0.09, delay: 1.5 },
+          { x: "15%", y: "70%", size: 240, opacity: 0.11, delay: 2 },
         ].map((b, i) => (
           <motion.div
             key={i}

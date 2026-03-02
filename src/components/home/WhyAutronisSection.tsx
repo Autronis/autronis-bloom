@@ -63,7 +63,7 @@ const ReasonCard = ({
       onMouseMove={handleMouseMove}
       className="relative rounded-xl border border-border p-6 overflow-hidden transition-all duration-[300ms] ease-out"
       style={{
-        backgroundColor: "hsl(192, 22%, 17%)",
+        backgroundColor: "hsl(192, 22%, 15%)",
         transform: isHovered ? "scale(1.01) translateY(-4px)" : "scale(1) translateY(0)",
         opacity: isAnyHovered && !isHovered ? 0.88 : 1,
         borderColor: isHovered ? "hsl(var(--primary) / 0.4)" : undefined,
@@ -98,12 +98,12 @@ const WhyAutronisSection = () => {
       {/* Blurred bubbles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
-          { x: "10%", y: "15%", size: 280, opacity: 0.09, delay: 0 },
-          { x: "75%", y: "25%", size: 320, opacity: 0.08, delay: 1.5 },
-          { x: "40%", y: "70%", size: 240, opacity: 0.1, delay: 0.8 },
-          { x: "85%", y: "65%", size: 280, opacity: 0.07, delay: 2 },
-          { x: "20%", y: "85%", size: 220, opacity: 0.09, delay: 1.2 },
-          { x: "55%", y: "40%", size: 200, opacity: 0.08, delay: 2.5 },
+          { x: "10%", y: "15%", size: 280, opacity: 0.11, delay: 0 },
+          { x: "75%", y: "25%", size: 320, opacity: 0.1, delay: 1.5 },
+          { x: "40%", y: "70%", size: 240, opacity: 0.12, delay: 0.8 },
+          { x: "85%", y: "65%", size: 280, opacity: 0.09, delay: 2 },
+          { x: "20%", y: "85%", size: 220, opacity: 0.11, delay: 1.2 },
+          { x: "55%", y: "40%", size: 200, opacity: 0.1, delay: 2.5 },
         ].map((b, i) => (
           <motion.div
             key={i}
@@ -149,7 +149,7 @@ const WhyAutronisSection = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 {/* Left: cards + CTAs */}
                 <div className="p-6 sm:p-8 flex flex-col justify-between">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                     {reasons.map((r, i) => (
                       <ReasonCard
                         key={r.title}

@@ -69,10 +69,9 @@ const ServiceCard = ({
     <ScrollReveal key={s.title}>
       <ScrollRevealItem>
          <div
-          className="rounded-xl border border-border bg-card transition-all duration-500 ease-out"
+          className="rounded-xl border border-border bg-card transition-all duration-300 ease-out"
           style={{
             borderColor: hoveredIndex === i ? "hsl(var(--primary) / 0.4)" : undefined,
-            boxShadow: hoveredIndex === i ? "0 0 20px hsl(var(--primary) / 0.15)" : "none",
           }}
           onMouseEnter={() => setHoveredIndex(i)}
           onMouseLeave={() => setHoveredIndex(null)}
@@ -107,7 +106,6 @@ const ServiceCard = ({
                       transition={{ delay: idx * 0.08, duration: 0.4 }}
                       whileHover={{
                         borderColor: "hsl(174, 78%, 41%, 0.5)",
-                        boxShadow: "0 0 15px hsl(174, 78%, 41%, 0.15), inset 0 0 8px hsl(174, 78%, 41%, 0.03)",
                       }}
                     >
                       <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
@@ -132,22 +130,16 @@ const ServiceCard = ({
             {/* Image */}
             <div className={`flex-1 ${i === 0 ? 'min-h-[340px] sm:min-h-[460px]' : 'min-h-[220px] sm:min-h-[280px]'} relative overflow-hidden rounded-xl bg-white dark:bg-background`}>
               {/* Glow only on hover */}
-              <motion.div
-                className="absolute inset-0 z-[2] pointer-events-none"
-                animate={{ opacity: hoveredIndex === i ? 0.18 : 0 }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
-                style={{ background: "radial-gradient(ellipse at center, hsl(var(--primary) / 0.15), transparent 70%)" }}
-              />
               <motion.img
                 src={s.image}
                 alt={s.title}
                 className="w-full h-full object-cover relative z-[1] dark:mix-blend-screen"
                 animate={
                   hoveredIndex === i
-                    ? { scale: 1.06, filter: `brightness(calc(1.12 + (1 - var(--img-invert)) * 0.18)) saturate(1.1) invert(var(--img-invert)) hue-rotate(var(--img-hue))` }
+                    ? { scale: 1.04, filter: `brightness(calc(1.12 + (1 - var(--img-invert)) * 0.18)) saturate(1.1) invert(var(--img-invert)) hue-rotate(var(--img-hue))` }
                     : { scale: 1, filter: `brightness(calc(1 + (1 - var(--img-invert)) * 0.18)) saturate(1) invert(var(--img-invert)) hue-rotate(var(--img-hue))` }
                 }
-                transition={{ duration: 0.6, ease: "easeInOut" }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
                 loading="lazy"
               />
               {/* Edge gradient overlay */}
@@ -164,12 +156,6 @@ const ServiceCard = ({
                 style={{ background: "linear-gradient(to bottom, hsl(var(--card)) 0%, transparent 8%, transparent 92%, hsl(var(--card)) 100%)" }}
               />
               {/* Hover glow overlay */}
-              <motion.div
-                className="absolute inset-0 z-[4] pointer-events-none"
-                animate={{ opacity: hoveredIndex === i ? 0.15 : 0 }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
-                style={{ background: "radial-gradient(ellipse at center, hsl(var(--primary) / 0.3), transparent 60%)" }}
-              />
             </div>
           </div>
         </div>

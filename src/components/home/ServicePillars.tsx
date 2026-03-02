@@ -132,10 +132,11 @@ const ServiceCard = ({
                 src={s.image}
                 alt={s.title}
                 className="w-full h-full object-cover relative z-[1] dark:mix-blend-screen"
+                style={{ opacity: 0.55 }}
                 animate={
                   hoveredIndex === i
-                    ? { scale: 1.04, filter: `brightness(calc(1.12 + (1 - var(--img-invert)) * 0.18)) saturate(1.1) invert(var(--img-invert)) hue-rotate(var(--img-hue))` }
-                    : { scale: 1, filter: `brightness(calc(1 + (1 - var(--img-invert)) * 0.18)) saturate(1) invert(var(--img-invert)) hue-rotate(var(--img-hue))` }
+                    ? { scale: 1.04, filter: `brightness(calc(0.85 + (1 - var(--img-invert)) * 0.1)) saturate(0.7) invert(var(--img-invert)) hue-rotate(var(--img-hue))` }
+                    : { scale: 1, filter: `brightness(calc(0.75 + (1 - var(--img-invert)) * 0.1)) saturate(0.6) invert(var(--img-invert)) hue-rotate(var(--img-hue))` }
                 }
                 transition={{ duration: 0.35, ease: "easeOut" }}
                 loading="lazy"

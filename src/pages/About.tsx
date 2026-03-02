@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Target, Shield, Users, Handshake } from "lucide-react";
+import AnimatedBubbles from "@/components/home/AnimatedBubbles";
 import { useState } from "react";
 import fotoSyb from "@/assets/foto_syb.jpg";
 import fotoSem from "@/assets/foto_sem.jpg";
@@ -64,8 +65,9 @@ const TeamCard = ({ member }: { member: typeof team[0] }) => {
 const About = () => {
   return (
     <Layout>
-      <section className="pt-16 pb-24">
-        <div className="container mx-auto px-4 lg:px-8">
+      <section className="pt-16 pb-24 relative overflow-hidden">
+        <AnimatedBubbles />
+        <div className="container mx-auto px-4 lg:px-8 relative z-10">
           {/* Intro */}
           <div className="max-w-3xl mx-auto text-center mb-20">
             <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Over Ons</p>

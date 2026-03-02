@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ShieldCheck, Search, PenTool, Wrench, CheckCircle, BarChart3 } from "lucide-react";
 import { useState, useRef, useCallback, useEffect } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
-import AnimatedBubbles from "@/components/home/AnimatedBubbles";
 import GridMovingDots from "@/components/home/GridMovingDots";
 
 const phases = [
@@ -180,20 +179,12 @@ const ProcessSection = () => {
           backgroundSize: "50px 50px",
         }}
       />
-      {/* Bubbles background */}
-      <AnimatedBubbles bubbles={[
-        { x: "10%", y: "15%", size: 260, opacity: 0.1, delay: 0 },
-        { x: "75%", y: "30%", size: 220, opacity: 0.09, delay: 1.4 },
-        { x: "40%", y: "80%", size: 280, opacity: 0.08, delay: 0.6 },
-        { x: "90%", y: "65%", size: 200, opacity: 0.11, delay: 2.1 },
-        { x: "20%", y: "50%", size: 240, opacity: 0.09, delay: 0.9 },
-      ]} />
       <GridMovingDots dots={[
-        { axis: "x", pos: "250px", duration: 21, delay: 2 },
-        { axis: "x", pos: "450px", duration: 26, delay: 6, reverse: true },
-        { axis: "y", pos: "350px", duration: 23, delay: 0 },
-        { axis: "y", pos: "150px", duration: 18, delay: 4, reverse: true },
-        { axis: "x", pos: "550px", duration: 20, delay: 8 },
+        { axis: "x", lineIndex: 5, duration: 21, delay: 2 },
+        { axis: "x", lineIndex: 9, duration: 26, delay: 6, reverse: true },
+        { axis: "y", lineIndex: 7, duration: 23, delay: 0 },
+        { axis: "y", lineIndex: 3, duration: 18, delay: 4, reverse: true },
+        { axis: "x", lineIndex: 11, duration: 20, delay: 8 },
       ]} />
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[

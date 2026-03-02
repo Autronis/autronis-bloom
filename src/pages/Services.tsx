@@ -187,13 +187,13 @@ const InteractiveBubbles = () => {
     const isDark = document.documentElement.classList.contains('dark');
     const boost = isDark ? 1 : 2.5;
 
-    const bubbles = Array.from({ length: 7 }, (_, i) => ({
+    const bubbles = Array.from({ length: 14 }, (_, i) => ({
       x: Math.random(),
       y: Math.random(),
-      baseSize: 80 + Math.random() * 140,
-      speed: 0.0003 + Math.random() * 0.0004,
+      baseSize: 60 + Math.random() * 180,
+      speed: 0.0002 + Math.random() * 0.0005,
       phase: Math.random() * Math.PI * 2,
-      opacity: (0.015 + Math.random() * 0.02) * boost,
+      opacity: (0.018 + Math.random() * 0.025) * boost,
     }));
 
     const resize = () => {

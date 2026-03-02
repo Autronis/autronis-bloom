@@ -5,6 +5,7 @@ import { ArrowRight, ChevronDown, CheckCircle2, Cog, Link2, PieChart, FolderOpen
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import AmbientLight from "@/components/AmbientLight";
 
 const pillars = [
   {
@@ -430,7 +431,7 @@ const Services = () => {
     <Layout>
       {/* Hero */}
       <section className="relative pt-16 pb-20 overflow-hidden">
-        <InteractiveBubbles />
+        <AmbientLight />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <motion.div
             className="max-w-3xl mx-auto text-center"
@@ -457,7 +458,7 @@ const Services = () => {
 
       {/* Tool icons marquee + Pillar sections combined for continuous bubbles */}
       <section className="pb-24 relative overflow-hidden">
-        <InteractiveBubbles />
+        <AmbientLight />
 
         <div className="py-16 border-t border-border overflow-hidden relative">
         <div className="container mx-auto px-4 lg:px-8 text-center mb-10 relative z-10">

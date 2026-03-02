@@ -1,11 +1,6 @@
 import { motion } from "framer-motion";
 
 const GRID_SPACING = 50;
-const HORIZONTAL_LINE_COUNT = 12;
-const VERTICAL_LINE_COUNT = 20;
-const HORIZONTAL_START_INDEX = 2;
-const VERTICAL_START_INDEX = 2;
-const INNER_INSET = GRID_SPACING * 2;
 
 interface GridDot {
   axis: "x" | "y";
@@ -15,54 +10,29 @@ interface GridDot {
   reverse?: boolean;
 }
 
-const buildDenseLineDots = (): GridDot[] => {
-  const horizontalDots: GridDot[] = Array.from(
-    { length: HORIZONTAL_LINE_COUNT },
-    (_, i): GridDot[] => [
-      {
-        axis: "x",
-        lineIndex: i + HORIZONTAL_START_INDEX,
-        duration: 10 + (i % 4) * 1.4,
-        delay: (i * 0.55) % 4.5,
-        reverse: i % 2 === 0,
-      },
-      {
-        axis: "x",
-        lineIndex: i + HORIZONTAL_START_INDEX,
-        duration: 12 + (i % 3) * 1.6,
-        delay: ((i * 0.55) + 1.8) % 6,
-        reverse: i % 2 !== 0,
-      },
-    ]
-  ).flat();
+const buildLineDots = (): GridDot[] => {
+  // Only horizontal dots moving left-to-right across the full width
+  // Spread across different grid lines, fewer and faster
+  const dots: GridDot[] = [];
+  const lines = [3, 5, 7, 9, 11, 13];
 
-  const verticalDots: GridDot[] = Array.from(
-    { length: VERTICAL_LINE_COUNT },
-    (_, i): GridDot[] => [
-      {
-        axis: "y",
-        lineIndex: i + VERTICAL_START_INDEX,
-        duration: 9 + (i % 5) * 1.3,
-        delay: (i * 0.45) % 4,
-        reverse: i % 2 !== 0,
-      },
-      {
-        axis: "y",
-        lineIndex: i + VERTICAL_START_INDEX,
-        duration: 11 + (i % 4) * 1.5,
-        delay: ((i * 0.45) + 1.2) % 5.8,
-        reverse: i % 2 === 0,
-      },
-    ]
-  ).flat();
+  for (const line of lines) {
+    dots.push({
+      axis: "x",
+      lineIndex: line,
+      duration: 6 + (line % 3) * 1.2,
+      delay: (line * 0.7) % 4,
+      reverse: false,
+    });
+  }
 
-  return [...horizontalDots, ...verticalDots];
+  return dots;
 };
 
 const defaultDots: GridDot[] = [];
 
 const GridMovingDots = ({ dots = defaultDots }: { dots?: GridDot[] }) => {
-  const allDots = [...buildDenseLineDots(), ...dots];
+  const allDots = [...buildLineDots(), ...dots];
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -71,40 +41,29 @@ const GridMovingDots = ({ dots = defaultDots }: { dots?: GridDot[] }) => {
 
         return (
           <motion.div
-            key={`line-${dot.axis}-${dot.lineIndex}-${i}`}
+            key={`dot-${dot.lineIndex}-${i}`}
             className="absolute"
             style={{
               width: 3,
               height: 3,
               borderRadius: "9999px",
-              background: "hsl(var(--primary) / 0.4)",
-              boxShadow: "0 0 4px hsl(var(--primary) / 0.25), 0 0 12px hsl(var(--primary) / 0.12)",
+              background: "hsl(var(--primary) / 0.45)",
+              boxShadow: "0 0 4px hsl(var(--primary) / 0.3), 0 0 10px hsl(var(--primary) / 0.12)",
               willChange: "transform, opacity",
-              ...(dot.axis === "x" ? { top: pos, left: 0 } : { left: pos, top: 0 }),
+              top: pos,
+              left: 0,
             }}
-            animate={
-              dot.axis === "x"
-                ? {
-                    x: dot.reverse
-                      ? [`calc(100% - ${INNER_INSET}px)`, `${INNER_INSET}px`]
-                      : [`${INNER_INSET}px`, `calc(100% - ${INNER_INSET}px)`],
-                    opacity: [0, 0.35, 0.35, 0.9, 0.35, 0],
-                    scale: [0.8, 1, 1, 1.9, 1, 0.8],
-                  }
-                : {
-                    y: dot.reverse
-                      ? [`calc(100% - ${INNER_INSET}px)`, `${INNER_INSET}px`]
-                      : [`${INNER_INSET}px`, `calc(100% - ${INNER_INSET}px)`],
-                    opacity: [0, 0.35, 0.35, 0.9, 0.35, 0],
-                    scale: [0.8, 1, 1, 1.9, 1, 0.8],
-                  }
-            }
+            animate={{
+              x: ["-4px", "calc(100% + 4px)"],
+              opacity: [0, 0.5, 0.5, 0.95, 0.5, 0],
+              scale: [0.8, 1, 1, 1.8, 1, 0.8],
+            }}
             transition={{
               duration: dot.duration,
               delay: dot.delay,
               repeat: Infinity,
               ease: "linear",
-              times: [0, 0.2, 0.48, 0.7, 0.86, 1],
+              times: [0, 0.15, 0.45, 0.65, 0.85, 1],
             }}
           />
         );

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useState, useCallback } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
-import GridMovingDots from "@/components/home/GridMovingDots";
+import AmbientLight from "@/components/AmbientLight";
 
 const caseStudies = [
   {
@@ -93,23 +93,7 @@ const CaseStudiesPreview = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
-      {/* Grid background */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `
-            linear-gradient(hsl(174 78% 30% / var(--grid-opacity, 0.035)) 1px, transparent 1px),
-            linear-gradient(90deg, hsl(174 78% 30% / var(--grid-opacity, 0.035)) 1px, transparent 1px)
-          `,
-          backgroundSize: "50px 50px",
-        }}
-      />
-      <GridMovingDots dots={[
-        { axis: "x", lineIndex: 2, duration: 20, delay: 1 },
-        { axis: "x", lineIndex: 6, duration: 25, delay: 4, reverse: true },
-        { axis: "y", lineIndex: 5, duration: 22, delay: 2 },
-        { axis: "y", lineIndex: 11, duration: 18, delay: 6, reverse: true },
-      ]} />
+      <AmbientLight />
 
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">

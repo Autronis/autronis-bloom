@@ -142,7 +142,7 @@ const PhaseCard = ({
         <p
           className="uppercase tracking-[0.14em] transition-all duration-300 text-right"
           style={{
-            fontSize: isCurrent ? "0.7rem" : "0.625rem",
+            fontSize: isCurrent ? "0.85rem" : "0.75rem",
             fontWeight: isCurrent ? 700 : 600,
             color: isActive ? "hsl(174, 78%, 41%)" : "hsl(var(--muted-foreground))",
             opacity: isCurrent ? 1 : isActive ? 0.7 : 0.4,
@@ -153,7 +153,7 @@ const PhaseCard = ({
         <p
           className="leading-tight transition-all duration-300 mt-0.5 text-right"
           style={{
-            fontSize: isCurrent ? "0.8rem" : "0.7rem",
+            fontSize: isCurrent ? "0.875rem" : "0.8rem",
             fontWeight: isCurrent ? 600 : 400,
             color: isCurrent ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground))",
             opacity: isCurrent ? 1 : isActive ? 0.65 : 0.35,
@@ -423,6 +423,11 @@ const Process = () => {
 
         {/* ── Timeline ── */}
         <div ref={timelineRef} className="max-w-4xl mx-auto mb-20 relative">
+          {/* Full-height baseline bar behind nodes */}
+          <div
+            className="absolute top-0 bottom-0 w-[2px] pointer-events-none left-[19px] sm:left-[23px] lg:left-[163px]"
+            style={{ backgroundColor: "hsl(var(--border) / 0.15)" }}
+          />
           {phases.map((phase, i) => (
             <PhaseCard
               key={phase.step}

@@ -120,7 +120,7 @@ const ServiceCard = ({
               </Button>
             </div>
             {/* Image */}
-            <div className="flex-1 min-h-[220px] sm:min-h-[280px] relative overflow-hidden rounded-xl">
+            <div className="flex-1 min-h-[220px] sm:min-h-[280px] relative overflow-hidden rounded-xl bg-background">
               {/* Subtle pulsing glow */}
               <motion.div
                 className="absolute inset-0 z-[2] pointer-events-none"
@@ -131,7 +131,7 @@ const ServiceCard = ({
               <motion.img
                 src={s.image}
                 alt={s.title}
-                className="w-full h-full object-cover relative z-[1]"
+                className="w-full h-full object-cover relative z-[1] mix-blend-screen dark:mix-blend-screen opacity-70 dark:opacity-100"
                 animate={
                   hoveredIndex === i
                     ? { scale: 1.06, filter: "brightness(1.15) saturate(1.1)" }
@@ -149,7 +149,6 @@ const ServiceCard = ({
                     : "linear-gradient(to left, hsl(var(--card)) 0%, transparent 25%)",
                 }}
               />
-              {/* Top/bottom fade */}
               <div
                 className="absolute inset-0 z-[3] pointer-events-none"
                 style={{ background: "linear-gradient(to bottom, hsl(var(--card)) 0%, transparent 8%, transparent 92%, hsl(var(--card)) 100%)" }}

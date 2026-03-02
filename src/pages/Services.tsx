@@ -485,31 +485,9 @@ const Services = () => {
             ))}
           </nav>
 
-          <div className="flex gap-12">
-            {/* Sticky side nav (desktop) */}
-            <nav className="hidden lg:block w-56 shrink-0">
-              <div className="sticky top-28 space-y-1.5">
-                {pillars.map((p) => {
-                  const isActive = activeSection === p.id;
-                  return (
-                    <button
-                      key={p.id}
-                      onClick={() => scrollTo(p.id)}
-                      className={`relative block w-full text-left px-4 py-3 rounded-lg text-sm transition-all duration-[250ms] ease-out ${
-                        isActive
-                          ? "bg-primary text-primary-foreground font-semibold shadow-[0_0_20px_hsl(var(--primary)/0.2)]"
-                          : "text-muted-foreground hover:text-foreground opacity-50 hover:opacity-80"
-                      }`}
-                    >
-                      {p.title}
-                    </button>
-                  );
-                })}
-              </div>
-            </nav>
-
+          <div>
             {/* Content */}
-            <div className="flex-1 space-y-12">
+            <div className="space-y-12">
               {pillars.map((pillar) => (
                 <PillarCard
                   key={pillar.id}

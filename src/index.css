@@ -51,8 +51,8 @@
     --img-hue: 180deg;
     --bubble-boost: 2.5;
     --grid-opacity: 0;
-    --ag-low: 0.10;
-    --ag-peak: 0.18;
+    --ag-low: 0.22;
+    --ag-peak: 0.38;
     --ambient-blend: overlay;
   }
 
@@ -160,7 +160,7 @@
 .ambient-glow {
   position: absolute;
   border-radius: 50%;
-  filter: blur(70px);
+  filter: blur(120px);
   will-change: transform, opacity;
   background: radial-gradient(ellipse at center,
     hsl(174 78% 36% / var(--ag-peak, 0.10)),

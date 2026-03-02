@@ -135,8 +135,8 @@ const ServiceCard = ({
                 style={{ opacity: 0.65 }}
                 animate={
                   hoveredIndex === i
-                    ? { scale: 1.04, filter: `brightness(0.8) saturate(0.85) invert(var(--img-invert)) hue-rotate(var(--img-hue))` }
-                    : { scale: 1, filter: `brightness(0.65) saturate(0.75) invert(var(--img-invert)) hue-rotate(var(--img-hue))` }
+                    ? { scale: 1.04, filter: `brightness(0.85) saturate(1.1) invert(var(--img-invert)) hue-rotate(var(--img-hue))` }
+                    : { scale: 1, filter: `brightness(0.7) saturate(0.95) invert(var(--img-invert)) hue-rotate(var(--img-hue))` }
                 }
                 transition={{ duration: 0.35, ease: "easeOut" }}
                 loading="lazy"

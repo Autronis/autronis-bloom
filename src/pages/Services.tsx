@@ -63,17 +63,20 @@ const pillars = [
   },
 ];
 
-const toolIcons = [
+const toolIcons: Array<{ name: string; logo?: string; icon?: React.ComponentType<any> }> = [
+  { name: "Procesautomatisering", icon: Cog },
   { name: "Make", logo: "https://img.logo.dev/make.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
   { name: "Zapier", logo: "https://img.logo.dev/zapier.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
   { name: "n8n", logo: "https://img.logo.dev/n8n.io?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
   { name: "HubSpot", logo: "https://img.logo.dev/hubspot.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
   { name: "Salesforce", logo: "https://img.logo.dev/salesforce.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
+  { name: "Systeemintegraties", icon: Link2 },
   { name: "Slack", logo: "https://img.logo.dev/slack.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
   { name: "Notion", logo: "https://img.logo.dev/notion.so?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
   { name: "Airtable", logo: "https://img.logo.dev/airtable.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
   { name: "Google Sheets", logo: "https://img.logo.dev/sheets.google.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
   { name: "Stripe", logo: "https://img.logo.dev/stripe.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
+  { name: "Data & Rapportage", icon: PieChart },
   { name: "Shopify", logo: "https://img.logo.dev/shopify.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
   { name: "Xero", logo: "https://img.logo.dev/xero.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
   { name: "QuickBooks", logo: "https://img.logo.dev/quickbooks.intuit.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
@@ -454,7 +457,13 @@ const Services = () => {
           <div className="flex animate-marquee-right gap-12 w-max items-center justify-center">
             {[...toolIcons, ...toolIcons, ...toolIcons].map((tool, i) => (
               <div key={i} className="flex items-center justify-center hover:scale-110 transition-transform duration-200">
-                <img src={tool.logo} alt={tool.name} className="w-10 h-10 rounded-lg opacity-70 hover:opacity-100 transition-opacity duration-200" loading="lazy" />
+                {'logo' in tool ? (
+                  <img src={tool.logo} alt={tool.name} className="w-10 h-10 rounded-lg opacity-70 hover:opacity-100 transition-opacity duration-200" loading="lazy" />
+                ) : (
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                    <tool.icon size={20} />
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -464,7 +473,13 @@ const Services = () => {
           <div className="flex animate-marquee-left gap-12 w-max items-center justify-center">
             {[...toolIcons.slice().reverse(), ...toolIcons.slice().reverse(), ...toolIcons.slice().reverse()].map((tool, i) => (
               <div key={i} className="flex items-center justify-center hover:scale-110 transition-transform duration-200">
-                <img src={tool.logo} alt={tool.name} className="w-10 h-10 rounded-lg opacity-70 hover:opacity-100 transition-opacity duration-200" loading="lazy" />
+                {'logo' in tool ? (
+                  <img src={tool.logo} alt={tool.name} className="w-10 h-10 rounded-lg opacity-70 hover:opacity-100 transition-opacity duration-200" loading="lazy" />
+                ) : (
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                    <tool.icon size={20} />
+                  </div>
+                )}
               </div>
             ))}
           </div>

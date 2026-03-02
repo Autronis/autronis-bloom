@@ -348,24 +348,52 @@ const Services = () => {
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="flex gap-12">
+            {/* Mobile horizontal pills */}
+            <nav className="lg:hidden sticky top-16 z-20 -mx-4 px-4 py-3 flex gap-2 overflow-x-auto no-scrollbar bg-background/80 backdrop-blur-xl border-b border-border/50">
+              {pillars.map((p) => (
+                <button
+                  key={p.id}
+                  onClick={() => scrollTo(p.id)}
+                  className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ease-out shrink-0 ${
+                    activeSection === p.id
+                      ? "bg-primary/15 text-primary shadow-[0_0_12px_hsl(var(--primary)/0.15)]"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {p.title}
+                </button>
+              ))}
+            </nav>
+
             {/* Sticky side nav (desktop) */}
             <nav className="hidden lg:block w-64 shrink-0">
-              <div className="sticky top-24 space-y-2">
-                {pillars.map((p) => (
-                  <button
-                    key={p.id}
-                    onClick={() => scrollTo(p.id)}
-                    className="block w-full text-left px-4 py-3 rounded-lg text-sm transition-all duration-300"
-                    style={{
-                      backgroundColor: activeSection === p.id ? "hsl(var(--primary) / 0.1)" : "transparent",
-                      color: activeSection === p.id ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))",
-                      borderLeft: activeSection === p.id ? "2px solid hsl(var(--primary))" : "2px solid transparent",
-                      fontWeight: activeSection === p.id ? 600 : 400,
-                    }}
-                  >
-                    {p.title}
-                  </button>
-                ))}
+              <div className="sticky top-24 space-y-1">
+                {pillars.map((p) => {
+                  const isActive = activeSection === p.id;
+                  return (
+                    <button
+                      key={p.id}
+                      onClick={() => scrollTo(p.id)}
+                      className="relative block w-full text-left px-4 py-3 rounded-lg text-sm transition-all duration-300 ease-out"
+                      style={{
+                        backgroundColor: isActive ? "hsl(var(--primary) / 0.1)" : "transparent",
+                        color: isActive ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))",
+                        fontWeight: isActive ? 600 : 400,
+                        boxShadow: isActive ? "0 0 20px hsl(var(--primary) / 0.08)" : "none",
+                      }}
+                    >
+                      {/* Sliding indicator bar */}
+                      <span
+                        className="absolute left-0 top-1/2 -translate-y-1/2 w-[2px] rounded-full bg-primary transition-all duration-300 ease-out"
+                        style={{
+                          height: isActive ? "60%" : "0%",
+                          opacity: isActive ? 1 : 0,
+                        }}
+                      />
+                      {p.title}
+                    </button>
+                  );
+                })}
               </div>
             </nav>
 

@@ -131,11 +131,11 @@ const ServiceCard = ({
               <motion.img
                 src={s.image}
                 alt={s.title}
-                className="w-full h-full object-cover relative z-[1] dark:invert-0 invert dark:hue-rotate-0 hue-rotate-180"
+                className="w-full h-full object-cover relative z-[1]"
                 animate={
                   hoveredIndex === i
-                    ? { scale: 1.06, filter: "brightness(1.15) saturate(1.1)" }
-                    : { scale: 1, filter: "brightness(1) saturate(1)" }
+                    ? { scale: 1.06, filter: "brightness(1.15) saturate(1.1) invert(var(--img-invert)) hue-rotate(var(--img-hue))" }
+                    : { scale: 1, filter: "brightness(1) saturate(1) invert(var(--img-invert)) hue-rotate(var(--img-hue))" }
                 }
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 loading="lazy"

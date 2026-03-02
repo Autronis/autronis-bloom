@@ -47,7 +47,8 @@
 
     --accent-light: 174 64% 44%;
     --accent-dark: 174 78% 25%;
-
+    --img-invert: 1;
+    --img-hue: 180deg;
   }
 
   .dark {
@@ -92,7 +93,8 @@
 
     --accent-light: 174 64% 56%;
     --accent-dark: 174 78% 30%;
-
+    --img-invert: 0;
+    --img-hue: 0deg;
   }
 }
 

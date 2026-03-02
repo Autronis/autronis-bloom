@@ -31,7 +31,7 @@ const Index = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="relative min-h-[80vh] sm:min-h-screen flex flex-col items-center justify-center overflow-hidden">
+      <section className="relative min-h-[80vh] sm:min-h-screen flex flex-col items-center justify-center overflow-hidden" style={{ backgroundColor: "hsl(var(--card))" }}>
         <HeroBackground />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center">

@@ -96,15 +96,13 @@ const ServiceCard = ({
                   {s.impact.map((item, idx) => (
                     <motion.div
                       key={item.title}
-                      className="flex items-start gap-2.5 p-3 rounded-lg bg-card transition-all duration-200 group"
-                      style={{
-                        border: "1px solid hsl(var(--border))",
-                      }}
+                      className="flex items-start gap-2.5 p-3 rounded-lg bg-card border border-border transition-all duration-300 ease-out group cursor-default"
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: idx * 0.08, duration: 0.4 }}
                       whileHover={{
+                        scale: 1.03,
                         borderColor: "hsl(174, 78%, 41%, 0.5)",
                       }}
                     >
@@ -121,7 +119,7 @@ const ServiceCard = ({
               </div>
 
               {/* CTA to service page */}
-              <Button asChild variant="outline" size="sm" className="self-start border-primary/30 text-primary hover:bg-primary/10">
+              <Button asChild variant="link" size="sm" className="self-start text-primary px-0 hover:no-underline">
                 <Link to={`/services#${s.slug}`}>
                   Bekijk meer over {s.title} <ArrowRight size={14} />
                 </Link>

@@ -174,7 +174,7 @@ const ServicePillars = () => {
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
       {/* Blurred bubbles */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-100 dark:opacity-100" style={{ '--light-boost': 2.5 } as React.CSSProperties}>
         {[
           { x: "15%", y: "20%", size: 300, opacity: 0.08, delay: 0 },
           { x: "80%", y: "15%", size: 260, opacity: 0.07, delay: 1.2 },
@@ -192,7 +192,7 @@ const ServicePillars = () => {
             transition={{ duration: 4 + idx * 0.4, repeat: Infinity, ease: "easeInOut", delay: b.delay }}
             style={{
               left: b.x, top: b.y, width: b.size, height: b.size,
-              background: `radial-gradient(circle, hsl(var(--primary) / ${b.opacity}), transparent 70%)`,
+              background: `radial-gradient(circle, hsl(174 78% 35% / calc(${b.opacity} * var(--bubble-boost, 1))), transparent 70%)`,
               filter: "blur(50px)", transform: "translate(-50%, -50%)",
             }}
           />

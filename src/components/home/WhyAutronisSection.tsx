@@ -122,7 +122,7 @@ const WhyAutronisSection = () => {
               top: b.y,
               width: b.size,
               height: b.size,
-              background: `radial-gradient(circle, hsl(174 78% 41% / ${b.opacity}), transparent 70%)`,
+              background: `radial-gradient(circle, hsl(174 78% 35% / calc(${b.opacity} * var(--bubble-boost, 1))), transparent 70%)`,
               filter: "blur(50px)",
               transform: "translate(-50%, -50%)",
             }}

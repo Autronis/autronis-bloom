@@ -49,6 +49,8 @@
     --accent-dark: 174 78% 25%;
     --img-invert: 1;
     --img-hue: 180deg;
+    --bubble-boost: 3;
+    --grid-opacity: 0.08;
   }
 
   .dark {
@@ -95,6 +97,8 @@
     --accent-dark: 174 78% 30%;
     --img-invert: 0;
     --img-hue: 0deg;
+    --bubble-boost: 1;
+    --grid-opacity: 0.035;
   }
 }
 

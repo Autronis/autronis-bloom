@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Cog, Link2, PieChart, ChevronDown, CheckCircle2, FolderOpen, Briefcase, Rocket, ShoppingCart, LinkIcon, CreditCard, Puzzle, BarChart3, LayoutDashboard, FileText, Database, AlertTriangle } from "lucide-react";
+import { ArrowRight, Cog, Link2, PieChart, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import GlowCard from "@/components/GlowCard";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import serviceAutomation from "@/assets/service_automation_gen.png";
 import serviceIntegration from "@/assets/service_integration_gen.png";
 import serviceData from "@/assets/service_data_gen.png";
@@ -13,6 +13,7 @@ const services = [
   {
     icon: Cog,
     title: "Procesautomatisering",
+    slug: "procesautomatisering",
     intro: "Wij automatiseren terugkerende processen zodat werk doorloopt zonder handmatige tussenstappen.",
     impact: [
       { title: "Tot 70% minder handmatige verwerkingstijd", sub: "Routinetaken worden volledig geautomatiseerd" },
@@ -20,17 +21,12 @@ const services = [
       { title: "Snellere doorlooptijden bij goedkeuringen", sub: "Escalaties en approvals verlopen automatisch" },
       { title: "Schaalbaarheid zonder extra personeel", sub: "Groei zonder lineaire personeelskosten" },
     ],
-    toepassingen: [
-      { icon: FolderOpen, title: "Interne Workflow Automatisering", items: ["Goedkeuringsflows", "Taaktoewijzing", "Notificaties en escalaties", "Documentgeneratie"] },
-      { icon: Briefcase, title: "Sales- en Orderautomatisering", items: ["Orderverwerking", "CRM-updates", "Facturatie workflows", "Leadopvolging"] },
-      { icon: Rocket, title: "Onboarding & Offboarding", items: ["Accountcreatie", "Checklist automatisering", "Rolgebaseerde toegangsrechten", "E-signature integraties"] },
-      { icon: ShoppingCart, title: "E-commerce Automatisering", items: ["Voorraadbeheer", "Retourafhandeling", "Orderstatus synchronisatie", "Dynamische pricing"] },
-    ],
     image: serviceAutomation,
   },
   {
     icon: Link2,
     title: "Systeemintegraties",
+    slug: "systeemintegraties",
     intro: "Wij koppelen systemen via API's zodat data automatisch en consistent stroomt.",
     impact: [
       { title: "Eén consistente datastroom tussen kernsystemen", sub: "Alle data synchroon en betrouwbaar" },
@@ -38,29 +34,18 @@ const services = [
       { title: "Realtime synchronisatie zonder exports", sub: "Geen handmatige CSV- of Excel-exports meer" },
       { title: "Proactieve foutdetectie en logging", sub: "Problemen worden gesignaleerd vóór ze escaleren" },
     ],
-    toepassingen: [
-      { icon: LinkIcon, title: "API Koppelingen", items: ["REST API integraties", "Webhooks", "Event-based triggers", "Retry-logica"] },
-      { icon: CreditCard, title: "CRM & Finance Integraties", items: ["CRM ↔ Boekhouding synchronisatie", "ERP koppelingen", "Grootboekkoppelingen", "Realtime data-uitwisseling"] },
-      { icon: Puzzle, title: "Legacy Systemen", items: ["Datamigraties", "Middleware implementatie", "Maatwerk API lagen", "Systeemmodernisering"] },
-      { icon: BarChart3, title: "Monitoring & Logging", items: ["Foutdetectie", "Audit logging", "Datavalidatie", "Integratie monitoring"] },
-    ],
     image: serviceIntegration,
   },
   {
     icon: PieChart,
     title: "Data & Rapportage",
+    slug: "data-rapportage",
     intro: "Realtime dashboards en geautomatiseerde rapportages voor volledig inzicht.",
     impact: [
       { title: "Direct inzicht in KPI's en prestaties", sub: "Realtime dashboards altijd up-to-date" },
       { title: "Geautomatiseerde rapportages zonder handmatig werk", sub: "Wekelijks, maandelijks of op maat" },
       { title: "Eén bron van waarheid voor alle bedrijfsdata", sub: "Geen conflicterende spreadsheets meer" },
       { title: "Vroegtijdige detectie van afwijkingen", sub: "Anomalieën worden direct gesignaleerd" },
-    ],
-    toepassingen: [
-      { icon: LayoutDashboard, title: "KPI Dashboards", items: ["Management dashboards", "Team dashboards", "Realtime visualisaties", "Performance monitoring"] },
-      { icon: FileText, title: "Geautomatiseerde Rapportages", items: ["Wekelijkse exports", "PDF rapportages", "E-mail distributie", "Custom rapportageflows"] },
-      { icon: Database, title: "Dataconsolidatie", items: ["Multi-source data", "Eén bron van waarheid", "Datamodel optimalisatie", "Datakwaliteitscontrole"] },
-      { icon: AlertTriangle, title: "Alerts & Monitoring", items: ["Anomaly detection", "Performance alerts", "SLA bewaking", "Datastroom monitoring"] },
     ],
     image: serviceData,
   },
@@ -78,7 +63,6 @@ const ServiceCard = ({
   setHoveredIndex: (i: number | null) => void;
 }) => {
   const isEven = i % 2 === 0;
-  const [expanded, setExpanded] = useState(false);
 
   return (
     <ScrollReveal key={s.title}>
@@ -101,7 +85,7 @@ const ServiceCard = ({
               </div>
               <p className="text-sm text-muted-foreground mb-5 leading-relaxed">{s.intro}</p>
 
-              {/* Wat levert dit op? - mini highlight blocks */}
+              {/* Wat levert dit op? */}
               <div className="mb-5">
                 <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
                   Wat levert dit op?
@@ -128,54 +112,15 @@ const ServiceCard = ({
                 </div>
               </div>
 
-              {/* Toggle control bar */}
-              <button
-                onClick={() => setExpanded(!expanded)}
-                className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-all duration-200 group self-start relative py-1"
-              >
-                <span>{expanded ? "Verberg concrete toepassingen" : "Bekijk concrete toepassingen"}</span>
-                <ChevronDown
-                  size={16}
-                  className="transition-transform duration-300 ease-out"
-                  style={{ transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}
-                />
-                <span className="absolute bottom-0 left-0 h-px w-0 bg-primary/40 group-hover:w-full transition-all duration-300" />
-              </button>
-
-              <AnimatePresence>
-                {expanded && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                    className="overflow-hidden"
-                  >
-                    <div className="mt-4 space-y-4 pt-4 border-t border-border">
-                      {s.toepassingen.map((cat) => (
-                        <div key={cat.title}>
-                          <p className="text-sm font-medium text-foreground mb-2 flex items-center gap-2">
-                            <cat.icon size={14} className="text-primary" />
-                            {cat.title}
-                          </p>
-                          <div className="grid grid-cols-2 gap-1.5">
-                            {cat.items.map((item) => (
-                              <span key={item} className="flex items-start gap-1.5 text-xs text-muted-foreground">
-                                <span className="w-1 h-1 rounded-full bg-primary mt-1.5 shrink-0" />
-                                {item}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {/* CTA to service page */}
+              <Button asChild variant="outline" size="sm" className="self-start border-primary/30 text-primary hover:bg-primary/10">
+                <Link to={`/services#${s.slug}`}>
+                  Bekijk meer over {s.title} <ArrowRight size={14} />
+                </Link>
+              </Button>
             </div>
             {/* Image */}
             <div className="flex-1 min-h-[220px] sm:min-h-[280px] relative overflow-hidden rounded-xl">
-              <div className="absolute inset-0 bg-background" />
               {/* Subtle pulsing glow */}
               <motion.div
                 className="absolute inset-0 z-[2] pointer-events-none"

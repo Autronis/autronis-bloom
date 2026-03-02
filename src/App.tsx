@@ -20,6 +20,7 @@ import Team from "./pages/Team";
 import Privacy from "./pages/Privacy";
 import Cookies from "./pages/Cookies";
 import NotFound from "./pages/NotFound";
+import ImpactROI from "./pages/ImpactROI";
 import Layout from "./components/Layout";
 
 const queryClient = new QueryClient();
@@ -45,6 +46,7 @@ const App = () => (
             <Route path="/team" element={<Team />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/resources/:slug" element={<ResourceDetail />} />
+            <Route path="/impact-roi" element={<ImpactROI />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/cookies" element={<Cookies />} />

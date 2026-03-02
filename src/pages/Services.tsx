@@ -429,12 +429,14 @@ const Services = () => {
 
   return (
     <Layout>
-      {/* Hero */}
-      <section className="relative pt-16 pb-20 overflow-hidden">
+      {/* Single continuous section — hero + integrations + pillars */}
+      <section className="relative pt-16 pb-24 overflow-hidden">
         <AmbientLight />
+
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
+          {/* Hero */}
           <motion.div
-            className="max-w-3xl mx-auto text-center"
+            className="max-w-3xl mx-auto text-center mb-20"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
@@ -453,55 +455,47 @@ const Services = () => {
               handmatige stappen elimineren en realtime inzicht geven.
             </motion.p>
           </motion.div>
-        </div>
-      </section>
 
-      {/* Tool icons marquee + Pillar sections combined for continuous bubbles */}
-      <section className="pb-24 relative overflow-hidden">
-        <AmbientLight />
+          {/* Integrations marquee — no border, flows naturally */}
+          <div className="mb-20">
+            <div className="text-center mb-10">
+              <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Integraties</p>
+              <h2 className="text-2xl sm:text-3xl font-bold mb-3">Werkt met uw huidige stack</h2>
+              <p className="text-muted-foreground">Heeft uw systeem een API? Dan kunnen wij integreren.</p>
+            </div>
 
-        <div className="py-16 border-t border-border overflow-hidden relative">
-        <div className="container mx-auto px-4 lg:px-8 text-center mb-10 relative z-10">
-          <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Integraties</p>
-          <h2 className="text-2xl sm:text-3xl font-bold mb-3">Werkt met uw huidige stack</h2>
-          <p className="text-muted-foreground">Heeft uw systeem een API? Dan kunnen wij integreren.</p>
-        </div>
-
-        <div className="relative mb-4 overflow-hidden">
-          <div className="flex animate-marquee-right gap-12 w-max items-center justify-center">
-            {[...toolIcons, ...toolIcons, ...toolIcons].map((tool, i) => (
-              <div key={i} className="flex items-center justify-center hover:scale-110 transition-transform duration-200">
-                {'logo' in tool ? (
-                  <img src={tool.logo} alt={tool.name} className="w-10 h-10 rounded-lg opacity-70 hover:opacity-100 transition-opacity duration-200" loading="lazy" />
-                ) : (
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                    <tool.icon size={20} />
+            <div className="relative mb-4 overflow-hidden">
+              <div className="flex animate-marquee-right gap-12 w-max items-center justify-center">
+                {[...toolIcons, ...toolIcons, ...toolIcons].map((tool, i) => (
+                  <div key={i} className="flex items-center justify-center hover:scale-110 transition-transform duration-200">
+                    {'logo' in tool ? (
+                      <img src={tool.logo} alt={tool.name} className="w-10 h-10 rounded-lg opacity-70 hover:opacity-100 transition-opacity duration-200" loading="lazy" />
+                    ) : (
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                        <tool.icon size={20} />
+                      </div>
+                    )}
                   </div>
-                )}
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
 
-        <div className="relative overflow-hidden">
-          <div className="flex animate-marquee-left gap-12 w-max items-center justify-center">
-            {[...toolIcons.slice().reverse(), ...toolIcons.slice().reverse(), ...toolIcons.slice().reverse()].map((tool, i) => (
-              <div key={i} className="flex items-center justify-center hover:scale-110 transition-transform duration-200">
-                {'logo' in tool ? (
-                  <img src={tool.logo} alt={tool.name} className="w-10 h-10 rounded-lg opacity-70 hover:opacity-100 transition-opacity duration-200" loading="lazy" />
-                ) : (
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                    <tool.icon size={20} />
+            <div className="relative overflow-hidden">
+              <div className="flex animate-marquee-left gap-12 w-max items-center justify-center">
+                {[...toolIcons.slice().reverse(), ...toolIcons.slice().reverse(), ...toolIcons.slice().reverse()].map((tool, i) => (
+                  <div key={i} className="flex items-center justify-center hover:scale-110 transition-transform duration-200">
+                    {'logo' in tool ? (
+                      <img src={tool.logo} alt={tool.name} className="w-10 h-10 rounded-lg opacity-70 hover:opacity-100 transition-opacity duration-200" loading="lazy" />
+                    ) : (
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                        <tool.icon size={20} />
+                      </div>
+                    )}
                   </div>
-                )}
+                ))}
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-        </div>
-
-
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
           {/* Mobile horizontal pills */}
           <nav className="lg:hidden sticky top-16 z-20 -mx-4 px-4 py-3 flex gap-2 overflow-x-auto no-scrollbar bg-background/80 backdrop-blur-xl border-b border-border/50 mb-8">
             {pillars.map((p) => (

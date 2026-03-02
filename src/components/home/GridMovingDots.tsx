@@ -32,12 +32,12 @@ const GridMovingDots = ({ dots: _dots }: { dots?: GridDot[] }) => {
 
     // Create dots that move horizontally along grid lines
     const dotStates: DotState[] = [
-      { lineIndex: 3, t: 0, speed: 0.012, radius: 2, maxOpacity: 0.5, glowPhase: 0 },
-      { lineIndex: 5, t: 0.3, speed: 0.009, radius: 2.2, maxOpacity: 0.45, glowPhase: 1.2 },
-      { lineIndex: 7, t: 0.6, speed: 0.011, radius: 1.8, maxOpacity: 0.5, glowPhase: 2.5 },
-      { lineIndex: 9, t: 0.15, speed: 0.010, radius: 2, maxOpacity: 0.45, glowPhase: 3.8 },
-      { lineIndex: 11, t: 0.5, speed: 0.013, radius: 2.2, maxOpacity: 0.5, glowPhase: 5.1 },
-      { lineIndex: 13, t: 0.8, speed: 0.008, radius: 1.8, maxOpacity: 0.45, glowPhase: 0.7 },
+      { lineIndex: 3, t: 0, speed: 0.0012, radius: 2, maxOpacity: 0.5, glowPhase: 0 },
+      { lineIndex: 5, t: 0.3, speed: 0.0009, radius: 2.2, maxOpacity: 0.45, glowPhase: 1.2 },
+      { lineIndex: 7, t: 0.6, speed: 0.0011, radius: 1.8, maxOpacity: 0.5, glowPhase: 2.5 },
+      { lineIndex: 9, t: 0.15, speed: 0.0010, radius: 2, maxOpacity: 0.45, glowPhase: 3.8 },
+      { lineIndex: 11, t: 0.5, speed: 0.0013, radius: 2.2, maxOpacity: 0.5, glowPhase: 5.1 },
+      { lineIndex: 13, t: 0.8, speed: 0.0008, radius: 1.8, maxOpacity: 0.45, glowPhase: 0.7 },
     ];
 
     const resize = () => {

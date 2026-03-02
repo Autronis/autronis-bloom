@@ -50,7 +50,7 @@ const StatCard = ({
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       onMouseMove={handleMouseMove}
-      className="relative rounded-lg border border-border bg-card p-3 sm:p-4 text-center overflow-hidden transition-all duration-[280ms] ease-out"
+      className="relative rounded-lg border border-border bg-card p-2.5 sm:p-3 text-center overflow-hidden transition-all duration-[280ms] ease-out"
       style={{
         transform: isHovered ? "scale(1.05) translateY(-4px)" : "scale(1) translateY(0)",
         opacity: isAnyHovered && !isHovered ? 0.88 : 1,
@@ -88,7 +88,7 @@ const StatisticsBlock = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 max-w-xl mx-auto">
       {stats.map((stat, i) => (
         <StatCard
           key={stat.label}

@@ -1,8 +1,10 @@
 import Layout from "@/components/Layout";
+import AnimatedBubbles from "@/components/home/AnimatedBubbles";
 
 const Privacy = () => (
   <Layout>
-    <section className="pt-16 pb-24">
+    <section className="pt-16 pb-24 relative overflow-hidden">
+      <AnimatedBubbles />
       <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
         <h1 className="text-3xl font-bold mb-8">Privacybeleid</h1>
         <div className="space-y-6 text-sm text-muted-foreground leading-relaxed">

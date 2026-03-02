@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 import { ArrowRight, Mail, Linkedin, Clock } from "lucide-react";
 import { useState } from "react";
-import AnimatedBubbles from "@/components/home/AnimatedBubbles";
+import AmbientLight from "@/components/AmbientLight";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 const Contact = () => {
@@ -14,7 +14,7 @@ const Contact = () => {
   return (
     <Layout>
       <section className="pt-16 pb-24 relative overflow-hidden">
-        <AnimatedBubbles />
+        <AmbientLight />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <ScrollReveal className="max-w-2xl mx-auto text-center mb-12">
             <ScrollRevealItem>

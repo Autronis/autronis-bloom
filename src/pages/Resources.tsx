@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import AnimatedBubbles from "@/components/home/AnimatedBubbles";
+import AmbientLight from "@/components/AmbientLight";
 
 const posts = [
   {
@@ -31,7 +31,7 @@ const Resources = () => {
   return (
     <Layout>
       <section className="pt-16 pb-24 relative overflow-hidden">
-        <AnimatedBubbles />
+        <AmbientLight />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-2xl mx-auto text-center mb-12">
             <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Resources</p>

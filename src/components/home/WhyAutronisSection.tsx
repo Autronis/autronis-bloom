@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion, useInView } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
-import AnimatedBubbles from "@/components/home/AnimatedBubbles";
+import AmbientLight from "@/components/AmbientLight";
 import teamFoto from "@/assets/autronis_team_foto.png";
 
 const reasons = [
@@ -95,16 +95,7 @@ const WhyAutronisSection = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
-      <AnimatedBubbles bubbles={[
-        { x: "10%", y: "15%", size: 300, opacity: 0.13, delay: 0, skewX: 8, borderRadius: "60% 40% 55% 45% / 50% 60% 40% 50%" },
-        { x: "75%", y: "25%", size: 340, opacity: 0.12, delay: 1.5, skewY: -6, borderRadius: "45% 55% 40% 60% / 55% 45% 60% 40%" },
-        { x: "40%", y: "70%", size: 280, opacity: 0.13, delay: 0.8, skewX: -5, borderRadius: "50% 50% 45% 55% / 60% 40% 55% 45%" },
-        { x: "85%", y: "65%", size: 300, opacity: 0.11, delay: 2, skewY: 7, borderRadius: "55% 45% 50% 50% / 40% 60% 45% 55%" },
-        { x: "20%", y: "85%", size: 240, opacity: 0.12, delay: 1.2, skewX: 10, borderRadius: "40% 60% 50% 50% / 55% 45% 50% 50%" },
-        { x: "55%", y: "40%", size: 260, opacity: 0.11, delay: 2.5, skewY: -4, borderRadius: "50% 50% 60% 40% / 45% 55% 50% 50%" },
-        { x: "30%", y: "30%", size: 220, opacity: 0.12, delay: 0.4, skewX: -8, borderRadius: "45% 55% 50% 50% / 50% 50% 55% 45%" },
-        { x: "65%", y: "50%", size: 280, opacity: 0.1, delay: 1.8, skewY: 5, borderRadius: "55% 45% 45% 55% / 50% 50% 40% 60%" },
-      ]} />
+      <AmbientLight />
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <ScrollReveal className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">

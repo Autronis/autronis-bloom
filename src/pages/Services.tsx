@@ -528,15 +528,14 @@ const Services = () => {
 
           {/* ROI reference */}
           <div className="mt-16 text-center border-t border-border pt-12">
-            <p className="text-sm text-muted-foreground mb-2">
+            <p className="text-sm text-muted-foreground mb-4">
               Elke implementatie wordt vooraf onderbouwd met een impact- en ROI-analyse.
             </p>
-            <Link
-              to="/impact-roi"
-              className="text-sm text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
-            >
-              Bekijk hoe wij ROI berekenen <ArrowRight size={14} />
-            </Link>
+            <Button asChild size="lg">
+              <Link to="/impact-roi">
+                Bekijk hoe wij ROI berekenen <ArrowRight size={18} />
+              </Link>
+            </Button>
           </div>
 
           {/* Bottom CTA */}

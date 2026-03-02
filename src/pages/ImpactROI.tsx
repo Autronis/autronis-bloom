@@ -200,9 +200,9 @@ const ImpactROI = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
           >
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30">
+            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
               Impact & ROI
-            </Badge>
+            </p>
             <h1 className="text-4xl sm:text-5xl font-bold mb-4 leading-tight">
               Impact is meetbaar. Wij rekenen voordat we bouwen.
             </h1>

@@ -19,7 +19,7 @@ const HeroBackground = () => {
 
     let animationId: number;
     let time = 0;
-    const lineCount = 10;
+    const lineCount = 6;
 
     const dots: GlowDot[] = [];
     const usedLines = new Set<number>();
@@ -56,14 +56,14 @@ const HeroBackground = () => {
       const t_pos = (lineIdx + 1) / (lineCount + 1);
       // Spread lines across 32% of viewport height (34% to 66%)
       const yBase = h * (0.28 + t_pos * 0.44);
-      const freq = 0.0024 + (lineIdx % 3) * 0.001;
+      const freq = 0.003 + (lineIdx % 3) * 0.0012;
       const speed = 0.12 + (lineIdx % 4) * 0.04;
-      const amp = 18 + Math.sin(lineIdx * 1.1) * 10;
+      const amp = 24 + Math.sin(lineIdx * 1.1) * 14;
       return (
         yBase +
         Math.sin(x * freq + time * speed) * amp +
-        Math.sin(x * freq * 0.5 + time * speed * 0.7) * amp * 0.5 +
-        Math.cos(x * freq * 0.3 + time * speed * 0.4 + lineIdx) * amp * 0.25
+        Math.sin(x * freq * 0.5 + time * speed * 0.7) * amp * 0.55 +
+        Math.cos(x * freq * 0.3 + time * speed * 0.4 + lineIdx) * amp * 0.3
       );
     };
 
@@ -86,8 +86,8 @@ const HeroBackground = () => {
       drawGlow(w * 0.5, h * 0.3, 450, 0.015 + Math.sin(time * 0.2 + 2) * 0.008);
 
       for (let i = 0; i < lineCount; i++) {
-        const opacity = i % 2 === 0 ? 0.07 : 0.035;
-        const lineWidth = i % 3 === 0 ? 2.5 : 1.5;
+        const opacity = i % 2 === 0 ? 0.09 : 0.045;
+        const lineWidth = i % 3 === 0 ? 3.5 : 2.5;
 
         ctx.beginPath();
         ctx.strokeStyle = `hsla(174, 78%, 41%, ${opacity})`;

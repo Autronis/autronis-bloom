@@ -248,10 +248,14 @@ const PhaseCard = ({
 
         <motion.div
           className="relative rounded-xl border p-5 sm:p-6 cursor-default transform-gpu"
-          initial={{ opacity: 0, x: 32 }}
+          initial={{ opacity: 0, x: 32, scale: 1 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+          animate={{
+            scale: isCurrent ? 1.05 : isPast ? 0.96 : 0.98,
+            opacity: isPast ? 0.65 : 1,
+          }}
+          transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
           style={{
             backgroundColor: isCurrent ? "hsl(var(--card))" : "hsl(var(--card) / 0.7)",
             borderColor: isCurrent
@@ -262,12 +266,10 @@ const PhaseCard = ({
             boxShadow: isCurrent
               ? "0 4px 20px hsl(174 78% 41% / 0.06), 0 1px 6px hsl(0 0% 0% / 0.04)"
               : "none",
-            opacity: isPast ? 0.7 : 1,
-            transform: isCurrent ? "scale(1.05)" : isPast ? "scale(0.98)" : "scale(1)",
-            transition: "all 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+            transition: "background-color 500ms, border-color 500ms, box-shadow 500ms",
           }}
           whileHover={{
-            scale: 1.02,
+            scale: isCurrent ? 1.06 : 1.02,
             boxShadow: "0 6px 24px hsl(174 78% 41% / 0.08), 0 2px 8px hsl(0 0% 0% / 0.05)",
           }}
         >

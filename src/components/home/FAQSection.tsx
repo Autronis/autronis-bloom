@@ -84,7 +84,7 @@ const FAQSection = () => {
                     value={`faq-${i}`}
                     className="border border-border rounded-lg px-5 data-[state=open]:border-primary/30 hover:border-primary/20 transition-all duration-300 hover:shadow-[0_0_20px_hsl(174_78%_41%/0.06)]"
                   >
-                    <AccordionTrigger className="text-left text-sm font-medium hover:no-underline hover:text-primary transition-colors duration-200">
+                    <AccordionTrigger className="text-left text-sm font-medium text-foreground hover:no-underline hover:text-primary transition-colors duration-200">
                       {faq.q}
                     </AccordionTrigger>
                     <AccordionContent className="text-sm text-muted-foreground leading-relaxed">

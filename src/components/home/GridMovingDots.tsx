@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
 
 const GRID_SPACING = 50;
-const HORIZONTAL_LINE_COUNT = 14;
-const VERTICAL_LINE_COUNT = 24;
+const HORIZONTAL_LINE_COUNT = 12;
+const VERTICAL_LINE_COUNT = 20;
+const HORIZONTAL_START_INDEX = 2;
+const VERTICAL_START_INDEX = 2;
+const INNER_INSET = GRID_SPACING * 2;
 
 interface GridDot {
   axis: "x" | "y";
@@ -18,14 +21,14 @@ const buildDenseLineDots = (): GridDot[] => {
     (_, i): GridDot[] => [
       {
         axis: "x",
-        lineIndex: i + 1,
+        lineIndex: i + HORIZONTAL_START_INDEX,
         duration: 10 + (i % 4) * 1.4,
         delay: (i * 0.55) % 4.5,
         reverse: i % 2 === 0,
       },
       {
         axis: "x",
-        lineIndex: i + 1,
+        lineIndex: i + HORIZONTAL_START_INDEX,
         duration: 12 + (i % 3) * 1.6,
         delay: ((i * 0.55) + 1.8) % 6,
         reverse: i % 2 !== 0,
@@ -38,14 +41,14 @@ const buildDenseLineDots = (): GridDot[] => {
     (_, i): GridDot[] => [
       {
         axis: "y",
-        lineIndex: i + 1,
+        lineIndex: i + VERTICAL_START_INDEX,
         duration: 9 + (i % 5) * 1.3,
         delay: (i * 0.45) % 4,
         reverse: i % 2 !== 0,
       },
       {
         axis: "y",
-        lineIndex: i + 1,
+        lineIndex: i + VERTICAL_START_INDEX,
         duration: 11 + (i % 4) * 1.5,
         delay: ((i * 0.45) + 1.2) % 5.8,
         reverse: i % 2 === 0,
@@ -82,12 +85,16 @@ const GridMovingDots = ({ dots = defaultDots }: { dots?: GridDot[] }) => {
             animate={
               dot.axis === "x"
                 ? {
-                    x: dot.reverse ? ["calc(100% + 8px)", "-8px"] : ["-8px", "calc(100% + 8px)"],
+                    x: dot.reverse
+                      ? [`calc(100% - ${INNER_INSET}px)`, `${INNER_INSET}px`]
+                      : [`${INNER_INSET}px`, `calc(100% - ${INNER_INSET}px)`],
                     opacity: [0, 0.35, 0.35, 0.9, 0.35, 0],
                     scale: [0.8, 1, 1, 1.9, 1, 0.8],
                   }
                 : {
-                    y: dot.reverse ? ["calc(100% + 8px)", "-8px"] : ["-8px", "calc(100% + 8px)"],
+                    y: dot.reverse
+                      ? [`calc(100% - ${INNER_INSET}px)`, `${INNER_INSET}px`]
+                      : [`${INNER_INSET}px`, `calc(100% - ${INNER_INSET}px)`],
                     opacity: [0, 0.35, 0.35, 0.9, 0.35, 0],
                     scale: [0.8, 1, 1, 1.9, 1, 0.8],
                   }

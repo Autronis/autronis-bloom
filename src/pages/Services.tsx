@@ -64,8 +64,22 @@ const pillars = [
 ];
 
 const toolIcons = [
-  "Make", "Zapier", "n8n", "HubSpot", "Salesforce", "Slack", "Notion", "Airtable",
-  "Google Sheets", "Stripe", "Shopify", "Xero", "QuickBooks", "Mailchimp", "Twilio", "OpenAI",
+  { name: "Make", logo: "https://cdn.simpleicons.org/make/6D00CC" },
+  { name: "Zapier", logo: "https://cdn.simpleicons.org/zapier/FF4A00" },
+  { name: "n8n", logo: "https://cdn.simpleicons.org/n8n/EA4B71" },
+  { name: "HubSpot", logo: "https://cdn.simpleicons.org/hubspot/FF7A59" },
+  { name: "Salesforce", logo: "https://cdn.simpleicons.org/salesforce/00A1E0" },
+  { name: "Slack", logo: "https://cdn.simpleicons.org/slack/4A154B" },
+  { name: "Notion", logo: "https://cdn.simpleicons.org/notion/000000" },
+  { name: "Airtable", logo: "https://cdn.simpleicons.org/airtable/18BFFF" },
+  { name: "Google Sheets", logo: "https://cdn.simpleicons.org/googlesheets/34A853" },
+  { name: "Stripe", logo: "https://cdn.simpleicons.org/stripe/635BFF" },
+  { name: "Shopify", logo: "https://cdn.simpleicons.org/shopify/7AB55C" },
+  { name: "Xero", logo: "https://cdn.simpleicons.org/xero/13B5EA" },
+  { name: "QuickBooks", logo: "https://cdn.simpleicons.org/quickbooks/2CA01C" },
+  { name: "Mailchimp", logo: "https://cdn.simpleicons.org/mailchimp/FFE01B" },
+  { name: "Twilio", logo: "https://cdn.simpleicons.org/twilio/F22F46" },
+  { name: "OpenAI", logo: "https://cdn.simpleicons.org/openai/412991" },
 ];
 
 const InteractiveGridBg = () => {
@@ -420,6 +434,37 @@ const Services = () => {
         </div>
       </section>
 
+      {/* Tool icons marquee */}
+      <section className="py-16 border-t border-border overflow-hidden">
+        <div className="container mx-auto px-4 lg:px-8 text-center mb-10">
+          <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Integraties</p>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-3">Werkt met uw huidige stack</h2>
+          <p className="text-muted-foreground">Heeft uw systeem een API? Dan kunnen wij integreren.</p>
+        </div>
+
+        <div className="relative mb-4 overflow-hidden">
+          <div className="flex animate-marquee-right gap-4 w-max">
+            {[...toolIcons, ...toolIcons].map((tool, i) => (
+              <div key={i} className="flex items-center gap-3 px-5 py-3 rounded-lg border border-border bg-card text-sm text-muted-foreground whitespace-nowrap hover:scale-105 hover:border-primary/30 hover:text-foreground transition-all duration-200">
+                <img src={tool.logo} alt={tool.name} className="w-5 h-5 dark:invert-0" loading="lazy" />
+                {tool.name}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="relative overflow-hidden">
+          <div className="flex animate-marquee-left gap-4 w-max">
+            {[...toolIcons.slice().reverse(), ...toolIcons.slice().reverse()].map((tool, i) => (
+              <div key={i} className="flex items-center gap-3 px-5 py-3 rounded-lg border border-border bg-card text-sm text-muted-foreground whitespace-nowrap hover:scale-105 hover:border-primary/30 hover:text-foreground transition-all duration-200">
+                <img src={tool.logo} alt={tool.name} className="w-5 h-5 dark:invert-0" loading="lazy" />
+                {tool.name}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Pillar sections with sticky nav */}
       <section className="pb-24 relative overflow-hidden">
         <InteractiveBubbles />
@@ -486,35 +531,6 @@ const Services = () => {
                 </ScrollReveal>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Tool icons marquee */}
-      <section className="py-16 border-t border-border overflow-hidden">
-        <div className="container mx-auto px-4 lg:px-8 text-center mb-10">
-          <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Integraties</p>
-          <h2 className="text-2xl sm:text-3xl font-bold mb-3">Werkt met uw huidige stack</h2>
-          <p className="text-muted-foreground">Heeft uw systeem een API? Dan kunnen wij integreren.</p>
-        </div>
-
-        <div className="relative mb-4 overflow-hidden">
-          <div className="flex animate-[marquee-right_30s_linear_infinite] gap-4 w-max">
-            {[...toolIcons, ...toolIcons].map((tool, i) => (
-              <div key={i} className="flex items-center justify-center px-5 py-3 rounded-lg border border-border bg-card text-sm text-muted-foreground whitespace-nowrap hover:scale-105 hover:border-primary/30 hover:text-foreground transition-all duration-200">
-                {tool}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="relative overflow-hidden">
-          <div className="flex animate-[marquee-left_25s_linear_infinite] gap-4 w-max">
-            {[...toolIcons.slice().reverse(), ...toolIcons.slice().reverse()].map((tool, i) => (
-              <div key={i} className="flex items-center justify-center px-5 py-3 rounded-lg border border-border bg-card text-sm text-muted-foreground whitespace-nowrap hover:scale-105 hover:border-primary/30 hover:text-foreground transition-all duration-200">
-                {tool}
-              </div>
-            ))}
           </div>
         </div>
       </section>

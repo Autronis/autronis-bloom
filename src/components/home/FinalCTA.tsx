@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import AnimatedBubbles from "@/components/home/AnimatedBubbles";
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
@@ -10,39 +11,14 @@ const FinalCTA = () => {
 
   return (
     <section ref={sectionRef} className="py-16 sm:py-28 border-t border-border relative overflow-hidden">
-      {/* Blurred bubbles - more visible */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[
-          { x: "25%", y: "30%", size: 320, opacity: 0.12, delay: 0 },
-          { x: "75%", y: "50%", size: 280, opacity: 0.1, delay: 1 },
-          { x: "50%", y: "20%", size: 340, opacity: 0.09, delay: 1.5 },
-          { x: "15%", y: "70%", size: 240, opacity: 0.11, delay: 2 },
-        ].map((b, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full"
-            animate={{
-              scale: [1, 1.5, 1],
-              opacity: [b.opacity, b.opacity * 1.8, b.opacity],
-            }}
-            transition={{
-              duration: 4 + i * 0.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: b.delay,
-            }}
-            style={{
-              left: b.x,
-              top: b.y,
-              width: b.size,
-              height: b.size,
-              background: `radial-gradient(circle, hsl(174 78% 41% / ${b.opacity}), transparent 70%)`,
-              filter: "blur(50px)",
-              transform: "translate(-50%, -50%)",
-            }}
-          />
-        ))}
-      </div>
+      <AnimatedBubbles bubbles={[
+        { x: "25%", y: "30%", size: 340, opacity: 0.13, delay: 0, skewX: 8, borderRadius: "60% 40% 55% 45% / 50% 60% 40% 50%" },
+        { x: "75%", y: "50%", size: 300, opacity: 0.12, delay: 1, skewY: -6, borderRadius: "45% 55% 40% 60% / 55% 45% 60% 40%" },
+        { x: "50%", y: "20%", size: 360, opacity: 0.11, delay: 1.5, skewX: -5, borderRadius: "50% 50% 45% 55% / 60% 40% 55% 45%" },
+        { x: "15%", y: "70%", size: 280, opacity: 0.12, delay: 2, skewY: 7, borderRadius: "55% 45% 50% 50% / 40% 60% 45% 55%" },
+        { x: "85%", y: "25%", size: 260, opacity: 0.13, delay: 0.5, skewX: 10, borderRadius: "40% 60% 50% 50% / 55% 45% 50% 50%" },
+        { x: "40%", y: "80%", size: 300, opacity: 0.11, delay: 2.5, skewY: -4, borderRadius: "50% 50% 60% 40% / 45% 55% 50% 50%" },
+      ]} />
 
       {/* Butterfly SVG - larger and more vivid */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">

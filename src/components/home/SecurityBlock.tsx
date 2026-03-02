@@ -2,6 +2,7 @@ import { KeyRound, FileText, Activity, Scale } from "lucide-react";
 import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import AnimatedBubbles from "@/components/home/AnimatedBubbles";
 
 const items = [
   { icon: KeyRound, label: "Minimale toegangsrechten" },
@@ -63,43 +64,16 @@ const SecurityBlock = () => {
 
   return (
     <section className="py-12 sm:py-20 border-t border-border relative overflow-hidden">
-      {/* Blurred bubbles background - more visible */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[
-          { x: "20%", y: "30%", size: 300, opacity: 0.13, delay: 0.5 },
-          { x: "70%", y: "20%", size: 340, opacity: 0.12, delay: 1.3 },
-          { x: "50%", y: "70%", size: 320, opacity: 0.13, delay: 0.9 },
-          { x: "85%", y: "60%", size: 280, opacity: 0.11, delay: 1.8 },
-          { x: "10%", y: "65%", size: 260, opacity: 0.12, delay: 2.2 },
-          { x: "40%", y: "15%", size: 240, opacity: 0.11, delay: 0.3 },
-          { x: "90%", y: "35%", size: 220, opacity: 0.13, delay: 1.6 },
-          { x: "30%", y: "85%", size: 280, opacity: 0.1, delay: 2.5 },
-        ].map((b, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full"
-            animate={{
-              scale: [1, 1.5, 1],
-              opacity: [b.opacity, b.opacity * 1.8, b.opacity],
-            }}
-            transition={{
-              duration: 4 + i * 0.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: b.delay,
-            }}
-            style={{
-              left: b.x,
-              top: b.y,
-              width: b.size,
-              height: b.size,
-              background: `radial-gradient(circle, hsl(174 78% 35% / calc(${b.opacity} * var(--bubble-boost, 1))), transparent 70%)`,
-              filter: "blur(50px)",
-              transform: "translate(-50%, -50%)",
-            }}
-          />
-        ))}
-      </div>
+      <AnimatedBubbles bubbles={[
+        { x: "20%", y: "30%", size: 320, opacity: 0.14, delay: 0.5, skewX: 8, borderRadius: "60% 40% 55% 45% / 50% 60% 40% 50%" },
+        { x: "70%", y: "20%", size: 360, opacity: 0.13, delay: 1.3, skewY: -6, borderRadius: "45% 55% 40% 60% / 55% 45% 60% 40%" },
+        { x: "50%", y: "70%", size: 340, opacity: 0.14, delay: 0.9, skewX: -5, borderRadius: "50% 50% 45% 55% / 60% 40% 55% 45%" },
+        { x: "85%", y: "60%", size: 300, opacity: 0.12, delay: 1.8, skewY: 7, borderRadius: "55% 45% 50% 50% / 40% 60% 45% 55%" },
+        { x: "10%", y: "65%", size: 280, opacity: 0.13, delay: 2.2, skewX: 10, borderRadius: "40% 60% 50% 50% / 55% 45% 50% 50%" },
+        { x: "40%", y: "15%", size: 260, opacity: 0.12, delay: 0.3, skewY: -4, borderRadius: "50% 50% 60% 40% / 45% 55% 50% 50%" },
+        { x: "90%", y: "35%", size: 240, opacity: 0.14, delay: 1.6, skewX: -8, borderRadius: "45% 55% 50% 50% / 50% 50% 55% 45%" },
+        { x: "30%", y: "85%", size: 300, opacity: 0.11, delay: 2.5, skewY: 5, borderRadius: "55% 45% 45% 55% / 50% 50% 40% 60%" },
+      ]} />
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <ScrollReveal className="max-w-3xl mx-auto text-center">

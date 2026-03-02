@@ -27,60 +27,6 @@ const TeamBlock = () => {
           backgroundSize: "50px 50px",
         }}
       />
-      {/* Sporadic animated node dots */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[
-          { x: "10%", y: "15%", delay: 0 },
-          { x: "88%", y: "25%", delay: 1.2 },
-          { x: "35%", y: "80%", delay: 0.6 },
-          { x: "65%", y: "10%", delay: 1.8 },
-          { x: "20%", y: "55%", delay: 0.3 },
-          { x: "75%", y: "70%", delay: 2.1 },
-          { x: "50%", y: "40%", delay: 0.9 },
-          { x: "92%", y: "60%", delay: 1.5 },
-        ].map((pos, i) => (
-          <div
-            key={i}
-            className="absolute w-1.5 h-1.5 rounded-full bg-primary/20 animate-pulse"
-            style={{
-              left: pos.x,
-              top: pos.y,
-              animationDelay: `${pos.delay}s`,
-              animationDuration: "3s",
-            }}
-          />
-        ))}
-        {/* Data line pulses */}
-        {[
-          { x1: "10%", y1: "15%", x2: "35%", y2: "80%", delay: 0 },
-          { x1: "88%", y1: "25%", x2: "65%", y2: "10%", delay: 2 },
-          { x1: "50%", y1: "40%", x2: "75%", y2: "70%", delay: 1 },
-        ].map((line, i) => (
-          <svg
-            key={`line-${i}`}
-            className="absolute inset-0 w-full h-full"
-            style={{ opacity: 0.06 }}
-          >
-            <line
-              x1={line.x1}
-              y1={line.y1}
-              x2={line.x2}
-              y2={line.y2}
-              stroke="hsl(174 78% 41%)"
-              strokeWidth="0.5"
-              strokeDasharray="4 8"
-            >
-              <animate
-                attributeName="stroke-dashoffset"
-                values="0;-24"
-                dur="4s"
-                begin={`${line.delay}s`}
-                repeatCount="indefinite"
-              />
-            </line>
-          </svg>
-        ))}
-      </div>
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">

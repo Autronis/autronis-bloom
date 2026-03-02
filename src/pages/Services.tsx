@@ -2,10 +2,9 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronDown, CheckCircle2, FolderOpen, Briefcase, Rocket, ShoppingCart, LinkIcon, CreditCard, Puzzle, BarChart3, LayoutDashboard, FileText, Database, AlertTriangle } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
-import GlowCard from "@/components/GlowCard";
 
 const pillars = [
   {
@@ -149,19 +148,101 @@ const InteractiveGridBg = () => {
   );
 };
 
+const InteractiveBubbles = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mouseRef = useRef({ x: -1000, y: -1000 });
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animId: number;
+
+    const bubbles = Array.from({ length: 14 }, (_, i) => ({
+      x: Math.random(),
+      y: Math.random(),
+      baseSize: 80 + Math.random() * 200,
+      speed: 0.0003 + Math.random() * 0.0005,
+      phase: Math.random() * Math.PI * 2,
+      opacity: 0.04 + Math.random() * 0.06,
+    }));
+
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio, 2);
+      canvas.width = canvas.offsetWidth * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    const handleMouse = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    };
+    canvas.addEventListener("mousemove", handleMouse);
+
+    let time = 0;
+    const animate = () => {
+      const w = canvas.offsetWidth;
+      const h = canvas.offsetHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      for (const b of bubbles) {
+        const bx = b.x * w + Math.sin(time * b.speed * 1000 + b.phase) * 30;
+        const by = b.y * h + Math.cos(time * b.speed * 800 + b.phase) * 20;
+        const pulse = Math.sin(time * 0.4 + b.phase) * 0.3 + 1;
+        const size = b.baseSize * pulse;
+
+        // Mouse interaction - bubbles grow/glow near cursor
+        const dx = mouseRef.current.x - bx;
+        const dy = mouseRef.current.y - by;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const influence = Math.max(0, 1 - dist / 300);
+        const finalSize = size + influence * 60;
+        const finalOpacity = b.opacity + influence * 0.06;
+
+        const grad = ctx.createRadialGradient(bx, by, 0, bx, by, finalSize);
+        grad.addColorStop(0, `hsla(174, 78%, 41%, ${finalOpacity})`);
+        grad.addColorStop(1, `hsla(174, 78%, 41%, 0)`);
+
+        ctx.beginPath();
+        ctx.arc(bx, by, finalSize, 0, Math.PI * 2);
+        ctx.fillStyle = grad;
+        ctx.fill();
+      }
+
+      time += 0.016;
+      animId = requestAnimationFrame(animate);
+    };
+    animate();
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener("resize", resize);
+      canvas.removeEventListener("mousemove", handleMouse);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full z-0"
+      style={{ opacity: 1 }}
+    />
+  );
+};
+
 const PillarSection = ({
   pillar,
-  hoveredCards,
-  setHoveredCards,
   sectionRef,
 }: {
   pillar: (typeof pillars)[0];
-  hoveredCards: Record<string, number | null>;
-  setHoveredCards: React.Dispatch<React.SetStateAction<Record<string, number | null>>>;
   sectionRef: (el: HTMLDivElement | null) => void;
 }) => {
   const [expanded, setExpanded] = useState(false);
-  const hovered = hoveredCards[pillar.id] ?? null;
 
   return (
     <div ref={sectionRef} className="scroll-mt-24">
@@ -172,7 +253,7 @@ const PillarSection = ({
         </ScrollRevealItem>
       </ScrollReveal>
 
-      {/* Impact block - mini highlight blocks */}
+      {/* Impact block */}
       <ScrollReveal>
         <ScrollRevealItem>
           <div className="rounded-xl border border-border bg-card/50 p-6 mb-6">
@@ -203,7 +284,7 @@ const PillarSection = ({
         </ScrollRevealItem>
       </ScrollReveal>
 
-      {/* Toggle control bar */}
+      {/* Toggle */}
       <ScrollReveal>
         <ScrollRevealItem>
           <button
@@ -230,32 +311,29 @@ const PillarSection = ({
             transition={{ duration: 0.3, ease: "easeOut" }}
             className="overflow-hidden"
           >
-            <ScrollReveal className="grid grid-cols-1 sm:grid-cols-2 gap-6" staggerChildren={0.06}>
-              {pillar.categories.map((cat, i) => (
-                <ScrollRevealItem key={cat.title}>
-                  <GlowCard
-                    className="rounded-xl border border-border bg-card p-6 h-full"
-                    isAnyHovered={hovered !== null}
-                    isHovered={hovered === i}
-                    onHover={() => setHoveredCards((prev) => ({ ...prev, [pillar.id]: i }))}
-                    onLeave={() => setHoveredCards((prev) => ({ ...prev, [pillar.id]: null }))}
-                  >
-                    <h3 className="font-semibold mb-3 flex items-center gap-2">
-                      <cat.icon size={15} className="text-primary" />
-                      {cat.title}
-                    </h3>
-                    <ul className="space-y-1.5">
-                      {cat.items.map((item) => (
-                        <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                          <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </GlowCard>
-                </ScrollRevealItem>
+            <div className="space-y-6 pt-2 border-t border-border">
+              {pillar.categories.map((cat, catIdx) => (
+                <motion.div
+                  key={cat.title}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: catIdx * 0.08, duration: 0.4 }}
+                >
+                  <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                    <cat.icon size={15} className="text-primary" />
+                    {cat.title}
+                  </h3>
+                  <div className="grid grid-cols-2 gap-x-8 gap-y-1.5 pl-[23px]">
+                    {cat.items.map((item) => (
+                      <span key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
               ))}
-            </ScrollReveal>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -265,8 +343,17 @@ const PillarSection = ({
 
 const Services = () => {
   const [activeSection, setActiveSection] = useState(pillars[0].id);
-  const [hoveredCards, setHoveredCards] = useState<Record<string, number | null>>({});
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  useEffect(() => {
+    // Handle hash on mount
+    const hash = window.location.hash.slice(1);
+    if (hash && sectionRefs.current[hash]) {
+      setTimeout(() => {
+        sectionRefs.current[hash]?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 300);
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -322,49 +409,28 @@ const Services = () => {
 
       {/* Pillar sections with sticky nav */}
       <section className="pb-24 relative overflow-hidden">
-        {/* Bubbles background below grid area */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[
-            { x: "10%", y: "15%", size: 280, opacity: 0.06, delay: 0 },
-            { x: "85%", y: "20%", size: 240, opacity: 0.05, delay: 1.4 },
-            { x: "45%", y: "45%", size: 320, opacity: 0.05, delay: 0.8 },
-            { x: "20%", y: "70%", size: 260, opacity: 0.06, delay: 2 },
-            { x: "75%", y: "75%", size: 240, opacity: 0.05, delay: 2.6 },
-            { x: "55%", y: "85%", size: 200, opacity: 0.06, delay: 1 },
-          ].map((b, i) => (
-            <motion.div
-              key={i}
-              className="absolute rounded-full"
-              animate={{ scale: [1, 1.3, 1], opacity: [b.opacity, b.opacity * 1.6, b.opacity] }}
-              transition={{ duration: 5 + i * 0.5, repeat: Infinity, ease: "easeInOut", delay: b.delay }}
-              style={{
-                left: b.x, top: b.y, width: b.size, height: b.size,
-                background: `radial-gradient(circle, hsl(var(--primary) / ${b.opacity}), transparent 70%)`,
-                filter: "blur(50px)", transform: "translate(-50%, -50%)",
-              }}
-            />
-          ))}
-        </div>
+        {/* Interactive bubbles background */}
+        <InteractiveBubbles />
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <div className="flex gap-12">
-            {/* Mobile horizontal pills */}
-            <nav className="lg:hidden sticky top-16 z-20 -mx-4 px-4 py-3 flex gap-2 overflow-x-auto no-scrollbar bg-background/80 backdrop-blur-xl border-b border-border/50">
-              {pillars.map((p) => (
-                <button
-                  key={p.id}
-                  onClick={() => scrollTo(p.id)}
-                  className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ease-out shrink-0 ${
-                    activeSection === p.id
-                      ? "bg-primary/15 text-primary shadow-[0_0_12px_hsl(var(--primary)/0.15)]"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  {p.title}
-                </button>
-              ))}
-            </nav>
+          {/* Mobile horizontal pills */}
+          <nav className="lg:hidden sticky top-16 z-20 -mx-4 px-4 py-3 flex gap-2 overflow-x-auto no-scrollbar bg-background/80 backdrop-blur-xl border-b border-border/50 mb-8">
+            {pillars.map((p) => (
+              <button
+                key={p.id}
+                onClick={() => scrollTo(p.id)}
+                className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ease-out shrink-0 ${
+                  activeSection === p.id
+                    ? "bg-primary/15 text-primary shadow-[0_0_12px_hsl(var(--primary)/0.15)]"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {p.title}
+              </button>
+            ))}
+          </nav>
 
+          <div className="flex gap-12">
             {/* Sticky side nav (desktop) */}
             <nav className="hidden lg:block w-64 shrink-0">
               <div className="sticky top-24 space-y-1">
@@ -382,7 +448,6 @@ const Services = () => {
                         boxShadow: isActive ? "0 0 20px hsl(var(--primary) / 0.08)" : "none",
                       }}
                     >
-                      {/* Sliding indicator bar */}
                       <span
                         className="absolute left-0 top-1/2 -translate-y-1/2 w-[2px] rounded-full bg-primary transition-all duration-300 ease-out"
                         style={{
@@ -403,8 +468,6 @@ const Services = () => {
                 <PillarSection
                   key={pillar.id}
                   pillar={pillar}
-                  hoveredCards={hoveredCards}
-                  setHoveredCards={setHoveredCards}
                   sectionRef={(el) => (sectionRefs.current[pillar.id] = el)}
                 />
               ))}

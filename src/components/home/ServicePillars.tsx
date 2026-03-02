@@ -12,8 +12,8 @@ import serviceData from "@/assets/service_data_gen.png";
 const services = [
   {
     icon: Cog,
-    title: "Process Automation",
-    intro: "Terugkerende processen worden geautomatiseerd zodat uw team zich focust op werk dat ertoe doet.",
+    title: "Procesautomatisering",
+    intro: "Wij automatiseren terugkerende processen zodat werk doorloopt zonder handmatige tussenstappen.",
     bullets: [
       "Goedkeuringsflows en notificaties",
       "Order- en facturatiepipelines",

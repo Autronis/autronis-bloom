@@ -80,7 +80,7 @@ const ReasonCard = ({
         <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
           <Icon size={20} />
         </div>
-        <h3 className="font-semibold mb-2">{reason.title}</h3>
+        <h3 className="font-semibold mb-2 text-foreground">{reason.title}</h3>
         <p className="text-sm text-muted-foreground leading-relaxed">{reason.description}</p>
       </div>
     </div>
@@ -150,7 +150,7 @@ const WhyAutronisSection = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 {/* Left: cards + CTAs */}
                 <div className="p-6 sm:p-8 flex flex-col justify-between">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                     {reasons.map((r, i) => (
                       <ReasonCard
                         key={r.title}
@@ -162,7 +162,7 @@ const WhyAutronisSection = () => {
                       />
                     ))}
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="flex flex-col sm:flex-row gap-3 mt-2">
                     <Button asChild size="lg">
                       <Link to="/book">
                         Plan een kennismaking
@@ -185,10 +185,11 @@ const WhyAutronisSection = () => {
 
                 {/* Right: Team photo */}
                 <div ref={imgRef} className="relative min-h-[400px] lg:min-h-0">
-                  <motion.img
+                   <motion.img
                     src={teamFoto}
                     alt="Autronis team - Sem en Syb"
                     className="w-full h-full object-cover"
+                    style={{ filter: "brightness(0.85)" }}
                     initial={{ opacity: 0, scale: 1.03 }}
                     animate={imgInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.03 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}

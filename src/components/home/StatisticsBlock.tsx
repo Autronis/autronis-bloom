@@ -54,7 +54,8 @@ const StatCard = ({
       style={{
         transform: isHovered ? "scale(1.05) translateY(-4px)" : "scale(1) translateY(0)",
         opacity: isAnyHovered && !isHovered ? 0.88 : 1,
-        borderColor: isHovered ? "hsl(var(--primary) / 0.5)" : undefined,
+        borderColor: isHovered ? "hsl(var(--primary) / 0.6)" : undefined,
+        boxShadow: isHovered ? "0 0 15px hsl(var(--primary) / 0.25), 0 0 30px hsl(var(--primary) / 0.1), inset 0 0 15px hsl(var(--primary) / 0.05)" : "none",
       }}
     >
       {/* Mouse-following radial glow */}

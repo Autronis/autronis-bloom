@@ -371,14 +371,6 @@ const PillarCard = ({
           )}
         </AnimatePresence>
 
-        {/* CTA */}
-        <div className="mt-5 pt-4 border-t border-border/30">
-          <Button asChild size="sm">
-            <Link to="/book">
-              Plan Automation Scan <ArrowRight size={14} />
-            </Link>
-          </Button>
-        </div>
       </div>
     </div>
   );

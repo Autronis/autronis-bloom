@@ -62,26 +62,7 @@ const FAQSection = () => {
         { axis: "x", lineIndex: 8, duration: 19, delay: 5, reverse: true },
         { axis: "y", lineIndex: 12, duration: 23, delay: 1 },
       ]} />
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[
-          { x: "12%", y: "20%", delay: 0.3 },
-          { x: "85%", y: "35%", delay: 1.1 },
-          { x: "40%", y: "75%", delay: 0.7 },
-          { x: "70%", y: "10%", delay: 1.9 },
-          { x: "25%", y: "60%", delay: 0.5 },
-        ].map((pos, i) => (
-          <div
-            key={i}
-            className="absolute w-1.5 h-1.5 rounded-full bg-primary/12 animate-pulse"
-            style={{
-              left: pos.x,
-              top: pos.y,
-              animationDelay: `${pos.delay}s`,
-              animationDuration: "3.5s",
-            }}
-          />
-        ))}
-      </div>
+
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="max-w-3xl mx-auto">

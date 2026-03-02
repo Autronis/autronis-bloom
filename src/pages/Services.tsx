@@ -445,10 +445,12 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Tool icons marquee */}
-      <section className="py-16 border-t border-border overflow-hidden relative">
+      {/* Tool icons marquee + Pillar sections combined for continuous bubbles */}
+      <section className="pb-24 relative overflow-hidden">
         <InteractiveBubbles />
-        <div className="container mx-auto px-4 lg:px-8 text-center mb-10">
+
+        <div className="py-16 border-t border-border overflow-hidden relative">
+        <div className="container mx-auto px-4 lg:px-8 text-center mb-10 relative z-10">
           <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Integraties</p>
           <h2 className="text-2xl sm:text-3xl font-bold mb-3">Werkt met uw huidige stack</h2>
           <p className="text-muted-foreground">Heeft uw systeem een API? Dan kunnen wij integreren.</p>
@@ -485,11 +487,8 @@ const Services = () => {
             ))}
           </div>
         </div>
-      </section>
+        </div>
 
-      {/* Pillar sections + Bottom CTA wrapped together for continuous bubbles */}
-      <section className="pb-24 relative overflow-hidden">
-        <InteractiveBubbles />
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           {/* Mobile horizontal pills */}

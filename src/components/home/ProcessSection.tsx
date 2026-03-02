@@ -186,26 +186,7 @@ const ProcessSection = () => {
         { axis: "y", lineIndex: 3, duration: 18, delay: 4, reverse: true },
         { axis: "x", lineIndex: 11, duration: 20, delay: 8 },
       ]} />
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[
-          { x: "20%", y: "15%", delay: 0.5 },
-          { x: "78%", y: "40%", delay: 1.2 },
-          { x: "45%", y: "85%", delay: 0.8 },
-          { x: "85%", y: "70%", delay: 1.6 },
-          { x: "12%", y: "60%", delay: 2 },
-        ].map((pos, i) => (
-          <div
-            key={i}
-            className="absolute w-1.5 h-1.5 rounded-full bg-primary/12 animate-pulse"
-            style={{
-              left: pos.x,
-              top: pos.y,
-              animationDelay: `${pos.delay}s`,
-              animationDuration: "3.5s",
-            }}
-          />
-        ))}
-      </div>
+
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <ScrollReveal className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">

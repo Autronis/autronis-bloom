@@ -66,11 +66,14 @@ const SecurityBlock = () => {
       {/* Blurred bubbles background - more visible */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
-          { x: "20%", y: "30%", size: 260, opacity: 0.11, delay: 0.5 },
-          { x: "70%", y: "20%", size: 300, opacity: 0.1, delay: 1.3 },
-          { x: "50%", y: "70%", size: 280, opacity: 0.11, delay: 0.9 },
-          { x: "85%", y: "60%", size: 240, opacity: 0.09, delay: 1.8 },
-          { x: "10%", y: "65%", size: 220, opacity: 0.1, delay: 2.2 },
+          { x: "20%", y: "30%", size: 300, opacity: 0.13, delay: 0.5 },
+          { x: "70%", y: "20%", size: 340, opacity: 0.12, delay: 1.3 },
+          { x: "50%", y: "70%", size: 320, opacity: 0.13, delay: 0.9 },
+          { x: "85%", y: "60%", size: 280, opacity: 0.11, delay: 1.8 },
+          { x: "10%", y: "65%", size: 260, opacity: 0.12, delay: 2.2 },
+          { x: "40%", y: "15%", size: 240, opacity: 0.11, delay: 0.3 },
+          { x: "90%", y: "35%", size: 220, opacity: 0.13, delay: 1.6 },
+          { x: "30%", y: "85%", size: 280, opacity: 0.1, delay: 2.5 },
         ].map((b, i) => (
           <motion.div
             key={i}
@@ -90,7 +93,7 @@ const SecurityBlock = () => {
               top: b.y,
               width: b.size,
               height: b.size,
-              background: `radial-gradient(circle, hsl(174 78% 41% / ${b.opacity}), transparent 70%)`,
+              background: `radial-gradient(circle, hsl(174 78% 35% / calc(${b.opacity} * var(--bubble-boost, 1))), transparent 70%)`,
               filter: "blur(50px)",
               transform: "translate(-50%, -50%)",
             }}

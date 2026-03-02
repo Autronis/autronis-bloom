@@ -10,38 +10,47 @@ const FinalCTA = () => {
 
   return (
     <section ref={sectionRef} className="py-16 sm:py-28 border-t border-border relative overflow-hidden">
-      {/* Blurred bubbles */}
+      {/* More visible blurred bubbles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
-          { x: "25%", y: "30%", size: 200, opacity: 0.03, delay: 0 },
-          { x: "75%", y: "50%", size: 180, opacity: 0.025, delay: 1 },
-          { x: "50%", y: "20%", size: 220, opacity: 0.02, delay: 1.5 },
+          { x: "25%", y: "30%", size: 280, opacity: 0.07, delay: 0 },
+          { x: "75%", y: "50%", size: 240, opacity: 0.06, delay: 1 },
+          { x: "50%", y: "20%", size: 300, opacity: 0.05, delay: 1.5 },
+          { x: "15%", y: "70%", size: 200, opacity: 0.06, delay: 2 },
         ].map((b, i) => (
-          <div
+          <motion.div
             key={i}
-            className="absolute rounded-full animate-pulse"
+            className="absolute rounded-full"
+            animate={{
+              scale: [1, 1.4, 1],
+              opacity: [b.opacity, b.opacity * 1.5, b.opacity],
+            }}
+            transition={{
+              duration: 5 + i * 0.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: b.delay,
+            }}
             style={{
               left: b.x,
               top: b.y,
               width: b.size,
               height: b.size,
               background: `radial-gradient(circle, hsl(174 78% 41% / ${b.opacity}), transparent 70%)`,
-              filter: "blur(40px)",
-              animationDelay: `${b.delay}s`,
-              animationDuration: "6s",
+              filter: "blur(50px)",
               transform: "translate(-50%, -50%)",
             }}
           />
         ))}
       </div>
 
-      {/* Logo-inspired butterfly */}
+      {/* Logo-inspired butterfly - BIGGER and MORE VISIBLE */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <motion.svg
-          width="500"
-          height="400"
+          width="700"
+          height="560"
           viewBox="-100 -80 200 160"
-          className="max-w-[85vw]"
+          className="max-w-[90vw]"
           aria-hidden="true"
           initial={{ scale: 0.15, opacity: 0 }}
           animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0.15, opacity: 0 }}
@@ -59,10 +68,10 @@ const FinalCTA = () => {
           <motion.path
             d="M -4 -2 C -12 -18, -30 -50, -60 -45 C -75 -38, -70 -18, -50 -8 C -35 -2, -15 0, -4 2 Z"
             fill="hsl(174, 78%, 41%)"
-            fillOpacity="0.05"
+            fillOpacity="0.1"
             stroke="hsl(174, 78%, 41%)"
-            strokeOpacity="0.1"
-            strokeWidth="0.8"
+            strokeOpacity="0.25"
+            strokeWidth="1"
             animate={{
               d: [
                 "M -4 -2 C -12 -18, -30 -50, -60 -45 C -75 -38, -70 -18, -50 -8 C -35 -2, -15 0, -4 2 Z",
@@ -76,10 +85,10 @@ const FinalCTA = () => {
           <motion.path
             d="M -4 2 C -15 8, -40 18, -55 35 C -58 48, -40 52, -25 38 C -14 28, -6 12, -4 2 Z"
             fill="hsl(174, 78%, 41%)"
-            fillOpacity="0.04"
+            fillOpacity="0.08"
             stroke="hsl(174, 78%, 41%)"
-            strokeOpacity="0.08"
-            strokeWidth="0.6"
+            strokeOpacity="0.2"
+            strokeWidth="0.8"
             animate={{
               d: [
                 "M -4 2 C -15 8, -40 18, -55 35 C -58 48, -40 52, -25 38 C -14 28, -6 12, -4 2 Z",
@@ -94,10 +103,10 @@ const FinalCTA = () => {
           <motion.path
             d="M 4 -2 C 12 -18, 30 -50, 60 -45 C 75 -38, 70 -18, 50 -8 C 35 -2, 15 0, 4 2 Z"
             fill="hsl(174, 78%, 41%)"
-            fillOpacity="0.05"
+            fillOpacity="0.1"
             stroke="hsl(174, 78%, 41%)"
-            strokeOpacity="0.1"
-            strokeWidth="0.8"
+            strokeOpacity="0.25"
+            strokeWidth="1"
             animate={{
               d: [
                 "M 4 -2 C 12 -18, 30 -50, 60 -45 C 75 -38, 70 -18, 50 -8 C 35 -2, 15 0, 4 2 Z",
@@ -111,10 +120,10 @@ const FinalCTA = () => {
           <motion.path
             d="M 4 2 C 15 8, 40 18, 55 35 C 58 48, 40 52, 25 38 C 14 28, 6 12, 4 2 Z"
             fill="hsl(174, 78%, 41%)"
-            fillOpacity="0.04"
+            fillOpacity="0.08"
             stroke="hsl(174, 78%, 41%)"
-            strokeOpacity="0.08"
-            strokeWidth="0.6"
+            strokeOpacity="0.2"
+            strokeWidth="0.8"
             animate={{
               d: [
                 "M 4 2 C 15 8, 40 18, 55 35 C 58 48, 40 52, 25 38 C 14 28, 6 12, 4 2 Z",
@@ -125,8 +134,8 @@ const FinalCTA = () => {
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
           />
 
-          {/* Wing veins */}
-          <g opacity="0.06" stroke="hsl(174, 78%, 41%)" strokeWidth="0.4" fill="none">
+          {/* Wing veins - more visible */}
+          <g opacity="0.15" stroke="hsl(174, 78%, 41%)" strokeWidth="0.5" fill="none">
             <line x1="-4" y1="0" x2="-50" y2="-30" />
             <line x1="-4" y1="0" x2="-60" y2="-10" />
             <line x1="-4" y1="0" x2="-40" y2="30" />
@@ -135,10 +144,20 @@ const FinalCTA = () => {
             <line x1="4" y1="0" x2="40" y2="30" />
           </g>
 
+          {/* Inner wing detail lines */}
+          <g opacity="0.08" stroke="hsl(174, 78%, 41%)" strokeWidth="0.4" fill="none">
+            <path d="M -4 -1 C -10 -12, -25 -35, -45 -35" />
+            <path d="M -4 0 C -12 -8, -30 -20, -55 -20" />
+            <path d="M -4 1 C -10 5, -25 12, -40 25" />
+            <path d="M 4 -1 C 10 -12, 25 -35, 45 -35" />
+            <path d="M 4 0 C 12 -8, 30 -20, 55 -20" />
+            <path d="M 4 1 C 10 5, 25 12, 40 25" />
+          </g>
+
           {/* Body */}
-          <ellipse cx="0" cy="0" rx="3.5" ry="12" fill="hsl(174, 78%, 41%)" fillOpacity="0.08" stroke="hsl(174, 78%, 41%)" strokeOpacity="0.12" strokeWidth="0.8" />
+          <ellipse cx="0" cy="0" rx="3.5" ry="12" fill="hsl(174, 78%, 41%)" fillOpacity="0.15" stroke="hsl(174, 78%, 41%)" strokeOpacity="0.25" strokeWidth="1" />
           
-          {/* Center pulse */}
+          {/* Center pulse - more visible */}
           <motion.circle
             cx="0"
             cy="0"
@@ -146,21 +165,32 @@ const FinalCTA = () => {
             fill="none"
             stroke="hsl(174, 78%, 41%)"
             strokeWidth="1.5"
-            strokeOpacity="0.15"
-            animate={{ strokeOpacity: [0.1, 0.2, 0.1], r: [5, 6, 5] }}
+            animate={{ strokeOpacity: [0.15, 0.35, 0.15], r: [5, 7, 5] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           />
 
-          {/* Antennae */}
+          {/* Outer glow ring */}
+          <motion.circle
+            cx="0"
+            cy="0"
+            r="10"
+            fill="none"
+            stroke="hsl(174, 78%, 41%)"
+            strokeWidth="0.8"
+            animate={{ strokeOpacity: [0.05, 0.15, 0.05], r: [10, 13, 10] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          />
+
+          {/* Antennae - more visible */}
           <path
             d="M -1.5 -12 Q -8 -30 -14 -40 M 1.5 -12 Q 8 -30 14 -40"
             stroke="hsl(174, 78%, 41%)"
-            strokeOpacity="0.1"
-            strokeWidth="0.6"
+            strokeOpacity="0.2"
+            strokeWidth="0.8"
             fill="none"
           />
-          <circle cx="-14" cy="-40" r="1.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.1" />
-          <circle cx="14" cy="-40" r="1.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.1" />
+          <circle cx="-14" cy="-40" r="1.8" fill="hsl(174, 78%, 41%)" fillOpacity="0.2" />
+          <circle cx="14" cy="-40" r="1.8" fill="hsl(174, 78%, 41%)" fillOpacity="0.2" />
         </motion.svg>
       </div>
 

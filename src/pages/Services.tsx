@@ -75,7 +75,6 @@ const toolIcons = [
 
 const InteractiveGridBg = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mouseRef = useRef({ x: -1000, y: -1000 });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -95,22 +94,13 @@ const InteractiveGridBg = () => {
     resize();
     window.addEventListener("resize", resize);
 
-    const handleMouse = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
-    };
-    canvas.addEventListener("mousemove", handleMouse);
-
     let time = 0;
     const animate = () => {
       const w = canvas.offsetWidth;
       const h = canvas.offsetHeight;
       ctx.clearRect(0, 0, w, h);
 
-      const mx = mouseRef.current.x;
-      const my = mouseRef.current.y;
-
-      // Draw grid lines
+      // Draw grid lines - no mouse interaction
       for (let x = 0; x <= w; x += spacing) {
         const offsetX = Math.sin(time * 0.3 + x * 0.01) * 2;
         ctx.beginPath();
@@ -130,30 +120,21 @@ const InteractiveGridBg = () => {
         ctx.stroke();
       }
 
-      // Draw nodes at intersections
+      // Draw nodes at intersections - subtle pulse, no hover
       for (let x = 0; x <= w; x += spacing) {
         for (let y = 0; y <= h; y += spacing) {
           const ox = Math.sin(time * 0.3 + x * 0.01) * 2;
           const oy = Math.sin(time * 0.2 + y * 0.01) * 2;
           const nx = x + ox;
           const ny = y + oy;
-          const dist = Math.hypot(mx - nx, my - ny);
-          const proximity = Math.max(0, 1 - dist / 200);
-          const radius = 1 + proximity * 3;
-          const opacity = 0.06 + proximity * 0.25;
+          const pulse = Math.sin(time * 0.5 + x * 0.02 + y * 0.02) * 0.5 + 0.5;
+          const radius = 1 + pulse * 0.5;
+          const opacity = 0.04 + pulse * 0.04;
 
           ctx.beginPath();
           ctx.arc(nx, ny, radius, 0, Math.PI * 2);
           ctx.fillStyle = `hsla(174, 78%, 41%, ${opacity})`;
           ctx.fill();
-
-          if (proximity > 0.3) {
-            const grad = ctx.createRadialGradient(nx, ny, 0, nx, ny, 30);
-            grad.addColorStop(0, `hsla(174, 78%, 41%, ${proximity * 0.08})`);
-            grad.addColorStop(1, `hsla(174, 78%, 41%, 0)`);
-            ctx.fillStyle = grad;
-            ctx.fillRect(nx - 30, ny - 30, 60, 60);
-          }
         }
       }
 
@@ -165,14 +146,13 @@ const InteractiveGridBg = () => {
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
-      canvas.removeEventListener("mousemove", handleMouse);
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-auto z-0"
+      className="absolute inset-0 w-full h-full pointer-events-none z-0"
       style={{ opacity: 1 }}
     />
   );

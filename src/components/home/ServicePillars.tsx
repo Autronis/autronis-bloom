@@ -4,6 +4,7 @@ import { ArrowRight, Cog, Link2, PieChart } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import GlowCard from "@/components/GlowCard";
+import { motion } from "framer-motion";
 import serviceAutomation from "@/assets/service_automation_gen.png";
 import serviceIntegration from "@/assets/service_integration_gen.png";
 import serviceData from "@/assets/service_data_gen.png";
@@ -52,28 +53,38 @@ const ServicePillars = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
-      {/* Blurred bubbles background */}
+      {/* More visible blurred bubbles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
-          { x: "15%", y: "20%", size: 200, opacity: 0.03, delay: 0 },
-          { x: "80%", y: "15%", size: 180, opacity: 0.025, delay: 1.2 },
-          { x: "50%", y: "50%", size: 240, opacity: 0.02, delay: 0.6 },
-          { x: "25%", y: "75%", size: 160, opacity: 0.035, delay: 1.8 },
-          { x: "70%", y: "80%", size: 190, opacity: 0.025, delay: 2.2 },
-          { x: "90%", y: "40%", size: 150, opacity: 0.03, delay: 0.4 },
+          { x: "15%", y: "20%", size: 280, opacity: 0.07, delay: 0 },
+          { x: "80%", y: "15%", size: 240, opacity: 0.06, delay: 1.2 },
+          { x: "50%", y: "50%", size: 320, opacity: 0.05, delay: 0.6 },
+          { x: "25%", y: "75%", size: 220, opacity: 0.07, delay: 1.8 },
+          { x: "70%", y: "80%", size: 260, opacity: 0.06, delay: 2.2 },
+          { x: "90%", y: "40%", size: 200, opacity: 0.07, delay: 0.4 },
+          { x: "5%", y: "55%", size: 180, opacity: 0.05, delay: 3 },
+          { x: "60%", y: "30%", size: 200, opacity: 0.04, delay: 1.6 },
         ].map((b, i) => (
-          <div
+          <motion.div
             key={i}
-            className="absolute rounded-full animate-pulse"
+            className="absolute rounded-full"
+            animate={{
+              scale: [1, 1.3, 1],
+              opacity: [b.opacity, b.opacity * 1.5, b.opacity],
+            }}
+            transition={{
+              duration: 5 + i * 0.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: b.delay,
+            }}
             style={{
               left: b.x,
               top: b.y,
               width: b.size,
               height: b.size,
               background: `radial-gradient(circle, hsl(174 78% 41% / ${b.opacity}), transparent 70%)`,
-              filter: "blur(40px)",
-              animationDelay: `${b.delay}s`,
-              animationDuration: "6s",
+              filter: "blur(50px)",
               transform: "translate(-50%, -50%)",
             }}
           />
@@ -128,25 +139,55 @@ const ServicePillars = () => {
                           ))}
                         </ul>
                       </div>
-                      {/* Image with darker background blend */}
+                      {/* Image with site-matching background + glow animation */}
                       <div className="flex-1 min-h-[220px] sm:min-h-[280px] relative overflow-hidden">
                         <div
                           className="absolute inset-0"
-                          style={{ backgroundColor: "hsl(192, 25%, 8%)" }}
+                          style={{ backgroundColor: "hsl(192, 25%, 12%)" }}
                         />
-                        <img
+                        {/* Subtle pulsing glow on image */}
+                        <motion.div
+                          className="absolute inset-0 z-[2] pointer-events-none"
+                          animate={{
+                            opacity: [0, 0.15, 0],
+                          }}
+                          transition={{
+                            duration: 4,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: i * 1.3,
+                          }}
+                          style={{
+                            background: "radial-gradient(ellipse at center, hsl(174 78% 41% / 0.12), transparent 70%)",
+                          }}
+                        />
+                        <motion.img
                           src={s.image}
                           alt={s.title}
-                          className="w-full h-full object-cover relative z-[1] transition-transform duration-300"
+                          className="w-full h-full object-cover relative z-[1]"
+                          animate={
+                            hoveredIndex === i
+                              ? { scale: 1.03, filter: "brightness(1.1)" }
+                              : { scale: 1, filter: "brightness(1)" }
+                          }
+                          transition={{ duration: 0.5, ease: "easeOut" }}
                           style={{
                             borderTopRightRadius: isEven ? "0.75rem" : undefined,
                             borderBottomRightRadius: isEven ? "0.75rem" : undefined,
                             borderTopLeftRadius: !isEven ? "0.75rem" : undefined,
                             borderBottomLeftRadius: !isEven ? "0.75rem" : undefined,
-                            transform: hoveredIndex === i ? "scale(1.02)" : "scale(1)",
                             mixBlendMode: "lighten",
                           }}
                           loading="lazy"
+                        />
+                        {/* Edge gradient overlay for smooth transition */}
+                        <div
+                          className="absolute inset-0 z-[3] pointer-events-none"
+                          style={{
+                            background: isEven
+                              ? "linear-gradient(to right, hsl(var(--card)) 0%, transparent 20%)"
+                              : "linear-gradient(to left, hsl(var(--card)) 0%, transparent 20%)",
+                          }}
                         />
                       </div>
                     </div>

@@ -39,36 +39,23 @@ const DropdownItem = ({
   isActive: boolean;
 }) => (
   <Link to={item.href} className="block group">
-    <motion.div
+    <div
       className={`flex items-start gap-3 px-4 py-3 rounded-lg transition-colors duration-200 ${
         isActive
-          ? "bg-primary/8 text-primary"
-          : "text-foreground hover:bg-primary/5"
+          ? "bg-primary/10 text-primary"
+          : "text-foreground hover:bg-muted/80"
       }`}
-      whileHover={{
-        backgroundColor: "hsl(174, 78%, 41%, 0.08)",
-        boxShadow: "inset 0 0 20px hsl(174, 78%, 41%, 0.04)",
-      }}
-      transition={{ duration: 0.2, ease: "easeOut" }}
     >
-      <motion.div
-        className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 mt-0.5"
-        whileHover={{ scale: 1.05 }}
-        transition={{ duration: 0.2, ease: "easeOut" }}
-      >
+      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 mt-0.5 group-hover:bg-primary/15 transition-colors duration-200">
         <item.icon size={16} />
-      </motion.div>
+      </div>
       <div className="min-w-0">
         <p className="text-sm font-semibold leading-tight">{item.label}</p>
-        <motion.p
-          className="text-xs text-muted-foreground mt-0.5 leading-relaxed"
-          whileHover={{ y: -2 }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
-        >
+        <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
           {item.description}
-        </motion.p>
+        </p>
       </div>
-    </motion.div>
+    </div>
   </Link>
 );
 
@@ -93,24 +80,47 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ${
-        scrolled
-          ? "bg-background/88 backdrop-blur-xl border-b border-border/50 shadow-lg"
-          : "bg-background/72 backdrop-blur-md border-b border-transparent"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ease-out"
+      style={{
+        height: scrolled ? "52px" : "64px",
+        backgroundColor: scrolled
+          ? "hsl(var(--background) / 0.95)"
+          : "hsl(var(--background) / 0.72)",
+        backdropFilter: scrolled ? "blur(20px)" : "blur(12px)",
+        borderColor: scrolled
+          ? "hsl(var(--border) / 0.5)"
+          : "transparent",
+        boxShadow: scrolled
+          ? "0 1px 12px hsl(0 0% 0% / 0.08)"
+          : "none",
+      }}
     >
-      <nav className="container mx-auto h-16 flex items-center justify-between px-4 lg:px-8">
-        <Link to="/" className="flex items-center gap-2 shrink-0 min-w-[140px]">
+      <nav
+        className="container mx-auto h-full flex items-center justify-between transition-all duration-300 ease-out"
+        style={{
+          padding: scrolled ? "0 1rem" : "0 1rem",
+        }}
+      >
+        <Link to="/" className="flex items-center gap-2 shrink-0 min-w-[130px]">
           <img
             src="/logo.png"
             alt="Autronis"
-            className="w-auto h-8 transform-gpu"
+            className="w-auto transform-gpu transition-all duration-300 ease-out"
+            style={{ height: scrolled ? "26px" : "32px" }}
             fetchPriority="high"
           />
-          <span className="font-bold tracking-tight text-[1.05rem]">Autronis</span>
+          <span
+            className="font-bold tracking-tight transition-all duration-300 ease-out"
+            style={{ fontSize: scrolled ? "0.92rem" : "1.05rem" }}
+          >
+            Autronis
+          </span>
         </Link>
 
-        <div className="hidden lg:flex items-center gap-1">
+        <div
+          className="hidden lg:flex items-center transition-all duration-300 ease-out"
+          style={{ gap: scrolled ? "0" : "4px" }}
+        >
           {navLinks.map((link: NavItem) =>
             "children" in link && link.children ? (
               <div
@@ -120,11 +130,12 @@ const Navbar = () => {
                 onMouseLeave={() => setDropdownOpen(false)}
               >
                 <button
-                  className={`px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1 ${
+                  className={`px-3 py-2 font-medium rounded-md transition-all duration-300 flex items-center gap-1 ${
                     link.children.some((c) => location.pathname === c.href)
                       ? "text-primary"
                       : "text-muted-foreground hover:text-foreground"
                   }`}
+                  style={{ fontSize: scrolled ? "0.82rem" : "0.875rem" }}
                 >
                   {link.label}
                   <ChevronDown
@@ -139,10 +150,12 @@ const Navbar = () => {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 6, scale: 0.98 }}
                       transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[320px] bg-background/98 backdrop-blur-xl border border-border/60 rounded-xl shadow-xl p-2 z-50"
+                      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[320px] rounded-xl p-2 z-50"
                       style={{
+                        backgroundColor: "hsl(var(--card))",
+                        border: "1px solid hsl(var(--border) / 0.4)",
                         boxShadow:
-                          "0 4px 24px hsl(174 78% 41% / 0.06), 0 16px 48px hsl(0 0% 0% / 0.1)",
+                          "0 8px 32px hsl(0 0% 0% / 0.18), 0 2px 8px hsl(0 0% 0% / 0.1)",
                       }}
                     >
                       {link.children.map((child) => (
@@ -160,11 +173,12 @@ const Navbar = () => {
               <Link
                 key={"href" in link ? link.href : link.label}
                 to={"href" in link ? link.href! : "/"}
-                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                className={`px-3 py-2 font-medium rounded-md transition-all duration-300 ${
                   "href" in link && location.pathname === link.href
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
+                style={{ fontSize: scrolled ? "0.82rem" : "0.875rem" }}
               >
                 {link.label}
               </Link>
@@ -206,7 +220,8 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-background/98 backdrop-blur-md border-b border-border overflow-hidden"
+            className="lg:hidden border-b border-border overflow-hidden"
+            style={{ backgroundColor: "hsl(var(--background) / 0.98)" }}
           >
             <div className="container mx-auto px-4 py-4 flex flex-col gap-1">
               {navLinks.map((link: NavItem) =>

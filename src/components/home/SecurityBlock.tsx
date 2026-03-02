@@ -1,5 +1,6 @@
 import { KeyRound, FileText, Activity, Scale } from "lucide-react";
 import { useState, useCallback } from "react";
+import { motion } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 const items = [
@@ -62,18 +63,28 @@ const SecurityBlock = () => {
 
   return (
     <section className="py-12 sm:py-20 border-t border-border relative overflow-hidden">
-      {/* Blurred bubbles background */}
+      {/* Blurred bubbles background - more visible */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
-          { x: "20%", y: "30%", size: 220, opacity: 0.06, delay: 0.5 },
-          { x: "70%", y: "20%", size: 260, opacity: 0.05, delay: 1.3 },
-          { x: "50%", y: "70%", size: 240, opacity: 0.06, delay: 0.9 },
-          { x: "85%", y: "60%", size: 200, opacity: 0.05, delay: 1.8 },
-          { x: "10%", y: "65%", size: 180, opacity: 0.06, delay: 2.2 },
+          { x: "20%", y: "30%", size: 260, opacity: 0.09, delay: 0.5 },
+          { x: "70%", y: "20%", size: 300, opacity: 0.08, delay: 1.3 },
+          { x: "50%", y: "70%", size: 280, opacity: 0.09, delay: 0.9 },
+          { x: "85%", y: "60%", size: 240, opacity: 0.07, delay: 1.8 },
+          { x: "10%", y: "65%", size: 220, opacity: 0.08, delay: 2.2 },
         ].map((b, i) => (
-          <div
+          <motion.div
             key={i}
-            className="absolute rounded-full animate-pulse"
+            className="absolute rounded-full"
+            animate={{
+              scale: [1, 1.5, 1],
+              opacity: [b.opacity, b.opacity * 1.8, b.opacity],
+            }}
+            transition={{
+              duration: 4 + i * 0.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: b.delay,
+            }}
             style={{
               left: b.x,
               top: b.y,
@@ -81,8 +92,6 @@ const SecurityBlock = () => {
               height: b.size,
               background: `radial-gradient(circle, hsl(174 78% 41% / ${b.opacity}), transparent 70%)`,
               filter: "blur(50px)",
-              animationDelay: `${b.delay}s`,
-              animationDuration: "5s",
               transform: "translate(-50%, -50%)",
             }}
           />

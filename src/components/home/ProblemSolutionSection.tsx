@@ -30,19 +30,19 @@ const problems = [
 const solutions = [
   {
     icon: Cog,
-    title: "Process Automation",
+    title: "Procesautomatisering",
     description:
       "Terugkerende taken worden geautomatiseerd zodat processen zelfstandig verlopen.",
   },
   {
     icon: Link2,
-    title: "System Integrations",
+    title: "Systeemintegraties",
     description:
       "Systemen worden gekoppeld via API's zodat data automatisch en consistent stroomt.",
   },
   {
     icon: PieChart,
-    title: "Data & Reporting",
+    title: "Data & Rapportage",
     description:
       "Realtime dashboards geven direct inzicht in prestaties en knelpunten.",
   },
@@ -110,8 +110,8 @@ const ProblemSolutionSection = () => {
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage: `
-            linear-gradient(hsl(174 78% 30% / 0.05) 1px, transparent 1px),
-            linear-gradient(90deg, hsl(174 78% 30% / 0.05) 1px, transparent 1px)
+            linear-gradient(hsl(174 78% 30% / 0.045) 1px, transparent 1px),
+            linear-gradient(90deg, hsl(174 78% 30% / 0.045) 1px, transparent 1px)
           `,
           backgroundSize: "50px 50px",
         }}

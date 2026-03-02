@@ -66,11 +66,11 @@ const SecurityBlock = () => {
       {/* Blurred bubbles background - more visible */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
-          { x: "20%", y: "30%", size: 260, opacity: 0.09, delay: 0.5 },
-          { x: "70%", y: "20%", size: 300, opacity: 0.08, delay: 1.3 },
-          { x: "50%", y: "70%", size: 280, opacity: 0.09, delay: 0.9 },
-          { x: "85%", y: "60%", size: 240, opacity: 0.07, delay: 1.8 },
-          { x: "10%", y: "65%", size: 220, opacity: 0.08, delay: 2.2 },
+          { x: "20%", y: "30%", size: 260, opacity: 0.11, delay: 0.5 },
+          { x: "70%", y: "20%", size: 300, opacity: 0.1, delay: 1.3 },
+          { x: "50%", y: "70%", size: 280, opacity: 0.11, delay: 0.9 },
+          { x: "85%", y: "60%", size: 240, opacity: 0.09, delay: 1.8 },
+          { x: "10%", y: "65%", size: 220, opacity: 0.1, delay: 2.2 },
         ].map((b, i) => (
           <motion.div
             key={i}

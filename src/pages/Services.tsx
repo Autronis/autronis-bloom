@@ -337,10 +337,15 @@ const PillarCard = ({
                 {pillar.categories.map((cat, catIdx) => (
                   <motion.div
                     key={cat.title}
-                    className="rounded-lg bg-muted/40 border border-border/30 p-4"
+                    className="rounded-lg bg-muted/40 border border-border/30 p-4 transition-all duration-300 ease-out cursor-default"
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: catIdx * 0.08, duration: 0.4 }}
+                    whileHover={{
+                      scale: 1.03,
+                      borderColor: "hsl(174, 78%, 41%, 0.6)",
+                      boxShadow: "0 0 15px hsl(174, 78%, 41%, 0.25), 0 0 30px hsl(174, 78%, 41%, 0.1), inset 0 0 15px hsl(174, 78%, 41%, 0.05)",
+                    }}
                   >
                     <h3 className="text-[0.925rem] font-bold text-foreground mb-3 flex items-center gap-2">
                       <cat.icon size={16} className="text-primary" />

@@ -531,19 +531,17 @@ const Process = () => {
         <ScrollReveal className="text-center">
           <ScrollRevealItem>
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">
-              Wilt u weten wat dit concreet voor uw organisatie betekent?
+              Klaar om uw processen structureel te verbeteren?
             </h2>
             <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
-              Ontvang een onderbouwde impactanalyse inclusief ROI-berekening en prioritering van automatiseringskansen.
+              Plan een Automation Scan en ontvang een concreet overzicht van
+              optimalisatiekansen.
             </p>
             <Button asChild size="lg">
               <Link to="/book">
-                Plan een impactanalyse <ArrowRight size={18} />
+                Plan een Automation Scan <ArrowRight size={18} />
               </Link>
             </Button>
-            <p className="text-xs text-muted-foreground mt-3 max-w-md mx-auto">
-              Geen verplichtingen. U ontvangt een helder overzicht van impact en prioriteiten.
-            </p>
           </ScrollRevealItem>
         </ScrollReveal>
       </div>

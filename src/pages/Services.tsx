@@ -1,21 +1,22 @@
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, ChevronDown, CheckCircle2, FolderOpen, Briefcase, Rocket, ShoppingCart, LinkIcon, CreditCard, Puzzle, BarChart3, LayoutDashboard, FileText, Database, AlertTriangle } from "lucide-react";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { ArrowRight, ChevronDown, CheckCircle2, Cog, Link2, PieChart, FolderOpen, Briefcase, Rocket, ShoppingCart, LinkIcon, CreditCard, Puzzle, BarChart3, LayoutDashboard, FileText, Database, AlertTriangle } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 const pillars = [
   {
     id: "procesautomatisering",
+    icon: Cog,
     title: "Procesautomatisering",
-    subtitle: "Gestructureerde automatisering van operationele en commerciële processen.",
+    intro: "Wij automatiseren terugkerende processen zodat werk doorloopt zonder handmatige tussenstappen.",
     impact: [
-      { title: "Minder handmatige verwerking", sub: "Routinetaken volledig geautomatiseerd" },
-      { title: "Kortere doorlooptijden", sub: "Goedkeuringen en escalaties verlopen sneller" },
-      { title: "Minder fouten in processen", sub: "Gestandaardiseerde workflows elimineren variatie" },
-      { title: "Meer voorspelbaarheid en controle", sub: "Inzicht in elke processtap" },
+      { title: "Tot 70% minder handmatige verwerkingstijd", sub: "Routinetaken worden volledig geautomatiseerd" },
+      { title: "Foutreductie door gestandaardiseerde workflows", sub: "Consistente uitvoering zonder menselijke fouten" },
+      { title: "Snellere doorlooptijden bij goedkeuringen", sub: "Escalaties en approvals verlopen automatisch" },
+      { title: "Schaalbaarheid zonder extra personeel", sub: "Groei zonder lineaire personeelskosten" },
     ],
     categories: [
       { icon: FolderOpen, title: "Interne Workflow Automatisering", items: ["Goedkeuringsflows", "Taaktoewijzing", "Notificaties en escalaties", "Documentgeneratie"] },
@@ -26,13 +27,14 @@ const pillars = [
   },
   {
     id: "systeemintegraties",
+    icon: Link2,
     title: "Systeemintegraties",
-    subtitle: "Betrouwbare koppelingen tussen kernsystemen voor consistente datastromen.",
+    intro: "Wij koppelen systemen via API's zodat data automatisch en consistent stroomt.",
     impact: [
-      { title: "Geen dubbele invoer", sub: "Eénmalig invoeren, overal beschikbaar" },
-      { title: "Betrouwbare datastromen", sub: "Consistente synchronisatie zonder fouten" },
-      { title: "Realtime synchronisatie tussen systemen", sub: "Geen handmatige exports meer nodig" },
-      { title: "Minder afhankelijkheid van spreadsheets", sub: "Data leeft in geïntegreerde systemen" },
+      { title: "Eén consistente datastroom tussen kernsystemen", sub: "Alle data synchroon en betrouwbaar" },
+      { title: "Eliminatie van dubbele data-invoer", sub: "Eénmalig invoeren, overal beschikbaar" },
+      { title: "Realtime synchronisatie zonder exports", sub: "Geen handmatige CSV- of Excel-exports meer" },
+      { title: "Proactieve foutdetectie en logging", sub: "Problemen worden gesignaleerd vóór ze escaleren" },
     ],
     categories: [
       { icon: LinkIcon, title: "API Koppelingen", items: ["REST API integraties", "Webhooks", "Event-based triggers", "Retry-logica"] },
@@ -43,13 +45,14 @@ const pillars = [
   },
   {
     id: "data-rapportage",
+    icon: PieChart,
     title: "Data & Rapportage",
-    subtitle: "Realtime inzicht en controle over uw bedrijfsdata.",
+    intro: "Realtime dashboards en geautomatiseerde rapportages voor volledig inzicht.",
     impact: [
-      { title: "Realtime inzicht in prestaties", sub: "Dashboards altijd up-to-date" },
-      { title: "Snellere besluitvorming", sub: "Data-gedreven keuzes op basis van feiten" },
-      { title: "Eén bron van waarheid", sub: "Geen conflicterende bronnen meer" },
-      { title: "Minder handmatige rapportage", sub: "Geautomatiseerde exports en distributie" },
+      { title: "Direct inzicht in KPI's en prestaties", sub: "Realtime dashboards altijd up-to-date" },
+      { title: "Geautomatiseerde rapportages zonder handmatig werk", sub: "Wekelijks, maandelijks of op maat" },
+      { title: "Eén bron van waarheid voor alle bedrijfsdata", sub: "Geen conflicterende spreadsheets meer" },
+      { title: "Vroegtijdige detectie van afwijkingen", sub: "Anomalieën worden direct gesignaleerd" },
     ],
     categories: [
       { icon: LayoutDashboard, title: "KPI Dashboards", items: ["Management dashboards", "Team dashboards", "Realtime visualisaties", "Performance monitoring"] },
@@ -143,7 +146,6 @@ const InteractiveGridBg = () => {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full pointer-events-none z-0"
-      style={{ opacity: 1 }}
     />
   );
 };
@@ -160,13 +162,13 @@ const InteractiveBubbles = () => {
 
     let animId: number;
 
-    const bubbles = Array.from({ length: 14 }, (_, i) => ({
+    const bubbles = Array.from({ length: 10 }, (_, i) => ({
       x: Math.random(),
       y: Math.random(),
-      baseSize: 80 + Math.random() * 200,
-      speed: 0.0003 + Math.random() * 0.0005,
+      baseSize: 100 + Math.random() * 180,
+      speed: 0.0003 + Math.random() * 0.0004,
       phase: Math.random() * Math.PI * 2,
-      opacity: 0.04 + Math.random() * 0.06,
+      opacity: 0.02 + Math.random() * 0.03,
     }));
 
     const resize = () => {
@@ -196,13 +198,12 @@ const InteractiveBubbles = () => {
         const pulse = Math.sin(time * 0.4 + b.phase) * 0.3 + 1;
         const size = b.baseSize * pulse;
 
-        // Mouse interaction - bubbles grow/glow near cursor
         const dx = mouseRef.current.x - bx;
         const dy = mouseRef.current.y - by;
         const dist = Math.sqrt(dx * dx + dy * dy);
         const influence = Math.max(0, 1 - dist / 300);
-        const finalSize = size + influence * 60;
-        const finalOpacity = b.opacity + influence * 0.06;
+        const finalSize = size + influence * 40;
+        const finalOpacity = b.opacity + influence * 0.03;
 
         const grad = ctx.createRadialGradient(bx, by, 0, bx, by, finalSize);
         grad.addColorStop(0, `hsla(174, 78%, 41%, ${finalOpacity})`);
@@ -230,12 +231,12 @@ const InteractiveBubbles = () => {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full z-0"
-      style={{ opacity: 1 }}
+      style={{ opacity: 0.6 }}
     />
   );
 };
 
-const PillarSection = ({
+const PillarCard = ({
   pillar,
   sectionRef,
 }: {
@@ -245,98 +246,104 @@ const PillarSection = ({
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div ref={sectionRef} className="scroll-mt-24">
-      <ScrollReveal>
-        <ScrollRevealItem>
-          <h2 className="text-2xl sm:text-3xl font-bold mb-2">{pillar.title}</h2>
-          <p className="text-muted-foreground mb-6">{pillar.subtitle}</p>
-        </ScrollRevealItem>
-      </ScrollReveal>
-
-      {/* Impact block */}
-      <ScrollReveal>
-        <ScrollRevealItem>
-          <div className="rounded-xl border border-border bg-card/50 p-6 mb-6">
-            <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase">
-              Wat levert dit op?
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {pillar.impact.map((item, idx) => (
-                <motion.div
-                  key={item.title}
-                  className="flex items-start gap-3 p-3 rounded-lg bg-primary/[0.04] hover:bg-primary/[0.08] hover:shadow-[0_0_15px_hsl(var(--primary)/0.08)] transition-all duration-200 group"
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1, duration: 0.4 }}
-                >
-                  <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
-                    <CheckCircle2 size={13} className="text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground leading-tight">{item.title}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">{item.sub}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+    <div ref={sectionRef} className="scroll-mt-28">
+      <div className="rounded-xl border border-border bg-card/80 backdrop-blur-sm p-6 sm:p-8">
+        {/* Header */}
+        <div className="flex items-center gap-3 mb-2">
+          <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+            <pillar.icon size={18} />
           </div>
-        </ScrollRevealItem>
-      </ScrollReveal>
+          <h2 className="text-xl sm:text-2xl font-bold">{pillar.title}</h2>
+        </div>
+        <p className="text-sm text-muted-foreground mb-6 leading-relaxed">{pillar.intro}</p>
 
-      {/* Toggle */}
-      <ScrollReveal>
-        <ScrollRevealItem>
-          <button
-            onClick={() => setExpanded(!expanded)}
-            className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-all duration-200 mb-6 relative py-1 group"
-          >
-            <span>{expanded ? "Verberg concrete toepassingen" : "Bekijk concrete toepassingen"}</span>
-            <ChevronDown
-              size={16}
-              className="transition-transform duration-300 ease-out"
-              style={{ transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}
-            />
-            <span className="absolute bottom-0 left-0 h-px w-0 bg-primary/40 group-hover:w-full transition-all duration-300" />
-          </button>
-        </ScrollRevealItem>
-      </ScrollReveal>
+        {/* Impact block */}
+        <div className="rounded-lg border border-border/50 bg-primary/[0.02] p-5 mb-5">
+          <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
+            Wat levert dit op?
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {pillar.impact.map((item, idx) => (
+              <motion.div
+                key={item.title}
+                className="flex items-start gap-2.5 p-2.5 rounded-lg bg-primary/[0.04] hover:bg-primary/[0.08] transition-colors duration-200 group"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.08, duration: 0.4 }}
+              >
+                <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
+                  <CheckCircle2 size={12} className="text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-foreground leading-tight">{item.title}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{item.sub}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
 
-      <AnimatePresence>
-        {expanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="overflow-hidden"
-          >
-            <div className="space-y-6 pt-2 border-t border-border">
-              {pillar.categories.map((cat, catIdx) => (
-                <motion.div
-                  key={cat.title}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: catIdx * 0.08, duration: 0.4 }}
-                >
-                  <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                    <cat.icon size={15} className="text-primary" />
-                    {cat.title}
-                  </h3>
-                  <div className="grid grid-cols-2 gap-x-8 gap-y-1.5 pl-[23px]">
-                    {cat.items.map((item) => (
-                      <span key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        {/* Toggle for concrete toepassingen */}
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-all duration-200 mb-4 relative py-1 group"
+        >
+          <span>{expanded ? "Verberg concrete toepassingen" : "Bekijk concrete toepassingen"}</span>
+          <ChevronDown
+            size={16}
+            className="transition-transform duration-300 ease-out"
+            style={{ transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}
+          />
+          <span className="absolute bottom-0 left-0 h-px w-0 bg-primary/40 group-hover:w-full transition-all duration-300" />
+        </button>
+
+        {/* Expandable categories — inside the same card */}
+        <AnimatePresence>
+          {expanded && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="overflow-hidden"
+            >
+              <div className="space-y-5 pt-4 border-t border-border/50">
+                {pillar.categories.map((cat, catIdx) => (
+                  <motion.div
+                    key={cat.title}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: catIdx * 0.08, duration: 0.4 }}
+                  >
+                    <h3 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                      <cat.icon size={15} className="text-primary" />
+                      {cat.title}
+                    </h3>
+                    <div className="grid grid-cols-2 gap-x-8 gap-y-1.5 pl-[23px]">
+                      {cat.items.map((item) => (
+                        <span key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* CTA */}
+        <div className="mt-5 pt-4 border-t border-border/30">
+          <Button asChild size="sm">
+            <Link to="/book">
+              Plan Automation Scan <ArrowRight size={14} />
+            </Link>
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };
@@ -346,7 +353,6 @@ const Services = () => {
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   useEffect(() => {
-    // Handle hash on mount
     const hash = window.location.hash.slice(1);
     if (hash && sectionRefs.current[hash]) {
       setTimeout(() => {
@@ -355,26 +361,33 @@ const Services = () => {
     }
   }, []);
 
+  // IntersectionObserver for scroll-reactive nav
   useEffect(() => {
-    const handleScroll = () => {
-      let current = pillars[0].id;
-      for (const p of pillars) {
-        const el = sectionRefs.current[p.id];
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top < window.innerHeight * 0.4) {
-            current = p.id;
+    const observers: IntersectionObserver[] = [];
+
+    for (const p of pillars) {
+      const el = sectionRefs.current[p.id];
+      if (!el) continue;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              setActiveSection(p.id);
+            }
           }
-        }
-      }
-      setActiveSection(current);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+        },
+        { threshold: 0.35, rootMargin: "-10% 0px -50% 0px" }
+      );
+      observer.observe(el);
+      observers.push(observer);
+    }
+
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
 
   const scrollTo = (id: string) => {
+    setActiveSection(id);
     sectionRefs.current[id]?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
@@ -409,7 +422,6 @@ const Services = () => {
 
       {/* Pillar sections with sticky nav */}
       <section className="pb-24 relative overflow-hidden">
-        {/* Interactive bubbles background */}
         <InteractiveBubbles />
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
@@ -421,8 +433,8 @@ const Services = () => {
                 onClick={() => scrollTo(p.id)}
                 className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ease-out shrink-0 ${
                   activeSection === p.id
-                    ? "bg-primary/15 text-primary shadow-[0_0_12px_hsl(var(--primary)/0.15)]"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "bg-primary text-primary-foreground shadow-[0_0_16px_hsl(var(--primary)/0.25)]"
+                    : "text-muted-foreground hover:text-foreground opacity-60"
                 }`}
               >
                 {p.title}
@@ -432,26 +444,25 @@ const Services = () => {
 
           <div className="flex gap-12">
             {/* Sticky side nav (desktop) */}
-            <nav className="hidden lg:block w-64 shrink-0">
-              <div className="sticky top-24 space-y-1">
+            <nav className="hidden lg:block w-56 shrink-0">
+              <div className="sticky top-28 space-y-1.5">
                 {pillars.map((p) => {
                   const isActive = activeSection === p.id;
                   return (
                     <button
                       key={p.id}
                       onClick={() => scrollTo(p.id)}
-                      className="relative block w-full text-left px-4 py-3 rounded-lg text-sm transition-all duration-300 ease-out"
-                      style={{
-                        backgroundColor: isActive ? "hsl(var(--primary) / 0.1)" : "transparent",
-                        color: isActive ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))",
-                        fontWeight: isActive ? 600 : 400,
-                        boxShadow: isActive ? "0 0 20px hsl(var(--primary) / 0.08)" : "none",
-                      }}
+                      className={`relative block w-full text-left px-4 py-3 rounded-lg text-sm transition-all duration-[250ms] ease-out ${
+                        isActive
+                          ? "bg-primary text-primary-foreground font-semibold shadow-[0_0_20px_hsl(var(--primary)/0.2)]"
+                          : "text-muted-foreground hover:text-foreground opacity-50 hover:opacity-80"
+                      }`}
                     >
+                      {/* Sliding indicator bar */}
                       <span
-                        className="absolute left-0 top-1/2 -translate-y-1/2 w-[2px] rounded-full bg-primary transition-all duration-300 ease-out"
+                        className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] rounded-full bg-primary-foreground transition-all duration-[250ms] ease-out"
                         style={{
-                          height: isActive ? "60%" : "0%",
+                          height: isActive ? "55%" : "0%",
                           opacity: isActive ? 1 : 0,
                         }}
                       />
@@ -463,13 +474,16 @@ const Services = () => {
             </nav>
 
             {/* Content */}
-            <div className="flex-1 space-y-20">
+            <div className="flex-1 space-y-12">
               {pillars.map((pillar) => (
-                <PillarSection
-                  key={pillar.id}
-                  pillar={pillar}
-                  sectionRef={(el) => (sectionRefs.current[pillar.id] = el)}
-                />
+                <ScrollReveal key={pillar.id}>
+                  <ScrollRevealItem>
+                    <PillarCard
+                      pillar={pillar}
+                      sectionRef={(el) => (sectionRefs.current[pillar.id] = el)}
+                    />
+                  </ScrollRevealItem>
+                </ScrollReveal>
               ))}
             </div>
           </div>

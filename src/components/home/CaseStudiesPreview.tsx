@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useState, useCallback } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import AnimatedBubbles from "@/components/home/AnimatedBubbles";
 
 const caseStudies = [
   {
@@ -91,17 +92,14 @@ const CaseStudiesPreview = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
-      {/* Grid background */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `
-            linear-gradient(hsl(174 78% 30% / 0.035) 1px, transparent 1px),
-            linear-gradient(90deg, hsl(174 78% 30% / 0.035) 1px, transparent 1px)
-          `,
-          backgroundSize: "50px 50px",
-        }}
-      />
+      {/* Bubbles background */}
+      <AnimatedBubbles bubbles={[
+        { x: "15%", y: "25%", size: 240, opacity: 0.1, delay: 0.3 },
+        { x: "78%", y: "18%", size: 300, opacity: 0.08, delay: 1.5 },
+        { x: "45%", y: "70%", size: 200, opacity: 0.11, delay: 0.7 },
+        { x: "88%", y: "60%", size: 260, opacity: 0.09, delay: 2 },
+        { x: "30%", y: "85%", size: 180, opacity: 0.1, delay: 1.1 },
+      ]} />
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
           { x: "15%", y: "25%", delay: 0 },

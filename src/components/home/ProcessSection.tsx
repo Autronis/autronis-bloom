@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ShieldCheck, Search, PenTool, Wrench, CheckCircle, BarChart3 } from "lucide-react";
 import { useState, useRef, useCallback, useEffect } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import AnimatedBubbles from "@/components/home/AnimatedBubbles";
 
 const phases = [
   {
@@ -167,17 +168,14 @@ const ProcessSection = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden" ref={sectionRef}>
-      {/* Grid background */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `
-            linear-gradient(hsl(174 78% 30% / var(--grid-opacity, 0.035)) 1px, transparent 1px),
-            linear-gradient(90deg, hsl(174 78% 30% / var(--grid-opacity, 0.035)) 1px, transparent 1px)
-          `,
-          backgroundSize: "50px 50px",
-        }}
-      />
+      {/* Bubbles background */}
+      <AnimatedBubbles bubbles={[
+        { x: "10%", y: "15%", size: 260, opacity: 0.1, delay: 0 },
+        { x: "75%", y: "30%", size: 220, opacity: 0.09, delay: 1.4 },
+        { x: "40%", y: "80%", size: 280, opacity: 0.08, delay: 0.6 },
+        { x: "90%", y: "65%", size: 200, opacity: 0.11, delay: 2.1 },
+        { x: "20%", y: "50%", size: 240, opacity: 0.09, delay: 0.9 },
+      ]} />
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
           { x: "20%", y: "15%", delay: 0.5 },

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import AmbientLight from "@/components/AmbientLight";
 
@@ -42,37 +42,22 @@ const CaseCard = ({
   onHover: () => void;
   onLeave: () => void;
 }) => {
-  const [glowPos, setGlowPos] = useState({ x: 0, y: 0 });
   const isHovered = hoveredIndex === index;
   const isAnyHovered = hoveredIndex !== null;
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setGlowPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  }, []);
 
   return (
     <Link
       to={`/case-studies/${cs.slug}`}
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
-      onMouseMove={handleMouseMove}
-      className="relative group rounded-xl border border-border bg-card p-6 flex flex-col h-full overflow-hidden transition-all duration-[300ms] ease-out"
+      
+      className="relative group rounded-xl border border-border bg-card p-6 flex flex-col h-full overflow-hidden transition-all duration-300 ease-out"
       style={{
-        transform: isHovered ? "scale(1.01) translateY(-4px)" : "scale(1) translateY(0)",
+        transform: isHovered ? "scale(1.02) translateY(-4px)" : "scale(1) translateY(0)",
         opacity: isAnyHovered && !isHovered ? 0.88 : 1,
         borderColor: isHovered ? "hsl(var(--primary) / 0.6)" : undefined,
-        boxShadow: isHovered ? "0 0 15px hsl(var(--primary) / 0.25), 0 0 30px hsl(var(--primary) / 0.1), inset 0 0 15px hsl(var(--primary) / 0.05)" : "none",
       }}
     >
-      {isHovered && (
-        <div
-          className="absolute pointer-events-none inset-0 z-0"
-          style={{
-            background: `radial-gradient(200px circle at ${glowPos.x}px ${glowPos.y}px, hsl(174 78% 41% / 0.1), transparent 70%)`,
-          }}
-        />
-      )}
       <div className="relative z-10 flex flex-col h-full">
         <span className="text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full self-start mb-4">
           {cs.industry}

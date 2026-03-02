@@ -67,7 +67,7 @@ const ROIScanModule = () => {
     const yearlyHoursSaved = weeklyHoursSaved * 48;
     const yearlySavings = yearlyHoursSaved * rate;
     const implementationCost = yearlySavings * 0.3; // conservative estimate
-    const paybackMonths = yearlySavings > 0 ? Math.ceil((implementationCost / yearlySavings) * 12) : 0;
+    const paybackMonths = implementationCost > 0 ? Math.round((implementationCost / yearlySavings) * 12 * 10) / 10 : 0;
 
     return {
       yearlyHoursSaved: Math.round(yearlyHoursSaved),
@@ -131,11 +131,13 @@ const ROIScanModule = () => {
 
         <div className="mt-8">
           <Button
+            variant="outline"
             size="lg"
             onClick={() => setCalculated(true)}
             disabled={!results.isValid}
           >
             Bereken indicatieve impact
+            <ArrowRight size={18} />
           </Button>
         </div>
 
@@ -276,15 +278,16 @@ const ImpactROI = () => {
             <ScrollRevealItem>
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
                 {scenarios.map((scenario, idx) => (
-                  <motion.div
+                   <motion.div
                     key={scenario.title}
-                    className="rounded-xl border border-border bg-card p-6 sm:p-8"
+                    className="rounded-xl border border-border bg-card p-6 sm:p-8 transition-all duration-300 ease-out"
                     initial={{ opacity: 0, y: 12 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: idx * 0.1, duration: 0.4 }}
                     whileHover={{
-                      borderColor: "hsl(174, 78%, 41%, 0.3)",
+                      scale: 1.02,
+                      borderColor: "hsl(174, 78%, 41%, 0.5)",
                     }}
                   >
                     <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">

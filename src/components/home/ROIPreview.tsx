@@ -13,7 +13,7 @@ const ROIPreview = () => {
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <ScrollReveal className="max-w-2xl mx-auto text-center mb-8 sm:mb-12">
           <ScrollRevealItem>
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30">
+            <Badge variant="outline" className="mb-4 text-primary border-transparent bg-primary/10">
               Impact & ROI
             </Badge>
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">

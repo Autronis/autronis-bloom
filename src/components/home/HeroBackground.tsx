@@ -22,11 +22,11 @@ const HeroBackground = () => {
     const lineCount = 10;
 
     const dots: GlowDot[] = [];
-    for (let i = 0; i < 14; i++) {
+    for (let i = 0; i < 8; i++) {
       dots.push({
         lineIndex: Math.floor(Math.random() * lineCount),
         t: Math.random(),
-        speed: 0.0002 + Math.random() * 0.0005,
+        speed: 0.00012 + Math.random() * 0.0003,
         radius: 2 + Math.random() * 2.5,
         opacity: 0.1 + Math.random() * 0.12,
       });

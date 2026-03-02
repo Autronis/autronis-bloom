@@ -61,7 +61,7 @@ const ReasonCard = ({
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       onMouseMove={handleMouseMove}
-      className="relative rounded-xl border border-border bg-card p-6 overflow-hidden transition-all duration-[300ms] ease-out"
+      className="relative rounded-xl border border-border bg-background p-6 overflow-hidden transition-all duration-[300ms] ease-out"
       style={{
         transform: isHovered ? "scale(1.01) translateY(-4px)" : "scale(1) translateY(0)",
         opacity: isAnyHovered && !isHovered ? 0.88 : 1,
@@ -94,27 +94,36 @@ const WhyAutronisSection = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
-      {/* Blurred bubbles background */}
+      {/* More visible blurred bubbles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
-          { x: "10%", y: "15%", size: 180, opacity: 0.03, delay: 0 },
-          { x: "75%", y: "25%", size: 220, opacity: 0.025, delay: 1.5 },
-          { x: "40%", y: "70%", size: 160, opacity: 0.035, delay: 0.8 },
-          { x: "85%", y: "65%", size: 200, opacity: 0.02, delay: 2 },
-          { x: "20%", y: "85%", size: 140, opacity: 0.03, delay: 1.2 },
+          { x: "10%", y: "15%", size: 260, opacity: 0.07, delay: 0 },
+          { x: "75%", y: "25%", size: 300, opacity: 0.06, delay: 1.5 },
+          { x: "40%", y: "70%", size: 220, opacity: 0.08, delay: 0.8 },
+          { x: "85%", y: "65%", size: 260, opacity: 0.05, delay: 2 },
+          { x: "20%", y: "85%", size: 200, opacity: 0.07, delay: 1.2 },
+          { x: "55%", y: "40%", size: 180, opacity: 0.06, delay: 2.5 },
         ].map((b, i) => (
-          <div
+          <motion.div
             key={i}
-            className="absolute rounded-full animate-pulse"
+            className="absolute rounded-full"
+            animate={{
+              scale: [1, 1.4, 1],
+              opacity: [b.opacity, b.opacity * 1.6, b.opacity],
+            }}
+            transition={{
+              duration: 5 + i * 0.6,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: b.delay,
+            }}
             style={{
               left: b.x,
               top: b.y,
               width: b.size,
               height: b.size,
               background: `radial-gradient(circle, hsl(174 78% 41% / ${b.opacity}), transparent 70%)`,
-              filter: "blur(40px)",
-              animationDelay: `${b.delay}s`,
-              animationDuration: "6s",
+              filter: "blur(50px)",
               transform: "translate(-50%, -50%)",
             }}
           />
@@ -133,28 +142,26 @@ const WhyAutronisSection = () => {
           </ScrollRevealItem>
         </ScrollReveal>
 
-        {/* Single big block: cards + team photo */}
+        {/* Wide block: cards side-by-side with photo */}
         <ScrollReveal>
           <ScrollRevealItem>
-            <div className="rounded-2xl border border-border bg-card overflow-hidden max-w-5xl mx-auto">
-              {/* Cards grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-6 sm:p-8">
-                {reasons.map((r, i) => (
-                  <ReasonCard
-                    key={r.title}
-                    reason={r}
-                    index={i}
-                    hoveredIndex={hoveredIndex}
-                    onHover={() => setHoveredIndex(i)}
-                    onLeave={() => setHoveredIndex(null)}
-                  />
-                ))}
-              </div>
-
-              {/* Team photo + CTAs */}
+            <div className="rounded-2xl border border-border bg-card overflow-hidden max-w-6xl mx-auto">
+              {/* Main content: cards left, image right */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-                {/* CTA side */}
-                <div className="p-8 sm:p-12 flex flex-col justify-center">
+                {/* Left: cards + CTAs */}
+                <div className="p-6 sm:p-8 flex flex-col justify-between">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                    {reasons.map((r, i) => (
+                      <ReasonCard
+                        key={r.title}
+                        reason={r}
+                        index={i}
+                        hoveredIndex={hoveredIndex}
+                        onHover={() => setHoveredIndex(i)}
+                        onLeave={() => setHoveredIndex(null)}
+                      />
+                    ))}
+                  </div>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <Button asChild size="lg">
                       <Link to="/book">
@@ -176,8 +183,8 @@ const WhyAutronisSection = () => {
                   </div>
                 </div>
 
-                {/* Image side */}
-                <div ref={imgRef} className="relative min-h-[300px] lg:min-h-0">
+                {/* Right: Team photo */}
+                <div ref={imgRef} className="relative min-h-[400px] lg:min-h-0">
                   <motion.img
                     src={teamFoto}
                     alt="Autronis team - Sem en Syb"
@@ -187,13 +194,14 @@ const WhyAutronisSection = () => {
                     transition={{ duration: 0.7, ease: "easeOut" }}
                     loading="lazy"
                   />
-                  {/* Gradient overlay */}
+                  {/* Gradient overlay left edge */}
                   <div
                     className="absolute inset-0 pointer-events-none"
                     style={{
-                      background: "linear-gradient(to right, hsl(var(--card)) 0%, hsl(var(--card) / 0.6) 15%, transparent 40%)",
+                      background: "linear-gradient(to right, hsl(var(--card)) 0%, hsl(var(--card) / 0.4) 12%, transparent 35%)",
                     }}
                   />
+                  {/* Mobile top gradient */}
                   <div
                     className="absolute inset-0 pointer-events-none lg:hidden"
                     style={{

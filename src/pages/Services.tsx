@@ -331,13 +331,13 @@ const PillarCard = ({
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="overflow-hidden"
+              className="overflow-visible"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-border/50">
                 {pillar.categories.map((cat, catIdx) => (
                   <motion.div
                     key={cat.title}
-                    className="rounded-lg bg-muted/40 border border-border/30 p-4 transition-all duration-300 ease-out cursor-default"
+                    className="rounded-lg bg-muted/40 border border-border/30 p-4 transition-all duration-300 ease-out cursor-default overflow-hidden min-w-0"
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: catIdx * 0.08, duration: 0.4 }}

@@ -156,6 +156,49 @@
   to { transform: translateX(0); }
 }
 
+@keyframes ambient-drift-1 {
+  0%   { transform: translate(-20%, -30%) scale(1); }
+  25%  { transform: translate(-17%, -27%) scale(1.03); }
+  50%  { transform: translate(-22%, -32%) scale(0.98); }
+  75%  { transform: translate(-18%, -28%) scale(1.02); }
+  100% { transform: translate(-20%, -30%) scale(1); }
+}
+
+@keyframes ambient-drift-2 {
+  0%   { transform: translate(20%, 30%) scale(1); }
+  25%  { transform: translate(22%, 32%) scale(0.97); }
+  50%  { transform: translate(18%, 28%) scale(1.03); }
+  75%  { transform: translate(21%, 31%) scale(0.99); }
+  100% { transform: translate(20%, 30%) scale(1); }
+}
+
+.ambient-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  will-change: transform;
+}
+
+.ambient-glow-1 {
+  top: 0;
+  left: 0;
+  width: 85%;
+  height: 85%;
+  background: radial-gradient(ellipse at center, hsl(174 78% 28% / var(--ambient-opacity-1, 0.10)), hsl(174 78% 20% / 0.03) 50%, transparent 75%);
+  mix-blend-mode: var(--ambient-blend, screen);
+  animation: ambient-drift-1 26s ease-in-out infinite;
+}
+
+.ambient-glow-2 {
+  bottom: 0;
+  right: 0;
+  width: 80%;
+  height: 80%;
+  background: radial-gradient(ellipse at center, hsl(174 78% 32% / var(--ambient-opacity-2, 0.08)), hsl(174 78% 22% / 0.02) 50%, transparent 75%);
+  mix-blend-mode: var(--ambient-blend, screen);
+  animation: ambient-drift-2 30s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

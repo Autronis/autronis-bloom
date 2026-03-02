@@ -116,105 +116,7 @@ const movingDashStyle = `
 }
 `;
 
-/* ── Phase Rail: labels positioned to match card positions ── */
-const PhaseRail = ({ activeIndex, fillPercent }: { activeIndex: number; fillPercent: number }) => {
-  const [labelTops, setLabelTops] = useState<number[]>([]);
-  const railRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const update = () => {
-      if (!railRef.current) return;
-      const railRect = railRef.current.getBoundingClientRect();
-      const tops: number[] = [];
-      phases.forEach((_, i) => {
-        const el = document.querySelector(`[data-phase="${i}"]`);
-        if (!el) return;
-        const cardRect = el.getBoundingClientRect();
-        // Align label top with card top (relative to rail)
-        tops.push(cardRect.top - railRect.top);
-      });
-      setLabelTops(tops);
-    };
-
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    // Run after initial layout
-    const timer = setTimeout(update, 100);
-    return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-      clearTimeout(timer);
-    };
-  }, []);
-
-  return (
-    <div ref={railRef} className="hidden lg:block w-[200px] shrink-0 relative">
-      {/* Full-height progress track */}
-      <div className="absolute left-0 top-0 bottom-0 w-[3px] rounded-full" style={{ backgroundColor: "hsl(var(--border) / 0.15)" }}>
-        <div
-          className="absolute inset-x-0 top-0 rounded-full bg-primary"
-          style={{
-            height: `${fillPercent}%`,
-            transition: "height 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-          }}
-        />
-        <div
-          className="absolute inset-x-0 top-0 rounded-full pointer-events-none"
-          style={{
-            height: `${fillPercent}%`,
-            backgroundImage: "linear-gradient(180deg, transparent 0px, hsl(174 78% 41% / 0.3) 2px, transparent 4px)",
-            backgroundSize: "3px 10px",
-            animation: "flowDash 4s linear infinite",
-            transition: "height 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-          }}
-        />
-      </div>
-
-      {/* Labels absolutely positioned to match cards */}
-      {phases.map((phase, i) => {
-        const isCurrent = i === activeIndex;
-        const isActive = i <= activeIndex;
-        const top = labelTops[i];
-        if (top === undefined) return null;
-        return (
-          <button
-            key={phase.step}
-            onClick={() => {
-              const el = document.querySelector(`[data-phase="${i}"]`);
-              el?.scrollIntoView({ behavior: "smooth", block: "center" });
-            }}
-            className="absolute left-5 text-left transition-all duration-300 ease-out"
-            style={{ top: `${top}px` }}
-          >
-            <p
-              className="uppercase tracking-[0.14em] transition-all duration-300"
-              style={{
-                fontSize: isCurrent ? "0.7rem" : "0.625rem",
-                fontWeight: isCurrent ? 700 : 600,
-                color: isActive ? "hsl(174, 78%, 41%)" : "hsl(var(--muted-foreground))",
-                opacity: isCurrent ? 1 : isActive ? 0.7 : 0.4,
-              }}
-            >
-              Fase {phase.step}
-            </p>
-            <p
-              className="leading-tight transition-all duration-300 mt-0.5"
-              style={{
-                fontSize: isCurrent ? "0.8rem" : "0.7rem",
-                fontWeight: isCurrent ? 600 : 400,
-                color: isCurrent ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground))",
-                opacity: isCurrent ? 1 : isActive ? 0.65 : 0.35,
-              }}
-            >
-              {phase.title}
-            </p>
-          </button>
-        );
-      })}
-    </div>
-  );
-};
+/* PhaseRail removed — labels integrated into PhaseCard grid */
 
 /* ── Phase card ── */
 const PhaseCard = ({
@@ -232,12 +134,37 @@ const PhaseCard = ({
 
   return (
     <div
-      className="relative grid grid-cols-[40px_1fr] sm:grid-cols-[48px_1fr] items-start"
+      className="relative grid grid-cols-[40px_1fr] sm:grid-cols-[48px_1fr] lg:grid-cols-[140px_48px_1fr] items-start"
       data-phase={index}
     >
+      {/* Left: Fase label (desktop only) */}
+      <div className="hidden lg:flex flex-col justify-center items-end pr-5 mt-4">
+        <p
+          className="uppercase tracking-[0.14em] transition-all duration-300 text-right"
+          style={{
+            fontSize: isCurrent ? "0.7rem" : "0.625rem",
+            fontWeight: isCurrent ? 700 : 600,
+            color: isActive ? "hsl(174, 78%, 41%)" : "hsl(var(--muted-foreground))",
+            opacity: isCurrent ? 1 : isActive ? 0.7 : 0.4,
+          }}
+        >
+          Fase {phase.step}
+        </p>
+        <p
+          className="leading-tight transition-all duration-300 mt-0.5 text-right"
+          style={{
+            fontSize: isCurrent ? "0.8rem" : "0.7rem",
+            fontWeight: isCurrent ? 600 : 400,
+            color: isCurrent ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground))",
+            opacity: isCurrent ? 1 : isActive ? 0.65 : 0.35,
+          }}
+        >
+          {phase.title}
+        </p>
+      </div>
+
       {/* Node column */}
       <div className="flex flex-col items-center shrink-0 relative">
-        {/* Node */}
         <div
           className="w-5 h-5 rounded-full border-2 relative z-10 mt-5 transform-gpu"
           style={{
@@ -250,17 +177,10 @@ const PhaseCard = ({
             transition: "all 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
           }}
         >
-          {/* Ring on hover */}
           {isCurrent && (
-            <div
-              className="absolute inset-[-6px] rounded-full border border-primary/20"
-              style={{
-                animation: "none",
-              }}
-            />
+            <div className="absolute inset-[-6px] rounded-full border border-primary/20" />
           )}
         </div>
-        {/* Line segment to next node */}
         {index < phases.length - 1 && (
           <div
             className="w-[2px] flex-1 relative"
@@ -501,27 +421,16 @@ const Process = () => {
           </ScrollRevealItem>
         </ScrollReveal>
 
-        {/* ── Timeline with sticky rail ── */}
-        <div ref={timelineRef} className="max-w-5xl mx-auto mb-20 relative flex gap-10">
-          <PhaseRail activeIndex={activeIndex} fillPercent={fillPercent} />
-
-          {/* Timeline column */}
-          <div className="flex-1 relative">
-            {/* Full baseline */}
-            <div
-              className="absolute left-[9px] sm:left-[11px] top-0 bottom-0 w-[2px] pointer-events-none"
-              style={{ backgroundColor: "hsl(var(--border) / 0.15)" }}
+        {/* ── Timeline ── */}
+        <div ref={timelineRef} className="max-w-4xl mx-auto mb-20 relative">
+          {phases.map((phase, i) => (
+            <PhaseCard
+              key={phase.step}
+              phase={phase}
+              index={i}
+              activeIndex={activeIndex}
             />
-
-            {phases.map((phase, i) => (
-              <PhaseCard
-                key={phase.step}
-                phase={phase}
-                index={i}
-                activeIndex={activeIndex}
-              />
-            ))}
-          </div>
+          ))}
         </div>
 
         {/* ── Security & Reliability ── */}

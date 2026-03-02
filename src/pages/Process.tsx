@@ -14,6 +14,10 @@ import {
   AlertTriangle,
   Users,
   Target,
+  Layers,
+  Cog,
+  ScanSearch,
+  Rocket,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
@@ -24,7 +28,7 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 const phases = [
   {
     step: "01",
-    emoji: "🧠",
+    icon: Brain,
     title: "Analyse & Architectuur",
     timing: "Week 1",
     description:
@@ -40,7 +44,7 @@ const phases = [
   },
   {
     step: "02",
-    emoji: "🏗",
+    icon: Layers,
     title: "Ontwerp & Structuur",
     timing: "Week 1–2",
     description:
@@ -56,7 +60,7 @@ const phases = [
   },
   {
     step: "03",
-    emoji: "⚙️",
+    icon: Cog,
     title: "Bouw & Implementatie",
     timing: "Week 2–4",
     description:
@@ -71,7 +75,7 @@ const phases = [
   },
   {
     step: "04",
-    emoji: "🔍",
+    icon: ScanSearch,
     title: "Validatie & Optimalisatie",
     timing: "Week 3–5",
     description:
@@ -87,7 +91,7 @@ const phases = [
   },
   {
     step: "05",
-    emoji: "🚀",
+    icon: Rocket,
     title: "Livegang & Overdracht",
     timing: "Week 4–6",
     description:
@@ -280,8 +284,8 @@ const PhaseCard = ({
             </p>
 
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
-              <h3 className="text-base sm:text-lg font-bold">
-                <span className="mr-2">{phase.emoji}</span>
+              <h3 className="text-base sm:text-lg font-bold flex items-center gap-2">
+                <phase.icon size={18} className="text-primary shrink-0" />
                 {phase.title}
               </h3>
               <span className="text-[10px] sm:text-xs text-muted-foreground bg-muted px-2.5 py-0.5 rounded-full shrink-0 self-start border-0">

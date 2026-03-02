@@ -24,7 +24,7 @@ const HeroBackground = () => {
     const dots: GlowDot[] = [];
     for (let i = 0; i < 8; i++) {
       dots.push({
-        lineIndex: Math.floor(Math.random() * lineCount),
+        lineIndex: i % lineCount,
         t: Math.random(),
         speed: 0.00012 + Math.random() * 0.0003,
         radius: 2 + Math.random() * 2.5,

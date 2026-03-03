@@ -74,10 +74,9 @@ const Index = () => {
 
       <ProblemSolutionSection />
       <ServicePillars />
-      <ROIPreview />
       <ProcessSection />
       <WhyAutronisSection />
-
+      <ROIPreview />
       <CaseStudiesPreview />
       <SecurityBlock />
       <FAQSection />

@@ -64,39 +64,94 @@ const pillars = [
   },
 ];
 
-// dark = black SVG that needs invert in dark mode
-const toolIconsRow1: Array<{ name: string; logo: string; dark?: boolean }> = [
-  { name: "Slack", logo: "/logos/slack.svg" },
-  { name: "OpenAI", logo: "/logos/openai.svg" },
-  { name: "Make", logo: "/logos/make.svg" },
-  { name: "Xero", logo: "/logos/xero.svg" },
-  { name: "Notion", logo: "/logos/notion.svg", dark: true },
-  { name: "Stripe", logo: "/logos/stripe.svg" },
-  { name: "HubSpot", logo: "/logos/hubspot.svg" },
-  { name: "Google Sheets", logo: "/logos/google-sheets.svg" },
-  { name: "Twilio", logo: "/logos/twilio.svg" },
-  { name: "Airtable", logo: "/logos/airtable.svg" },
-  { name: "QuickBooks", logo: "/logos/quickbooks.svg" },
-  { name: "Salesforce", logo: "/logos/salesforce.svg" },
-];
-
-const toolIconsRow2: Array<{ name: string; logo: string; dark?: boolean }> = [
-  { name: "n8n", logo: "/logos/n8n.svg" },
-  { name: "Shopify", logo: "/logos/shopify.svg" },
-  { name: "Mailchimp", logo: "/logos/mailchimp.svg" },
-  { name: "Zapier", logo: "/logos/zapier.svg" },
-  { name: "Salesforce", logo: "/logos/salesforce.svg" },
-  { name: "Twilio", logo: "/logos/twilio.svg" },
-  { name: "Stripe", logo: "/logos/stripe.svg" },
-  { name: "Notion", logo: "/logos/notion.svg", dark: true },
-  { name: "HubSpot", logo: "/logos/hubspot.svg" },
-  { name: "OpenAI", logo: "/logos/openai.svg" },
-  { name: "Slack", logo: "/logos/slack.svg" },
-  { name: "Make", logo: "/logos/make.svg" },
-  { name: "Xero", logo: "/logos/xero.svg" },
-  { name: "Airtable", logo: "/logos/airtable.svg" },
-  { name: "Google Sheets", logo: "/logos/google-sheets.svg" },
-  { name: "QuickBooks", logo: "/logos/quickbooks.svg" },
+const toolCategories = [
+  {
+    label: "AI & LLM",
+    tools: [
+      { name: "OpenAI", logo: "/logos/openai.svg" },
+      { name: "Anthropic", logo: "/logos/anthropic.svg" },
+      { name: "Azure OpenAI", logo: "/logos/azure.svg" },
+      { name: "LangChain", logo: "/logos/langchain.svg", dark: true },
+      { name: "Pinecone", logo: "/logos/pinecone.svg" },
+    ],
+  },
+  {
+    label: "Automatisering & Workflow",
+    tools: [
+      { name: "n8n", logo: "/logos/n8n.svg" },
+      { name: "Make", logo: "/logos/make.svg" },
+      { name: "Zapier", logo: "/logos/zapier.svg" },
+      { name: "Retool", logo: "/logos/retool.svg" },
+    ],
+  },
+  {
+    label: "Data & Database",
+    tools: [
+      { name: "Supabase", logo: "/logos/supabase.svg" },
+      { name: "PostgreSQL", logo: "/logos/postgresql.svg" },
+      { name: "Firebase", logo: "/logos/firebase.svg" },
+      { name: "Airtable", logo: "/logos/airtable.svg" },
+      { name: "MongoDB", logo: "/logos/mongodb.svg" },
+      { name: "MySQL", logo: "/logos/mysql.svg" },
+    ],
+  },
+  {
+    label: "Hosting & Infra",
+    tools: [
+      { name: "Vercel", logo: "/logos/vercel.svg" },
+      { name: "AWS", logo: "/logos/aws.svg" },
+      { name: "Cloudflare", logo: "/logos/cloudflare.svg" },
+      { name: "Microsoft Azure", logo: "/logos/azure.svg" },
+    ],
+  },
+  {
+    label: "CRM & Sales",
+    tools: [
+      { name: "HubSpot", logo: "/logos/hubspot.svg" },
+      { name: "Pipedrive", logo: "/logos/pipedrive.svg" },
+      { name: "Salesforce", logo: "/logos/salesforce.svg" },
+    ],
+  },
+  {
+    label: "Productivity & Collaboration",
+    tools: [
+      { name: "Notion", logo: "/logos/notion.svg", dark: true },
+      { name: "Google Workspace", logo: "/logos/google-workspace.svg" },
+      { name: "Microsoft 365", logo: "/logos/microsoft-365.svg" },
+      { name: "Slack", logo: "/logos/slack.svg" },
+    ],
+  },
+  {
+    label: "E-commerce",
+    tools: [
+      { name: "Shopify", logo: "/logos/shopify.svg" },
+      { name: "WooCommerce", logo: "/logos/woocommerce.svg" },
+      { name: "Magento", logo: "/logos/magento.svg" },
+    ],
+  },
+  {
+    label: "Payments",
+    tools: [
+      { name: "Stripe", logo: "/logos/stripe.svg" },
+      { name: "Mollie", logo: "/logos/mollie.svg" },
+      { name: "PayPal", logo: "/logos/paypal.svg" },
+    ],
+  },
+  {
+    label: "Analytics & Reporting",
+    tools: [
+      { name: "Looker Studio", logo: "/logos/looker-studio.svg" },
+      { name: "Power BI", logo: "/logos/power-bi.svg" },
+      { name: "Google Analytics", logo: "/logos/google-analytics.svg" },
+    ],
+  },
+  {
+    label: "Monitoring & Reliability",
+    tools: [
+      { name: "Sentry", logo: "/logos/sentry.svg" },
+      { name: "Datadog", logo: "/logos/datadog.svg" },
+    ],
+  },
 ];
 
 const InteractiveGridBg = () => {
@@ -475,34 +530,33 @@ const Services = () => {
             </motion.p>
           </motion.div>
 
-          {/* Integrations marquee — no border, flows naturally */}
+          {/* Toolstack grid */}
           <div className="mb-20">
             <div className="text-center mb-10">
-              <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Integraties</p>
-              <h2 className="text-2xl sm:text-3xl font-bold mb-3">Werkt met uw huidige stack</h2>
+              <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Toolstack</p>
+              <h2 className="text-2xl sm:text-3xl font-bold mb-3">Technologieën waar wij mee werken</h2>
               <p className="text-muted-foreground">Heeft uw systeem een API? Dan kunnen wij integreren.</p>
             </div>
 
-            <div className="relative mb-4 overflow-hidden">
-                <div className="flex animate-marquee-right gap-14 w-max items-center justify-center">
-                  {[...toolIconsRow1, ...toolIconsRow1, ...toolIconsRow1].map((tool, i) => (
-                    <div key={i} className="flex flex-col items-center gap-1.5 hover:scale-110 transition-transform duration-200">
-                      <img src={tool.logo} alt={tool.name} className={`w-10 h-10 object-contain opacity-80 hover:opacity-100 transition-all duration-200 ${tool.dark ? 'dark:brightness-0 dark:invert' : ''}`} loading="lazy" />
-                      <span className="text-[10px] text-muted-foreground/60 font-medium">{tool.name}</span>
-                    </div>
-                  ))}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 max-w-4xl mx-auto">
+              {toolCategories.map((cat) => (
+                <div key={cat.label} className="space-y-2">
+                  <p className="text-[10px] font-semibold tracking-widest uppercase text-primary/70 px-1">{cat.label}</p>
+                  <div className="space-y-1">
+                    {cat.tools.map((tool) => (
+                      <div key={tool.name} className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg hover:bg-card hover:border-primary/20 border border-transparent transition-all duration-200">
+                        <img
+                          src={tool.logo}
+                          alt={tool.name}
+                          className={`w-4 h-4 object-contain ${tool.dark ? 'dark:brightness-0 dark:invert' : ''}`}
+                          loading="lazy"
+                        />
+                        <span className="text-xs text-muted-foreground">{tool.name}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-
-              <div className="relative overflow-hidden">
-                <div className="flex animate-marquee-left gap-14 w-max items-center justify-center">
-                  {[...toolIconsRow2, ...toolIconsRow2, ...toolIconsRow2].map((tool, i) => (
-                    <div key={i} className="flex flex-col items-center gap-1.5 hover:scale-110 transition-transform duration-200">
-                      <img src={tool.logo} alt={tool.name} className={`w-10 h-10 object-contain opacity-80 hover:opacity-100 transition-all duration-200 ${tool.dark ? 'dark:brightness-0 dark:invert' : ''}`} loading="lazy" />
-                      <span className="text-[10px] text-muted-foreground/60 font-medium">{tool.name}</span>
-                    </div>
-                  ))}
-                </div>
+              ))}
             </div>
           </div>
           {/* Mobile horizontal pills */}

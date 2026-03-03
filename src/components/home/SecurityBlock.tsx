@@ -108,7 +108,7 @@ const SecurityBlock = () => {
                         </div>
                       </div>
 
-                      <p className="text-sm text-muted-foreground pl-12 mb-5">
+                      <p className="text-sm text-primary pl-12 mb-5">
                         {layer.intro}
                       </p>
 

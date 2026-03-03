@@ -131,7 +131,7 @@ const ServiceCard = ({
                   Inclusief role-based access, logging en overdraagbare architectuur.
                 </p>
                 <a href="#beveiliging" className="group inline-flex items-center gap-1 text-[11px] text-foreground/70 hover:text-primary/70 transition-colors mt-1">
-                  Bekijk onze Beveiliging &amp; vertrouwen
+                  Bekijk onze Beveiligingsaanpak
                   <ArrowRight size={10} className="transition-transform duration-200 group-hover:translate-x-1" />
                 </a>
               </div>

@@ -100,11 +100,11 @@ const SecurityBlock = () => {
                           <Icon size={18} className="text-primary" />
                         </div>
                         <div className="flex items-baseline gap-2.5">
-                          <span className="text-base font-bold tracking-widest uppercase text-primary/70">
+                          <span className="text-base font-bold tracking-widest uppercase text-foreground">
                             {layer.label}
                           </span>
                           <span className="text-muted-foreground/40">—</span>
-                          <h3 className="text-lg font-semibold">{layer.title}</h3>
+                          <h3 className="text-lg font-semibold text-primary">{layer.title}</h3>
                         </div>
                       </div>
 

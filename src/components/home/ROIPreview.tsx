@@ -60,7 +60,7 @@ const ROIPreview = () => {
                 </motion.div>
 
                 <p className="text-xs text-muted-foreground mb-6 leading-relaxed italic">
-                  ⚠️ Deze berekening is indicatief. Tijdens de analysefase wordt een volledige businesscase opgesteld inclusief risico- en impactanalyse.
+                  <span className="text-primary not-italic">⚠️</span> Deze berekening is indicatief. Tijdens de analysefase wordt een volledige businesscase opgesteld inclusief risico- en impactanalyse.
                 </p>
 
                 <Button asChild size="lg" className="w-full sm:w-auto">

@@ -65,25 +65,22 @@ const pillars = [
 ];
 
 const toolIcons: Array<{ name: string; logo?: string; icon?: React.ComponentType<any> }> = [
-  { name: "Procesautomatisering", icon: Cog },
-  { name: "Make", logo: "https://img.logo.dev/make.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
-  { name: "Zapier", logo: "https://img.logo.dev/zapier.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
-  { name: "n8n", logo: "https://img.logo.dev/n8n.io?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
-  { name: "HubSpot", logo: "https://img.logo.dev/hubspot.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
-  { name: "Salesforce", logo: "https://img.logo.dev/salesforce.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
-  { name: "Systeemintegraties", icon: Link2 },
-  { name: "Slack", logo: "https://img.logo.dev/slack.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
-  { name: "Notion", logo: "https://img.logo.dev/notion.so?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
-  { name: "Airtable", logo: "https://img.logo.dev/airtable.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
-  { name: "Google Sheets", logo: "https://img.logo.dev/sheets.google.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
-  { name: "Stripe", logo: "https://img.logo.dev/stripe.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
-  { name: "Data & Rapportage", icon: PieChart },
-  { name: "Shopify", logo: "https://img.logo.dev/shopify.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
-  { name: "Xero", logo: "https://img.logo.dev/xero.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
-  { name: "QuickBooks", logo: "https://img.logo.dev/quickbooks.intuit.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
-  { name: "Mailchimp", logo: "https://img.logo.dev/mailchimp.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
-  { name: "Twilio", logo: "https://img.logo.dev/twilio.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
-  { name: "OpenAI", logo: "https://img.logo.dev/openai.com?token=pk_CBMEtpG9SimBNMCv4GdJXQ&size=64" },
+  { name: "Make", logo: "/logos/make.svg" },
+  { name: "Zapier", logo: "/logos/zapier.svg" },
+  { name: "n8n", logo: "/logos/n8n.svg" },
+  { name: "HubSpot", logo: "/logos/hubspot.svg" },
+  { name: "Salesforce", logo: "/logos/salesforce.svg" },
+  { name: "Slack", logo: "/logos/slack.svg" },
+  { name: "Notion", logo: "/logos/notion.svg" },
+  { name: "Airtable", logo: "/logos/airtable.svg" },
+  { name: "Google Sheets", logo: "/logos/google-sheets.svg" },
+  { name: "Stripe", logo: "/logos/stripe.svg" },
+  { name: "Shopify", logo: "/logos/shopify.svg" },
+  { name: "Xero", logo: "/logos/xero.svg" },
+  { name: "QuickBooks", logo: "/logos/quickbooks.svg" },
+  { name: "Mailchimp", logo: "/logos/mailchimp.svg" },
+  { name: "Twilio", logo: "/logos/twilio.svg" },
+  { name: "OpenAI", logo: "/logos/openai.svg" },
 ];
 
 const InteractiveGridBg = () => {
@@ -471,35 +468,25 @@ const Services = () => {
             </div>
 
             <div className="relative mb-4 overflow-hidden">
-              <div className="flex animate-marquee-right gap-12 w-max items-center justify-center">
-                {[...toolIcons, ...toolIcons, ...toolIcons].map((tool, i) => (
-                  <div key={i} className="flex items-center justify-center hover:scale-110 transition-transform duration-200">
-                    {'logo' in tool ? (
-                      <img src={tool.logo} alt={tool.name} className="w-10 h-10 rounded-lg opacity-70 hover:opacity-100 transition-opacity duration-200" loading="lazy" />
-                    ) : (
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                        <tool.icon size={20} />
-                      </div>
-                    )}
-                  </div>
-                ))}
+                <div className="flex animate-marquee-right gap-14 w-max items-center justify-center">
+                  {[...toolIcons, ...toolIcons, ...toolIcons].map((tool, i) => (
+                    <div key={i} className="flex flex-col items-center gap-1.5 hover:scale-110 transition-transform duration-200">
+                      <img src={tool.logo} alt={tool.name} className="w-10 h-10 opacity-70 hover:opacity-100 transition-opacity duration-200" loading="lazy" />
+                      <span className="text-[10px] text-muted-foreground/60 font-medium">{tool.name}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            <div className="relative overflow-hidden">
-              <div className="flex animate-marquee-left gap-12 w-max items-center justify-center">
-                {[...toolIcons.slice().reverse(), ...toolIcons.slice().reverse(), ...toolIcons.slice().reverse()].map((tool, i) => (
-                  <div key={i} className="flex items-center justify-center hover:scale-110 transition-transform duration-200">
-                    {'logo' in tool ? (
-                      <img src={tool.logo} alt={tool.name} className="w-10 h-10 rounded-lg opacity-70 hover:opacity-100 transition-opacity duration-200" loading="lazy" />
-                    ) : (
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                        <tool.icon size={20} />
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
+              <div className="relative overflow-hidden">
+                <div className="flex animate-marquee-left gap-14 w-max items-center justify-center">
+                  {[...toolIcons.slice().reverse(), ...toolIcons.slice().reverse(), ...toolIcons.slice().reverse()].map((tool, i) => (
+                    <div key={i} className="flex flex-col items-center gap-1.5 hover:scale-110 transition-transform duration-200">
+                      <img src={tool.logo} alt={tool.name} className="w-10 h-10 opacity-70 hover:opacity-100 transition-opacity duration-200" loading="lazy" />
+                      <span className="text-[10px] text-muted-foreground/60 font-medium">{tool.name}</span>
+                    </div>
+                  ))}
+                </div>
             </div>
           </div>
           {/* Mobile horizontal pills */}

@@ -259,10 +259,10 @@ const PhaseCard = ({
           style={{
             backgroundColor: isCurrent ? "hsl(var(--card))" : "hsl(var(--card) / 0.7)",
             borderColor: isCurrent
-              ? "hsl(174, 78%, 41%, 0.25)"
+              ? "hsl(174, 78%, 41%, 0.3)"
               : isPast
-              ? "hsl(var(--border) / 0.6)"
-              : "hsl(var(--border))",
+              ? "hsl(174, 78%, 41%, 0.1)"
+              : "hsl(174, 78%, 41%, 0.15)",
             boxShadow: isCurrent
               ? "0 4px 20px hsl(174 78% 41% / 0.06), 0 1px 6px hsl(0 0% 0% / 0.04)"
               : "none",

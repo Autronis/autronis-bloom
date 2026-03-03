@@ -102,144 +102,138 @@ const ImpactSimulator = () => {
           </ScrollRevealItem>
         </ScrollReveal>
 
-        {/* 2-column layout */}
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* LEFT — Inputs */}
-          <motion.div
-            className="rounded-2xl border border-border bg-card p-6 sm:p-8"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
-          >
-            <p className="text-sm font-semibold text-foreground mb-6">Parameters</p>
-            <div className="space-y-7">
-              {sliders.map((s) => (
-                <div key={s.label}>
-                  <div className="flex items-center justify-between mb-2.5">
-                    <label className="text-sm font-medium text-foreground">{s.label}</label>
-                    <span className="text-sm font-semibold text-primary tabular-nums">{s.display}</span>
+        {/* Single outer block */}
+        <div className="max-w-6xl mx-auto rounded-2xl border border-border bg-card p-6 sm:p-8 lg:p-10">
+          {/* 2-column layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+            {/* LEFT — Inputs */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+            >
+              <p className="text-sm font-semibold text-foreground mb-6">Parameters</p>
+              <div className="space-y-7">
+                {sliders.map((s) => (
+                  <div key={s.label}>
+                    <div className="flex items-center justify-between mb-2.5">
+                      <label className="text-sm font-medium text-foreground">{s.label}</label>
+                      <span className="text-sm font-semibold text-primary tabular-nums">{s.display}</span>
+                    </div>
+                    <Slider
+                      value={[s.value]}
+                      onValueChange={([v]) => s.onChange(v)}
+                      min={s.min}
+                      max={s.max}
+                      step={s.step}
+                      className="w-full"
+                    />
+                    <p className="text-xs text-muted-foreground mt-1.5">{s.hint}</p>
                   </div>
-                  <Slider
-                    value={[s.value]}
-                    onValueChange={([v]) => s.onChange(v)}
-                    min={s.min}
-                    max={s.max}
-                    step={s.step}
-                    className="w-full"
-                  />
-                  <p className="text-xs text-muted-foreground mt-1.5">{s.hint}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* RIGHT — Results dashboard */}
-          <motion.div
-            className="rounded-2xl border border-border bg-muted/20 p-5 sm:p-6 space-y-6"
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
-          >
-            {/* KPI cards */}
-            <div className="grid grid-cols-2 gap-4">
-              <KPICard
-                label="Maandelijkse besparing"
-                value={formatCurrency(results.monthlySavings)}
-                icon={<Euro size={16} />}
-              />
-              <KPICard
-                label="Jaarlijkse besparing"
-                value={formatCurrency(results.yearlySavings)}
-                icon={<TrendingUp size={16} />}
-                highlight
-              />
-              <KPICard
-                label="Terugverdientijd"
-                value={`${results.paybackMonths} mnd`}
-                icon={<Calendar size={16} />}
-              />
-              <KPICard
-                label="ROI Multiplier"
-                value={`${results.roiMultiplier.toFixed(1)}x`}
-                icon={<Percent size={16} />}
-              />
-            </div>
-
-            {/* Divider */}
-            <div className="h-px bg-border" />
-
-            {/* Confidence score */}
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-sm font-medium text-foreground">Impact Confidence Score</p>
-                <span className="text-sm font-semibold text-primary tabular-nums">{results.confidence}%</span>
+                ))}
               </div>
-              <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
-                <motion.div
-                  className="h-full rounded-full bg-primary"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${results.confidence}%` }}
-                  transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+            </motion.div>
+
+            {/* RIGHT — Results dashboard */}
+            <motion.div
+              className="space-y-6"
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
+            >
+              {/* KPI cards */}
+              <div className="grid grid-cols-2 gap-4">
+                <KPICard
+                  label="Maandelijkse besparing"
+                  value={formatCurrency(results.monthlySavings)}
+                  icon={<Euro size={16} />}
+                />
+                <KPICard
+                  label="Jaarlijkse besparing"
+                  value={formatCurrency(results.yearlySavings)}
+                  icon={<TrendingUp size={16} />}
+                  highlight
+                />
+                <KPICard
+                  label="Terugverdientijd"
+                  value={`${results.paybackMonths} mnd`}
+                  icon={<Calendar size={16} />}
+                />
+                <KPICard
+                  label="ROI Multiplier"
+                  value={`${results.roiMultiplier.toFixed(1)}x`}
+                  icon={<Percent size={16} />}
                 />
               </div>
-              <p className="text-xs text-muted-foreground mt-2.5">
-                Gebaseerd op vergelijkbare implementaties binnen MKB-organisaties.
-              </p>
-            </div>
 
-            {/* Divider */}
-            <div className="h-px bg-border" />
+              {/* Confidence score */}
+              <div className="rounded-xl border border-border p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-sm font-medium text-foreground">Impact Confidence Score</p>
+                  <span className="text-sm font-semibold text-primary tabular-nums">{results.confidence}%</span>
+                </div>
+                <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
+                  <motion.div
+                    className="h-full rounded-full bg-primary"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${results.confidence}%` }}
+                    transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+                  />
+                </div>
+                <p className="text-xs text-muted-foreground mt-2.5">
+                  Gebaseerd op vergelijkbare implementaties binnen MKB-organisaties.
+                </p>
+              </div>
 
-            {/* Bar chart - custom */}
-            <div>
-              <p className="text-sm font-medium text-foreground mb-5">Maandelijks kostenoverzicht</p>
-              <div className="space-y-4">
-                {chartData.map((item) => {
-                  const maxVal = Math.max(...chartData.map((d) => d.value));
-                  const pct = maxVal > 0 ? (item.value / maxVal) * 100 : 0;
-                  return (
-                    <div key={item.name}>
-                      {item.type === "savings" && (
-                        <div className="flex items-center gap-3 mb-4">
-                          <div className="h-px flex-1 bg-border" />
-                          <span className="text-xs text-muted-foreground font-medium ml-auto">−</span>
-                        </div>
-                      )}
-                      <div className="space-y-1.5">
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="text-muted-foreground">{item.name}</span>
-                          <span className="font-medium text-foreground tabular-nums">{formatCurrency(item.value)}</span>
-                        </div>
-                        <div className="w-full h-3 rounded-full bg-muted overflow-hidden">
-                          <motion.div
-                            className="h-full rounded-full"
-                            style={{
-                              backgroundColor:
-                                item.type === "savings"
-                                  ? "hsl(174, 78%, 41%)"
-                                  : item.type === "automated"
-                                  ? "hsl(192, 20%, 30%)"
-                                  : "hsl(192, 15%, 45%)",
-                            }}
-                            initial={{ width: 0 }}
-                            animate={{ width: `${pct}%` }}
-                            transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-                          />
+              {/* Bar chart */}
+              <div className="rounded-xl border border-border p-4">
+                <p className="text-sm font-medium text-foreground mb-5">Maandelijks kostenoverzicht</p>
+                <div className="space-y-4">
+                  {chartData.map((item) => {
+                    const maxVal = Math.max(...chartData.map((d) => d.value));
+                    const pct = maxVal > 0 ? (item.value / maxVal) * 100 : 0;
+                    return (
+                      <div key={item.name}>
+                        {item.type === "savings" && (
+                          <div className="flex items-center gap-3 mb-4">
+                            <div className="h-px flex-1 bg-border" />
+                            <span className="text-xs text-muted-foreground font-medium">−</span>
+                          </div>
+                        )}
+                        <div className="space-y-1.5">
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="text-muted-foreground">{item.name}</span>
+                            <span className="font-medium text-foreground tabular-nums">{formatCurrency(item.value)}</span>
+                          </div>
+                          <div className="w-full h-3 rounded-full bg-muted overflow-hidden">
+                            <motion.div
+                              className="h-full rounded-full"
+                              style={{
+                                backgroundColor:
+                                  item.type === "savings"
+                                    ? "hsl(174, 78%, 41%)"
+                                    : item.type === "automated"
+                                    ? "hsl(192, 20%, 30%)"
+                                    : "hsl(192, 15%, 45%)",
+                              }}
+                              initial={{ width: 0 }}
+                              animate={{ width: `${pct}%` }}
+                              transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+                            />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          </motion.div>
-        </div>
+            </motion.div>
+          </div>
 
-        {/* Disclaimer + CTAs */}
-        <div className="max-w-6xl mx-auto mt-8">
-          <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
+          {/* Disclaimer + CTAs */}
+          <div className="mt-8 pt-6 border-t border-border">
             <p className="text-sm text-muted-foreground leading-relaxed mb-5 italic flex items-start gap-1.5">
               <AlertTriangle size={14} className="text-primary shrink-0 mt-0.5 not-italic" />
               Deze berekening is indicatief. Tijdens de analysefase wordt een volledige businesscase opgesteld inclusief risico- en impactanalyse.

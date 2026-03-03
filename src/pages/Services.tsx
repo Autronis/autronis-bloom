@@ -371,6 +371,17 @@ const PillarCard = ({
           )}
         </AnimatePresence>
 
+        {/* Security CTA */}
+        <div className="text-center pt-6">
+          <Link
+            to="/#beveiliging"
+            className="group inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline underline-offset-4 transition-all"
+          >
+            🔐 Bekijk onze beveiligingsaanpak
+            <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" />
+          </Link>
+        </div>
+
       </div>
     </div>
   );

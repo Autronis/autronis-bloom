@@ -120,7 +120,7 @@ const SecurityBlock = () => {
                               key={point.text}
                               className="flex items-start gap-3 text-sm leading-relaxed"
                             >
-                              <PointIcon size={15} className="text-primary/60 mt-[2px] shrink-0" />
+                              <PointIcon size={15} className="text-foreground mt-[2px] shrink-0" />
                               <span className="text-muted-foreground/40 text-xs">–</span>
                               <span className="text-foreground/85">{point.text}</span>
                             </li>

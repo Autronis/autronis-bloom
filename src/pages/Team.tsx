@@ -85,7 +85,7 @@ const TeamCard = ({ member }: { member: (typeof team)[0] }) => {
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse 50% 60% at 50% 35%, transparent 0%, hsl(0 0% 100% / 0.18) 100%)",
+            background: "radial-gradient(ellipse 50% 60% at 50% 35%, transparent 0%, hsl(0 0% 100% / 0.10) 100%)",
           }}
         />
         <div

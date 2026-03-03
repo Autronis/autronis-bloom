@@ -56,7 +56,7 @@ const ImpactROI = () => {
             </ScrollRevealItem>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-5xl mx-auto auto-rows-fr">
             {[
               {
                 num: "01",
@@ -109,6 +109,12 @@ const ImpactROI = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: idx * 0.06, duration: 0.45 }}
+                    whileHover={{
+                      scale: 1.015,
+                      y: -2,
+                      borderColor: "hsl(174, 78%, 41%, 0.5)",
+                      boxShadow: "0 4px 24px hsl(174, 78%, 33%, 0.08)",
+                    }}
                   >
                     <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
                       <factor.icon size={20} className="text-primary" />

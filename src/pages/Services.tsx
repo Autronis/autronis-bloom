@@ -487,9 +487,7 @@ const Services = () => {
                 <div className="flex animate-marquee-right gap-14 w-max items-center justify-center">
                   {[...toolIconsRow1, ...toolIconsRow1, ...toolIconsRow1].map((tool, i) => (
                     <div key={i} className="flex flex-col items-center gap-1.5 hover:scale-110 transition-transform duration-200">
-                      <div className="w-10 h-10 rounded-lg bg-white/90 flex items-center justify-center p-1.5">
-                        <img src={tool.logo} alt={tool.name} className="w-full h-full object-contain" loading="lazy" />
-                      </div>
+                      <img src={tool.logo} alt={tool.name} className="w-10 h-10 object-contain opacity-70 hover:opacity-100 transition-opacity duration-200 dark:invert dark:brightness-200" loading="lazy" />
                       <span className="text-[10px] text-muted-foreground/60 font-medium">{tool.name}</span>
                     </div>
                   ))}
@@ -500,9 +498,7 @@ const Services = () => {
                 <div className="flex animate-marquee-left gap-14 w-max items-center justify-center">
                   {[...toolIconsRow2, ...toolIconsRow2, ...toolIconsRow2].map((tool, i) => (
                     <div key={i} className="flex flex-col items-center gap-1.5 hover:scale-110 transition-transform duration-200">
-                      <div className="w-10 h-10 rounded-lg bg-white/90 flex items-center justify-center p-1.5">
-                        <img src={tool.logo} alt={tool.name} className="w-full h-full object-contain" loading="lazy" />
-                      </div>
+                      <img src={tool.logo} alt={tool.name} className="w-10 h-10 object-contain opacity-70 hover:opacity-100 transition-opacity duration-200 dark:invert dark:brightness-200" loading="lazy" />
                       <span className="text-[10px] text-muted-foreground/60 font-medium">{tool.name}</span>
                     </div>
                   ))}

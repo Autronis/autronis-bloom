@@ -66,7 +66,7 @@ const SecurityBlock = () => {
               Beveiliging & Vertrouwen
             </p>
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Enterprise-grade beveiliging, zonder compromissen
+              Beveiliging op enterprise-niveau
             </h2>
             <p className="text-base leading-relaxed text-muted-foreground">
               Beveiliging is geïntegreerd in elke automatisering en systeemintegratie die wij ontwikkelen.

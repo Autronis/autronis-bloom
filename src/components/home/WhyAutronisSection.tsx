@@ -103,7 +103,7 @@ const WhyAutronisSection = () => {
 
         <ScrollReveal>
           <ScrollRevealItem>
-            <div className="rounded-2xl border-[3px] border-primary/40 dark:border-primary/20 bg-card overflow-hidden max-w-6xl mx-auto shadow-sm dark:shadow-none">
+            <div className="rounded-2xl border-[3px] border-primary/40 dark:border-[2px] dark:border-primary/20 bg-card overflow-hidden max-w-6xl mx-auto shadow-sm dark:shadow-none">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 {/* Left: cards + CTAs */}
                 <div className="p-6 sm:p-8 flex flex-col">
@@ -152,9 +152,15 @@ const WhyAutronisSection = () => {
                     loading="lazy"
                   />
                   <div
-                    className="absolute inset-0 pointer-events-none"
+                    className="absolute inset-0 pointer-events-none dark:block"
                     style={{
                       background: "linear-gradient(to right, hsl(var(--card)) 0%, hsl(var(--card) / 0.3) 8%, transparent 25%)",
+                    }}
+                  />
+                  <div
+                    className="absolute inset-0 pointer-events-none dark:hidden"
+                    style={{
+                      background: "linear-gradient(to right, hsl(var(--card)) 0%, hsl(var(--card) / 0.15) 6%, transparent 18%)",
                     }}
                   />
                 </div>

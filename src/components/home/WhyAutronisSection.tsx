@@ -141,7 +141,7 @@ const WhyAutronisSection = () => {
                 </div>
 
                 {/* Right: Team photo */}
-                <div ref={imgRef} className="relative min-h-[400px] lg:min-h-0 border-l border-border lg:border-l dark:border-border/50 overflow-hidden">
+                <div ref={imgRef} className="relative min-h-[400px] lg:min-h-0 overflow-hidden">
                   <motion.img
                     src={teamFoto}
                     alt="Autronis team - Sem en Syb"

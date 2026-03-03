@@ -17,14 +17,26 @@ export interface TeamMember {
   linkedin: string;
 }
 
-export const categoryMeta: Record<SkillCategory, { border: string; bg: string }> = {
-  arch: { border: "border-[rgba(70,130,190,0.6)]", bg: "bg-[rgba(70,130,190,0.2)]" },
-  ai:   { border: "border-[rgba(60,190,170,0.55)]", bg: "bg-[rgba(60,190,170,0.18)]" },
-  gov:  { border: "border-[rgba(160,140,200,0.55)]", bg: "bg-[rgba(160,140,200,0.18)]" },
+export const categoryMeta: Record<SkillCategory, { border: string; bg: string; glow: string }> = {
+  arch: {
+    border: "border-[hsla(205,45%,55%,0.5)]",
+    bg: "bg-[hsla(205,45%,55%,0.15)]",
+    glow: "hover:bg-[hsla(205,45%,55%,0.25)] hover:shadow-[0_0_8px_hsla(205,45%,55%,0.2)]",
+  },
+  ai: {
+    border: "border-[hsla(174,50%,45%,0.5)]",
+    bg: "bg-[hsla(174,50%,45%,0.15)]",
+    glow: "hover:bg-[hsla(174,50%,45%,0.25)] hover:shadow-[0_0_8px_hsla(174,50%,45%,0.2)]",
+  },
+  gov: {
+    border: "border-[hsla(265,30%,60%,0.45)]",
+    bg: "bg-[hsla(265,30%,60%,0.13)]",
+    glow: "hover:bg-[hsla(265,30%,60%,0.22)] hover:shadow-[0_0_8px_hsla(265,30%,60%,0.18)]",
+  },
 };
 
 export const categoryLabels: Record<SkillCategory, string> = {
   arch: "Architectuur",
-  ai: "AI en integraties",
-  gov: "Beheer en beveiliging",
+  ai: "AI & Integraties",
+  gov: "Beheer & Beveiliging",
 };

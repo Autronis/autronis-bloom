@@ -1,13 +1,12 @@
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Users, Eye, Shield, Clock, Mail, Linkedin } from "lucide-react";
-import React, { useState } from "react";
+import { ArrowRight, Users, Eye, Shield, Clock } from "lucide-react";
+import React from "react";
 import fotoSyb from "@/assets/foto_syb.jpg";
 import fotoSem from "@/assets/foto_sem.jpg";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import AmbientLight from "@/components/AmbientLight";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import TeamCard from "@/components/team/TeamCard";
 import type { TeamMember } from "@/components/team/types";
 
@@ -17,8 +16,9 @@ const team: TeamMember[] = [
     role: "Automatiseringsarchitect",
     subtitle: "Co-founder",
     photo: fotoSyb,
-    focusLabel: "Technische realisatie en AI-integraties",
-    description: "Syb realiseert schaalbare automatiseringssystemen en AI-integraties met focus op codekwaliteit, prestaties en onderhoudbaarheid.",
+    focusLabel: "Technische realisatie & AI-integraties",
+    description:
+      "Syb bouwt schaalbare automatiseringssystemen en AI-integraties met focus op codekwaliteit, prestaties en onderhoudbaarheid. Van architectuur tot productie: hij levert stabiel, strak en meetbaar.",
     skills: [
       { label: "Architectuurontwerp", category: "arch" },
       { label: "Workflow-ontwerp", category: "arch" },
@@ -39,7 +39,8 @@ const team: TeamMember[] = [
     subtitle: "Co-founder",
     photo: fotoSem,
     focusLabel: "Structuur, AI en systeemarchitectuur",
-    description: "Sem vertaalt complexe processen naar heldere systeemarchitectuur en bewaakt documentatie, datalogica en overdraagbaarheid — van ontwerp tot livegang.",
+    description:
+      "Sem vertaalt complexe processen naar heldere systeemstructuur. Hij bewaakt documentatie, datalogica en overdraagbaarheid — van ontwerp tot livegang. Sterk in planning, scope en beslissingen die later onderhoud besparen.",
     skills: [
       { label: "Systeemarchitectuur", category: "arch" },
       { label: "Workflow-ontwerp", category: "arch" },

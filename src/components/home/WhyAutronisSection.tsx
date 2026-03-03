@@ -145,7 +145,7 @@ const WhyAutronisSection = () => {
                   <motion.img
                     src={teamFoto}
                     alt="Autronis team - Sem en Syb"
-                    className="w-full h-full object-cover brightness-[0.7] dark:brightness-[0.6]"
+                    className="w-full h-full object-cover object-center scale-110 brightness-[0.58] dark:brightness-[0.48]"
                     initial={{ opacity: 0, scale: 1.03 }}
                     animate={imgInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.03 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}

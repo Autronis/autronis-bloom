@@ -17,9 +17,9 @@ interface Skill {
 }
 
 const categoryMeta: Record<SkillCategory, { border: string; bg: string }> = {
-  arch: { border: "border-[rgba(70,140,170,0.6)]", bg: "bg-[rgba(70,140,170,0.2)]" },
-  ai:   { border: "border-[rgba(80,190,175,0.55)]", bg: "bg-[rgba(80,190,175,0.18)]" },
-  gov:  { border: "border-[rgba(155,140,190,0.55)]", bg: "bg-[rgba(155,140,190,0.18)]" },
+  arch: { border: "border-[rgba(60,160,200,0.7)]", bg: "bg-[rgba(60,160,200,0.25)]" },
+  ai:   { border: "border-[rgba(60,210,190,0.65)]", bg: "bg-[rgba(60,210,190,0.22)]" },
+  gov:  { border: "border-[rgba(170,150,210,0.65)]", bg: "bg-[rgba(170,150,210,0.22)]" },
 };
 
 const categoryLabels: Record<SkillCategory, string> = {

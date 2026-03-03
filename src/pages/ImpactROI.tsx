@@ -181,6 +181,15 @@ const ROIScanModule = () => {
               <ArrowRight size={18} />
             </Link>
           </Button>
+          <div className="mt-4">
+            <Link
+              to="/#beveiliging"
+              className="group inline-flex items-center gap-1 text-[11px] text-foreground/70 hover:text-primary/70 transition-colors"
+            >
+              Bekijk onze Beveiligingsaanpak
+              <ArrowRight size={10} className="transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
+          </div>
         </div>
       </div>
     </div>
@@ -268,7 +277,7 @@ const ImpactROI = () => {
       </section>
 
       {/* ROI-scan Module */}
-      <section className="py-16 sm:py-24 border-t border-border relative overflow-hidden">
+      <section id="roi-scan" className="py-16 sm:py-24 border-t border-border relative overflow-hidden scroll-mt-24">
         <AmbientLight />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <ScrollReveal className="max-w-2xl mx-auto text-center mb-12">

@@ -124,6 +124,17 @@ const ServiceCard = ({
                   Bekijk meer over {s.title} <ArrowRight size={14} />
                 </Link>
               </Button>
+
+              {/* Security trust line */}
+              <div className="mt-4 pt-3 border-t border-border/30">
+                <p className="text-[11px] text-muted-foreground/60 leading-relaxed">
+                  Inclusief role-based access, logging en overdraagbare architectuur.
+                </p>
+                <a href="#beveiliging" className="group inline-flex items-center gap-1 text-[11px] text-muted-foreground/50 hover:text-primary/70 transition-colors mt-1">
+                  Bekijk onze Beveiliging &amp; vertrouwen
+                  <ArrowRight size={10} className="transition-transform duration-200 group-hover:translate-x-1" />
+                </a>
+              </div>
             </div>
             {/* Image */}
             <div className={`flex-1 ${i === 0 ? 'min-h-[340px] sm:min-h-[460px]' : 'min-h-[220px] sm:min-h-[280px]'} relative overflow-hidden rounded-xl bg-card`}>

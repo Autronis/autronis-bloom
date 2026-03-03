@@ -11,8 +11,6 @@ import {
   TrendingUp,
   Clock,
   DollarSign,
-  AlertTriangle,
-  Users,
   Target,
   Layers,
   Cog,
@@ -137,11 +135,40 @@ const introPoints = [
   { icon: TrendingUp, text: "Schaalbaar vanaf dag één", sub: "Ontworpen om mee te groeien zonder lineaire personeelskosten." },
 ];
 
-const valueItems = [
-  { icon: Clock, text: "Meetbare tijdsbesparing" },
-  { icon: DollarSign, text: "Structurele kostenreductie" },
-  { icon: AlertTriangle, text: "Minder operationeel risico" },
-  { icon: Users, text: "Schaalbaarheid zonder lineaire personeelsgroei" },
+const impactCards = [
+  {
+    icon: Clock,
+    title: "Tot 30–70% minder handmatig werk",
+    description: "Repetitieve taken worden structureel geëlimineerd. Vrijgekomen uren worden direct vertaald naar FTE-waarde en herinzetbare capaciteit.",
+    sub: "Gebaseerd op procesanalyse en gemiddelde loonkosten inclusief overhead.",
+    primary: true,
+  },
+  {
+    icon: DollarSign,
+    title: "Structurele kostenreductie",
+    description: "Correctiewerk, dubbele invoer en inefficiënte overdracht verdwijnen uit het proces. Besparingen werken cumulatief door per kwartaal.",
+    sub: "Direct vertaald naar operationele kostenbesparing in de businesscase.",
+    primary: true,
+  },
+  {
+    icon: Shield,
+    title: "Lager operationeel risico",
+    description: "Gestandaardiseerde processen met logging, toegangsbeheer en documentatie verminderen foutkans en escalaties.",
+    primary: false,
+  },
+  {
+    icon: TrendingUp,
+    title: "Schaalbaarheid zonder lineaire personeelsgroei",
+    description: "Meer output met hetzelfde team. Groei wordt mogelijk zonder proportionele stijging in personeelskosten.",
+    primary: false,
+  },
+];
+
+const proofStrip = [
+  "Gebaseerd op procesanalyse",
+  "Financieel doorgerekend",
+  "Inclusief risico- en overheadfactoren",
+  "Transparante ROI-indicatie",
 ];
 
 /* ── Phase card ── */
@@ -491,43 +518,119 @@ const Process = () => {
           ))}
         </div>
 
-        {/* ── Value block ── */}
-        <ScrollReveal className="max-w-3xl mx-auto mb-20">
-          <ScrollRevealItem>
-            <div className="text-center mb-8">
+        {/* ── Impact section ── */}
+        <div className="max-w-4xl mx-auto mb-20 relative">
+          {/* Subtle background glow */}
+          <div
+            className="absolute inset-0 pointer-events-none rounded-3xl"
+            style={{
+              background: "radial-gradient(ellipse at center, hsl(174 78% 41% / 0.04), transparent 70%)",
+            }}
+          />
+
+          <div className="relative z-10">
+            <motion.div
+              className="text-center mb-10"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            >
               <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
                 Resultaat
               </p>
-              <h2 className="text-2xl sm:text-3xl font-bold">
-                Wat dit concreet oplevert
+              <h2 className="text-2xl sm:text-3xl font-bold mb-3">
+                Structurele impact op tijd, kosten en continuïteit
               </h2>
-            </div>
-          </ScrollRevealItem>
-          <ScrollRevealItem>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {valueItems.map((item, idx) => (
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                Onze automatiseringen leveren geen cosmetische winst, maar structurele verbetering in capaciteit, foutreductie en schaalbaarheid — meetbaar vertaald naar financiële impact.
+              </p>
+            </motion.div>
+
+            {/* Primary cards – row 1 */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+              {impactCards.filter(c => c.primary).map((card, idx) => (
                 <motion.div
-                  key={item.text}
-                  className="flex items-center gap-3 p-4 rounded-xl border border-border bg-card cursor-default"
-                  initial={{ opacity: 0, y: 12 }}
+                  key={card.title}
+                  className="rounded-2xl border border-primary/20 p-6 sm:p-7 cursor-default group"
+                  style={{
+                    backgroundColor: "hsl(var(--card) / 0.8)",
+                    backdropFilter: "blur(8px)",
+                  }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.08, duration: 0.4 }}
+                  transition={{ delay: idx * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   whileHover={{
-                    borderColor: "hsl(174, 78%, 41%, 0.5)",
-                    boxShadow: "0 0 14px hsl(174, 78%, 41%, 0.1)",
                     scale: 1.02,
+                    borderColor: "hsl(174, 78%, 41%, 0.4)",
+                    boxShadow: "0 0 12px hsl(174, 78%, 41%, 0.08)",
                   }}
                 >
-                  <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                    <item.icon size={18} />
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-foreground mb-4 group-hover:text-primary transition-colors duration-300">
+                    <card.icon size={20} />
                   </div>
-                  <p className="text-sm font-semibold">{item.text}</p>
+                  <h3 className="text-lg font-bold mb-2">{card.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+                    {card.description}
+                  </p>
+                  {card.sub && (
+                    <p className="text-[11px] text-muted-foreground/60 leading-relaxed italic">
+                      {card.sub}
+                    </p>
+                  )}
                 </motion.div>
               ))}
             </div>
-          </ScrollRevealItem>
-        </ScrollReveal>
+
+            {/* Secondary cards – row 2 */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-10">
+              {impactCards.filter(c => !c.primary).map((card, idx) => (
+                <motion.div
+                  key={card.title}
+                  className="rounded-2xl border border-border p-5 sm:p-6 cursor-default group"
+                  style={{
+                    backgroundColor: "hsl(var(--card) / 0.6)",
+                    backdropFilter: "blur(6px)",
+                  }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.16 + idx * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  whileHover={{
+                    scale: 1.02,
+                    borderColor: "hsl(174, 78%, 41%, 0.35)",
+                    boxShadow: "0 0 12px hsl(174, 78%, 41%, 0.06)",
+                  }}
+                >
+                  <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
+                    <card.icon size={18} />
+                  </div>
+                  <h3 className="text-base font-bold mb-1.5">{card.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {card.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Micro proof strip */}
+            <motion.div
+              className="flex flex-wrap justify-center gap-x-6 gap-y-2"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              {proofStrip.map((item) => (
+                <span key={item} className="flex items-center gap-1.5 text-[11px] text-muted-foreground/60">
+                  <span className="text-primary">✔</span>
+                  {item}
+                </span>
+              ))}
+            </motion.div>
+          </div>
+        </div>
 
         {/* ── CTA ── */}
         <ScrollReveal className="text-center">

@@ -82,9 +82,7 @@ const HeroBackground = () => {
 
       ctx.clearRect(0, 0, w, h);
 
-      drawGlow(w * 0.2, h * 0.4, 400, 0.02 + Math.sin(time * 0.3) * 0.008);
-      drawGlow(w * 0.8, h * 0.6, 350, 0.018 + Math.sin(time * 0.4 + 1) * 0.008);
-      drawGlow(w * 0.5, h * 0.3, 450, 0.015 + Math.sin(time * 0.2 + 2) * 0.008);
+      // Subtle background glow removed
 
       for (let i = 0; i < lineCount; i++) {
         const opacity = i % 2 === 0 ? 0.05 : 0.03;

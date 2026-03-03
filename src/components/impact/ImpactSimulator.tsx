@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, TrendingUp, Calendar, Percent, DollarSign, ArrowRight } from "lucide-react";
+import { AlertTriangle, TrendingUp, Calendar, Percent, Euro, ArrowRight } from "lucide-react";
 
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import AmbientLight from "@/components/AmbientLight";
@@ -147,7 +147,7 @@ const ImpactSimulator = () => {
               <KPICard
                 label="Maandelijkse besparing"
                 value={formatCurrency(results.monthlySavings)}
-                icon={<DollarSign size={16} />}
+                icon={<Euro size={16} />}
               />
               <KPICard
                 label="Jaarlijkse besparing"
@@ -224,25 +224,27 @@ const ImpactSimulator = () => {
         </div>
 
         {/* Disclaimer + CTAs */}
-        <div className="max-w-6xl mx-auto mt-8 pt-6 border-t border-border">
-          <p className="text-sm text-muted-foreground leading-relaxed mb-5 italic flex items-start gap-1.5">
-            <AlertTriangle size={14} className="text-primary shrink-0 mt-0.5 not-italic" />
-            Deze berekening is indicatief. Tijdens de analysefase wordt een volledige businesscase opgesteld inclusief risico- en impactanalyse.
-          </p>
-          <Button asChild size="lg">
-            <Link to="/book">
-              Plan een impactanalyse
-              <ArrowRight size={18} />
-            </Link>
-          </Button>
-          <div className="mt-4">
-            <Link
-              to="/#beveiliging"
-              className="group inline-flex items-center gap-1 text-[11px] text-foreground/70 hover:text-primary/70 transition-colors"
-            >
-              Bekijk onze Beveiligingsaanpak
-              <ArrowRight size={10} className="transition-transform duration-200 group-hover:translate-x-1" />
-            </Link>
+        <div className="max-w-6xl mx-auto mt-8">
+          <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
+            <p className="text-sm text-muted-foreground leading-relaxed mb-5 italic flex items-start gap-1.5">
+              <AlertTriangle size={14} className="text-primary shrink-0 mt-0.5 not-italic" />
+              Deze berekening is indicatief. Tijdens de analysefase wordt een volledige businesscase opgesteld inclusief risico- en impactanalyse.
+            </p>
+            <Button asChild size="lg">
+              <Link to="/book">
+                Plan een impactanalyse
+                <ArrowRight size={18} />
+              </Link>
+            </Button>
+            <div className="mt-4">
+              <Link
+                to="/#beveiliging"
+                className="group inline-flex items-center gap-1 text-[11px] text-foreground/70 hover:text-primary/70 transition-colors"
+              >
+                Bekijk onze Beveiligingsaanpak
+                <ArrowRight size={10} className="transition-transform duration-200 group-hover:translate-x-1" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

@@ -16,28 +16,46 @@ interface Skill {
   category: SkillCategory;
 }
 
-const categoryMeta: Record<SkillCategory, { border: string }> = {
-  arch: { border: "border-[rgba(100,140,160,0.35)]" },
-  ai:   { border: "border-[rgba(110,180,170,0.30)]" },
-  gov:  { border: "border-[rgba(150,140,175,0.30)]" },
+const categoryMeta: Record<SkillCategory, { border: string; bg: string }> = {
+  arch: { border: "border-[rgba(80,130,150,0.45)]", bg: "bg-[rgba(80,130,150,0.12)]" },
+  ai:   { border: "border-[rgba(90,170,160,0.40)]", bg: "bg-[rgba(90,170,160,0.10)]" },
+  gov:  { border: "border-[rgba(140,130,170,0.40)]", bg: "bg-[rgba(140,130,170,0.10)]" },
 };
 
-const team = [
+const categoryLabels: Record<SkillCategory, string> = {
+  arch: "ARCHITECTUUR",
+  ai: "AI & INTEGRATIES",
+  gov: "GOVERNANCE",
+};
+
+interface TeamMember {
+  name: string;
+  role: string;
+  photo: string;
+  focusLabel: string;
+  description: string;
+  visibleSkills: Skill[];
+  hiddenSkills: Skill[];
+  mail: string;
+  linkedin: string;
+}
+
+const team: TeamMember[] = [
   {
     name: "Syb Sprenkeler",
     role: "Automation Architect",
     photo: fotoSyb,
-    coreBadge: "Core Strength: Technical Build & Implementation",
+    focusLabel: "Technical Build & Implementation",
     description: "Syb focust op technische realisatie en codekwaliteit. Van architectuur tot productie bouwt hij schaalbare systemen met performance en onderhoudbaarheid als uitgangspunt.",
     visibleSkills: [
-      { label: "Architectuurontwerp", category: "arch" as SkillCategory },
-      { label: "API & systeemintegraties", category: "ai" as SkillCategory },
-      { label: "Workflow engineering", category: "arch" as SkillCategory },
+      { label: "Architectuurontwerp", category: "arch" },
+      { label: "API & systeemintegraties", category: "ai" },
+      { label: "Workflow engineering", category: "arch" },
     ],
-    hoverSkills: [
-      { label: "Performance & schaalbaarheid", category: "arch" as SkillCategory },
-      { label: "Code optimalisatie", category: "arch" as SkillCategory },
-      { label: "Technische documentatie", category: "gov" as SkillCategory },
+    hiddenSkills: [
+      { label: "Performance & schaalbaarheid", category: "arch" },
+      { label: "Code optimalisatie", category: "arch" },
+      { label: "Technische documentatie", category: "gov" },
     ],
     mail: "mailto:syb@autronis.com",
     linkedin: "https://www.linkedin.com/in/syb-sprenkeler-1b9b01323/",
@@ -46,17 +64,17 @@ const team = [
     name: "Sem Gijsberts",
     role: "AI & Systems Engineer",
     photo: fotoSem,
-    coreBadge: "Core Strength: Structuur & Systeemarchitectuur",
+    focusLabel: "Structuur & Systeemarchitectuur",
     description: "Sem bewaakt overzicht, documentatie en systeemlogica. Hij vertaalt complexe processen naar heldere architectuur en zorgt dat implementaties logisch, overdraagbaar en schaalbaar blijven.",
     visibleSkills: [
-      { label: "AI-integraties", category: "ai" as SkillCategory },
-      { label: "Backend automatisering", category: "ai" as SkillCategory },
-      { label: "Datagovernance", category: "gov" as SkillCategory },
+      { label: "AI-integraties", category: "ai" },
+      { label: "Backend automatisering", category: "ai" },
+      { label: "Datagovernance", category: "gov" },
     ],
-    hoverSkills: [
-      { label: "Logging & monitoring", category: "gov" as SkillCategory },
-      { label: "Structuur & documentatie", category: "gov" as SkillCategory },
-      { label: "Security by design", category: "gov" as SkillCategory },
+    hiddenSkills: [
+      { label: "Logging & monitoring", category: "gov" },
+      { label: "Structuur & documentatie", category: "gov" },
+      { label: "Security by design", category: "gov" },
     ],
     mail: "mailto:sem@autronis.com",
     linkedin: "https://www.linkedin.com/in/sem-gijsberts-65ba543b3/",
@@ -75,28 +93,35 @@ const toolStack = ["OpenAI", "Supabase", "n8n", "Make", "Vercel", "AWS"];
 const SkillBadge = ({ skill }: { skill: Skill }) => (
   <span
     className={`text-[10px] font-semibold px-2.5 py-1 rounded-full border backdrop-blur-sm
-      bg-[rgba(0,0,0,0.55)] text-white/90 ${categoryMeta[skill.category].border}
-      transition-all duration-200 hover:text-white hover:border-white/25`}
+      ${categoryMeta[skill.category].bg} ${categoryMeta[skill.category].border}
+      text-white transition-all duration-200 hover:translate-y-[-1px] hover:border-white/30`}
   >
     {skill.label}
   </span>
 );
 
-const TeamCard = ({ member }: { member: (typeof team)[0] }) => {
+const TeamCard = ({ member }: { member: TeamMember }) => {
   const [hovered, setHovered] = useState(false);
+
+  // Group all skills by category for hover overlay
+  const allSkills = [...member.visibleSkills, ...member.hiddenSkills];
+  const grouped = allSkills.reduce<Record<SkillCategory, Skill[]>>((acc, s) => {
+    (acc[s.category] = acc[s.category] || []).push(s);
+    return acc;
+  }, {} as Record<SkillCategory, Skill[]>);
 
   return (
     <div
-      className="relative rounded-xl border border-border bg-card overflow-hidden group"
+      className="relative rounded-xl border border-border overflow-hidden group cursor-default"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
         transform: hovered ? "translateY(-3px)" : "translateY(0)",
-        boxShadow: hovered ? "0 10px 28px -6px rgba(0,0,0,0.3)" : "none",
+        boxShadow: hovered ? "0 12px 32px -8px rgba(0,0,0,0.35)" : "none",
         transition: "transform 0.3s ease, box-shadow 0.3s ease",
       }}
     >
-      {/* Photo */}
+      {/* Photo area */}
       <div className="aspect-[3/4] relative overflow-hidden">
         <img
           src={member.photo}
@@ -104,16 +129,18 @@ const TeamCard = ({ member }: { member: (typeof team)[0] }) => {
           className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
         />
 
-        {/* Gradient scrim for readability */}
+        {/* Default gradient scrim – bottom 30%, deepens to 50% on hover */}
         <div
-          className="absolute inset-x-0 bottom-0 pointer-events-none"
+          className="absolute inset-x-0 bottom-0 pointer-events-none transition-all duration-300"
           style={{
-            height: "45%",
-            background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.25) 55%, transparent 100%)",
+            height: hovered ? "60%" : "45%",
+            background: hovered
+              ? "linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.40) 50%, transparent 100%)"
+              : "linear-gradient(to top, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.20) 50%, transparent 100%)",
           }}
         />
 
-        {/* Social icons — top right */}
+        {/* Social icons – top right */}
         <div className="absolute top-4 right-4 flex gap-2 z-10">
           <TooltipProvider delayDuration={200}>
             <Tooltip>
@@ -145,44 +172,71 @@ const TeamCard = ({ member }: { member: (typeof team)[0] }) => {
           </TooltipProvider>
         </div>
 
-        {/* Visible skill badges — always shown */}
-        <div className="absolute bottom-4 left-4 right-4 z-10 flex flex-wrap gap-1.5">
-          {member.visibleSkills.map((skill) => (
-            <SkillBadge key={skill.label} skill={skill} />
-          ))}
+        {/* ── Hover overlay content (focus area + description + all skills) ── */}
+        <div
+          className="absolute inset-x-0 bottom-0 z-10 px-4 pb-4 flex flex-col justify-end pointer-events-none"
+          style={{ height: "60%" }}
+        >
+          {/* Hover-reveal block */}
+          <div
+            className="transition-all duration-[250ms] ease-out mb-3"
+            style={{
+              opacity: hovered ? 1 : 0,
+              transform: hovered ? "translateY(0)" : "translateY(10px)",
+            }}
+          >
+            <p className="text-[9px] font-semibold tracking-[0.15em] uppercase text-white/50 mb-0.5">
+              Focus Area
+            </p>
+            <p className="text-[13px] font-bold text-white mb-2 leading-snug">
+              {member.focusLabel}
+            </p>
+            <p className="text-[11px] text-white/70 leading-relaxed mb-3 line-clamp-3">
+              {member.description}
+            </p>
+
+            {/* All skills grouped by category in 2 columns */}
+            <div className="grid grid-cols-2 gap-x-3 gap-y-2">
+              {(["arch", "ai", "gov"] as SkillCategory[]).map((cat) =>
+                grouped[cat]?.length ? (
+                  <div key={cat} className="col-span-2">
+                    <p className="text-[8px] font-bold tracking-[0.12em] uppercase text-white/40 mb-1">
+                      {categoryLabels[cat]}
+                    </p>
+                    <div className="flex flex-wrap gap-1">
+                      {grouped[cat].map((s) => (
+                        <SkillBadge key={s.label} skill={s} />
+                      ))}
+                    </div>
+                  </div>
+                ) : null
+              )}
+            </div>
+          </div>
+
+          {/* Default visible skills + +X badge (fade out on hover) */}
+          <div
+            className="flex flex-wrap gap-1.5 items-center transition-all duration-200"
+            style={{
+              opacity: hovered ? 0 : 1,
+              transform: hovered ? "translateY(4px)" : "translateY(0)",
+              pointerEvents: hovered ? "none" : "auto",
+            }}
+          >
+            {member.visibleSkills.map((skill) => (
+              <SkillBadge key={skill.label} skill={skill} />
+            ))}
+            <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-[rgba(0,0,0,0.6)] backdrop-blur-sm border border-white/15 text-white/80 transition-colors duration-200 hover:border-white/30 hover:text-white">
+              +{member.hiddenSkills.length}
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Name + role + core badge — always visible */}
-      <div className="p-5">
+      {/* Name + role – always visible below photo */}
+      <div className="p-5 bg-card">
         <p className="font-semibold text-foreground">{member.name}</p>
-        <p className="text-sm text-muted-foreground mb-3">{member.role}</p>
-
-        {/* Core strength badge — always visible */}
-        <div className="mb-3">
-          <span className="text-[10px] font-bold tracking-wide uppercase px-2.5 py-1 rounded-full border border-primary/25 bg-primary/8 text-primary">
-            {member.coreBadge}
-          </span>
-        </div>
-
-        {/* Hover-reveal section: extra skills + description */}
-        <div
-          className="overflow-hidden transition-all duration-300 ease-out"
-          style={{
-            maxHeight: hovered ? "200px" : "0px",
-            opacity: hovered ? 1 : 0,
-            transform: hovered ? "translateY(0)" : "translateY(6px)",
-          }}
-        >
-          <div className="flex flex-wrap gap-1.5 mb-3 pt-1">
-            {member.hoverSkills.map((skill) => (
-              <SkillBadge key={skill.label} skill={skill} />
-            ))}
-          </div>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            {member.description}
-          </p>
-        </div>
+        <p className="text-sm text-muted-foreground">{member.role}</p>
       </div>
     </div>
   );

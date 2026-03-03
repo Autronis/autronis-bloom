@@ -141,12 +141,23 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
             </p>
 
 
-            {/* Skills grouped – no headers */}
-            <div className="flex flex-wrap gap-1.5">
-              {member.skills.map((s) => {
-                const i = tagIndex++;
-                return <SkillBadge key={s.label} skill={s} index={i} />;
-              })}
+            {/* Skills grouped by category */}
+            <div className="space-y-2.5">
+              {(["arch", "ai", "gov"] as SkillCategory[]).map((cat) =>
+                grouped[cat]?.length ? (
+                  <div key={cat}>
+                    <p className="text-[8px] font-semibold tracking-[0.12em] uppercase text-white/50 mb-1">
+                      {categoryLabels[cat]}
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {grouped[cat].map((s) => {
+                        const i = tagIndex++;
+                        return <SkillBadge key={s.label} skill={s} index={i} />;
+                      })}
+                    </div>
+                  </div>
+                ) : null
+              )}
             </div>
           </div>
 
@@ -158,7 +169,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
                 : "opacity-100 group-hover:opacity-0 group-hover:h-0 group-hover:overflow-hidden"
               }`}
           >
-            <span className="text-[8px] font-medium tracking-[0.14em] uppercase text-white/40 mr-1 block w-full mb-1">
+            <span className="text-[8px] font-bold tracking-[0.14em] uppercase text-white/50 mr-1 block w-full mb-1">
               Vaardigheden
             </span>
             {/* Pick first skill from each category for variety */}

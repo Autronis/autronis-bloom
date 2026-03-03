@@ -292,7 +292,7 @@ const PillarCard = ({
             {pillar.impact.map((item, idx) => (
               <motion.div
                 key={item.title}
-                className="flex items-start gap-2.5 p-2.5 rounded-lg bg-primary/[0.04] hover:bg-primary/[0.08] transition-colors duration-200 group"
+                className="flex items-start gap-2.5 p-2.5 rounded-lg bg-card border border-primary/15 hover:border-primary/30 transition-colors duration-200 group"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

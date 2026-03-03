@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, TrendingUp, Calendar, Percent, DollarSign, ArrowRight } from "lucide-react";
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, Tooltip } from "recharts";
+
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import AmbientLight from "@/components/AmbientLight";
 
@@ -186,47 +186,38 @@ const ImpactSimulator = () => {
               </p>
             </div>
 
-            {/* Bar chart */}
+            {/* Bar chart - custom */}
             <div className="rounded-2xl border border-border bg-card p-5">
-              <p className="text-sm font-medium text-foreground mb-4">Maandelijks kostenoverzicht</p>
-              <div className="h-[140px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={chartData} layout="vertical" barSize={20} margin={{ left: 0, right: 16, top: 0, bottom: 0 }}>
-                    <XAxis type="number" hide />
-                    <YAxis
-                      dataKey="name"
-                      type="category"
-                      width={120}
-                      axisLine={false}
-                      tickLine={false}
-                      tick={{ fontSize: 12, fill: "hsl(192, 15%, 55%)" }}
-                    />
-                    <Tooltip
-                      formatter={(value: number) => formatCurrency(value)}
-                      contentStyle={{
-                        backgroundColor: "hsl(192, 25%, 13%)",
-                        border: "1px solid hsl(192, 18%, 19%)",
-                        borderRadius: "8px",
-                        fontSize: "12px",
-                        color: "hsl(0, 0%, 96%)",
-                      }}
-                    />
-                    <Bar dataKey="value" radius={[0, 6, 6, 0]}>
-                      {chartData.map((entry) => (
-                        <Cell
-                          key={entry.name}
-                          fill={
-                            entry.type === "savings"
-                              ? "hsl(174, 78%, 41%)"
-                              : entry.type === "automated"
-                              ? "hsl(192, 20%, 25%)"
-                              : "hsl(192, 20%, 35%)"
-                          }
+              <p className="text-sm font-medium text-foreground mb-5">Maandelijks kostenoverzicht</p>
+              <div className="space-y-4">
+                {chartData.map((item) => {
+                  const maxVal = Math.max(...chartData.map((d) => d.value));
+                  const pct = maxVal > 0 ? (item.value / maxVal) * 100 : 0;
+                  return (
+                    <div key={item.name} className="space-y-1.5">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-muted-foreground">{item.name}</span>
+                        <span className="font-medium text-foreground tabular-nums">{formatCurrency(item.value)}</span>
+                      </div>
+                      <div className="w-full h-3 rounded-full bg-muted overflow-hidden">
+                        <motion.div
+                          className="h-full rounded-full"
+                          style={{
+                            backgroundColor:
+                              item.type === "savings"
+                                ? "hsl(174, 78%, 41%)"
+                                : item.type === "automated"
+                                ? "hsl(192, 20%, 30%)"
+                                : "hsl(192, 15%, 45%)",
+                          }}
+                          initial={{ width: 0 }}
+                          animate={{ width: `${pct}%` }}
+                          transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
                         />
-                      ))}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </motion.div>

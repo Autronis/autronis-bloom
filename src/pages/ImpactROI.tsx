@@ -172,8 +172,8 @@ const ROIScanModule = () => {
         )}
 
         <div className="mt-8 pt-6 border-t border-border">
-          <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-            Deze berekening is indicatief. Tijdens de analysefase wordt een volledige businesscase opgesteld inclusief risico- en impactanalyse.
+          <p className="text-sm text-muted-foreground leading-relaxed mb-5 italic">
+            <span className="text-primary not-italic">⚠️</span> Deze berekening is indicatief. Tijdens de analysefase wordt een volledige businesscase opgesteld inclusief risico- en impactanalyse.
           </p>
           <Button asChild size="lg">
             <Link to="/book">

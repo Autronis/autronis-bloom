@@ -73,7 +73,7 @@ const TimelineCard = ({
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       onMouseMove={handleMouseMove}
-      className="relative rounded-xl border bg-card p-6 cursor-pointer overflow-hidden"
+      className="relative rounded-xl border border-primary/20 bg-card p-6 cursor-pointer overflow-hidden"
       style={{
         transform: isActive
           ? "scale(1.02) translateY(-2px)"

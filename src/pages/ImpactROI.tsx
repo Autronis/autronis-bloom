@@ -1,14 +1,10 @@
 import Layout from "@/components/Layout";
 import ImpactSimulator from "@/components/impact/ImpactSimulator";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Clock, Users, TrendingUp, Calculator, Building2, ShoppingCart, FileText, Shield, AlertTriangle } from "lucide-react";
-import { useState, useMemo } from "react";
+import { ArrowRight, Clock, Users, TrendingUp, Calculator, Building2, ShoppingCart, FileText, Shield } from "lucide-react";
 import { motion } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import AmbientLight from "@/components/AmbientLight";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 
 const methodItems = [
   { icon: Clock, title: "Directe tijdsbesparing", description: "Uren die vrijkomen door het elimineren van handmatige, repetitieve taken." },
@@ -50,152 +46,6 @@ const scenarios = [
     ],
   },
 ];
-
-const ROIScanModule = () => {
-  const [employees, setEmployees] = useState<string>("");
-  const [hourlyRate, setHourlyRate] = useState<string>("");
-  const [hoursPerWeek, setHoursPerWeek] = useState<string>("");
-  const [automationRate, setAutomationRate] = useState<string>("");
-  const [calculated, setCalculated] = useState(false);
-
-  const results = useMemo(() => {
-    const emp = parseFloat(employees) || 0;
-    const rate = parseFloat(hourlyRate) || 0;
-    const hours = parseFloat(hoursPerWeek) || 0;
-    const autoRate = (parseFloat(automationRate) || 0) / 100;
-
-    const weeklyHoursSaved = hours * autoRate;
-    const yearlyHoursSaved = weeklyHoursSaved * 48;
-    const yearlySavings = yearlyHoursSaved * rate;
-    const implementationCost = yearlySavings * 0.3; // conservative estimate
-    const paybackMonths = implementationCost > 0 ? Math.round((implementationCost / yearlySavings) * 12 * 10) / 10 : 0;
-
-    return {
-      yearlyHoursSaved: Math.round(yearlyHoursSaved),
-      yearlySavings: Math.round(yearlySavings),
-      paybackMonths,
-      isValid: emp > 0 && rate > 0 && hours > 0 && autoRate > 0,
-    };
-  }, [employees, hourlyRate, hoursPerWeek, automationRate]);
-
-  return (
-    <div className="max-w-4xl mx-auto">
-      <div className="rounded-xl border border-border bg-card p-6 sm:p-10">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-            <Calculator size={20} />
-          </div>
-          <div>
-            <h3 className="text-xl font-bold">ROI-scan</h3>
-            <p className="text-sm text-muted-foreground">Indicatieve impactanalyse</p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-8">
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Aantal medewerkers</label>
-            <Input
-              type="number"
-              placeholder="bijv. 12"
-              value={employees}
-              onChange={(e) => { setEmployees(e.target.value); setCalculated(false); }}
-            />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Gemiddelde uurkost (€)</label>
-            <Input
-              type="number"
-              placeholder="bijv. 55"
-              value={hourlyRate}
-              onChange={(e) => { setHourlyRate(e.target.value); setCalculated(false); }}
-            />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Uren per week aan repetitieve taken</label>
-            <Input
-              type="number"
-              placeholder="bijv. 40"
-              value={hoursPerWeek}
-              onChange={(e) => { setHoursPerWeek(e.target.value); setCalculated(false); }}
-            />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Verwachte automatiseringsgraad (%)</label>
-            <Input
-              type="number"
-              placeholder="bijv. 65"
-              value={automationRate}
-              onChange={(e) => { setAutomationRate(e.target.value); setCalculated(false); }}
-            />
-          </div>
-        </div>
-
-        <div className="mt-8">
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={() => setCalculated(true)}
-            disabled={!results.isValid}
-          >
-            Bereken indicatieve impact
-            <ArrowRight size={18} />
-          </Button>
-        </div>
-
-        {calculated && results.isValid && (
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
-            className="mt-8 pt-8 border-t border-border"
-          >
-            <p className="text-xs font-semibold text-primary mb-5 tracking-widest uppercase">
-              Indicatieve resultaten
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="rounded-lg border border-border bg-muted/50 p-5">
-                <p className="text-xs text-muted-foreground mb-1">Vrijgespeelde capaciteit</p>
-                <p className="text-2xl font-bold text-foreground">{results.yearlyHoursSaved.toLocaleString("nl-NL")}</p>
-                <p className="text-sm text-muted-foreground">uur per jaar</p>
-              </div>
-              <div className="rounded-lg border border-primary/30 bg-primary/[0.04] p-5">
-                <p className="text-xs text-muted-foreground mb-1">Structurele kostenreductie</p>
-                <p className="text-3xl font-bold text-primary">€{results.yearlySavings.toLocaleString("nl-NL")}</p>
-                <p className="text-sm text-muted-foreground">per jaar</p>
-              </div>
-              <div className="rounded-lg border border-border bg-muted/50 p-5">
-                <p className="text-xs text-muted-foreground mb-1">Indicatieve terugverdientijd</p>
-                <p className="text-2xl font-bold text-foreground">{results.paybackMonths}</p>
-                <p className="text-sm text-muted-foreground">maanden</p>
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        <div className="mt-8 pt-6 border-t border-border">
-          <p className="text-sm text-muted-foreground leading-relaxed mb-5 italic flex items-start gap-1.5">
-            <AlertTriangle size={14} className="text-primary shrink-0 mt-0.5 not-italic" /> Deze berekening is indicatief. Tijdens de analysefase wordt een volledige businesscase opgesteld inclusief risico- en impactanalyse.
-          </p>
-          <Button asChild size="lg">
-            <Link to="/book">
-              Plan een impactanalyse
-              <ArrowRight size={18} />
-            </Link>
-          </Button>
-          <div className="mt-4">
-            <Link
-              to="/#beveiliging"
-              className="group inline-flex items-center gap-1 text-[11px] text-foreground/70 hover:text-primary/70 transition-colors"
-            >
-              Bekijk onze Beveiligingsaanpak
-              <ArrowRight size={10} className="transition-transform duration-200 group-hover:translate-x-1" />
-            </Link>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const ImpactROI = () => {
   return (
@@ -274,26 +124,6 @@ const ImpactROI = () => {
               </div>
             </ScrollRevealItem>
           </ScrollReveal>
-        </div>
-      </section>
-
-      {/* ROI-scan Module */}
-      <section id="roi-scan" className="py-16 sm:py-24 border-t border-border relative overflow-hidden scroll-mt-24">
-        <AmbientLight />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <ScrollReveal className="max-w-2xl mx-auto text-center mb-12">
-            <ScrollRevealItem>
-              <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
-                ROI-scan
-              </p>
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4">Bereken uw indicatieve impact</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                Vul onderstaande gegevens in voor een eerste indicatie van de zakelijke impact van automatisering.
-              </p>
-            </ScrollRevealItem>
-          </ScrollReveal>
-
-          <ROIScanModule />
         </div>
       </section>
 

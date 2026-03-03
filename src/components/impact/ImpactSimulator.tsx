@@ -1,9 +1,12 @@
 import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Slider } from "@/components/ui/slider";
-import { AlertTriangle, TrendingUp, Calendar, Percent, DollarSign } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { AlertTriangle, TrendingUp, Calendar, Percent, DollarSign, ArrowRight } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, Tooltip } from "recharts";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import AmbientLight from "@/components/AmbientLight";
 
 const formatCurrency = (v: number) =>
   `€${Math.round(v).toLocaleString("nl-NL")}`;
@@ -80,10 +83,8 @@ const ImpactSimulator = () => {
   ];
 
   return (
-    <section className="relative overflow-hidden border-t border-border">
-      {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-primary/[0.03]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_100%,hsl(174_78%_41%/0.06),transparent)]" />
+    <section id="roi-scan" className="relative overflow-hidden border-t border-border scroll-mt-24">
+      <AmbientLight />
 
       <div className="container mx-auto px-4 lg:px-8 py-16 sm:py-24 relative z-10">
         {/* Header */}
@@ -231,12 +232,27 @@ const ImpactSimulator = () => {
           </motion.div>
         </div>
 
-        {/* Disclaimer */}
-        <div className="max-w-6xl mx-auto mt-8">
-          <p className="text-xs text-muted-foreground leading-relaxed italic flex items-start gap-1.5">
-            <AlertTriangle size={12} className="text-primary shrink-0 mt-0.5 not-italic" />
-            Alle berekeningen zijn conservatief en worden tijdens de impactanalyse gevalideerd inclusief risico-inschatting.
+        {/* Disclaimer + CTAs */}
+        <div className="max-w-6xl mx-auto mt-8 pt-6 border-t border-border">
+          <p className="text-sm text-muted-foreground leading-relaxed mb-5 italic flex items-start gap-1.5">
+            <AlertTriangle size={14} className="text-primary shrink-0 mt-0.5 not-italic" />
+            Deze berekening is indicatief. Tijdens de analysefase wordt een volledige businesscase opgesteld inclusief risico- en impactanalyse.
           </p>
+          <Button asChild size="lg">
+            <Link to="/book">
+              Plan een impactanalyse
+              <ArrowRight size={18} />
+            </Link>
+          </Button>
+          <div className="mt-4">
+            <Link
+              to="/#beveiliging"
+              className="group inline-flex items-center gap-1 text-[11px] text-foreground/70 hover:text-primary/70 transition-colors"
+            >
+              Bekijk onze Beveiligingsaanpak
+              <ArrowRight size={10} className="transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
+          </div>
         </div>
       </div>
     </section>

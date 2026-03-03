@@ -79,7 +79,7 @@ const Contact = () => {
                   <p className="text-sm text-muted-foreground">Wij reageren op elke aanvraag binnen één werkdag. Geen wachtrijen, geen formulieren — gewoon snel en persoonlijk contact.</p>
                 </div>
                 <div className="space-y-3 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2"><Mail size={16} className="text-primary" /> info@autronisgroup.com</div>
+                  <div className="flex items-center gap-2"><Mail size={16} className="text-primary" /> zakelijk@autronis.com</div>
                   <div className="flex items-center gap-2"><Linkedin size={16} className="text-primary" /> linkedin.com/company/autronisgroup</div>
                 </div>
               </div>

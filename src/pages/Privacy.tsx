@@ -16,9 +16,9 @@ const Privacy = () => (
           <h2 className="text-lg font-semibold text-foreground">Bewaring</h2>
           <p>Wij bewaren uw gegevens niet langer dan noodzakelijk voor het doel waarvoor ze zijn verzameld, met een maximum van 24 maanden.</p>
           <h2 className="text-lg font-semibold text-foreground">Uw rechten</h2>
-          <p>U heeft recht op inzage, correctie en verwijdering van uw persoonsgegevens. Neem contact op via info@autronisgroup.com.</p>
+          <p>U heeft recht op inzage, correctie en verwijdering van uw persoonsgegevens. Neem contact op via zakelijk@autronis.com.</p>
           <h2 className="text-lg font-semibold text-foreground">Contact</h2>
-          <p>Voor vragen over dit privacybeleid kunt u contact opnemen via info@autronisgroup.com.</p>
+          <p>Voor vragen over dit privacybeleid kunt u contact opnemen via zakelijk@autronis.com.</p>
         </div>
       </div>
     </section>

@@ -17,7 +17,7 @@ const Cookies = () => (
           <h2 className="text-lg font-semibold text-foreground">Cookies beheren</h2>
           <p>U kunt cookies beheren of uitschakelen via uw browserinstellingen. Let op: het uitschakelen van cookies kan de functionaliteit van de website beperken.</p>
           <h2 className="text-lg font-semibold text-foreground">Contact</h2>
-          <p>Vragen over ons cookiebeleid? Neem contact op via info@autronisgroup.com.</p>
+          <p>Vragen over ons cookiebeleid? Neem contact op via zakelijk@autronis.com.</p>
         </div>
       </div>
     </section>

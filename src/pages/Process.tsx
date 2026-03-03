@@ -552,7 +552,7 @@ const Process = () => {
               {impactCards.filter(c => c.primary).map((card, idx) => (
                 <motion.div
                   key={card.title}
-                  className="rounded-2xl border border-primary/20 p-6 sm:p-7 cursor-default group"
+                  className="rounded-2xl border border-primary/30 p-6 sm:p-7 cursor-default group"
                   style={{
                     backgroundColor: "hsl(var(--card) / 0.8)",
                     backdropFilter: "blur(8px)",
@@ -570,15 +570,10 @@ const Process = () => {
                   <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-foreground mb-4 group-hover:text-primary transition-colors duration-300">
                     <card.icon size={20} />
                   </div>
-                  <h3 className="text-lg font-bold mb-2">{card.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+                  <h3 className="text-base font-bold mb-2">{card.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
                     {card.description}
                   </p>
-                  {card.sub && (
-                    <p className="text-[11px] text-muted-foreground/60 leading-relaxed italic">
-                      {card.sub}
-                    </p>
-                  )}
                 </motion.div>
               ))}
             </div>

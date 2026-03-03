@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ShieldCheck } from "lucide-react";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import HeroBackground from "@/components/home/HeroBackground";
@@ -77,6 +77,25 @@ const Index = () => {
       <ProcessSection />
       <WhyAutronisSection />
       <ROIPreview />
+
+      {/* Security Trust Strip */}
+      <div className="border-t border-border/50">
+        <div className="container mx-auto px-4 lg:px-8 py-5">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+            <div className="flex items-center gap-2.5">
+              <ShieldCheck size={15} className="text-muted-foreground/60 shrink-0" />
+              <p className="text-xs text-muted-foreground/70 leading-relaxed">
+                Beveiliging en datakwaliteit zijn geïntegreerd in elke fase van onze aanpak — met minimale toegangsrechten, logging en volledige documentatie.
+              </p>
+            </div>
+            <Link to="/services#kwaliteitsnorm" className="text-xs text-muted-foreground/70 hover:text-primary transition-colors whitespace-nowrap flex items-center gap-1 shrink-0">
+              Bekijk onze kwaliteitsnorm
+              <ArrowRight size={12} />
+            </Link>
+          </div>
+        </div>
+      </div>
+
       <CaseStudiesPreview />
       <SecurityBlock />
       <FAQSection />

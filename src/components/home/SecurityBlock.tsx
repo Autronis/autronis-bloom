@@ -93,10 +93,11 @@ const SecurityBlock = () => {
                 className="relative rounded-2xl p-6 cursor-default transition-all duration-300 ease-out bg-card border border-border"
                 style={{
                   borderColor: isHovered ? "hsl(var(--primary) / 0.4)" : undefined,
-                  transform: isHovered ? "translateY(-4px)" : "translateY(0)",
+                  transform: isHovered ? "scale(1.03) translateY(-4px)" : "scale(1) translateY(0)",
                   boxShadow: isHovered
                     ? "0 8px 32px hsl(174 78% 41% / 0.1), 0 2px 8px hsl(0 0% 0% / 0.2)"
                     : "none",
+                  zIndex: isHovered ? 10 : 1,
                 }}
               >
                 <div

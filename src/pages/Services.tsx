@@ -518,25 +518,28 @@ const Services = () => {
             </div>
           </div>
 
-          {/* Standaard inbegrepen */}
+          {/* Kwaliteitsnorm */}
           <div className="mt-16 border-t border-border pt-12 max-w-3xl mx-auto">
             <ScrollReveal className="text-center mb-8">
               <ScrollRevealItem>
-                <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Kwaliteitsbasis</p>
-                <h2 className="text-2xl sm:text-3xl font-bold">Standaard inbegrepen</h2>
+                <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Kwaliteitsnorm</p>
+                <h2 className="text-2xl sm:text-3xl font-bold mb-4">Onze technische en organisatorische basis</h2>
+                <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl mx-auto">
+                  Elke implementatie voldoet aan vaste architectuur- en governanceprincipes. Beveiliging, controle en overdraagbaarheid zijn geen toevoeging, maar uitgangspunt.
+                </p>
               </ScrollRevealItem>
             </ScrollReveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {[
-                { icon: ShieldCheck, text: "Minimale toegangsrechten (least privilege)" },
-                { icon: BarChart3, text: "Logging & monitoring" },
-                { icon: FileText, text: "Volledige technische documentatie" },
-                { icon: Shield, text: "Datagovernance en AVG-afstemming" },
-                { icon: Layers, text: "Overdraagbare architectuur" },
+                { icon: ShieldCheck, title: "Minimale toegangsrechten", desc: "Toegang wordt ingericht volgens het least-privilege principe met role-based access control. Geen overmatige systeemrechten." },
+                { icon: BarChart3, title: "Logging & monitoring", desc: "Realtime logging, foutdetectie en audittrails voor volledige traceerbaarheid van processen en datastromen." },
+                { icon: FileText, title: "Volledige technische documentatie", desc: "Architectuur, integraties, datalogica en configuraties volledig vastgelegd en overdraagbaar." },
+                { icon: Shield, title: "Datagovernance & AVG-afstemming", desc: "Dataverwerking ingericht conform privacyrichtlijnen en interne compliance-eisen." },
+                { icon: Layers, title: "Overdraagbare architectuur", desc: "Geen vendor lock-in. Systemen blijven beheersbaar en uitbreidbaar voor interne teams." },
               ].map((item, idx) => (
                 <motion.div
-                  key={item.text}
-                  className="flex items-center gap-3 p-4 rounded-xl border border-border bg-card cursor-default"
+                  key={item.title}
+                  className="flex items-start gap-3 p-4 rounded-xl border border-primary/15 bg-card cursor-default"
                   initial={{ opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -546,13 +549,19 @@ const Services = () => {
                     boxShadow: "0 0 14px hsl(174, 78%, 41%, 0.1)",
                   }}
                 >
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 mt-0.5">
                     <item.icon size={16} />
                   </div>
-                  <p className="text-sm text-foreground/80">{item.text}</p>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">{item.title}</p>
+                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{item.desc}</p>
+                  </div>
                 </motion.div>
               ))}
             </div>
+            <p className="text-xs text-muted-foreground text-center mt-6 italic">
+              Wij realiseren geen automatisering zonder dat deze principes aantoonbaar zijn geborgd.
+            </p>
           </div>
 
           {/* ROI reference */}

@@ -62,7 +62,7 @@ const ReasonCard = ({
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       onMouseMove={handleMouseMove}
-      className="relative rounded-xl border border-border p-6 overflow-hidden transition-all duration-[300ms] ease-out bg-muted dark:bg-[hsl(192,22%,15%)]"
+      className="relative rounded-xl border border-border p-6 overflow-hidden transition-all duration-[300ms] ease-out bg-card"
       style={{
         transform: isHovered ? "scale(1.01) translateY(-4px)" : "scale(1) translateY(0)",
         opacity: isAnyHovered && !isHovered ? 0.88 : 1,

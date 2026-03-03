@@ -2,6 +2,7 @@ import { Shield, Lock, Globe, Database, Award, KeyRound, ShieldCheck } from "luc
 import { useState } from "react";
 import { motion } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import AmbientLight from "@/components/AmbientLight";
 
 const features = [
   {
@@ -56,34 +57,18 @@ const SecurityBlock = () => {
 
   return (
     <section className="relative overflow-hidden border-t border-primary/10">
-      {/* Background gradient */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(180deg, hsl(192 30% 8%) 0%, hsl(180 28% 10%) 50%, hsl(192 30% 8%) 100%)",
-        }}
-      />
-
-      {/* Subtle radial glow */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse, hsl(174 78% 41% / 0.06) 0%, transparent 70%)",
-        }}
-      />
+      <AmbientLight />
 
       <div className="container mx-auto px-4 lg:px-8 py-16 sm:py-24 relative z-10">
         <ScrollReveal className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
           <ScrollRevealItem>
-            <p className="text-xs font-semibold tracking-widest uppercase mb-4" style={{ color: "hsl(174, 78%, 41%)" }}>
+            <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-primary">
               Beveiliging & Vertrouwen
             </p>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ color: "hsl(0 0% 95%)" }}>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
               Uw data is beschermd volgens enterprise-standaarden
             </h2>
-            <p className="text-base leading-relaxed" style={{ color: "hsl(192 15% 55%)" }}>
+            <p className="text-base leading-relaxed text-muted-foreground">
               Beveiliging is geen toevoeging achteraf. Het is geïntegreerd in elke laag van onze automatiseringen en AI-oplossingen.
             </p>
           </ScrollRevealItem>
@@ -105,30 +90,24 @@ const SecurityBlock = () => {
                 viewport={{ once: true, amount: 0.3 }}
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                className="relative rounded-2xl p-6 cursor-default transition-all duration-300 ease-out"
+                className="relative rounded-2xl p-6 cursor-default transition-all duration-300 ease-out bg-card border border-border"
                 style={{
-                  backgroundColor: "hsl(192 25% 13%)",
-                  border: `1px solid ${isHovered ? "hsl(174, 78%, 41%, 0.4)" : "hsl(192 18% 19%)"}`,
+                  borderColor: isHovered ? "hsl(var(--primary) / 0.4)" : undefined,
                   transform: isHovered ? "translateY(-4px)" : "translateY(0)",
                   boxShadow: isHovered
                     ? "0 8px 32px hsl(174 78% 41% / 0.1), 0 2px 8px hsl(0 0% 0% / 0.2)"
-                    : "0 2px 8px hsl(0 0% 0% / 0.15)",
+                    : "none",
                 }}
               >
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-colors duration-300"
-                  style={{
-                    backgroundColor: isHovered
-                      ? "hsl(174 78% 41% / 0.15)"
-                      : "hsl(174 78% 41% / 0.08)",
-                  }}
+                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-colors duration-300 bg-primary/10"
                 >
-                  <Icon size={20} style={{ color: "hsl(174, 78%, 41%)" }} />
+                  <Icon size={20} className="text-primary" />
                 </div>
-                <h3 className="text-base font-semibold mb-2" style={{ color: "hsl(0 0% 93%)" }}>
+                <h3 className="text-base font-semibold mb-2">
                   {feature.title}
                 </h3>
-                <p className="text-sm leading-relaxed" style={{ color: "hsl(192 15% 50%)" }}>
+                <p className="text-sm leading-relaxed text-muted-foreground">
                   {feature.description}
                 </p>
               </motion.div>
@@ -140,14 +119,14 @@ const SecurityBlock = () => {
         <ScrollReveal className="mt-12 sm:mt-16">
           <ScrollRevealItem>
             <div className="flex items-center justify-center gap-3">
-              <div className="h-px w-16 sm:w-24" style={{ backgroundColor: "hsl(174 78% 41% / 0.2)" }} />
+              <div className="h-px w-16 sm:w-24 bg-primary/20" />
               <div className="flex items-center gap-2">
-                <ShieldCheck size={14} style={{ color: "hsl(174, 78%, 41%)" }} />
-                <span className="text-xs font-medium tracking-wide" style={{ color: "hsl(192 15% 45%)" }}>
+                <ShieldCheck size={14} className="text-primary" />
+                <span className="text-xs font-medium tracking-wide text-muted-foreground">
                   Security by design. Geen compromissen.
                 </span>
               </div>
-              <div className="h-px w-16 sm:w-24" style={{ backgroundColor: "hsl(174 78% 41% / 0.2)" }} />
+              <div className="h-px w-16 sm:w-24 bg-primary/20" />
             </div>
           </ScrollRevealItem>
         </ScrollReveal>

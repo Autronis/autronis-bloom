@@ -14,7 +14,7 @@ const SkillBadge = ({ skill, index }: { skill: Skill; index: number }) => (
     className={`text-[10px] font-medium px-2.5 py-1 rounded-full border backdrop-blur-sm
       ${categoryMeta[skill.category].bg} ${categoryMeta[skill.category].border}
       ${categoryMeta[skill.category].glow}
-      text-white/90 transition-all duration-200 cursor-default`}
+      text-white transition-all duration-200 cursor-default`}
   >
     {skill.label}
   </motion.span>
@@ -24,7 +24,7 @@ const PreviewBadge = ({ skill }: { skill: Skill }) => (
   <span
     className={`text-[10px] font-medium px-2.5 py-1 rounded-full border
       ${categoryMeta[skill.category].bg} ${categoryMeta[skill.category].border}
-      text-white/90`}
+      text-white`}
   >
     {skill.label}
   </span>
@@ -132,7 +132,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
                 : "opacity-100 group-hover:opacity-0 group-hover:h-0 group-hover:overflow-hidden"
               }`}
           >
-            <span className="text-[8px] font-bold tracking-[0.14em] uppercase text-white/50 mr-1 block w-full mb-1">
+            <span className="text-[8px] font-bold tracking-[0.14em] uppercase text-white/70 mr-1 block w-full mb-1">
               Vaardigheden
             </span>
             {/* Pick first skill from each category for variety */}

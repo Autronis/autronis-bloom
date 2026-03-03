@@ -164,13 +164,13 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
               transition-all duration-200 hover:scale-[1.08]"
             onClick={(e) => e.stopPropagation()}
           >
-            <svg width="16" height="12" viewBox="0 0 24 18" fill="none">
-              <path d="M1.636 0L12 7.09L22.364 0H1.636z" fill="#EA4335"/>
-              <path d="M24 1.636L12 10.909 0 1.636V16.364C0 17.268.732 18 1.636 18H6V9l6 4.5L18 9v9h4.364c.904 0 1.636-.732 1.636-1.636V1.636z" fill="#4285F4"/>
-              <path d="M0 1.636V16.364C0 17.268.732 18 1.636 18H6V9L0 1.636z" fill="#4285F4"/>
-              <path d="M24 1.636V16.364c0 .904-.732 1.636-1.636 1.636H18V9l6-7.364z" fill="#34A853"/>
-              <path d="M0 1.636L6 9V4.636L1.636 0C.732 0 0 .732 0 1.636z" fill="#C5221F"/>
-              <path d="M24 1.636L18 9V4.636L22.364 0C23.268 0 24 .732 24 1.636z" fill="#FBBC05"/>
+            <svg width="16" height="12" viewBox="0 0 48 36" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5.5 0A5.5 5.5 0 0 0 0 5.5v1.2L24 21 48 6.7V5.5A5.5 5.5 0 0 0 42.5 0h-37z" fill="#EA4335"/>
+              <path d="M0 10.4V30.5A5.5 5.5 0 0 0 5.5 36H16V18L0 10.4z" fill="#4285F4"/>
+              <path d="M48 10.4V30.5A5.5 5.5 0 0 1 42.5 36H32V18l16-7.6z" fill="#34A853"/>
+              <path d="M16 18v18h16V18l-8 6-8-6z" fill="#C5221F"/>
+              <path d="M0 10.4L16 18l-8 6L0 10.4z" fill="#C5221F"/>
+              <path d="M48 10.4L32 18l8 6 8-13.6z" fill="#FBBC05"/>
             </svg>
           </a>
           <a

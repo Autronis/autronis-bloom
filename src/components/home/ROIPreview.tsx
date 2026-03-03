@@ -140,7 +140,7 @@ const ROIPreview = () => {
               </Link>
             </Button>
             <p className="text-xs text-muted-foreground mt-3">
-              Ontvang direct een indicatieve businesscase inclusief terugverdientijd.
+              Gebruik onze ROI-calculator en ontvang direct een indicatieve businesscase inclusief terugverdientijd.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>

@@ -11,7 +11,7 @@ import {
   Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,
 } from "@/components/ui/tooltip";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
-import AmbientLight from "@/components/AmbientLight";
+
 
 /* ─── helpers ─── */
 const formatCurrency = (v: number) =>
@@ -110,7 +110,7 @@ const ImpactSimulator = () => {
 
   return (
     <section id="roi-scan" className="relative overflow-hidden border-t border-border scroll-mt-24">
-      <AmbientLight />
+      
       <div className="container mx-auto px-4 lg:px-8 py-16 sm:py-24 relative z-10">
         {/* Header */}
         <ScrollReveal className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">

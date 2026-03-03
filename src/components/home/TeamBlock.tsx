@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import teamFoto from "@/assets/autronis_team_foto.png";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
-import AmbientLight from "@/components/AmbientLight";
+
 
 const TeamBlock = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -17,7 +17,7 @@ const TeamBlock = () => {
       ref={sectionRef}
       className="py-12 sm:py-24 border-t border-border relative overflow-hidden"
     >
-      <AmbientLight />
+      
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">

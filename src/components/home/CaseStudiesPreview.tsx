@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
-import AmbientLight from "@/components/AmbientLight";
+
 
 const caseStudies = [
   {
@@ -78,7 +78,7 @@ const CaseStudiesPreview = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
-      <AmbientLight />
+      
 
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">

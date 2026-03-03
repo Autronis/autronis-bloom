@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
-import AmbientLight from "@/components/AmbientLight";
+
 
 const impactBlocks = [
   {
@@ -47,7 +47,7 @@ const kernpunten = [
 const ROIPreview = () => {
   return (
     <section className="py-16 sm:py-24 border-t border-border relative overflow-hidden">
-      <AmbientLight />
+      
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Header */}
         <ScrollReveal className="max-w-2xl mx-auto text-center mb-10 sm:mb-14">

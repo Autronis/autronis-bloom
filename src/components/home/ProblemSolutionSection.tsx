@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import { useInView } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import GlowCard from "@/components/GlowCard";
-import AmbientLight from "@/components/AmbientLight";
+
 
 const problems = [
   {
@@ -106,7 +106,7 @@ const ProblemSolutionSection = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
-      <AmbientLight />
+      
 
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">

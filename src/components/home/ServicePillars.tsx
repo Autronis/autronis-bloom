@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Cog, Link2, PieChart, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
-import AmbientLight from "@/components/AmbientLight";
+
 
 import { motion } from "framer-motion";
 import serviceAutomation from "@/assets/service_automation_gen.png";
@@ -179,7 +179,7 @@ const ServicePillars = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
-      <AmbientLight />
+      
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <ScrollReveal className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">

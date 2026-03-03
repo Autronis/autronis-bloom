@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { ArrowRight, ArrowLeft } from "lucide-react";
-import AmbientLight from "@/components/AmbientLight";
+
 
 const caseData: Record<string, {
   client: string; industry: string; metric: string;
@@ -50,7 +50,7 @@ const CaseStudyDetail = () => {
   return (
     <Layout>
       <section className="pt-16 pb-24 relative overflow-hidden">
-        <AmbientLight />
+        
         <div className="container mx-auto px-4 lg:px-8">
           <Link to="/case-studies" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-8">
             <ArrowLeft size={14} /> Alle case studies

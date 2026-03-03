@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ShieldCheck, Search, PenTool, Wrench, CheckCircle, BarChart3 } from "lucide-react";
 import { useState, useRef, useCallback, useEffect } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
-import AmbientLight from "@/components/AmbientLight";
+
 
 const phases = [
   {
@@ -156,7 +156,7 @@ const ProcessSection = () => {
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden" ref={sectionRef}>
-      <AmbientLight />
+      
 
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">

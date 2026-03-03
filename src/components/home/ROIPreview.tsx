@@ -64,7 +64,7 @@ const ROIPreview = () => {
                 </p>
 
                 <Button asChild size="lg" className="w-full sm:w-auto">
-                  <Link to="/impact-roi">
+                  <Link to="/impact-roi#roi-scan">
                     Bekijk uw persoonlijke impactanalyse
                     <ArrowRight size={18} />
                   </Link>

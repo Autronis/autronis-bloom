@@ -548,7 +548,7 @@ const Services = () => {
                 { icon: ShieldCheck, title: "Toegangscontrole als basis", desc: "Least-privilege en rolgebaseerde toegang zijn standaard. Overmatige systeemrechten worden niet toegepast." },
                 { icon: BarChart3, title: "Logging & volledige traceerbaarheid", desc: "Realtime logging, audittrails en foutdetectie zijn standaard actief binnen elke implementatie." },
                 { icon: Layers, title: "Overdraagbare architectuur", desc: "Geen vendor lock-in. Architectuur blijft beheersbaar, uitbreidbaar en overdraagbaar naar interne teams." },
-                { icon: Database, title: "Datagovernance & AVG-afstemming", desc: "Dataverwerking wordt ingericht conform privacywetgeving en interne compliance-eisen." },
+                { icon: Database, title: "Datagovernance & AVG-afstemming", desc: "Dataverwerking wordt ingericht conform privacywetgeving en aantoonbare compliance-eisen." },
                 { icon: FileText, title: "Volledige technische documentatie", desc: "Architectuur, integraties en configuraties worden volledig vastgelegd en overdraagbaar opgeleverd." },
                 { icon: Cog, title: "Stabiele en schaalbare infrastructuur", desc: "Enterprise-grade infrastructuur die meegroeit zonder performance- of veiligheidscompromissen." },
               ].map((item, idx) => (

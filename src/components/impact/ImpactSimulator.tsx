@@ -194,26 +194,35 @@ const ImpactSimulator = () => {
                   const maxVal = Math.max(...chartData.map((d) => d.value));
                   const pct = maxVal > 0 ? (item.value / maxVal) * 100 : 0;
                   return (
-                    <div key={item.name} className="space-y-1.5">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="text-muted-foreground">{item.name}</span>
-                        <span className="font-medium text-foreground tabular-nums">{formatCurrency(item.value)}</span>
-                      </div>
-                      <div className="w-full h-3 rounded-full bg-muted overflow-hidden">
-                        <motion.div
-                          className="h-full rounded-full"
-                          style={{
-                            backgroundColor:
-                              item.type === "savings"
-                                ? "hsl(174, 78%, 41%)"
-                                : item.type === "automated"
-                                ? "hsl(192, 20%, 30%)"
-                                : "hsl(192, 15%, 45%)",
-                          }}
-                          initial={{ width: 0 }}
-                          animate={{ width: `${pct}%` }}
-                          transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-                        />
+                    <div key={item.name}>
+                      {item.type === "savings" && (
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="h-px flex-1 bg-border" />
+                          <span className="text-xs text-muted-foreground font-medium">−</span>
+                          <div className="h-px flex-1 bg-border" />
+                        </div>
+                      )}
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-muted-foreground">{item.name}</span>
+                          <span className="font-medium text-foreground tabular-nums">{formatCurrency(item.value)}</span>
+                        </div>
+                        <div className="w-full h-3 rounded-full bg-muted overflow-hidden">
+                          <motion.div
+                            className="h-full rounded-full"
+                            style={{
+                              backgroundColor:
+                                item.type === "savings"
+                                  ? "hsl(174, 78%, 41%)"
+                                  : item.type === "automated"
+                                  ? "hsl(192, 20%, 30%)"
+                                  : "hsl(192, 15%, 45%)",
+                            }}
+                            initial={{ width: 0 }}
+                            animate={{ width: `${pct}%` }}
+                            transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+                          />
+                        </div>
                       </div>
                     </div>
                   );

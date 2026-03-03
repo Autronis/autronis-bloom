@@ -152,7 +152,7 @@ const WhyAutronisSection = () => {
                     loading="lazy"
                   />
                   <div
-                    className="absolute inset-0 pointer-events-none hidden dark:block"
+                    className="absolute inset-0 pointer-events-none"
                     style={{
                       background: "linear-gradient(to right, hsl(var(--card)) 0%, hsl(var(--card) / 0.3) 8%, transparent 25%)",
                     }}

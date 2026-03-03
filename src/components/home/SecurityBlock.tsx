@@ -118,10 +118,11 @@ const SecurityBlock = () => {
                             <motion.li
                               key={point.text}
                               className="flex items-start gap-3 text-sm leading-relaxed"
-                              whileHover={{ x: 4 }}
+                              whileHover={{ scale: 1.02, x: 4 }}
                               transition={{ duration: 0.2 }}
                             >
                               <PointIcon size={15} className="text-primary/60 mt-[2px] shrink-0" />
+                              <span className="text-muted-foreground/50">—</span>
                               <span className="text-foreground/85">{point.text}</span>
                             </motion.li>
                           );

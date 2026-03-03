@@ -149,36 +149,16 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
             </p>
 
             {/* Description – larger and more readable */}
-            <p className="text-[12px] text-white/85 leading-relaxed mb-4">
+            <p className="text-[13px] text-white/90 leading-relaxed mb-4">
               {member.description}
             </p>
 
-            {/* Vaardigheden label */}
-            <p className="text-[8px] font-medium tracking-[0.18em] uppercase text-white/40 mb-2.5">
-              Vaardigheden
-            </p>
-
-            {/* Skills grouped */}
-            <div className="space-y-2.5">
-              {(["arch", "ai", "gov"] as SkillCategory[]).map((cat) =>
-                grouped[cat]?.length ? (
-                  <div key={cat}>
-                    <p className="text-[8px] font-semibold tracking-[0.12em] uppercase text-white/50 mb-1">
-                      {categoryLabels[cat]}
-                    </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {grouped[cat].map((s) => {
-                        const i = tagIndex++;
-                        return isMobile && expanded ? (
-                          <SkillBadge key={s.label} skill={s} index={i} />
-                        ) : (
-                          <SkillBadge key={s.label} skill={s} index={i} />
-                        );
-                      })}
-                    </div>
-                  </div>
-                ) : null
-              )}
+            {/* Skills grouped – no headers */}
+            <div className="flex flex-wrap gap-1.5">
+              {member.skills.map((s) => {
+                const i = tagIndex++;
+                return <SkillBadge key={s.label} skill={s} index={i} />;
+              })}
             </div>
           </div>
 

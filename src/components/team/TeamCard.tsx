@@ -55,7 +55,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
       // Desktop hover via group
     >
       {/* Photo area */}
-      <div className="relative overflow-hidden" style={{ aspectRatio: "3/4" }}>
+      <div className="relative overflow-hidden" style={{ aspectRatio: "2/3" }}>
         <img
           src={member.photo}
           alt={member.name}
@@ -69,9 +69,9 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
           className={`absolute inset-0 pointer-events-none transition-all duration-400
             ${isMobile
               ? expanded
-                ? "bg-black/60 dark:bg-black/65 backdrop-blur-[6px]"
-                : "bg-gradient-to-t from-black/55 via-black/15 to-transparent"
-              : "bg-gradient-to-t from-black/55 via-black/15 to-transparent group-hover:bg-black/60 dark:group-hover:bg-black/65 group-hover:backdrop-blur-[6px]"
+                ? "bg-black/75 backdrop-blur-[8px]"
+                : "bg-gradient-to-t from-black/60 via-black/20 to-transparent"
+              : "bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:bg-black/75 group-hover:backdrop-blur-[8px]"
             }`}
         />
 
@@ -125,7 +125,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
         )}
 
         {/* Content overlay */}
-        <div className="absolute inset-x-0 bottom-0 z-10 px-5 pb-5 pt-10">
+        <div className="absolute inset-x-0 bottom-0 top-0 z-10 px-5 pb-5 pt-14 flex flex-col justify-end overflow-y-auto">
           {/* Expanded state: desktop hover OR mobile tap */}
           <div
             className={`transition-all duration-350 ease-out overflow-visible
@@ -136,7 +136,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
             style={isMobile && expanded ? { maxHeight: "700px" } : undefined}
           >
             {/* Description */}
-            <p className="text-[13px] text-white/90 leading-relaxed mb-4">
+            <p className="text-[13px] text-white leading-relaxed mb-4 pr-6">
               {member.description}
             </p>
 

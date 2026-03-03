@@ -1,6 +1,6 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import {
@@ -41,25 +41,6 @@ const useAnimatedValue = (target: number, duration = 600) => {
   return display;
 };
 
-/* ─── delta badge ─── */
-const DeltaBadge = ({ value }: { value: number }) => (
-  <AnimatePresence>
-    {value !== 0 && (
-      <motion.span
-        key={value}
-        initial={{ opacity: 0, y: 4 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.35 }}
-        className={`ml-2 text-xs font-medium tabular-nums ${value > 0 ? "text-primary" : "text-destructive"}`}
-      >
-        {value > 0 ? "+" : ""}
-        {formatCurrency(value)}
-      </motion.span>
-    )}
-  </AnimatePresence>
-);
-
 /* ─── main ─── */
 const ImpactSimulator = () => {
   const [hours, setHours] = useState(40);
@@ -68,11 +49,6 @@ const ImpactSimulator = () => {
   const [errorPercent, setErrorPercent] = useState(5);
   const [activeSlider, setActiveSlider] = useState<string | null>(null);
   const [showTransparency, setShowTransparency] = useState(false);
-
-  // delta tracking
-  const prevYearly = useRef(0);
-  const [yearlyDelta, setYearlyDelta] = useState(0);
-  const deltaTimer = useRef<ReturnType<typeof setTimeout>>();
 
   const results = useMemo(() => {
     const autoFraction = autoPercent / 100;
@@ -106,20 +82,6 @@ const ImpactSimulator = () => {
       confidence,
     };
   }, [hours, rate, autoPercent, errorPercent]);
-
-  // delta effect
-  useEffect(() => {
-    const rounded = Math.round(results.yearlySavings);
-    if (prevYearly.current !== 0) {
-      const d = rounded - prevYearly.current;
-      if (Math.abs(d) > 50) {
-        setYearlyDelta(d);
-        if (deltaTimer.current) clearTimeout(deltaTimer.current);
-        deltaTimer.current = setTimeout(() => setYearlyDelta(0), 1200);
-      }
-    }
-    prevYearly.current = rounded;
-  }, [results.yearlySavings]);
 
   const animYearly = useAnimatedValue(Math.round(results.yearlySavings));
   const animMonthly = useAnimatedValue(Math.round(results.monthlySavings));
@@ -265,7 +227,6 @@ const ImpactSimulator = () => {
                   value={formatCurrency(animYearly)}
                   icon={<TrendingUp size={16} />}
                   highlight
-                  delta={yearlyDelta}
                 />
                 <KPICard
                   label="Break-even punt"
@@ -365,10 +326,6 @@ const ImpactSimulator = () => {
                 </AnimatePresence>
               </div>
 
-              {/* Bottom disclaimer */}
-              <p className="text-xs text-muted-foreground leading-relaxed text-center">
-                Deze berekening is indicatief. Tijdens de impactanalyse wordt een volledige businesscase opgesteld inclusief risico-inschatting, implementatieplanning en validatie van aannames.
-              </p>
             </motion.div>
           </div>
         </div>
@@ -379,13 +336,12 @@ const ImpactSimulator = () => {
 
 /* ─── KPI Card ─── */
 const KPICard = ({
-  label, value, icon, highlight, delta,
+  label, value, icon, highlight,
 }: {
   label: string;
   value: string;
   icon: React.ReactNode;
   highlight?: boolean;
-  delta?: number;
 }) => (
   <div
     className={`rounded-xl border p-4 transition-colors duration-300 ${
@@ -396,12 +352,9 @@ const KPICard = ({
       <div className="text-primary">{icon}</div>
       <p className="text-xs text-muted-foreground">{label}</p>
     </div>
-    <div className="flex items-baseline">
-      <p className={`text-2xl font-bold tabular-nums ${highlight ? "text-primary" : "text-foreground"}`}>
-        {value}
-      </p>
-      {delta !== undefined && delta !== 0 && <DeltaBadge value={delta} />}
-    </div>
+    <p className={`text-2xl font-bold tabular-nums ${highlight ? "text-primary" : "text-foreground"}`}>
+      {value}
+    </p>
   </div>
 );
 

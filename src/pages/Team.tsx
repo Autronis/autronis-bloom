@@ -15,6 +15,7 @@ const team = [
     photo: fotoSyb,
     description:
       "Syb heeft een scherp oog voor technische details en is de drijvende kracht achter de bouw. Hij denkt altijd een stap verder en zorgt dat elk systeem niet alleen werkt maar ook schaalbaar en toekomstbestendig is.",
+    skills: ["Automation Architect", "API Integraties", "Workflow Engineering", "Data-architectuur", "Performance optimalisatie"],
   },
   {
     name: "Sem Gijsberts",
@@ -22,7 +23,12 @@ const team = [
     photo: fotoSem,
     description:
       "Sem bouwt mee, denkt vooruit en houdt overzicht. Van het eerste klantgesprek tot het opgeleverde systeem — hij is betrokken bij elke stap en zorgt dat niets tussen wal en schip valt.",
+    skills: ["AI Integraties", "System Integrations", "Backend Automatisering", "Datastromen & Structuur", "Governance & Logging"],
   },
+];
+
+const toolStack = [
+  "OpenAI", "Supabase", "n8n", "Make", "Vercel", "AWS", "Google Cloud",
 ];
 
 const TeamCard = ({ member }: { member: (typeof team)[0] }) => {
@@ -52,7 +58,17 @@ const TeamCard = ({ member }: { member: (typeof team)[0] }) => {
       </div>
       <div className="p-4 text-center">
         <p className="font-semibold">{member.name}</p>
-        <p className="text-sm text-muted-foreground">{member.role}</p>
+        <p className="text-sm text-muted-foreground mb-3">{member.role}</p>
+        <div className="flex flex-wrap justify-center gap-1.5">
+          {member.skills.map((skill) => (
+            <span
+              key={skill}
+              className="text-[11px] px-2.5 py-1 rounded-full border border-border text-muted-foreground"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -81,7 +97,7 @@ const Team = () => {
           </ScrollReveal>
 
           {/* Cards */}
-          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto mb-20">
+          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto mb-16">
             {team.map((member) => (
               <ScrollRevealItem key={member.name}>
                 <TeamCard member={member} />
@@ -89,8 +105,28 @@ const Team = () => {
             ))}
           </ScrollReveal>
 
+          {/* Hoe wij werken */}
+          <ScrollReveal className="max-w-2xl mx-auto mb-16">
+            <ScrollRevealItem>
+              <h2 className="text-xl font-bold mb-5">Hoe wij werken</h2>
+              <ul className="space-y-2.5">
+                {[
+                  "Direct contact met engineers",
+                  "Geen accountmanager tussenlaag",
+                  "Technische diepgang vanaf dag één",
+                  "Transparante architectuurkeuzes",
+                ].map((item) => (
+                  <li key={item} className="flex items-center gap-2.5 text-sm text-foreground/90">
+                    <span className="w-1 h-1 rounded-full bg-primary shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </ScrollRevealItem>
+          </ScrollReveal>
+
           {/* CTA */}
-          <ScrollReveal className="text-center">
+          <ScrollReveal className="text-center mb-12">
             <ScrollRevealItem>
               <h2 className="text-2xl font-bold mb-3">Klaar om samen te werken?</h2>
               <p className="text-muted-foreground mb-6">
@@ -103,6 +139,13 @@ const Team = () => {
               </Button>
             </ScrollRevealItem>
           </ScrollReveal>
+
+          {/* Credibility line */}
+          <div className="text-center">
+            <p className="text-xs text-muted-foreground/60 tracking-wide">
+              Gebouwd met: {toolStack.join(" · ")}
+            </p>
+          </div>
         </div>
       </section>
     </Layout>

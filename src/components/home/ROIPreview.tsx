@@ -74,14 +74,16 @@ const ROIPreview = () => {
               {impactBlocks.map((block, idx) => (
                 <motion.div
                   key={block.title}
-                  className="rounded-xl border border-border bg-card p-6 sm:p-7 transition-all duration-300"
+                  className="rounded-xl border border-border bg-card p-6 sm:p-7"
                   initial={{ opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1, duration: 0.4 }}
                   whileHover={{
                     scale: 1.02,
+                    y: -3,
                     borderColor: "hsl(174, 78%, 41%, 0.5)",
+                    transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] },
                   }}
                 >
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">

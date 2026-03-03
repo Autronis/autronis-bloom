@@ -59,10 +59,10 @@ const team: TeamMember[] = [
 ];
 
 const directReasons = [
-  { icon: Users, title: "Geen overdracht tussen sales en techniek", description: "De architect die ontwerpt, bouwt ook." },
-  { icon: Clock, title: "Technische keuzes met lange termijnvisie", description: "Geen snelle oplossingen die later herschreven moeten worden." },
-  { icon: Eye, title: "Volledige overdraagbaarheid", description: "Architectuur en documentatie zijn altijd inzichtelijk." },
-  { icon: Shield, title: "Beveiliging vanaf dag één", description: "Geen systemen zonder logging, toegangsmodel en controle." },
+  { icon: Users, title: "Direct contact met engineers", description: "U werkt direct met de mensen die uw systemen ontwerpen en bouwen. Geen overdracht, geen ruis — alleen inhoudelijke samenwerking." },
+  { icon: Clock, title: "Technische keuzes met lange termijnvisie", description: "Elke beslissing is gericht op schaalbaarheid, onderhoudbaarheid en overdraagbaarheid. Geen snelle oplossingen die later herschreven moeten worden." },
+  { icon: Eye, title: "Volledige overdraagbaarheid", description: "Systemen zijn logisch opgebouwd, volledig gedocumenteerd en inzichtelijk. U blijft eigenaar van uw automatisering." },
+  { icon: Shield, title: "Beveiliging vanaf dag één", description: "Toegangsmodellen, logging en databeheer zijn standaard geïntegreerd — niet achteraf toegevoegd." },
 ];
 
 const toolStack = ["OpenAI", "Supabase", "n8n", "Make", "Vercel", "AWS"];
@@ -87,14 +87,7 @@ const WerkstandaardSection = ({ reasons }: { reasons: typeof directReasons }) =>
         Waarom direct met ons werken?
       </motion.h2>
 
-      {/* Animated accent line */}
-      <motion.div
-        className="h-[2px] mb-6 rounded-full"
-        style={{ background: "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary) / 0.2))" }}
-        initial={{ width: 0 }}
-        animate={isInView ? { width: "100%" } : { width: 0 }}
-        transition={{ duration: 0.7, delay: 0.15, ease: sectionEase }}
-      />
+      <div className="mb-6" />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {reasons.map((reason, i) => (

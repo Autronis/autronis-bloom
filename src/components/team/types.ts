@@ -19,19 +19,19 @@ export interface TeamMember {
 
 export const categoryMeta: Record<SkillCategory, { border: string; bg: string; glow: string }> = {
   arch: {
-    border: "border-[hsla(205,45%,55%,0.5)]",
-    bg: "bg-[hsla(205,45%,55%,0.15)]",
-    glow: "hover:bg-[hsla(205,45%,55%,0.25)] hover:shadow-[0_0_8px_hsla(205,45%,55%,0.2)]",
+    border: "border-[hsla(210,55%,45%,0.6)]",
+    bg: "bg-[hsla(210,55%,45%,0.22)]",
+    glow: "hover:bg-[hsla(210,55%,45%,0.32)] hover:shadow-[0_0_8px_hsla(210,55%,45%,0.25)]",
   },
   ai: {
-    border: "border-[hsla(174,50%,45%,0.5)]",
-    bg: "bg-[hsla(174,50%,45%,0.15)]",
-    glow: "hover:bg-[hsla(174,50%,45%,0.25)] hover:shadow-[0_0_8px_hsla(174,50%,45%,0.2)]",
+    border: "border-[hsla(174,55%,38%,0.6)]",
+    bg: "bg-[hsla(174,55%,38%,0.22)]",
+    glow: "hover:bg-[hsla(174,55%,38%,0.32)] hover:shadow-[0_0_8px_hsla(174,55%,38%,0.25)]",
   },
   gov: {
-    border: "border-[hsla(265,30%,60%,0.45)]",
-    bg: "bg-[hsla(265,30%,60%,0.13)]",
-    glow: "hover:bg-[hsla(265,30%,60%,0.22)] hover:shadow-[0_0_8px_hsla(265,30%,60%,0.18)]",
+    border: "border-[hsla(270,35%,50%,0.55)]",
+    bg: "bg-[hsla(270,35%,50%,0.18)]",
+    glow: "hover:bg-[hsla(270,35%,50%,0.28)] hover:shadow-[0_0_8px_hsla(270,35%,50%,0.22)]",
   },
 };
 

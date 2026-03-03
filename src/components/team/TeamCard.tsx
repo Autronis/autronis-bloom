@@ -135,15 +135,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
               }`}
             style={isMobile && expanded ? { maxHeight: "700px" } : undefined}
           >
-            {/* Role label */}
-            <p className="text-[9px] font-semibold tracking-[0.14em] uppercase text-white/45 mb-1">
-              {member.role}
-            </p>
-
             {/* Focus title */}
-            <p className="text-[8px] font-semibold tracking-[0.16em] uppercase text-primary/80 mb-0.5">
-              Kernfocus
-            </p>
             <p className="text-[13px] font-semibold text-white leading-snug mb-2">
               {member.focusLabel}
             </p>

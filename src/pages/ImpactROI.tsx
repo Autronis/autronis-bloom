@@ -104,8 +104,8 @@ const ImpactROI = () => {
               <ScrollReveal key={factor.num}>
                 <ScrollRevealItem>
                   <motion.div
-                    className="rounded-2xl border border-border bg-card p-6 flex flex-col"
-                    style={{ minHeight: 280 }}
+                    className="rounded-2xl border border-border bg-card p-5 flex flex-col"
+                    style={{ minHeight: 240 }}
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -126,7 +126,7 @@ const ImpactROI = () => {
                         <h3 className="text-base font-semibold text-foreground">{factor.title}</h3>
                       </div>
                     </div>
-                    <p className="text-sm text-foreground/90 leading-relaxed mb-4">
+                    <p className="text-sm text-foreground/90 leading-relaxed mb-3">
                       – {factor.description}
                     </p>
                     <div className="flex items-start gap-2.5 mt-auto">

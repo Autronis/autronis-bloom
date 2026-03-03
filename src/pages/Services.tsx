@@ -537,46 +537,45 @@ const Services = () => {
             <ScrollReveal className="text-center mb-10">
               <ScrollRevealItem>
                 <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Kwaliteitsnorm</p>
-                <h2 className="text-2xl sm:text-3xl font-bold mb-4">Gebouwd op vaste architectuur- en governanceprincipes</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold mb-4">Onze vaste standaard binnen elke implementatie</h2>
                 <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl mx-auto">
-                  Elke implementatie voldoet aan vaste technische en organisatorische standaarden.
-                  Beveiliging, controle en overdraagbaarheid zijn geen toevoeging — maar uitgangspunt.
+                  Elke implementatie voldoet aan vaste technische en organisatorische randvoorwaarden. Beveiliging, controle en overdraagbaarheid zijn geen toevoeging — maar uitgangspunt.
                 </p>
               </ScrollRevealItem>
             </ScrollReveal>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr">
               {[
-                { icon: ShieldCheck, title: "Minimale toegangsrechten", desc: "Least-privilege en rolgebaseerde toegang zonder overmatige systeemrechten." },
-                { icon: BarChart3, title: "Logging & monitoring", desc: "Realtime logging, audittrails en foutdetectie voor volledige traceerbaarheid." },
-                { icon: FileText, title: "Volledige technische documentatie", desc: "Architectuur, integraties en configuraties volledig vastgelegd en overdraagbaar." },
-                { icon: Database, title: "Datagovernance & AVG-afstemming", desc: "Dataverwerking ingericht conform privacywetgeving en compliance-eisen." },
-                { icon: Layers, title: "Overdraagbare architectuur", desc: "Geen vendor lock-in. Beheersbaar en uitbreidbaar voor interne teams." },
+                { icon: ShieldCheck, title: "Toegangscontrole als basis", desc: "Least-privilege en rolgebaseerde toegang zijn standaard. Overmatige systeemrechten worden niet toegepast." },
+                { icon: BarChart3, title: "Logging & volledige traceerbaarheid", desc: "Realtime logging, audittrails en foutdetectie zijn standaard actief binnen elke implementatie." },
+                { icon: Layers, title: "Overdraagbare architectuur", desc: "Geen vendor lock-in. Architectuur blijft beheersbaar, uitbreidbaar en overdraagbaar naar interne teams." },
+                { icon: Database, title: "Datagovernance & AVG-afstemming", desc: "Dataverwerking wordt ingericht conform privacywetgeving en interne compliance-eisen." },
+                { icon: FileText, title: "Volledige technische documentatie", desc: "Architectuur, integraties en configuraties worden volledig vastgelegd en overdraagbaar opgeleverd." },
                 { icon: Cog, title: "Stabiele en schaalbare infrastructuur", desc: "Enterprise-grade infrastructuur die meegroeit zonder performance- of veiligheidscompromissen." },
               ].map((item, idx) => (
                 <motion.div
                   key={item.title}
-                  className="p-5 rounded-2xl border border-primary/15 bg-card/80 backdrop-blur-sm cursor-default"
+                  className="p-5 rounded-2xl border border-border bg-card cursor-default flex flex-col"
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.07, duration: 0.45 }}
                   whileHover={{
-                    scale: 1.03,
-                    y: -4,
+                    scale: 1.015,
+                    y: -2,
                     borderColor: "hsl(174, 78%, 41%, 0.5)",
-                    boxShadow: "0 8px 28px hsl(174, 78%, 41%, 0.08)",
+                    boxShadow: "0 4px 24px hsl(174, 78%, 33%, 0.08)",
                   }}
                 >
                   <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
                     <item.icon size={20} />
                   </div>
                   <p className="text-base font-semibold text-foreground mb-2">{item.title}</p>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                  <p className="text-sm text-foreground/90 leading-relaxed">{item.desc}</p>
                 </motion.div>
               ))}
             </div>
-            <p className="text-sm text-muted-foreground text-center mt-8 italic">
-              Deze principes zijn vaste randvoorwaarden binnen elke implementatie.
+            <p className="text-sm text-muted-foreground text-center mt-8">
+              Zonder deze randvoorwaarden realiseren wij geen implementatie.
             </p>
           </div>
 

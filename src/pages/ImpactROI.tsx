@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Clock, Users, TrendingUp, Calculator, Building2, ShoppingCart, FileText, Shield } from "lucide-react";
+import { ArrowRight, Clock, Users, TrendingUp, Calculator, Building2, ShoppingCart, FileText, Shield, AlertTriangle } from "lucide-react";
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
@@ -172,8 +172,8 @@ const ROIScanModule = () => {
         )}
 
         <div className="mt-8 pt-6 border-t border-border">
-          <p className="text-sm text-muted-foreground leading-relaxed mb-5 italic">
-            <span className="text-primary not-italic">⚠️</span> Deze berekening is indicatief. Tijdens de analysefase wordt een volledige businesscase opgesteld inclusief risico- en impactanalyse.
+          <p className="text-sm text-muted-foreground leading-relaxed mb-5 italic flex items-start gap-1.5">
+            <AlertTriangle size={14} className="text-primary shrink-0 mt-0.5 not-italic" /> Deze berekening is indicatief. Tijdens de analysefase wordt een volledige businesscase opgesteld inclusief risico- en impactanalyse.
           </p>
           <Button asChild size="lg">
             <Link to="/book">

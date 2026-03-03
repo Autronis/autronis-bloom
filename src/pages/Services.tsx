@@ -303,7 +303,7 @@ const PillarCard = ({
         <p className="text-sm text-muted-foreground mb-6 leading-relaxed">{pillar.intro}</p>
 
         {/* Impact block */}
-        <div className="rounded-lg border border-border/50 p-5 mb-5">
+        <div className="rounded-lg border border-border/50 bg-muted/40 p-5 mb-5">
           <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
             Wat levert dit op?
           </p>

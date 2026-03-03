@@ -43,14 +43,14 @@ interface TeamMember {
 const team: TeamMember[] = [
   {
     name: "Syb Sprenkeler",
-    role: "Automation Architect",
+    role: "Automatiseringsarchitect",
     photo: fotoSyb,
     focusLabel: "Technische Realisatie & Implementatie",
     description: "Syb focust op technische realisatie en codekwaliteit. Van architectuur tot productie bouwt hij schaalbare systemen met performance en onderhoudbaarheid als uitgangspunt.",
     visibleSkills: [
       { label: "Architectuurontwerp", category: "arch" },
       { label: "API & systeemintegraties", category: "ai" },
-      { label: "Workflow engineering", category: "arch" },
+      { label: "Workflow-engineering", category: "arch" },
     ],
     hiddenSkills: [
       { label: "Prestatie & schaalbaarheid", category: "arch" },
@@ -62,19 +62,19 @@ const team: TeamMember[] = [
   },
   {
     name: "Sem Gijsberts",
-    role: "AI & Systems Engineer",
+    role: "AI- & Systeemingenieur",
     photo: fotoSem,
     focusLabel: "Structuur & Systeemarchitectuur",
     description: "Sem bewaakt overzicht, documentatie en systeemlogica. Hij vertaalt complexe processen naar heldere architectuur en zorgt dat implementaties logisch, overdraagbaar en schaalbaar blijven.",
     visibleSkills: [
       { label: "AI-integraties", category: "ai" },
-      { label: "Backend automatisering", category: "ai" },
+      { label: "Backend-automatisering", category: "ai" },
       { label: "Datagovernance", category: "gov" },
     ],
     hiddenSkills: [
       { label: "Logging & monitoring", category: "gov" },
       { label: "Structuur & documentatie", category: "gov" },
-      { label: "Security by design", category: "gov" },
+      { label: "Beveiliging by design", category: "gov" },
     ],
     mail: "mailto:sem@autronis.com",
     linkedin: "https://www.linkedin.com/in/sem-gijsberts-65ba543b3/",
@@ -126,17 +126,16 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
         <img
           src={member.photo}
           alt={member.name}
-          className="w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-[1.02] group-hover:blur-[6px]"
+          className="w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-[1.03] group-hover:blur-[8px] group-hover:brightness-75"
         />
 
-        {/* Default gradient scrim – bottom 30%, deepens to 50% on hover */}
+        {/* Dark overlay – strengthens on hover for readability */}
         <div
-          className="absolute inset-x-0 bottom-0 pointer-events-none transition-all duration-300"
+          className="absolute inset-0 pointer-events-none transition-all duration-500"
           style={{
-            height: hovered ? "60%" : "45%",
             background: hovered
-              ? "linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.40) 50%, transparent 100%)"
-              : "linear-gradient(to top, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.20) 50%, transparent 100%)",
+              ? "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.25) 100%)"
+              : "linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 55%, transparent 100%)",
           }}
         />
 
@@ -185,13 +184,13 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
               transform: hovered ? "translateY(0)" : "translateY(10px)",
             }}
           >
-            <p className="text-[9px] font-semibold tracking-[0.15em] uppercase text-white/50 mb-0.5">
+            <p className="text-[9px] font-semibold tracking-[0.15em] uppercase text-white/70 mb-0.5">
               Focusgebied
             </p>
             <p className="text-[13px] font-bold text-white mb-2 leading-snug">
               {member.focusLabel}
             </p>
-            <p className="text-[11px] text-white/70 leading-relaxed mb-3 line-clamp-3">
+            <p className="text-[11px] text-white/85 leading-relaxed mb-3 line-clamp-3">
               {member.description}
             </p>
 
@@ -200,7 +199,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
               {(["arch", "ai", "gov"] as SkillCategory[]).map((cat) =>
                 grouped[cat]?.length ? (
                   <div key={cat} className="col-span-2">
-                    <p className="text-[8px] font-bold tracking-[0.12em] uppercase text-white/40 mb-1">
+                    <p className="text-[8px] font-bold tracking-[0.12em] uppercase text-white/60 mb-1">
                       {categoryLabels[cat]}
                     </p>
                     <div className="flex flex-wrap gap-1">

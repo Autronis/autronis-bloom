@@ -310,7 +310,7 @@ const ImpactROI = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
                 {[
                   {
-                    num: "01",
+                    icon: Clock,
                     title: "Directe productiviteitswinst",
                     items: [
                       "Eliminatie van handmatige, repetitieve taken",
@@ -319,7 +319,7 @@ const ImpactROI = () => {
                     ],
                   },
                   {
-                    num: "02",
+                    icon: Shield,
                     title: "Structurele foutreductie",
                     items: [
                       "Minder data-invoerfouten en correctiewerk",
@@ -328,7 +328,7 @@ const ImpactROI = () => {
                     ],
                   },
                   {
-                    num: "03",
+                    icon: Calculator,
                     title: "Kostenoptimalisatie",
                     items: [
                       "Vermeden externe inhuur en operationele overhead",
@@ -337,7 +337,7 @@ const ImpactROI = () => {
                     ],
                   },
                   {
-                    num: "04",
+                    icon: Building2,
                     title: "Operationele risicoreductie",
                     items: [
                       "Logging, monitoring en audittrails",
@@ -346,7 +346,7 @@ const ImpactROI = () => {
                     ],
                   },
                   {
-                    num: "05",
+                    icon: TrendingUp,
                     title: "Schaalbaarheid zonder lineaire kosten",
                     items: [
                       "Groei zonder evenredige FTE-toename",
@@ -355,7 +355,7 @@ const ImpactROI = () => {
                     ],
                   },
                   {
-                    num: "06",
+                    icon: Users,
                     title: "Datagedreven sturing",
                     items: [
                       "Realtime inzicht in KPI's en operationele prestaties",
@@ -378,8 +378,10 @@ const ImpactROI = () => {
                       boxShadow: "0 8px 28px hsl(174, 78%, 41%, 0.08)",
                     }}
                   >
-                    <span className="text-xs font-bold text-primary/60 tracking-wider">{block.num}</span>
-                    <h3 className="font-semibold text-foreground mt-2 mb-3">{block.title}</h3>
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-3">
+                      <block.icon size={20} />
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-3">{block.title}</h3>
                     <ul className="space-y-2">
                       {block.items.map((item) => (
                         <li key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground">

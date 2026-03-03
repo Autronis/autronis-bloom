@@ -13,7 +13,9 @@ const team = [
     name: "Syb Sprenkeler",
     role: "Co-founder & Engineer",
     photo: fotoSyb,
-    objectPosition: "50% 20%",
+    objectPosition: "50% 18%",
+    scale: "scale-[1.7]",
+    scaleHover: "group-hover:scale-[1.8]",
     description:
       "Syb heeft een scherp oog voor technische details en is de drijvende kracht achter de bouw. Hij denkt altijd een stap verder en zorgt dat elk systeem niet alleen werkt maar ook schaalbaar en toekomstbestendig is.",
     skills: ["Automation Architect", "API Integraties", "Workflow Engineering", "Data-architectuur", "Performance optimalisatie"],
@@ -23,6 +25,8 @@ const team = [
     role: "Co-founder & Engineer",
     photo: fotoSem,
     objectPosition: "50% 15%",
+    scale: "scale-150",
+    scaleHover: "group-hover:scale-[1.6]",
     description:
       "Sem bouwt mee, denkt vooruit en houdt overzicht. Van het eerste klantgesprek tot het opgeleverde systeem — hij is betrokken bij elke stap en zorgt dat niets tussen wal en schip valt.",
     skills: ["AI Integraties", "System Integrations", "Backend Automatisering", "Datastromen & Structuur", "Governance & Logging"],
@@ -46,7 +50,7 @@ const TeamCard = ({ member }: { member: (typeof team)[0] }) => {
         <img
           src={member.photo}
           alt={member.name}
-          className="w-full h-full object-cover scale-150 transition-transform duration-500 group-hover:scale-[1.6]"
+          className={`w-full h-full object-cover ${member.scale} transition-transform duration-500 ${member.scaleHover}`}
           style={{ objectPosition: member.objectPosition }}
         />
         <div

@@ -104,7 +104,8 @@ const ImpactROI = () => {
               <ScrollReveal key={factor.num}>
                 <ScrollRevealItem>
                   <motion.div
-                    className="rounded-2xl border border-border bg-card p-6 h-full"
+                    className="rounded-2xl border border-border bg-card p-6 flex flex-col"
+                    style={{ minHeight: 280 }}
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -116,17 +117,19 @@ const ImpactROI = () => {
                       boxShadow: "0 4px 24px hsl(174, 78%, 33%, 0.08)",
                     }}
                   >
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                      <factor.icon size={20} className="text-primary" />
-                    </div>
-                    <div className="flex items-baseline gap-2.5 mb-3">
-                      <span className="text-xs font-bold tracking-widest text-primary">{factor.num}</span>
-                      <h3 className="text-base font-semibold text-foreground">{factor.title}</h3>
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                        <factor.icon size={20} className="text-primary" />
+                      </div>
+                      <div className="flex items-baseline gap-2.5">
+                        <span className="text-xs font-bold tracking-widest text-primary">{factor.num}</span>
+                        <h3 className="text-base font-semibold text-foreground">{factor.title}</h3>
+                      </div>
                     </div>
                     <p className="text-sm text-foreground/90 leading-relaxed mb-4">
                       – {factor.description}
                     </p>
-                    <div className="flex items-start gap-2.5">
+                    <div className="flex items-start gap-2.5 mt-auto">
                       <Calculator size={14} className="text-primary mt-[3px] shrink-0" />
                       <p className="text-sm text-foreground/90 leading-relaxed">
                         <span className="font-medium text-foreground">Financiële vertaling:</span>{" "}

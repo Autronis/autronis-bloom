@@ -132,7 +132,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
                 : "opacity-100 group-hover:opacity-0 group-hover:h-0 group-hover:overflow-hidden"
               }`}
           >
-            <span className="text-[8px] font-bold tracking-[0.14em] uppercase text-white/70 mr-1 block w-full mb-1">
+            <span className="text-[8px] font-bold tracking-[0.14em] uppercase text-white/85 mr-1 block w-full mb-1">
               Vaardigheden
             </span>
             {/* Pick first skill from each category for variety */}

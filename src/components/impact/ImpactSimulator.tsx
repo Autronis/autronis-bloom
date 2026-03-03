@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, TrendingUp, Calendar, Percent, Euro, ArrowRight, Calculator } from "lucide-react";
+import { AlertTriangle, TrendingUp, Calendar, Percent, Euro, ArrowRight, Calculator, Info } from "lucide-react";
 
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import AmbientLight from "@/components/AmbientLight";
@@ -15,31 +15,29 @@ const ImpactSimulator = () => {
   const [hours, setHours] = useState(40);
   const [rate, setRate] = useState(55);
   const [autoPercent, setAutoPercent] = useState(65);
-  const [errorPercent, setErrorPercent] = useState(8);
+  const [errorPercent, setErrorPercent] = useState(5);
 
   const results = useMemo(() => {
     const autoFraction = autoPercent / 100;
+    const errorFraction = errorPercent / 100;
     const weeksPerMonth = 4.33;
 
-    // Core savings
-    const monthlySavings = hours * autoFraction * rate * weeksPerMonth;
-    const yearlySavings = monthlySavings * 12;
+    // Core time savings
+    const monthlySavingsHours = hours * autoFraction * rate * weeksPerMonth;
 
-    // Error correction savings
-    const errorFraction = errorPercent / 100;
-    const monthlyErrorSavings = hours * errorFraction * rate * weeksPerMonth * 0.5; // 50% of error time recoverable
-    const yearlyErrorSavings = monthlyErrorSavings * 12;
+    // Error correction savings (recoverable portion)
+    const monthlyErrorSavings = hours * errorFraction * rate * weeksPerMonth * 0.5;
 
-    const totalMonthlySavings = monthlySavings + monthlyErrorSavings;
-    const totalYearlySavings = yearlySavings + yearlyErrorSavings;
+    const totalMonthlySavings = monthlySavingsHours + monthlyErrorSavings;
+    const totalYearlySavings = totalMonthlySavings * 12;
 
-    // Auto-calculated investment based on hours and complexity
+    // Auto-calculated investment
     const complexityMultiplier = autoPercent <= 50 ? 1 : autoPercent <= 70 ? 1.4 : 1.8;
-    const baseInvestment = hours * rate * 6; // ~6 weeks equivalent
+    const baseInvestment = hours * rate * 6;
     const investment = Math.round(baseInvestment * complexityMultiplier / 500) * 500;
 
     const netBenefitYear1 = totalYearlySavings - investment;
-    const paybackMonths = totalMonthlySavings > 0 ? investment / totalMonthlySavings : 0;
+    const breakEvenMonths = totalMonthlySavings > 0 ? investment / totalMonthlySavings : 0;
     const roiMultiplier = investment > 0 ? totalYearlySavings / investment : 0;
 
     // Confidence score
@@ -53,7 +51,7 @@ const ImpactSimulator = () => {
       yearlySavings: totalYearlySavings,
       investment,
       netBenefitYear1,
-      paybackMonths: Math.round(paybackMonths * 10) / 10,
+      breakEvenMonths: Math.round(breakEvenMonths * 10) / 10,
       roiMultiplier,
       confidence,
     };
@@ -104,7 +102,8 @@ const ImpactSimulator = () => {
       max: 25,
       step: 1,
       display: `${errorPercent}%`,
-      hint: "Percentage tijd besteed aan correcties en herstelwerk.",
+      hint: "Percentage van totale werktijd besteed aan correcties, herstelwerk of dubbele invoer.",
+      subHint: "Bij administratieve processen ligt dit vaak tussen 2–8%.",
     },
   ];
 
@@ -123,14 +122,13 @@ const ImpactSimulator = () => {
               Impact & ROI Simulator
             </h2>
             <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Op basis van uw situatie berekenen wij een conservatieve businesscase inclusief besparing, terugverdientijd en ROI.
+              Op basis van uw situatie berekenen wij een conservatieve businesscase inclusief besparing, break-even punt en ROI.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>
 
         {/* Single outer block */}
         <div className="max-w-6xl mx-auto rounded-2xl border border-border bg-card p-6 sm:p-8 lg:p-10">
-          {/* 2-column layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
             {/* LEFT — Inputs */}
             <motion.div
@@ -156,6 +154,9 @@ const ImpactSimulator = () => {
                       className="w-full"
                     />
                     <p className="text-xs text-muted-foreground mt-1.5">{s.hint}</p>
+                    {"subHint" in s && s.subHint && (
+                      <p className="text-xs text-muted-foreground/70 mt-0.5 italic">{s.subHint}</p>
+                    )}
                   </div>
                 ))}
               </div>
@@ -170,7 +171,10 @@ const ImpactSimulator = () => {
                   <span className="text-lg font-bold text-foreground tabular-nums">{formatCurrency(results.investment)}</span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Indicatief op basis van vergelijkbare implementaties binnen MKB-organisaties.
+                  Gebaseerd op vergelijkbare implementaties binnen MKB-organisaties.
+                </p>
+                <p className="text-xs text-muted-foreground/70 mt-0.5 italic">
+                  Projectinvestering omvat analyse, ontwerp, bouw, integraties, testen en documentatie.
                 </p>
               </div>
 
@@ -178,7 +182,7 @@ const ImpactSimulator = () => {
               <div className="mt-8 pt-6 border-t border-border">
                 <p className="text-sm text-muted-foreground leading-relaxed mb-5 italic flex items-start gap-1.5">
                   <AlertTriangle size={14} className="text-primary shrink-0 mt-0.5 not-italic" />
-                  Deze berekening is indicatief. Tijdens de analysefase wordt een volledige businesscase opgesteld inclusief risico- en impactanalyse.
+                  Deze berekening is indicatief. Tijdens de impactanalyse wordt een volledige businesscase opgesteld inclusief risico-inschatting, implementatieplanning en validatie van aannames.
                 </p>
                 <Button asChild size="lg">
                   <Link to="/book">
@@ -198,9 +202,9 @@ const ImpactSimulator = () => {
               </div>
             </motion.div>
 
-            {/* RIGHT — Results dashboard */}
+            {/* RIGHT — Results */}
             <motion.div
-              className="space-y-6"
+              className="space-y-5"
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -208,27 +212,10 @@ const ImpactSimulator = () => {
             >
               {/* KPI cards */}
               <div className="grid grid-cols-2 gap-4">
-                <KPICard
-                  label="Maandelijkse besparing"
-                  value={formatCurrency(results.monthlySavings)}
-                  icon={<Euro size={16} />}
-                />
-                <KPICard
-                  label="Jaarlijkse besparing"
-                  value={formatCurrency(results.yearlySavings)}
-                  icon={<TrendingUp size={16} />}
-                  highlight
-                />
-                <KPICard
-                  label="Netto voordeel jaar 1"
-                  value={formatCurrency(results.netBenefitYear1)}
-                  icon={<Euro size={16} />}
-                />
-                <KPICard
-                  label="Terugverdientijd"
-                  value={`${results.paybackMonths} mnd`}
-                  icon={<Calendar size={16} />}
-                />
+                <KPICard label="Maandelijkse besparing" value={formatCurrency(results.monthlySavings)} icon={<Euro size={16} />} />
+                <KPICard label="Jaarlijkse besparing" value={formatCurrency(results.yearlySavings)} icon={<TrendingUp size={16} />} highlight />
+                <KPICard label="Netto voordeel jaar 1" value={formatCurrency(results.netBenefitYear1)} icon={<Euro size={16} />} />
+                <KPICard label="Break-even punt" value={`${results.breakEvenMonths} mnd`} icon={<Calendar size={16} />} />
               </div>
 
               {/* ROI Multiplier */}
@@ -240,6 +227,31 @@ const ImpactSimulator = () => {
                   </div>
                   <span className="text-2xl font-bold text-primary tabular-nums">{results.roiMultiplier.toFixed(1)}x</span>
                 </div>
+              </div>
+
+              {/* Transparency block */}
+              <div className="rounded-xl border border-border p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <Info size={14} className="text-primary" />
+                  <p className="text-sm font-medium text-foreground">Wat is inbegrepen in deze berekening?</p>
+                </div>
+                <ul className="space-y-1 mb-4">
+                  {["Besparing op handmatige uren", "Besparing door foutreductie", "Structurele capaciteitsvrijmaking"].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-xs text-foreground/80">
+                      <span className="w-1 h-1 rounded-full bg-primary shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-sm font-medium text-foreground mb-2">Wat is niet inbegrepen?</p>
+                <ul className="space-y-1">
+                  {["Extra omzetgroei", "Strategische schaalvoordelen", "Langetermijnoptimalisaties"].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <span className="w-1 h-1 rounded-full bg-muted-foreground/40 shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               {/* Confidence score */}
@@ -257,7 +269,7 @@ const ImpactSimulator = () => {
                   />
                 </div>
                 <p className="text-xs text-muted-foreground mt-2.5">
-                  Gebaseerd op vergelijkbare implementaties binnen MKB-organisaties.
+                  Gebaseerd op automatiseringspercentage, procescomplexiteit en vergelijkbare implementaties binnen MKB-organisaties.
                 </p>
               </div>
 
@@ -306,7 +318,7 @@ const ImpactSimulator = () => {
 
               {/* Bottom disclaimer */}
               <p className="text-xs text-muted-foreground leading-relaxed text-center">
-                Deze berekening is indicatief. Tijdens de impactanalyse wordt een volledige businesscase opgesteld inclusief risico-inschatting.
+                Deze berekening is indicatief. Tijdens de impactanalyse wordt een volledige businesscase opgesteld inclusief risico-inschatting, implementatieplanning en validatie van aannames.
               </p>
             </motion.div>
           </div>
@@ -329,9 +341,7 @@ const KPICard = ({
 }) => (
   <div
     className={`rounded-xl border p-4 transition-colors duration-300 ${
-      highlight
-        ? "border-primary/30 bg-primary/[0.04]"
-        : "border-border bg-card"
+      highlight ? "border-primary/30 bg-primary/[0.04]" : "border-border bg-card"
     }`}
   >
     <div className="flex items-center gap-2 mb-2">

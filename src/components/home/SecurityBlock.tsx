@@ -1,4 +1,4 @@
-import { Shield, Database, FileCheck } from "lucide-react";
+import { Shield, Database, FileCheck, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import AmbientLight from "@/components/AmbientLight";
@@ -11,11 +11,11 @@ const layers = [
     title: "Architectuurlaag",
     intro: "De basis waarop alles rust.",
     points: [
-      { emoji: "🔐", text: "Least-privilege toegangsmodel als standaard" },
-      { emoji: "🛡️", text: "Rol- en recordniveau beveiliging (Row Level Security)" },
-      { emoji: "🧪", text: "Gescheiden omgevingen (ontwikkeling, test, productie)" },
-      { emoji: "🔗", text: "API-gebaseerde integraties met gecontroleerde toegang" },
-      { emoji: "🔓", text: "Geen vendor lock-in of verborgen afhankelijkheden" },
+      "Least-privilege toegangsmodel als standaard",
+      "Rol- en recordniveau beveiliging (Row Level Security)",
+      "Gescheiden omgevingen (ontwikkeling, test, productie)",
+      "API-gebaseerde integraties met gecontroleerde toegang",
+      "Geen vendor lock-in of verborgen afhankelijkheden",
     ],
     closing: "Hier bepalen we hoe systemen communiceren en wie toegang krijgt — vóórdat er data stroomt.",
   },
@@ -25,11 +25,11 @@ const layers = [
     title: "Datalaag",
     intro: "Bescherming van uw bedrijfsgegevens.",
     points: [
-      { emoji: "🔒", text: "End-to-end versleuteling (TLS 1.2+ tijdens transport, AES-256 bij opslag)" },
-      { emoji: "🇪🇺", text: "Verwerking en opslag binnen de EU waar mogelijk" },
-      { emoji: "🚫", text: "Geen AI-training op uw bedrijfsdata" },
-      { emoji: "👁️", text: "Data niet toegankelijk voor onbevoegden — ook niet voor derden" },
-      { emoji: "📂", text: "Datasegmentatie en gecontroleerde toegang per rol" },
+      "End-to-end versleuteling (TLS 1.2+ tijdens transport, AES-256 bij opslag)",
+      "Verwerking en opslag binnen de EU waar mogelijk",
+      "Geen AI-training op uw bedrijfsdata",
+      "Data niet toegankelijk voor onbevoegden — ook niet voor derden",
+      "Datasegmentatie en gecontroleerde toegang per rol",
     ],
     closing: "Uw data blijft van u, technisch én contractueel.",
   },
@@ -39,11 +39,11 @@ const layers = [
     title: "Governance & controle",
     intro: "Aantoonbare beheersing van risico.",
     points: [
-      { emoji: "📋", text: "Logging en audittrails standaard actief" },
-      { emoji: "📡", text: "Monitoring en incidentprocedures" },
-      { emoji: "⚖️", text: "AVG / GDPR-compliance inclusief verwerkersovereenkomsten (DPA's)" },
-      { emoji: "📄", text: "Volledige technische documentatie en overdraagbaarheid" },
-      { emoji: "✅", text: "Samenwerking met SOC 2 Type II en ISO 27001 gecertificeerde technologiepartners (zoals Supabase, OpenAI, Anthropic en Vercel)" },
+      "Logging en audittrails standaard actief",
+      "Monitoring en incidentprocedures",
+      "AVG / GDPR-compliance inclusief verwerkersovereenkomsten (DPA's)",
+      "Volledige technische documentatie en overdraagbaarheid",
+      "Samenwerking met SOC 2 Type II en ISO 27001 gecertificeerde technologiepartners (zoals Supabase, OpenAI, Anthropic en Vercel)",
     ],
     closing: "Beveiliging wordt niet alleen technisch geborgd, maar ook juridisch en operationeel.",
   },
@@ -59,9 +59,12 @@ const SecurityBlock = () => {
       <div className="container mx-auto px-4 lg:px-8 py-16 sm:py-24 relative z-10">
         <ScrollReveal className="max-w-3xl mx-auto text-center mb-14 sm:mb-20">
           <ScrollRevealItem>
-            <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-primary">
-              Beveiliging & Controle
-            </p>
+            <div className="inline-flex items-center gap-2 mb-4">
+              <ShieldCheck size={16} className="text-primary" />
+              <p className="text-xs font-semibold tracking-widest uppercase text-primary">
+                Beveiliging & Controle
+              </p>
+            </div>
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
               Beveiliging als architectuurprincipe
             </h2>
@@ -84,7 +87,7 @@ const SecurityBlock = () => {
                     className="rounded-2xl border bg-card overflow-hidden"
                     animate={{
                       borderColor: isHovered ? "hsl(var(--primary) / 0.35)" : "hsl(var(--border))",
-                      boxShadow: isHovered ? "0 4px 24px hsl(174 78% 41% / 0.08)" : "0 0 0 transparent",
+                      boxShadow: isHovered ? "0 4px 24px hsl(174 78% 33% / 0.08)" : "0 0 0 transparent",
                     }}
                     transition={{ duration: 0.3 }}
                     onMouseEnter={() => setHoveredIndex(i)}
@@ -110,10 +113,15 @@ const SecurityBlock = () => {
 
                       <ul className="space-y-2.5 pl-12 mb-5">
                         {layer.points.map((point) => (
-                          <li key={point.text} className="flex items-start gap-3 text-sm leading-relaxed">
-                            <span className="shrink-0 mt-[1px]">{point.emoji}</span>
-                            <span className="text-foreground/85">{point.text}</span>
-                          </li>
+                          <motion.li
+                            key={point}
+                            className="flex items-start gap-3 text-sm leading-relaxed"
+                            whileHover={{ x: 4 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            <span className="mt-[7px] w-[6px] h-[6px] rounded-full bg-primary/60 shrink-0" />
+                            <span className="text-foreground/85">{point}</span>
+                          </motion.li>
                         ))}
                       </ul>
 

@@ -287,89 +287,99 @@ const ImpactROI = () => {
         </div>
       </section>
 
-      {/* Methodiek onderbouwing */}
+      {/* Methodiek — 6 waardecomponenten */}
       <section className="py-16 sm:py-24 border-t border-border relative overflow-hidden">
         <AmbientLight />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <ScrollReveal className="max-w-2xl mx-auto text-center mb-12">
+          <ScrollReveal className="max-w-3xl mx-auto text-center mb-12">
             <ScrollRevealItem>
               <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
                 Methodiek
               </p>
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-                Waarop wij deze berekening baseren
+                De 6 structurele waardecomponenten achter onze ROI-berekening
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                De ROI-indicatie is gebaseerd op vijf structurele impactfactoren die wij tijdens de analysefase kwantificeren.
+                Wij kwantificeren impact op basis van meetbare operationele en financiële factoren, vertaald naar een concrete businesscase.
               </p>
             </ScrollRevealItem>
           </ScrollReveal>
 
           <ScrollReveal>
             <ScrollRevealItem>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
                 {[
                   {
-                    icon: Clock,
-                    title: "Directe tijdsbesparing",
+                    num: "01",
+                    title: "Directe productiviteitswinst",
                     items: [
-                      "Analyse van repetitieve taken",
-                      "Eliminatie van handmatige overdrachten",
-                      "Automatisering van goedkeuringsflows",
+                      "Eliminatie van handmatige, repetitieve taken",
+                      "Automatisering van goedkeurings- en overdrachtsflows",
+                      "Directe capaciteitsvergroting zonder extra FTE",
                     ],
                   },
                   {
-                    icon: TrendingUp,
-                    title: "Indirecte foutreductie",
+                    num: "02",
+                    title: "Structurele foutreductie",
                     items: [
-                      "Minder correctiewerk",
-                      "Minder data-invoerfouten",
+                      "Minder data-invoerfouten en correctiewerk",
                       "Gestandaardiseerde procesuitvoering",
+                      "Hogere kwaliteit en betrouwbaarheid van output",
                     ],
                   },
                   {
-                    icon: Calculator,
-                    title: "Structurele kostenoptimalisatie",
+                    num: "03",
+                    title: "Kostenoptimalisatie",
                     items: [
-                      "Vermeden externe inhuur",
-                      "Minder operationele overhead",
+                      "Vermeden externe inhuur en operationele overhead",
                       "Efficiëntere inzet van personeel",
+                      "Cumulatieve besparingen per kwartaal",
                     ],
                   },
                   {
-                    icon: Building2,
-                    title: "Vermindering van operationeel risico",
+                    num: "04",
+                    title: "Operationele risicoreductie",
                     items: [
-                      "Logging & monitoring",
+                      "Logging, monitoring en audittrails",
                       "Failover- en fallbackstrategieën",
-                      "Compliance & auditability",
+                      "Compliance en traceerbaarheid",
                     ],
                   },
                   {
-                    icon: Users,
-                    title: "Vermeden personeelsgroei",
+                    num: "05",
+                    title: "Schaalbaarheid zonder lineaire kosten",
                     items: [
-                      "Schaalbaarheid zonder lineaire FTE-toename",
+                      "Groei zonder evenredige FTE-toename",
+                      "Systemen die meeschalen met volume",
                       "Capaciteitsvergroting zonder extra loonkosten",
+                    ],
+                  },
+                  {
+                    num: "06",
+                    title: "Datagedreven sturing",
+                    items: [
+                      "Realtime inzicht in KPI's en operationele prestaties",
+                      "Vroegtijdige detectie van afwijkingen",
+                      "Onderbouwde besluitvorming op directieniveau",
                     ],
                   },
                 ].map((block, idx) => (
                   <motion.div
                     key={block.title}
-                    className="rounded-xl border border-border bg-card p-6 transition-all duration-300 ease-out"
-                    initial={{ opacity: 0, y: 12 }}
+                    className="rounded-2xl border border-primary/15 bg-card/80 backdrop-blur-sm p-6 cursor-default"
+                    initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: idx * 0.08, duration: 0.4 }}
+                    transition={{ delay: idx * 0.07, duration: 0.45 }}
                     whileHover={{
-                      scale: 1.02,
+                      scale: 1.03,
+                      y: -4,
                       borderColor: "hsl(174, 78%, 41%, 0.5)",
+                      boxShadow: "0 8px 28px hsl(174, 78%, 41%, 0.08)",
                     }}
                   >
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
-                      <block.icon size={20} />
-                    </div>
-                    <h3 className="font-semibold mb-3 text-foreground">{block.title}</h3>
+                    <span className="text-xs font-bold text-primary/60 tracking-wider">{block.num}</span>
+                    <h3 className="font-semibold text-foreground mt-2 mb-3">{block.title}</h3>
                     <ul className="space-y-2">
                       {block.items.map((item) => (
                         <li key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground">
@@ -382,8 +392,8 @@ const ImpactROI = () => {
                 ))}
               </div>
 
-              <p className="text-sm text-muted-foreground text-center mt-10 max-w-2xl mx-auto leading-relaxed">
-                Tijdens de impactanalyse worden deze factoren vertaald naar een volledige businesscase inclusief risico-inschatting en terugverdientijd.
+              <p className="text-sm text-muted-foreground text-center mt-10 max-w-3xl mx-auto leading-relaxed italic">
+                Tijdens de impactanalyse vertalen wij deze factoren naar een volledige businesscase inclusief risico-inschatting en terugverdientijd.
               </p>
 
             </ScrollRevealItem>

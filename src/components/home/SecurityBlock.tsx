@@ -1,128 +1,142 @@
-import { Shield, Lock, Globe, Database, Award, KeyRound, ShieldCheck } from "lucide-react";
-import { useState } from "react";
+import { Shield, Database, FileCheck, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import AmbientLight from "@/components/AmbientLight";
 
-const features = [
+const layers = [
   {
-    icon: Lock,
-    title: "End-to-end versleuteling",
-    description:
-      "Alle data wordt versleuteld tijdens transport (TLS 1.2+) en bij opslag (AES-256). Gegevens zijn niet leesbaar voor onbevoegden.",
-  },
-  {
-    icon: Globe,
-    title: "EU dataopslag mogelijk",
-    description:
-      "Verwerking en opslag binnen de EU waar mogelijk, op Europese servers en datacenters.",
+    icon: Shield,
+    label: "Laag 1",
+    title: "Architectuurlaag",
+    intro: "De basis waarop alles rust.",
+    points: [
+      "Least-privilege toegangsmodel als standaard",
+      "Rol- en recordniveau beveiliging (Row Level Security)",
+      "Gescheiden omgevingen (ontwikkeling, test, productie)",
+      "API-gebaseerde integraties met gecontroleerde toegang",
+      "Geen vendor lock-in of verborgen afhankelijkheden",
+    ],
+    closing:
+      "Hier bepalen we hoe systemen communiceren en wie toegang krijgt — vóórdat er data stroomt.",
   },
   {
     icon: Database,
-    title: "Geen training op uw data",
-    description:
-      "Wij gebruiken uitsluitend enterprise API's zonder dataretentie. Uw bedrijfsdata wordt nooit gebruikt voor AI-training.",
+    label: "Laag 2",
+    title: "Datalaag",
+    intro: "Bescherming van uw bedrijfsgegevens.",
+    points: [
+      "End-to-end versleuteling (TLS 1.2+ tijdens transport, AES-256 bij opslag)",
+      "Verwerking en opslag binnen de EU waar mogelijk",
+      "Geen AI-training op uw bedrijfsdata",
+      "Data niet toegankelijk voor onbevoegden — ook niet voor derden",
+      "Datasegmentatie en gecontroleerde toegang per rol",
+    ],
+    closing: "Uw data blijft van u, technisch én contractueel.",
   },
   {
-    icon: KeyRound,
-    title: "Fijnmazig toegangsbeheer",
-    description:
-      "Row Level Security (RLS) en rolgebaseerde toegang zorgen dat gebruikers alleen zien wat ze mogen zien.",
-  },
-  {
-    icon: Shield,
-    title: "AVG / GDPR compliant",
-    description:
-      "Volledig in lijn met Europese privacywetgeving. Inclusief verwerkersovereenkomsten (DPA's) met partners.",
-  },
-  {
-    icon: Award,
-    title: "Gecertificeerde technologiepartners",
-    description:
-      "Wij werken met SOC 2 Type II en ISO 27001 gecertificeerde technologieën zoals Supabase, OpenAI, Anthropic en Vercel.",
+    icon: FileCheck,
+    label: "Laag 3",
+    title: "Governance & controle",
+    intro: "Aantoonbare beheersing van risico.",
+    points: [
+      "Logging en audittrails standaard actief",
+      "Monitoring en incidentprocedures",
+      "AVG / GDPR-compliance inclusief verwerkersovereenkomsten (DPA's)",
+      "Volledige technische documentatie en overdraagbaarheid",
+      "Samenwerking met SOC 2 Type II en ISO 27001 gecertificeerde technologiepartners (zoals Supabase, OpenAI, Anthropic en Vercel)",
+    ],
+    closing:
+      "Beveiliging wordt niet alleen technisch geborgd, maar ook juridisch en operationeel.",
   },
 ];
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.1, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
-  }),
-};
-
 const SecurityBlock = () => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
   return (
     <section id="beveiliging" className="relative overflow-hidden border-t border-primary/10">
       <AmbientLight />
 
       <div className="container mx-auto px-4 lg:px-8 py-16 sm:py-24 relative z-10">
-        <ScrollReveal className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
+        {/* Header */}
+        <ScrollReveal className="max-w-3xl mx-auto text-center mb-14 sm:mb-20">
           <ScrollRevealItem>
             <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-primary">
-              Beveiliging & Vertrouwen
+              Beveiliging & Controle
             </p>
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Beveiliging op enterprise-niveau
+              Beveiliging als architectuurprincipe
             </h2>
-            <p className="text-base leading-relaxed text-muted-foreground">
-              Beveiliging is geïntegreerd in elke automatisering en systeemintegratie die wij ontwikkelen.
+            <p className="text-base leading-relaxed text-muted-foreground max-w-2xl mx-auto">
+              Elke automatisering en systeemintegratie wordt ontworpen met dataveiligheid, controle
+              en overdraagbaarheid als uitgangspunt — niet als toevoeging achteraf.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>
 
-        {/* Feature grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
-          {features.map((feature, i) => {
-            const Icon = feature.icon;
-            const isHovered = hoveredIndex === i;
-
+        {/* Layers */}
+        <div className="max-w-4xl mx-auto space-y-6">
+          {layers.map((layer, i) => {
+            const Icon = layer.icon;
             return (
-              <motion.div
-                key={feature.title}
-                custom={i}
-                variants={cardVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
-                whileHover={{ scale: 1.03, y: -4 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                onMouseEnter={() => setHoveredIndex(i)}
-                onMouseLeave={() => setHoveredIndex(null)}
-                className="relative rounded-2xl p-6 cursor-default bg-card border border-border"
-                style={{
-                  borderColor: isHovered ? "hsl(var(--primary) / 0.4)" : undefined,
-                  boxShadow: isHovered
-                    ? "0 8px 32px hsl(174 78% 41% / 0.1), 0 2px 8px hsl(0 0% 0% / 0.2)"
-                    : "none",
-                  zIndex: isHovered ? 10 : 1,
-                }}
-              >
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-colors duration-300 bg-primary/10"
-                >
-                  <Icon size={20} className="text-primary" />
-                </div>
-                <h3 className="text-base font-semibold mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {feature.description}
-                </p>
-              </motion.div>
+              <ScrollReveal key={layer.title}>
+                <ScrollRevealItem>
+                  <motion.div
+                    className="rounded-2xl border border-border bg-card p-6 sm:p-8"
+                    whileHover={{
+                      borderColor: "hsl(var(--primary) / 0.35)",
+                      boxShadow: "0 4px 24px hsl(174 78% 41% / 0.08)",
+                    }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {/* Layer header */}
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary/10 shrink-0">
+                        <Icon size={18} className="text-primary" />
+                      </div>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-[11px] font-semibold tracking-widest uppercase text-primary/70">
+                          {layer.label}
+                        </span>
+                        <span className="text-xs text-muted-foreground/40">—</span>
+                        <h3 className="text-lg font-semibold">{layer.title}</h3>
+                      </div>
+                    </div>
+
+                    {/* Intro */}
+                    <p className="text-sm text-muted-foreground mb-5 pl-12">
+                      {layer.intro}
+                    </p>
+
+                    {/* Points */}
+                    <ul className="space-y-2.5 pl-12 mb-5">
+                      {layer.points.map((point) => (
+                        <li key={point} className="flex items-start gap-2.5 text-sm leading-relaxed">
+                          <ChevronRight
+                            size={14}
+                            className="text-primary/60 mt-[3px] shrink-0"
+                          />
+                          <span className="text-foreground/85">{point}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* Closing statement */}
+                    <p className="text-sm font-medium text-muted-foreground/80 italic pl-12 border-l-2 border-primary/20 ml-12 py-1">
+                      {layer.closing}
+                    </p>
+                  </motion.div>
+                </ScrollRevealItem>
+              </ScrollReveal>
             );
           })}
         </div>
 
-        {/* Trust badge */}
-        <ScrollReveal className="mt-12 sm:mt-16">
+        {/* Final statement */}
+        <ScrollReveal className="mt-14 sm:mt-20">
           <ScrollRevealItem>
-            <div className="flex items-center justify-center">
-              <ShieldCheck size={14} className="text-primary" />
-            </div>
+            <p className="text-center text-sm sm:text-base font-medium text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              "Wij bouwen geen automatisering zonder aantoonbare beheersing van risico, data en
+              continuïteit."
+            </p>
           </ScrollRevealItem>
         </ScrollReveal>
       </div>

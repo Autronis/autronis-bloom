@@ -83,7 +83,7 @@ const WerkstandaardSection = ({ reasons }: { reasons: typeof directReasons }) =>
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.6, ease: sectionEase }}
       >
-        Waarom direct met ons werken?
+        Waarom met ons werken?
       </motion.h2>
 
       <div className="mb-6" />

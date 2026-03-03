@@ -116,7 +116,15 @@ const ROIPreview = () => {
         {/* Strategic text block */}
         <ScrollReveal className="max-w-4xl mx-auto">
           <ScrollRevealItem>
-            <div className="rounded-xl border border-border bg-card p-6 sm:p-8 mb-10">
+            <motion.div
+              className="rounded-xl border border-border bg-card p-6 sm:p-8 mb-10"
+              whileHover={{
+                scale: 1.015,
+                y: -2,
+                borderColor: "hsl(174, 78%, 41%, 0.5)",
+                transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] },
+              }}
+            >
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 lg:gap-10 items-start">
                 <div>
                   <h3 className="text-xl font-bold text-foreground mb-3">
@@ -137,7 +145,7 @@ const ROIPreview = () => {
                   ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
             <p className="text-xs text-muted-foreground text-center max-w-2xl mx-auto mb-10">
               *Afhankelijk van implementatieomvang en procescomplexiteit.
             </p>

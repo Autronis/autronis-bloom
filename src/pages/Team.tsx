@@ -2,7 +2,8 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Users, Eye, Shield, Clock } from "lucide-react";
-import React from "react";
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import fotoSyb from "@/assets/foto_syb.jpg";
 import fotoSem from "@/assets/foto_sem.jpg";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
@@ -66,6 +67,58 @@ const directReasons = [
 
 const toolStack = ["OpenAI", "Supabase", "n8n", "Make", "Vercel", "AWS"];
 
+const sectionEase = [0.16, 1, 0.3, 1] as const;
+
+const WerkstandaardSection = ({ reasons }: { reasons: typeof directReasons }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: false, amount: 0.25 });
+
+  return (
+    <div ref={ref} className="max-w-2xl mx-auto mb-16 relative">
+      {/* Parallax background glow */}
+      <div className="werkstandaard-glow" />
+
+      <motion.h2
+        className="text-xl font-bold mb-1"
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        transition={{ duration: 0.6, ease: sectionEase }}
+      >
+        Waarom direct met ons werken?
+      </motion.h2>
+
+      {/* Animated accent line */}
+      <motion.div
+        className="h-[2px] mb-6 rounded-full"
+        style={{ background: "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary) / 0.2))" }}
+        initial={{ width: 0 }}
+        animate={isInView ? { width: "100%" } : { width: 0 }}
+        transition={{ duration: 0.7, delay: 0.15, ease: sectionEase }}
+      />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {reasons.map((reason, i) => (
+          <motion.div
+            key={reason.title}
+            className="werkstandaard-card rounded-lg border border-border bg-card p-5 flex gap-4 items-start"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.16 + i * 0.1, ease: sectionEase }}
+          >
+            <div className="werkstandaard-icon-wrap shrink-0 mt-0.5">
+              <reason.icon size={20} className="text-primary shrink-0 relative z-10" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-foreground mb-1">{reason.title}</p>
+              <p className="text-sm text-muted-foreground leading-relaxed">{reason.description}</p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const Team = () => {
   return (
     <Layout>
@@ -92,29 +145,17 @@ const Team = () => {
             ))}
           </ScrollReveal>
 
-          <ScrollReveal className="max-w-2xl mx-auto mb-16">
-            <ScrollRevealItem>
-              <h2 className="text-xl font-bold mb-6">Waarom direct met ons werken?</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {directReasons.map((reason) => (
-                  <div key={reason.title} className="rounded-lg border border-border bg-card p-5 flex gap-4 items-start">
-                    <reason.icon size={20} className="text-primary shrink-0 mt-0.5" />
-                    <div>
-                      <p className="text-sm font-semibold text-foreground mb-1">{reason.title}</p>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{reason.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </ScrollRevealItem>
-          </ScrollReveal>
+          <WerkstandaardSection reasons={directReasons} />
 
           <ScrollReveal className="text-center mb-12">
             <ScrollRevealItem>
               <h2 className="text-2xl font-bold mb-3">Wilt u direct met de architecten spreken?</h2>
               <p className="text-muted-foreground mb-6">Plan een kennismaking waarin we uw processen en automatiseringskansen technisch verkennen.</p>
-              <Button asChild size="lg">
-                <Link to="/book">Plan een technisch gesprek <ArrowRight size={18} /></Link>
+              <Button asChild size="lg" className="group/cta">
+                <Link to="/book">
+                  Plan een technisch gesprek
+                  <ArrowRight size={18} className="transition-transform duration-300 group-hover/cta:translate-x-1" />
+                </Link>
               </Button>
             </ScrollRevealItem>
           </ScrollReveal>

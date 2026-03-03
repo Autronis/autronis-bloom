@@ -93,7 +93,7 @@ const WerkstandaardSection = ({ reasons }: { reasons: typeof directReasons }) =>
         {reasons.map((reason, i) => (
           <motion.div
             key={reason.title}
-            className="werkstandaard-card rounded-lg border border-border bg-card p-5 flex gap-4 items-start"
+            className="werkstandaard-card rounded-lg border border-border bg-card p-4 flex gap-3 items-start"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.16 + i * 0.1, ease: sectionEase }}

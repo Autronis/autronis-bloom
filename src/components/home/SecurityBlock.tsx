@@ -120,12 +120,7 @@ const SecurityBlock = () => {
           <ScrollRevealItem>
             <div className="flex items-center justify-center gap-3">
               <div className="h-px w-16 sm:w-24 bg-primary/20" />
-              <div className="flex items-center gap-2">
-                <ShieldCheck size={14} className="text-primary" />
-                <span className="text-xs font-medium tracking-wide text-muted-foreground">
-                  Security by design. Geen compromissen.
-                </span>
-              </div>
+              <ShieldCheck size={14} className="text-primary" />
               <div className="h-px w-16 sm:w-24 bg-primary/20" />
             </div>
           </ScrollRevealItem>

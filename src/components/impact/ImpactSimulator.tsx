@@ -136,7 +136,7 @@ const ImpactSimulator = () => {
 
           {/* RIGHT — Results dashboard */}
           <motion.div
-            className="space-y-5"
+            className="rounded-2xl border border-border bg-card p-5 sm:p-6 space-y-6"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -167,8 +167,11 @@ const ImpactSimulator = () => {
               />
             </div>
 
+            {/* Divider */}
+            <div className="h-px bg-border" />
+
             {/* Confidence score */}
-            <div className="rounded-2xl border border-border bg-card p-5">
+            <div>
               <div className="flex items-center justify-between mb-3">
                 <p className="text-sm font-medium text-foreground">Impact Confidence Score</p>
                 <span className="text-sm font-semibold text-primary tabular-nums">{results.confidence}%</span>
@@ -186,8 +189,11 @@ const ImpactSimulator = () => {
               </p>
             </div>
 
+            {/* Divider */}
+            <div className="h-px bg-border" />
+
             {/* Bar chart - custom */}
-            <div className="rounded-2xl border border-border bg-card p-5">
+            <div>
               <p className="text-sm font-medium text-foreground mb-5">Maandelijks kostenoverzicht</p>
               <div className="space-y-4">
                 {chartData.map((item) => {
@@ -198,8 +204,7 @@ const ImpactSimulator = () => {
                       {item.type === "savings" && (
                         <div className="flex items-center gap-3 mb-4">
                           <div className="h-px flex-1 bg-border" />
-                          <span className="text-xs text-muted-foreground font-medium">−</span>
-                          <div className="h-px flex-1 bg-border" />
+                          <span className="text-xs text-muted-foreground font-medium ml-auto">−</span>
                         </div>
                       )}
                       <div className="space-y-1.5">

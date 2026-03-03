@@ -79,22 +79,34 @@ const Index = () => {
       <ROIPreview />
 
       {/* Security Trust Strip */}
-      <div className="border-t border-border/50">
+      <motion.div
+        className="border-t border-border/50"
+        initial={{ opacity: 0, y: 8 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+      >
         <div className="container mx-auto px-4 lg:px-8 py-5">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
             <div className="flex items-center gap-2.5">
-              <ShieldCheck size={15} className="text-muted-foreground/60 shrink-0" />
+              <motion.div
+                whileHover={{ scale: 1.03, filter: "drop-shadow(0 0 4px hsl(174 78% 41% / 0.35))" }}
+                transition={{ duration: 0.2 }}
+                className="shrink-0"
+              >
+                <ShieldCheck size={15} className="text-muted-foreground/60" />
+              </motion.div>
               <p className="text-xs text-muted-foreground/70 leading-relaxed">
                 Beveiliging en datakwaliteit zijn geïntegreerd in elke fase van onze aanpak — met minimale toegangsrechten, logging en volledige documentatie.
               </p>
             </div>
-            <Link to="/services#kwaliteitsnorm" className="text-xs text-muted-foreground/70 hover:text-primary transition-colors whitespace-nowrap flex items-center gap-1 shrink-0">
+            <Link to="/services#kwaliteitsnorm" className="group text-xs text-muted-foreground/70 hover:text-primary/80 transition-colors whitespace-nowrap flex items-center gap-1 shrink-0">
               Bekijk onze kwaliteitsnorm
-              <ArrowRight size={12} />
+              <ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       <CaseStudiesPreview />
       <SecurityBlock />

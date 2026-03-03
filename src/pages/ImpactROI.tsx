@@ -48,10 +48,10 @@ const ImpactROI = () => {
                 Methodiek
               </p>
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-                Hoe wij Impact & ROI berekenen
+                Van impact naar onderbouwde businesscase
               </h2>
               <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                Onze ROI-indicatie is gebaseerd op zes kwantificeerbare impactfactoren die tijdens de analysefase worden doorgerekend naar een financiële businesscase.
+                Elke ROI-indicatie wordt gebaseerd op meetbare aannames, expliciete rekenregels en transparante uitgangspunten. Tijdens de analysefase vertalen wij operationele impact naar een financieel onderbouwde businesscase.
               </p>
             </ScrollRevealItem>
           </ScrollReveal>
@@ -62,43 +62,43 @@ const ImpactROI = () => {
                 num: "01",
                 icon: Clock,
                 title: "Reductie van handmatige uren",
-                description: "Wij analyseren hoeveel repetitieve, handmatige werkzaamheden structureel kunnen worden geëlimineerd.",
-                financial: "Deze uren worden omgerekend naar FTE-waarde op basis van gemiddelde loonkosten inclusief werkgeverslasten en overhead.",
+                description: "Wij analyseren repetitieve, foutgevoelige en tijdsintensieve werkzaamheden die structureel geautomatiseerd kunnen worden.",
+                financial: "Vrijgekomen uren worden omgerekend naar structurele FTE-besparing op basis van volledig belaste loonkosten (inclusief werkgeverslasten en overhead).",
               },
               {
                 num: "02",
                 icon: Shield,
                 title: "Vermindering van correctie- en herstelkosten",
-                description: "We identificeren foutpercentages, herstelwerk en dubbele data-invoer binnen processen.",
-                financial: "De tijd en kosten van correcties worden berekend en vertaald naar directe kostenreductie.",
+                description: "Wij identificeren foutpercentages, herstelwerk, dubbele data-invoer en inefficiënte overdrachtsmomenten binnen processen.",
+                financial: "De tijd en kosten van correcties worden gekwantificeerd en vertaald naar directe kostenreductie en lagere operationele druk.",
               },
               {
                 num: "03",
                 icon: Calculator,
                 title: "Optimalisatie van externe inhuur en overhead",
-                description: "We beoordelen in hoeverre externe capaciteit of ondersteunende processen kunnen worden teruggebracht.",
-                financial: "Reductie van externe inhuur en operationele overhead wordt direct meegenomen in de businesscase.",
+                description: "Wij beoordelen in hoeverre externe capaciteit, ondersteunende processen of tijdelijke inzet structureel kan worden teruggebracht.",
+                financial: "Reductie van externe inhuur en operationele overhead wordt direct meegenomen in de totale businesscase-impact.",
               },
               {
                 num: "04",
                 icon: TrendingUp,
                 title: "Capaciteitsgroei zonder personeelsuitbreiding",
                 description: "Vrijgekomen tijd wordt geanalyseerd als beschikbare groeicapaciteit binnen bestaande teams.",
-                financial: "We berekenen hoeveel extra output mogelijk is zonder lineaire stijging van personeelskosten.",
+                financial: "Wij berekenen hoeveel extra output mogelijk is zonder lineaire stijging van personeelskosten.",
               },
               {
                 num: "05",
                 icon: Building2,
                 title: "Risicoreductie en continuïteit",
-                description: "We analyseren verstoringen, escalaties, compliance-risico's en handmatige afhankelijkheden.",
+                description: "Wij analyseren verstoringen, escalaties, afhankelijkheden en compliance-risico's binnen kritieke processen.",
                 financial: "Potentiële kosten van uitval, herstel en operationele verstoring worden meegenomen in de ROI-berekening.",
               },
               {
                 num: "06",
                 icon: Users,
                 title: "Verbeterde besluitvorming door realtime inzicht",
-                description: "We beoordelen de impact van realtime data, snellere rapportage en betere stuurinformatie.",
-                financial: "Operationele vertragingen en inefficiënties worden gekwantificeerd op basis van verbeterde informatiestromen.",
+                description: "Wij beoordelen de impact van realtime data, snellere rapportage en verbeterde stuurinformatie op operationele prestaties.",
+                financial: "Operationele vertragingen en inefficiënties worden gekwantificeerd op basis van verbeterde informatiestromen en besluitvorming.",
               },
             ].map((factor, idx) => (
               <ScrollReveal key={factor.num}>
@@ -132,7 +132,7 @@ const ImpactROI = () => {
                     <div className="flex items-start gap-2.5 mt-auto">
                       <Calculator size={14} className="text-primary mt-[3px] shrink-0" />
                       <p className="text-sm text-foreground/90 leading-relaxed">
-                        <span className="font-medium text-foreground">Financiële vertaling:</span>{" "}
+                        <span className="font-medium text-foreground">Doorrekening:</span>{" "}
                         {factor.financial}
                       </p>
                     </div>
@@ -142,10 +142,29 @@ const ImpactROI = () => {
             ))}
           </div>
 
+          {/* Autoriteitsbalk */}
+          <ScrollReveal className="mt-10 max-w-5xl mx-auto">
+            <ScrollRevealItem>
+              <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 py-5 px-6 rounded-xl border border-border/50 bg-card/50">
+                {[
+                  "Geen black-box berekeningen",
+                  "Geen aannames zonder onderbouwing",
+                  "Transparante rekenmodellen",
+                  "Herleidbaar naar uw eigen cijfers",
+                ].map((item) => (
+                  <span key={item} className="flex items-center gap-2 text-xs text-muted-foreground tracking-wide">
+                    <span className="w-1 h-1 rounded-full bg-primary/60 shrink-0" />
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </ScrollRevealItem>
+          </ScrollReveal>
+
           <ScrollReveal className="mt-14">
             <ScrollRevealItem>
               <p className="text-sm text-muted-foreground text-center max-w-3xl mx-auto leading-relaxed">
-                Tijdens de impactanalyse vertalen wij deze factoren naar een volledige businesscase inclusief terugverdientijd, ROI-multiple en risico-inschatting.
+                Tijdens de impactanalyse vertalen wij deze factoren naar een volledige businesscase inclusief terugverdientijd, structurele besparing en strategische waarde.
               </p>
             </ScrollRevealItem>
           </ScrollReveal>

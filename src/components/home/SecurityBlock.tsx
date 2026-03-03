@@ -117,17 +117,12 @@ const SecurityBlock = () => {
           })}
         </div>
 
-        {/* Trust divider */}
+        {/* Trust badge */}
         <ScrollReveal className="mt-12 sm:mt-16">
           <ScrollRevealItem>
-            <div className="flex items-center justify-center gap-3">
-              <div className="h-px w-16 sm:w-24 bg-primary/20" />
+            <div className="flex items-center justify-center">
               <ShieldCheck size={14} className="text-primary" />
-              <div className="h-px w-16 sm:w-24 bg-primary/20" />
             </div>
-            <p className="text-sm text-muted-foreground text-center mt-4 italic">
-              Security by design. Geen compromissen.
-            </p>
           </ScrollRevealItem>
         </ScrollReveal>
       </div>

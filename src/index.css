@@ -241,6 +241,64 @@
   70%      { transform: translate(6px, -4px) scale(0.985); }
 }
 
+/* ── Werkstandaard section animations ── */
+.werkstandaard-card {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+  will-change: transform;
+}
+.werkstandaard-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px -8px hsl(var(--primary) / 0.12);
+  border-color: hsl(var(--primary) / 0.35);
+}
+.werkstandaard-icon-wrap {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+.werkstandaard-card:hover .werkstandaard-icon-wrap {
+  transform: scale(1.05);
+}
+.werkstandaard-icon-wrap::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1.5px solid hsl(var(--primary) / 0);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+  transform: scale(0.8);
+}
+.werkstandaard-card:hover .werkstandaard-icon-wrap::after {
+  border-color: hsl(var(--primary) / 0.3);
+  transform: scale(1);
+}
+
+/* Parallax glow behind werkstandaard */
+.werkstandaard-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  height: 300px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center,
+    hsl(var(--primary) / 0.08),
+    transparent 70%
+  );
+  filter: blur(80px);
+  pointer-events: none;
+  animation: werkstandaard-glow-drift 15s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes werkstandaard-glow-drift {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  33% { transform: translate(-48%, -52%) scale(1.03); }
+  66% { transform: translate(-52%, -48%) scale(0.97); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

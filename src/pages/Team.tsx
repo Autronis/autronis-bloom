@@ -79,13 +79,13 @@ const TeamCard = ({ member }: { member: (typeof team)[0] }) => {
         <img
           src={member.photo}
           alt={member.name}
-          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105 brightness-125"
+          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
         />
-        {/* Radial vignette: darkens edges, keeps center (person) bright */}
+        {/* Inverse vignette: brightens edges (bricks), keeps center (person) natural */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse 55% 65% at 50% 35%, transparent 0%, hsl(0 0% 0% / 0.50) 100%)",
+            background: "radial-gradient(ellipse 50% 60% at 50% 35%, transparent 0%, hsl(0 0% 100% / 0.18) 100%)",
           }}
         />
         <div

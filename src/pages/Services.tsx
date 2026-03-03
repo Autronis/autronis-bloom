@@ -64,20 +64,20 @@ const pillars = [
   },
 ];
 
-// dark = icon is black/dark, needs invert in dark mode to become white
+// dark = black SVG that needs invert in dark mode
 const toolIconsRow1: Array<{ name: string; logo: string; dark?: boolean }> = [
-  { name: "Slack", logo: "/logos/slack.svg", dark: true },
-  { name: "OpenAI", logo: "/logos/openai.svg", dark: true },
+  { name: "Slack", logo: "/logos/slack.svg" },
+  { name: "OpenAI", logo: "/logos/openai.svg" },
   { name: "Make", logo: "/logos/make.svg" },
   { name: "Xero", logo: "/logos/xero.svg" },
   { name: "Notion", logo: "/logos/notion.svg", dark: true },
   { name: "Stripe", logo: "/logos/stripe.svg" },
   { name: "HubSpot", logo: "/logos/hubspot.svg" },
   { name: "Google Sheets", logo: "/logos/google-sheets.svg" },
-  { name: "Twilio", logo: "/logos/twilio.svg", dark: true },
+  { name: "Twilio", logo: "/logos/twilio.svg" },
   { name: "Airtable", logo: "/logos/airtable.svg" },
   { name: "QuickBooks", logo: "/logos/quickbooks.svg" },
-  { name: "Salesforce", logo: "/logos/salesforce.svg", dark: true },
+  { name: "Salesforce", logo: "/logos/salesforce.svg" },
 ];
 
 const toolIconsRow2: Array<{ name: string; logo: string; dark?: boolean }> = [
@@ -85,13 +85,13 @@ const toolIconsRow2: Array<{ name: string; logo: string; dark?: boolean }> = [
   { name: "Shopify", logo: "/logos/shopify.svg" },
   { name: "Mailchimp", logo: "/logos/mailchimp.svg" },
   { name: "Zapier", logo: "/logos/zapier.svg" },
-  { name: "Salesforce", logo: "/logos/salesforce.svg", dark: true },
-  { name: "Twilio", logo: "/logos/twilio.svg", dark: true },
+  { name: "Salesforce", logo: "/logos/salesforce.svg" },
+  { name: "Twilio", logo: "/logos/twilio.svg" },
   { name: "Stripe", logo: "/logos/stripe.svg" },
   { name: "Notion", logo: "/logos/notion.svg", dark: true },
   { name: "HubSpot", logo: "/logos/hubspot.svg" },
-  { name: "OpenAI", logo: "/logos/openai.svg", dark: true },
-  { name: "Slack", logo: "/logos/slack.svg", dark: true },
+  { name: "OpenAI", logo: "/logos/openai.svg" },
+  { name: "Slack", logo: "/logos/slack.svg" },
   { name: "Make", logo: "/logos/make.svg" },
   { name: "Xero", logo: "/logos/xero.svg" },
   { name: "Airtable", logo: "/logos/airtable.svg" },

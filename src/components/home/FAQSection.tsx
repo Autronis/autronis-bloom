@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -37,6 +39,11 @@ const faqs = [
     a: "Ja. Na go-live monitoren we de automatiseringen en bieden we support voor optimalisatie. We zijn uw langetermijn automation partner — niet een eenmalige leverancier.",
   },
   {
+    q: "Hoe waarborgen jullie beveiliging en datakwaliteit?",
+    a: "Beveiliging en datakwaliteit zijn geïntegreerd in elke fase van onze aanpak. We werken met minimale toegangsrechten (least privilege), standaard logging en monitoring, en volledige technische documentatie. Architectuur en datastromen worden zodanig ingericht dat controle, compliance en overdraagbaarheid geborgd zijn.",
+    link: { text: "Bekijk onze kwaliteitsnorm", href: "/services#kwaliteitsnorm" },
+  },
+  {
     q: "Voor welke bedrijfsgrootte is dit geschikt?",
     a: "Onze oplossingen zijn het meest impactvol voor MKB-bedrijven (10–500 medewerkers) die klaar zijn om te schalen zonder evenredig meer mensen aan te nemen.",
   },
@@ -73,6 +80,12 @@ const FAQSection = () => {
                     </AccordionTrigger>
                     <AccordionContent className="text-sm text-foreground/80 leading-relaxed">
                       {faq.a}
+                      {"link" in faq && faq.link && (
+                        <Link to={faq.link.href} className="group flex items-center gap-1 text-xs text-muted-foreground/60 hover:text-primary/70 transition-colors mt-3">
+                          {faq.link.text}
+                          <ArrowRight size={11} className="transition-transform duration-200 group-hover:translate-x-1" />
+                        </Link>
+                      )}
                     </AccordionContent>
                   </AccordionItem>
                 </ScrollRevealItem>

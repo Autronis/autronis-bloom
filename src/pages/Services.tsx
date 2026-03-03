@@ -64,33 +64,34 @@ const pillars = [
   },
 ];
 
-const toolIconsRow1 = [
-  { name: "Slack", logo: "/logos/slack.svg" },
-  { name: "OpenAI", logo: "/logos/openai.svg" },
+// dark = icon is black/dark, needs invert in dark mode to become white
+const toolIconsRow1: Array<{ name: string; logo: string; dark?: boolean }> = [
+  { name: "Slack", logo: "/logos/slack.svg", dark: true },
+  { name: "OpenAI", logo: "/logos/openai.svg", dark: true },
   { name: "Make", logo: "/logos/make.svg" },
   { name: "Xero", logo: "/logos/xero.svg" },
-  { name: "Notion", logo: "/logos/notion.svg" },
+  { name: "Notion", logo: "/logos/notion.svg", dark: true },
   { name: "Stripe", logo: "/logos/stripe.svg" },
   { name: "HubSpot", logo: "/logos/hubspot.svg" },
   { name: "Google Sheets", logo: "/logos/google-sheets.svg" },
-  { name: "Twilio", logo: "/logos/twilio.svg" },
+  { name: "Twilio", logo: "/logos/twilio.svg", dark: true },
   { name: "Airtable", logo: "/logos/airtable.svg" },
   { name: "QuickBooks", logo: "/logos/quickbooks.svg" },
-  { name: "Salesforce", logo: "/logos/salesforce.svg" },
+  { name: "Salesforce", logo: "/logos/salesforce.svg", dark: true },
 ];
 
-const toolIconsRow2 = [
+const toolIconsRow2: Array<{ name: string; logo: string; dark?: boolean }> = [
   { name: "n8n", logo: "/logos/n8n.svg" },
   { name: "Shopify", logo: "/logos/shopify.svg" },
   { name: "Mailchimp", logo: "/logos/mailchimp.svg" },
   { name: "Zapier", logo: "/logos/zapier.svg" },
-  { name: "Salesforce", logo: "/logos/salesforce.svg" },
-  { name: "Twilio", logo: "/logos/twilio.svg" },
+  { name: "Salesforce", logo: "/logos/salesforce.svg", dark: true },
+  { name: "Twilio", logo: "/logos/twilio.svg", dark: true },
   { name: "Stripe", logo: "/logos/stripe.svg" },
-  { name: "Notion", logo: "/logos/notion.svg" },
+  { name: "Notion", logo: "/logos/notion.svg", dark: true },
   { name: "HubSpot", logo: "/logos/hubspot.svg" },
-  { name: "OpenAI", logo: "/logos/openai.svg" },
-  { name: "Slack", logo: "/logos/slack.svg" },
+  { name: "OpenAI", logo: "/logos/openai.svg", dark: true },
+  { name: "Slack", logo: "/logos/slack.svg", dark: true },
   { name: "Make", logo: "/logos/make.svg" },
   { name: "Xero", logo: "/logos/xero.svg" },
   { name: "Airtable", logo: "/logos/airtable.svg" },
@@ -486,7 +487,7 @@ const Services = () => {
                 <div className="flex animate-marquee-right gap-14 w-max items-center justify-center">
                   {[...toolIconsRow1, ...toolIconsRow1, ...toolIconsRow1].map((tool, i) => (
                     <div key={i} className="flex flex-col items-center gap-1.5 hover:scale-110 transition-transform duration-200">
-                      <img src={tool.logo} alt={tool.name} className="w-10 h-10 object-contain opacity-80 hover:opacity-100 transition-all duration-200 dark:brightness-0 dark:invert" loading="lazy" />
+                      <img src={tool.logo} alt={tool.name} className={`w-10 h-10 object-contain opacity-80 hover:opacity-100 transition-all duration-200 ${tool.dark ? 'dark:brightness-0 dark:invert' : ''}`} loading="lazy" />
                       <span className="text-[10px] text-muted-foreground/60 font-medium">{tool.name}</span>
                     </div>
                   ))}
@@ -497,7 +498,7 @@ const Services = () => {
                 <div className="flex animate-marquee-left gap-14 w-max items-center justify-center">
                   {[...toolIconsRow2, ...toolIconsRow2, ...toolIconsRow2].map((tool, i) => (
                     <div key={i} className="flex flex-col items-center gap-1.5 hover:scale-110 transition-transform duration-200">
-                      <img src={tool.logo} alt={tool.name} className="w-10 h-10 object-contain opacity-80 hover:opacity-100 transition-all duration-200 dark:brightness-0 dark:invert" loading="lazy" />
+                      <img src={tool.logo} alt={tool.name} className={`w-10 h-10 object-contain opacity-80 hover:opacity-100 transition-all duration-200 ${tool.dark ? 'dark:brightness-0 dark:invert' : ''}`} loading="lazy" />
                       <span className="text-[10px] text-muted-foreground/60 font-medium">{tool.name}</span>
                     </div>
                   ))}

@@ -228,12 +228,18 @@ const ProcessSection = () => {
         {/* Security line */}
         <ScrollReveal className="mt-10">
           <ScrollRevealItem>
-            <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground mb-8">
-              <ShieldCheck size={14} className="text-primary" />
-              <span>
-                Beveiliging en datakwaliteit zijn geïntegreerd in elke fase — met minimale
-                toegangsrechten, logging en volledige documentatie.
-              </span>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-xs text-muted-foreground mb-8">
+              <div className="flex items-center gap-2">
+                <ShieldCheck size={14} className="text-primary" />
+                <span>
+                  Beveiliging en datakwaliteit zijn geïntegreerd in elke fase — met minimale
+                  toegangsrechten, logging en volledige documentatie.
+                </span>
+              </div>
+              <a href="#beveiliging" className="group flex items-center gap-1 text-muted-foreground/70 hover:text-primary/80 transition-colors whitespace-nowrap shrink-0">
+                Bekijk beveiliging & vertrouwen
+                <ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1" />
+              </a>
             </div>
           </ScrollRevealItem>
         </ScrollReveal>

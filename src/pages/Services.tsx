@@ -489,21 +489,27 @@ const Services = () => {
               <p className="text-muted-foreground">Heeft uw systeem een API? Dan kunnen wij integreren.</p>
             </div>
 
-            <div className="relative mb-4 overflow-hidden">
+            <div className="relative mb-4 overflow-hidden py-8">
               <div className="flex animate-marquee-right gap-14 w-max items-center justify-center">
                 {[...toolIconsRow1, ...toolIconsRow1, ...toolIconsRow1].map((tool, i) => (
-                  <div key={i} className="hover:scale-110 transition-transform duration-200">
-                    <img src={tool.logo} alt={tool.name} className={`w-12 h-12 object-contain opacity-70 hover:opacity-100 transition-all duration-200 ${tool.dark ? 'dark:invert' : ''}`} loading="lazy" />
+                  <div key={i} className="relative group hover:scale-110 transition-transform duration-200">
+                    <img src={tool.logo} alt={tool.name} className={`w-12 h-12 object-contain opacity-70 group-hover:opacity-100 transition-all duration-200 ${tool.dark ? 'dark:invert' : ''}`} loading="lazy" />
+                    <span className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-muted-foreground bg-card border border-border rounded px-2 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-sm">
+                      {tool.name}
+                    </span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="relative overflow-hidden">
+            <div className="relative overflow-hidden py-8">
               <div className="flex animate-marquee-left gap-14 w-max items-center justify-center">
                 {[...toolIconsRow2, ...toolIconsRow2, ...toolIconsRow2].map((tool, i) => (
-                  <div key={i} className="hover:scale-110 transition-transform duration-200">
-                    <img src={tool.logo} alt={tool.name} className={`w-12 h-12 object-contain opacity-70 hover:opacity-100 transition-all duration-200 ${tool.dark ? 'dark:invert' : ''}`} loading="lazy" />
+                  <div key={i} className="relative group hover:scale-110 transition-transform duration-200">
+                    <img src={tool.logo} alt={tool.name} className={`w-12 h-12 object-contain opacity-70 group-hover:opacity-100 transition-all duration-200 ${tool.dark ? 'dark:invert' : ''}`} loading="lazy" />
+                    <span className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-muted-foreground bg-card border border-border rounded px-2 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-sm">
+                      {tool.name}
+                    </span>
                   </div>
                 ))}
               </div>

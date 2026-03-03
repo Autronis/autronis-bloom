@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { motion, useInView } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import AmbientLight from "@/components/AmbientLight";
-import teamFoto from "@/assets/autronis_team_foto.png";
+import teamWallFoto from "@/assets/team_wall.png";
 
 const reasons = [
   {
@@ -141,13 +141,13 @@ const WhyAutronisSection = () => {
                 </div>
 
                 {/* Right: Team photo */}
-                <div ref={imgRef} className="relative min-h-[400px] lg:min-h-0 border-l border-border lg:border-l dark:border-border/50">
+                <div ref={imgRef} className="relative min-h-[400px] lg:min-h-0 border-l border-border lg:border-l dark:border-border/50 overflow-hidden">
                   <motion.img
-                    src={teamFoto}
+                    src={teamWallFoto}
                     alt="Autronis team - Sem en Syb"
-                    className="w-full h-full object-cover dark:brightness-[0.82] brightness-100"
-                    initial={{ opacity: 0, scale: 1.03 }}
-                    animate={imgInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.03 }}
+                    className="w-full h-full object-cover object-[50%_25%] scale-110 brightness-[0.75] dark:brightness-[0.65]"
+                    initial={{ opacity: 0, scale: 1.15 }}
+                    animate={imgInView ? { opacity: 1, scale: 1.1 } : { opacity: 0, scale: 1.15 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}
                     loading="lazy"
                   />

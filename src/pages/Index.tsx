@@ -80,7 +80,7 @@ const Index = () => {
 
       {/* Security Trust Strip */}
       <motion.div
-        className="border-t border-border/50"
+        className="border-t border-border/50 bg-background"
         initial={{ opacity: 0, y: 8 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.5 }}
@@ -94,13 +94,13 @@ const Index = () => {
                 transition={{ duration: 0.2 }}
                 className="shrink-0"
               >
-                <ShieldCheck size={15} className="text-muted-foreground/60" />
+                <ShieldCheck size={15} className="text-primary" />
               </motion.div>
               <p className="text-xs text-muted-foreground/70 leading-relaxed">
                 Beveiliging en datakwaliteit zijn geïntegreerd in elke fase van onze aanpak — met minimale toegangsrechten, logging en volledige documentatie.
               </p>
             </div>
-            <Link to="/services#kwaliteitsnorm" className="group text-xs text-muted-foreground hover:text-primary/80 transition-colors whitespace-nowrap flex items-center gap-1 shrink-0">
+            <Link to="/services#kwaliteitsnorm" className="group text-xs text-muted-foreground/70 hover:text-primary/80 transition-colors whitespace-nowrap flex items-center gap-1 shrink-0">
               Bekijk onze kwaliteitsnorm
               <ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1" />
             </Link>

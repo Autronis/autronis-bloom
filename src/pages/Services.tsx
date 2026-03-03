@@ -5,7 +5,7 @@ import { ArrowRight, ChevronDown, CheckCircle2, Cog, Link2, PieChart, FolderOpen
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
-import AmbientLight from "@/components/AmbientLight";
+
 
 const pillars = [
   {
@@ -456,7 +456,7 @@ const Services = () => {
     <Layout>
       {/* Single continuous section — hero + integrations + pillars */}
       <section className="relative pt-16 pb-24 overflow-hidden">
-        <AmbientLight />
+        
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           {/* Hero */}

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import AmbientLight from "@/components/AmbientLight";
+
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
@@ -11,7 +11,7 @@ const FinalCTA = () => {
 
   return (
     <section ref={sectionRef} className="py-16 sm:py-28 border-t border-border relative overflow-hidden">
-      <AmbientLight />
+      
 
       {/* Logo-inspired butterfly: gear body + circuit wings */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">

@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Target, Shield, Users, Handshake } from "lucide-react";
-import AmbientLight from "@/components/AmbientLight";
+
 import { useState } from "react";
 import fotoSyb from "@/assets/foto_syb.jpg";
 import fotoSem from "@/assets/foto_sem.jpg";
@@ -66,7 +66,7 @@ const About = () => {
   return (
     <Layout>
       <section className="pt-16 pb-24 relative overflow-hidden">
-        <AmbientLight />
+        
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           {/* Intro */}
           <div className="max-w-3xl mx-auto text-center mb-20">

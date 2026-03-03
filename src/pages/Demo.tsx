@@ -2,13 +2,13 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Play, ArrowRight } from "lucide-react";
-import AmbientLight from "@/components/AmbientLight";
+
 
 const Demo = () => {
   return (
     <Layout>
       <section className="pt-16 pb-24 relative overflow-hidden">
-        <AmbientLight />
+        
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center mb-12">
             <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Demo</p>

@@ -1,7 +1,7 @@
 import { Shield, Database, FileCheck, ShieldCheck, Lock, Globe, BrainCog, Eye, FolderLock, KeyRound, Server, FlaskConical, Link2, Unlock, ShieldOff, ClipboardList, Radio, Scale, FileText, BadgeCheck } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import AmbientLight from "@/components/AmbientLight";
+
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 const layers = [
@@ -54,7 +54,7 @@ const SecurityBlock = () => {
 
   return (
     <section id="beveiliging" className="relative overflow-hidden border-t border-primary/10">
-      <AmbientLight />
+      
 
       <div className="container mx-auto px-4 lg:px-8 py-16 sm:py-24 relative z-10">
         <ScrollReveal className="max-w-3xl mx-auto text-center mb-14 sm:mb-20">

@@ -7,7 +7,7 @@ import { motion, useInView } from "framer-motion";
 import fotoSyb from "@/assets/foto_syb.jpg";
 import fotoSem from "@/assets/foto_sem.jpg";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
-import AmbientLight from "@/components/AmbientLight";
+
 import TeamCard from "@/components/team/TeamCard";
 import type { TeamMember } from "@/components/team/types";
 
@@ -112,7 +112,7 @@ const Team = () => {
   return (
     <Layout>
       <section className="pt-16 pb-24 relative overflow-hidden">
-        <AmbientLight />
+        
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <ScrollReveal className="max-w-3xl mx-auto text-center mb-16">
             <ScrollRevealItem>

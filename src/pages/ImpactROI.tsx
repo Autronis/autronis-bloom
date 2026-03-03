@@ -3,14 +3,13 @@ import ImpactSimulator from "@/components/impact/ImpactSimulator";
 import { Clock, Users, TrendingUp, Calculator, Building2, Shield } from "lucide-react";
 import { motion } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
-import AmbientLight from "@/components/AmbientLight";
+
 
 const ImpactROI = () => {
   return (
     <Layout>
       {/* Hero */}
       <section className="relative pt-16 sm:pt-24 pb-16 overflow-hidden">
-        <AmbientLight />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <motion.div
             className="max-w-3xl mx-auto text-center"
@@ -40,7 +39,7 @@ const ImpactROI = () => {
 
       {/* Methodiek — 6 impactfactoren */}
       <section className="py-16 sm:py-24 border-t border-border relative overflow-hidden">
-        <AmbientLight />
+        
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <ScrollReveal className="max-w-3xl mx-auto text-center mb-14">
             <ScrollRevealItem>

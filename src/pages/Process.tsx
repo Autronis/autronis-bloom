@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
-import AmbientLight from "@/components/AmbientLight";
+
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 /* ── Phase data ── */
@@ -395,7 +395,7 @@ const Process = () => {
 
   return (
     <section className="pt-16 pb-24 relative overflow-hidden">
-      <AmbientLight />
+      
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Hero */}
         <ScrollReveal className="max-w-3xl mx-auto text-center mb-16">

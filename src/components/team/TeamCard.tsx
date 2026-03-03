@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
-import { Mail, Linkedin, X } from "lucide-react";
+import { Linkedin, X } from "lucide-react";
+import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -156,13 +157,17 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
           <p className="text-xs text-muted-foreground/55 mt-0.5">{member.subtitle}</p>
         </div>
         <div className="flex gap-2 shrink-0 mt-0.5">
-          <a
-            href={member.mail}
+          <button
             className="w-8 h-8 rounded-full bg-muted/40 border border-border
               flex items-center justify-center
               hover:border-primary/40
               transition-all duration-200 hover:scale-[1.08]"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              const email = member.mail.replace("mailto:", "");
+              navigator.clipboard.writeText(email);
+              toast.success("E-mailadres gekopieerd naar klembord");
+            }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335"/>
@@ -171,7 +176,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
               <path d="M18.545 11.73V21.002h-3.819V11.73L12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457L18.545 11.73z" fill="#FBBC05"/>
               <path d="M5.455 11.73V21.002h3.818V11.73L12 9.548 5.455 4.64 3.927 3.494C2.309 2.28 0 3.434 0 5.457L5.455 11.73z" fill="#C5221F"/>
             </svg>
-          </a>
+          </button>
           <a
             href={member.linkedin}
             target="_blank"

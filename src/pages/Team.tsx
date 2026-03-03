@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Users, Eye, Shield, Clock, Mail, Linkedin } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import fotoSyb from "@/assets/foto_syb.jpg";
 import fotoSem from "@/assets/foto_sem.jpg";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
@@ -71,51 +71,89 @@ const toolStack = [
   "OpenAI", "Supabase", "n8n", "Make", "Vercel", "AWS",
 ];
 
+const VISIBLE_COUNT = 3;
+const MOBILE_VISIBLE = 3;
+
 const TeamCard = ({ member }: { member: (typeof team)[0] }) => {
   const [hovered, setHovered] = useState(false);
-  const mobileSkills = member.skills.slice(0, 4);
+  const [expanded, setExpanded] = useState(false);
+
+  const visibleSkills = member.skills.slice(0, VISIBLE_COUNT);
+  const hiddenSkills = member.skills.slice(VISIBLE_COUNT);
+  const mobileVisible = member.skills.slice(0, MOBILE_VISIBLE);
+  const mobileHidden = member.skills.slice(MOBILE_VISIBLE);
+
+  const handleExpandClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setExpanded((prev) => !prev);
+  };
+
+  // Close expanded on outside click
+  const cardRef = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    if (!expanded) return;
+    const handler = (e: MouseEvent) => {
+      if (cardRef.current && !cardRef.current.contains(e.target as Node)) {
+        setExpanded(false);
+      }
+    };
+    document.addEventListener("click", handler);
+    return () => document.removeEventListener("click", handler);
+  }, [expanded]);
+
+  const badgeClass =
+    "text-[10px] px-2.5 py-1 rounded-full backdrop-blur-md border transition-all duration-300 " +
+    "bg-[rgba(20,20,25,0.7)] border-[rgba(255,255,255,0.1)] text-[rgba(220,220,225,0.9)] " +
+    "hover:border-[rgba(255,255,255,0.2)] hover:text-[rgba(240,240,245,1)] hover:shadow-[0_0_10px_rgba(255,255,255,0.04)]";
+
+  const plusBadgeClass =
+    "text-[10px] px-2.5 py-1 rounded-full backdrop-blur-md border cursor-pointer select-none transition-all duration-300 " +
+    "bg-[rgba(20,20,25,0.7)] border-[rgba(255,255,255,0.12)] text-[rgba(200,200,205,0.85)] " +
+    "hover:border-[rgba(255,255,255,0.25)] hover:text-[rgba(240,240,245,1)]";
 
   return (
     <div
-      className="relative rounded-xl border border-border bg-card overflow-hidden group cursor-pointer transition-shadow duration-300 hover:shadow-lg hover:shadow-primary/5"
+      ref={cardRef}
+      className="relative rounded-xl border border-border bg-card overflow-hidden group transition-all duration-300 ease-out"
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseLeave={() => { setHovered(false); }}
+      style={{
+        transform: hovered ? "translateY(-4px)" : "translateY(0)",
+        boxShadow: hovered ? "0 12px 32px -8px rgba(0,0,0,0.35)" : "none",
+      }}
     >
       <div className="aspect-[3/4] relative overflow-hidden">
         <img
           src={member.photo}
           alt={member.name}
-          className={`w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-105 ${
-            hovered ? "-translate-y-1" : ""
-          }`}
+          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
         />
+
         {/* Subtle brick brightener */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse 50% 60% at 50% 35%, transparent 0%, hsl(0 0% 100% / 0.06) 100%)",
+            background: "radial-gradient(ellipse 50% 60% at 50% 35%, transparent 0%, hsl(0 0% 100% / 0.04) 100%)",
           }}
         />
 
-        {/* Description overlay on hover */}
+        {/* Dark gradient scrim for readability */}
         <div
-          className={`absolute inset-0 bg-background/90 backdrop-blur-sm flex items-center justify-center p-6 transition-opacity duration-300 ${
-            hovered ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <p className="text-sm text-foreground leading-relaxed text-center">
-            {member.description}
-          </p>
-        </div>
+          className="absolute inset-x-0 bottom-0 pointer-events-none"
+          style={{
+            height: "40%",
+            background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 50%, transparent 100%)",
+          }}
+        />
 
         {/* Social icons - top right */}
-        <div className={`absolute top-4 right-4 flex gap-2 z-10 transition-opacity duration-300 ${hovered ? "opacity-100" : "opacity-60"}`}>
+        <div className={`absolute top-4 right-4 flex gap-2 z-10 transition-opacity duration-300 ${hovered ? "opacity-100" : "opacity-50"}`}>
           <TooltipProvider delayDuration={200}>
             <Tooltip>
               <TooltipTrigger asChild>
                 <a
                   href={member.mail}
-                  className="w-9 h-9 rounded-full bg-background/30 backdrop-blur-md border border-primary/20 flex items-center justify-center text-primary/80 hover:text-primary hover:border-primary/50 hover:shadow-[0_0_12px_hsl(var(--primary)/0.25)] hover:scale-[1.03] transition-all duration-300"
+                  className="w-9 h-9 rounded-full bg-[rgba(20,20,25,0.6)] backdrop-blur-md border border-[rgba(255,255,255,0.08)] flex items-center justify-center text-[rgba(200,200,205,0.7)] hover:text-primary/80 hover:border-[rgba(255,255,255,0.2)] hover:scale-[1.03] transition-all duration-300"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <Mail size={15} />
@@ -129,7 +167,7 @@ const TeamCard = ({ member }: { member: (typeof team)[0] }) => {
                   href={member.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full bg-background/30 backdrop-blur-md border border-primary/20 flex items-center justify-center text-primary/80 hover:text-primary hover:border-primary/50 hover:shadow-[0_0_12px_hsl(var(--primary)/0.25)] hover:scale-[1.03] transition-all duration-300"
+                  className="w-9 h-9 rounded-full bg-[rgba(20,20,25,0.6)] backdrop-blur-md border border-[rgba(255,255,255,0.08)] flex items-center justify-center text-[rgba(200,200,205,0.7)] hover:text-primary/80 hover:border-[rgba(255,255,255,0.2)] hover:scale-[1.03] transition-all duration-300"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <Linkedin size={15} />
@@ -140,34 +178,56 @@ const TeamCard = ({ member }: { member: (typeof team)[0] }) => {
           </TooltipProvider>
         </div>
 
-        {/* Skill badges - bottom left on photo */}
-        <div className={`absolute bottom-4 left-4 right-4 z-10 transition-opacity duration-300 ${hovered ? "opacity-100" : "opacity-75"}`}>
-          {/* Desktop: all skills */}
-          <div className="hidden sm:flex flex-wrap gap-1.5 max-w-[90%]">
-            {member.skills.map((skill) => (
-              <span
-                key={skill}
-                className={`text-[10px] px-2 py-0.5 rounded-full bg-background/25 backdrop-blur-md border border-primary/25 text-primary/90 transition-all duration-300 ${
-                  hovered ? "border-primary/50 text-primary shadow-[0_0_8px_hsl(var(--primary)/0.15)]" : ""
-                }`}
-                style={{ animation: hovered ? "none" : `floatBadge 4s ease-in-out infinite` }}
-              >
-                {skill}
-              </span>
-            ))}
+        {/* Expanded overlay with hidden skills */}
+        {expanded && (
+          <div
+            className="absolute inset-x-0 bottom-0 z-20 p-4 pt-10"
+            style={{
+              background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.5) 60%, transparent 100%)",
+              animation: "skillsExpand 280ms ease-out forwards",
+            }}
+          >
+            <div className="flex flex-wrap gap-1.5">
+              {member.skills.map((skill) => (
+                <span key={skill} className={badgeClass}>{skill}</span>
+              ))}
+            </div>
+            <button
+              onClick={handleExpandClick}
+              className={`${plusBadgeClass} mt-2`}
+            >
+              Sluiten
+            </button>
           </div>
-          {/* Mobile: max 4 */}
-          <div className="flex sm:hidden flex-wrap gap-1.5">
-            {mobileSkills.map((skill) => (
-              <span
-                key={skill}
-                className="text-[10px] px-2 py-0.5 rounded-full bg-background/25 backdrop-blur-md border border-primary/25 text-primary/90"
-              >
-                {skill}
-              </span>
-            ))}
+        )}
+
+        {/* Skill badges - bottom left */}
+        {!expanded && (
+          <div className={`absolute bottom-4 left-4 right-4 z-10 transition-opacity duration-300 ${hovered ? "opacity-100" : "opacity-75"}`}>
+            {/* Desktop */}
+            <div className="hidden sm:flex flex-wrap gap-1.5">
+              {visibleSkills.map((skill) => (
+                <span key={skill} className={badgeClass}>{skill}</span>
+              ))}
+              {hiddenSkills.length > 0 && (
+                <button onClick={handleExpandClick} className={plusBadgeClass}>
+                  +{hiddenSkills.length}
+                </button>
+              )}
+            </div>
+            {/* Mobile */}
+            <div className="flex sm:hidden flex-wrap gap-1.5">
+              {mobileVisible.map((skill) => (
+                <span key={skill} className={badgeClass}>{skill}</span>
+              ))}
+              {mobileHidden.length > 0 && (
+                <button onClick={handleExpandClick} className={plusBadgeClass}>
+                  +{mobileHidden.length}
+                </button>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Clean bottom: name + role only */}
@@ -183,9 +243,9 @@ const Team = () => {
   return (
     <Layout>
       <style>{`
-        @keyframes floatBadge {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-2px); }
+        @keyframes skillsExpand {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
       <section className="pt-16 pb-24 relative overflow-hidden">

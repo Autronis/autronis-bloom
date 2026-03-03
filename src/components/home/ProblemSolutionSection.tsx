@@ -121,9 +121,9 @@ const ProblemSolutionSection = () => {
                 Het probleem is niet <StrikeThroughText />.
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                Veel groeiende organisaties denken dat ze meer mensen nodig hebben om bij te
-                blijven. In werkelijkheid ontstaan vertragingen doordat processen versnipperd
-                zijn en systemen niet goed samenwerken.
+                Veel groeiende organisaties denken dat ze extra personeel nodig hebben om bij te
+                blijven. In werkelijkheid ontstaan vertragingen doordat processen niet goed op
+                elkaar zijn afgestemd en systemen onvoldoende samenwerken.
               </p>
             </ScrollRevealItem>
           </ScrollReveal>

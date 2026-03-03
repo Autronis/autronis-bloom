@@ -66,10 +66,10 @@ const SecurityBlock = () => {
               Beveiliging & Vertrouwen
             </p>
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Uw data is beschermd volgens enterprise-standaarden
+              Enterprise-grade beveiliging, zonder compromissen
             </h2>
             <p className="text-base leading-relaxed text-muted-foreground">
-              Beveiliging is geen toevoeging achteraf. Het is geïntegreerd in elke laag van onze automatiseringen en AI-oplossingen.
+              Beveiliging is geïntegreerd in elke automatisering en systeemintegratie die wij ontwikkelen.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>
@@ -125,6 +125,9 @@ const SecurityBlock = () => {
               <ShieldCheck size={14} className="text-primary" />
               <div className="h-px w-16 sm:w-24 bg-primary/20" />
             </div>
+            <p className="text-sm text-muted-foreground text-center mt-4 italic">
+              Security by design. Geen compromissen.
+            </p>
           </ScrollRevealItem>
         </ScrollReveal>
       </div>

@@ -532,49 +532,51 @@ const Services = () => {
             </div>
           </div>
 
-          {/* Kwaliteitsnorm */}
-          <div className="mt-16 border-t border-border pt-12 max-w-3xl mx-auto">
-            <ScrollReveal className="text-center mb-8">
+        {/* Kwaliteitsnorm */}
+          <div className="mt-16 border-t border-border pt-12 max-w-5xl mx-auto">
+            <ScrollReveal className="text-center mb-10">
               <ScrollRevealItem>
                 <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Kwaliteitsnorm</p>
-                <h2 className="text-2xl sm:text-3xl font-bold mb-4">Onze technische en organisatorische basis</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold mb-4">Gebouwd op vaste architectuur- en governanceprincipes</h2>
                 <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl mx-auto">
-                  Elke implementatie voldoet aan vaste architectuur- en governanceprincipes. Beveiliging, controle en overdraagbaarheid zijn geen toevoeging, maar uitgangspunt.
+                  Elke implementatie voldoet aan vaste technische en organisatorische standaarden.
+                  Beveiliging, controle en overdraagbaarheid zijn geen toevoeging — maar uitgangspunt.
                 </p>
               </ScrollRevealItem>
             </ScrollReveal>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {[
-                { icon: ShieldCheck, title: "Minimale toegangsrechten", desc: "Toegang wordt ingericht volgens het least-privilege principe met role-based access control. Geen overmatige systeemrechten." },
-                { icon: BarChart3, title: "Logging & monitoring", desc: "Realtime logging, foutdetectie en audittrails voor volledige traceerbaarheid van processen en datastromen." },
-                { icon: FileText, title: "Volledige technische documentatie", desc: "Architectuur, integraties, datalogica en configuraties volledig vastgelegd en overdraagbaar." },
-                { icon: Shield, title: "Datagovernance & AVG-afstemming", desc: "Dataverwerking ingericht conform privacyrichtlijnen en interne compliance-eisen." },
-                { icon: Layers, title: "Overdraagbare architectuur", desc: "Geen vendor lock-in. Systemen blijven beheersbaar en uitbreidbaar voor interne teams." },
+                { icon: ShieldCheck, title: "Minimale toegangsrechten", desc: "Least-privilege en rolgebaseerde toegang zonder overmatige systeemrechten." },
+                { icon: BarChart3, title: "Logging & monitoring", desc: "Realtime logging, audittrails en foutdetectie voor volledige traceerbaarheid." },
+                { icon: FileText, title: "Volledige technische documentatie", desc: "Architectuur, integraties en configuraties volledig vastgelegd en overdraagbaar." },
+                { icon: Database, title: "Datagovernance & AVG-afstemming", desc: "Dataverwerking ingericht conform privacywetgeving en compliance-eisen." },
+                { icon: Layers, title: "Overdraagbare architectuur", desc: "Geen vendor lock-in. Beheersbaar en uitbreidbaar voor interne teams." },
+                { icon: Cog, title: "Stabiele en schaalbare infrastructuur", desc: "Enterprise-grade infrastructuur die meegroeit zonder performance- of veiligheidscompromissen." },
               ].map((item, idx) => (
                 <motion.div
                   key={item.title}
-                  className="flex items-start gap-3 p-4 rounded-xl border border-primary/15 bg-card cursor-default"
-                  initial={{ opacity: 0, y: 12 }}
+                  className="p-5 rounded-2xl border border-primary/15 bg-card/80 backdrop-blur-sm cursor-default"
+                  initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.06, duration: 0.4 }}
+                  transition={{ delay: idx * 0.07, duration: 0.45 }}
                   whileHover={{
+                    scale: 1.03,
+                    y: -4,
                     borderColor: "hsl(174, 78%, 41%, 0.5)",
-                    boxShadow: "0 0 14px hsl(174, 78%, 41%, 0.1)",
+                    boxShadow: "0 8px 28px hsl(174, 78%, 41%, 0.08)",
                   }}
                 >
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 mt-0.5">
-                    <item.icon size={16} />
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
+                    <item.icon size={20} />
                   </div>
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">{item.title}</p>
-                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{item.desc}</p>
-                  </div>
+                  <p className="text-base font-semibold text-foreground mb-2">{item.title}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
                 </motion.div>
               ))}
             </div>
-            <p className="text-xs text-muted-foreground text-center mt-6 italic">
-              Wij realiseren geen automatisering zonder dat deze principes aantoonbaar zijn geborgd.
+            <p className="text-sm text-muted-foreground text-center mt-8 italic">
+              Deze principes zijn vaste randvoorwaarden binnen elke implementatie.
             </p>
           </div>
 

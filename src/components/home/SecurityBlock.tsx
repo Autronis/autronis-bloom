@@ -1,4 +1,4 @@
-import { Shield, Database, FileCheck, ShieldCheck } from "lucide-react";
+import { Shield, Database, FileCheck, ShieldCheck, Lock, Globe, BrainCog, Eye, FolderLock, KeyRound, Server, FlaskConical, Link2, Unlock, ShieldOff, ClipboardList, Radio, Scale, FileText, BadgeCheck } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import AmbientLight from "@/components/AmbientLight";
@@ -11,11 +11,11 @@ const layers = [
     title: "Architectuurlaag",
     intro: "De basis waarop alles rust.",
     points: [
-      "Least-privilege toegangsmodel als standaard",
-      "Rol- en recordniveau beveiliging (Row Level Security)",
-      "Gescheiden omgevingen (ontwikkeling, test, productie)",
-      "API-gebaseerde integraties met gecontroleerde toegang",
-      "Geen vendor lock-in of verborgen afhankelijkheden",
+      { icon: KeyRound, text: "Least-privilege toegangsmodel als standaard" },
+      { icon: ShieldCheck, text: "Rol- en recordniveau beveiliging (Row Level Security)" },
+      { icon: FlaskConical, text: "Gescheiden omgevingen (ontwikkeling, test, productie)" },
+      { icon: Link2, text: "API-gebaseerde integraties met gecontroleerde toegang" },
+      { icon: Unlock, text: "Geen vendor lock-in of verborgen afhankelijkheden" },
     ],
     closing: "Hier bepalen we hoe systemen communiceren en wie toegang krijgt — vóórdat er data stroomt.",
   },
@@ -25,11 +25,11 @@ const layers = [
     title: "Datalaag",
     intro: "Bescherming van uw bedrijfsgegevens.",
     points: [
-      "End-to-end versleuteling (TLS 1.2+ tijdens transport, AES-256 bij opslag)",
-      "Verwerking en opslag binnen de EU waar mogelijk",
-      "Geen AI-training op uw bedrijfsdata",
-      "Data niet toegankelijk voor onbevoegden — ook niet voor derden",
-      "Datasegmentatie en gecontroleerde toegang per rol",
+      { icon: Lock, text: "End-to-end versleuteling (TLS 1.2+ tijdens transport, AES-256 bij opslag)" },
+      { icon: Globe, text: "Verwerking en opslag binnen de EU waar mogelijk" },
+      { icon: BrainCog, text: "Geen AI-training op uw bedrijfsdata" },
+      { icon: Eye, text: "Data niet toegankelijk voor onbevoegden — ook niet voor derden" },
+      { icon: FolderLock, text: "Datasegmentatie en gecontroleerde toegang per rol" },
     ],
     closing: "Uw data blijft van u, technisch én contractueel.",
   },
@@ -39,11 +39,11 @@ const layers = [
     title: "Governance & controle",
     intro: "Aantoonbare beheersing van risico.",
     points: [
-      "Logging en audittrails standaard actief",
-      "Monitoring en incidentprocedures",
-      "AVG / GDPR-compliance inclusief verwerkersovereenkomsten (DPA's)",
-      "Volledige technische documentatie en overdraagbaarheid",
-      "Samenwerking met SOC 2 Type II en ISO 27001 gecertificeerde technologiepartners (zoals Supabase, OpenAI, Anthropic en Vercel)",
+      { icon: ClipboardList, text: "Logging en audittrails standaard actief" },
+      { icon: Radio, text: "Monitoring en incidentprocedures" },
+      { icon: Scale, text: "AVG / GDPR-compliance inclusief verwerkersovereenkomsten (DPA's)" },
+      { icon: FileText, text: "Volledige technische documentatie en overdraagbaarheid" },
+      { icon: BadgeCheck, text: "Samenwerking met SOC 2 Type II en ISO 27001 gecertificeerde technologiepartners (zoals Supabase, OpenAI, Anthropic en Vercel)" },
     ],
     closing: "Beveiliging wordt niet alleen technisch geborgd, maar ook juridisch en operationeel.",
   },
@@ -112,20 +112,23 @@ const SecurityBlock = () => {
                       </p>
 
                       <ul className="space-y-2.5 pl-12 mb-5">
-                        {layer.points.map((point) => (
-                          <motion.li
-                            key={point}
-                            className="flex items-start gap-3 text-sm leading-relaxed"
-                            whileHover={{ x: 4 }}
-                            transition={{ duration: 0.2 }}
-                          >
-                            <span className="mt-[7px] w-[6px] h-[6px] rounded-full bg-primary/60 shrink-0" />
-                            <span className="text-foreground/85">{point}</span>
-                          </motion.li>
-                        ))}
+                        {layer.points.map((point) => {
+                          const PointIcon = point.icon;
+                          return (
+                            <motion.li
+                              key={point.text}
+                              className="flex items-start gap-3 text-sm leading-relaxed"
+                              whileHover={{ x: 4 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              <PointIcon size={15} className="text-primary/60 mt-[2px] shrink-0" />
+                              <span className="text-foreground/85">{point.text}</span>
+                            </motion.li>
+                          );
+                        })}
                       </ul>
 
-                      <p className="text-sm font-medium text-muted-foreground/80 italic pl-12 border-l-2 border-primary/20 ml-12 py-1">
+                      <p className="text-sm font-medium text-muted-foreground/80 italic pl-12">
                         {layer.closing}
                       </p>
                     </div>

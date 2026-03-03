@@ -16,22 +16,10 @@ interface Skill {
   category: SkillCategory;
 }
 
-const categoryMeta: Record<SkillCategory, { title: string; border: string; bg: string }> = {
-  arch: {
-    title: "ARCHITECTUUR",
-    border: "border-[rgba(160,180,210,0.25)]",
-    bg: "bg-[rgba(160,180,210,0.06)]",
-  },
-  ai: {
-    title: "AI & INTEGRATIES",
-    border: "border-[rgba(130,200,190,0.25)]",
-    bg: "bg-[rgba(130,200,190,0.06)]",
-  },
-  gov: {
-    title: "GOVERNANCE",
-    border: "border-[rgba(170,160,200,0.25)]",
-    bg: "bg-[rgba(170,160,200,0.06)]",
-  },
+const categoryMeta: Record<SkillCategory, { border: string }> = {
+  arch: { border: "border-[rgba(100,140,160,0.35)]" },
+  ai:   { border: "border-[rgba(110,180,170,0.30)]" },
+  gov:  { border: "border-[rgba(150,140,175,0.30)]" },
 };
 
 const team = [
@@ -39,11 +27,16 @@ const team = [
     name: "Syb Sprenkeler",
     role: "Automation Architect",
     photo: fotoSyb,
-    skills: [
+    coreBadge: "Core Strength: Technical Build & Implementation",
+    description: "Syb focust op technische realisatie en codekwaliteit. Van architectuur tot productie bouwt hij schaalbare systemen met performance en onderhoudbaarheid als uitgangspunt.",
+    visibleSkills: [
       { label: "Architectuurontwerp", category: "arch" as SkillCategory },
       { label: "API & systeemintegraties", category: "ai" as SkillCategory },
       { label: "Workflow engineering", category: "arch" as SkillCategory },
+    ],
+    hoverSkills: [
       { label: "Performance & schaalbaarheid", category: "arch" as SkillCategory },
+      { label: "Code optimalisatie", category: "arch" as SkillCategory },
       { label: "Technische documentatie", category: "gov" as SkillCategory },
     ],
     mail: "mailto:syb@autronis.com",
@@ -53,11 +46,16 @@ const team = [
     name: "Sem Gijsberts",
     role: "AI & Systems Engineer",
     photo: fotoSem,
-    skills: [
+    coreBadge: "Core Strength: Structuur & Systeemarchitectuur",
+    description: "Sem bewaakt overzicht, documentatie en systeemlogica. Hij vertaalt complexe processen naar heldere architectuur en zorgt dat implementaties logisch, overdraagbaar en schaalbaar blijven.",
+    visibleSkills: [
       { label: "AI-integraties", category: "ai" as SkillCategory },
       { label: "Backend automatisering", category: "ai" as SkillCategory },
       { label: "Datagovernance", category: "gov" as SkillCategory },
+    ],
+    hoverSkills: [
       { label: "Logging & monitoring", category: "gov" as SkillCategory },
+      { label: "Structuur & documentatie", category: "gov" as SkillCategory },
       { label: "Security by design", category: "gov" as SkillCategory },
     ],
     mail: "mailto:sem@autronis.com",
@@ -74,99 +72,55 @@ const directReasons = [
 
 const toolStack = ["OpenAI", "Supabase", "n8n", "Make", "Vercel", "AWS"];
 
-const VISIBLE_COUNT = 3;
-
-const SkillBadge = ({ skill }: { skill: Skill }) => {
-  const meta = categoryMeta[skill.category];
-  return (
-    <span
-      className={`text-[10px] font-semibold px-2.5 py-1 rounded-full backdrop-blur-md border transition-all duration-200
-        bg-[rgba(0,0,0,0.6)] text-white ${meta.border}
-        hover:translate-y-[-1px] hover:border-[rgba(255,255,255,0.3)]`}
-    >
-      {skill.label}
-    </span>
-  );
-};
+const SkillBadge = ({ skill }: { skill: Skill }) => (
+  <span
+    className={`text-[10px] font-semibold px-2.5 py-1 rounded-full border backdrop-blur-sm
+      bg-[rgba(0,0,0,0.55)] text-white/90 ${categoryMeta[skill.category].border}
+      transition-all duration-200 hover:text-white hover:border-white/25`}
+  >
+    {skill.label}
+  </span>
+);
 
 const TeamCard = ({ member }: { member: (typeof team)[0] }) => {
   const [hovered, setHovered] = useState(false);
-  const [expanded, setExpanded] = useState(false);
-  const cardRef = React.useRef<HTMLDivElement>(null);
-
-  const visibleSkills = member.skills.slice(0, VISIBLE_COUNT);
-  const hiddenCount = member.skills.length - VISIBLE_COUNT;
-
-  const handleExpandClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setExpanded((prev) => !prev);
-  };
-
-  React.useEffect(() => {
-    if (!expanded) return;
-    const handler = (e: MouseEvent) => {
-      if (cardRef.current && !cardRef.current.contains(e.target as Node)) setExpanded(false);
-    };
-    document.addEventListener("click", handler);
-    return () => document.removeEventListener("click", handler);
-  }, [expanded]);
-
-  // Group skills by category for expanded view
-  const grouped = member.skills.reduce<Record<SkillCategory, Skill[]>>((acc, s) => {
-    (acc[s.category] ??= []).push(s);
-    return acc;
-  }, {} as Record<SkillCategory, Skill[]>);
 
   return (
     <div
-      ref={cardRef}
       className="relative rounded-xl border border-border bg-card overflow-hidden group"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        transform: hovered ? "translateY(-4px)" : "translateY(0)",
-        boxShadow: hovered ? "0 12px 32px -8px rgba(0,0,0,0.35)" : "none",
+        transform: hovered ? "translateY(-3px)" : "translateY(0)",
+        boxShadow: hovered ? "0 10px 28px -6px rgba(0,0,0,0.3)" : "none",
         transition: "transform 0.3s ease, box-shadow 0.3s ease",
       }}
     >
+      {/* Photo */}
       <div className="aspect-[3/4] relative overflow-hidden">
         <img
           src={member.photo}
           alt={member.name}
-          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
         />
 
-        {/* Subtle brick brightener */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: "radial-gradient(ellipse 50% 60% at 50% 35%, transparent 0%, hsl(0 0% 100% / 0.04) 100%)",
-          }}
-        />
-
-        {/* Dark gradient scrim */}
+        {/* Gradient scrim for readability */}
         <div
           className="absolute inset-x-0 bottom-0 pointer-events-none"
           style={{
-            height: "40%",
-            background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 50%, transparent 100%)",
+            height: "45%",
+            background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.25) 55%, transparent 100%)",
           }}
         />
 
-        {/* Extra darkening on hover — content stays visible */}
-        <div
-          className="absolute inset-0 pointer-events-none transition-opacity duration-300"
-          style={{ background: "rgba(0,0,0,0.12)", opacity: hovered ? 1 : 0 }}
-        />
-
-        {/* Social icons — top right, WHITE icons */}
+        {/* Social icons — top right */}
         <div className="absolute top-4 right-4 flex gap-2 z-10">
           <TooltipProvider delayDuration={200}>
             <Tooltip>
               <TooltipTrigger asChild>
                 <a
                   href={member.mail}
-                  className="w-9 h-9 rounded-full bg-[rgba(0,0,0,0.45)] backdrop-blur-md border border-[rgba(255,255,255,0.1)] flex items-center justify-center text-white hover:border-[rgba(130,200,190,0.4)] hover:shadow-[0_0_12px_rgba(130,200,190,0.15)] hover:scale-[1.04] transition-all duration-300"
+                  className="w-9 h-9 rounded-full bg-[rgba(0,0,0,0.5)] backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:border-[rgba(110,180,170,0.4)] hover:shadow-[0_0_10px_rgba(110,180,170,0.12)] hover:scale-[1.04] transition-all duration-300"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <Mail size={15} />
@@ -180,7 +134,7 @@ const TeamCard = ({ member }: { member: (typeof team)[0] }) => {
                   href={member.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full bg-[rgba(0,0,0,0.45)] backdrop-blur-md border border-[rgba(255,255,255,0.1)] flex items-center justify-center text-white hover:border-[rgba(130,200,190,0.4)] hover:shadow-[0_0_12px_rgba(130,200,190,0.15)] hover:scale-[1.04] transition-all duration-300"
+                  className="w-9 h-9 rounded-full bg-[rgba(0,0,0,0.5)] backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:border-[rgba(110,180,170,0.4)] hover:shadow-[0_0_10px_rgba(110,180,170,0.12)] hover:scale-[1.04] transition-all duration-300"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <Linkedin size={15} />
@@ -191,61 +145,44 @@ const TeamCard = ({ member }: { member: (typeof team)[0] }) => {
           </TooltipProvider>
         </div>
 
-        {/* Expanded overlay — categorized skills */}
-        {expanded && (
-          <div
-            className="absolute inset-x-0 bottom-0 z-20 p-4 pt-8"
-            style={{
-              background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 60%, transparent 100%)",
-              backdropFilter: "blur(4px)",
-              animation: "skillsExpand 250ms ease-out forwards",
-            }}
-          >
-            <div className="grid grid-cols-2 gap-x-4 gap-y-3">
-              {(Object.entries(grouped) as [SkillCategory, Skill[]][]).map(([cat, skills]) => (
-                <div key={cat} className="space-y-1.5">
-                  <p className="text-[9px] font-bold tracking-widest text-[rgba(255,255,255,0.5)] uppercase">
-                    {categoryMeta[cat].title}
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {skills.map((s) => (
-                      <SkillBadge key={s.label} skill={s} />
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-            <button
-              onClick={handleExpandClick}
-              className="mt-3 text-[10px] font-semibold px-2.5 py-1 rounded-full bg-[rgba(0,0,0,0.6)] backdrop-blur-md border border-[rgba(255,255,255,0.15)] text-white cursor-pointer hover:border-[rgba(255,255,255,0.3)] transition-all duration-200"
-            >
-              Sluiten
-            </button>
-          </div>
-        )}
-
-        {/* Visible skill badges — bottom left */}
-        {!expanded && (
-          <div className="absolute bottom-4 left-4 right-4 z-10 flex flex-wrap gap-1.5">
-            {visibleSkills.map((skill) => (
-              <SkillBadge key={skill.label} skill={skill} />
-            ))}
-            {hiddenCount > 0 && (
-              <button
-                onClick={handleExpandClick}
-                className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-[rgba(0,0,0,0.6)] backdrop-blur-md border border-[rgba(255,255,255,0.15)] text-white cursor-pointer select-none hover:border-[rgba(255,255,255,0.3)] transition-all duration-200"
-              >
-                +{hiddenCount}
-              </button>
-            )}
-          </div>
-        )}
+        {/* Visible skill badges — always shown */}
+        <div className="absolute bottom-4 left-4 right-4 z-10 flex flex-wrap gap-1.5">
+          {member.visibleSkills.map((skill) => (
+            <SkillBadge key={skill.label} skill={skill} />
+          ))}
+        </div>
       </div>
 
-      {/* Name + role — always visible */}
-      <div className="p-4 text-center">
-        <p className="font-semibold">{member.name}</p>
-        <p className="text-sm text-muted-foreground">{member.role}</p>
+      {/* Name + role + core badge — always visible */}
+      <div className="p-5">
+        <p className="font-semibold text-foreground">{member.name}</p>
+        <p className="text-sm text-muted-foreground mb-3">{member.role}</p>
+
+        {/* Core strength badge — always visible */}
+        <div className="mb-3">
+          <span className="text-[10px] font-bold tracking-wide uppercase px-2.5 py-1 rounded-full border border-primary/25 bg-primary/8 text-primary">
+            {member.coreBadge}
+          </span>
+        </div>
+
+        {/* Hover-reveal section: extra skills + description */}
+        <div
+          className="overflow-hidden transition-all duration-300 ease-out"
+          style={{
+            maxHeight: hovered ? "200px" : "0px",
+            opacity: hovered ? 1 : 0,
+            transform: hovered ? "translateY(0)" : "translateY(6px)",
+          }}
+        >
+          <div className="flex flex-wrap gap-1.5 mb-3 pt-1">
+            {member.hoverSkills.map((skill) => (
+              <SkillBadge key={skill.label} skill={skill} />
+            ))}
+          </div>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            {member.description}
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -254,12 +191,6 @@ const TeamCard = ({ member }: { member: (typeof team)[0] }) => {
 const Team = () => {
   return (
     <Layout>
-      <style>{`
-        @keyframes skillsExpand {
-          from { opacity: 0; transform: translateY(12px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
       <section className="pt-16 pb-24 relative overflow-hidden">
         <AmbientLight />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">

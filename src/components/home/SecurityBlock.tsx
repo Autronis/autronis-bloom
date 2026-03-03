@@ -11,13 +11,13 @@ const layers = [
     title: "Architectuurlaag",
     intro: "De basis waarop alles rust.",
     points: [
-      { icon: KeyRound, text: "Least-privilege toegangsmodel als standaard" },
-      { icon: ShieldCheck, text: "Rol- en recordniveau beveiliging (Row Level Security)" },
-      { icon: FlaskConical, text: "Gescheiden omgevingen (ontwikkeling, test, productie)" },
-      { icon: Link2, text: "API-gebaseerde integraties met gecontroleerde toegang" },
+      { icon: KeyRound, text: "Toegangsmodel volgens het least-privilege principe" },
+      { icon: ShieldCheck, text: "Rol- en recordniveau beveiliging (RLS)" },
+      { icon: FlaskConical, text: "Gescheiden omgevingen voor ontwikkeling, test en productie" },
+      { icon: Link2, text: "API-koppelingen met gecontroleerde toegang" },
       { icon: Unlock, text: "Geen vendor lock-in of verborgen afhankelijkheden" },
     ],
-    closing: "Hier bepalen we hoe systemen communiceren en wie toegang krijgt — vóórdat er data stroomt.",
+    closing: "Hier wordt vastgelegd hoe systemen met elkaar communiceren en wie toegang heeft — vóórdat data wordt verwerkt.",
   },
   {
     icon: Database,
@@ -27,11 +27,11 @@ const layers = [
     points: [
       { icon: Lock, text: "End-to-end versleuteling (TLS 1.2+ tijdens transport, AES-256 bij opslag)" },
       { icon: Globe, text: "Verwerking en opslag binnen de EU waar mogelijk" },
-      { icon: BrainCog, text: "Geen AI-training op uw bedrijfsdata" },
-      { icon: Eye, text: "Data niet toegankelijk voor onbevoegden — ook niet voor derden" },
-      { icon: FolderLock, text: "Datasegmentatie en gecontroleerde toegang per rol" },
+      { icon: BrainCog, text: "Geen gebruik van bedrijfsdata voor AI-training" },
+      { icon: Eye, text: "Data is niet toegankelijk voor onbevoegden, ook niet voor derden" },
+      { icon: FolderLock, text: "Datasegmentatie en toegangscontrole per rol" },
     ],
-    closing: "Uw data blijft van u, technisch én contractueel.",
+    closing: "Uw data blijft onder uw controle — technisch én contractueel.",
   },
   {
     icon: FileCheck,
@@ -40,12 +40,12 @@ const layers = [
     intro: "Aantoonbare beheersing van risico.",
     points: [
       { icon: ClipboardList, text: "Logging en audittrails standaard actief" },
-      { icon: Radio, text: "Monitoring en incidentprocedures" },
-      { icon: Scale, text: "AVG / GDPR-compliance inclusief verwerkersovereenkomsten (DPA's)" },
+      { icon: Radio, text: "Continue monitoring en vastgelegde incidentprocedures" },
+      { icon: Scale, text: "Naleving van AVG / GDPR inclusief verwerkersovereenkomsten" },
       { icon: FileText, text: "Volledige technische documentatie en overdraagbaarheid" },
-      { icon: BadgeCheck, text: "Samenwerking met SOC 2 Type II en ISO 27001 gecertificeerde technologiepartners (zoals Supabase, OpenAI, Anthropic en Vercel)" },
+      { icon: BadgeCheck, text: "Samenwerking met technologiepartners die voldoen aan SOC 2 Type II en ISO 27001" },
     ],
-    closing: "Beveiliging wordt niet alleen technisch geborgd, maar ook juridisch en operationeel.",
+    closing: "Beveiliging wordt niet alleen technisch ingericht, maar ook organisatorisch en juridisch geborgd.",
   },
 ];
 
@@ -103,7 +103,6 @@ const SecurityBlock = () => {
                           <span className="text-base font-bold tracking-widest uppercase text-primary">
                             {layer.label}
                           </span>
-                          <span className="text-muted-foreground/40">—</span>
                           <h3 className="text-lg font-semibold text-foreground">{layer.title}</h3>
                         </div>
                       </div>
@@ -121,7 +120,6 @@ const SecurityBlock = () => {
                               className="flex items-start gap-3 text-sm leading-relaxed"
                             >
                               <PointIcon size={15} className="text-foreground mt-[2px] shrink-0" />
-                              <span className="text-muted-foreground/40 text-xs">–</span>
                               <span className="text-foreground/85">{point.text}</span>
                             </li>
                           );

@@ -30,7 +30,7 @@ const reasons = [
     icon: ShieldCheck,
     title: "Eigendom & controle",
     description:
-      "Volledige documentatie. Geen vendor lock-in. Alles wat we bouwen is volledig uw eigendom — inclusief broncode en overdracht.",
+      "Volledige documentatie en overdraagbaarheid. Maatwerkconfiguraties en ontwikkelde code blijven onder uw controle, zonder vendor lock-in.",
   },
 ];
 

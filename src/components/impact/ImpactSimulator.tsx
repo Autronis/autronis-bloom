@@ -1,46 +1,96 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, TrendingUp, Calendar, Percent, Euro, ArrowRight, Calculator, Info } from "lucide-react";
-
+import {
+  AlertTriangle, TrendingUp, Calendar, Percent, Euro,
+  ArrowRight, Calculator, Info, ChevronDown,
+} from "lucide-react";
+import {
+  Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,
+} from "@/components/ui/tooltip";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import AmbientLight from "@/components/AmbientLight";
 
+/* ─── helpers ─── */
 const formatCurrency = (v: number) =>
   `€${Math.round(v).toLocaleString("nl-NL")}`;
 
+const useAnimatedValue = (target: number, duration = 600) => {
+  const [display, setDisplay] = useState(target);
+  const raf = useRef<number>();
+  const prev = useRef(target);
+
+  useEffect(() => {
+    const from = prev.current;
+    const diff = target - from;
+    if (Math.abs(diff) < 1) { setDisplay(target); prev.current = target; return; }
+    const start = performance.now();
+    const tick = (now: number) => {
+      const t = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      setDisplay(Math.round(from + diff * ease));
+      if (t < 1) raf.current = requestAnimationFrame(tick);
+      else prev.current = target;
+    };
+    raf.current = requestAnimationFrame(tick);
+    return () => { if (raf.current) cancelAnimationFrame(raf.current); };
+  }, [target, duration]);
+
+  return display;
+};
+
+/* ─── delta badge ─── */
+const DeltaBadge = ({ value }: { value: number }) => (
+  <AnimatePresence>
+    {value !== 0 && (
+      <motion.span
+        key={value}
+        initial={{ opacity: 0, y: 4 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.35 }}
+        className={`ml-2 text-xs font-medium tabular-nums ${value > 0 ? "text-primary" : "text-destructive"}`}
+      >
+        {value > 0 ? "+" : ""}
+        {formatCurrency(value)}
+      </motion.span>
+    )}
+  </AnimatePresence>
+);
+
+/* ─── main ─── */
 const ImpactSimulator = () => {
   const [hours, setHours] = useState(40);
   const [rate, setRate] = useState(55);
   const [autoPercent, setAutoPercent] = useState(65);
   const [errorPercent, setErrorPercent] = useState(5);
+  const [activeSlider, setActiveSlider] = useState<string | null>(null);
+  const [showTransparency, setShowTransparency] = useState(false);
+
+  // delta tracking
+  const prevYearly = useRef(0);
+  const [yearlyDelta, setYearlyDelta] = useState(0);
+  const deltaTimer = useRef<ReturnType<typeof setTimeout>>();
 
   const results = useMemo(() => {
     const autoFraction = autoPercent / 100;
     const errorFraction = errorPercent / 100;
     const weeksPerMonth = 4.33;
-
-    // Core time savings
     const monthlySavingsHours = hours * autoFraction * rate * weeksPerMonth;
-
-    // Error correction savings (recoverable portion)
     const monthlyErrorSavings = hours * errorFraction * rate * weeksPerMonth * 0.5;
-
     const totalMonthlySavings = monthlySavingsHours + monthlyErrorSavings;
     const totalYearlySavings = totalMonthlySavings * 12;
 
-    // Auto-calculated investment
     const complexityMultiplier = autoPercent <= 50 ? 1 : autoPercent <= 70 ? 1.4 : 1.8;
     const baseInvestment = hours * rate * 6;
-    const investment = Math.round(baseInvestment * complexityMultiplier / 500) * 500;
+    const investment = Math.round((baseInvestment * complexityMultiplier) / 500) * 500;
 
     const netBenefitYear1 = totalYearlySavings - investment;
     const breakEvenMonths = totalMonthlySavings > 0 ? investment / totalMonthlySavings : 0;
     const roiMultiplier = investment > 0 ? totalYearlySavings / investment : 0;
 
-    // Confidence score
     const hoursFactor = Math.min(hours / 60, 1) * 30;
     const autoFactor = autoFraction * 40;
     const investFactor = Math.min(investment / 30000, 1) * 30;
@@ -57,6 +107,25 @@ const ImpactSimulator = () => {
     };
   }, [hours, rate, autoPercent, errorPercent]);
 
+  // delta effect
+  useEffect(() => {
+    const rounded = Math.round(results.yearlySavings);
+    if (prevYearly.current !== 0) {
+      const d = rounded - prevYearly.current;
+      if (Math.abs(d) > 50) {
+        setYearlyDelta(d);
+        if (deltaTimer.current) clearTimeout(deltaTimer.current);
+        deltaTimer.current = setTimeout(() => setYearlyDelta(0), 1200);
+      }
+    }
+    prevYearly.current = rounded;
+  }, [results.yearlySavings]);
+
+  const animYearly = useAnimatedValue(Math.round(results.yearlySavings));
+  const animMonthly = useAnimatedValue(Math.round(results.monthlySavings));
+  const animNet = useAnimatedValue(Math.round(results.netBenefitYear1));
+  const animInvestment = useAnimatedValue(Math.round(results.investment));
+
   const chartData = [
     { name: "Huidige kosten", value: Math.round(hours * rate * 4.33), type: "current" },
     { name: "Na automatisering", value: Math.round(hours * (1 - autoPercent / 100) * rate * 4.33), type: "automated" },
@@ -64,70 +133,35 @@ const ImpactSimulator = () => {
   ];
 
   const sliders = [
-    {
-      label: "Handmatige uren per week",
-      value: hours,
-      onChange: setHours,
-      min: 5,
-      max: 80,
-      step: 1,
-      display: `${hours} uur`,
-      hint: "Tijd besteed aan repetitieve of handmatige processen.",
-    },
-    {
-      label: "Gemiddelde uurkosten",
-      value: rate,
-      onChange: setRate,
-      min: 25,
-      max: 120,
-      step: 5,
-      display: `€${rate}`,
-      hint: "Inclusief salaris, werkgeverslasten en overhead.",
-    },
-    {
-      label: "Automatiseringspercentage",
-      value: autoPercent,
-      onChange: setAutoPercent,
-      min: 30,
-      max: 85,
-      step: 1,
-      display: `${autoPercent}%`,
-      hint: "Conservatieve inschatting na validatie en controle.",
-    },
-    {
-      label: "Geschat foutpercentage",
-      value: errorPercent,
-      onChange: setErrorPercent,
-      min: 0,
-      max: 25,
-      step: 1,
-      display: `${errorPercent}%`,
-      hint: "Percentage van totale werktijd besteed aan correcties, herstelwerk of dubbele invoer.",
-      subHint: "Bij administratieve processen ligt dit vaak tussen 2–8%.",
-    },
+    { id: "hours", label: "Handmatige uren per week", value: hours, onChange: setHours, min: 5, max: 80, step: 1, display: `${hours} uur`, hint: "Tijd besteed aan repetitieve of handmatige processen." },
+    { id: "rate", label: "Gemiddelde uurkosten", value: rate, onChange: setRate, min: 25, max: 120, step: 5, display: `€${rate}`, hint: "Inclusief salaris, werkgeverslasten en overhead." },
+    { id: "auto", label: "Automatiseringspercentage", value: autoPercent, onChange: setAutoPercent, min: 30, max: 85, step: 1, display: `${autoPercent}%`, hint: "Conservatieve inschatting na validatie en controle." },
+    { id: "error", label: "Geschat foutpercentage", value: errorPercent, onChange: setErrorPercent, min: 0, max: 25, step: 1, display: `${errorPercent}%`, hint: "Percentage van totale werktijd besteed aan correcties, herstelwerk of dubbele invoer.", subHint: "Bij administratieve processen ligt dit vaak tussen 2–8%." },
   ];
+
+  const handleSliderChange = useCallback((setter: (v: number) => void, id: string) => (v: number) => {
+    setter(v);
+    setActiveSlider(id);
+  }, []);
+
+  const handleSliderEnd = useCallback(() => setActiveSlider(null), []);
 
   return (
     <section id="roi-scan" className="relative overflow-hidden border-t border-border scroll-mt-24">
       <AmbientLight />
-
       <div className="container mx-auto px-4 lg:px-8 py-16 sm:py-24 relative z-10">
         {/* Header */}
         <ScrollReveal className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
           <ScrollRevealItem>
-            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
-              Impact & ROI
-            </p>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Impact & ROI Simulator
-            </h2>
+            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Impact & ROI</p>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Impact & ROI Simulator</h2>
             <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               Op basis van uw situatie berekenen wij een conservatieve businesscase inclusief besparing, break-even punt en ROI.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>
 
-        {/* Single outer block */}
+        {/* Single block */}
         <div className="max-w-6xl mx-auto rounded-2xl border border-border bg-card p-6 sm:p-8 lg:p-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
             {/* LEFT — Inputs */}
@@ -140,14 +174,19 @@ const ImpactSimulator = () => {
               <p className="text-sm font-semibold text-foreground mb-6">Parameters</p>
               <div className="space-y-7">
                 {sliders.map((s) => (
-                  <div key={s.label}>
+                  <motion.div
+                    key={s.id}
+                    animate={{ opacity: activeSlider && activeSlider !== s.id ? 0.5 : 1 }}
+                    transition={{ duration: 0.25 }}
+                  >
                     <div className="flex items-center justify-between mb-2.5">
                       <label className="text-sm font-medium text-foreground">{s.label}</label>
                       <span className="text-sm font-semibold text-primary tabular-nums">{s.display}</span>
                     </div>
                     <Slider
                       value={[s.value]}
-                      onValueChange={([v]) => s.onChange(v)}
+                      onValueChange={([v]) => handleSliderChange(s.onChange, s.id)(v)}
+                      onValueCommit={() => handleSliderEnd()}
                       min={s.min}
                       max={s.max}
                       step={s.step}
@@ -157,28 +196,37 @@ const ImpactSimulator = () => {
                     {"subHint" in s && s.subHint && (
                       <p className="text-xs text-muted-foreground/70 mt-0.5 italic">{s.subHint}</p>
                     )}
-                  </div>
+                  </motion.div>
                 ))}
               </div>
 
-              {/* Investment indication */}
+              {/* Investment summary */}
               <div className="mt-7 pt-5 border-t border-border">
                 <div className="flex items-center justify-between mb-1">
                   <div className="flex items-center gap-2">
                     <Calculator size={14} className="text-primary" />
                     <p className="text-sm font-medium text-foreground">Indicatieve projectinvestering</p>
+                    <TooltipProvider delayDuration={200}>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Info size={13} className="text-muted-foreground cursor-help" />
+                        </TooltipTrigger>
+                        <TooltipContent side="top" className="max-w-[240px] text-xs">
+                          Omvat analyse, ontwerp, bouw, integraties, testen en documentatie.
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </div>
-                  <span className="text-lg font-bold text-foreground tabular-nums">{formatCurrency(results.investment)}</span>
+                  <span className="text-lg font-bold text-foreground tabular-nums">
+                    {formatCurrency(animInvestment)}
+                  </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
                   Gebaseerd op vergelijkbare implementaties binnen MKB-organisaties.
                 </p>
-                <p className="text-xs text-muted-foreground/70 mt-0.5 italic">
-                  Projectinvestering omvat analyse, ontwerp, bouw, integraties, testen en documentatie.
-                </p>
               </div>
 
-              {/* Disclaimer + CTAs */}
+              {/* Disclaimer + CTA */}
               <div className="mt-8 pt-6 border-t border-border">
                 <p className="text-sm text-muted-foreground leading-relaxed mb-5 italic flex items-start gap-1.5">
                   <AlertTriangle size={14} className="text-primary shrink-0 mt-0.5 not-italic" />
@@ -210,49 +258,42 @@ const ImpactSimulator = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
             >
-              {/* KPI cards */}
+              {/* Primary KPIs */}
               <div className="grid grid-cols-2 gap-4">
-                <KPICard label="Maandelijkse besparing" value={formatCurrency(results.monthlySavings)} icon={<Euro size={16} />} />
-                <KPICard label="Jaarlijkse besparing" value={formatCurrency(results.yearlySavings)} icon={<TrendingUp size={16} />} highlight />
-                <KPICard label="Netto voordeel jaar 1" value={formatCurrency(results.netBenefitYear1)} icon={<Euro size={16} />} />
-                <KPICard label="Break-even punt" value={`${results.breakEvenMonths} mnd`} icon={<Calendar size={16} />} />
+                <KPICard
+                  label="Jaarlijkse besparing"
+                  value={formatCurrency(animYearly)}
+                  icon={<TrendingUp size={16} />}
+                  highlight
+                  delta={yearlyDelta}
+                />
+                <KPICard
+                  label="Break-even punt"
+                  value={`${results.breakEvenMonths} mnd`}
+                  icon={<Calendar size={16} />}
+                />
               </div>
 
-              {/* ROI Multiplier */}
-              <div className="rounded-xl border border-primary/30 bg-primary/[0.04] p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+              {/* Secondary KPIs */}
+              <div className="grid grid-cols-2 gap-4">
+                <KPICard
+                  label="Netto voordeel jaar 1"
+                  value={formatCurrency(animNet)}
+                  icon={<Euro size={16} />}
+                />
+                <div className="rounded-xl border border-primary/30 bg-primary/[0.04] p-4 flex flex-col justify-between">
+                  <div className="flex items-center gap-2 mb-2">
                     <Percent size={16} className="text-primary" />
-                    <p className="text-sm font-medium text-foreground">ROI Multiplier</p>
+                    <p className="text-xs text-muted-foreground">ROI Multiplier</p>
                   </div>
-                  <span className="text-2xl font-bold text-primary tabular-nums">{results.roiMultiplier.toFixed(1)}x</span>
+                  <p className="text-2xl font-bold text-primary tabular-nums">
+                    {results.roiMultiplier.toFixed(1)}x
+                  </p>
                 </div>
               </div>
 
-              {/* Transparency block */}
-              <div className="rounded-xl border border-border p-4">
-                <div className="flex items-center gap-2 mb-3">
-                  <Info size={14} className="text-primary" />
-                  <p className="text-sm font-medium text-foreground">Wat is inbegrepen in deze berekening?</p>
-                </div>
-                <ul className="space-y-1 mb-4">
-                  {["Besparing op handmatige uren", "Besparing door foutreductie", "Structurele capaciteitsvrijmaking"].map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-xs text-foreground/80">
-                      <span className="w-1 h-1 rounded-full bg-primary shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <p className="text-sm font-medium text-foreground mb-2">Wat is niet inbegrepen?</p>
-                <ul className="space-y-1">
-                  {["Extra omzetgroei", "Strategische schaalvoordelen", "Langetermijnoptimalisaties"].map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <span className="w-1 h-1 rounded-full bg-muted-foreground/40 shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {/* Bar chart */}
+              <BarChart data={chartData} />
 
               {/* Confidence score */}
               <div className="rounded-xl border border-border p-4">
@@ -263,57 +304,65 @@ const ImpactSimulator = () => {
                 <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
                   <motion.div
                     className="h-full rounded-full bg-primary"
-                    initial={{ width: 0 }}
                     animate={{ width: `${results.confidence}%` }}
                     transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
                   />
                 </div>
                 <p className="text-xs text-muted-foreground mt-2.5">
-                  Gebaseerd op automatiseringspercentage, procescomplexiteit en vergelijkbare implementaties binnen MKB-organisaties.
+                  Gebaseerd op automatiseringspercentage, procescomplexiteit en vergelijkbare implementaties.
                 </p>
               </div>
 
-              {/* Bar chart */}
-              <div className="rounded-xl border border-border p-4">
-                <p className="text-sm font-medium text-foreground mb-5">Maandelijks kostenoverzicht</p>
-                <div className="space-y-4">
-                  {chartData.map((item) => {
-                    const maxVal = Math.max(...chartData.map((d) => d.value));
-                    const pct = maxVal > 0 ? (item.value / maxVal) * 100 : 0;
-                    return (
-                      <div key={item.name}>
-                        {item.type === "savings" && (
-                          <div className="flex items-center gap-3 mb-4">
-                            <div className="h-px flex-1 bg-border" />
-                            <span className="text-xs text-muted-foreground font-medium">−</span>
-                          </div>
-                        )}
-                        <div className="space-y-1.5">
-                          <div className="flex items-center justify-between text-xs">
-                            <span className="text-muted-foreground">{item.name}</span>
-                            <span className="font-medium text-foreground tabular-nums">{formatCurrency(item.value)}</span>
-                          </div>
-                          <div className="w-full h-3 rounded-full bg-muted overflow-hidden">
-                            <motion.div
-                              className="h-full rounded-full"
-                              style={{
-                                backgroundColor:
-                                  item.type === "savings"
-                                    ? "hsl(174, 78%, 41%)"
-                                    : item.type === "automated"
-                                    ? "hsl(192, 20%, 30%)"
-                                    : "hsl(192, 15%, 45%)",
-                              }}
-                              initial={{ width: 0 }}
-                              animate={{ width: `${pct}%` }}
-                              transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-                            />
-                          </div>
+              {/* Transparency accordion */}
+              <div className="rounded-xl border border-border overflow-hidden">
+                <button
+                  onClick={() => setShowTransparency((p) => !p)}
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-muted/30 transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <Info size={14} className="text-primary" />
+                    <p className="text-sm font-medium text-foreground">Hoe is dit berekend?</p>
+                  </div>
+                  <motion.div animate={{ rotate: showTransparency ? 180 : 0 }} transition={{ duration: 0.25 }}>
+                    <ChevronDown size={16} className="text-muted-foreground" />
+                  </motion.div>
+                </button>
+                <AnimatePresence initial={false}>
+                  {showTransparency && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-4 pb-4 space-y-3">
+                        <div>
+                          <p className="text-xs font-medium text-foreground mb-1.5">Inbegrepen</p>
+                          <ul className="space-y-1">
+                            {["Besparing op handmatige uren", "Besparing door foutreductie", "Structurele capaciteitsvrijmaking"].map((item) => (
+                              <li key={item} className="flex items-center gap-2 text-xs text-foreground/80">
+                                <span className="w-1 h-1 rounded-full bg-primary shrink-0" />
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div>
+                          <p className="text-xs font-medium text-foreground mb-1.5">Niet inbegrepen</p>
+                          <ul className="space-y-1">
+                            {["Extra omzetgroei", "Strategische schaalvoordelen", "Langetermijnoptimalisaties"].map((item) => (
+                              <li key={item} className="flex items-center gap-2 text-xs text-muted-foreground">
+                                <span className="w-1 h-1 rounded-full bg-muted-foreground/40 shrink-0" />
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* Bottom disclaimer */}
@@ -328,16 +377,15 @@ const ImpactSimulator = () => {
   );
 };
 
+/* ─── KPI Card ─── */
 const KPICard = ({
-  label,
-  value,
-  icon,
-  highlight,
+  label, value, icon, highlight, delta,
 }: {
   label: string;
   value: string;
   icon: React.ReactNode;
   highlight?: boolean;
+  delta?: number;
 }) => (
   <div
     className={`rounded-xl border p-4 transition-colors duration-300 ${
@@ -348,10 +396,59 @@ const KPICard = ({
       <div className="text-primary">{icon}</div>
       <p className="text-xs text-muted-foreground">{label}</p>
     </div>
-    <p className={`text-2xl font-bold tabular-nums ${highlight ? "text-primary" : "text-foreground"}`}>
-      {value}
-    </p>
+    <div className="flex items-baseline">
+      <p className={`text-2xl font-bold tabular-nums ${highlight ? "text-primary" : "text-foreground"}`}>
+        {value}
+      </p>
+      {delta !== undefined && delta !== 0 && <DeltaBadge value={delta} />}
+    </div>
   </div>
 );
+
+/* ─── Bar Chart ─── */
+const BarChart = ({ data }: { data: { name: string; value: number; type: string }[] }) => {
+  const maxVal = Math.max(...data.map((d) => d.value));
+  return (
+    <div className="rounded-xl border border-border p-4">
+      <p className="text-sm font-medium text-foreground mb-5">Maandelijks kostenoverzicht</p>
+      <div className="space-y-4">
+        {data.map((item) => {
+          const pct = maxVal > 0 ? (item.value / maxVal) * 100 : 0;
+          return (
+            <div key={item.name}>
+              {item.type === "savings" && (
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-px flex-1 bg-border" />
+                  <span className="text-xs text-muted-foreground font-medium">−</span>
+                </div>
+              )}
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-muted-foreground">{item.name}</span>
+                  <span className="font-medium text-foreground tabular-nums">{formatCurrency(item.value)}</span>
+                </div>
+                <div className="w-full h-3 rounded-full bg-muted overflow-hidden">
+                  <motion.div
+                    className="h-full rounded-full"
+                    style={{
+                      backgroundColor:
+                        item.type === "savings"
+                          ? "hsl(174, 78%, 41%)"
+                          : item.type === "automated"
+                          ? "hsl(192, 20%, 30%)"
+                          : "hsl(192, 15%, 45%)",
+                    }}
+                    animate={{ width: `${pct}%` }}
+                    transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+                  />
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
 
 export default ImpactSimulator;

@@ -1,5 +1,6 @@
-import { Shield, Database, FileCheck, ChevronRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { Shield, Database, FileCheck } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import AmbientLight from "@/components/AmbientLight";
 
@@ -51,6 +52,8 @@ const layers = [
 ];
 
 const SecurityBlock = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   return (
     <section id="beveiliging" className="relative overflow-hidden border-t border-primary/10">
       <AmbientLight />
@@ -73,56 +76,92 @@ const SecurityBlock = () => {
         </ScrollReveal>
 
         {/* Layers */}
-        <div className="max-w-4xl mx-auto space-y-6">
+        <div className="max-w-4xl mx-auto space-y-4">
           {layers.map((layer, i) => {
             const Icon = layer.icon;
+            const isHovered = hoveredIndex === i;
+
             return (
               <ScrollReveal key={layer.title}>
                 <ScrollRevealItem>
                   <motion.div
-                    className="rounded-2xl border border-border bg-card p-6 sm:p-8"
-                    whileHover={{
-                      borderColor: "hsl(var(--primary) / 0.35)",
-                      boxShadow: "0 4px 24px hsl(174 78% 41% / 0.08)",
+                    className="rounded-2xl border border-border bg-card cursor-default overflow-hidden"
+                    animate={{
+                      borderColor: isHovered
+                        ? "hsl(var(--primary) / 0.35)"
+                        : "hsl(var(--border))",
+                      boxShadow: isHovered
+                        ? "0 4px 24px hsl(174 78% 41% / 0.08)"
+                        : "0 0 0 transparent",
                     }}
                     transition={{ duration: 0.3 }}
+                    onMouseEnter={() => setHoveredIndex(i)}
+                    onMouseLeave={() => setHoveredIndex(null)}
                   >
-                    {/* Layer header */}
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary/10 shrink-0">
-                        <Icon size={18} className="text-primary" />
+                    <div className="p-6 sm:p-8">
+                      {/* Layer header */}
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary/10 shrink-0">
+                          <Icon size={18} className="text-primary" />
+                        </div>
+                        <div className="flex items-baseline gap-2.5">
+                          <motion.span
+                            className="font-semibold tracking-widest uppercase text-primary/70"
+                            animate={{ fontSize: isHovered ? "14px" : "12px" }}
+                            transition={{ duration: 0.25 }}
+                          >
+                            {layer.label}
+                          </motion.span>
+                          <span className="text-muted-foreground/40">—</span>
+                          <motion.h3
+                            className="font-semibold"
+                            animate={{ fontSize: isHovered ? "22px" : "18px" }}
+                            transition={{ duration: 0.25 }}
+                          >
+                            {layer.title}
+                          </motion.h3>
+                        </div>
                       </div>
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-[11px] font-semibold tracking-widest uppercase text-primary/70">
-                          {layer.label}
-                        </span>
-                        <span className="text-xs text-muted-foreground/40">—</span>
-                        <h3 className="text-lg font-semibold">{layer.title}</h3>
-                      </div>
+
+                      {/* Intro - always visible */}
+                      <p className="text-sm text-muted-foreground mt-3 pl-12">
+                        {layer.intro}
+                      </p>
+
+                      {/* Expandable content */}
+                      <AnimatePresence initial={false}>
+                        {isHovered && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+                            className="overflow-hidden"
+                          >
+                            {/* Points */}
+                            <ul className="space-y-2.5 pl-12 mt-5 mb-5">
+                              {layer.points.map((point, pi) => (
+                                <motion.li
+                                  key={point}
+                                  initial={{ opacity: 0, x: -8 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{ delay: pi * 0.04, duration: 0.3 }}
+                                  className="flex items-start gap-3 text-sm leading-relaxed"
+                                >
+                                  <span className="mt-[7px] w-[6px] h-[6px] rounded-full bg-primary/60 shrink-0" />
+                                  <span className="text-foreground/85">{point}</span>
+                                </motion.li>
+                              ))}
+                            </ul>
+
+                            {/* Closing statement */}
+                            <p className="text-sm font-medium text-muted-foreground/80 italic pl-12 border-l-2 border-primary/20 ml-12 py-1">
+                              {layer.closing}
+                            </p>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
-
-                    {/* Intro */}
-                    <p className="text-sm text-muted-foreground mb-5 pl-12">
-                      {layer.intro}
-                    </p>
-
-                    {/* Points */}
-                    <ul className="space-y-2.5 pl-12 mb-5">
-                      {layer.points.map((point) => (
-                        <li key={point} className="flex items-start gap-2.5 text-sm leading-relaxed">
-                          <ChevronRight
-                            size={14}
-                            className="text-primary/60 mt-[3px] shrink-0"
-                          />
-                          <span className="text-foreground/85">{point}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* Closing statement */}
-                    <p className="text-sm font-medium text-muted-foreground/80 italic pl-12 border-l-2 border-primary/20 ml-12 py-1">
-                      {layer.closing}
-                    </p>
                   </motion.div>
                 </ScrollRevealItem>
               </ScrollReveal>

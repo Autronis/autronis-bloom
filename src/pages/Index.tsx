@@ -100,10 +100,10 @@ const Index = () => {
                 Beveiliging en datakwaliteit zijn geïntegreerd in elke fase van onze aanpak — met minimale toegangsrechten, logging en volledige documentatie.
               </p>
             </div>
-            <Link to="/services#kwaliteitsnorm" className="group text-xs text-muted-foreground/70 hover:text-primary/80 transition-colors whitespace-nowrap flex items-center gap-1 shrink-0">
-              Bekijk onze kwaliteitsnorm
+            <a href="#beveiliging" className="group text-xs text-muted-foreground/70 hover:text-primary/80 transition-colors whitespace-nowrap flex items-center gap-1 shrink-0">
+              Bekijk beveiliging & vertrouwen
               <ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1" />
-            </Link>
+            </a>
           </div>
         </div>
       </motion.div>

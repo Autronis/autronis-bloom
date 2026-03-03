@@ -17,15 +17,15 @@ interface Skill {
 }
 
 const categoryMeta: Record<SkillCategory, { border: string; bg: string }> = {
-  arch: { border: "border-[rgba(80,130,150,0.45)]", bg: "bg-[rgba(80,130,150,0.12)]" },
-  ai:   { border: "border-[rgba(90,170,160,0.40)]", bg: "bg-[rgba(90,170,160,0.10)]" },
-  gov:  { border: "border-[rgba(140,130,170,0.40)]", bg: "bg-[rgba(140,130,170,0.10)]" },
+  arch: { border: "border-[rgba(70,140,170,0.6)]", bg: "bg-[rgba(70,140,170,0.2)]" },
+  ai:   { border: "border-[rgba(80,190,175,0.55)]", bg: "bg-[rgba(80,190,175,0.18)]" },
+  gov:  { border: "border-[rgba(155,140,190,0.55)]", bg: "bg-[rgba(155,140,190,0.18)]" },
 };
 
 const categoryLabels: Record<SkillCategory, string> = {
-  arch: "ARCHITECTUUR",
-  ai: "AI & INTEGRATIES",
-  gov: "GOVERNANCE",
+  arch: "Architectuur",
+  ai: "AI & Integraties",
+  gov: "Governance",
 };
 
 interface TeamMember {
@@ -45,7 +45,7 @@ const team: TeamMember[] = [
     name: "Syb Sprenkeler",
     role: "Automation Architect",
     photo: fotoSyb,
-    focusLabel: "Technical Build & Implementation",
+    focusLabel: "Technische Realisatie & Implementatie",
     description: "Syb focust op technische realisatie en codekwaliteit. Van architectuur tot productie bouwt hij schaalbare systemen met performance en onderhoudbaarheid als uitgangspunt.",
     visibleSkills: [
       { label: "Architectuurontwerp", category: "arch" },
@@ -53,8 +53,8 @@ const team: TeamMember[] = [
       { label: "Workflow engineering", category: "arch" },
     ],
     hiddenSkills: [
-      { label: "Performance & schaalbaarheid", category: "arch" },
-      { label: "Code optimalisatie", category: "arch" },
+      { label: "Prestatie & schaalbaarheid", category: "arch" },
+      { label: "Code-optimalisatie", category: "arch" },
       { label: "Technische documentatie", category: "gov" },
     ],
     mail: "mailto:syb@autronis.com",
@@ -126,7 +126,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
         <img
           src={member.photo}
           alt={member.name}
-          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+          className="w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-[1.02] group-hover:blur-[6px]"
         />
 
         {/* Default gradient scrim – bottom 30%, deepens to 50% on hover */}
@@ -186,7 +186,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
             }}
           >
             <p className="text-[9px] font-semibold tracking-[0.15em] uppercase text-white/50 mb-0.5">
-              Focus Area
+              Focusgebied
             </p>
             <p className="text-[13px] font-bold text-white mb-2 leading-snug">
               {member.focusLabel}

@@ -1,0 +1,279 @@
+import { useState, useMemo } from "react";
+import { motion } from "framer-motion";
+import { Slider } from "@/components/ui/slider";
+import { AlertTriangle, TrendingUp, Calendar, Percent, DollarSign } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, Tooltip } from "recharts";
+import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+
+const formatCurrency = (v: number) =>
+  `€${Math.round(v).toLocaleString("nl-NL")}`;
+
+const ImpactSimulator = () => {
+  const [hours, setHours] = useState(40);
+  const [rate, setRate] = useState(55);
+  const [autoPercent, setAutoPercent] = useState(65);
+  const [investment, setInvestment] = useState(18000);
+
+  const results = useMemo(() => {
+    const autoFraction = autoPercent / 100;
+    const monthlySavings = hours * autoFraction * rate * 4.33;
+    const yearlySavings = monthlySavings * 12;
+    const paybackMonths = yearlySavings > 0 ? investment / yearlySavings * 12 : 0;
+    const roiMultiplier = investment > 0 ? yearlySavings / investment : 0;
+
+    // Confidence score based on automation %, hours, complexity
+    const hoursFactor = Math.min(hours / 60, 1) * 30;
+    const autoFactor = autoFraction * 40;
+    const investFactor = Math.min(investment / 30000, 1) * 30;
+    const confidence = Math.round(Math.min(hoursFactor + autoFactor + investFactor, 95));
+
+    return { monthlySavings, yearlySavings, paybackMonths: Math.round(paybackMonths * 10) / 10, roiMultiplier, confidence };
+  }, [hours, rate, autoPercent, investment]);
+
+  const chartData = [
+    { name: "Huidige kosten", value: Math.round(hours * rate * 4.33), type: "current" },
+    { name: "Na automatisering", value: Math.round(hours * (1 - autoPercent / 100) * rate * 4.33), type: "automated" },
+    { name: "Besparing", value: Math.round(results.monthlySavings), type: "savings" },
+  ];
+
+  const sliders = [
+    {
+      label: "Handmatige uren per week",
+      value: hours,
+      onChange: setHours,
+      min: 5,
+      max: 80,
+      step: 1,
+      display: `${hours} uur`,
+      hint: "Tijd besteed aan repetitieve of handmatige processen.",
+    },
+    {
+      label: "Gemiddelde uurkosten",
+      value: rate,
+      onChange: setRate,
+      min: 25,
+      max: 120,
+      step: 5,
+      display: `€${rate}`,
+      hint: "Inclusief salaris, werkgeverslasten en overhead.",
+    },
+    {
+      label: "Automatiseringspercentage",
+      value: autoPercent,
+      onChange: setAutoPercent,
+      min: 30,
+      max: 85,
+      step: 1,
+      display: `${autoPercent}%`,
+      hint: "Conservatieve inschatting na validatie en controle.",
+    },
+    {
+      label: "Verwachte implementatie-investering",
+      value: investment,
+      onChange: setInvestment,
+      min: 5000,
+      max: 50000,
+      step: 1000,
+      display: formatCurrency(investment),
+      hint: "Indicatieve projectinvestering.",
+    },
+  ];
+
+  return (
+    <section className="relative overflow-hidden border-t border-border">
+      {/* Gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-primary/[0.03]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_100%,hsl(174_78%_41%/0.06),transparent)]" />
+
+      <div className="container mx-auto px-4 lg:px-8 py-16 sm:py-24 relative z-10">
+        {/* Header */}
+        <ScrollReveal className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
+          <ScrollRevealItem>
+            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
+              Impact & ROI
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+              Bereken de potentiële impact van automatisering
+            </h2>
+            <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+              Op basis van uw situatie berekenen wij een conservatieve businesscase inclusief besparing, terugverdientijd en ROI.
+            </p>
+          </ScrollRevealItem>
+        </ScrollReveal>
+
+        {/* 2-column layout */}
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          {/* LEFT — Inputs */}
+          <motion.div
+            className="rounded-2xl border border-border bg-card p-6 sm:p-8"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+          >
+            <p className="text-sm font-semibold text-foreground mb-6">Parameters</p>
+            <div className="space-y-7">
+              {sliders.map((s) => (
+                <div key={s.label}>
+                  <div className="flex items-center justify-between mb-2.5">
+                    <label className="text-sm font-medium text-foreground">{s.label}</label>
+                    <span className="text-sm font-semibold text-primary tabular-nums">{s.display}</span>
+                  </div>
+                  <Slider
+                    value={[s.value]}
+                    onValueChange={([v]) => s.onChange(v)}
+                    min={s.min}
+                    max={s.max}
+                    step={s.step}
+                    className="w-full"
+                  />
+                  <p className="text-xs text-muted-foreground mt-1.5">{s.hint}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* RIGHT — Results dashboard */}
+          <motion.div
+            className="space-y-5"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
+          >
+            {/* KPI cards */}
+            <div className="grid grid-cols-2 gap-4">
+              <KPICard
+                label="Maandelijkse besparing"
+                value={formatCurrency(results.monthlySavings)}
+                icon={<DollarSign size={16} />}
+              />
+              <KPICard
+                label="Jaarlijkse besparing"
+                value={formatCurrency(results.yearlySavings)}
+                icon={<TrendingUp size={16} />}
+                highlight
+              />
+              <KPICard
+                label="Terugverdientijd"
+                value={`${results.paybackMonths} mnd`}
+                icon={<Calendar size={16} />}
+              />
+              <KPICard
+                label="ROI Multiplier"
+                value={`${results.roiMultiplier.toFixed(1)}x`}
+                icon={<Percent size={16} />}
+              />
+            </div>
+
+            {/* Confidence score */}
+            <div className="rounded-2xl border border-border bg-card p-5">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-medium text-foreground">Impact Confidence Score</p>
+                <span className="text-sm font-semibold text-primary tabular-nums">{results.confidence}%</span>
+              </div>
+              <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
+                <motion.div
+                  className="h-full rounded-full bg-primary"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${results.confidence}%` }}
+                  transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+                />
+              </div>
+              <p className="text-xs text-muted-foreground mt-2.5">
+                Gebaseerd op vergelijkbare implementaties binnen MKB-organisaties.
+              </p>
+            </div>
+
+            {/* Bar chart */}
+            <div className="rounded-2xl border border-border bg-card p-5">
+              <p className="text-sm font-medium text-foreground mb-4">Maandelijks kostenoverzicht</p>
+              <div className="h-[140px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={chartData} layout="vertical" barSize={20} margin={{ left: 0, right: 16, top: 0, bottom: 0 }}>
+                    <XAxis type="number" hide />
+                    <YAxis
+                      dataKey="name"
+                      type="category"
+                      width={120}
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fontSize: 12, fill: "hsl(192, 15%, 55%)" }}
+                    />
+                    <Tooltip
+                      formatter={(value: number) => formatCurrency(value)}
+                      contentStyle={{
+                        backgroundColor: "hsl(192, 25%, 13%)",
+                        border: "1px solid hsl(192, 18%, 19%)",
+                        borderRadius: "8px",
+                        fontSize: "12px",
+                        color: "hsl(0, 0%, 96%)",
+                      }}
+                    />
+                    <Bar dataKey="value" radius={[0, 6, 6, 0]}>
+                      {chartData.map((entry) => (
+                        <Cell
+                          key={entry.name}
+                          fill={
+                            entry.type === "savings"
+                              ? "hsl(174, 78%, 41%)"
+                              : entry.type === "automated"
+                              ? "hsl(192, 20%, 25%)"
+                              : "hsl(192, 20%, 35%)"
+                          }
+                        />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Disclaimer */}
+        <div className="max-w-6xl mx-auto mt-8">
+          <p className="text-xs text-muted-foreground leading-relaxed italic flex items-start gap-1.5">
+            <AlertTriangle size={12} className="text-primary shrink-0 mt-0.5 not-italic" />
+            Alle berekeningen zijn conservatief en worden tijdens de impactanalyse gevalideerd inclusief risico-inschatting.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const KPICard = ({
+  label,
+  value,
+  icon,
+  highlight,
+}: {
+  label: string;
+  value: string;
+  icon: React.ReactNode;
+  highlight?: boolean;
+}) => (
+  <motion.div
+    className={`rounded-2xl border p-5 transition-colors duration-300 ${
+      highlight
+        ? "border-primary/30 bg-primary/[0.04]"
+        : "border-border bg-card"
+    }`}
+    whileHover={{
+      borderColor: "hsl(174, 78%, 41%, 0.4)",
+      boxShadow: "0 4px 20px hsl(174, 78%, 41%, 0.08)",
+    }}
+    transition={{ duration: 0.2 }}
+  >
+    <div className="flex items-center gap-2 mb-2">
+      <div className="text-primary">{icon}</div>
+      <p className="text-xs text-muted-foreground">{label}</p>
+    </div>
+    <p className={`text-2xl font-bold tabular-nums ${highlight ? "text-primary" : "text-foreground"}`}>
+      {value}
+    </p>
+  </motion.div>
+);
+
+export default ImpactSimulator;

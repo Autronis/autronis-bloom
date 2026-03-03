@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import ImpactSimulator from "@/components/impact/ImpactSimulator";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Clock, Users, TrendingUp, Calculator, Building2, ShoppingCart, FileText, Shield, AlertTriangle } from "lucide-react";
@@ -295,6 +296,9 @@ const ImpactROI = () => {
           <ROIScanModule />
         </div>
       </section>
+
+      {/* Impact Simulator */}
+      <ImpactSimulator />
 
       {/* Methodiek — 6 waardecomponenten */}
       <section className="py-16 sm:py-24 border-t border-border relative overflow-hidden">

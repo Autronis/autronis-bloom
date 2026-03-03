@@ -89,6 +89,7 @@ const SecurityBlock = () => {
                       borderColor: isHovered ? "hsl(var(--primary) / 0.35)" : "hsl(var(--border))",
                       boxShadow: isHovered ? "0 4px 24px hsl(174 78% 33% / 0.08)" : "0 0 0 transparent",
                     }}
+                    whileHover={{ scale: 1.015, y: -2 }}
                     transition={{ duration: 0.3 }}
                     onMouseEnter={() => setHoveredIndex(i)}
                     onMouseLeave={() => setHoveredIndex(null)}
@@ -115,16 +116,14 @@ const SecurityBlock = () => {
                         {layer.points.map((point) => {
                           const PointIcon = point.icon;
                           return (
-                            <motion.li
+                            <li
                               key={point.text}
                               className="flex items-start gap-3 text-sm leading-relaxed"
-                              whileHover={{ scale: 1.02, x: 4 }}
-                              transition={{ duration: 0.2 }}
                             >
                               <PointIcon size={15} className="text-primary/60 mt-[2px] shrink-0" />
-                              <span className="text-muted-foreground/50">—</span>
+                              <span className="text-muted-foreground/40 text-xs">–</span>
                               <span className="text-foreground/85">{point.text}</span>
-                            </motion.li>
+                            </li>
                           );
                         })}
                       </ul>

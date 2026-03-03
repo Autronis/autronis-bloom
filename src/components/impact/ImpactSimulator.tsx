@@ -277,17 +277,12 @@ const KPICard = ({
   icon: React.ReactNode;
   highlight?: boolean;
 }) => (
-  <motion.div
-    className={`rounded-2xl border p-5 transition-colors duration-300 ${
+  <div
+    className={`rounded-xl p-4 transition-colors duration-300 ${
       highlight
-        ? "border-primary/30 bg-primary/[0.04]"
-        : "border-border bg-card"
+        ? "bg-primary/[0.06]"
+        : "bg-muted/30"
     }`}
-    whileHover={{
-      borderColor: "hsl(174, 78%, 41%, 0.4)",
-      boxShadow: "0 4px 20px hsl(174, 78%, 41%, 0.08)",
-    }}
-    transition={{ duration: 0.2 }}
   >
     <div className="flex items-center gap-2 mb-2">
       <div className="text-primary">{icon}</div>
@@ -296,7 +291,7 @@ const KPICard = ({
     <p className={`text-2xl font-bold tabular-nums ${highlight ? "text-primary" : "text-foreground"}`}>
       {value}
     </p>
-  </motion.div>
+  </div>
 );
 
 export default ImpactSimulator;

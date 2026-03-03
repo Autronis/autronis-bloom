@@ -135,15 +135,11 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
               }`}
             style={isMobile && expanded ? { maxHeight: "700px" } : undefined}
           >
-            {/* Focus title */}
-            <p className="text-[13px] font-semibold text-white leading-snug mb-2">
-              {member.focusLabel}
-            </p>
-
-            {/* Description – larger and more readable */}
+            {/* Description */}
             <p className="text-[13px] text-white/90 leading-relaxed mb-4">
               {member.description}
             </p>
+
 
             {/* Skills grouped – no headers */}
             <div className="flex flex-wrap gap-1.5">
@@ -154,7 +150,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
             </div>
           </div>
 
-          {/* Pre-hover state: preview skills */}
+          {/* Pre-hover state: preview skills – one from each category */}
           <div
             className={`flex flex-wrap gap-1.5 items-center transition-all duration-250
               ${isMobile
@@ -162,9 +158,14 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
                 : "opacity-100 group-hover:opacity-0 group-hover:h-0 group-hover:overflow-hidden"
               }`}
           >
-            {member.skills.slice(0, 3).map((skill) => (
-              <PreviewBadge key={skill.label} skill={skill} />
-            ))}
+            <span className="text-[8px] font-medium tracking-[0.14em] uppercase text-white/40 mr-1 block w-full mb-1">
+              Vaardigheden
+            </span>
+            {/* Pick first skill from each category for variety */}
+            {(["arch", "ai", "gov"] as SkillCategory[]).map((cat) => {
+              const first = member.skills.find((s) => s.category === cat);
+              return first ? <PreviewBadge key={first.label} skill={first} /> : null;
+            })}
             <span className="text-[10px] font-medium px-2.5 py-1 rounded-full bg-black/40 border border-white/10 text-white/60">
               +{member.skills.length - 3}
             </span>

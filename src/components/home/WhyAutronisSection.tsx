@@ -145,18 +145,27 @@ const WhyAutronisSection = () => {
                   <motion.img
                     src={teamFoto}
                     alt="Autronis team - Sem en Syb"
-                    className="w-full h-full object-cover object-center scale-110 brightness-[0.70] dark:brightness-[0.58] rotate-[2deg]"
+                    className="w-full h-full object-cover object-center scale-110 rotate-[2deg]"
                     initial={{ opacity: 0, scale: 1.03 }}
                     animate={imgInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.03 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}
                     loading="lazy"
                   />
+                  {/* Radial vignette: darkens bricks around edges, keeps center (people) bright */}
                   <div
-                    className="absolute inset-0 pointer-events-none dark:block"
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background: "radial-gradient(ellipse 55% 65% at 50% 40%, transparent 0%, hsl(0 0% 0% / 0.55) 100%)",
+                    }}
+                  />
+                  {/* Left fade into card - dark mode */}
+                  <div
+                    className="absolute inset-0 pointer-events-none dark:block hidden"
                     style={{
                       background: "linear-gradient(to right, hsl(var(--card)) 0%, hsl(var(--card) / 0.3) 8%, transparent 25%)",
                     }}
                   />
+                  {/* Left fade into card - light mode */}
                   <div
                     className="absolute inset-0 pointer-events-none dark:hidden"
                     style={{

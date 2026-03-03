@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -59,8 +59,8 @@ const ROIPreview = () => {
                   <p className="text-4xl sm:text-5xl font-bold text-primary">€74.000</p>
                 </motion.div>
 
-                <p className="text-xs text-muted-foreground mb-6 leading-relaxed italic">
-                  <span className="text-primary not-italic">⚠️</span> Deze berekening is indicatief. Tijdens de analysefase wordt een volledige businesscase opgesteld inclusief risico- en impactanalyse.
+                <p className="text-xs text-muted-foreground mb-6 leading-relaxed italic flex items-start gap-1.5">
+                  <AlertTriangle size={13} className="text-primary shrink-0 mt-0.5 not-italic" /> Deze berekening is indicatief. Tijdens de analysefase wordt een volledige businesscase opgesteld inclusief risico- en impactanalyse.
                 </p>
 
                 <Button asChild size="lg" className="w-full sm:w-auto">

@@ -56,7 +56,7 @@ const SecurityBlock = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section className="relative overflow-hidden border-t border-primary/10">
+    <section id="beveiliging" className="relative overflow-hidden border-t border-primary/10">
       <AmbientLight />
 
       <div className="container mx-auto px-4 lg:px-8 py-16 sm:py-24 relative z-10">

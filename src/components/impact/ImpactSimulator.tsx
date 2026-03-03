@@ -136,7 +136,7 @@ const ImpactSimulator = () => {
 
           {/* RIGHT — Results dashboard */}
           <motion.div
-            className="rounded-2xl border border-border bg-card p-5 sm:p-6 space-y-6"
+            className="rounded-2xl border border-border bg-muted/20 p-5 sm:p-6 space-y-6"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -278,10 +278,10 @@ const KPICard = ({
   highlight?: boolean;
 }) => (
   <div
-    className={`rounded-xl p-4 transition-colors duration-300 ${
+    className={`rounded-xl border p-4 transition-colors duration-300 ${
       highlight
-        ? "bg-primary/[0.06]"
-        : "bg-muted/30"
+        ? "border-primary/30 bg-primary/[0.04]"
+        : "border-border bg-card"
     }`}
   >
     <div className="flex items-center gap-2 mb-2">

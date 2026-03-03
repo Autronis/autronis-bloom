@@ -17,7 +17,7 @@ interface Skill {
 }
 
 const categoryMeta: Record<SkillCategory, { border: string; bg: string }> = {
-  arch: { border: "border-[rgba(60,160,200,0.7)]", bg: "bg-[rgba(60,160,200,0.25)]" },
+  arch: { border: "border-[rgba(90,150,220,0.7)]", bg: "bg-[rgba(90,150,220,0.25)]" },
   ai:   { border: "border-[rgba(60,210,190,0.65)]", bg: "bg-[rgba(60,210,190,0.22)]" },
   gov:  { border: "border-[rgba(170,150,210,0.65)]", bg: "bg-[rgba(170,150,210,0.22)]" },
 };
@@ -58,6 +58,7 @@ const team: TeamMember[] = [
       { label: "Backend-automatisering", category: "ai" },
       { label: "Code-optimalisatie", category: "gov" },
       { label: "Technische documentatie", category: "gov" },
+      { label: "Beveiliging vanaf ontwerp", category: "gov" },
     ],
     mail: "mailto:syb@autronis.com",
     linkedin: "https://www.linkedin.com/in/syb-sprenkeler-1b9b01323/",
@@ -79,7 +80,7 @@ const team: TeamMember[] = [
       { label: "Backend-automatisering", category: "ai" },
       { label: "Logging & monitoring", category: "gov" },
       { label: "Structuur & documentatie", category: "gov" },
-      { label: "Beveiliging by design", category: "gov" },
+      { label: "Beveiliging vanaf ontwerp", category: "gov" },
     ],
     mail: "mailto:sem@autronis.com",
     linkedin: "https://www.linkedin.com/in/sem-gijsberts-65ba543b3/",

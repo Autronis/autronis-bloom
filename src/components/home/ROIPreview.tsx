@@ -53,13 +53,13 @@ const ROIPreview = () => {
         <ScrollReveal className="max-w-2xl mx-auto text-center mb-10 sm:mb-14">
           <ScrollRevealItem>
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
-              Impact & ROI
+              Voorbeeldscenario's
             </p>
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Wat automatisering concreet kan opleveren
+              Indicatieve impact per team
             </h2>
             <p className="text-muted-foreground leading-relaxed max-w-xl mx-auto">
-              Indicatieve impact op basis van een gemiddeld MKB-bedrijf. Berekeningen zijn conservatief en gebaseerd op structurele procesoptimalisatie.
+              Onderstaande scenario's zijn gebaseerd op conservatieve aannames bij een gemiddeld MKB-bedrijf.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>

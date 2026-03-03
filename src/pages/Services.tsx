@@ -65,8 +65,8 @@ const pillars = [
 ];
 
 const toolIconsRow1: Array<{ name: string; logo: string; dark?: boolean }> = [
-  { name: "OpenAI", logo: "/logos/openai.svg", dark: true },
-  { name: "Anthropic", logo: "/logos/anthropic.svg", dark: true },
+  { name: "OpenAI", logo: "/logos/openai.svg" },
+  { name: "Anthropic", logo: "/logos/anthropic.svg" },
   { name: "Make", logo: "/logos/make.svg" },
   { name: "Supabase", logo: "/logos/supabase.svg" },
   { name: "Notion", logo: "/logos/notion.svg", dark: true },
@@ -75,7 +75,6 @@ const toolIconsRow1: Array<{ name: string; logo: string; dark?: boolean }> = [
   { name: "Slack", logo: "/logos/slack.svg" },
   { name: "Airtable", logo: "/logos/airtable.svg" },
   { name: "Salesforce", logo: "/logos/salesforce.svg" },
-  { name: "Vercel", logo: "/logos/vercel.svg", dark: true },
   { name: "PostgreSQL", logo: "/logos/postgresql.svg" },
   { name: "Shopify", logo: "/logos/shopify.svg" },
   { name: "AWS", logo: "/logos/aws.svg" },

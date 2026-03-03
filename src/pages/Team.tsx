@@ -13,6 +13,7 @@ const team = [
     name: "Syb Sprenkeler",
     role: "Co-founder & Engineer",
     photo: fotoSyb,
+    objectPosition: "50% 20%",
     description:
       "Syb heeft een scherp oog voor technische details en is de drijvende kracht achter de bouw. Hij denkt altijd een stap verder en zorgt dat elk systeem niet alleen werkt maar ook schaalbaar en toekomstbestendig is.",
     skills: ["Automation Architect", "API Integraties", "Workflow Engineering", "Data-architectuur", "Performance optimalisatie"],
@@ -21,6 +22,7 @@ const team = [
     name: "Sem Gijsberts",
     role: "Co-founder & Engineer",
     photo: fotoSem,
+    objectPosition: "50% 15%",
     description:
       "Sem bouwt mee, denkt vooruit en houdt overzicht. Van het eerste klantgesprek tot het opgeleverde systeem — hij is betrokken bij elke stap en zorgt dat niets tussen wal en schip valt.",
     skills: ["AI Integraties", "System Integrations", "Backend Automatisering", "Datastromen & Structuur", "Governance & Logging"],
@@ -44,7 +46,8 @@ const TeamCard = ({ member }: { member: (typeof team)[0] }) => {
         <img
           src={member.photo}
           alt={member.name}
-          className="w-full h-full object-cover object-top scale-150 transition-transform duration-500 group-hover:scale-[1.6]"
+          className="w-full h-full object-cover scale-150 transition-transform duration-500 group-hover:scale-[1.6]"
+          style={{ objectPosition: member.objectPosition }}
         />
         <div
           className={`absolute inset-0 bg-background/90 backdrop-blur-sm flex items-center justify-center p-6 transition-opacity duration-300 ${

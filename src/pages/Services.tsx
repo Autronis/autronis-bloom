@@ -80,7 +80,7 @@ const toolIconsRow1: Array<{ name: string; logo: string; dark?: boolean }> = [
   { name: "AWS", logo: "/logos/aws.svg" },
   { name: "Cloudflare", logo: "/logos/cloudflare.svg" },
   { name: "LangChain", logo: "/logos/langchain.svg", dark: true },
-  { name: "Pinecone", logo: "/logos/pinecone.svg" },
+  { name: "Pinecone", logo: "/logos/pinecone.svg", dark: true },
   { name: "Firebase", logo: "/logos/firebase.svg" },
 ];
 
@@ -96,12 +96,12 @@ const toolIconsRow2: Array<{ name: string; logo: string; dark?: boolean }> = [
   { name: "Microsoft 365", logo: "/logos/microsoft-365.svg" },
   { name: "WooCommerce", logo: "/logos/woocommerce.svg" },
   { name: "Magento", logo: "/logos/magento.svg" },
-  { name: "Mollie", logo: "/logos/mollie.svg" },
+  { name: "Mollie", logo: "/logos/mollie.svg", dark: true },
   { name: "PayPal", logo: "/logos/paypal.svg" },
   { name: "Looker Studio", logo: "/logos/looker-studio.svg" },
   { name: "Power BI", logo: "/logos/power-bi.svg" },
   { name: "Google Analytics", logo: "/logos/google-analytics.svg" },
-  { name: "Sentry", logo: "/logos/sentry.svg" },
+  { name: "Sentry", logo: "/logos/sentry.svg", dark: true },
   { name: "Datadog", logo: "/logos/datadog.svg" },
 ];
 

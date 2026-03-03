@@ -38,117 +38,110 @@ const ImpactROI = () => {
       {/* Impact Simulator */}
       <ImpactSimulator />
 
-      {/* Methodiek — 6 waardecomponenten */}
+      {/* Methodiek — 6 impactfactoren */}
       <section className="py-16 sm:py-24 border-t border-border relative overflow-hidden">
         <AmbientLight />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <ScrollReveal className="max-w-3xl mx-auto text-center mb-12">
+          <ScrollReveal className="max-w-3xl mx-auto text-center mb-14">
             <ScrollRevealItem>
               <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
                 Methodiek
               </p>
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-                De 6 structurele waardecomponenten achter onze ROI-berekening
+                Hoe wij Impact & ROI berekenen
               </h2>
-              <p className="text-muted-foreground leading-relaxed">
-                Wij kwantificeren impact op basis van meetbare operationele en financiële factoren, vertaald naar een concrete businesscase.
+              <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                Onze ROI-indicatie is gebaseerd op zes kwantificeerbare impactfactoren die tijdens de analysefase worden doorgerekend naar een financiële businesscase.
               </p>
             </ScrollRevealItem>
           </ScrollReveal>
 
-          <ScrollReveal>
-            <ScrollRevealItem>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
-                {[
-                  {
-                    icon: Clock,
-                    title: "Directe productiviteitswinst",
-                    items: [
-                      "Eliminatie van handmatige, repetitieve taken",
-                      "Automatisering van goedkeurings- en overdrachtsflows",
-                      "Directe capaciteitsvergroting zonder extra FTE",
-                    ],
-                  },
-                  {
-                    icon: Shield,
-                    title: "Structurele foutreductie",
-                    items: [
-                      "Minder data-invoerfouten en correctiewerk",
-                      "Gestandaardiseerde procesuitvoering",
-                      "Hogere kwaliteit en betrouwbaarheid van output",
-                    ],
-                  },
-                  {
-                    icon: Calculator,
-                    title: "Kostenoptimalisatie",
-                    items: [
-                      "Vermeden externe inhuur en operationele overhead",
-                      "Efficiëntere inzet van personeel",
-                      "Cumulatieve besparingen per kwartaal",
-                    ],
-                  },
-                  {
-                    icon: Building2,
-                    title: "Operationele risicoreductie",
-                    items: [
-                      "Logging, monitoring en audittrails",
-                      "Failover- en fallbackstrategieën",
-                      "Compliance en traceerbaarheid",
-                    ],
-                  },
-                  {
-                    icon: TrendingUp,
-                    title: "Schaalbaarheid zonder lineaire kosten",
-                    items: [
-                      "Groei zonder evenredige FTE-toename",
-                      "Systemen die meeschalen met volume",
-                      "Capaciteitsvergroting zonder extra loonkosten",
-                    ],
-                  },
-                  {
-                    icon: Users,
-                    title: "Datagedreven sturing",
-                    items: [
-                      "Realtime inzicht in KPI's en operationele prestaties",
-                      "Vroegtijdige detectie van afwijkingen",
-                      "Onderbouwde besluitvorming op directieniveau",
-                    ],
-                  },
-                ].map((block, idx) => (
+          <div className="max-w-4xl mx-auto space-y-4">
+            {[
+              {
+                num: "01",
+                icon: Clock,
+                title: "Reductie van handmatige uren",
+                description: "Wij analyseren hoeveel repetitieve, handmatige werkzaamheden structureel kunnen worden geëlimineerd.",
+                financial: "Deze uren worden omgerekend naar FTE-waarde op basis van gemiddelde loonkosten inclusief werkgeverslasten en overhead.",
+              },
+              {
+                num: "02",
+                icon: Shield,
+                title: "Vermindering van correctie- en herstelkosten",
+                description: "We identificeren foutpercentages, herstelwerk en dubbele data-invoer binnen processen.",
+                financial: "De tijd en kosten van correcties worden berekend en vertaald naar directe kostenreductie.",
+              },
+              {
+                num: "03",
+                icon: Calculator,
+                title: "Optimalisatie van externe inhuur en overhead",
+                description: "We beoordelen in hoeverre externe capaciteit of ondersteunende processen kunnen worden teruggebracht.",
+                financial: "Reductie van externe inhuur en operationele overhead wordt direct meegenomen in de businesscase.",
+              },
+              {
+                num: "04",
+                icon: TrendingUp,
+                title: "Capaciteitsgroei zonder personeelsuitbreiding",
+                description: "Vrijgekomen tijd wordt geanalyseerd als beschikbare groeicapaciteit binnen bestaande teams.",
+                financial: "We berekenen hoeveel extra output mogelijk is zonder lineaire stijging van personeelskosten.",
+              },
+              {
+                num: "05",
+                icon: Building2,
+                title: "Risicoreductie en continuïteit",
+                description: "We analyseren verstoringen, escalaties, compliance-risico's en handmatige afhankelijkheden.",
+                financial: "Potentiële kosten van uitval, herstel en operationele verstoring worden meegenomen in de ROI-berekening.",
+              },
+              {
+                num: "06",
+                icon: Users,
+                title: "Verbeterde besluitvorming door realtime inzicht",
+                description: "We beoordelen de impact van realtime data, snellere rapportage en betere stuurinformatie.",
+                financial: "Operationele vertragingen en inefficiënties worden gekwantificeerd op basis van verbeterde informatiestromen.",
+              },
+            ].map((factor, idx) => (
+              <ScrollReveal key={factor.num}>
+                <ScrollRevealItem>
                   <motion.div
-                    key={block.title}
-                    className="rounded-2xl border border-primary/15 bg-card/80 backdrop-blur-sm p-6 cursor-default"
+                    className="rounded-2xl border border-border bg-card p-6 sm:p-8"
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: idx * 0.07, duration: 0.45 }}
-                    whileHover={{
-                      scale: 1.03,
-                      y: -4,
-                      borderColor: "hsl(174, 78%, 41%, 0.5)",
-                      boxShadow: "0 8px 28px hsl(174, 78%, 41%, 0.08)",
-                    }}
+                    transition={{ delay: idx * 0.06, duration: 0.45 }}
                   >
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-3">
-                      <block.icon size={20} />
+                    <div className="flex items-start gap-4 sm:gap-5">
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                        <factor.icon size={20} className="text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-baseline gap-3 mb-2">
+                          <span className="text-xs font-bold tracking-widest text-primary">{factor.num}</span>
+                          <h3 className="text-base sm:text-lg font-semibold text-foreground">{factor.title}</h3>
+                        </div>
+                        <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+                          {factor.description}
+                        </p>
+                        <div className="flex items-start gap-2.5 pl-0.5">
+                          <Calculator size={14} className="text-primary mt-[3px] shrink-0" />
+                          <p className="text-sm text-foreground/80 leading-relaxed">
+                            <span className="font-medium text-foreground">Financiële vertaling:</span>{" "}
+                            {factor.financial}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <h3 className="font-semibold text-foreground mb-3">{block.title}</h3>
-                    <ul className="space-y-2">
-                      {block.items.map((item) => (
-                        <li key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                          <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
                   </motion.div>
-                ))}
-              </div>
+                </ScrollRevealItem>
+              </ScrollReveal>
+            ))}
+          </div>
 
-              <p className="text-sm text-muted-foreground text-center mt-10 max-w-3xl mx-auto leading-relaxed italic">
-                Tijdens de impactanalyse vertalen wij deze factoren naar een volledige businesscase inclusief risico-inschatting en terugverdientijd.
+          <ScrollReveal className="mt-14">
+            <ScrollRevealItem>
+              <p className="text-sm text-muted-foreground text-center max-w-3xl mx-auto leading-relaxed">
+                Tijdens de impactanalyse vertalen wij deze factoren naar een volledige businesscase inclusief terugverdientijd, ROI-multiple en risico-inschatting.
               </p>
-
             </ScrollRevealItem>
           </ScrollReveal>
         </div>

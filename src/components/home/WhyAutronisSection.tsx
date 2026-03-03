@@ -145,9 +145,10 @@ const WhyAutronisSection = () => {
                   <motion.img
                     src={teamWallFoto}
                     alt="Autronis team - Sem en Syb"
-                    className="w-full h-full object-cover object-[50%_25%] scale-110 brightness-[0.75] dark:brightness-[0.65]"
-                    initial={{ opacity: 0, scale: 1.15 }}
-                    animate={imgInView ? { opacity: 1, scale: 1.1 } : { opacity: 0, scale: 1.15 }}
+                    className="w-full h-full object-cover object-[50%_30%] brightness-[0.65] dark:brightness-[0.55]"
+                    style={{ transform: "rotate(2deg) scale(1.15)" }}
+                    initial={{ opacity: 0 }}
+                    animate={imgInView ? { opacity: 1 } : { opacity: 0 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}
                     loading="lazy"
                   />

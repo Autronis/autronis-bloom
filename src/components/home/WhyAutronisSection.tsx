@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { motion, useInView } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import AmbientLight from "@/components/AmbientLight";
-import teamFoto from "@/assets/autronis_team_foto.png";
+import teamFoto from "@/assets/team_wall_cropped.png";
 
 const reasons = [
   {
@@ -145,7 +145,7 @@ const WhyAutronisSection = () => {
                   <motion.img
                     src={teamFoto}
                     alt="Autronis team - Sem en Syb"
-                    className="w-full h-full object-cover dark:brightness-[0.82] brightness-100"
+                    className="w-full h-full object-cover brightness-[0.7] dark:brightness-[0.6]"
                     initial={{ opacity: 0, scale: 1.03 }}
                     animate={imgInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.03 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}

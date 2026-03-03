@@ -3,7 +3,7 @@ import { Linkedin, Twitter, Mail } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="border-t border-border bg-card/50">
+    <footer className="border-t border-border">
       <div className="container mx-auto px-4 lg:px-8 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
@@ -23,7 +23,7 @@ const Footer = () => {
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Twitter">
                 <Twitter size={18} />
               </a>
-              <a href="mailto:info@autronisgroup.com" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Email">
+              <a href="mailto:zakelijk@autronis.com" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Email">
                 <Mail size={18} />
               </a>
             </div>

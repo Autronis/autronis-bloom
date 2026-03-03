@@ -10,9 +10,10 @@ const impactBlocks = [
     icon: Building2,
     title: "Operations-team",
     highlight: "Tot €85.000 per jaar aan structurele besparing",
+    sub: "Gebaseerd op 40+ uur per week aan repetitieve verwerking.",
     bullets: [
       "40+ uur per week geautomatiseerd",
-      "70% kortere doorlooptijden",
+      "Aanzienlijk kortere doorlooptijden",
       "Minder handmatige overdrachten",
     ],
   },
@@ -20,9 +21,10 @@ const impactBlocks = [
     icon: ShoppingCart,
     title: "Sales-team",
     highlight: "Tot €52.000 per jaar aan efficiëntiewinst",
+    sub: "Gebaseerd op tijdsbesparing binnen CRM en opvolgprocessen.",
     bullets: [
-      "Minder CRM-administratie",
-      "60% snellere leadopvolging",
+      "Minder administratieve CRM-taken",
+      "Snellere leadopvolging",
       "Meer tijd voor omzetgeneratie",
     ],
   },
@@ -30,8 +32,9 @@ const impactBlocks = [
     icon: FileText,
     title: "Finance / Backoffice",
     highlight: "Tot €42.000 per jaar aan kostenreductie",
+    sub: "Gebaseerd op foutreductie en automatisering van rapportage.",
     bullets: [
-      "Tot 80% foutreductie",
+      "Aanzienlijke foutreductie",
       "Snellere rapportages",
       "Minder correctiewerk",
     ],
@@ -39,8 +42,8 @@ const impactBlocks = [
 ];
 
 const kernpunten = [
-  { icon: TrendingUp, text: "Tot 4x ROI binnen 12 maanden" },
-  { icon: Timer, text: "Terugverdientijd vaak < 6 maanden" },
+  { icon: TrendingUp, text: "Tot 4x ROI binnen 12 maanden*" },
+  { icon: Timer, text: "Break-even vaak binnen 3–6 maanden" },
   { icon: Clock, text: "Structurele kostenoptimalisatie" },
 ];
 
@@ -67,7 +70,7 @@ const ROIPreview = () => {
         {/* 3 impact blocks */}
         <ScrollReveal>
           <ScrollRevealItem>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto mb-6">
               {impactBlocks.map((block, idx) => (
                 <motion.div
                   key={block.title}
@@ -85,8 +88,11 @@ const ROIPreview = () => {
                     <block.icon size={20} />
                   </div>
                   <h3 className="text-lg font-bold mb-3 text-foreground">{block.title}</h3>
-                  <p className="text-sm font-semibold text-primary mb-4 leading-snug">
+                  <p className="text-sm font-semibold text-primary mb-1 leading-snug">
                     {block.highlight}
+                  </p>
+                  <p className="text-xs text-muted-foreground mb-4">
+                    {block.sub}
                   </p>
                   <ul className="space-y-2">
                     {block.bullets.map((item) => (
@@ -99,6 +105,9 @@ const ROIPreview = () => {
                 </motion.div>
               ))}
             </div>
+            <p className="text-xs text-muted-foreground text-center max-w-3xl mx-auto mb-12">
+              Scenario's gebaseerd op conservatieve aannames binnen middelgrote MKB-organisaties. Werkelijke impact is afhankelijk van procescomplexiteit en volumes.
+            </p>
           </ScrollRevealItem>
         </ScrollReveal>
 
@@ -127,6 +136,9 @@ const ROIPreview = () => {
                 </div>
               </div>
             </div>
+            <p className="text-xs text-muted-foreground text-center max-w-2xl mx-auto mb-10">
+              *Afhankelijk van implementatieomvang en procescomplexiteit.
+            </p>
           </ScrollRevealItem>
         </ScrollReveal>
 

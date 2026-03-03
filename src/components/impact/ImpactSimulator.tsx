@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, TrendingUp, Calendar, Percent, Euro, ArrowRight } from "lucide-react";
+import { AlertTriangle, TrendingUp, Calendar, Percent, Euro, ArrowRight, Calculator } from "lucide-react";
 
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import AmbientLight from "@/components/AmbientLight";
@@ -15,23 +15,49 @@ const ImpactSimulator = () => {
   const [hours, setHours] = useState(40);
   const [rate, setRate] = useState(55);
   const [autoPercent, setAutoPercent] = useState(65);
-  const [investment, setInvestment] = useState(18000);
+  const [errorPercent, setErrorPercent] = useState(8);
 
   const results = useMemo(() => {
     const autoFraction = autoPercent / 100;
-    const monthlySavings = hours * autoFraction * rate * 4.33;
-    const yearlySavings = monthlySavings * 12;
-    const paybackMonths = yearlySavings > 0 ? investment / yearlySavings * 12 : 0;
-    const roiMultiplier = investment > 0 ? yearlySavings / investment : 0;
+    const weeksPerMonth = 4.33;
 
-    // Confidence score based on automation %, hours, complexity
+    // Core savings
+    const monthlySavings = hours * autoFraction * rate * weeksPerMonth;
+    const yearlySavings = monthlySavings * 12;
+
+    // Error correction savings
+    const errorFraction = errorPercent / 100;
+    const monthlyErrorSavings = hours * errorFraction * rate * weeksPerMonth * 0.5; // 50% of error time recoverable
+    const yearlyErrorSavings = monthlyErrorSavings * 12;
+
+    const totalMonthlySavings = monthlySavings + monthlyErrorSavings;
+    const totalYearlySavings = yearlySavings + yearlyErrorSavings;
+
+    // Auto-calculated investment based on hours and complexity
+    const complexityMultiplier = autoPercent <= 50 ? 1 : autoPercent <= 70 ? 1.4 : 1.8;
+    const baseInvestment = hours * rate * 6; // ~6 weeks equivalent
+    const investment = Math.round(baseInvestment * complexityMultiplier / 500) * 500;
+
+    const netBenefitYear1 = totalYearlySavings - investment;
+    const paybackMonths = totalMonthlySavings > 0 ? investment / totalMonthlySavings : 0;
+    const roiMultiplier = investment > 0 ? totalYearlySavings / investment : 0;
+
+    // Confidence score
     const hoursFactor = Math.min(hours / 60, 1) * 30;
     const autoFactor = autoFraction * 40;
     const investFactor = Math.min(investment / 30000, 1) * 30;
     const confidence = Math.round(Math.min(hoursFactor + autoFactor + investFactor, 95));
 
-    return { monthlySavings, yearlySavings, paybackMonths: Math.round(paybackMonths * 10) / 10, roiMultiplier, confidence };
-  }, [hours, rate, autoPercent, investment]);
+    return {
+      monthlySavings: totalMonthlySavings,
+      yearlySavings: totalYearlySavings,
+      investment,
+      netBenefitYear1,
+      paybackMonths: Math.round(paybackMonths * 10) / 10,
+      roiMultiplier,
+      confidence,
+    };
+  }, [hours, rate, autoPercent, errorPercent]);
 
   const chartData = [
     { name: "Huidige kosten", value: Math.round(hours * rate * 4.33), type: "current" },
@@ -71,14 +97,14 @@ const ImpactSimulator = () => {
       hint: "Conservatieve inschatting na validatie en controle.",
     },
     {
-      label: "Verwachte implementatie-investering",
-      value: investment,
-      onChange: setInvestment,
-      min: 5000,
-      max: 50000,
-      step: 1000,
-      display: formatCurrency(investment),
-      hint: "Indicatieve projectinvestering.",
+      label: "Geschat foutpercentage",
+      value: errorPercent,
+      onChange: setErrorPercent,
+      min: 0,
+      max: 25,
+      step: 1,
+      display: `${errorPercent}%`,
+      hint: "Percentage tijd besteed aan correcties en herstelwerk.",
     },
   ];
 
@@ -94,7 +120,7 @@ const ImpactSimulator = () => {
               Impact & ROI
             </p>
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Bereken de potentiële impact van automatisering
+              Impact & ROI Simulator
             </h2>
             <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               Op basis van uw situatie berekenen wij een conservatieve businesscase inclusief besparing, terugverdientijd en ROI.
@@ -132,6 +158,20 @@ const ImpactSimulator = () => {
                     <p className="text-xs text-muted-foreground mt-1.5">{s.hint}</p>
                   </div>
                 ))}
+              </div>
+
+              {/* Investment indication */}
+              <div className="mt-7 pt-5 border-t border-border">
+                <div className="flex items-center justify-between mb-1">
+                  <div className="flex items-center gap-2">
+                    <Calculator size={14} className="text-primary" />
+                    <p className="text-sm font-medium text-foreground">Indicatieve projectinvestering</p>
+                  </div>
+                  <span className="text-lg font-bold text-foreground tabular-nums">{formatCurrency(results.investment)}</span>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Indicatief op basis van vergelijkbare implementaties binnen MKB-organisaties.
+                </p>
               </div>
 
               {/* Disclaimer + CTAs */}
@@ -180,15 +220,26 @@ const ImpactSimulator = () => {
                   highlight
                 />
                 <KPICard
+                  label="Netto voordeel jaar 1"
+                  value={formatCurrency(results.netBenefitYear1)}
+                  icon={<Euro size={16} />}
+                />
+                <KPICard
                   label="Terugverdientijd"
                   value={`${results.paybackMonths} mnd`}
                   icon={<Calendar size={16} />}
                 />
-                <KPICard
-                  label="ROI Multiplier"
-                  value={`${results.roiMultiplier.toFixed(1)}x`}
-                  icon={<Percent size={16} />}
-                />
+              </div>
+
+              {/* ROI Multiplier */}
+              <div className="rounded-xl border border-primary/30 bg-primary/[0.04] p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Percent size={16} className="text-primary" />
+                    <p className="text-sm font-medium text-foreground">ROI Multiplier</p>
+                  </div>
+                  <span className="text-2xl font-bold text-primary tabular-nums">{results.roiMultiplier.toFixed(1)}x</span>
+                </div>
               </div>
 
               {/* Confidence score */}
@@ -252,11 +303,13 @@ const ImpactSimulator = () => {
                   })}
                 </div>
               </div>
+
+              {/* Bottom disclaimer */}
+              <p className="text-xs text-muted-foreground leading-relaxed text-center">
+                Deze berekening is indicatief. Tijdens de impactanalyse wordt een volledige businesscase opgesteld inclusief risico-inschatting.
+              </p>
             </motion.div>
           </div>
-
-
-
         </div>
       </div>
     </section>

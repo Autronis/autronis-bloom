@@ -10,21 +10,21 @@ import GlowCard from "@/components/GlowCard";
 const problems = [
   {
     icon: Layers,
-    title: "Gefragmenteerde systemen",
+    title: "Losstaande systemen",
     description:
-      "Afdelingen werken in losse tools zonder centrale datastroom. Informatie wordt handmatig overgezet tussen CRM, finance, operations en spreadsheets.",
+      "Afdelingen werken vaak in verschillende tools zonder één gedeelde datastroom. Informatie wordt handmatig overgezet tussen bijvoorbeeld CRM, finance en operations, wat extra werk en vertraging kan veroorzaken.",
   },
   {
     icon: Users,
-    title: "Handmatige afhankelijkheid",
+    title: "Afhankelijkheid van handmatige stappen",
     description:
-      "Belangrijke workflows zijn afhankelijk van menselijke tussenstappen. Naarmate volume groeit, groeit ook het handwerk — en daarmee de personeelsdruk.",
+      "In veel processen zitten nog handmatige overdrachten en controles. Naarmate het volume toeneemt, groeit ook de werkdruk en neemt de kans op fouten toe.",
   },
   {
     icon: BarChart3,
-    title: "Gebrek aan realtime inzicht",
+    title: "Beperkt actueel inzicht",
     description:
-      "Rapportages zijn achteraf in plaats van actueel, waardoor bijsturen te laat gebeurt.",
+      "Rapportages zijn regelmatig gebaseerd op data die achteraf wordt verzameld. Daardoor ontbreekt realtime overzicht en wordt bijsturen minder tijdig.",
   },
 ];
 

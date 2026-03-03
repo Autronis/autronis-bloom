@@ -65,8 +65,8 @@ const pillars = [
 ];
 
 const toolIconsRow1: Array<{ name: string; logo: string; dark?: boolean }> = [
-  { name: "OpenAI", logo: "/logos/openai.svg" },
-  { name: "Anthropic", logo: "/logos/anthropic.svg" },
+  { name: "OpenAI", logo: "/logos/openai.svg", dark: true },
+  { name: "Anthropic", logo: "/logos/anthropic.svg", dark: true },
   { name: "Make", logo: "/logos/make.svg" },
   { name: "Supabase", logo: "/logos/supabase.svg" },
   { name: "Notion", logo: "/logos/notion.svg", dark: true },

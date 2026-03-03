@@ -237,7 +237,7 @@ const ProcessSection = () => {
                 </span>
               </div>
               <a href="#beveiliging" className="group flex items-center gap-1 text-muted-foreground/70 hover:text-primary/80 transition-colors whitespace-nowrap shrink-0">
-                Bekijk beveiliging & vertrouwen
+                Bekijk beveiligingsaanpak
                 <ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1" />
               </a>
             </div>

@@ -586,7 +586,7 @@ const Services = () => {
               Elke implementatie wordt vooraf onderbouwd met een impact- en ROI-analyse.
             </p>
             <Button asChild variant="outline" size="lg">
-              <Link to="/impact-roi">
+              <Link to="/impact-roi#roi-scan">
                 Bekijk hoe wij ROI berekenen <ArrowRight size={18} />
               </Link>
             </Button>

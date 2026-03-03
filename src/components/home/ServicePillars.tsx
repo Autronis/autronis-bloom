@@ -69,7 +69,7 @@ const ServiceCard = ({
     <ScrollReveal key={s.title}>
       <ScrollRevealItem>
          <div
-          className="rounded-xl border border-border bg-card transition-all duration-300 ease-out"
+          className="rounded-xl border border-primary/15 bg-card transition-all duration-300 ease-out"
           style={{
             borderColor: hoveredIndex === i ? "hsl(var(--primary) / 0.4)" : undefined,
           }}
@@ -96,7 +96,7 @@ const ServiceCard = ({
                   {s.impact.map((item, idx) => (
                     <motion.div
                       key={item.title}
-                      className="flex items-start gap-2.5 p-3 rounded-lg bg-card border border-border transition-all duration-300 ease-out group cursor-default"
+                      className="flex items-start gap-2.5 p-3 rounded-lg bg-card border border-primary/15 transition-all duration-300 ease-out group cursor-default"
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}

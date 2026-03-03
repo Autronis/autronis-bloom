@@ -190,9 +190,6 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
                 : "opacity-100 group-hover:opacity-0 group-hover:h-0 group-hover:overflow-hidden"
               }`}
           >
-            <span className="text-[8px] font-medium tracking-[0.14em] uppercase text-white/40 mr-1 block w-full mb-1">
-              Vaardigheden
-            </span>
             {member.skills.slice(0, 3).map((skill) => (
               <PreviewBadge key={skill.label} skill={skill} />
             ))}
@@ -203,10 +200,11 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
         </div>
       </div>
 
-      {/* Name / role footer */}
+      {/* Name / focus footer */}
       <div className="p-5 bg-card">
         <p className="font-semibold text-foreground">{member.name}</p>
-        <p className="text-sm text-muted-foreground">{member.role}</p>
+        <p className="text-[8px] font-semibold tracking-[0.14em] uppercase text-primary/70 mt-1">Kernfocus</p>
+        <p className="text-sm text-muted-foreground">{member.focusLabel}</p>
         <p className="text-xs text-muted-foreground/55 mt-0.5">{member.subtitle}</p>
       </div>
 

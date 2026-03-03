@@ -18,7 +18,7 @@ const team: TeamMember[] = [
     photo: fotoSyb,
     focusLabel: "Technische realisatie & AI-integraties",
     description:
-      "Syb bouwt schaalbare automatiseringssystemen en AI-integraties met focus op codekwaliteit, prestaties en onderhoudbaarheid. Van architectuur tot productie: hij levert stabiel, strak en meetbaar.",
+      "Syb realiseert schaalbare automatiseringssystemen en AI-integraties met nadruk op codekwaliteit, prestaties en onderhoudbaarheid. Hij vertaalt architectuur naar stabiele implementaties en zorgt dat systemen ook op lange termijn logisch, uitbreidbaar en efficiënt blijven functioneren.",
     skills: [
       { label: "Architectuurontwerp", category: "arch" },
       { label: "Workflow-ontwerp", category: "arch" },
@@ -38,9 +38,9 @@ const team: TeamMember[] = [
     role: "AI- en Systeemingenieur",
     subtitle: "Co-founder",
     photo: fotoSem,
-    focusLabel: "Structuur, AI en systeemarchitectuur",
+    focusLabel: "Structuur, AI en systeemlogica",
     description:
-      "Sem vertaalt complexe processen naar heldere systeemstructuur. Hij bewaakt documentatie, datalogica en overdraagbaarheid — van ontwerp tot livegang. Sterk in planning, scope en beslissingen die later onderhoud besparen.",
+      "Sem vertaalt complexe processen naar heldere systeemstructuur en bewaakt documentatie, datalogica en overdraagbaarheid. Hij zorgt voor overzicht, duidelijke planning en consistente besluitvorming — zodat implementaties niet alleen werken, maar ook begrijpelijk en beheersbaar blijven.",
     skills: [
       { label: "Systeemarchitectuur", category: "arch" },
       { label: "Workflow-ontwerp", category: "arch" },

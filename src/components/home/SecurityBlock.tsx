@@ -88,12 +88,13 @@ const SecurityBlock = () => {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.3 }}
+                whileHover={{ scale: 1.03, y: -4 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                className="relative rounded-2xl p-6 cursor-default transition-all duration-300 ease-out bg-card border border-border"
+                className="relative rounded-2xl p-6 cursor-default bg-card border border-border"
                 style={{
                   borderColor: isHovered ? "hsl(var(--primary) / 0.4)" : undefined,
-                  transform: isHovered ? "scale(1.03) translateY(-4px)" : "scale(1) translateY(0)",
                   boxShadow: isHovered
                     ? "0 8px 32px hsl(174 78% 41% / 0.1), 0 2px 8px hsl(0 0% 0% / 0.2)"
                     : "none",

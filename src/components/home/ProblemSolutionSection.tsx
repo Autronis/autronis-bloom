@@ -33,19 +33,19 @@ const solutions = [
     icon: Cog,
     title: "Procesautomatisering",
     description:
-      "Terugkerende taken worden geautomatiseerd zodat processen zelfstandig verlopen.",
+      "Terugkerende en handmatige taken worden geautomatiseerd, zodat processen consistenter en met minder tussenkomst verlopen.",
   },
   {
     icon: Link2,
     title: "Systeemintegraties",
     description:
-      "Systemen worden gekoppeld via API's zodat data automatisch en consistent stroomt.",
+      "Applicaties worden via API-koppelingen met elkaar verbonden, waardoor data automatisch en betrouwbaar tussen systemen wordt uitgewisseld.",
   },
   {
     icon: PieChart,
-    title: "Data & Rapportage",
+    title: "Data & rapportage",
     description:
-      "Realtime dashboards geven direct inzicht in prestaties en knelpunten.",
+      "Realtime dashboards bieden actueel inzicht in prestaties, capaciteit en knelpunten, zodat tijdig kan worden bijgestuurd.",
   },
 ];
 
@@ -161,8 +161,7 @@ const ProblemSolutionSection = () => {
                 Structuur vóór capaciteit.
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                Wanneer systemen geïntegreerd zijn en processen logisch zijn ingericht, groeit
-                de organisatie zonder dat de personeelsdruk meegroeit.
+                Wanneer systemen goed op elkaar aansluiten en processen logisch zijn ingericht, kan een organisatie groeien zonder dat de personeelsdruk evenredig toeneemt.
               </p>
             </ScrollRevealItem>
           </ScrollReveal>

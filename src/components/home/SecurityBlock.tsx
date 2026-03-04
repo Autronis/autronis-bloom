@@ -139,7 +139,7 @@ const SecurityBlock = () => {
 
         <ScrollReveal className="mt-14 sm:mt-20">
           <ScrollRevealItem>
-            <p className="text-center text-xs sm:text-sm font-medium text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            <p className="text-center text-xs font-medium text-muted-foreground max-w-3xl mx-auto leading-relaxed italic">
               "Wij bouwen geen automatisering zonder aantoonbare beheersing van risico, data en
               continuïteit."
             </p>

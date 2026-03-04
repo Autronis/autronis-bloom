@@ -546,7 +546,7 @@ const Services = () => {
           </div>
 
         {/* Kwaliteitsnorm */}
-          <div className="mt-16 border-t border-border pt-12 max-w-5xl mx-auto">
+          <div className="mt-16 pt-12 max-w-5xl mx-auto">
             <ScrollReveal className="text-center mb-10">
               <ScrollRevealItem>
                 <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Kwaliteitsnorm</p>
@@ -587,13 +587,13 @@ const Services = () => {
                 </motion.div>
               ))}
             </div>
-            <p className="text-sm text-muted-foreground text-center mt-8">
+            <p className="text-xs text-muted-foreground text-center mt-8 italic">
               Zonder deze randvoorwaarden realiseren wij geen implementatie.
             </p>
           </div>
 
           {/* ROI reference */}
-          <div className="mt-16 text-center border-t border-border pt-12">
+          <div className="mt-16 text-center pt-12">
             <p className="text-sm text-muted-foreground mb-4">
               Elke implementatie wordt vooraf onderbouwd met een impact- en ROI-analyse.
             </p>

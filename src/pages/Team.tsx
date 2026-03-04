@@ -141,7 +141,10 @@ const Team = () => {
                 { icon: Cable, title: "Integraties", text: "Systemen en software die naadloos met elkaar samenwerken." },
                 { icon: BarChart3, title: "Data", text: "Inzicht, controle en rapportages op basis van betrouwbare data." },
               ].map((block) => (
-                <div key={block.title} className="rounded-lg border border-border bg-card p-3 text-center flex flex-col h-full">
+                <div
+                  key={block.title}
+                  className="rounded-lg border border-border bg-card p-3 text-center flex flex-col h-full transition-all duration-[280ms] ease-out cursor-default hover:scale-[1.05] hover:-translate-y-1 hover:border-primary/60 hover:shadow-[0_0_15px_hsl(174_78%_41%/0.25),0_0_30px_hsl(174_78%_41%/0.1),inset_0_0_15px_hsl(174_78%_41%/0.05)]"
+                >
                   <div className="w-7 h-7 rounded-md bg-primary/10 flex items-center justify-center text-primary mb-2 mx-auto">
                     <block.icon size={14} />
                   </div>

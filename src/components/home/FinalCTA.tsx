@@ -7,7 +7,7 @@ import { motion, useInView } from "framer-motion";
 
 const FinalCTA = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: false, amount: 0.4 });
+  const isInView = useInView(sectionRef, { once: true, amount: 0.4 });
 
   return (
     <section ref={sectionRef} className="py-16 sm:py-28 border-t border-border relative overflow-hidden">

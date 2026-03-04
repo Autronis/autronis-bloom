@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Target, Shield, Users, Handshake } from "lucide-react";
+import { ArrowRight, Target, Shield, Users, Handshake, Boxes, Cable, BarChart3 } from "lucide-react";
 
 import { useState } from "react";
 import fotoSyb from "@/assets/foto_syb.jpg";
@@ -68,21 +68,46 @@ const About = () => {
       <section className="pt-16 pb-24 relative overflow-hidden">
         
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          {/* Intro */}
-          <div className="max-w-3xl mx-auto text-center mb-20">
-            <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Over Ons</p>
-            <h1 className="text-3xl sm:text-4xl font-bold mb-6 leading-tight">
-              Systemen die <span className="text-gradient">tot leven komen</span>
+          {/* Over Autronis */}
+          <div className="max-w-3xl mx-auto mb-20">
+            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Over Autronis</p>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-8 leading-tight">
+              Van handmatig werk naar schaalbare systemen
             </h1>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-              Autronis is opgericht met één missie: bedrijven bevrijden van repetitief handmatig werk. Wij geloven dat elk proces dat voorspelbaar is, geautomatiseerd kan worden.
-            </p>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-              Wij zijn Sem en Syb. U werkt direct met de bouwers — de mensen die uw systemen ontwerpen, bouwen en optimaliseren.
-            </p>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Ons team combineert diepgaande technische expertise met business-inzicht. We bouwen geen tools om het bouwen — we bouwen oplossingen die direct meetbaar impact leveren op uw operatie.
-            </p>
+            <div className="space-y-4 text-muted-foreground leading-relaxed">
+              <p>
+                Veel groeiende bedrijven lopen vast in handmatige processen, losse tools en spreadsheets die niet meer schaalbaar zijn.
+              </p>
+              <p>
+                Autronis is opgericht met één doel: processen omzetten in betrouwbare systemen die automatisch draaien.
+              </p>
+              <p>
+                We ontwerpen en implementeren automatiseringsstructuren waarin workflows, integraties en data samenkomen in één logisch geheel.
+              </p>
+              <p>
+                Van AI-gestuurde workflows tot systeemintegraties en dashboards: wij bouwen de digitale infrastructuur waarop bedrijven kunnen doorgroeien.
+              </p>
+              <p>
+                Geen losse automatiseringen, maar systemen die blijven werken wanneer uw organisatie groeit.
+              </p>
+            </div>
+
+            {/* Concept blocks */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10">
+              {[
+                { icon: Boxes, title: "Systemen", text: "Automatisering die processen structureert en schaalbaar maakt." },
+                { icon: Cable, title: "Integraties", text: "Systemen en software die naadloos met elkaar samenwerken." },
+                { icon: BarChart3, title: "Data", text: "Inzicht, controle en rapportages op basis van betrouwbare data." },
+              ].map((block) => (
+                <div key={block.title} className="rounded-xl border border-border bg-card p-5">
+                  <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3">
+                    <block.icon size={18} />
+                  </div>
+                  <p className="font-semibold text-sm mb-1">{block.title}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{block.text}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Values */}

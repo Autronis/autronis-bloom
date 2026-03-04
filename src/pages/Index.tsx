@@ -117,13 +117,16 @@ const Index = () => {
                 <div className="p-4 pb-0">
                   <p className="text-[10px] font-semibold text-primary tracking-widest uppercase">Systeemdemo</p>
                 </div>
-                <div className="aspect-video bg-muted/10 flex items-center justify-center m-4 mt-2 rounded-lg border border-border">
-                  <div className="text-center text-muted-foreground/50">
-                    <div className="w-16 h-16 rounded-full border-2 border-primary/30 flex items-center justify-center mx-auto mb-3">
-                      <div className="w-0 h-0 border-t-[10px] border-t-transparent border-b-[10px] border-b-transparent border-l-[16px] border-l-primary/50 ml-1" />
-                    </div>
-                    <p className="text-xs">Video binnenkort beschikbaar</p>
-                  </div>
+                <div className="aspect-video m-4 mt-2 rounded-lg overflow-hidden border border-border">
+                  {videoOpen && (
+                    <iframe
+                      src="https://www.youtube.com/embed/2pZ5mX64K3k?autoplay=1"
+                      title="Autronis demo"
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  )}
                 </div>
               </DialogContent>
             </Dialog>

@@ -54,9 +54,13 @@ const TeamBlock = () => {
                 alt="Autronis team - Sem en Syb"
                 width={800}
                 height={600}
-                className="w-full h-auto object-cover rounded-xl"
+                className="w-full h-auto object-cover rounded-xl opacity-0 transition-opacity duration-700 ease-out"
                 loading="lazy"
                 decoding="async"
+                onLoad={(e) => {
+                  (e.currentTarget as HTMLImageElement).classList.remove('opacity-0');
+                  (e.currentTarget as HTMLImageElement).classList.add('opacity-100');
+                }}
               />
             </div>
           </div>

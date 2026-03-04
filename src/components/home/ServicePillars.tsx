@@ -141,7 +141,7 @@ const ServiceCard = ({
               <motion.img
                 src={s.image}
                 alt={s.title}
-                className="absolute inset-0 w-full h-full object-contain z-[1] dark:mix-blend-screen mix-blend-multiply scale-[1.5] dark:opacity-85 opacity-80 dark:brightness-[0.85] brightness-[1] dark:[filter:drop-shadow(0_0_6px_rgba(35,198,183,0.5))] [filter:none]"
+                className="absolute inset-0 w-full h-full object-contain z-[1] mix-blend-screen scale-[1.5] dark:opacity-85 opacity-60 dark:brightness-[0.85] brightness-[1] dark:[filter:drop-shadow(0_0_6px_rgba(35,198,183,0.5))] [filter:none]"
                 animate={
                   hoveredIndex === i
                     ? { scale: 1.55 }
@@ -150,7 +150,15 @@ const ServiceCard = ({
                 transition={{ duration: 0.35, ease: "easeOut" }}
                 loading="lazy"
               />
-              {/* Top/bottom fade only */}
+              {/* Edge gradient overlays */}
+              <div
+                className="absolute inset-0 z-[3] pointer-events-none"
+                style={{
+                  background: isEven
+                    ? "linear-gradient(to right, hsl(var(--card)) 0%, transparent 25%)"
+                    : "linear-gradient(to left, hsl(var(--card)) 0%, transparent 25%)",
+                }}
+              />
               <div
                 className="absolute inset-0 z-[3] pointer-events-none"
                 style={{ background: "linear-gradient(to bottom, hsl(var(--card)) 0%, transparent 8%, transparent 92%, hsl(var(--card)) 100%)" }}

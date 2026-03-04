@@ -17,6 +17,19 @@ const SecurityBlock = lazy(() => import("@/components/home/SecurityBlock"));
 const FAQSection = lazy(() => import("@/components/home/FAQSection"));
 const FinalCTA = lazy(() => import("@/components/home/FinalCTA"));
 
+// Preload all lazy sections after initial render so they're ready before scrolling
+const preloadSections = () => {
+  import("@/components/home/ProblemSolutionSection");
+  import("@/components/home/ServicePillars");
+  import("@/components/home/ProcessSection");
+  import("@/components/home/WhyAutronisSection");
+  import("@/components/home/ROIPreview");
+  import("@/components/home/CaseStudiesPreview");
+  import("@/components/home/SecurityBlock");
+  import("@/components/home/FAQSection");
+  import("@/components/home/FinalCTA");
+};
+
 const rotatingWords = ["groei", "processen", "systemen", "datastromen", "schaalbaarheid"];
 
 const SectionFallback = () => (
@@ -29,6 +42,9 @@ const Index = () => {
   const [wordIndex, setWordIndex] = useState(0);
   const [videoOpen, setVideoOpen] = useState(false);
   useEffect(() => {
+    // Preload all sections shortly after hero renders
+    const preloadTimer = setTimeout(preloadSections, 1000);
+
     // Delay first word rotation to reduce initial JS work and let LCP paint
     let interval: ReturnType<typeof setInterval> | undefined;
     const startDelay = setTimeout(() => {
@@ -37,6 +53,7 @@ const Index = () => {
       }, 3500);
     }, 2000);
     return () => {
+      clearTimeout(preloadTimer);
       clearTimeout(startDelay);
       if (interval) clearInterval(interval);
     };

@@ -54,11 +54,12 @@ const ReasonCard = ({
     <div
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
-      className="relative rounded-xl border border-border p-6 overflow-hidden transition-all duration-[300ms] ease-out bg-card"
+      className="relative rounded-xl border border-border p-6 overflow-hidden transition-all duration-200 ease-out bg-card"
       style={{
-        transform: isHovered ? "scale(1.01) translateY(-4px)" : "scale(1) translateY(0)",
+        transform: isHovered ? "scale(1.015) translateY(-2px)" : "scale(1) translateY(0)",
         opacity: isAnyHovered && !isHovered ? 0.88 : 1,
-        borderColor: isHovered ? "hsl(var(--primary) / 0.4)" : undefined,
+        borderColor: isHovered ? "hsl(var(--primary) / 0.5)" : undefined,
+        boxShadow: isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none",
       }}
     >
       <div className="relative z-10">
@@ -136,7 +137,7 @@ const WhyAutronisSection = () => {
                     alt="Autronis team - Sem en Syb"
                     width={800}
                     height={600}
-                    className="w-full h-full object-cover object-center scale-110 rotate-[2deg]"
+                    className="w-full h-full object-cover object-center scale-110"
                     loading="lazy"
                     decoding="async"
                   />

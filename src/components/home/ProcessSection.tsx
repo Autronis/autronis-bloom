@@ -80,21 +80,17 @@ const TimelineCard = ({
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       onMouseMove={handleMouseMove}
-      className="relative rounded-xl border border-primary/20 bg-card p-6 cursor-pointer overflow-hidden"
+      className="relative rounded-xl border border-border bg-card p-6 cursor-pointer overflow-hidden"
       style={{
-        transform: isActive
-          ? "scale(1.02) translateY(-2px)"
-          : isHovered
-          ? "scale(1.01) translateY(-4px)"
+        transform: isActive || isHovered
+          ? "scale(1.015) translateY(-2px)"
           : "scale(1) translateY(0)",
         opacity: isAnyHovered && !isHovered ? 0.88 : 1,
-        borderColor: isActive
-          ? "hsl(var(--primary) / 0.5)"
-          : isHovered
+        borderColor: isActive || isHovered
           ? "hsl(var(--primary) / 0.5)"
           : undefined,
-        boxShadow: "none",
-        transition: "all 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        boxShadow: isActive || isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none",
+        transition: "all 200ms ease-out",
       }}
     >
       <div className="relative z-10">
@@ -136,7 +132,7 @@ const ProcessSection = () => {
         const cardRect = ref.getBoundingClientRect();
         const cardCenter = cardRect.top + cardRect.height / 2;
         // Card becomes active when its center passes 60% of viewport
-        if (cardCenter < viewportH * 0.6) {
+        if (cardCenter < viewportH * 0.55) {
           newActive = i;
         }
       });
@@ -199,6 +195,7 @@ const ProcessSection = () => {
                 key={phase.step}
                 ref={(el) => (cardRefs.current[i] = el)}
                 className="flex items-start gap-4 sm:gap-6"
+                style={{ scrollMarginTop: "100px" }}
               >
                 {/* Node */}
                 <div className="hidden sm:flex flex-col items-center shrink-0 relative z-10">

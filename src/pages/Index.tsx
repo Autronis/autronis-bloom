@@ -45,17 +45,17 @@ const Index = () => {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-[80vh] sm:min-h-screen flex flex-col items-center justify-center overflow-hidden" >
+      <section className="relative min-h-[80vh] sm:min-h-screen flex flex-col items-center justify-center" >
         <HeroBackground />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase">
               Systeemarchitectuur & Automatisering
             </p>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.3] tracking-tight mb-6">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.35] tracking-tight mb-6">
               Breng structuur in je
               <br />
-              <span className="inline-block relative h-[1.3em] overflow-hidden align-bottom">
+              <span className="inline-block relative h-[1.35em] align-bottom">
                 {rotatingWords.map((word, i) => (
                   <span
                     key={word}

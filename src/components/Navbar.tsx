@@ -163,6 +163,10 @@ const Navbar = () => {
                       : "text-muted-foreground hover:text-foreground"
                   }`}
                   style={{ fontSize: scrolled ? "0.82rem" : "0.875rem" }}
+                  onFocus={() => setDropdownOpen(true)}
+                  onKeyDown={(e) => { if (e.key === "Escape") setDropdownOpen(false); }}
+                  aria-expanded={dropdownOpen}
+                  aria-haspopup="true"
                 >
                   {link.label}
                   <ChevronDown
@@ -170,8 +174,10 @@ const Navbar = () => {
                     className={`transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`}
                   />
                 </button>
+                {/* Hover bridge - invisible area connecting trigger to dropdown */}
+                <div className="absolute top-full left-0 right-0 h-3" />
                 <div
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[320px] rounded-xl p-2 z-50 transition-all duration-200 ease-out"
+                  className="absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2 w-[320px] rounded-xl p-2 z-50 transition-all duration-200 ease-out"
                   style={{
                     backgroundColor: "hsl(var(--card))",
                     border: "1px solid hsl(var(--border) / 0.4)",

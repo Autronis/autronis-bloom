@@ -1,8 +1,9 @@
 import { Blocks, BarChart3, Users, ShieldCheck, ArrowRight } from "lucide-react";
-import { useState, useCallback, useRef } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import useCanHover from "@/hooks/use-can-hover";
 
 import teamFoto from "@/assets/team_wall_cropped.png";
 
@@ -39,35 +40,37 @@ const ReasonCard = ({
   hoveredIndex,
   onHover,
   onLeave,
+  canHover,
 }: {
   reason: (typeof reasons)[0];
   index: number;
   hoveredIndex: number | null;
   onHover: () => void;
   onLeave: () => void;
+  canHover: boolean;
 }) => {
-  const isHovered = hoveredIndex === index;
-  const isAnyHovered = hoveredIndex !== null;
+  const isHovered = canHover && hoveredIndex === index;
+  const isAnyHovered = canHover && hoveredIndex !== null;
   const Icon = reason.icon;
 
   return (
     <div
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
-      className="relative rounded-xl border border-border p-6 overflow-hidden transition-all duration-200 ease-out bg-card"
+      onMouseEnter={canHover ? onHover : undefined}
+      onMouseLeave={canHover ? onLeave : undefined}
+      className="relative rounded-xl border border-border p-4 sm:p-6 overflow-hidden transition-all duration-200 ease-out bg-card"
       style={{
-        transform: isHovered ? "scale(1.015) translateY(-2px)" : "scale(1) translateY(0)",
+        transform: isHovered ? "scale(1.015) translateY(-2px)" : "none",
         opacity: isAnyHovered && !isHovered ? 0.88 : 1,
         borderColor: isHovered ? "hsl(var(--primary) / 0.5)" : undefined,
         boxShadow: isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none",
       }}
     >
       <div className="relative z-10">
-        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
-          <Icon size={20} />
+        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3 sm:mb-4">
+          <Icon size={18} />
         </div>
-        <h3 className="font-semibold mb-2 text-foreground">{reason.title}</h3>
-        <p className="text-sm text-muted-foreground leading-relaxed">{reason.description}</p>
+        <h3 className="font-semibold text-sm sm:text-base mb-1.5 sm:mb-2 text-foreground">{reason.title}</h3>
+        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{reason.description}</p>
       </div>
     </div>
   );
@@ -75,17 +78,18 @@ const ReasonCard = ({
 
 const WhyAutronisSection = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const canHover = useCanHover();
 
   return (
-    <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
+    <section className="py-10 sm:py-24 border-t border-border relative overflow-hidden">
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <ScrollReveal className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
+        <ScrollReveal className="text-center max-w-2xl mx-auto mb-6 sm:mb-16">
           <ScrollRevealItem>
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
               Waarom Autronis
             </p>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
               Van chaos naar controle.
             </h2>
           </ScrollRevealItem>
@@ -96,8 +100,8 @@ const WhyAutronisSection = () => {
             <div className="rounded-2xl border-[3px] border-primary/40 dark:border-[2px] dark:border-primary/20 bg-card overflow-hidden max-w-6xl mx-auto shadow-sm dark:shadow-none">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 {/* Left: cards + CTAs */}
-                <div className="p-6 sm:p-8 flex flex-col">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div className="p-4 sm:p-6 md:p-8 flex flex-col">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4">
                     {reasons.map((r, i) => (
                       <ReasonCard
                         key={r.title}
@@ -106,22 +110,18 @@ const WhyAutronisSection = () => {
                         hoveredIndex={hoveredIndex}
                         onHover={() => setHoveredIndex(i)}
                         onLeave={() => setHoveredIndex(null)}
+                        canHover={canHover}
                       />
                     ))}
                   </div>
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <Button asChild size="lg">
+                    <Button asChild size="lg" className="w-full sm:w-auto">
                       <Link to="/book">
                         Plan een kennismaking
                         <ArrowRight size={18} />
                       </Link>
                     </Button>
-                    <Button
-                      asChild
-                      size="lg"
-                      variant="outline"
-                      className="border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors duration-300"
-                    >
+                    <Button asChild size="lg" variant="outline" className="w-full sm:w-auto border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors duration-300">
                       <Link to="/team">
                         Bekijk ons team
                         <ArrowRight size={18} />
@@ -131,7 +131,7 @@ const WhyAutronisSection = () => {
                 </div>
 
                 {/* Right: Team photo */}
-                <div className="relative min-h-[400px] lg:min-h-0 overflow-hidden">
+                <div className="relative min-h-[250px] sm:min-h-[400px] lg:min-h-0 overflow-hidden">
                   <img
                     src={teamFoto}
                     alt="Autronis team - Sem en Syb"

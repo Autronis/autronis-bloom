@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Cog, Link2, PieChart, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import useCanHover from "@/hooks/use-can-hover";
 
 import serviceAutomation from "@/assets/service_automation_gen.png";
 import serviceIntegration from "@/assets/service_integration_gen.png";
@@ -55,13 +56,16 @@ const ServiceCard = ({
   i,
   hoveredIndex,
   setHoveredIndex,
+  canHover,
 }: {
   s: (typeof services)[0];
   i: number;
   hoveredIndex: number | null;
   setHoveredIndex: (i: number | null) => void;
+  canHover: boolean;
 }) => {
   const isEven = i % 2 === 0;
+  const isHovered = canHover && hoveredIndex === i;
 
   return (
     <ScrollReveal key={s.title}>
@@ -69,20 +73,20 @@ const ServiceCard = ({
          <div
           className="rounded-xl border border-border bg-card transition-all duration-200 ease-out overflow-hidden"
            style={{
-             borderColor: hoveredIndex === i ? "hsl(var(--primary) / 0.5)" : undefined,
-             boxShadow: hoveredIndex === i ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none",
+             borderColor: isHovered ? "hsl(var(--primary) / 0.5)" : undefined,
+             boxShadow: isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none",
            }}
-          onMouseEnter={() => setHoveredIndex(i)}
-          onMouseLeave={() => setHoveredIndex(null)}
+          onMouseEnter={canHover ? () => setHoveredIndex(i) : undefined}
+          onMouseLeave={canHover ? () => setHoveredIndex(null) : undefined}
         >
            <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} items-start md:items-center gap-0`}>
             {/* Text */}
-              <div className="flex-1 px-4 py-8 sm:px-5 sm:py-10 flex flex-col justify-start">
+              <div className="flex-1 px-4 py-5 sm:px-5 sm:py-10 flex flex-col justify-start">
               <div className="flex items-center gap-3 mb-1">
                 <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
                   <s.icon size={18} />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold">{s.title}</h3>
+                <h3 className="text-lg sm:text-2xl font-bold">{s.title}</h3>
               </div>
               <p className="text-xs text-muted-foreground mb-2 leading-relaxed">{s.intro}</p>
 
@@ -95,7 +99,7 @@ const ServiceCard = ({
                   {s.impact.map((item) => (
                     <div
                       key={item.title}
-                      className="flex items-start gap-2 p-2.5 rounded-lg bg-card border border-primary/15 transition-all duration-300 ease-out group cursor-default hover:scale-[1.03] hover:border-primary/50"
+                      className="flex items-start gap-2 p-2 sm:p-2.5 rounded-lg bg-card border border-border transition-all duration-200 ease-out group cursor-default md:hover:scale-[1.03] md:hover:border-primary/50"
                     >
                       <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
                         <CheckCircle2 size={12} className="text-primary" />
@@ -128,16 +132,13 @@ const ServiceCard = ({
               </div>
             </div>
             {/* Image */}
-            <div className="flex-1 relative overflow-hidden bg-card flex items-center justify-center min-h-[200px] md:min-h-0 aspect-[4/3] md:aspect-auto md:self-stretch">
+            <div className="flex-1 relative overflow-hidden bg-card flex items-center justify-center min-h-[180px] md:min-h-0 aspect-[4/3] md:aspect-auto md:self-stretch">
               <img
                 src={s.image}
                 alt={s.title}
                 width={600}
                 height={450}
-                className="absolute inset-0 w-full h-full object-contain z-[1] scale-[1.5] dark:mix-blend-screen dark:invert-0 dark:hue-rotate-0 dark:brightness-[0.85] dark:opacity-85 invert hue-rotate-180 mix-blend-multiply brightness-100 opacity-80 transition-transform duration-300 ease-out"
-                style={{
-                  transform: hoveredIndex === i ? "scale(1.55)" : "scale(1.5)",
-                }}
+                className="absolute inset-0 w-full h-full object-contain z-[1] scale-[1.5] dark:mix-blend-screen dark:invert-0 dark:hue-rotate-0 dark:brightness-[0.85] dark:opacity-85 invert hue-rotate-180 mix-blend-multiply brightness-100 opacity-80"
                 loading="lazy"
                 decoding="async"
               />
@@ -164,31 +165,32 @@ const ServiceCard = ({
 
 const ServicePillars = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const canHover = useCanHover();
 
   return (
-    <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
+    <section className="py-10 sm:py-24 border-t border-border relative overflow-hidden">
       
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <ScrollReveal className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
+        <ScrollReveal className="text-center max-w-2xl mx-auto mb-6 sm:mb-16">
           <ScrollRevealItem>
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Services</p>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Drie pijlers. Één geïntegreerd systeem.</h2>
-            <p className="text-muted-foreground">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">Drie pijlers. Één geïntegreerd systeem.</h2>
+            <p className="text-sm sm:text-base text-muted-foreground">
               Wij combineren procesautomatisering, systeemintegraties en data-inzichten tot een schaalbare architectuur.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>
 
-        <div className="space-y-5 sm:space-y-6 mb-12">
+        <div className="space-y-4 sm:space-y-6 mb-8 sm:mb-12">
           {services.map((s, i) => (
-            <ServiceCard key={s.title} s={s} i={i} hoveredIndex={hoveredIndex} setHoveredIndex={setHoveredIndex} />
+            <ServiceCard key={s.title} s={s} i={i} hoveredIndex={hoveredIndex} setHoveredIndex={setHoveredIndex} canHover={canHover} />
           ))}
         </div>
 
         <ScrollReveal className="text-center">
           <ScrollRevealItem>
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="w-full sm:w-auto">
               <Link to="/services">
                 Bekijk onze services <ArrowRight size={18} />
               </Link>

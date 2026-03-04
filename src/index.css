@@ -223,3 +223,13 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── Mobile: disable hover scale effects on touch devices ── */
+@media (hover: none) and (pointer: coarse) {
+  .werkstandaard-card:hover {
+    transform: none !important;
+  }
+  .werkstandaard-card:hover .werkstandaard-icon-wrap {
+    transform: none !important;
+  }
+}

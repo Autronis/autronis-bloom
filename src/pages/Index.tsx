@@ -45,14 +45,14 @@ const Index = () => {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-[80vh] sm:min-h-screen flex flex-col items-center justify-center" >
+      <section className="relative min-h-[75vh] sm:min-h-screen flex flex-col items-center justify-center pt-16 sm:pt-0" >
         <HeroBackground />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase">
               Systeemarchitectuur & Automatisering
             </p>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.35] tracking-tight mb-6">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.35] tracking-tight mb-4 sm:mb-6">
               Breng structuur in je
               <br />
               <span className="inline-block relative h-[1.35em] align-bottom">
@@ -73,23 +73,23 @@ const Index = () => {
                 <span className="invisible">{rotatingWords[wordIndex]}.</span>
               </span>
             </h1>
-            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8 leading-relaxed">
               Wij transformeren processen tot slimme systemen die schaalbaar en beheersbaar blijven.
             </p>
-            <div className="flex flex-col items-center mb-12">
-              <div className="flex flex-col sm:flex-row items-start justify-center gap-3">
-                <Button asChild size="lg" className="mt-0">
+            <div className="flex flex-col items-center mb-8 sm:mb-12">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-start justify-center gap-3 w-full sm:w-auto">
+                <Button asChild size="lg" className="w-full sm:w-auto mt-0">
                   <Link to="/book">
                     Plan een Automation Scan
                     <ArrowRight size={18} />
                   </Link>
                 </Button>
                 <div className="flex flex-col items-center">
-                  <Button size="lg" variant="outline" onClick={() => setVideoOpen(true)}>
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto" onClick={() => setVideoOpen(true)}>
                     <Play size={16} />
                     Bekijk 2 min demo
                   </Button>
-                  <p className="text-[11px] italic text-muted-foreground mt-1.5">Zie hoe automatisering in de praktijk werkt in 2 minuten.</p>
+                  <p className="text-[11px] italic text-muted-foreground mt-1.5 hidden sm:block">Zie hoe automatisering in de praktijk werkt in 2 minuten.</p>
                 </div>
               </div>
             </div>

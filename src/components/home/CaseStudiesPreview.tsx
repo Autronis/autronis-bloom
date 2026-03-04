@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ShoppingCart, FileText, Users, CheckCircle2, Clock } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import useCanHover from "@/hooks/use-can-hover";
 
 interface CaseStudy {
   slug: string;
@@ -61,42 +62,47 @@ const ImplementedCard = ({
   isAnyHovered,
   onHover,
   onLeave,
+  canHover,
 }: {
   cs: CaseStudy;
   isHovered: boolean;
   isAnyHovered: boolean;
   onHover: () => void;
   onLeave: () => void;
+  canHover: boolean;
 }) => {
   const Icon = cs.icon;
+  const showHover = canHover && isHovered;
+  const showDim = canHover && isAnyHovered && !isHovered;
+
   return (
     <Link
       to="/case-studies"
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
-      className="relative group rounded-xl border border-border bg-card p-6 flex flex-col h-full overflow-hidden transition-all duration-200 ease-out"
+      onMouseEnter={canHover ? onHover : undefined}
+      onMouseLeave={canHover ? onLeave : undefined}
+      className="relative group rounded-xl border border-border bg-card p-4 sm:p-6 flex flex-col h-full overflow-hidden transition-all duration-200 ease-out"
       style={{
-        transform: isHovered ? "scale(1.015) translateY(-2px)" : "scale(1) translateY(0)",
-        opacity: isAnyHovered && !isHovered ? 0.88 : 1,
-        borderColor: isHovered ? "hsl(var(--primary) / 0.5)" : undefined,
-        boxShadow: isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none",
+        transform: showHover ? "scale(1.015) translateY(-2px)" : "none",
+        opacity: showDim ? 0.88 : 1,
+        borderColor: showHover ? "hsl(var(--primary) / 0.5)" : undefined,
+        boxShadow: showHover ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none",
       }}
     >
       <div className="relative z-10 flex flex-col h-full">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-            <Icon size={18} />
+        <div className="flex items-center gap-3 mb-3 sm:mb-4">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+            <Icon size={16} />
           </div>
-          <h3 className="text-lg font-bold">{cs.title}</h3>
+          <h3 className="text-base sm:text-lg font-bold">{cs.title}</h3>
         </div>
 
-        <p className="text-sm text-muted-foreground leading-relaxed mb-5">{cs.description}</p>
+        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-4 sm:mb-5">{cs.description}</p>
 
-        <div className="border-t border-border pt-4 flex-1">
+        <div className="border-t border-border pt-3 sm:pt-4 flex-1">
           <p className="text-xs font-semibold text-primary mb-2 tracking-wide uppercase">Resultaat</p>
           <ul className="space-y-1.5">
             {cs.results.map((r, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+              <li key={i} className="flex items-start gap-2 text-xs sm:text-sm text-muted-foreground">
                 <CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0" />
                 {r}
               </li>
@@ -104,7 +110,7 @@ const ImplementedCard = ({
           </ul>
         </div>
 
-        <span className="mt-5 text-sm text-primary inline-flex items-center gap-1 group-hover:underline">
+        <span className="mt-4 sm:mt-5 text-sm text-primary inline-flex items-center gap-1 group-hover:underline">
           Lees meer <ArrowRight size={14} />
         </span>
       </div>
@@ -118,35 +124,40 @@ const UpcomingCard = ({
   isAnyHovered,
   onHover,
   onLeave,
+  canHover,
 }: {
   cs: UpcomingCase;
   isHovered: boolean;
   isAnyHovered: boolean;
   onHover: () => void;
   onLeave: () => void;
+  canHover: boolean;
 }) => {
   const Icon = cs.icon;
+  const showHover = canHover && isHovered;
+  const showDim = canHover && isAnyHovered && !isHovered;
+
   return (
     <div
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
-      className="relative group rounded-xl border border-border bg-card p-6 flex flex-col h-full overflow-hidden transition-all duration-200 ease-out"
+      onMouseEnter={canHover ? onHover : undefined}
+      onMouseLeave={canHover ? onLeave : undefined}
+      className="relative group rounded-xl border border-border bg-card p-4 sm:p-6 flex flex-col h-full overflow-hidden transition-all duration-200 ease-out"
       style={{
-        transform: isHovered ? "scale(1.015) translateY(-2px)" : "scale(1) translateY(0)",
-        opacity: isAnyHovered && !isHovered ? 0.88 : 1,
-        borderColor: isHovered ? "hsl(var(--primary) / 0.5)" : undefined,
-        boxShadow: isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none",
+        transform: showHover ? "scale(1.015) translateY(-2px)" : "none",
+        opacity: showDim ? 0.88 : 1,
+        borderColor: showHover ? "hsl(var(--primary) / 0.5)" : undefined,
+        boxShadow: showHover ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none",
       }}
     >
       <div className="relative z-10 flex flex-col h-full">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-            <Icon size={18} />
+        <div className="flex items-center gap-3 mb-3 sm:mb-4">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+            <Icon size={16} />
           </div>
-          <h3 className="text-lg font-bold">{cs.title}</h3>
+          <h3 className="text-base sm:text-lg font-bold">{cs.title}</h3>
         </div>
 
-        <p className="text-sm text-muted-foreground leading-relaxed mb-5">{cs.description}</p>
+        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-4 sm:mb-5">{cs.description}</p>
 
         <div className="flex items-center gap-1.5 mt-auto">
           <Clock size={12} className="text-primary" />
@@ -159,21 +170,22 @@ const UpcomingCard = ({
 
 const CaseStudiesPreview = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const canHover = useCanHover();
 
   return (
-    <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
+    <section className="py-10 sm:py-24 border-t border-border relative overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <ScrollReveal className="text-center mb-12">
+        <ScrollReveal className="text-center mb-8 sm:mb-12">
           <ScrollRevealItem>
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Case Studies</p>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Voorbeelden van automatiseringsimplementaties</h2>
-            <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">Voorbeelden van automatiseringsimplementaties</h2>
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               Concrete voorbeelden van hoe automatisering processen versnelt, fouten vermindert en schaalbaarheid mogelijk maakt.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>
 
-        <ScrollReveal className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <ScrollReveal className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
           {cases.map((cs, i) => (
             <ScrollRevealItem key={cs.slug}>
               {cs.upcoming ? (
@@ -183,6 +195,7 @@ const CaseStudiesPreview = () => {
                   isAnyHovered={hoveredIndex !== null}
                   onHover={() => setHoveredIndex(i)}
                   onLeave={() => setHoveredIndex(null)}
+                  canHover={canHover}
                 />
               ) : (
                 <ImplementedCard
@@ -191,6 +204,7 @@ const CaseStudiesPreview = () => {
                   isAnyHovered={hoveredIndex !== null}
                   onHover={() => setHoveredIndex(i)}
                   onLeave={() => setHoveredIndex(null)}
+                  canHover={canHover}
                 />
               )}
             </ScrollRevealItem>
@@ -199,7 +213,7 @@ const CaseStudiesPreview = () => {
 
         <ScrollReveal className="text-center">
           <ScrollRevealItem>
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="w-full sm:w-auto">
               <Link to="/case-studies">
                 Bekijk meer implementaties
                 <ArrowRight size={18} />

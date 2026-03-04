@@ -6,9 +6,9 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 
 import { motion } from "framer-motion";
-import serviceAutomation from "@/assets/service_automation_transparent.png";
-import serviceIntegration from "@/assets/service_integration_transparent.png";
-import serviceData from "@/assets/service_data_transparent.png";
+import serviceAutomation from "@/assets/service_automation_gen.png";
+import serviceIntegration from "@/assets/service_integration_gen.png";
+import serviceData from "@/assets/service_data_gen.png";
 
 const services = [
   {
@@ -137,11 +137,11 @@ const ServiceCard = ({
               </div>
             </div>
             {/* Image */}
-            <div className="flex-1 relative overflow-hidden rounded-xl bg-card flex items-center justify-center min-h-[200px] md:min-h-0 aspect-[4/3] md:aspect-auto md:self-stretch">
+            <div className="flex-1 relative overflow-hidden bg-card flex items-center justify-center min-h-[200px] md:min-h-0 aspect-[4/3] md:aspect-auto md:self-stretch">
               <motion.img
                 src={s.image}
                 alt={s.title}
-                className="absolute inset-0 w-full h-full object-contain z-[1] scale-[1.5] dark:opacity-85 opacity-90 dark:[filter:drop-shadow(0_0_6px_rgba(35,198,183,0.5))] [filter:brightness(0.68)_saturate(1.1)]"
+                className="absolute inset-0 w-full h-full object-contain z-[1] dark:mix-blend-screen scale-[1.5] dark:invert-0 invert brightness-0 dark:brightness-[0.85] dark:filter-none opacity-20 dark:opacity-85"
                 animate={
                   hoveredIndex === i
                     ? { scale: 1.55 }
@@ -150,6 +150,20 @@ const ServiceCard = ({
                 transition={{ duration: 0.35, ease: "easeOut" }}
                 loading="lazy"
               />
+              {/* Edge gradient overlay */}
+              <div
+                className="absolute inset-0 z-[3] pointer-events-none"
+                style={{
+                  background: isEven
+                    ? "linear-gradient(to right, hsl(var(--card)) 0%, transparent 25%)"
+                    : "linear-gradient(to left, hsl(var(--card)) 0%, transparent 25%)",
+                }}
+              />
+              <div
+                className="absolute inset-0 z-[3] pointer-events-none"
+                style={{ background: "linear-gradient(to bottom, hsl(var(--card)) 0%, transparent 8%, transparent 92%, hsl(var(--card)) 100%)" }}
+              />
+              {/* Hover glow overlay */}
             </div>
           </div>
         </div>

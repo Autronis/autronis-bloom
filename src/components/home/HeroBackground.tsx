@@ -69,8 +69,10 @@ const HeroBackground = () => {
 
     const getWaveY = (x: number, lineIdx: number, h: number) => {
       const t_pos = (lineIdx + 1) / (lineCount + 1);
-      // Spread lines across 32% of viewport height (34% to 66%)
-      const yBase = h * (0.28 + t_pos * 0.44);
+      // On mobile, shift lines higher (20%-56%) vs desktop (28%-72%)
+      const yBase = isMobile
+        ? h * (0.20 + t_pos * 0.36)
+        : h * (0.28 + t_pos * 0.44);
       const freq = 0.004 + (lineIdx % 3) * 0.0006;
       const speed = 0.08 + lineIdx * 0.025;
       const amp = 30 + Math.sin(lineIdx * 1.1) * 16;

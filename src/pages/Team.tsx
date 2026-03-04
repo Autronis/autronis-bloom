@@ -125,7 +125,7 @@ const Team = () => {
           <ScrollReveal className="max-w-3xl mx-auto text-center mb-16">
             <ScrollRevealItem>
               <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Team</p>
-              <h1 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight">
+              <h1 className="text-3xl sm:text-4xl font-bold mb-6 leading-tight">
                 Werk direct met de engineers die uw systemen bouwen.
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed">

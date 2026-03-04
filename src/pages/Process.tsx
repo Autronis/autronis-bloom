@@ -423,7 +423,7 @@ const Process = () => {
             </p>
           </ScrollRevealItem>
           <ScrollRevealItem>
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4 leading-tight">
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">
               Van analyse naar schaalbare automatisering
             </h1>
           </ScrollRevealItem>

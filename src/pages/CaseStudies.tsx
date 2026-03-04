@@ -41,7 +41,7 @@ const CaseStudies = () => {
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-2xl mx-auto text-center mb-12">
             <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Case Studies</p>
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4">Resultaten die spreken</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4">Resultaten die spreken</h1>
             <p className="text-lg text-muted-foreground">
               Ontdek hoe wij bedrijven helpen met AI-automatisering die meetbaar verschil maakt.
             </p>

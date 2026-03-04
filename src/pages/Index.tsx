@@ -70,17 +70,17 @@ const Index = () => {
               Systeemarchitectuur & Automatisering
             </p>
             <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.35] tracking-tight mb-4 sm:mb-6">
-              Breng structuur in je
-              <br />
-              <span className="inline-block relative h-[1.35em] align-bottom">
+              Breng structuur in je{" "}
+              <span className="inline-block relative h-[1.2em] sm:h-[1.35em] align-bottom">
                 {rotatingWords.map((word, i) => (
                   <span
                     key={word}
-                    className="absolute left-0 w-full text-primary transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]"
+                    className="absolute left-0 w-full text-primary"
                     style={{
                       opacity: i === wordIndex ? 1 : 0,
-                      transform: i === wordIndex ? "translateY(0) blur(0)" : "translateY(18px)",
-                      filter: i === wordIndex ? "blur(0px)" : "blur(4px)",
+                      transform: i === wordIndex ? "translateY(0)" : i === (wordIndex + 1) % rotatingWords.length ? "translateY(-100%)" : "translateY(100%)",
+                      filter: i === wordIndex ? "blur(0px)" : "blur(6px)",
+                      transition: "opacity 0.7s cubic-bezier(0.23,1,0.32,1), transform 0.7s cubic-bezier(0.23,1,0.32,1), filter 0.7s cubic-bezier(0.23,1,0.32,1)",
                     }}
                   >
                     {word}.

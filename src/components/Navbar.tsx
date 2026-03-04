@@ -43,7 +43,7 @@ const DropdownItem = ({
     <div
       className={`flex items-start gap-3 px-4 py-3 rounded-lg transition-colors duration-200 ${
         isActive
-          ? "bg-primary/10 text-primary"
+          ? "bg-muted text-foreground"
           : "text-foreground hover:bg-muted/80"
       }`}
     >

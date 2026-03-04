@@ -66,7 +66,6 @@ const CapabilityCard = ({
           <cap.icon size={14} />
         </div>
         <p className="text-xs font-semibold mb-1">{cap.title}</p>
-        <p className="text-[11px] text-muted-foreground leading-relaxed">{cap.description}</p>
       </div>
     </div>
   );

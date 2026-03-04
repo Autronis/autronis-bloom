@@ -35,9 +35,9 @@ const cases: CaseItem[] = [
     problem: "Orders moesten handmatig worden gecontroleerd, ingevoerd en gesynchroniseerd tussen meerdere systemen.",
     solution: "We implementeerden een automatiseringslaag die webshop, ERP en fulfilmentsoftware direct met elkaar verbindt.",
     results: [
-      "65% minder handmatige verwerking",
-      "Realtime voorraad synchronisatie",
-      "Orderverwerking van 10 min → 30 sec",
+      "Tot 65% minder handmatige verwerking",
+      "Realtime voorraadsynchronisatie",
+      "Orderverwerking van ±10 minuten naar ±30 seconden",
       "Minder operationele fouten",
     ],
   },
@@ -49,7 +49,7 @@ const cases: CaseItem[] = [
     problem: "Facturen werden handmatig ingevoerd en rapportages moesten periodiek handmatig worden samengesteld.",
     solution: "We automatiseerden factuurverwerking via document parsing, integratie met boekhoudsoftware en automatische rapportage dashboards.",
     results: [
-      "70% minder handmatige factuurverwerking",
+      "Tot 70% minder handmatige factuurverwerking",
       "Snellere maandrapportages",
       "Betere datakwaliteit in financiële systemen",
       "Minder correctiewerk",
@@ -60,7 +60,7 @@ const cases: CaseItem[] = [
     icon: Bot,
     title: "AI-gedreven klantenservice automatisering",
     context: "Een implementatie waarbij AI en workflowautomatisering worden gecombineerd om klantvragen automatisch te classificeren en routeren.",
-    body: "We bouwen momenteel een automatiseringssysteem waarin AI inkomende klantvragen analyseert en automatisch doorstuurt naar de juiste workflow of medewerker.\n\nBinnenkort delen we de volledige implementatie en resultaten.",
+    body: "We werken momenteel aan een implementatie waarbij AI inkomende klantvragen analyseert en automatisch classificeert en doorstuurt naar de juiste workflow of medewerker.\n\nBinnenkort delen we de volledige implementatie en resultaten.",
     upcoming: true,
   },
 ];

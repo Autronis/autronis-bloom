@@ -552,18 +552,18 @@ const Services = () => {
                 <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Kwaliteitsnorm</p>
                 <h2 className="text-2xl sm:text-3xl font-bold mb-4">Onze vaste standaard binnen elke implementatie</h2>
                 <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl mx-auto">
-                  Elke implementatie voldoet aan vaste technische en organisatorische randvoorwaarden. Beveiliging, controle en overdraagbaarheid zijn geen toevoeging — maar uitgangspunt.
+                  Elke implementatie voldoet aan vaste technische en organisatorische randvoorwaarden. Beveiliging, controle en overdraagbaarheid zijn geen toevoeging, maar het uitgangspunt.
                 </p>
               </ScrollRevealItem>
             </ScrollReveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr">
               {[
                 { icon: ShieldCheck, title: "Toegangscontrole als basis", desc: "Least-privilege en rolgebaseerde toegang zijn standaard. Overmatige systeemrechten worden niet toegepast." },
-                { icon: BarChart3, title: "Logging & volledige traceerbaarheid", desc: "Realtime logging, audittrails en foutdetectie zijn standaard actief binnen elke implementatie." },
-                { icon: Layers, title: "Overdraagbare architectuur", desc: "Geen vendor lock-in. Architectuur blijft beheersbaar, uitbreidbaar en overdraagbaar naar interne teams." },
-                { icon: Database, title: "Datagovernance & AVG-afstemming", desc: "Dataverwerking wordt ingericht conform privacywetgeving en aantoonbare compliance-eisen." },
-                { icon: FileText, title: "Volledige technische documentatie", desc: "Architectuur, integraties en configuraties worden volledig vastgelegd en overdraagbaar opgeleverd." },
-                { icon: Cog, title: "Stabiele en schaalbare infrastructuur", desc: "Enterprise-grade infrastructuur die meegroeit zonder performance- of veiligheidscompromissen." },
+                { icon: BarChart3, title: "Logging en traceerbaarheid", desc: "Logging, audittrails en foutdetectie zijn standaard actief binnen elke implementatie." },
+                { icon: Layers, title: "Overdraagbare architectuur", desc: "Architectuur blijft beheersbaar, uitbreidbaar en overdraagbaar, zonder onnodige afhankelijkheid van één leverancier." },
+                { icon: Database, title: "Datagovernance en AVG-afstemming", desc: "Dataverwerking wordt ingericht conform privacywetgeving en duidelijke compliance-richtlijnen." },
+                { icon: FileText, title: "Volledige technische documentatie", desc: "Architectuur, integraties en configuraties worden vastgelegd en overdraagbaar opgeleverd." },
+                { icon: Cog, title: "Stabiele en schaalbare infrastructuur", desc: "De technische basis wordt zo ingericht dat systemen betrouwbaar functioneren en kunnen meegroeien met de organisatie." },
               ].map((item, idx) => (
                 <motion.div
                   key={item.title}
@@ -588,7 +588,7 @@ const Services = () => {
               ))}
             </div>
             <p className="text-xs text-muted-foreground text-center mt-8 italic">
-              Zonder deze randvoorwaarden realiseren wij geen implementatie.
+              Deze randvoorwaarden vormen de basis van elke implementatie.
             </p>
           </div>
 

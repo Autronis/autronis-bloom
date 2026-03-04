@@ -4,10 +4,10 @@ import { Linkedin, Twitter, Mail } from "lucide-react";
 const Footer = () => {
   return (
     <footer className="border-t border-border">
-      <div className="container mx-auto px-4 lg:px-8 py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="container mx-auto px-4 lg:px-8 py-10 sm:py-16">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-10">
           {/* Brand */}
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4 col-span-2 sm:col-span-2 lg:col-span-1">
             <Link to="/" className="flex items-center gap-2">
               <img src="/logo.png" alt="Autronis" className="h-8 w-auto" width={130} height={32} loading="lazy" decoding="async" />
               <span className="text-lg font-bold">Autronis</span>
@@ -61,7 +61,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
+        <div className="mt-8 sm:mt-12 pt-6 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 text-xs text-muted-foreground">
           <div className="flex flex-col gap-1">
             <p>© {new Date().getFullYear()} Autronis. Alle rechten voorbehouden.</p>
             <p className="text-muted-foreground/60">Architectuurgedreven automatisering met geïntegreerde beveiliging en datagovernance.</p>

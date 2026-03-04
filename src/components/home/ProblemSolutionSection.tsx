@@ -105,43 +105,43 @@ const ProblemSolutionSection = () => {
   const [solutionHovered, setSolutionHovered] = useState<number | null>(null);
 
   return (
-    <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
+    <section className="py-10 sm:py-24 border-t border-border relative overflow-hidden">
       
 
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* PROBLEEM */}
-        <div className="mb-16 sm:mb-24">
-          <ScrollReveal className="text-center max-w-2xl mx-auto mb-10">
+        <div className="mb-12 sm:mb-24">
+          <ScrollReveal className="text-center max-w-2xl mx-auto mb-6 sm:mb-10">
             <ScrollRevealItem>
               <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
                 Probleem
               </p>
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
                 Het probleem is niet <StrikeThroughText />.
               </h2>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                 Veel groeiende organisaties denken dat ze extra personeel nodig hebben om bij te
                 blijven. In werkelijkheid ontstaan vertragingen doordat processen niet goed op
                 elkaar zijn afgestemd en systemen onvoldoende samenwerken.
               </p>
             </ScrollRevealItem>
           </ScrollReveal>
-          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6">
             {problems.map((p, i) => (
               <ScrollRevealItem key={p.title}>
                 <GlowCard
-                  className="rounded-xl border border-border bg-card p-6"
+                  className="rounded-xl border border-border bg-card p-4 sm:p-6"
                   isAnyHovered={problemHovered !== null}
                   isHovered={problemHovered === i}
                   onHover={() => setProblemHovered(i)}
                   onLeave={() => setProblemHovered(null)}
                 >
-                  <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center text-destructive mb-4">
-                    <p.icon size={20} />
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-destructive/10 flex items-center justify-center text-destructive mb-3 sm:mb-4">
+                    <p.icon size={18} />
                   </div>
-                  <h3 className="font-semibold mb-2">{p.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <h3 className="font-semibold text-sm sm:text-base mb-1.5 sm:mb-2">{p.title}</h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                     {p.description}
                   </p>
                 </GlowCard>
@@ -152,34 +152,34 @@ const ProblemSolutionSection = () => {
 
         {/* OPLOSSING */}
         <div>
-          <ScrollReveal className="text-center max-w-2xl mx-auto mb-10">
+          <ScrollReveal className="text-center max-w-2xl mx-auto mb-6 sm:mb-10">
             <ScrollRevealItem>
               <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
                 Oplossing
               </p>
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
                 Structuur vóór capaciteit.
               </h2>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                 Wanneer systemen goed op elkaar aansluiten en processen logisch zijn ingericht, kan een organisatie groeien zonder dat de personeelsdruk evenredig toeneemt.
               </p>
             </ScrollRevealItem>
           </ScrollReveal>
-          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
+          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 mb-8 sm:mb-12">
             {solutions.map((s, i) => (
               <ScrollRevealItem key={s.title}>
                 <GlowCard
-                  className="rounded-xl border border-border bg-card p-6"
+                  className="rounded-xl border border-border bg-card p-4 sm:p-6"
                   isAnyHovered={solutionHovered !== null}
                   isHovered={solutionHovered === i}
                   onHover={() => setSolutionHovered(i)}
                   onLeave={() => setSolutionHovered(null)}
                 >
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
-                    <s.icon size={20} />
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3 sm:mb-4">
+                    <s.icon size={18} />
                   </div>
-                  <h3 className="font-semibold mb-2">{s.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <h3 className="font-semibold text-sm sm:text-base mb-1.5 sm:mb-2">{s.title}</h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                     {s.description}
                   </p>
                 </GlowCard>

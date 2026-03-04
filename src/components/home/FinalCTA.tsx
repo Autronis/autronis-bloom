@@ -219,14 +219,14 @@ const FinalCTA = () => {
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 text-center relative z-10">
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 max-w-2xl mx-auto">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 max-w-2xl mx-auto">
           Klaar om uw processen structureel te verbeteren?
         </h2>
-        <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
+        <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-xl mx-auto">
           Plan een vrijblijvende Automation Scan en ontdek waar de grootste impact ligt
           voor uw organisatie.
         </p>
-        <Button asChild size="lg" className="text-base px-10">
+        <Button asChild size="lg" className="w-full sm:w-auto text-base px-10">
           <Link to="/book">
             Plan Automation Scan
             <ArrowRight size={18} />

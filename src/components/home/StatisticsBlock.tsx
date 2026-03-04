@@ -1,5 +1,6 @@
 import { useRef, useState, useCallback } from "react";
 import { Workflow, Cable, BarChart3 } from "lucide-react";
+import useCanHover from "@/hooks/use-can-hover";
 
 const capabilities = [
   {
@@ -25,12 +26,14 @@ const CapabilityCard = ({
   isHovered,
   onHover,
   onLeave,
+  canHover,
 }: {
   cap: (typeof capabilities)[0];
   isAnyHovered: boolean;
   isHovered: boolean;
   onHover: () => void;
   onLeave: () => void;
+  canHover: boolean;
 }) => {
   const [glowPos, setGlowPos] = useState({ x: 0, y: 0 });
 
@@ -39,20 +42,23 @@ const CapabilityCard = ({
     setGlowPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   }, []);
 
+  const showHover = canHover && isHovered;
+  const showDim = canHover && isAnyHovered && !isHovered;
+
   return (
     <div
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
-      onMouseMove={handleMouseMove}
-      className="relative rounded-lg border border-border bg-card p-2.5 sm:p-3 text-center overflow-hidden transition-all duration-[280ms] ease-out"
+      onMouseEnter={canHover ? onHover : undefined}
+      onMouseLeave={canHover ? onLeave : undefined}
+      onMouseMove={canHover ? handleMouseMove : undefined}
+      className="relative rounded-lg border border-border bg-card p-2.5 sm:p-3 text-center overflow-hidden transition-all duration-200 ease-out"
       style={{
-        transform: isHovered ? "scale(1.05) translateY(-4px)" : "scale(1) translateY(0)",
-        opacity: isAnyHovered && !isHovered ? 0.88 : 1,
-        borderColor: isHovered ? "hsl(var(--primary) / 0.6)" : undefined,
-        boxShadow: isHovered ? "0 0 15px hsl(var(--primary) / 0.25), 0 0 30px hsl(var(--primary) / 0.1), inset 0 0 15px hsl(var(--primary) / 0.05)" : "none",
+        transform: showHover ? "scale(1.05) translateY(-4px)" : "none",
+        opacity: showDim ? 0.88 : 1,
+        borderColor: showHover ? "hsl(var(--primary) / 0.6)" : undefined,
+        boxShadow: showHover ? "0 0 15px hsl(var(--primary) / 0.25), 0 0 30px hsl(var(--primary) / 0.1), inset 0 0 15px hsl(var(--primary) / 0.05)" : "none",
       }}
     >
-      {isHovered && (
+      {showHover && (
         <div
           className="absolute pointer-events-none inset-0 transition-opacity duration-300"
           style={{
@@ -73,9 +79,10 @@ const CapabilityCard = ({
 
 const StatisticsBlock = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const canHover = useCanHover();
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 max-w-xl mx-auto">
+    <div className="grid grid-cols-3 gap-2 sm:gap-2.5 max-w-xl mx-auto">
       {capabilities.map((cap, i) => (
         <CapabilityCard
           key={cap.title}
@@ -84,6 +91,7 @@ const StatisticsBlock = () => {
           isHovered={hoveredIndex === i}
           onHover={() => setHoveredIndex(i)}
           onLeave={() => setHoveredIndex(null)}
+          canHover={canHover}
         />
       ))}
     </div>

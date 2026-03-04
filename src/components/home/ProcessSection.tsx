@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ShieldCheck, Brain, Layers, Cog, ScanSearch, Rocket, RefreshCw } from "lucide-react";
 import { useState, useRef, useCallback, useEffect } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import useCanHover from "@/hooks/use-can-hover";
 
 
 const phases = [
@@ -57,6 +58,7 @@ const TimelineCard = ({
   hoveredIndex,
   onHover,
   onLeave,
+  canHover,
 }: {
   phase: (typeof phases)[0];
   index: number;
@@ -64,27 +66,21 @@ const TimelineCard = ({
   hoveredIndex: number | null;
   onHover: () => void;
   onLeave: () => void;
+  canHover: boolean;
 }) => {
-  const [glowPos, setGlowPos] = useState({ x: 0, y: 0 });
-  const isHovered = hoveredIndex === index;
-  const isAnyHovered = hoveredIndex !== null;
+  const isHovered = canHover && hoveredIndex === index;
+  const isAnyHovered = canHover && hoveredIndex !== null;
   const Icon = phase.icon;
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setGlowPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  }, []);
 
   return (
     <div
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
-      onMouseMove={handleMouseMove}
-      className="relative rounded-xl border border-border bg-card p-6 cursor-pointer overflow-hidden"
+      onMouseEnter={canHover ? onHover : undefined}
+      onMouseLeave={canHover ? onLeave : undefined}
+      className="relative rounded-xl border border-border bg-card p-4 sm:p-6 cursor-pointer overflow-hidden"
       style={{
-        transform: isActive || isHovered
+        transform: (canHover && (isActive || isHovered))
           ? "scale(1.015) translateY(-2px)"
-          : "scale(1) translateY(0)",
+          : "none",
         opacity: isAnyHovered && !isHovered ? 0.88 : 1,
         borderColor: isActive || isHovered
           ? "hsl(var(--primary) / 0.5)"
@@ -95,22 +91,23 @@ const TimelineCard = ({
     >
       <div className="relative z-10">
         <div
-          className="w-9 h-9 rounded-lg flex items-center justify-center mb-3 transition-all duration-500"
+          className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center mb-2 sm:mb-3 transition-all duration-500"
           style={{
             backgroundColor: isActive ? "hsl(var(--primary) / 0.15)" : "hsl(var(--primary) / 0.1)",
           }}
         >
-          <Icon size={18} className="text-primary" />
+          <Icon size={16} className="text-primary sm:w-[18px] sm:h-[18px]" />
         </div>
         <p className="text-xs font-bold text-primary mb-1">Stap {phase.step}</p>
-        <h3 className="font-semibold mb-2">{phase.title}</h3>
-        <p className="text-sm text-muted-foreground leading-relaxed">{phase.description}</p>
+        <h3 className="font-semibold text-sm sm:text-base mb-1.5 sm:mb-2">{phase.title}</h3>
+        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{phase.description}</p>
       </div>
     </div>
   );
 };
 
 const ProcessSection = () => {
+  const canHover = useCanHover();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [activeIndex, setActiveIndex] = useState(-1);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -158,18 +155,17 @@ const ProcessSection = () => {
   }, []);
 
   return (
-    <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden" ref={sectionRef}>
+    <section className="py-10 sm:py-24 border-t border-border relative overflow-hidden" ref={sectionRef}>
       
 
-
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <ScrollReveal className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
+        <ScrollReveal className="text-center max-w-2xl mx-auto mb-6 sm:mb-16">
           <ScrollRevealItem>
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
               Aanpak
             </p>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-2">Van analyse tot livegang</h2>
-            <p className="text-muted-foreground">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">Van analyse tot livegang</h2>
+            <p className="text-sm sm:text-base text-muted-foreground">
               Gestructureerd. Voorspelbaar. Schaalbaar.
             </p>
           </ScrollRevealItem>
@@ -189,12 +185,12 @@ const ProcessSection = () => {
           </div>
 
           {/* Cards */}
-          <div className="space-y-6 sm:space-y-8">
+          <div className="space-y-4 sm:space-y-8">
             {phases.map((phase, i) => (
               <div
                 key={phase.step}
                 ref={(el) => (cardRefs.current[i] = el)}
-                className="flex items-start gap-4 sm:gap-6"
+                className="flex items-start gap-3 sm:gap-6"
                 style={{ scrollMarginTop: "100px" }}
               >
                 {/* Node */}
@@ -222,6 +218,7 @@ const ProcessSection = () => {
                     hoveredIndex={hoveredIndex}
                     onHover={() => setHoveredIndex(i)}
                     onLeave={() => setHoveredIndex(null)}
+                    canHover={canHover}
                   />
                 </div>
               </div>
@@ -250,7 +247,7 @@ const ProcessSection = () => {
 
         <ScrollReveal className="text-center">
           <ScrollRevealItem>
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="w-full sm:w-auto">
               <Link to="/process">
                 Bekijk ons volledige proces
                 <ArrowRight size={18} />

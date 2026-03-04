@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Play } from "lucide-react";
-import { useState, useEffect, lazy, Suspense, useRef } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import HeroBackground from "@/components/home/HeroBackground";
 import StatisticsBlock from "@/components/home/StatisticsBlock";
+import { AnimatePresence, motion } from "framer-motion";
 
 // Lazy-load all below-fold sections
 const ProblemSolutionSection = lazy(() => import("@/components/home/ProblemSolutionSection"));
@@ -62,7 +63,7 @@ const Index = () => {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-[75vh] sm:min-h-screen flex flex-col items-center justify-center pt-16 sm:pt-0" >
+      <section className="hero-section relative min-h-[75vh] sm:min-h-screen flex flex-col items-center justify-center pt-16 sm:pt-0" >
         <HeroBackground />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
@@ -72,23 +73,21 @@ const Index = () => {
             <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.35] tracking-tight mb-4 sm:mb-6">
               Breng structuur in je
               <br />
-              <span className="inline-block relative h-[1.2em] sm:h-[1.35em] align-bottom">
-                {rotatingWords.map((word, i) => (
-                  <span
-                    key={word}
-                    className="absolute left-0 w-full text-primary"
-                    style={{
-                      opacity: i === wordIndex ? 1 : 0,
-                      transform: i === wordIndex ? "translateY(0)" : i === (wordIndex + 1) % rotatingWords.length ? "translateY(-100%)" : "translateY(100%)",
-                      filter: i === wordIndex ? "blur(0px)" : "blur(6px)",
-                      transition: "opacity 0.7s cubic-bezier(0.23,1,0.32,1), transform 0.7s cubic-bezier(0.23,1,0.32,1), filter 0.7s cubic-bezier(0.23,1,0.32,1)",
-                    }}
+              <span className="relative inline-flex h-[1.2em] min-w-[14ch] items-end justify-center sm:h-[1.35em] align-bottom overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={rotatingWords[wordIndex]}
+                    className="absolute inset-0 flex items-end justify-center text-primary"
+                    initial={{ opacity: 0, y: 18, filter: "blur(2px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -18, filter: "blur(2px)" }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    {word}.
-                  </span>
-                ))}
+                    {rotatingWords[wordIndex]}.
+                  </motion.span>
+                </AnimatePresence>
                 {/* Invisible sizer for width */}
-                <span className="invisible">{rotatingWords[wordIndex]}.</span>
+                <span className="invisible">schaalbaarheid.</span>
               </span>
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8 leading-relaxed">

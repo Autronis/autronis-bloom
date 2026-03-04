@@ -233,3 +233,26 @@
     transform: none !important;
   }
 }
+
+/* ── Mobile: tap feedback sitewide (except hero section) ── */
+@media (max-width: 767px) and (hover: none) and (pointer: coarse) {
+  main :where(a, button, [role="button"], [class*="card"], [class*="Card"]) {
+    transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 180ms ease,
+                border-color 180ms ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  main :where(a, button, [role="button"], [class*="card"], [class*="Card"]):active {
+    transform: scale(1.02);
+    border-color: hsl(var(--primary) / 0.45);
+    box-shadow: 0 0 0 1px hsl(var(--primary) / 0.45),
+                0 10px 24px -16px hsl(var(--primary) / 0.55);
+  }
+
+  .hero-section :where(a, button, [role="button"], [class*="card"], [class*="Card"]):active {
+    transform: none;
+    border-color: inherit;
+    box-shadow: none;
+  }
+}

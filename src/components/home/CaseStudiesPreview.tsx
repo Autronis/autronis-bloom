@@ -173,7 +173,7 @@ const UpcomingCard = ({
         <p className="text-sm text-muted-foreground leading-relaxed mb-5">{cs.context}</p>
 
         <div className="rounded-lg border border-border bg-muted/30 p-4 flex-1">
-          <p className="text-xs font-semibold mb-2">Project in ontwikkeling</p>
+          <p className="text-xs font-semibold mb-2">Coming soon</p>
           {cs.body.split("\n\n").map((p, i) => (
             <p key={i} className="text-sm text-muted-foreground leading-relaxed mb-2 last:mb-0">{p}</p>
           ))}

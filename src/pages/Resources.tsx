@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Layout from "@/components/Layout";
 import { Link } from "react-router-dom";
-import { ArrowRight, BookOpen, Calculator, BarChart3, Workflow, DollarSign, Settings, UserPlus, Layers, Link2, ShieldCheck } from "lucide-react";
+import { ArrowRight, BookOpen, Calculator, BarChart3, Workflow, Euro, Settings, UserPlus, Layers, Link2, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import AutomationImpactScan from "@/components/resources/AutomationImpactScan";
@@ -52,7 +52,7 @@ const processes = [
     description: "Automatische leadopvolging, CRM-updates en pipelinebeheer.",
   },
   {
-    icon: DollarSign,
+    icon: Euro,
     title: "Finance procesautomatisering",
     description: "Factuurverwerking, rapportages en financiële workflows.",
   },

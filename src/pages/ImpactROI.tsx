@@ -58,17 +58,16 @@ const ImpactROI = () => {
                 Methodiek
               </p>
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-                Hoe wij impact vertalen naar een businesscase
+                Waarop onze impact- en ROI-berekening is gebaseerd
               </h2>
               <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                Elke ROI-indicatie wordt gebaseerd op meetbare aannames en transparante rekenregels.
-                Tijdens de impactanalyse vertalen wij operationele verbeteringen naar een financieel onderbouwde businesscase.
+                De factoren die bepalen hoe automatisering wordt vertaald naar financiële impact.
               </p>
             </ScrollRevealItem>
           </ScrollReveal>
 
           {/* 3x2 grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto mb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto mb-10 auto-rows-fr">
             {factors.map((factor, idx) => (
               <ScrollReveal key={factor.title}>
                 <ScrollRevealItem>
@@ -127,7 +126,7 @@ const ImpactROI = () => {
                 </div>
               </div>
               <p className="text-sm text-muted-foreground text-center mt-8 leading-relaxed max-w-2xl mx-auto">
-                Tijdens de impactanalyse vertalen wij deze factoren naar een volledige businesscase inclusief terugverdientijd, structurele besparing en verwachte ROI.
+                Tijdens de impactanalyse vertalen wij deze factoren naar een volledige businesscase met terugverdientijd, structurele besparing en ROI.
               </p>
             </ScrollRevealItem>
           </ScrollReveal>

@@ -63,6 +63,7 @@ const ImpactSimulator = () => {
     const investment = 18500 + complexityVariation;
 
     const netBenefitYear1 = totalYearlySavings - investment;
+    const totalValue3Year = (totalYearlySavings * 3) - investment;
     const breakEvenMonths = totalMonthlySavings > 0 ? investment / totalMonthlySavings : 0;
     const roiMultiplier = investment > 0 ? totalYearlySavings / investment : 0;
 
@@ -76,6 +77,7 @@ const ImpactSimulator = () => {
       yearlySavings: totalYearlySavings,
       investment,
       netBenefitYear1,
+      totalValue3Year,
       breakEvenMonths: Math.round(breakEvenMonths * 10) / 10,
       roiMultiplier,
       confidence,
@@ -85,6 +87,7 @@ const ImpactSimulator = () => {
   const animYearly = useAnimatedValue(Math.round(results.yearlySavings));
   const animMonthly = useAnimatedValue(Math.round(results.monthlySavings));
   const animNet = useAnimatedValue(Math.round(results.netBenefitYear1));
+  const animTotal3Year = useAnimatedValue(Math.round(results.totalValue3Year));
   const animInvestment = useAnimatedValue(Math.round(results.investment));
 
   const chartData = [
@@ -150,7 +153,7 @@ const ImpactSimulator = () => {
                     highlight
                   />
                   <KPICard
-                    label="Break-even punt"
+                    label="Terugverdientijd"
                     value={`${results.breakEvenMonths} mnd`}
                     icon={<Calendar size={16} />}
                   />
@@ -160,19 +163,26 @@ const ImpactSimulator = () => {
               {/* Secondary KPIs */}
               <div className="grid grid-cols-2 gap-4">
                 <KPICard
-                  label="Netto voordeel jaar 1"
+                  label="Netto besparing jaar 1"
                   value={formatCurrency(animNet)}
                   icon={<Euro size={16} />}
                 />
-                <div className="rounded-xl border border-primary/30 bg-primary/[0.04] p-4 flex flex-col justify-between">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Percent size={16} className="text-primary" />
-                    <p className="text-xs text-muted-foreground">ROI Multiplier</p>
-                  </div>
-                  <p className="text-2xl font-bold text-primary tabular-nums">
-                    {results.roiMultiplier.toFixed(1)}x
-                  </p>
+                <KPICard
+                  label="Totale waarde (3 jaar)"
+                  value={formatCurrency(animTotal3Year)}
+                  icon={<TrendingUp size={16} />}
+                />
+              </div>
+
+              {/* ROI Multiplier */}
+              <div className="rounded-xl border border-primary/30 bg-primary/[0.04] p-4 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Percent size={16} className="text-primary" />
+                  <p className="text-xs text-muted-foreground">ROI Multiplier</p>
                 </div>
+                <p className="text-2xl font-bold text-primary tabular-nums">
+                  {results.roiMultiplier.toFixed(1)}x
+                </p>
               </div>
 
               {/* Bar chart */}

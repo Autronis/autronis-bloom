@@ -1,8 +1,10 @@
+import { useState } from "react";
 import Layout from "@/components/Layout";
 import { Link } from "react-router-dom";
-import { ArrowRight, BookOpen, Calculator, ClipboardCheck, BarChart3, Workflow, DollarSign, Settings, UserPlus, Layers, Link2, ShieldCheck } from "lucide-react";
+import { ArrowRight, BookOpen, Calculator, BarChart3, Workflow, DollarSign, Settings, UserPlus, Layers, Link2, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import AutomationImpactScan from "@/components/resources/AutomationImpactScan";
 
 const guides = [
   {
@@ -36,16 +38,10 @@ const tools = [
     href: "/impact-roi",
   },
   {
-    icon: ClipboardCheck,
-    title: "Automatiseringsscan",
-    description: "Een korte scan om te bepalen hoe volwassen uw organisatie is op het gebied van automatisering en systeemintegraties.",
-    href: "#",
-  },
-  {
     icon: BarChart3,
-    title: "Impactanalyse automatisering",
-    description: "Analyseer waar automatisering binnen uw organisatie de grootste operationele en financiële impact kan realiseren.",
-    href: "#",
+    title: "Automation Impact Scan",
+    description: "Ontvang een eerste indicatie waar automatisering binnen uw organisatie de grootste impact kan realiseren.",
+    href: "__impact-scan__",
   },
 ];
 

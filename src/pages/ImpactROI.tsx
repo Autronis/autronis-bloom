@@ -87,7 +87,7 @@ const ImpactROI = () => {
                     <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3">
                       <factor.icon size={18} />
                     </div>
-                    <h3 className="text-sm font-semibold text-foreground mb-2">{factor.title}</h3>
+                    <h3 className="text-sm font-semibold text-foreground mb-2 min-h-[2.5rem]">{factor.title}</h3>
                     <p className="text-xs text-muted-foreground leading-relaxed mb-3">
                       {factor.description}
                     </p>

@@ -288,7 +288,7 @@ const ImpactSimulator = () => {
                 >
                   <div className="flex items-center gap-2">
                     <Info size={14} className="text-primary" />
-                    <p className="text-sm font-medium text-foreground">Hoe is dit berekend?</p>
+                    <p className="text-sm font-medium text-foreground">Wat zit er in deze berekening?</p>
                   </div>
                   <motion.div animate={{ rotate: showTransparency ? 180 : 0 }} transition={{ duration: 0.25 }}>
                     <ChevronDown size={16} className="text-muted-foreground" />
@@ -307,7 +307,7 @@ const ImpactSimulator = () => {
                         <div>
                           <p className="text-xs font-medium text-foreground mb-1.5">Inbegrepen</p>
                           <ul className="space-y-1">
-                            {["Besparing op handmatige uren", "Besparing door foutreductie", "Structurele capaciteitsvrijmaking"].map((item) => (
+                            {["Besparing op handmatige verwerkingstijd", "Vermindering van fouten en correctiewerk", "Structurele capaciteitsvrijmaking"].map((item) => (
                               <li key={item} className="flex items-center gap-2 text-xs text-foreground/80">
                                 <span className="w-1 h-1 rounded-full bg-primary shrink-0" />
                                 {item}
@@ -318,7 +318,7 @@ const ImpactSimulator = () => {
                         <div>
                           <p className="text-xs font-medium text-foreground mb-1.5">Niet inbegrepen</p>
                           <ul className="space-y-1">
-                            {["Extra omzetgroei", "Strategische schaalvoordelen", "Langetermijnoptimalisaties"].map((item) => (
+                             {["Extra omzetgroei", "Strategische schaalvoordelen", "Langetermijnoptimalisaties"].map((item) => (
                               <li key={item} className="flex items-center gap-2 text-xs text-muted-foreground">
                                 <span className="w-1 h-1 rounded-full bg-muted-foreground/40 shrink-0" />
                                 {item}
@@ -326,6 +326,9 @@ const ImpactSimulator = () => {
                             ))}
                           </ul>
                         </div>
+                        <p className="text-xs text-muted-foreground mt-3 leading-relaxed">
+                          Tijdens de impactanalyse wordt deze berekening vertaald naar een volledige businesscase op basis van uw organisatie.
+                        </p>
                       </div>
                     </motion.div>
                   )}

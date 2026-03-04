@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Sun, Moon, ChevronDown, Users, Workflow } from "lucide-react";
+import { Menu, X, Sun, Moon, ChevronDown, Users, Workflow, ChevronRight } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -66,6 +66,7 @@ const Navbar = () => {
   );
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
   const location = useLocation();
   const { theme, setTheme } = useTheme();
   const isMobile = useIsMobile();
@@ -239,26 +240,40 @@ const Navbar = () => {
             {navLinks.map((link: NavItem) =>
               "children" in link && link.children ? (
                 <div key={link.label} className="flex flex-col">
-                  <span className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                  <button
+                    onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
+                    className="px-4 py-3 rounded-md text-sm font-medium transition-colors text-muted-foreground hover:text-foreground hover:bg-muted flex items-center justify-between"
+                  >
                     {link.label}
-                  </span>
-                  {link.children.map((child) => (
-                    <Link
-                      key={child.href}
-                      to={child.href}
-                      className={`px-6 py-3 rounded-md text-sm font-medium transition-colors flex items-center gap-3 ${
-                        location.pathname === child.href
-                          ? "text-primary bg-primary/10"
-                          : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                      }`}
-                    >
-                      <child.icon size={16} />
-                      <div>
-                        <span className="block">{child.label}</span>
-                        <span className="text-xs text-muted-foreground font-normal">{child.description}</span>
-                      </div>
-                    </Link>
-                  ))}
+                    <ChevronDown
+                      size={16}
+                      className={`transition-transform duration-200 ${mobileDropdownOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                  <div
+                    className="grid transition-[grid-template-rows] duration-200 ease-out"
+                    style={{ gridTemplateRows: mobileDropdownOpen ? "1fr" : "0fr" }}
+                  >
+                    <div className="overflow-hidden">
+                      {link.children.map((child) => (
+                        <Link
+                          key={child.href}
+                          to={child.href}
+                          className={`px-6 py-3 rounded-md text-sm font-medium transition-colors flex items-center gap-3 ${
+                            location.pathname === child.href
+                              ? "text-primary bg-primary/10"
+                              : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                          }`}
+                        >
+                          <child.icon size={16} />
+                          <div>
+                            <span className="block">{child.label}</span>
+                            <span className="text-xs text-muted-foreground font-normal">{child.description}</span>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <Link

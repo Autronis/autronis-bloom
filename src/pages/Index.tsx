@@ -120,7 +120,7 @@ const Index = () => {
                 <div className="aspect-video m-4 mt-2 rounded-lg overflow-hidden border border-border">
                   {videoOpen && (
                     <iframe
-                      src="https://www.youtube.com/embed/2pZ5mX64K3k?autoplay=1"
+                      src="https://www.youtube-nocookie.com/embed/2pZ5mX64K3k?autoplay=1"
                       title="Autronis demo"
                       className="w-full h-full"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

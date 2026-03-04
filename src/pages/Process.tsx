@@ -428,7 +428,7 @@ const Process = () => {
             </h1>
           </ScrollRevealItem>
           <ScrollRevealItem>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed">
               Wij combineren procesautomatisering, systeemintegraties en data-architectuur tot één schaalbaar fundament. Geen losse oplossingen, maar een robuuste structuur die met uw organisatie meegroeit.
             </p>
           </ScrollRevealItem>

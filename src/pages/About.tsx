@@ -74,13 +74,13 @@ const About = () => {
             <h1 className="text-3xl sm:text-4xl font-bold mb-6 leading-tight">
               Systemen die <span className="text-gradient">tot leven komen</span>
             </h1>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+            <p className="text-sm text-muted-foreground leading-relaxed mb-4">
               Autronis is opgericht met één missie: bedrijven bevrijden van repetitief handmatig werk. Wij geloven dat elk proces dat voorspelbaar is, geautomatiseerd kan worden.
             </p>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+            <p className="text-sm text-muted-foreground leading-relaxed mb-4">
               Wij zijn Sem en Syb. U werkt direct met de bouwers — de mensen die uw systemen ontwerpen, bouwen en optimaliseren.
             </p>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed">
               Ons team combineert diepgaande technische expertise met business-inzicht. We bouwen geen tools om het bouwen — we bouwen oplossingen die direct meetbaar impact leveren op uw operatie.
             </p>
           </div>

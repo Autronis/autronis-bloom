@@ -139,7 +139,7 @@ const CaseStudies = () => {
             <ScrollRevealItem>
               <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Case Studies</p>
               <h1 className="text-3xl sm:text-4xl font-bold mb-4">Onze implementaties</h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 Concrete voorbeelden van hoe automatisering processen versnelt, fouten vermindert en schaalbaarheid mogelijk maakt.
               </p>
             </ScrollRevealItem>

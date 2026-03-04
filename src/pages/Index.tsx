@@ -1,22 +1,30 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, ShieldCheck, Play } from "lucide-react";
-import { useState, useEffect } from "react";
+import { ArrowRight, Play } from "lucide-react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import HeroBackground from "@/components/home/HeroBackground";
 import StatisticsBlock from "@/components/home/StatisticsBlock";
-import ProblemSolutionSection from "@/components/home/ProblemSolutionSection";
-import ServicePillars from "@/components/home/ServicePillars";
-import ProcessSection from "@/components/home/ProcessSection";
-import WhyAutronisSection from "@/components/home/WhyAutronisSection";
-import ROIPreview from "@/components/home/ROIPreview";
-import CaseStudiesPreview from "@/components/home/CaseStudiesPreview";
-import SecurityBlock from "@/components/home/SecurityBlock";
-import FAQSection from "@/components/home/FAQSection";
-import FinalCTA from "@/components/home/FinalCTA";
+
+// Lazy-load all below-fold sections
+const ProblemSolutionSection = lazy(() => import("@/components/home/ProblemSolutionSection"));
+const ServicePillars = lazy(() => import("@/components/home/ServicePillars"));
+const ProcessSection = lazy(() => import("@/components/home/ProcessSection"));
+const WhyAutronisSection = lazy(() => import("@/components/home/WhyAutronisSection"));
+const ROIPreview = lazy(() => import("@/components/home/ROIPreview"));
+const CaseStudiesPreview = lazy(() => import("@/components/home/CaseStudiesPreview"));
+const SecurityBlock = lazy(() => import("@/components/home/SecurityBlock"));
+const FAQSection = lazy(() => import("@/components/home/FAQSection"));
+const FinalCTA = lazy(() => import("@/components/home/FinalCTA"));
 
 const rotatingWords = ["groei", "processen", "systemen", "datastromen", "schaalbaarheid"];
+
+const SectionFallback = () => (
+  <div className="py-24 flex items-center justify-center">
+    <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+  </div>
+);
 
 const Index = () => {
   const [wordIndex, setWordIndex] = useState(0);
@@ -98,17 +106,33 @@ const Index = () => {
         </div>
       </section>
 
-
-
-      <ProblemSolutionSection />
-      <ServicePillars />
-      <ProcessSection />
-      <WhyAutronisSection />
-      <ROIPreview />
-      <CaseStudiesPreview />
-      <SecurityBlock />
-      <FAQSection />
-      <FinalCTA />
+      <Suspense fallback={<SectionFallback />}>
+        <ProblemSolutionSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <ServicePillars />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <ProcessSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <WhyAutronisSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <ROIPreview />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <CaseStudiesPreview />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <SecurityBlock />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <FAQSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <FinalCTA />
+      </Suspense>
     </>
   );
 };

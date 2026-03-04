@@ -141,6 +141,8 @@ const ServiceCard = ({
               <motion.img
                 src={s.image}
                 alt={s.title}
+                width={600}
+                height={450}
                 className="absolute inset-0 w-full h-full object-contain z-[1] scale-[1.5] dark:mix-blend-screen dark:invert-0 dark:hue-rotate-0 dark:brightness-[0.85] dark:opacity-85 invert hue-rotate-180 mix-blend-multiply brightness-100 opacity-80"
                 animate={
                   hoveredIndex === i

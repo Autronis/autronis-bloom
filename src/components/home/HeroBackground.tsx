@@ -19,11 +19,14 @@ const HeroBackground = () => {
 
     let animationId: number;
     let time = 0;
-    const lineCount = 6;
+    const isMobile = window.innerWidth < 768;
+    const lineCount = isMobile ? 4 : 6;
+    const dotCount = isMobile ? 3 : 5;
+    const stepSize = isMobile ? 4 : 2;
 
     const dots: GlowDot[] = [];
     const usedLines = new Set<number>();
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < dotCount; i++) {
       let line: number;
       if (usedLines.size < lineCount) {
         do { line = Math.floor(Math.random() * lineCount); } while (usedLines.has(line));
@@ -92,7 +95,7 @@ const HeroBackground = () => {
         ctx.strokeStyle = `hsla(174, 78%, 41%, ${opacity})`;
         ctx.lineWidth = lineWidth;
 
-        for (let x = 0; x <= w; x += 2) {
+        for (let x = 0; x <= w; x += stepSize) {
           const y = getWaveY(x, i, h);
           if (x === 0) ctx.moveTo(x, y);
           else ctx.lineTo(x, y);

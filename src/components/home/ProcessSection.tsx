@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ShieldCheck, Search, PenTool, Wrench, CheckCircle, BarChart3, Rocket } from "lucide-react";
+import { ArrowRight, ShieldCheck, Brain, Layers, Cog, ScanSearch, Rocket, RefreshCw } from "lucide-react";
 import { useState, useRef, useCallback, useEffect } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
@@ -8,28 +8,28 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 const phases = [
   {
     step: "01",
-    icon: Search,
+    icon: Brain,
     title: "Analyse & Architectuur",
     description:
       "We analyseren processen, systemen en datastromen en bepalen waar automatisering de meeste impact heeft. Op basis hiervan definiëren we een onderbouwde automatiseringsstrategie.",
   },
   {
     step: "02",
-    icon: PenTool,
+    icon: Layers,
     title: "Ontwerp & Structuur",
     description:
       "We ontwerpen een schaalbare systeemstructuur waarin integraties, datastromen en toegangsrechten logisch zijn ingericht voordat ontwikkeling start.",
   },
   {
     step: "03",
-    icon: Wrench,
+    icon: Cog,
     title: "Bouw & Implementatie",
     description:
       "Automatiseringen worden modulair ontwikkeld en gekoppeld aan uw bestaande systemen. Tijdens de bouw worden integraties en workflows continu getest.",
   },
   {
     step: "04",
-    icon: CheckCircle,
+    icon: ScanSearch,
     title: "Validatie & Optimalisatie",
     description:
       "We testen stabiliteit, prestaties en uitzonderingssituaties zodat automatiseringen betrouwbaar functioneren voordat ze live gaan.",
@@ -43,7 +43,7 @@ const phases = [
   },
   {
     step: "06",
-    icon: BarChart3,
+    icon: RefreshCw,
     title: "Doorontwikkeling & Ondersteuning",
     description:
       "Na livegang blijven we systemen monitoren en optimaliseren zodat automatiseringen blijven aansluiten op nieuwe processen en groei.",

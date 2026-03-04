@@ -19,19 +19,19 @@ export interface TeamMember {
 
 export const categoryMeta: Record<SkillCategory, { border: string; bg: string; glow: string }> = {
   arch: {
-    border: "border-[hsla(210,45%,55%,0.5)]",
-    bg: "bg-[hsla(210,40%,30%,0.75)]",
-    glow: "hover:bg-[hsla(210,40%,35%,0.8)]",
+    border: "border-[hsla(210,45%,55%,0.55)]",
+    bg: "bg-[hsla(210,40%,28%,0.92)]",
+    glow: "hover:bg-[hsla(210,40%,32%,0.95)]",
   },
   ai: {
-    border: "border-[hsla(174,45%,45%,0.5)]",
-    bg: "bg-[hsla(174,40%,25%,0.75)]",
-    glow: "hover:bg-[hsla(174,40%,30%,0.8)]",
+    border: "border-[hsla(174,45%,45%,0.55)]",
+    bg: "bg-[hsla(174,40%,23%,0.92)]",
+    glow: "hover:bg-[hsla(174,40%,27%,0.95)]",
   },
   gov: {
-    border: "border-[hsla(270,30%,55%,0.5)]",
-    bg: "bg-[hsla(270,25%,30%,0.70)]",
-    glow: "hover:bg-[hsla(270,25%,35%,0.75)]",
+    border: "border-[hsla(270,30%,55%,0.55)]",
+    bg: "bg-[hsla(270,25%,28%,0.90)]",
+    glow: "hover:bg-[hsla(270,25%,32%,0.93)]",
   },
 };
 

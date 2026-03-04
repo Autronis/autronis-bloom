@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+// Layout is provided by App.tsx
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronDown, CheckCircle2, Cog, Link2, PieChart, FolderOpen, Briefcase, Rocket, ShoppingCart, LinkIcon, CreditCard, Puzzle, BarChart3, LayoutDashboard, FileText, Database, AlertTriangle, ShieldCheck, Shield, Layers } from "lucide-react";
@@ -458,7 +458,7 @@ const Services = () => {
   };
 
   return (
-    <Layout>
+    <>
       {/* Single continuous section — hero + integrations + pillars */}
       <section className="relative pt-16 pb-24 overflow-hidden">
         
@@ -626,7 +626,7 @@ const Services = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 

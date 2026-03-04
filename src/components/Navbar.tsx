@@ -106,6 +106,8 @@ const Navbar = () => {
           <img
             src="/logo.png"
             alt="Autronis"
+            width={130}
+            height={32}
             className="w-auto transform-gpu transition-all duration-300 ease-out"
             style={{ height: scrolled ? "26px" : "32px" }}
             fetchPriority="high"

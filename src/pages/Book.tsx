@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+// Layout is provided by App.tsx
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,7 +18,7 @@ const Book = () => {
 
   if (submitted) {
     return (
-      <Layout>
+      <>
         <section className="pt-16 pb-24 flex items-center justify-center min-h-[60vh]">
           <div className="text-center max-w-md">
             <CheckCircle2 size={48} className="text-primary mx-auto mb-4" />
@@ -26,12 +26,12 @@ const Book = () => {
             <p className="text-muted-foreground">We nemen binnen 24 uur contact met u op om de Automation Scan in te plannen.</p>
           </div>
         </section>
-      </Layout>
+      </>
     );
   }
 
   return (
-    <Layout>
+    <>
       <section className="pt-16 pb-24 relative overflow-hidden">
         
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
@@ -133,7 +133,7 @@ const Book = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 

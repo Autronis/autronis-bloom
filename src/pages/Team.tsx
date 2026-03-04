@@ -62,7 +62,7 @@ const directReasons = [
   { icon: Users, title: "Direct contact met engineers", description: "U werkt direct met de mensen die uw systemen analyseren, ontwerpen en bouwen. Geen overdrachtslagen, maar directe en inhoudelijke samenwerking." },
   { icon: Clock, title: "Technische keuzes met lange termijnvisie", description: "Elke technische keuze is gericht op schaalbaarheid, onderhoudbaarheid en overdraagbaarheid. Geen snelle oplossingen die later opnieuw gebouwd moeten worden." },
   { icon: Eye, title: "Volledige overdraagbaarheid", description: "Systemen worden logisch opgebouwd en volledig gedocumenteerd. U blijft eigenaar van uw automatiseringen en behoudt volledig inzicht in de werking." },
-  { icon: Shield, title: "Beveiliging vanaf dag één", description: "Toegangsbeheer, logging en databescherming worden vanaf het begin geïntegreerd in de architectuur, niet achteraf toegevoegd." },
+  { icon: Shield, title: "Beveiliging vanaf dag één", description: "Toegangsbeheer, logging en databescherming worden vanaf het begin geïntegreerd in het systeemontwerp, niet achteraf toegevoegd." },
 ];
 
 
@@ -73,7 +73,7 @@ const WerkstandaardSection = ({ reasons }: { reasons: typeof directReasons }) =>
   const isInView = useInView(ref, { once: false, amount: 0.25 });
 
   return (
-    <div ref={ref} className="max-w-2xl mx-auto mb-16 relative">
+    <div ref={ref} className="max-w-2xl mx-auto mb-16 relative text-center">
       {/* Parallax background glow */}
       <div className="werkstandaard-glow" />
 
@@ -138,8 +138,8 @@ const Team = () => {
 
           <ScrollReveal className="text-center mb-12">
             <ScrollRevealItem>
-              <h2 className="text-2xl font-bold mb-3">Wilt u direct met de architecten spreken?</h2>
-              <p className="text-muted-foreground mb-6">Plan een kennismaking waarin we uw processen en automatiseringskansen technisch verkennen.</p>
+              <h2 className="text-2xl font-bold mb-3">Wilt u direct met de engineers spreken?</h2>
+              <p className="text-muted-foreground mb-6">Plan een Automation Scan en bespreek uw processen en automatiseringsmogelijkheden met ons team.</p>
               <Button asChild size="lg" className="group/cta">
                 <Link to="/book">
                   Plan een technisch gesprek

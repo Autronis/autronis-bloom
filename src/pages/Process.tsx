@@ -16,6 +16,7 @@ import {
   Cog,
   ScanSearch,
   Rocket,
+  RefreshCw,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
@@ -28,14 +29,14 @@ const phases = [
     step: "01",
     icon: Brain,
     title: "Analyse & Architectuur",
-    timing: "Week 1",
+    timing: "Indicatieve doorlooptijd: week 1",
     description:
-      "We analyseren processen, systemen en datastromen en definiëren een onderbouwde automatiseringsstrategie. Besluiten worden gebaseerd op impact-, risico- en ROI-berekeningen.",
+      "We analyseren processen, systemen en datastromen en definiëren een onderbouwde strategie. Besluiten worden gebaseerd op impact-, risico- en ROI-berekeningen.",
     deliverables: [
       "Procesmapping",
       "Systeemanalyse",
       "Impact- en ROI-analyse",
-      "Businesscase per automatiseringskans",
+      "Businesscase per kans",
       "Scope-definitie",
       "Risicoanalyse",
     ],
@@ -44,9 +45,9 @@ const phases = [
     step: "02",
     icon: Layers,
     title: "Ontwerp & Structuur",
-    timing: "Week 1–2",
+    timing: "Indicatieve doorlooptijd: week 1–2",
     description:
-      "We ontwerpen een schaalbare en veilige architectuur waarin systemen logisch samenwerken en data gecontroleerd stroomt. Beveiliging en datakwaliteit worden vanaf het ontwerp geborgd via role-based access, logging en datacontroles.",
+      "We ontwerpen een schaalbare en veilige architectuur waarin systemen logisch samenwerken en data gecontroleerd stroomt. Beveiliging en datakwaliteit worden vanaf het ontwerp geborgd.",
     deliverables: [
       "Technisch architectuurdocument",
       "Integratieschema",
@@ -60,11 +61,11 @@ const phases = [
     step: "03",
     icon: Cog,
     title: "Bouw & Implementatie",
-    timing: "Week 2–4",
+    timing: "Indicatieve doorlooptijd: week 2–4",
     description:
-      "We realiseren de automatiseringen modulair, gecontroleerd en volgens vastgestelde architectuurprincipes.",
+      "We realiseren de oplossingen modulair, gecontroleerd en volgens vastgestelde architectuurprincipes.",
     deliverables: [
-      "Werkende automatiseringsflows",
+      "Werkende flows",
       "Testomgeving",
       "Logging en foutafhandeling",
       "Versiebeheer en configuratiebeheer",
@@ -75,7 +76,7 @@ const phases = [
     step: "04",
     icon: ScanSearch,
     title: "Validatie & Optimalisatie",
-    timing: "Week 3–5",
+    timing: "Indicatieve doorlooptijd: week 3–5",
     description:
       "We testen stabiliteit, performance en uitzonderingssituaties voordat livegang plaatsvindt.",
     deliverables: [
@@ -91,7 +92,7 @@ const phases = [
     step: "05",
     icon: Rocket,
     title: "Livegang & Overdracht",
-    timing: "Week 4–6",
+    timing: "Indicatieve doorlooptijd: week 4–6",
     description:
       "We realiseren een gecontroleerde livegang en dragen het systeem volledig overdraagbaar over.",
     deliverables: [
@@ -101,6 +102,20 @@ const phases = [
       "Training & kennisoverdracht",
       "Nazorgperiode",
       "Governance- en eigenaarschapsoverdracht",
+    ],
+  },
+  {
+    step: "06",
+    icon: RefreshCw,
+    title: "Doorontwikkeling & ondersteuning",
+    timing: "Doorlopend",
+    description:
+      "Na livegang blijven systemen zich ontwikkelen. Naarmate processen veranderen of nieuwe systemen worden toegevoegd, passen wij de architectuur waar nodig aan. Veel organisaties kiezen voor doorlopende samenwerking zodat oplossingen blijven aansluiten op groei, nieuwe workflows en veranderende bedrijfsprocessen.",
+    deliverables: [
+      "Monitoring van integraties",
+      "Optimalisatie van bestaande workflows",
+      "Uitbreiding met nieuwe oplossingen",
+      "Ondersteuning bij systeemwijzigingen",
     ],
   },
 ];
@@ -328,7 +343,7 @@ const PhaseCard = ({
 
             <div>
               <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-2 font-semibold">
-                Deliverables
+                Resultaten
               </p>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
                 {phase.deliverables.map((d, dIdx) => (

@@ -82,7 +82,6 @@ const Connector = ({ x1, y1, x2, y2, id, dur = 3 }: {
     </g>
   );
 };
-);
 
 /* ─── Small icons ─── */
 const IcoGear = () => (
@@ -190,11 +189,8 @@ export const LeadIsometric = () => {
 
   return (
     <svg viewBox="0 0 400 210" className="w-full" fill="none">
-      <Connector x1={form.x} y1={form.y} x2={verr.x} y2={verr.y} />
-      <Connector x1={verr.x} y1={verr.y} x2={crm.x} y2={crm.y} />
-
-      <path id="lead-flow" d={flowD} fill="none" stroke="none" />
-      <FlowDot pathId="lead-flow" dur={5} />
+      <Connector x1={form.x} y1={form.y} x2={verr.x} y2={verr.y} id="ld1" dur={2.5} />
+      <Connector x1={verr.x} y1={verr.y} x2={crm.x} y2={crm.y} id="ld2" dur={2.5} />
 
       <IsoPlatform x={70} y={120} w={100} label="Formulier" icon={<IcoDoc />} />
       <IsoPlatform x={200} y={90} w={105} label="Verrijking" icon={<IcoGear />} />

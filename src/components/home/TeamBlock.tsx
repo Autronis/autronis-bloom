@@ -43,7 +43,7 @@ const TeamBlock = () => {
                     </Link>
                   </Button>
                   <Button asChild size="lg" variant="outline" className="border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors duration-300">
-                    <Link to="/team">
+                    <Link to="/team#team-section">
                       Bekijk ons team
                       <ArrowRight size={18} />
                     </Link>

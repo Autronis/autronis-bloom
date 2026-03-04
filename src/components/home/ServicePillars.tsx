@@ -76,7 +76,7 @@ const ServiceCard = ({
           onMouseEnter={() => setHoveredIndex(i)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
-           <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-3 sm:gap-4`}>
+           <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-0`}>
             {/* Text */}
               <div className="flex-1 p-4 sm:p-5 flex flex-col justify-center">
               <div className="flex items-center gap-3 mb-2">
@@ -137,7 +137,7 @@ const ServiceCard = ({
               </div>
             </div>
             {/* Image */}
-            <div className="flex-1 min-h-[200px] sm:min-h-[260px] relative overflow-hidden rounded-xl bg-card">
+            <div className="flex-1 min-h-[180px] sm:min-h-[220px] relative overflow-hidden rounded-xl bg-card">
               {/* Glow only on hover */}
               <motion.img
                 src={s.image}

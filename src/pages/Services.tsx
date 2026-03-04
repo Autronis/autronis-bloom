@@ -23,7 +23,7 @@ const pillars = [
       { icon: FolderOpen, title: "Interne workflow automatisering", items: ["Goedkeuringsflows", "Taaktoewijzing", "Notificaties en escalaties", "Documentgeneratie"] },
       { icon: Briefcase, title: "Sales- en orderautomatisering", items: ["Orderverwerking", "CRM-updates", "Facturatieprocessen", "Leadopvolging"] },
       { icon: Rocket, title: "Onboarding en offboarding", items: ["Accountcreatie", "Checklist automatisering", "Rolgebaseerde toegangsrechten", "E-signature integraties"] },
-      { icon: ShoppingCart, title: "E-commerce automatisering", items: ["Voorraadbeheer", "Retourafhandeling", "Orderstatus synchronisatie", "Dynamische prijsregels"] },
+      { icon: ShoppingCart, title: "E-commerce automatisering", items: ["Order & fulfilment automatisering", "Voorraad & retourbeheer", "Pricing & merchandising", "Product discovery & personalisatie"] },
     ],
   },
   {

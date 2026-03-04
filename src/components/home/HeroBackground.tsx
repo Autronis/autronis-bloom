@@ -49,7 +49,7 @@ const HeroBackground = () => {
       dots.push({
         lineIndex: line,
         t: Math.random(),
-        speed: 0.00008 + Math.random() * 0.00018,
+        speed: (isMobile ? 0.00025 : 0.00008) + Math.random() * (isMobile ? 0.00035 : 0.00018),
         radius: 2 + Math.random() * 2.5,
         opacity: 0.1 + Math.random() * 0.12,
       });

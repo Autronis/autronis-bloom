@@ -12,10 +12,7 @@ const FinalCTA = () => {
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
+        setIsVisible(entry.isIntersecting);
       },
       { threshold: 0.15 }
     );
@@ -27,7 +24,7 @@ const FinalCTA = () => {
     <section ref={sectionRef} className="py-16 sm:py-28 border-t border-border relative overflow-hidden">
 
       {/* Logo-inspired butterfly: gear body + circuit wings */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ marginTop: "-40px" }}>
         <svg
           width="700"
           height="560"

@@ -489,7 +489,7 @@ const Services = () => {
               <p className="text-muted-foreground">Heeft uw systeem een API? Dan kunnen wij integreren.</p>
             </div>
 
-            <div className="relative mb-4 overflow-hidden py-8">
+            <div className="relative mb-4 overflow-hidden py-10">
               <div className="flex animate-marquee-right gap-14 w-max items-center justify-center">
                 {[...toolIconsRow1, ...toolIconsRow1, ...toolIconsRow1].map((tool, i) => (
                   <div key={i} className="relative group hover:scale-110 transition-transform duration-200">
@@ -502,7 +502,7 @@ const Services = () => {
               </div>
             </div>
 
-            <div className="relative overflow-hidden py-8">
+            <div className="relative overflow-hidden py-10">
               <div className="flex animate-marquee-left gap-14 w-max items-center justify-center">
                 {[...toolIconsRow2, ...toolIconsRow2, ...toolIconsRow2].map((tool, i) => (
                   <div key={i} className="relative group hover:scale-110 transition-transform duration-200">

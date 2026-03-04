@@ -137,12 +137,12 @@ const ServiceCard = ({
               </div>
             </div>
             {/* Image */}
-            <div className="flex-1 relative overflow-hidden bg-card flex items-center justify-center aspect-[4/3] md:aspect-auto md:self-stretch">
+            <div className="flex-1 relative overflow-hidden bg-card flex items-center justify-center min-h-[200px] md:min-h-0 aspect-[4/3] md:aspect-auto md:self-stretch">
               {/* Glow only on hover */}
               <motion.img
                 src={s.image}
                 alt={s.title}
-                className="absolute inset-0 m-auto w-[92%] h-[92%] object-contain z-[1] mix-blend-screen"
+                className="absolute inset-0 m-auto w-[85%] h-[85%] object-contain z-[1] mix-blend-screen"
                 style={{ opacity: 0.85 }}
                 animate={
                   hoveredIndex === i

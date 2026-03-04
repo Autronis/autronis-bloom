@@ -17,7 +17,7 @@ const team: TeamMember[] = [
     role: "Automatiseringsarchitect",
     subtitle: "Co-founder",
     photo: fotoSyb,
-    focusLabel: "Technische realisatie & AI-integraties",
+    focusLabel: "Technische realisatie en AI-integraties",
     description:
       "Syb realiseert schaalbare automatiseringssystemen en AI-integraties met nadruk op codekwaliteit, prestaties en onderhoudbaarheid. Hij vertaalt architectuur naar stabiele implementaties en zorgt dat systemen ook op lange termijn logisch, uitbreidbaar en efficiënt blijven functioneren.",
     skills: [
@@ -39,9 +39,9 @@ const team: TeamMember[] = [
     role: "AI- en Systeemingenieur",
     subtitle: "Co-founder",
     photo: fotoSem,
-    focusLabel: "Structuur, AI en systeemlogica",
+    focusLabel: "Systeemstructuur, AI en datalogica",
     description:
-      "Sem vertaalt complexe processen naar heldere systeemstructuur en bewaakt documentatie, datalogica en overdraagbaarheid. Hij zorgt voor overzicht, duidelijke planning en consistente besluitvorming — zodat implementaties niet alleen werken, maar ook begrijpelijk en beheersbaar blijven.",
+      "Sem vertaalt complexe processen naar duidelijke systeemstructuren en bewaakt documentatie, datalogica en overdraagbaarheid. Hij zorgt voor overzicht, duidelijke planning en consistente besluitvorming, zodat implementaties niet alleen werken, maar ook logisch en beheersbaar blijven.",
     skills: [
       { label: "Systeemarchitectuur", category: "arch" },
       { label: "Workflow-ontwerp", category: "arch" },
@@ -59,10 +59,10 @@ const team: TeamMember[] = [
 ];
 
 const directReasons = [
-  { icon: Users, title: "Direct contact met engineers", description: "U werkt direct met de mensen die uw systemen ontwerpen en bouwen. Geen overdracht, geen ruis — alleen inhoudelijke samenwerking." },
-  { icon: Clock, title: "Technische keuzes met lange termijnvisie", description: "Elke beslissing is gericht op schaalbaarheid, onderhoudbaarheid en overdraagbaarheid. Geen snelle oplossingen die later herschreven moeten worden." },
-  { icon: Eye, title: "Volledige overdraagbaarheid", description: "Systemen zijn logisch opgebouwd, volledig gedocumenteerd en inzichtelijk. U blijft eigenaar van uw automatisering." },
-  { icon: Shield, title: "Beveiliging vanaf dag één", description: "Toegangsmodellen, logging en databeheer zijn standaard geïntegreerd — niet achteraf toegevoegd." },
+  { icon: Users, title: "Direct contact met engineers", description: "U werkt direct met de mensen die uw systemen analyseren, ontwerpen en bouwen. Geen overdrachtslagen, maar directe en inhoudelijke samenwerking." },
+  { icon: Clock, title: "Technische keuzes met lange termijnvisie", description: "Elke technische keuze is gericht op schaalbaarheid, onderhoudbaarheid en overdraagbaarheid. Geen snelle oplossingen die later opnieuw gebouwd moeten worden." },
+  { icon: Eye, title: "Volledige overdraagbaarheid", description: "Systemen worden logisch opgebouwd en volledig gedocumenteerd. U blijft eigenaar van uw automatiseringen en behoudt volledig inzicht in de werking." },
+  { icon: Shield, title: "Beveiliging vanaf dag één", description: "Toegangsbeheer, logging en databescherming worden vanaf het begin geïntegreerd in de architectuur, niet achteraf toegevoegd." },
 ];
 
 
@@ -118,10 +118,10 @@ const Team = () => {
             <ScrollRevealItem>
               <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Team</p>
               <h1 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight">
-                Werk direct met de architecten achter uw systeem.
+                Werk direct met de engineers die uw systemen bouwen.
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Wij ontwerpen, bouwen en optimaliseren zelf. Geen accountmanagers, geen overdracht — alleen directe samenwerking met de engineers die verantwoordelijk zijn voor uw architectuur.
+                Wij ontwerpen, bouwen en optimaliseren automatiseringen zelf. U werkt direct samen met de engineers die verantwoordelijk zijn voor analyse, ontwikkeling en implementatie. Geen accountmanagers of overdrachtslagen, maar directe samenwerking met het team dat uw systemen realiseert.
               </p>
             </ScrollRevealItem>
           </ScrollReveal>

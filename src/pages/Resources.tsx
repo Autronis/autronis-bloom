@@ -148,7 +148,7 @@ const Resources = () => {
         {/* Page header */}
         <div className="max-w-2xl mx-auto text-center mb-16">
           <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Inzichten</p>
-          <h1 className="text-4xl sm:text-5xl font-bold mb-4">Inzichten & gidsen</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold mb-4">Inzichten & gidsen</h1>
           <p className="text-lg text-muted-foreground leading-relaxed">
             Praktische inzichten over automatisering en AI voor MKB-bedrijven. Geen theorie, maar concrete kennis die direct toepasbaar is in bedrijfsprocessen en systemen.
           </p>

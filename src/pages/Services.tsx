@@ -472,7 +472,7 @@ const Services = () => {
             transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
           >
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Services</p>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">
               Automatisering zonder complexiteit
             </h1>
             <motion.p

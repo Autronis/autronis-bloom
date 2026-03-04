@@ -12,7 +12,7 @@ const Demo = () => {
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center mb-12">
             <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Demo</p>
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4">Zie automatisering in actie</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4">Zie automatisering in actie</h1>
             <p className="text-lg text-muted-foreground">
               Bekijk in twee minuten hoe een volledig geautomatiseerde workflow werkt — van trigger tot resultaat.
             </p>

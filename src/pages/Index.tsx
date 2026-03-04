@@ -114,18 +114,33 @@ const Index = () => {
             {/* Video Modal */}
             <Dialog open={videoOpen} onOpenChange={setVideoOpen}>
               <DialogContent className="sm:max-w-4xl p-0 bg-card border-border overflow-hidden">
-                <div className="p-4 pb-0">
+                <div className="p-4 pb-0 flex items-center justify-between">
                   <p className="text-[10px] font-semibold text-primary tracking-widest uppercase">Systeemdemo</p>
                 </div>
-                <div className="aspect-video m-4 mt-2 rounded-lg overflow-hidden border border-border">
+                <div className="relative m-4 mt-2 rounded-lg overflow-hidden border border-border bg-black">
                   {videoOpen && (
-                    <iframe
-                      src="https://www.youtube-nocookie.com/embed/2pZ5mX64K3k?autoplay=1"
-                      title="Autronis demo"
-                      className="w-full h-full"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
+                    <>
+                      <iframe
+                        id="demo-video-iframe"
+                        src="https://www.youtube-nocookie.com/embed/2pZ5mX64K3k?autoplay=1&rel=0&modestbranding=1&showinfo=0&fs=1"
+                        title="Autronis demo"
+                        className="w-full aspect-video block"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                        allowFullScreen
+                        style={{ border: 0 }}
+                      />
+                      <button
+                        onClick={() => {
+                          const iframe = document.getElementById('demo-video-iframe') as HTMLIFrameElement;
+                          if (iframe) {
+                            iframe.src = "https://www.youtube-nocookie.com/embed/2pZ5mX64K3k?autoplay=1&start=10&rel=0&modestbranding=1&showinfo=0&fs=1";
+                          }
+                        }}
+                        className="absolute bottom-3 right-3 px-3 py-1.5 rounded-md bg-card/90 backdrop-blur-sm border border-border text-xs font-medium text-foreground hover:bg-card transition-colors"
+                      >
+                        Skip intro →
+                      </button>
+                    </>
                   )}
                 </div>
               </DialogContent>

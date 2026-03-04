@@ -62,7 +62,7 @@ const cases: ImplementedCase[] = [
       "Meer klantgesprekken zonder extra teamcapaciteit",
     ],
     visual: LeadIsometric,
-    videoUrl: "https://www.youtube-nocookie.com/embed/2pZ5mX64K3k",
+    videoUrl: "https://www.youtube-nocookie.com/embed/2pZ5mX64K3k?rel=0&modestbranding=1&showinfo=0&fs=1",
   },
 ];
 

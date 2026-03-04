@@ -59,9 +59,8 @@ const ImpactSimulator = () => {
     const totalMonthlySavings = monthlySavingsHours + monthlyErrorSavings;
     const totalYearlySavings = totalMonthlySavings * 12;
 
-    const complexityMultiplier = autoPercent <= 50 ? 1 : autoPercent <= 70 ? 1.4 : 1.8;
-    const baseInvestment = hours * rate * 6;
-    const investment = Math.round((baseInvestment * complexityMultiplier) / 500) * 500;
+    const complexityVariation = autoPercent <= 50 ? 0 : autoPercent <= 70 ? 800 : 1500;
+    const investment = 18500 + complexityVariation;
 
     const netBenefitYear1 = totalYearlySavings - investment;
     const breakEvenMonths = totalMonthlySavings > 0 ? investment / totalMonthlySavings : 0;

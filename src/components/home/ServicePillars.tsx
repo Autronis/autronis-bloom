@@ -6,9 +6,9 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 
 import { motion } from "framer-motion";
-import serviceAutomation from "@/assets/service_automation_robot_transparent.png";
-import serviceIntegration from "@/assets/service_integration_transparent.png";
-import serviceData from "@/assets/service_data_transparent.png";
+import serviceAutomation from "@/assets/service_automation.png";
+import serviceIntegration from "@/assets/service_integration.png";
+import serviceData from "@/assets/service_data.png";
 
 const services = [
   {

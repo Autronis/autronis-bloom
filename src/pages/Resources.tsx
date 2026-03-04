@@ -89,13 +89,13 @@ const frameworks = [
 const ArticleCard = ({ post }: { post: typeof guides[0] }) => (
   <Link
     to={`/resources/${post.slug}`}
-    className="group rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/30 flex flex-col"
+    className="group rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/30 hover:scale-[1.015] hover:-translate-y-0.5 flex flex-col max-md:hover:scale-100 max-md:hover:translate-y-0"
   >
     <div className="flex items-center gap-2 mb-4">
       <span className="text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full">{post.category}</span>
       <span className="text-xs text-muted-foreground">{post.date}</span>
     </div>
-    <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">{post.title}</h3>
+    <h3 className="text-lg font-semibold mb-2">{post.title}</h3>
     <p className="text-sm text-muted-foreground leading-relaxed flex-1">{post.excerpt}</p>
     <span className="mt-4 text-sm text-primary inline-flex items-center gap-1 group-hover:underline">
       Lees meer <ArrowRight size={14} />
@@ -105,11 +105,11 @@ const ArticleCard = ({ post }: { post: typeof guides[0] }) => (
 
 const IconCard = ({ icon: Icon, title, description, href, onClick }: { icon: any; title: string; description: string; href?: string; onClick?: () => void }) => {
   const content = (
-    <div className="group rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/30 flex flex-col h-full">
+    <div className="group rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/30 md:hover:scale-[1.015] md:hover:-translate-y-0.5 flex flex-col h-full">
       <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:bg-primary/15 transition-colors">
         <Icon size={20} />
       </div>
-      <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">{title}</h3>
+      <h3 className="text-lg font-semibold mb-2">{title}</h3>
       <p className="text-sm text-muted-foreground leading-relaxed flex-1">{description}</p>
       {(href || onClick) && (
         <span className="mt-4 text-sm text-primary inline-flex items-center gap-1 group-hover:underline">

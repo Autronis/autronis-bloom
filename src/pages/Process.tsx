@@ -580,7 +580,7 @@ const Process = () => {
               {impactCards.filter(c => c.primary).map((card, idx) => (
                 <motion.div
                   key={card.title}
-                  className="rounded-2xl border border-primary/30 p-6 sm:p-7 cursor-default group"
+                  className="rounded-2xl border border-border p-6 sm:p-7 cursor-default group"
                   style={{
                     backgroundColor: "hsl(var(--card) / 0.8)",
                     backdropFilter: "blur(8px)",

@@ -127,7 +127,7 @@ const ProblemSolutionSection = () => {
               </p>
             </ScrollRevealItem>
           </ScrollReveal>
-          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6">
+          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             {problems.map((p, i) => (
               <ScrollRevealItem key={p.title}>
                 <GlowCard
@@ -165,7 +165,7 @@ const ProblemSolutionSection = () => {
               </p>
             </ScrollRevealItem>
           </ScrollReveal>
-          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 mb-8 sm:mb-12">
+          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
             {solutions.map((s, i) => (
               <ScrollRevealItem key={s.title}>
                 <GlowCard

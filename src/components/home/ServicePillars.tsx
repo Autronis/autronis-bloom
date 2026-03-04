@@ -6,9 +6,9 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 
 import { motion } from "framer-motion";
-import serviceAutomation from "@/assets/service_automation_gen.png";
-import serviceIntegration from "@/assets/service_integration_gen.png";
-import serviceData from "@/assets/service_data_gen.png";
+import serviceAutomation from "@/assets/service_automation_transparent.png";
+import serviceIntegration from "@/assets/service_integration_transparent.png";
+import serviceData from "@/assets/service_data_transparent.png";
 
 const services = [
   {
@@ -142,8 +142,8 @@ const ServiceCard = ({
               <motion.img
                 src={s.image}
                 alt={s.title}
-                className="w-full h-full object-cover relative z-[1] dark:mix-blend-lighten"
-                style={{ opacity: 0.65 }}
+                className="w-full h-full object-cover relative z-[1]"
+                style={{ opacity: 0.9 }}
                 animate={
                   hoveredIndex === i
                     ? { scale: 1.04, filter: `brightness(0.85) saturate(1.1)` }

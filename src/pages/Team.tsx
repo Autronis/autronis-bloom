@@ -73,20 +73,28 @@ const WerkstandaardSection = ({ reasons }: { reasons: typeof directReasons }) =>
   const isInView = useInView(ref, { once: false, amount: 0.25 });
 
   return (
-    <div ref={ref} className="max-w-2xl mx-auto mb-16 relative text-center">
+    <div ref={ref} className="max-w-2xl mx-auto mb-16 relative">
       {/* Parallax background glow */}
       <div className="werkstandaard-glow" />
 
-      <motion.h2
-        className="text-xl font-bold mb-1"
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        transition={{ duration: 0.6, ease: sectionEase }}
-      >
-        Waarom met ons werken?
-      </motion.h2>
-
-      <div className="mb-6" />
+      <div className="text-center mb-6">
+        <motion.p
+          className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5, ease: sectionEase }}
+        >
+          Samenwerking
+        </motion.p>
+        <motion.h2
+          className="text-xl font-bold"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, ease: sectionEase }}
+        >
+          Waarom organisaties met ons werken
+        </motion.h2>
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {reasons.map((reason, i) => (

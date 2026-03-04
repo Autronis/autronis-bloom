@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Sun, Moon, ChevronDown, Users, Workflow } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const dropdownItems = [
   {
@@ -67,7 +68,10 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = useLocation();
   const { theme, setTheme } = useTheme();
+  const isMobile = useIsMobile();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const compactNavbar = scrolled && !isMobile;
+  const headerElevated = scrolled || mobileOpen;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -85,14 +89,14 @@ const Navbar = () => {
     <header
       className="fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ease-out"
       style={{
-        backgroundColor: scrolled
+        backgroundColor: headerElevated
           ? "hsl(var(--background) / 0.95)"
           : "hsl(var(--background) / 0.72)",
-        backdropFilter: scrolled ? "blur(20px)" : "blur(12px)",
-        borderColor: scrolled
+        backdropFilter: headerElevated ? "blur(20px)" : "blur(12px)",
+        borderColor: headerElevated
           ? "hsl(var(--border) / 0.5)"
           : "transparent",
-        boxShadow: scrolled
+        boxShadow: headerElevated
           ? "0 1px 12px hsl(0 0% 0% / 0.08)"
           : "none",
       }}
@@ -100,7 +104,7 @@ const Navbar = () => {
       <nav
         className="container mx-auto flex items-center justify-between transition-all duration-300 ease-out"
         style={{
-          height: scrolled ? "52px" : "64px",
+          height: compactNavbar ? "52px" : "64px",
           padding: "0 1rem",
         }}
       >
@@ -111,13 +115,13 @@ const Navbar = () => {
             width={130}
             height={32}
             className="w-auto transform-gpu transition-all duration-300 ease-out"
-            style={{ height: scrolled ? "26px" : "32px" }}
+            style={{ height: compactNavbar ? "26px" : "32px" }}
             loading="eager"
             decoding="async"
           />
           <span
             className="font-bold tracking-tight transition-all duration-300 ease-out"
-            style={{ fontSize: scrolled ? "0.92rem" : "1.05rem" }}
+            style={{ fontSize: compactNavbar ? "0.92rem" : "1.05rem" }}
           >
             Autronis
           </span>
@@ -125,7 +129,7 @@ const Navbar = () => {
 
         <div
           className="hidden lg:flex items-center transition-all duration-300 ease-out"
-          style={{ gap: scrolled ? "0" : "4px" }}
+          style={{ gap: compactNavbar ? "0" : "4px" }}
         >
           {navLinks.map((link: NavItem) =>
             "children" in link && link.children ? (
@@ -141,7 +145,7 @@ const Navbar = () => {
                       ? "text-primary"
                       : "text-muted-foreground hover:text-foreground"
                   }`}
-                  style={{ fontSize: scrolled ? "0.82rem" : "0.875rem" }}
+                  style={{ fontSize: compactNavbar ? "0.82rem" : "0.875rem" }}
                   onFocus={() => setDropdownOpen(true)}
                   onKeyDown={(e) => { if (e.key === "Escape") setDropdownOpen(false); }}
                   aria-expanded={dropdownOpen}
@@ -184,7 +188,7 @@ const Navbar = () => {
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
-                style={{ fontSize: scrolled ? "0.82rem" : "0.875rem" }}
+                style={{ fontSize: compactNavbar ? "0.82rem" : "0.875rem" }}
               >
                 {link.label}
               </Link>
@@ -223,59 +227,61 @@ const Navbar = () => {
       {/* Mobile menu */}
       <div
         ref={mobileMenuRef}
-        className="lg:hidden border-b border-border overflow-hidden transition-all duration-300 ease-out"
+        className="lg:hidden border-b border-border grid transition-[grid-template-rows,opacity] duration-300 ease-out"
         style={{
           backgroundColor: "hsl(var(--background) / 0.98)",
-          maxHeight: mobileOpen ? "600px" : "0px",
+          gridTemplateRows: mobileOpen ? "1fr" : "0fr",
           opacity: mobileOpen ? 1 : 0,
         }}
       >
-        <div className="container mx-auto px-4 py-4 flex flex-col gap-1">
-          {navLinks.map((link: NavItem) =>
-            "children" in link && link.children ? (
-              <div key={link.label} className="flex flex-col">
-                <span className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+        <div className="overflow-hidden">
+          <div className="container mx-auto px-4 py-4 flex flex-col gap-1">
+            {navLinks.map((link: NavItem) =>
+              "children" in link && link.children ? (
+                <div key={link.label} className="flex flex-col">
+                  <span className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                    {link.label}
+                  </span>
+                  {link.children.map((child) => (
+                    <Link
+                      key={child.href}
+                      to={child.href}
+                      className={`px-6 py-3 rounded-md text-sm font-medium transition-colors flex items-center gap-3 ${
+                        location.pathname === child.href
+                          ? "text-primary bg-primary/10"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                      }`}
+                    >
+                      <child.icon size={16} />
+                      <div>
+                        <span className="block">{child.label}</span>
+                        <span className="text-xs text-muted-foreground font-normal">{child.description}</span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <Link
+                  key={"href" in link ? link.href : link.label}
+                  to={"href" in link ? link.href! : "/"}
+                  className={`px-4 py-3 rounded-md text-sm font-medium transition-colors ${
+                    "href" in link && location.pathname === link.href
+                      ? "text-primary bg-primary/10"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  }`}
+                >
                   {link.label}
-                </span>
-                {link.children.map((child) => (
-                  <Link
-                    key={child.href}
-                    to={child.href}
-                    className={`px-6 py-3 rounded-md text-sm font-medium transition-colors flex items-center gap-3 ${
-                      location.pathname === child.href
-                        ? "text-primary bg-primary/10"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                    }`}
-                  >
-                    <child.icon size={16} />
-                    <div>
-                      <span className="block">{child.label}</span>
-                      <span className="text-xs text-muted-foreground font-normal">{child.description}</span>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            ) : (
-              <Link
-                key={"href" in link ? link.href : link.label}
-                to={"href" in link ? link.href! : "/"}
-                className={`px-4 py-3 rounded-md text-sm font-medium transition-colors ${
-                  "href" in link && location.pathname === link.href
-                    ? "text-primary bg-primary/10"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                }`}
-              >
-                {link.label}
-              </Link>
-            )
-          )}
-          <div className="flex items-center gap-2 px-4 py-2">
-            <button className="px-2 py-1 rounded bg-primary/10 text-primary text-xs font-semibold">NL</button>
-            <button className="px-2 py-1 rounded text-xs text-muted-foreground opacity-50 cursor-not-allowed">EN</button>
+                </Link>
+              )
+            )}
+            <div className="flex items-center gap-2 px-4 py-2">
+              <button className="px-2 py-1 rounded bg-primary/10 text-primary text-xs font-semibold">NL</button>
+              <button className="px-2 py-1 rounded text-xs text-muted-foreground opacity-50 cursor-not-allowed">EN</button>
+            </div>
+            <Button asChild size="lg" className="mt-2">
+              <Link to="/book">Plan Automation Scan</Link>
+            </Button>
           </div>
-          <Button asChild size="lg" className="mt-2">
-            <Link to="/book">Plan Automation Scan</Link>
-          </Button>
         </div>
       </div>
     </header>

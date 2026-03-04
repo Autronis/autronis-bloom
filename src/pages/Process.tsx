@@ -379,10 +379,11 @@ const PhaseCard = ({
 const Process = () => {
   const timelineRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [fillPercent, setFillPercent] = useState(0);
+  const [fillHeight, setFillHeight] = useState(0);
 
   const updateActivePhase = useCallback(() => {
     const viewportH = window.innerHeight;
+    const timeline = timelineRef.current;
     let newActive = -1;
 
     phases.forEach((_, i) => {
@@ -397,11 +398,18 @@ const Process = () => {
 
     setActiveIndex(newActive);
 
-    if (newActive < 0) {
-      setFillPercent(0);
+    if (newActive < 0 || !timeline) {
+      setFillHeight(0);
     } else {
-      const totalSegments = phases.length - 1;
-      setFillPercent(Math.min(100, (newActive / totalSegments) * 100));
+      // Calculate fill height based on actual node position
+      const activeEl = document.querySelector(`[data-phase="${newActive}"]`);
+      if (activeEl) {
+        const timelineRect = timeline.getBoundingClientRect();
+        const activeRect = activeEl.getBoundingClientRect();
+        // The node dot is at mt-5 (20px) from the top of the phase element + half the dot height (10px)
+        const nodeCenter = activeRect.top + 30 - timelineRect.top;
+        setFillHeight(Math.max(0, nodeCenter));
+      }
     }
   }, []);
 
@@ -523,7 +531,7 @@ const Process = () => {
             <div
               className="absolute inset-x-0 top-0 bg-primary rounded-full"
               style={{
-                height: `${fillPercent}%`,
+                height: `${fillHeight}px`,
                 transition: "height 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
               }}
             />

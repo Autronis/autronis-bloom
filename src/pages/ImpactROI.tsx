@@ -8,29 +8,6 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 const ImpactROI = () => {
   return (
     <Layout>
-      {/* Hero */}
-      <section className="relative pt-16 sm:pt-24 pb-16 overflow-hidden">
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <motion.div
-            className="max-w-3xl mx-auto text-center"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
-          >
-            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
-              Impact & ROI
-            </p>
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4 leading-tight">
-              Impact is meetbaar. Wij rekenen voordat we bouwen.
-            </h1>
-            <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Automatisering is alleen waardevol wanneer de zakelijke impact aantoonbaar is. Daarom onderbouwen wij elke implementatie met een gestructureerde ROI-analyse.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-
 
 
 

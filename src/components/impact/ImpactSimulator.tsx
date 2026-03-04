@@ -109,16 +109,22 @@ const ImpactSimulator = () => {
   const handleSliderEnd = useCallback(() => setActiveSlider(null), []);
 
   return (
-    <section id="roi-scan" className="relative overflow-hidden border-t border-border scroll-mt-24">
+    <section id="roi-scan" className="relative overflow-hidden scroll-mt-24">
       
       <div className="container mx-auto px-4 lg:px-8 py-16 sm:py-24 relative z-10">
         {/* Header */}
         <ScrollReveal className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
           <ScrollRevealItem>
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Impact & ROI</p>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Impact & ROI Simulator</h2>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4">
+              Impact is meetbaar. Daarom rekenen wij voordat we bouwen.
+            </h1>
             <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Op basis van uw situatie berekenen wij een conservatieve businesscase inclusief besparing, break-even punt en ROI.
+              Automatisering is alleen waardevol wanneer de zakelijke impact aantoonbaar is.
+              Daarom berekenen wij vooraf een conservatieve businesscase met verwachte besparing, break-even punt en ROI.
+            </p>
+            <p className="text-sm text-foreground/80 mt-6 font-medium">
+              Vul uw situatie in en bereken direct de potentiële impact.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>

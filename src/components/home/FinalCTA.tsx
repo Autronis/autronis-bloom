@@ -1,18 +1,43 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 const FinalCTA = () => {
-  return (
-    <section className="py-16 sm:py-28 border-t border-border relative overflow-hidden">
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
-      {/* Logo-inspired butterfly: gear body + circuit wings - CSS animated */}
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="py-16 sm:py-28 border-t border-border relative overflow-hidden">
+
+      {/* Logo-inspired butterfly: gear body + circuit wings */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <svg
           width="700"
           height="560"
           viewBox="-120 -90 240 180"
-          className="max-w-[90vw] animate-[finalcta-breathe_10s_ease-in-out_infinite]"
+          className="max-w-[90vw]"
+          style={{
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? "scale(1)" : "scale(0.7)",
+            transition: "opacity 1.2s cubic-bezier(0.25,0.46,0.45,0.94), transform 1.2s cubic-bezier(0.25,0.46,0.45,0.94)",
+          }}
           aria-hidden="true"
         >
           {/* Left upper wing */}
@@ -23,6 +48,12 @@ const FinalCTA = () => {
             stroke="hsl(174, 78%, 41%)"
             strokeOpacity="0.3"
             strokeWidth="1.2"
+            style={{
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? "rotate(0deg)" : "rotate(25deg)",
+              transformOrigin: "-8px -4px",
+              transition: "opacity 0.8s ease-out 0.3s, transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94) 0.3s",
+            }}
           />
           {/* Left lower wing */}
           <path
@@ -32,6 +63,12 @@ const FinalCTA = () => {
             stroke="hsl(174, 78%, 41%)"
             strokeOpacity="0.25"
             strokeWidth="1"
+            style={{
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? "rotate(0deg)" : "rotate(-20deg)",
+              transformOrigin: "-8px 4px",
+              transition: "opacity 0.8s ease-out 0.4s, transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94) 0.4s",
+            }}
           />
 
           {/* Right upper wing */}
@@ -42,6 +79,12 @@ const FinalCTA = () => {
             stroke="hsl(174, 78%, 41%)"
             strokeOpacity="0.3"
             strokeWidth="1.2"
+            style={{
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? "rotate(0deg)" : "rotate(-25deg)",
+              transformOrigin: "8px -4px",
+              transition: "opacity 0.8s ease-out 0.3s, transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94) 0.3s",
+            }}
           />
           {/* Right lower wing */}
           <path
@@ -51,10 +94,25 @@ const FinalCTA = () => {
             stroke="hsl(174, 78%, 41%)"
             strokeOpacity="0.25"
             strokeWidth="1"
+            style={{
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? "rotate(0deg)" : "rotate(20deg)",
+              transformOrigin: "8px 4px",
+              transition: "opacity 0.8s ease-out 0.4s, transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94) 0.4s",
+            }}
           />
 
           {/* Circuit traces on wings - left */}
-          <g opacity="0.22" stroke="hsl(174, 78%, 41%)" strokeWidth="0.7" fill="none">
+          <g
+            opacity="0.22"
+            stroke="hsl(174, 78%, 41%)"
+            strokeWidth="0.7"
+            fill="none"
+            style={{
+              opacity: isVisible ? 0.22 : 0,
+              transition: "opacity 0.6s ease-out 0.7s",
+            }}
+          >
             <path d="M -8 -2 L -30 -15 L -50 -30" />
             <path d="M -8 0 L -40 -8 L -65 -20" />
             <path d="M -8 2 L -25 10 L -40 30" />
@@ -66,7 +124,16 @@ const FinalCTA = () => {
           </g>
 
           {/* Circuit traces on wings - right */}
-          <g opacity="0.22" stroke="hsl(174, 78%, 41%)" strokeWidth="0.7" fill="none">
+          <g
+            opacity="0.22"
+            stroke="hsl(174, 78%, 41%)"
+            strokeWidth="0.7"
+            fill="none"
+            style={{
+              opacity: isVisible ? 0.22 : 0,
+              transition: "opacity 0.6s ease-out 0.7s",
+            }}
+          >
             <path d="M 8 -2 L 30 -15 L 50 -30" />
             <path d="M 8 0 L 40 -8 L 65 -20" />
             <path d="M 8 2 L 25 10 L 40 30" />
@@ -78,7 +145,15 @@ const FinalCTA = () => {
           </g>
 
           {/* Gear body - 6 teeth */}
-          <g opacity="0.25">
+          <g
+            opacity="0.25"
+            style={{
+              opacity: isVisible ? 0.25 : 0,
+              transform: isVisible ? "scale(1)" : "scale(0)",
+              transformOrigin: "0px 0px",
+              transition: "opacity 0.6s ease-out 0.15s, transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94) 0.15s",
+            }}
+          >
             {[0, 60, 120, 180, 240, 300].map((angle) => (
               <rect
                 key={angle}
@@ -105,7 +180,11 @@ const FinalCTA = () => {
             stroke="hsl(174, 78%, 41%)"
             strokeWidth="2.5"
             strokeOpacity="0.4"
-            className="animate-[finalcta-pulse_3s_ease-in-out_infinite]"
+            className={isVisible ? "animate-[finalcta-pulse_3s_ease-in-out_infinite]" : ""}
+            style={{
+              opacity: isVisible ? 1 : 0,
+              transition: "opacity 0.5s ease-out 0.2s",
+            }}
           />
 
           {/* Center pulse */}
@@ -115,18 +194,27 @@ const FinalCTA = () => {
             r="4"
             fill="hsl(174, 78%, 41%)"
             fillOpacity="0.13"
+            style={{
+              opacity: isVisible ? 1 : 0,
+              transition: "opacity 0.4s ease-out 0.1s",
+            }}
           />
 
           {/* Antennae */}
-          <path
-            d="M -2.5 -14 Q -8 -35 -12 -48 M 2.5 -14 Q 8 -35 12 -48"
-            stroke="hsl(174, 78%, 41%)"
-            strokeOpacity="0.22"
-            strokeWidth="0.8"
-            fill="none"
-          />
-          <circle cx="-12" cy="-48" r="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.22" />
-          <circle cx="12" cy="-48" r="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.22" />
+          <g style={{
+            opacity: isVisible ? 1 : 0,
+            transition: "opacity 0.6s ease-out 0.6s",
+          }}>
+            <path
+              d="M -2.5 -14 Q -8 -35 -12 -48 M 2.5 -14 Q 8 -35 12 -48"
+              stroke="hsl(174, 78%, 41%)"
+              strokeOpacity="0.22"
+              strokeWidth="0.8"
+              fill="none"
+            />
+            <circle cx="-12" cy="-48" r="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.22" />
+            <circle cx="12" cy="-48" r="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.22" />
+          </g>
         </svg>
       </div>
 

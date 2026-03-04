@@ -76,9 +76,9 @@ const ServiceCard = ({
           onMouseEnter={() => setHoveredIndex(i)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
-           <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} items-stretch gap-0`}>
+           <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} items-start md:items-center gap-0`}>
             {/* Text */}
-              <div className="flex-1 px-4 py-2.5 sm:px-5 sm:py-3 flex flex-col justify-center">
+              <div className="flex-1 px-4 py-2 sm:px-5 sm:py-2.5 flex flex-col justify-start">
               <div className="flex items-center gap-3 mb-1">
                 <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
                   <s.icon size={18} />
@@ -137,12 +137,12 @@ const ServiceCard = ({
               </div>
             </div>
             {/* Image */}
-            <div className="flex-1 relative overflow-hidden bg-card flex items-center justify-center">
+            <div className="flex-1 relative overflow-hidden bg-card flex items-center justify-center aspect-[4/3] md:aspect-auto md:self-stretch">
               {/* Glow only on hover */}
               <motion.img
                 src={s.image}
                 alt={s.title}
-                className="w-full h-full object-contain relative z-[1] mix-blend-screen"
+                className="absolute inset-0 m-auto w-[92%] h-[92%] object-contain z-[1] mix-blend-screen"
                 style={{ opacity: 0.85 }}
                 animate={
                   hoveredIndex === i

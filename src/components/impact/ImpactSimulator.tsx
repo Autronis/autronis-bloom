@@ -96,7 +96,7 @@ const ImpactSimulator = () => {
 
   const sliders = [
     { id: "hours", label: "Handmatige uren per week", value: hours, onChange: setHours, min: 5, max: 80, step: 1, display: `${hours} uur`, hint: "Tijd besteed aan repetitieve of handmatige processen." },
-    { id: "rate", label: "Gemiddelde uurkosten", value: rate, onChange: setRate, min: 25, max: 120, step: 5, display: `€${rate}`, hint: "Inclusief salaris, werkgeverslasten en overhead." },
+    { id: "rate", label: "Gemiddelde uurkosten", value: rate, onChange: setRate, min: 25, max: 120, step: 5, display: `€${rate}`, hint: "Inclusief salaris, werkgeverslasten en overige personeelskosten." },
     { id: "auto", label: "Automatiseringspercentage", value: autoPercent, onChange: setAutoPercent, min: 30, max: 85, step: 1, display: `${autoPercent}%`, hint: "Conservatieve inschatting na validatie en controle." },
     { id: "error", label: "Geschat foutpercentage", value: errorPercent, onChange: setErrorPercent, min: 0, max: 25, step: 1, display: `${errorPercent}%`, hint: "Percentage van totale werktijd besteed aan correcties, herstelwerk of dubbele invoer.", subHint: "Bij administratieve processen ligt dit vaak tussen 2–8%." },
   ];
@@ -295,16 +295,6 @@ const ImpactSimulator = () => {
                   <div className="flex items-center gap-2">
                     <Calculator size={14} className="text-primary" />
                     <p className="text-sm font-medium text-foreground">Indicatieve projectinvestering</p>
-                    <TooltipProvider delayDuration={200}>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Info size={13} className="text-muted-foreground cursor-help" />
-                        </TooltipTrigger>
-                        <TooltipContent side="top" className="max-w-[240px] text-xs">
-                          Omvat analyse, ontwerp, bouw, integraties, testen en documentatie.
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
                   </div>
                   <span className="text-lg font-bold text-foreground tabular-nums">
                     {formatCurrency(animInvestment)}

@@ -1,5 +1,34 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 
+/** Wrapper that pauses SVG animations when off-screen */
+const VisibleSvg = ({ children, viewBox, className }: { children: React.ReactNode; viewBox: string; className?: string }) => {
+  const ref = useRef<SVGSVGElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { threshold: 0 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (visible) el.unpauseAnimations?.();
+    else el.pauseAnimations?.();
+  }, [visible]);
+
+  return (
+    <svg ref={ref} viewBox={viewBox} className={className} fill="none">
+      {children}
+    </svg>
+  );
+};
 /* ─── Isometric Platform ─── */
 const IsoPlatform = ({
   x, y, w = 110, label, isHub = false, icon,
@@ -153,28 +182,25 @@ export const EcommerceIsometric = () => {
   const toFul = `M ${hub.x},${hub.y} L ${ful.x},${ful.y}`;
 
   return (
-    <svg viewBox="0 0 440 400" className="w-full" fill="none">
-      {/* Connector lines */}
+    <VisibleSvg viewBox="0 0 440 400" className="w-full">
       <ConnectorLine x1={lev.x} y1={lev.y} x2={prod.x} y2={prod.y} />
       <ConnectorLine x1={prod.x} y1={prod.y} x2={hub.x} y2={hub.y} />
       <ConnectorLine x1={hub.x} y1={hub.y} x2={web.x} y2={web.y} />
       <ConnectorLine x1={hub.x} y1={hub.y} x2={erp.x} y2={erp.y} />
       <ConnectorLine x1={hub.x} y1={hub.y} x2={ful.x} y2={ful.y} />
 
-      {/* Animated dots: 1 top-down, 3 splitting from hub */}
       <FlowDot path={topFlow} id="ec-top" dur={3} />
       <FlowDot path={toWeb} id="ec-web" dur={2.5} />
       <FlowDot path={toErp} id="ec-erp" dur={2.5} />
       <FlowDot path={toFul} id="ec-ful" dur={2.5} />
 
-      {/* Platforms */}
       <IsoPlatform x={lev.x} y={lev.y} w={100} label="Leverancier" icon={<IcoBox />} />
       <IsoPlatform x={prod.x} y={prod.y} w={115} label="Productontdekking" icon={<IcoSearch />} />
       <IsoPlatform x={hub.x} y={hub.y} w={150} label="AUTOMATISERING" icon={<IcoGear />} isHub />
       <IsoPlatform x={web.x} y={web.y} w={100} label="Webshop" icon={<IcoCart />} />
       <IsoPlatform x={erp.x} y={erp.y} w={100} label="ERP" icon={<IcoChart />} />
       <IsoPlatform x={ful.x} y={ful.y} w={100} label="Fulfilment" icon={<IcoTruck />} />
-    </svg>
+    </VisibleSvg>
   );
 };
 
@@ -188,7 +214,7 @@ export const FinanceIsometric = () => {
   const flow = `M ${fact.x},${fact.y} L ${pars.x},${pars.y} L ${boek.x},${boek.y} L ${rapp.x},${rapp.y}`;
 
   return (
-    <svg viewBox="0 0 420 220" className="w-full" fill="none">
+    <VisibleSvg viewBox="0 0 420 220" className="w-full">
       <ConnectorLine x1={fact.x} y1={fact.y} x2={pars.x} y2={pars.y} />
       <ConnectorLine x1={pars.x} y1={pars.y} x2={boek.x} y2={boek.y} />
       <ConnectorLine x1={boek.x} y1={boek.y} x2={rapp.x} y2={rapp.y} />
@@ -199,7 +225,7 @@ export const FinanceIsometric = () => {
       <IsoPlatform x={175} y={100} w={100} label="Parsing" icon={<IcoGear />} />
       <IsoPlatform x={280} y={140} w={105} label="Boekhouding" icon={<IcoDb />} />
       <IsoPlatform x={370} y={100} w={90} label="Rapportage" icon={<IcoChart />} />
-    </svg>
+    </VisibleSvg>
   );
 };
 
@@ -212,7 +238,7 @@ export const LeadIsometric = () => {
   const flow = `M ${form.x},${form.y} L ${verr.x},${verr.y} L ${crm.x},${crm.y}`;
 
   return (
-    <svg viewBox="0 0 400 210" className="w-full" fill="none">
+    <VisibleSvg viewBox="0 0 400 210" className="w-full">
       <ConnectorLine x1={form.x} y1={form.y} x2={verr.x} y2={verr.y} />
       <ConnectorLine x1={verr.x} y1={verr.y} x2={crm.x} y2={crm.y} />
 
@@ -225,6 +251,6 @@ export const LeadIsometric = () => {
       <text x={200} y={190} textAnchor="middle" fontSize="9" fill="hsl(174, 78%, 41%)" fillOpacity="0.45" fontFamily="inherit" letterSpacing="4" fontWeight="600">
         COMING SOON
       </text>
-    </svg>
+    </VisibleSvg>
   );
 };

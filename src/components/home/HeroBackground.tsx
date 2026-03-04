@@ -19,7 +19,15 @@ const HeroBackground = () => {
 
     let animationId: number;
     let time = 0;
+    let isVisible = true;
     const isMobile = window.innerWidth < 768;
+
+    // Pause when off-screen
+    const visObserver = new IntersectionObserver(
+      ([entry]) => { isVisible = entry.isIntersecting; },
+      { threshold: 0 }
+    );
+    visObserver.observe(canvas);
 
     const lineCount = isMobile ? 4 : 6;
     const dotCount = isMobile ? 3 : 5;
@@ -81,6 +89,7 @@ const HeroBackground = () => {
     };
 
     const animate = () => {
+      if (!isVisible) { animationId = requestAnimationFrame(animate); return; }
       const w = window.innerWidth;
       const h = window.innerHeight;
 
@@ -145,6 +154,7 @@ const HeroBackground = () => {
     return () => {
       if (startDelay) clearTimeout(startDelay);
       cancelAnimationFrame(animationId);
+      visObserver.disconnect();
       window.removeEventListener("resize", resize);
     };
   }, []);

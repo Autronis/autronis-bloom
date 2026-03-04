@@ -158,16 +158,11 @@ const UpcomingCard = ({
       }}
     >
       <div className="relative z-10 flex flex-col h-full">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-              <Icon size={18} />
-            </div>
-            <h3 className="text-lg font-bold">{cs.title}</h3>
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+            <Icon size={18} />
           </div>
-          <span className="text-[10px] font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full flex items-center gap-1">
-            <Clock size={10} /> In ontwikkeling
-          </span>
+          <h3 className="text-lg font-bold">{cs.title}</h3>
         </div>
 
         <p className="text-sm text-muted-foreground leading-relaxed mb-5">{cs.context}</p>

@@ -78,7 +78,7 @@ const ServiceCard = ({
         >
            <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} items-start md:items-center gap-0`}>
             {/* Text */}
-              <div className="flex-1 px-4 py-6 sm:px-5 sm:py-7 flex flex-col justify-start">
+              <div className="flex-1 px-4 py-8 sm:px-5 sm:py-10 flex flex-col justify-start">
               <div className="flex items-center gap-3 mb-1">
                 <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
                   <s.icon size={18} />

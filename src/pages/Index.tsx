@@ -94,28 +94,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Demo Video */}
-      <section className="py-12 sm:py-20 border-t border-border">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-10">
-            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Demo</p>
-            <h2 className="text-2xl sm:text-3xl font-bold mb-4">Zie hoe automatisering in de praktijk werkt</h2>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Een korte demonstratie van hoe workflows, integraties en systemen automatisch samenwerken.
-            </p>
-          </div>
-          <div className="max-w-4xl mx-auto">
-            <div className="aspect-video rounded-xl border border-border bg-card overflow-hidden flex items-center justify-center">
-              <div className="text-center text-muted-foreground/50">
-                <div className="w-16 h-16 rounded-full border-2 border-primary/30 flex items-center justify-center mx-auto mb-3">
-                  <div className="w-0 h-0 border-t-[10px] border-t-transparent border-b-[10px] border-b-transparent border-l-[16px] border-l-primary/50 ml-1" />
-                </div>
-                <p className="text-xs">Video binnenkort beschikbaar</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       <ProblemSolutionSection />
       <ServicePillars />

@@ -185,7 +185,6 @@ export const LeadIsometric = () => {
   const verr = { x: 200, y: 104 };
   const crm  = { x: 330, y: 134 };
 
-  const flowD = `M ${form.x},${form.y} L ${verr.x},${verr.y} L ${crm.x},${crm.y}`;
 
   return (
     <svg viewBox="0 0 400 210" className="w-full" fill="none">

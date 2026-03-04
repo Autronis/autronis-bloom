@@ -142,12 +142,12 @@ const ServiceCard = ({
               <motion.img
                 src={s.image}
                 alt={s.title}
-                className="w-full h-full object-cover relative z-[1] dark:mix-blend-screen"
-                style={{ opacity: 0.85 }}
+                className="w-full h-full object-cover relative z-[1]"
+                style={{ opacity: 0.65 }}
                 animate={
                   hoveredIndex === i
-                    ? { scale: 1.04, filter: `brightness(1.5) saturate(0) invert(var(--img-invert))` }
-                    : { scale: 1, filter: `brightness(1.3) saturate(0) invert(var(--img-invert))` }
+                    ? { scale: 1.04, filter: `brightness(0.85) saturate(0.95)` }
+                    : { scale: 1, filter: `brightness(0.7) saturate(0.85)` }
                 }
                 transition={{ duration: 0.35, ease: "easeOut" }}
                 loading="lazy"

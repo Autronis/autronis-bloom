@@ -1,9 +1,7 @@
 import { ArrowRight, Building2, ShoppingCart, FileText, TrendingUp, Clock, Timer } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
-
 
 const impactBlocks = [
   {
@@ -50,7 +48,6 @@ const kernpunten = [
 const ROIPreview = () => {
   return (
     <section className="py-16 sm:py-24 border-t border-border relative overflow-hidden">
-      
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Header */}
         <ScrollReveal className="max-w-2xl mx-auto text-center mb-10 sm:mb-14">
@@ -71,20 +68,10 @@ const ROIPreview = () => {
         <ScrollReveal>
           <ScrollRevealItem>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto mb-6">
-              {impactBlocks.map((block, idx) => (
-                <motion.div
+              {impactBlocks.map((block) => (
+                <div
                   key={block.title}
-                  className="rounded-xl border border-border bg-card p-6 sm:p-7"
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1, duration: 0.4 }}
-                  whileHover={{
-                    scale: 1.02,
-                    y: -3,
-                    borderColor: "hsl(174, 78%, 41%, 0.5)",
-                    transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] },
-                  }}
+                  className="rounded-xl border border-border bg-card p-6 sm:p-7 transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-[3px] hover:border-primary/50"
                 >
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
                     <block.icon size={20} />
@@ -104,7 +91,7 @@ const ROIPreview = () => {
                       </li>
                     ))}
                   </ul>
-                </motion.div>
+                </div>
               ))}
             </div>
             <p className="text-xs text-muted-foreground text-center max-w-3xl mx-auto mb-12 italic">
@@ -116,14 +103,8 @@ const ROIPreview = () => {
         {/* Strategic text block */}
         <ScrollReveal className="max-w-4xl mx-auto">
           <ScrollRevealItem>
-            <motion.div
-              className="rounded-xl border border-border bg-card p-6 sm:p-8 mb-10"
-              whileHover={{
-                scale: 1.015,
-                y: -2,
-                borderColor: "hsl(174, 78%, 41%, 0.5)",
-                transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] },
-              }}
+            <div
+              className="rounded-xl border border-border bg-card p-6 sm:p-8 mb-10 transition-all duration-300 ease-out hover:scale-[1.015] hover:-translate-y-[2px] hover:border-primary/50"
             >
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 lg:gap-10 items-start">
                 <div>
@@ -145,7 +126,7 @@ const ROIPreview = () => {
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </div>
             <p className="text-xs text-muted-foreground text-center max-w-2xl mx-auto mb-10">
               *Afhankelijk van implementatieomvang en procescomplexiteit.
             </p>

@@ -1,6 +1,5 @@
 import { Shield, Database, FileCheck, ShieldCheck, Lock, Globe, BrainCog, Eye, FolderLock, KeyRound, Server, FlaskConical, Link2, Unlock, ShieldOff, ClipboardList, Radio, Scale, FileText, BadgeCheck } from "lucide-react";
 import { useState } from "react";
-import { motion } from "framer-motion";
 
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
@@ -54,7 +53,6 @@ const SecurityBlock = () => {
 
   return (
     <section id="beveiliging" className="relative overflow-hidden border-t border-primary/10">
-      
 
       <div className="container mx-auto px-4 lg:px-8 py-16 sm:py-24 relative z-10">
         <ScrollReveal className="max-w-3xl mx-auto text-center mb-14 sm:mb-20">
@@ -83,14 +81,12 @@ const SecurityBlock = () => {
             return (
               <ScrollReveal key={layer.title}>
                 <ScrollRevealItem>
-                  <motion.div
-                    className="rounded-2xl border bg-card overflow-hidden"
-                    animate={{
+                  <div
+                    className="rounded-2xl border bg-card overflow-hidden transition-all duration-300 ease-out hover:scale-[1.015] hover:-translate-y-[2px]"
+                    style={{
                       borderColor: isHovered ? "hsl(var(--primary) / 0.35)" : "hsl(var(--border))",
                       boxShadow: isHovered ? "0 4px 24px hsl(174 78% 33% / 0.08)" : "0 0 0 transparent",
                     }}
-                    whileHover={{ scale: 1.015, y: -2 }}
-                    transition={{ duration: 0.3 }}
                     onMouseEnter={() => setHoveredIndex(i)}
                     onMouseLeave={() => setHoveredIndex(null)}
                   >
@@ -130,7 +126,7 @@ const SecurityBlock = () => {
                         {layer.closing}
                       </p>
                     </div>
-                  </motion.div>
+                  </div>
                 </ScrollRevealItem>
               </ScrollReveal>
             );

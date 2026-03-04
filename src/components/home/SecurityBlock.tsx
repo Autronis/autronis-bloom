@@ -28,7 +28,7 @@ const layers = [
       { icon: Lock, text: "End-to-end versleuteling (TLS 1.2+ tijdens transport, AES-256 bij opslag)" },
       { icon: Globe, text: "Verwerking en opslag binnen de EU waar mogelijk" },
       { icon: BrainCog, text: "Geen gebruik van bedrijfsdata voor AI-training" },
-      { icon: Eye, text: "Data is niet toegankelijk voor onbevoegden, ook niet voor derden" },
+      { icon: Eye, text: "Data is alleen toegankelijk voor geautoriseerde partijen en wordt niet gedeeld met onbevoegden" },
       { icon: FolderLock, text: "Datasegmentatie en toegangscontrole per rol" },
     ],
     closing: "Uw data blijft onder uw controle en eigendom, zowel technisch als contractueel geborgd.",

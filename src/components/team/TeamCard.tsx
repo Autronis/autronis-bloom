@@ -12,10 +12,10 @@ const SkillBadge = ({ skill, index }: { skill: Skill; index: number }) => (
     initial={{ opacity: 0, y: 6 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay: index * 0.06, duration: 0.25, ease: "easeOut" }}
-    className={`text-[10px] font-medium px-2.5 py-1 rounded-full border backdrop-blur-sm
+    className={`text-[10px] font-medium px-2.5 py-1 rounded-full border
       ${categoryMeta[skill.category].bg} ${categoryMeta[skill.category].border}
       ${categoryMeta[skill.category].glow}
-      text-white transition-all duration-200 cursor-default`}
+      text-white/90 transition-colors duration-200 cursor-default`}
   >
     {skill.label}
   </motion.span>

@@ -23,11 +23,6 @@ const IsoPlatform = ({
 
   return (
     <g>
-      {isHub && (
-        <ellipse cx={x} cy={y - h + hh} rx={w * 0.6} ry={w * 0.2} fill="hsl(174, 78%, 41%)" fillOpacity="0.1">
-          <animate attributeName="fillOpacity" values="0.06;0.14;0.06" dur="3s" repeatCount="indefinite" />
-        </ellipse>
-      )}
       <path d={leftPath} fill={leftFill} stroke="hsl(174, 78%, 41%)" strokeWidth={strokeW} strokeOpacity={strokeOp} />
       <path d={rightPath} fill={rightFill} stroke="hsl(174, 78%, 41%)" strokeWidth={strokeW} strokeOpacity={strokeOp} />
       <path d={topPath} fill={topFill} stroke="hsl(174, 78%, 41%)" strokeWidth={strokeW} strokeOpacity={strokeOp} />
@@ -139,8 +134,8 @@ export const EcommerceIsometric = () => {
   const erp  = { x: 80,  y: 274 };  // (80, 260, w=100)
   const ful  = { x: 320, y: 274 };  // (320, 260, w=100)
 
-  // Full flow path for the dot: Lev → Hub → Web → Hub → Prod → Hub → ERP → Hub → Ful → Hub → Lev
-  const flowD = `M ${lev.x},${lev.y} L ${hub.x},${hub.y} L ${web.x},${web.y} L ${hub.x},${hub.y} L ${prod.x},${prod.y} L ${hub.x},${hub.y} L ${erp.x},${erp.y} L ${hub.x},${hub.y} L ${ful.x},${ful.y} L ${hub.x},${hub.y} L ${lev.x},${lev.y}`;
+  // Logical flow: Leverancier → Hub → Productdata → Hub → Webshop → Hub → ERP → Hub → Fulfilment
+  const flowD = `M ${lev.x},${lev.y} L ${hub.x},${hub.y} L ${prod.x},${prod.y} L ${hub.x},${hub.y} L ${web.x},${web.y} L ${hub.x},${hub.y} L ${erp.x},${erp.y} L ${hub.x},${hub.y} L ${ful.x},${ful.y}`;
 
   return (
     <svg viewBox="0 0 400 320" className="w-full" fill="none">

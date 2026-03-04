@@ -116,9 +116,9 @@ const Index = () => {
             {/* Video Modal */}
             <Dialog open={videoOpen} onOpenChange={(open) => { setVideoOpen(open); if (open) setShowSkip(true); }}>
               <DialogContent className="sm:max-w-4xl p-0 bg-card border-border overflow-hidden" aria-describedby={undefined}>
-                <DialogTitle className="sr-only">Systeemdemo</DialogTitle>
+                <DialogTitle className="sr-only">Lead-systeem Demo Jobby</DialogTitle>
                 <div className="p-4 pb-0 flex items-center justify-between">
-                  <p className="text-[10px] font-semibold text-primary tracking-widest uppercase">Systeemdemo</p>
+                  <p className="text-[10px] font-semibold text-primary tracking-widest uppercase">Lead-systeem Demo Jobby</p>
                 </div>
                 <div className="relative m-4 mt-2 rounded-lg overflow-hidden border border-border bg-black">
                   {videoOpen && (
@@ -143,7 +143,7 @@ const Index = () => {
                               setShowSkip(false);
                             }
                           }}
-                          className="absolute bottom-14 left-3 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 text-sm font-medium text-foreground hover:bg-white/20 transition-all shadow-lg"
+                          className="absolute bottom-20 left-3 px-5 py-2.5 rounded-xl bg-white/5 backdrop-blur-xl border border-white/15 text-sm font-medium text-foreground hover:bg-white/15 transition-all shadow-2xl"
                         >
                           Skip intro →
                         </button>

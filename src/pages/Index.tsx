@@ -70,7 +70,8 @@ const Index = () => {
               Systeemarchitectuur & Automatisering
             </p>
             <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.35] tracking-tight mb-4 sm:mb-6">
-              Breng structuur in je{" "}
+              Breng structuur in je
+              <br />
               <span className="inline-block relative h-[1.2em] sm:h-[1.35em] align-bottom">
                 {rotatingWords.map((word, i) => (
                   <span

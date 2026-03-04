@@ -8,9 +8,7 @@ interface CaseStudy {
   slug: string;
   icon: React.ElementType;
   title: string;
-  context: string;
-  problem: string;
-  solution: string;
+  description: string;
   results: string[];
   upcoming?: false;
 }
@@ -19,8 +17,7 @@ interface UpcomingCase {
   slug: string;
   icon: React.ElementType;
   title: string;
-  context: string;
-  body: string;
+  description: string;
   upcoming: true;
 }
 
@@ -31,36 +28,29 @@ const cases: CaseItem[] = [
     slug: "e-commerce-product-orderautomatisering",
     icon: ShoppingCart,
     title: "E-commerce product- en orderautomatisering",
-    context: "Veel e-commerce organisaties beheren productinformatie, leveranciersdata, voorraad en prijzen in verschillende systemen. Hierdoor ontstaan inconsistenties en kost productbeheer onnodig veel tijd.",
-    problem: "Productinformatie, voorraad en prijzen moesten handmatig worden bijgewerkt en gesynchroniseerd tussen leveranciersdata, webshop en interne systemen.",
-    solution: "We implementeerden een automatiseringsstructuur waarin productdata, leveranciersfeeds, voorraadbeheer en webshopintegraties automatisch worden gesynchroniseerd en bijgewerkt.",
+    description: "Automatisering van productdata, voorraadbeheer en orderverwerking tussen leverancierssystemen, webshop en interne systemen.",
     results: [
       "Tot 65% minder handmatig productbeheer",
       "Realtime voorraad- en prijsupdates",
-      "Snellere productupdates en lanceringen",
-      "Consistente productdata across systemen",
+      "Consistente productdata tussen systemen",
     ],
   },
   {
     slug: "financiele-procesautomatisering",
     icon: FileText,
     title: "Financiële procesautomatisering",
-    context: "Financiële teams besteden vaak veel tijd aan handmatige administratie, factuurverwerking en rapportages.",
-    problem: "Facturen, betalingen en rapportages werden handmatig verwerkt in verschillende systemen.",
-    solution: "We automatiseerden financiële workflows door integraties tussen boekhoudsoftware, documentverwerking en rapportagedashboards.",
+    description: "Automatisering van factuurverwerking, rapportages en financiële datastromen via integraties tussen boekhoudsoftware en dashboards.",
     results: [
-      "Tot 70% minder handmatige financiële verwerking",
-      "Snellere maand- en kwartaalrapportages",
+      "Tot 70% minder handmatige verwerking",
+      "Snellere maandrapportages",
       "Betere datakwaliteit in financiële systemen",
-      "Minder correctiewerk",
     ],
   },
   {
     slug: "leadmanagement-crm-automatisering",
     icon: Users,
     title: "Leadmanagement en CRM-automatisering",
-    context: "Een implementatie waarin inkomende leads automatisch worden verrijkt en gesynchroniseerd met het CRM.",
-    body: "We bouwen momenteel een systeem waarin inkomende leads automatisch worden verrijkt, gesynchroniseerd met het CRM en direct in opvolgworkflows worden geplaatst.\n\nBinnenkort delen we de volledige implementatie en resultaten.",
+    description: "Automatisch verrijken, synchroniseren en opvolgen van inkomende leads via CRM-integraties.",
     upcoming: true,
   },
 ];
@@ -81,7 +71,7 @@ const ImplementedCard = ({
   const Icon = cs.icon;
   return (
     <Link
-      to={`/case-studies/${cs.slug}`}
+      to="/case-studies"
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       className="relative group rounded-xl border border-border bg-card p-6 flex flex-col h-full overflow-hidden transition-all duration-300 ease-out"
@@ -99,20 +89,9 @@ const ImplementedCard = ({
           <h3 className="text-lg font-bold">{cs.title}</h3>
         </div>
 
-        <p className="text-sm text-muted-foreground leading-relaxed mb-4">{cs.context}</p>
+        <p className="text-sm text-muted-foreground leading-relaxed mb-5">{cs.description}</p>
 
-        <div className="space-y-3 mb-5 flex-1">
-          <div>
-            <p className="text-xs font-semibold text-primary mb-1 tracking-wide uppercase">Probleem</p>
-            <p className="text-sm text-muted-foreground leading-relaxed">{cs.problem}</p>
-          </div>
-          <div>
-            <p className="text-xs font-semibold text-primary mb-1 tracking-wide uppercase">Oplossing</p>
-            <p className="text-sm text-muted-foreground leading-relaxed">{cs.solution}</p>
-          </div>
-        </div>
-
-        <div className="border-t border-border pt-4">
+        <div className="border-t border-border pt-4 flex-1">
           <p className="text-xs font-semibold text-primary mb-2 tracking-wide uppercase">Resultaat</p>
           <ul className="space-y-1.5">
             {cs.results.map((r, i) => (
@@ -165,13 +144,11 @@ const UpcomingCard = ({
           <h3 className="text-lg font-bold">{cs.title}</h3>
         </div>
 
-        <p className="text-sm text-muted-foreground leading-relaxed mb-5">{cs.context}</p>
+        <p className="text-sm text-muted-foreground leading-relaxed mb-5">{cs.description}</p>
 
-        <div className="rounded-lg border border-border bg-muted/30 p-4 flex-1">
-          <p className="text-xs font-semibold mb-2">Coming soon</p>
-          {cs.body.split("\n\n").map((p, i) => (
-            <p key={i} className="text-sm text-muted-foreground leading-relaxed mb-2 last:mb-0">{p}</p>
-          ))}
+        <div className="flex items-center gap-1.5 mt-auto">
+          <Clock size={12} className="text-primary" />
+          <p className="text-xs font-semibold">Coming soon</p>
         </div>
       </div>
     </div>

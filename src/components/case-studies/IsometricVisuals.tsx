@@ -7,31 +7,38 @@ const IsoPlatform = ({
   x: number; y: number; w?: number; label: string;
   isHub?: boolean; icon?: React.ReactNode;
 }) => {
-  const h = 14;
+  const h = isHub ? 18 : 12;
   const hw = w / 2;
   const hh = w * 0.28;
 
   const topPath = `M ${x},${y - h} L ${x + hw},${y - h + hh} L ${x},${y - h + hh * 2} L ${x - hw},${y - h + hh} Z`;
-  const leftPath = `M ${x - hw},${y - h + hh} L ${x},${y - h + hh * 2} L ${x},${y - h + hh * 2 + 10} L ${x - hw},${y - h + hh + 10} Z`;
-  const rightPath = `M ${x + hw},${y - h + hh} L ${x},${y - h + hh * 2} L ${x},${y - h + hh * 2 + 10} L ${x + hw},${y - h + hh + 10} Z`;
+  const leftPath = `M ${x - hw},${y - h + hh} L ${x},${y - h + hh * 2} L ${x},${y - h + hh * 2 + h} L ${x - hw},${y - h + hh + h} Z`;
+  const rightPath = `M ${x + hw},${y - h + hh} L ${x},${y - h + hh * 2} L ${x},${y - h + hh * 2 + h} L ${x + hw},${y - h + hh + h} Z`;
 
-  const topFill = isHub ? "hsl(174, 78%, 22%)" : "hsl(192, 30%, 16%)";
-  const leftFill = isHub ? "hsl(174, 78%, 14%)" : "hsl(192, 30%, 12%)";
-  const rightFill = isHub ? "hsl(174, 78%, 10%)" : "hsl(192, 30%, 10%)";
-  const strokeOp = isHub ? "0.8" : "0.35";
-  const strokeW = isHub ? "1.2" : "0.8";
+  const topFill = isHub ? "hsl(174, 78%, 20%)" : "hsl(192, 30%, 14%)";
+  const leftFill = isHub ? "hsl(174, 78%, 12%)" : "hsl(192, 30%, 10%)";
+  const rightFill = isHub ? "hsl(174, 78%, 8%)" : "hsl(192, 30%, 8%)";
+  const strokeClr = "hsl(174, 78%, 45%)";
+  const strokeOp = isHub ? "0.7" : "0.3";
+  const strokeW = isHub ? "1.5" : "0.8";
 
   return (
     <g>
-      <path d={leftPath} fill={leftFill} stroke="hsl(174, 78%, 41%)" strokeWidth={strokeW} strokeOpacity={strokeOp} />
-      <path d={rightPath} fill={rightFill} stroke="hsl(174, 78%, 41%)" strokeWidth={strokeW} strokeOpacity={strokeOp} />
-      <path d={topPath} fill={topFill} stroke="hsl(174, 78%, 41%)" strokeWidth={strokeW} strokeOpacity={strokeOp} />
-      {icon && <g transform={`translate(${x - 7}, ${y - h + hh - 16})`}>{icon}</g>}
+      {/* Glow under hub */}
+      {isHub && (
+        <ellipse cx={x} cy={y - h + hh * 2 + h + 4} rx={hw * 1.1} ry={hh * 0.5}
+          fill="hsl(174, 78%, 45%)" fillOpacity="0.08" />
+      )}
+      <path d={leftPath} fill={leftFill} stroke={strokeClr} strokeWidth={strokeW} strokeOpacity={strokeOp} />
+      <path d={rightPath} fill={rightFill} stroke={strokeClr} strokeWidth={strokeW} strokeOpacity={strokeOp} />
+      <path d={topPath} fill={topFill} stroke={strokeClr} strokeWidth={strokeW} strokeOpacity={strokeOp} />
+      {icon && <g transform={`translate(${x - 7}, ${y - h + hh - 18})`}>{icon}</g>}
       <text
-        x={x} y={y - h + hh + (icon ? 8 : 2)}
-        textAnchor="middle" fontSize="9"
-        fill={isHub ? "hsl(174, 78%, 80%)" : "hsl(174, 78%, 65%)"}
-        fontWeight={isHub ? "600" : "500"} fontFamily="inherit"
+        x={x} y={y - h + hh + (icon ? 6 : 2)}
+        textAnchor="middle" fontSize={isHub ? "10" : "8.5"}
+        fill={isHub ? "hsl(174, 78%, 85%)" : "hsl(174, 78%, 65%)"}
+        fontWeight={isHub ? "700" : "500"} fontFamily="inherit"
+        letterSpacing={isHub ? "1" : "0"}
       >
         {label}
       </text>
@@ -39,43 +46,48 @@ const IsoPlatform = ({
   );
 };
 
-/* ─── Arrow at end of segment ─── */
-const Arrow = ({ x1, y1, x2, y2 }: { x1: number; y1: number; x2: number; y2: number }) => {
+/* ─── Glowing connector line with arrow + animated dot ─── */
+const Connector = ({ x1, y1, x2, y2, id, dur = 3 }: {
+  x1: number; y1: number; x2: number; y2: number; id: string; dur?: number;
+}) => {
+  const d = `M ${x1},${y1} L ${x2},${y2}`;
   const dx = x2 - x1;
   const dy = y2 - y1;
   const len = Math.sqrt(dx * dx + dy * dy);
   const ux = dx / len;
   const uy = dy / len;
-  // Arrow at 70% along
-  const mx = x1 + dx * 0.7;
-  const my = y1 + dy * 0.7;
-  const sz = 7;
-  const px = -uy * sz * 0.45;
-  const py = ux * sz * 0.45;
+  // Arrow at 65% along
+  const ax = x1 + dx * 0.65;
+  const ay = y1 + dy * 0.65;
+  const sz = 5;
+  const px = -uy * sz * 0.5;
+  const py = ux * sz * 0.5;
 
-  return (
-    <polygon
-      points={`${mx + ux * sz},${my + uy * sz} ${mx + px},${my + py} ${mx - px},${my - py}`}
-      fill="hsl(174, 78%, 50%)"
-      fillOpacity="0.8"
-    />
-  );
-};
-
-/* ─── Connector: line + arrow + animated dot per segment ─── */
-const Connector = ({ x1, y1, x2, y2, id, dur = 3 }: {
-  x1: number; y1: number; x2: number; y2: number; id: string; dur?: number;
-}) => {
-  const d = `M ${x1},${y1} L ${x2},${y2}`;
   return (
     <g>
-      {/* Visible line */}
-      <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="hsl(174, 78%, 41%)" strokeWidth="1.5" strokeOpacity="0.35" />
-      <Arrow x1={x1} y1={y1} x2={x2} y2={y2} />
-      {/* Dot following this specific line */}
+      {/* Glow line */}
+      <line x1={x1} y1={y1} x2={x2} y2={y2}
+        stroke="hsl(174, 78%, 45%)" strokeWidth="3" strokeOpacity="0.1" />
+      {/* Main line */}
+      <line x1={x1} y1={y1} x2={x2} y2={y2}
+        stroke="hsl(174, 78%, 45%)" strokeWidth="1.2" strokeOpacity="0.5"
+        strokeDasharray="4 3" />
+      {/* Arrow */}
+      <polygon
+        points={`${ax + ux * sz},${ay + uy * sz} ${ax + px},${ay + py} ${ax - px},${ay - py}`}
+        fill="hsl(174, 78%, 55%)" fillOpacity="0.7"
+      />
+      {/* Animated dot */}
       <path id={id} d={d} fill="none" stroke="none" />
-      <circle r="2.5" fill="hsl(174, 78%, 65%)" fillOpacity="0.9">
-        <animateMotion dur={`${dur}s`} repeatCount="indefinite" rotate="auto">
+      <circle r="3" fill="hsl(174, 78%, 70%)" fillOpacity="0.9">
+        <animate attributeName="r" values="2.5;3.5;2.5" dur="1.5s" repeatCount="indefinite" />
+        <animateMotion dur={`${dur}s`} repeatCount="indefinite">
+          <mpath xlinkHref={`#${id}`} />
+        </animateMotion>
+      </circle>
+      {/* Dot glow */}
+      <circle r="6" fill="hsl(174, 78%, 50%)" fillOpacity="0.2">
+        <animateMotion dur={`${dur}s`} repeatCount="indefinite">
           <mpath xlinkHref={`#${id}`} />
         </animateMotion>
       </circle>
@@ -122,36 +134,47 @@ const IcoDb = () => (
     <ellipse cx="7" cy="3.5" rx="5" ry="2" /><path d="M2 3.5v7c0 1.1 2.2 2 5 2s5-.9 5-2v-7" /><path d="M2 7c0 1.1 2.2 2 5 2s5-.9 5-2" />
   </g>
 );
+const IcoSearch = () => (
+  <g fill="none" stroke="hsl(174, 78%, 70%)" strokeWidth="1.2" strokeLinecap="round">
+    <circle cx="6.5" cy="6.5" r="4" /><line x1="9.5" y1="9.5" x2="13" y2="13" />
+  </g>
+);
 
-/*
-  Anchor calc: center of top face = (x, y - 14 + w * 0.28)
+/* ═══ CASE 1 — E-commerce (matching reference layout) ═══ 
+   Layout like reference image:
+   - Leverancier top
+   - Productontdekking middle-top  
+   - AUTOMATISERING center hub (large)
+   - Webshop bottom-left, ERP bottom-right
+   - Fulfilment bottom-center
 */
-
-/* ═══ CASE 1 — E-commerce ═══ */
 export const EcommerceIsometric = () => {
-  // Anchors
-  const hub  = { x: 200, y: 187 };  // (200, 165, w=130)
-  const lev  = { x: 80,  y: 94 };   // (80, 80, w=100)
-  const prod = { x: 320, y: 94 };   // (320, 80, w=100)
-  const web  = { x: 200, y: 64 };   // (200, 50, w=100)
-  const erp  = { x: 80,  y: 274 };  // (80, 260, w=100)
-  const ful  = { x: 320, y: 274 };  // (320, 260, w=100)
+  // Center hub
+  const hub = { x: 220, y: 200 };
+  // Top nodes (above hub)
+  const lev = { x: 220, y: 50 };
+  const prod = { x: 220, y: 120 };
+  // Bottom nodes (below hub, spread out)
+  const web = { x: 90, y: 310 };
+  const erp = { x: 350, y: 310 };
+  const ful = { x: 220, y: 340 };
 
   return (
-    <svg viewBox="0 0 400 320" className="w-full" fill="none">
-      {/* Each connector has its own dot */}
-      <Connector x1={lev.x} y1={lev.y} x2={hub.x} y2={hub.y} id="ec1" dur={2.5} />
-      <Connector x1={prod.x} y1={prod.y} x2={hub.x} y2={hub.y} id="ec2" dur={2.5} />
-      <Connector x1={web.x} y1={web.y} x2={hub.x} y2={hub.y} id="ec3" dur={2.5} />
-      <Connector x1={hub.x} y1={hub.y} x2={erp.x} y2={erp.y} id="ec4" dur={2.5} />
-      <Connector x1={hub.x} y1={hub.y} x2={ful.x} y2={ful.y} id="ec5" dur={2.5} />
+    <svg viewBox="0 0 440 400" className="w-full" fill="none">
+      {/* Connectors: all flow through hub */}
+      <Connector x1={lev.x} y1={lev.y} x2={prod.x} y2={prod.y} id="ec-lev-prod" dur={2} />
+      <Connector x1={prod.x} y1={prod.y} x2={hub.x} y2={hub.y} id="ec-prod-hub" dur={2} />
+      <Connector x1={hub.x} y1={hub.y} x2={web.x} y2={web.y} id="ec-hub-web" dur={2.5} />
+      <Connector x1={hub.x} y1={hub.y} x2={erp.x} y2={erp.y} id="ec-hub-erp" dur={2.5} />
+      <Connector x1={hub.x} y1={hub.y} x2={ful.x} y2={ful.y} id="ec-hub-ful" dur={2.5} />
 
-      <IsoPlatform x={200} y={165} w={130} label="Automatisering" icon={<IcoGear />} isHub />
-      <IsoPlatform x={80} y={80} w={100} label="Leverancier" icon={<IcoDb />} />
-      <IsoPlatform x={320} y={80} w={100} label="Productdata" icon={<IcoBox />} />
-      <IsoPlatform x={200} y={50} w={100} label="Webshop" icon={<IcoCart />} />
-      <IsoPlatform x={80} y={260} w={100} label="ERP" icon={<IcoChart />} />
-      <IsoPlatform x={320} y={260} w={100} label="Fulfilment" icon={<IcoTruck />} />
+      {/* Platforms */}
+      <IsoPlatform x={lev.x} y={lev.y} w={100} label="Leverancier" icon={<IcoBox />} />
+      <IsoPlatform x={prod.x} y={prod.y} w={110} label="Productontdekking" icon={<IcoSearch />} />
+      <IsoPlatform x={hub.x} y={hub.y} w={150} label="AUTOMATISERING" icon={<IcoGear />} isHub />
+      <IsoPlatform x={web.x} y={web.y} w={100} label="Webshop" icon={<IcoCart />} />
+      <IsoPlatform x={erp.x} y={erp.y} w={100} label="ERP" icon={<IcoChart />} />
+      <IsoPlatform x={ful.x} y={ful.y} w={100} label="Fulfilment" icon={<IcoTruck />} />
     </svg>
   );
 };
@@ -162,8 +185,6 @@ export const FinanceIsometric = () => {
   const pars = { x: 175, y: 114 };
   const boek = { x: 280, y: 155 };
   const rapp = { x: 370, y: 111 };
-
-  const flowD = `M ${fact.x},${fact.y} L ${pars.x},${pars.y} L ${boek.x},${boek.y} L ${rapp.x},${rapp.y}`;
 
   return (
     <svg viewBox="0 0 420 220" className="w-full" fill="none">
@@ -184,7 +205,6 @@ export const LeadIsometric = () => {
   const form = { x: 70,  y: 134 };
   const verr = { x: 200, y: 104 };
   const crm  = { x: 330, y: 134 };
-
 
   return (
     <svg viewBox="0 0 400 210" className="w-full" fill="none">

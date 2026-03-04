@@ -59,8 +59,8 @@ const Index = () => {
               Wij transformeren processen tot slimme systemen die schaalbaar en beheersbaar blijven.
             </p>
             <div className="flex flex-col items-center mb-12">
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Button asChild size="lg">
+              <div className="flex flex-col sm:flex-row items-start justify-center gap-3">
+                <Button asChild size="lg" className="mt-0">
                   <Link to="/book">
                     Plan een Automation Scan
                     <ArrowRight size={18} />

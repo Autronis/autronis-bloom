@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ShoppingCart, FileText, Bot, CheckCircle2, Clock } from "lucide-react";
+import { ArrowRight, ShoppingCart, FileText, Users, CheckCircle2, Clock } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
@@ -28,39 +28,39 @@ type CaseItem = CaseStudy | UpcomingCase;
 
 const cases: CaseItem[] = [
   {
-    slug: "e-commerce-orderautomatisering",
+    slug: "e-commerce-product-orderautomatisering",
     icon: ShoppingCart,
-    title: "E-commerce orderautomatisering",
-    context: "Veel e-commerce bedrijven verwerken orders handmatig tussen webshop, ERP en logistieke systemen. Dit leidt tot vertragingen, fouten en inefficiënte workflows.",
-    problem: "Orders moesten handmatig worden gecontroleerd, ingevoerd en gesynchroniseerd tussen meerdere systemen.",
-    solution: "We implementeerden een automatiseringslaag die webshop, ERP en fulfilmentsoftware direct met elkaar verbindt.",
+    title: "E-commerce product- en orderautomatisering",
+    context: "Veel e-commerce organisaties beheren productinformatie, leveranciersdata, voorraad en prijzen in verschillende systemen. Hierdoor ontstaan inconsistenties en kost productbeheer onnodig veel tijd.",
+    problem: "Productinformatie, voorraad en prijzen moesten handmatig worden bijgewerkt en gesynchroniseerd tussen leveranciersdata, webshop en interne systemen.",
+    solution: "We implementeerden een automatiseringsstructuur waarin productdata, leveranciersfeeds, voorraadbeheer en webshopintegraties automatisch worden gesynchroniseerd en bijgewerkt.",
     results: [
-      "Tot 65% minder handmatige verwerking",
-      "Realtime voorraadsynchronisatie",
-      "Orderverwerking van ±10 minuten naar ±30 seconden",
-      "Minder operationele fouten",
+      "Tot 65% minder handmatig productbeheer",
+      "Realtime voorraad- en prijsupdates",
+      "Snellere productupdates en lanceringen",
+      "Consistente productdata across systemen",
     ],
   },
   {
-    slug: "finance-procesautomatisering",
+    slug: "financiele-procesautomatisering",
     icon: FileText,
-    title: "Finance procesautomatisering",
-    context: "Financiële teams besteden vaak veel tijd aan handmatige factuurverwerking en rapportages.",
-    problem: "Facturen werden handmatig ingevoerd en rapportages moesten periodiek handmatig worden samengesteld.",
-    solution: "We automatiseerden factuurverwerking via document parsing, integratie met boekhoudsoftware en automatische rapportage dashboards.",
+    title: "Financiële procesautomatisering",
+    context: "Financiële teams besteden vaak veel tijd aan handmatige administratie, factuurverwerking en rapportages.",
+    problem: "Facturen, betalingen en rapportages werden handmatig verwerkt in verschillende systemen.",
+    solution: "We automatiseerden financiële workflows door integraties tussen boekhoudsoftware, documentverwerking en rapportagedashboards.",
     results: [
-      "Tot 70% minder handmatige factuurverwerking",
-      "Snellere maandrapportages",
+      "Tot 70% minder handmatige financiële verwerking",
+      "Snellere maand- en kwartaalrapportages",
       "Betere datakwaliteit in financiële systemen",
       "Minder correctiewerk",
     ],
   },
   {
-    slug: "ai-klantenservice-automatisering",
-    icon: Bot,
-    title: "AI-gedreven klantenservice automatisering",
-    context: "Een implementatie waarbij AI en workflowautomatisering worden gecombineerd om klantvragen automatisch te classificeren en routeren.",
-    body: "We werken momenteel aan een implementatie waarbij AI inkomende klantvragen analyseert en automatisch classificeert en doorstuurt naar de juiste workflow of medewerker.\n\nBinnenkort delen we de volledige implementatie en resultaten.",
+    slug: "leadmanagement-crm-automatisering",
+    icon: Users,
+    title: "Leadmanagement en CRM-automatisering",
+    context: "Een implementatie waarin inkomende leads automatisch worden verrijkt en gesynchroniseerd met het CRM.",
+    body: "We bouwen momenteel een systeem waarin inkomende leads automatisch worden verrijkt, gesynchroniseerd met het CRM en direct in opvolgworkflows worden geplaatst.\n\nBinnenkort delen we de volledige implementatie en resultaten.",
     upcoming: true,
   },
 ];

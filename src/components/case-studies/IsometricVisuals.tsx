@@ -39,46 +39,49 @@ const IsoPlatform = ({
   );
 };
 
-/* ─── Arrow along a segment ─── */
+/* ─── Arrow at end of segment ─── */
 const Arrow = ({ x1, y1, x2, y2 }: { x1: number; y1: number; x2: number; y2: number }) => {
   const dx = x2 - x1;
   const dy = y2 - y1;
   const len = Math.sqrt(dx * dx + dy * dy);
   const ux = dx / len;
   const uy = dy / len;
-  // Arrow at 60% along the segment
-  const mx = x1 + dx * 0.6;
-  const my = y1 + dy * 0.6;
-  const sz = 5;
-  const px = -uy * sz * 0.5;
-  const py = ux * sz * 0.5;
+  // Arrow at 70% along
+  const mx = x1 + dx * 0.7;
+  const my = y1 + dy * 0.7;
+  const sz = 7;
+  const px = -uy * sz * 0.45;
+  const py = ux * sz * 0.45;
 
   return (
     <polygon
       points={`${mx + ux * sz},${my + uy * sz} ${mx + px},${my + py} ${mx - px},${my - py}`}
-      fill="hsl(174, 78%, 55%)"
-      fillOpacity="0.6"
+      fill="hsl(174, 78%, 50%)"
+      fillOpacity="0.8"
     />
   );
 };
 
-/* ─── Single directed connector with arrow ─── */
-const Connector = ({ x1, y1, x2, y2 }: { x1: number; y1: number; x2: number; y2: number }) => (
-  <g>
-    <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="hsl(174, 78%, 41%)" strokeWidth="1" strokeOpacity="0.2" />
-    <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="hsl(174, 78%, 50%)" strokeWidth="2.5" strokeOpacity="0.05" />
-    <Arrow x1={x1} y1={y1} x2={x2} y2={y2} />
-  </g>
-);
-
-/* ─── Animated flow dot following full path ─── */
-const FlowDot = ({ pathId, dur = 8, delay = 0 }: { pathId: string; dur?: number; delay?: number }) => (
-  <circle r="2.5" fill="hsl(174, 78%, 65%)" fillOpacity="0.8">
-    <animateMotion dur={`${dur}s`} repeatCount="indefinite" begin={`${delay}s`} rotate="auto">
-      <mpath xlinkHref={`#${pathId}`} />
-    </animateMotion>
-  </circle>
-);
+/* ─── Connector: line + arrow + animated dot per segment ─── */
+const Connector = ({ x1, y1, x2, y2, id, dur = 3 }: {
+  x1: number; y1: number; x2: number; y2: number; id: string; dur?: number;
+}) => {
+  const d = `M ${x1},${y1} L ${x2},${y2}`;
+  return (
+    <g>
+      {/* Visible line */}
+      <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="hsl(174, 78%, 41%)" strokeWidth="1.5" strokeOpacity="0.35" />
+      <Arrow x1={x1} y1={y1} x2={x2} y2={y2} />
+      {/* Dot following this specific line */}
+      <path id={id} d={d} fill="none" stroke="none" />
+      <circle r="2.5" fill="hsl(174, 78%, 65%)" fillOpacity="0.9">
+        <animateMotion dur={`${dur}s`} repeatCount="indefinite" rotate="auto">
+          <mpath xlinkHref={`#${id}`} />
+        </animateMotion>
+      </circle>
+    </g>
+  );
+};
 
 /* ─── Small icons ─── */
 const IcoGear = () => (
@@ -134,24 +137,15 @@ export const EcommerceIsometric = () => {
   const erp  = { x: 80,  y: 274 };  // (80, 260, w=100)
   const ful  = { x: 320, y: 274 };  // (320, 260, w=100)
 
-  // Logical flow: Leverancier → Hub → Productdata → Hub → Webshop → Hub → ERP → Hub → Fulfilment
-  const flowD = `M ${lev.x},${lev.y} L ${hub.x},${hub.y} L ${prod.x},${prod.y} L ${hub.x},${hub.y} L ${web.x},${web.y} L ${hub.x},${hub.y} L ${erp.x},${erp.y} L ${hub.x},${hub.y} L ${ful.x},${ful.y}`;
-
   return (
     <svg viewBox="0 0 400 320" className="w-full" fill="none">
-      {/* Connectors with arrows */}
-      <Connector x1={lev.x} y1={lev.y} x2={hub.x} y2={hub.y} />
-      <Connector x1={prod.x} y1={prod.y} x2={hub.x} y2={hub.y} />
-      <Connector x1={web.x} y1={web.y} x2={hub.x} y2={hub.y} />
-      <Connector x1={hub.x} y1={hub.y} x2={erp.x} y2={erp.y} />
-      <Connector x1={hub.x} y1={hub.y} x2={ful.x} y2={ful.y} />
+      {/* Each connector has its own dot */}
+      <Connector x1={lev.x} y1={lev.y} x2={hub.x} y2={hub.y} id="ec1" dur={2.5} />
+      <Connector x1={prod.x} y1={prod.y} x2={hub.x} y2={hub.y} id="ec2" dur={2.5} />
+      <Connector x1={web.x} y1={web.y} x2={hub.x} y2={hub.y} id="ec3" dur={2.5} />
+      <Connector x1={hub.x} y1={hub.y} x2={erp.x} y2={erp.y} id="ec4" dur={2.5} />
+      <Connector x1={hub.x} y1={hub.y} x2={ful.x} y2={ful.y} id="ec5" dur={2.5} />
 
-      {/* Hidden path for dot animation */}
-      <path id="ecom-flow" d={flowD} fill="none" stroke="none" />
-      <FlowDot pathId="ecom-flow" dur={14} />
-      <FlowDot pathId="ecom-flow" dur={14} delay={7} />
-
-      {/* Platforms */}
       <IsoPlatform x={200} y={165} w={130} label="Automatisering" icon={<IcoGear />} isHub />
       <IsoPlatform x={80} y={80} w={100} label="Leverancier" icon={<IcoDb />} />
       <IsoPlatform x={320} y={80} w={100} label="Productdata" icon={<IcoBox />} />
@@ -173,16 +167,12 @@ export const FinanceIsometric = () => {
 
   return (
     <svg viewBox="0 0 420 220" className="w-full" fill="none">
-      <Connector x1={fact.x} y1={fact.y} x2={pars.x} y2={pars.y} />
-      <Connector x1={pars.x} y1={pars.y} x2={boek.x} y2={boek.y} />
-      <Connector x1={boek.x} y1={boek.y} x2={rapp.x} y2={rapp.y} />
-
-      <path id="fin-flow" d={flowD} fill="none" stroke="none" />
-      <FlowDot pathId="fin-flow" dur={6} />
-      <FlowDot pathId="fin-flow" dur={6} delay={3} />
+      <Connector x1={fact.x} y1={fact.y} x2={pars.x} y2={pars.y} id="fn1" dur={2} />
+      <Connector x1={pars.x} y1={pars.y} x2={boek.x} y2={boek.y} id="fn2" dur={2} />
+      <Connector x1={boek.x} y1={boek.y} x2={rapp.x} y2={rapp.y} id="fn3" dur={2} />
 
       <IsoPlatform x={70} y={140} w={100} label="Facturen" icon={<IcoDoc />} />
-      <IsoPlatform x={175} y={100} w={100} label="Parsing" icon={<IcoGear />} isHub />
+      <IsoPlatform x={175} y={100} w={100} label="Parsing" icon={<IcoGear />} />
       <IsoPlatform x={280} y={140} w={105} label="Boekhouding" icon={<IcoDb />} />
       <IsoPlatform x={370} y={100} w={90} label="Rapportage" icon={<IcoChart />} />
     </svg>
@@ -195,15 +185,11 @@ export const LeadIsometric = () => {
   const verr = { x: 200, y: 104 };
   const crm  = { x: 330, y: 134 };
 
-  const flowD = `M ${form.x},${form.y} L ${verr.x},${verr.y} L ${crm.x},${crm.y}`;
 
   return (
     <svg viewBox="0 0 400 210" className="w-full" fill="none">
-      <Connector x1={form.x} y1={form.y} x2={verr.x} y2={verr.y} />
-      <Connector x1={verr.x} y1={verr.y} x2={crm.x} y2={crm.y} />
-
-      <path id="lead-flow" d={flowD} fill="none" stroke="none" />
-      <FlowDot pathId="lead-flow" dur={5} />
+      <Connector x1={form.x} y1={form.y} x2={verr.x} y2={verr.y} id="ld1" dur={2.5} />
+      <Connector x1={verr.x} y1={verr.y} x2={crm.x} y2={crm.y} id="ld2" dur={2.5} />
 
       <IsoPlatform x={70} y={120} w={100} label="Formulier" icon={<IcoDoc />} />
       <IsoPlatform x={200} y={90} w={105} label="Verrijking" icon={<IcoGear />} />

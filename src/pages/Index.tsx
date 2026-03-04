@@ -67,8 +67,9 @@ const Index = () => {
               </Button>
               <Button size="lg" variant="outline" onClick={() => setVideoOpen(true)}>
                 <Play size={16} />
-                Bekijk demo
+                Bekijk 2 min demo
               </Button>
+              <p className="text-xs text-muted-foreground mt-1">Zie hoe automatisering in de praktijk werkt in 2 minuten.</p>
             </div>
 
             {/* Video Modal */}

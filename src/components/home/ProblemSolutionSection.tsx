@@ -51,7 +51,7 @@ const solutions = [
 
 const StrikeThroughText = () => {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: false, amount: 0.5 });
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
   const [isHovered, setIsHovered] = useState(false);
 
   return (

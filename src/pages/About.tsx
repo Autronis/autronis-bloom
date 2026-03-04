@@ -3,9 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Target, Shield, Users, Handshake } from "lucide-react";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import fotoSyb from "@/assets/foto_syb.jpg";
 import fotoSem from "@/assets/foto_sem.jpg";
+
+// Preload both team photos immediately on module load
+[fotoSyb, fotoSem].forEach((src) => {
+  const img = new Image();
+  img.src = src;
+});
 
 const values = [
   { icon: Target, title: "Resultaatgericht", description: "We meten succes in bespaarde uren, minder fouten en snellere processen — niet in opgeleverde features." },

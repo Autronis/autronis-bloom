@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ShoppingCart, FileText, Users, CheckCircle2, Clock } from "lucide-react";
+import { ArrowRight, ShoppingCart, FileText, Users, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import useCanHover from "@/hooks/use-can-hover";
@@ -11,20 +11,9 @@ interface CaseStudy {
   title: string;
   description: string;
   results: string[];
-  upcoming?: false;
 }
 
-interface UpcomingCase {
-  slug: string;
-  icon: React.ElementType;
-  title: string;
-  description: string;
-  upcoming: true;
-}
-
-type CaseItem = CaseStudy | UpcomingCase;
-
-const cases: CaseItem[] = [
+const cases: CaseStudy[] = [
   {
     slug: "e-commerce-product-orderautomatisering",
     icon: ShoppingCart,
@@ -48,11 +37,15 @@ const cases: CaseItem[] = [
     ],
   },
   {
-    slug: "leadmanagement-crm-automatisering",
+    slug: "leadwerving-outreach-automatisering",
     icon: Users,
-    title: "Leadmanagement en CRM-automatisering",
-    description: "Automatisch verrijken, synchroniseren en opvolgen van inkomende leads via CRM-integraties.",
-    upcoming: true,
+    title: "Leadwerving en outreach automatisering",
+    description: "Automatisch leads verzamelen, contactinformatie verrijken en gepersonaliseerde e-mail outreach genereren met AI.",
+    results: [
+      "Leadverwerking van 25 naar 5–10 min per lead",
+      "3–5× hogere outreach efficiëntie",
+      "50+ gepersonaliseerde e-mails per dag",
+    ],
   },
 ];
 
@@ -118,55 +111,6 @@ const ImplementedCard = ({
   );
 };
 
-const UpcomingCard = ({
-  cs,
-  isHovered,
-  isAnyHovered,
-  onHover,
-  onLeave,
-  canHover,
-}: {
-  cs: UpcomingCase;
-  isHovered: boolean;
-  isAnyHovered: boolean;
-  onHover: () => void;
-  onLeave: () => void;
-  canHover: boolean;
-}) => {
-  const Icon = cs.icon;
-  const showHover = canHover && isHovered;
-  const showDim = canHover && isAnyHovered && !isHovered;
-
-  return (
-    <div
-      onMouseEnter={canHover ? onHover : undefined}
-      onMouseLeave={canHover ? onLeave : undefined}
-      className="relative group rounded-xl border border-border bg-card p-4 sm:p-6 flex flex-col h-full overflow-hidden transition-all duration-200 ease-out"
-      style={{
-        transform: showHover ? "scale(1.015) translateY(-2px)" : "none",
-        opacity: showDim ? 0.88 : 1,
-        borderColor: showHover ? "hsl(var(--primary) / 0.5)" : undefined,
-        boxShadow: showHover ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none",
-      }}
-    >
-      <div className="relative z-10 flex flex-col h-full">
-        <div className="flex items-center gap-3 mb-3 sm:mb-4">
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-            <Icon size={16} />
-          </div>
-          <h3 className="text-base sm:text-lg font-bold">{cs.title}</h3>
-        </div>
-
-        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-4 sm:mb-5">{cs.description}</p>
-
-        <div className="flex items-center gap-1.5 mt-auto">
-          <Clock size={12} className="text-primary" />
-          <p className="text-xs font-semibold">Coming soon</p>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const CaseStudiesPreview = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -188,25 +132,14 @@ const CaseStudiesPreview = () => {
         <ScrollReveal className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
           {cases.map((cs, i) => (
             <ScrollRevealItem key={cs.slug}>
-              {cs.upcoming ? (
-                <UpcomingCard
-                  cs={cs}
-                  isHovered={hoveredIndex === i}
-                  isAnyHovered={hoveredIndex !== null}
-                  onHover={() => setHoveredIndex(i)}
-                  onLeave={() => setHoveredIndex(null)}
-                  canHover={canHover}
-                />
-              ) : (
-                <ImplementedCard
-                  cs={cs as CaseStudy}
-                  isHovered={hoveredIndex === i}
-                  isAnyHovered={hoveredIndex !== null}
-                  onHover={() => setHoveredIndex(i)}
-                  onLeave={() => setHoveredIndex(null)}
-                  canHover={canHover}
-                />
-              )}
+              <ImplementedCard
+                cs={cs}
+                isHovered={hoveredIndex === i}
+                isAnyHovered={hoveredIndex !== null}
+                onHover={() => setHoveredIndex(i)}
+                onLeave={() => setHoveredIndex(null)}
+                canHover={canHover}
+              />
             </ScrollRevealItem>
           ))}
         </ScrollReveal>

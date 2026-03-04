@@ -1,6 +1,6 @@
 // Layout is provided by App.tsx
 import { Link } from "react-router-dom";
-import { ArrowRight, ShoppingCart, FileText, Users, CheckCircle2, Clock } from "lucide-react";
+import { ArrowRight, ShoppingCart, FileText, Users, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import { EcommerceIsometric, FinanceIsometric, LeadIsometric } from "@/components/case-studies/IsometricVisuals";
@@ -15,20 +15,11 @@ interface ImplementedCase {
   solution: string;
   results: string[];
   visual: React.ElementType;
+  videoUrl?: string;
   upcoming?: false;
 }
 
-interface UpcomingCase {
-  title: string;
-  icon: React.ElementType;
-  body: string;
-  visual: React.ElementType;
-  upcoming: true;
-}
-
-type CaseItem = ImplementedCase | UpcomingCase;
-
-const cases: CaseItem[] = [
+const cases: ImplementedCase[] = [
   {
     title: "E-commerce product- en orderautomatisering",
     icon: ShoppingCart,
@@ -58,11 +49,20 @@ const cases: CaseItem[] = [
     visual: FinanceIsometric,
   },
   {
-    title: "Leadmanagement en CRM automatisering",
+    title: "Leadwerving en outreach automatisering",
     icon: Users,
-    body: "We bouwen momenteel een systeem waarin inkomende leads automatisch worden verrijkt, gesynchroniseerd met het CRM en direct in opvolgworkflows worden geplaatst.\n\nBinnenkort delen we de volledige implementatie en resultaten.",
+    context: "Jobby wilde met een klein team meer bedrijven bereiken, maar het vinden van nieuwe leads en het verzamelen van contactinformatie kostte veel tijd. Het team werkte voornamelijk met handmatig zoeken en telefonische outreach, waardoor de beschikbare tijd voor opvolging en schaalbare acquisitie beperkt bleef.",
+    problem: "Leads moesten handmatig worden gevonden via verschillende platformen, waarna contactinformatie en bedrijfsgegevens afzonderlijk moesten worden opgezocht. Hierdoor kostte het gemiddeld ongeveer 25 minuten om één lead volledig te verwerken en te benaderen. Daarnaast werd e-mail outreach nauwelijks ingezet, omdat het schrijven en versturen van gepersonaliseerde e-mails te tijdrovend was naast het bellen van leads.",
+    solution: "We implementeerden een leadmanagement en outreach automatiseringssysteem dat leads automatisch verzamelt vanuit meerdere platformen, bedrijfsinformatie en contactgegevens direct beschikbaar maakt, snelle navigatie naar de website van de lead mogelijk maakt voor extra context, en AI gebruikt om automatisch gepersonaliseerde e-mails te genereren op basis van mogelijke pijnpunten en andere informatie op de website. Batch verzending van meerdere e-mails tegelijk werd mogelijk gemaakt, zodat het team leads sneller kan analyseren, bellen en gelijktijdig e-mail outreach kan uitvoeren.",
+    results: [
+      "Leadverwerking van 25 naar 5–10 minuten per lead",
+      "3–5× hogere outreach efficiëntie",
+      "Van geen e-mail outreach naar 50+ gepersonaliseerde e-mails per dag",
+      "Snellere toegang tot contactinformatie en bedrijfscontext",
+      "Meer klantgesprekken zonder extra teamcapaciteit",
+    ],
     visual: LeadIsometric,
-    upcoming: true,
+    videoUrl: "https://www.youtube.com/embed/2pZ5mX64K3k",
   },
 ];
 
@@ -87,7 +87,7 @@ const CaseStudies = () => {
             {cases.map((cs, i) => {
               const Icon = cs.icon;
               const Visual = cs.visual;
-              const isUpcoming = cs.upcoming;
+              const impl = cs as ImplementedCase;
 
               return (
                 <ScrollReveal key={i}>
@@ -103,48 +103,46 @@ const CaseStudies = () => {
                             <h2 className="text-xl sm:text-2xl font-bold">{cs.title}</h2>
                           </div>
 
-                          {!isUpcoming ? (
-                            <div className="space-y-5">
-                              <div>
-                                <p className="text-xs font-semibold text-primary mb-1.5 tracking-wide uppercase">Context</p>
-                                <p className="text-sm text-muted-foreground leading-relaxed">{(cs as ImplementedCase).context}</p>
-                              </div>
-                              <div>
-                                <p className="text-xs font-semibold text-primary mb-1.5 tracking-wide uppercase">Probleem</p>
-                                <p className="text-sm text-muted-foreground leading-relaxed">{(cs as ImplementedCase).problem}</p>
-                              </div>
-                              <div>
-                                <p className="text-xs font-semibold text-primary mb-1.5 tracking-wide uppercase">Oplossing</p>
-                                <p className="text-sm text-muted-foreground leading-relaxed">{(cs as ImplementedCase).solution}</p>
-                              </div>
-                              <div>
-                                <p className="text-xs font-semibold text-primary mb-3 tracking-wide uppercase">Resultaat</p>
-                                <ul className="space-y-2">
-                                  {(cs as ImplementedCase).results.map((r, j) => (
-                                    <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground">
-                                      <CheckCircle2 size={15} className="text-primary mt-0.5 shrink-0" />
-                                      {r}
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
+                          <div className="space-y-5">
+                            <div>
+                              <p className="text-xs font-semibold text-primary mb-1.5 tracking-wide uppercase">Context</p>
+                              <p className="text-sm text-muted-foreground leading-relaxed">{impl.context}</p>
                             </div>
-                          ) : (
-                            <div className="rounded-lg border border-border bg-muted/30 p-4">
-                              <div className="flex items-center gap-1.5 mb-2">
-                                <Clock size={12} className="text-primary" />
-                                <p className="text-xs font-semibold">Coming soon</p>
-                              </div>
-                              {(cs as UpcomingCase).body.split("\n\n").map((p, j) => (
-                                <p key={j} className="text-sm text-muted-foreground leading-relaxed mb-2 last:mb-0">{p}</p>
-                              ))}
+                            <div>
+                              <p className="text-xs font-semibold text-primary mb-1.5 tracking-wide uppercase">Probleem</p>
+                              <p className="text-sm text-muted-foreground leading-relaxed">{impl.problem}</p>
                             </div>
-                          )}
+                            <div>
+                              <p className="text-xs font-semibold text-primary mb-1.5 tracking-wide uppercase">Oplossing</p>
+                              <p className="text-sm text-muted-foreground leading-relaxed">{impl.solution}</p>
+                            </div>
+                            <div>
+                              <p className="text-xs font-semibold text-primary mb-3 tracking-wide uppercase">Resultaat</p>
+                              <ul className="space-y-2">
+                                {impl.results.map((r, j) => (
+                                  <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground">
+                                    <CheckCircle2 size={15} className="text-primary mt-0.5 shrink-0" />
+                                    {r}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
                         </div>
 
-                        {/* Isometric Visual — 2 cols */}
+                        {/* Visual — 2 cols */}
                         <div className={`lg:col-span-2 border-t lg:border-t-0 ${i % 2 === 1 ? 'lg:order-1 lg:border-r lg:border-l-0' : 'lg:border-l'} border-border min-h-[320px] flex items-center justify-center p-4`}>
-                          <Visual />
+                          {impl.videoUrl ? (
+                            <iframe
+                              src={impl.videoUrl}
+                              title={cs.title}
+                              className="w-full aspect-video rounded-lg"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                            />
+                          ) : (
+                            <Visual />
+                          )}
                         </div>
                       </div>
                     </div>

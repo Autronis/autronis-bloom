@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Linkedin, Twitter, Mail } from "lucide-react";
+import { toast } from "sonner";
 
 const Footer = () => {
   return (
@@ -26,6 +27,7 @@ const Footer = () => {
               <button
                 onClick={() => {
                   navigator.clipboard.writeText("zakelijk@autronis.com");
+                  toast("E-mailadres gekopieerd naar klembord");
                 }}
                 className="text-muted-foreground hover:text-primary transition-colors"
                 aria-label="Kopieer e-mailadres"

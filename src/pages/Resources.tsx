@@ -1,8 +1,10 @@
+import { useState } from "react";
 import Layout from "@/components/Layout";
 import { Link } from "react-router-dom";
-import { ArrowRight, BookOpen, Calculator, ClipboardCheck, BarChart3, Workflow, DollarSign, Settings, UserPlus, Layers, Link2, ShieldCheck } from "lucide-react";
+import { ArrowRight, BookOpen, Calculator, BarChart3, Workflow, DollarSign, Settings, UserPlus, Layers, Link2, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import AutomationImpactScan from "@/components/resources/AutomationImpactScan";
 
 const guides = [
   {
@@ -36,16 +38,10 @@ const tools = [
     href: "/impact-roi",
   },
   {
-    icon: ClipboardCheck,
-    title: "Automatiseringsscan",
-    description: "Een korte scan om te bepalen hoe volwassen uw organisatie is op het gebied van automatisering en systeemintegraties.",
-    href: "#",
-  },
-  {
     icon: BarChart3,
-    title: "Impactanalyse automatisering",
-    description: "Analyseer waar automatisering binnen uw organisatie de grootste operationele en financiële impact kan realiseren.",
-    href: "#",
+    title: "Automation Impact Scan",
+    description: "Ontvang een eerste indicatie waar automatisering binnen uw organisatie de grootste impact kan realiseren.",
+    href: "__impact-scan__",
   },
 ];
 
@@ -107,7 +103,7 @@ const ArticleCard = ({ post }: { post: typeof guides[0] }) => (
   </Link>
 );
 
-const IconCard = ({ icon: Icon, title, description, href }: { icon: any; title: string; description: string; href?: string }) => {
+const IconCard = ({ icon: Icon, title, description, href, onClick }: { icon: any; title: string; description: string; href?: string; onClick?: () => void }) => {
   const content = (
     <div className="group rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/30 flex flex-col h-full">
       <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:bg-primary/15 transition-colors">
@@ -115,7 +111,7 @@ const IconCard = ({ icon: Icon, title, description, href }: { icon: any; title: 
       </div>
       <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">{title}</h3>
       <p className="text-sm text-muted-foreground leading-relaxed flex-1">{description}</p>
-      {href && (
+      {(href || onClick) && (
         <span className="mt-4 text-sm text-primary inline-flex items-center gap-1 group-hover:underline">
           Bekijk <ArrowRight size={14} />
         </span>
@@ -123,6 +119,9 @@ const IconCard = ({ icon: Icon, title, description, href }: { icon: any; title: 
     </div>
   );
 
+  if (onClick) {
+    return <button onClick={onClick} className="flex text-left w-full">{content}</button>;
+  }
   if (href && href !== "#") {
     return <Link to={href} className="flex">{content}</Link>;
   }
@@ -140,8 +139,11 @@ const SectionHeader = ({ label, title, description }: { label?: string; title: s
 );
 
 const Resources = () => {
+  const [scanOpen, setScanOpen] = useState(false);
+
   return (
     <section className="pt-16 pb-24 relative overflow-hidden">
+      <AutomationImpactScan open={scanOpen} onOpenChange={setScanOpen} />
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Page header */}
         <div className="max-w-2xl mx-auto text-center mb-16">
@@ -175,11 +177,15 @@ const Resources = () => {
             title="Praktische tools"
             description="Interactieve tools om automatiseringskansen en impact binnen uw organisatie te analyseren."
           />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
             {tools.map((tool) => (
               <ScrollReveal key={tool.title}>
                 <ScrollRevealItem>
-                  <IconCard {...tool} />
+                  <IconCard
+                    {...tool}
+                    onClick={tool.href === "__impact-scan__" ? () => setScanOpen(true) : undefined}
+                    href={tool.href === "__impact-scan__" ? undefined : tool.href}
+                  />
                 </ScrollRevealItem>
               </ScrollReveal>
             ))}

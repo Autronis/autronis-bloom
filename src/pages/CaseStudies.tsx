@@ -3,69 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, ShoppingCart, FileText, Users, CheckCircle2, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
-
-/* ─── Architecture Diagram ─── */
-
-const ArchitectureDiagram = ({ nodes }: { nodes: string[] }) => (
-  <div className="w-full h-full flex items-center justify-center p-8">
-    <svg viewBox="0 0 300 360" className="w-full max-w-[260px]" fill="none">
-      {nodes.map((node, i) => {
-        const y = i * (320 / (nodes.length - 1 || 1)) + 20;
-        const x = i % 2 === 0 ? 150 : 150;
-        return (
-          <g key={i}>
-            {/* Connecting line to next node */}
-            {i < nodes.length - 1 && (
-              <line
-                x1={x}
-                y1={y + 16}
-                x2={150}
-                y2={(i + 1) * (320 / (nodes.length - 1 || 1)) + 20 - 16}
-                stroke="hsl(174, 78%, 41%)"
-                strokeWidth="1"
-                strokeOpacity="0.3"
-              />
-            )}
-            {/* Arrow head */}
-            {i < nodes.length - 1 && (
-              <polygon
-                points={`146,${(i + 1) * (320 / (nodes.length - 1 || 1)) + 20 - 18} 150,${(i + 1) * (320 / (nodes.length - 1 || 1)) + 20 - 12} 154,${(i + 1) * (320 / (nodes.length - 1 || 1)) + 20 - 18}`}
-                fill="hsl(174, 78%, 41%)"
-                fillOpacity="0.4"
-              />
-            )}
-            {/* Node box */}
-            <rect
-              x={x - 70}
-              y={y - 14}
-              width="140"
-              height="28"
-              rx="6"
-              fill="hsl(174, 78%, 41%)"
-              fillOpacity="0.08"
-              stroke="hsl(174, 78%, 41%)"
-              strokeWidth="1"
-              strokeOpacity="0.25"
-            />
-            {/* Node dot */}
-            <circle cx={x - 54} cy={y} r="3" fill="hsl(174, 78%, 41%)" fillOpacity="0.5" />
-            {/* Node text */}
-            <text
-              x={x - 44}
-              y={y + 4}
-              fontSize="11"
-              fill="hsl(174, 78%, 41%)"
-              fontFamily="inherit"
-              fontWeight="500"
-            >
-              {node}
-            </text>
-          </g>
-        );
-      })}
-    </svg>
-  </div>
-);
+import { EcommerceIsometric, FinanceIsometric, LeadIsometric } from "@/components/case-studies/IsometricVisuals";
 
 /* ─── Data ─── */
 
@@ -76,7 +14,7 @@ interface ImplementedCase {
   problem: string;
   solution: string;
   results: string[];
-  architectureNodes: string[];
+  visual: React.ElementType;
   upcoming?: false;
 }
 
@@ -84,7 +22,7 @@ interface UpcomingCase {
   title: string;
   icon: React.ElementType;
   body: string;
-  architectureNodes: string[];
+  visual: React.ElementType;
   upcoming: true;
 }
 
@@ -103,7 +41,7 @@ const cases: CaseItem[] = [
       "Snellere productupdates en lanceringen",
       "Consistente productdata tussen systemen",
     ],
-    architectureNodes: ["Leverancier", "Productdata", "Automatisering", "Webshop", "ERP", "Fulfilment"],
+    visual: EcommerceIsometric,
   },
   {
     title: "Financiële procesautomatisering",
@@ -117,13 +55,13 @@ const cases: CaseItem[] = [
       "Betere datakwaliteit in financiële systemen",
       "Minder correctiewerk",
     ],
-    architectureNodes: ["Facturen", "Document parsing", "Boekhoudsoftware", "Rapportage dashboard"],
+    visual: FinanceIsometric,
   },
   {
     title: "Leadmanagement en CRM automatisering",
     icon: Users,
     body: "We bouwen momenteel een systeem waarin inkomende leads automatisch worden verrijkt, gesynchroniseerd met het CRM en direct in opvolgworkflows worden geplaatst.\n\nBinnenkort delen we de volledige implementatie en resultaten.",
-    architectureNodes: ["Website formulier", "Lead verrijking", "CRM synchronisatie", "Opvolgworkflow"],
+    visual: LeadIsometric,
     upcoming: true,
   },
 ];
@@ -148,6 +86,7 @@ const CaseStudies = () => {
           <div className="space-y-8">
             {cases.map((cs, i) => {
               const Icon = cs.icon;
+              const Visual = cs.visual;
               const isUpcoming = cs.upcoming;
 
               return (
@@ -203,10 +142,9 @@ const CaseStudies = () => {
                           )}
                         </div>
 
-                        {/* Architecture Visual — 2 cols */}
-                        <div className={`lg:col-span-2 border-t lg:border-t-0 ${i % 2 === 1 ? 'lg:order-1 lg:border-r lg:border-l-0' : 'lg:border-l'} border-border bg-muted/5 min-h-[320px] flex flex-col items-center justify-center`}>
-                          <p className="text-[10px] font-semibold text-muted-foreground/50 tracking-widest uppercase pt-6">Architectuur</p>
-                          <ArchitectureDiagram nodes={cs.architectureNodes} />
+                        {/* Isometric Visual — 2 cols */}
+                        <div className={`lg:col-span-2 border-t lg:border-t-0 ${i % 2 === 1 ? 'lg:order-1 lg:border-r lg:border-l-0' : 'lg:border-l'} border-border bg-muted/5 min-h-[280px] flex items-center justify-center p-6`}>
+                          <Visual />
                         </div>
                       </div>
                     </div>

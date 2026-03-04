@@ -121,7 +121,13 @@ const InteractiveGridBg = () => {
 
     let animId: number;
     const spacing = 60;
+    let isVisible = true;
 
+    const visObserver = new IntersectionObserver(
+      ([entry]) => { isVisible = entry.isIntersecting; },
+      { threshold: 0 }
+    );
+    visObserver.observe(canvas);
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio, 2);
       canvas.width = canvas.offsetWidth * dpr;
@@ -136,6 +142,7 @@ const InteractiveGridBg = () => {
 
     let time = 0;
     const animate = () => {
+      if (!isVisible) { animId = requestAnimationFrame(animate); return; }
       const w = canvas.offsetWidth;
       const h = canvas.offsetHeight;
       ctx.clearRect(0, 0, w, h);
@@ -185,6 +192,7 @@ const InteractiveGridBg = () => {
 
     return () => {
       cancelAnimationFrame(animId);
+      visObserver.disconnect();
       window.removeEventListener("resize", resize);
     };
   }, []);
@@ -208,7 +216,13 @@ const InteractiveBubbles = () => {
     if (!ctx) return;
 
     let animId: number;
+    let isVisible = true;
 
+    const visObserver = new IntersectionObserver(
+      ([entry]) => { isVisible = entry.isIntersecting; },
+      { threshold: 0 }
+    );
+    visObserver.observe(canvas);
     const isDark = document.documentElement.classList.contains('dark');
     const boost = isDark ? 1 : 2.5;
 
@@ -238,6 +252,7 @@ const InteractiveBubbles = () => {
 
     let time = 0;
     const animate = () => {
+      if (!isVisible) { animId = requestAnimationFrame(animate); return; }
       const w = canvas.offsetWidth;
       const h = canvas.offsetHeight;
       ctx.clearRect(0, 0, w, h);
@@ -272,6 +287,7 @@ const InteractiveBubbles = () => {
 
     return () => {
       cancelAnimationFrame(animId);
+      visObserver.disconnect();
       window.removeEventListener("resize", resize);
       canvas.removeEventListener("mousemove", handleMouse);
     };

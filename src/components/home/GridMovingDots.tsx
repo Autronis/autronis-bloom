@@ -29,6 +29,13 @@ const GridMovingDots = ({ dots: _dots }: { dots?: GridDot[] }) => {
     if (!ctx) return;
 
     let animId: number;
+    let isVisible = true;
+
+    const visObserver = new IntersectionObserver(
+      ([entry]) => { isVisible = entry.isIntersecting; },
+      { threshold: 0 }
+    );
+    visObserver.observe(canvas);
 
     // Create dots that move horizontally along grid lines
     const dotStates: DotState[] = [
@@ -50,6 +57,7 @@ const GridMovingDots = ({ dots: _dots }: { dots?: GridDot[] }) => {
     let time = 0;
 
     const animate = () => {
+      if (!isVisible) { animId = requestAnimationFrame(animate); return; }
       const w = canvas.offsetWidth;
       const h = canvas.offsetHeight;
       ctx.clearRect(0, 0, w, h);
@@ -91,6 +99,7 @@ const GridMovingDots = ({ dots: _dots }: { dots?: GridDot[] }) => {
 
     return () => {
       cancelAnimationFrame(animId);
+      visObserver.disconnect();
       window.removeEventListener("resize", resize);
     };
   }, []);

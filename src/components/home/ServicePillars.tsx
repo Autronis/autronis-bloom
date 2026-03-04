@@ -76,27 +76,27 @@ const ServiceCard = ({
           onMouseEnter={() => setHoveredIndex(i)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
-          <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-4 sm:gap-6`}>
+           <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-3 sm:gap-4`}>
             {/* Text */}
-            <div className="flex-1 p-5 sm:p-6 flex flex-col justify-center">
+              <div className="flex-1 p-4 sm:p-5 flex flex-col justify-center">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
                   <s.icon size={18} />
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-bold">{s.title}</h3>
+                <h3 className="text-xl sm:text-2xl font-bold">{s.title}</h3>
               </div>
-              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{s.intro}</p>
+              <p className="text-xs text-muted-foreground mb-3 leading-relaxed">{s.intro}</p>
 
               {/* Wat levert dit op? */}
-              <div className="mb-4">
-                <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
+              <div className="mb-3">
+                <p className="text-xs font-semibold text-primary mb-2 tracking-widest uppercase">
                   Wat levert dit op?
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                   {s.impact.map((item, idx) => (
                     <motion.div
                       key={item.title}
-                      className="flex items-start gap-2.5 p-3 rounded-lg bg-card border border-primary/15 transition-all duration-300 ease-out group cursor-default"
+                      className="flex items-start gap-2 p-2.5 rounded-lg bg-card border border-primary/15 transition-all duration-300 ease-out group cursor-default"
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
@@ -126,7 +126,7 @@ const ServiceCard = ({
               </Button>
 
               {/* Security trust line */}
-              <div className="mt-4 pt-3 border-t border-border/30">
+              <div className="mt-3 pt-2 border-t border-border/30">
                 <p className="text-[11px] text-muted-foreground/80 leading-relaxed">
                   Inclusief toegangsbeheer, logging en een overdraagbare architectuur.
                 </p>
@@ -137,17 +137,17 @@ const ServiceCard = ({
               </div>
             </div>
             {/* Image */}
-            <div className="flex-1 min-h-[250px] sm:min-h-[320px] relative overflow-hidden rounded-xl bg-card">
+            <div className="flex-1 min-h-[200px] sm:min-h-[260px] relative overflow-hidden rounded-xl bg-card">
               {/* Glow only on hover */}
               <motion.img
                 src={s.image}
                 alt={s.title}
-                className="w-full h-full object-cover relative z-[1] mix-blend-screen"
-                style={{ opacity: 0.9 }}
+                className="w-full h-full object-contain relative z-[1] mix-blend-screen"
+                style={{ opacity: 0.85 }}
                 animate={
                   hoveredIndex === i
-                    ? { scale: 1.04, filter: `brightness(1.1) saturate(1.1)` }
-                    : { scale: 1, filter: `brightness(0.9) saturate(0.95)` }
+                    ? { scale: 1.04, filter: `brightness(1.0) saturate(1.0)` }
+                    : { scale: 1, filter: `brightness(0.85) saturate(0.95)` }
                 }
                 transition={{ duration: 0.35, ease: "easeOut" }}
                 loading="lazy"
@@ -192,7 +192,7 @@ const ServicePillars = () => {
           </ScrollRevealItem>
         </ScrollReveal>
 
-        <div className="space-y-6 sm:space-y-8 mb-12">
+        <div className="space-y-5 sm:space-y-6 mb-12">
           {services.map((s, i) => (
             <ServiceCard key={s.title} s={s} i={i} hoveredIndex={hoveredIndex} setHoveredIndex={setHoveredIndex} />
           ))}

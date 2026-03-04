@@ -107,7 +107,7 @@ const ROIPreview = () => {
                 </motion.div>
               ))}
             </div>
-            <p className="text-xs text-muted-foreground text-center max-w-3xl mx-auto mb-12">
+            <p className="text-xs text-muted-foreground text-center max-w-3xl mx-auto mb-12 italic">
               Scenario's gebaseerd op conservatieve aannames binnen middelgrote MKB-organisaties. Werkelijke impact is afhankelijk van procescomplexiteit en volumes.
             </p>
           </ScrollRevealItem>

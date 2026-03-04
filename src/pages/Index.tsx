@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Play } from "lucide-react";
 import { useState, useEffect, useRef, lazy, Suspense } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import HeroBackground from "@/components/home/HeroBackground";
 import StatisticsBlock from "@/components/home/StatisticsBlock";
 import { AnimatePresence, motion } from "framer-motion";
@@ -43,7 +43,6 @@ const Index = () => {
   const [wordIndex, setWordIndex] = useState(0);
   const [videoOpen, setVideoOpen] = useState(false);
   const [showSkip, setShowSkip] = useState(true);
-  const [videoError, setVideoError] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   useEffect(() => {
     // Preload all sections shortly after hero renders
@@ -115,39 +114,28 @@ const Index = () => {
             </div>
 
             {/* Video Modal */}
-            <Dialog open={videoOpen} onOpenChange={(open) => { setVideoOpen(open); if (open) { setShowSkip(true); setVideoError(false); } }}>
-              <DialogContent className="sm:max-w-4xl p-0 bg-card border-border overflow-hidden">
+            <Dialog open={videoOpen} onOpenChange={(open) => { setVideoOpen(open); if (open) setShowSkip(true); }}>
+              <DialogContent className="sm:max-w-4xl p-0 bg-card border-border overflow-hidden" aria-describedby={undefined}>
+                <DialogTitle className="sr-only">Systeemdemo</DialogTitle>
                 <div className="p-4 pb-0 flex items-center justify-between">
                   <p className="text-[10px] font-semibold text-primary tracking-widest uppercase">Systeemdemo</p>
                 </div>
                 <div className="relative m-4 mt-2 rounded-lg overflow-hidden border border-border bg-black">
                   {videoOpen && (
                     <>
-                      {!videoError ? (
-                        <video
-                          ref={videoRef}
-                          src="https://www.autronis.nl/videos/videodemo.mp4"
-                          className="w-full aspect-video block"
-                          autoPlay
-                          controls
-                          controlsList="nodownload noplaybackrate"
-                          disablePictureInPicture
-                          onTimeUpdate={(e) => {
-                            if (e.currentTarget.currentTime >= 10) setShowSkip(false);
-                          }}
-                          onError={() => setVideoError(true)}
-                        />
-                      ) : (
-                        <iframe
-                          src="https://www.youtube-nocookie.com/embed/2pZ5mX64K3k?autoplay=1&rel=0&modestbranding=1&showinfo=0&fs=1&iv_load_policy=3"
-                          title="Autronis demo"
-                          className="w-full aspect-video block"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                          allowFullScreen
-                          style={{ border: 0 }}
-                        />
-                      )}
-                      {showSkip && !videoError && (
+                      <video
+                        ref={videoRef}
+                        src="https://www.autronis.nl/videos/videodemo.mp4"
+                        className="w-full aspect-video block"
+                        autoPlay
+                        controls
+                        controlsList="nodownload noplaybackrate"
+                        disablePictureInPicture
+                        onTimeUpdate={(e) => {
+                          if (e.currentTarget.currentTime >= 10) setShowSkip(false);
+                        }}
+                      />
+                      {showSkip && (
                         <button
                           onClick={() => {
                             if (videoRef.current) {

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ShieldCheck, Search, PenTool, Wrench, CheckCircle, BarChart3 } from "lucide-react";
+import { ArrowRight, ShieldCheck, Search, PenTool, Wrench, CheckCircle, BarChart3, Rocket } from "lucide-react";
 import { useState, useRef, useCallback, useEffect } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
@@ -9,37 +9,44 @@ const phases = [
   {
     step: "01",
     icon: Search,
-    title: "Analyse & Prioritering",
+    title: "Analyse & Architectuur",
     description:
-      "We analyseren processen, systemen en datastromen en identificeren waar automatisering de meeste impact oplevert. U ontvangt een helder overzicht van verbeterkansen en prioriteiten.",
+      "We analyseren processen, systemen en datastromen en bepalen waar automatisering de meeste impact heeft. Op basis hiervan definiëren we een onderbouwde automatiseringsstrategie.",
   },
   {
     step: "02",
     icon: PenTool,
     title: "Ontwerp & Structuur",
     description:
-      "We ontwerpen een schaalbare systeemstructuur waarin integraties, datastromen en toegangsrechten logisch zijn ingericht. De technische basis wordt vastgelegd voordat ontwikkeling start.",
+      "We ontwerpen een schaalbare systeemstructuur waarin integraties, datastromen en toegangsrechten logisch zijn ingericht voordat ontwikkeling start.",
   },
   {
     step: "03",
     icon: Wrench,
-    title: "Bouw & Integratie",
+    title: "Bouw & Implementatie",
     description:
-      "De automatiseringen worden modulair ontwikkeld en geïntegreerd met uw bestaande systemen. Elke stap wordt getest en gevalideerd tijdens de bouw.",
+      "Automatiseringen worden modulair ontwikkeld en gekoppeld aan uw bestaande systemen. Tijdens de bouw worden integraties en workflows continu getest.",
   },
   {
     step: "04",
     icon: CheckCircle,
-    title: "Validatie & Overdracht",
+    title: "Validatie & Optimalisatie",
     description:
-      "We testen stabiliteit, prestaties en uitzonderingssituaties. Daarna leveren we volledige documentatie en dragen we het systeem overdraagbaar over.",
+      "We testen stabiliteit, prestaties en uitzonderingssituaties zodat automatiseringen betrouwbaar functioneren voordat ze live gaan.",
   },
   {
     step: "05",
-    icon: BarChart3,
-    title: "Monitoring & Optimalisatie",
+    icon: Rocket,
+    title: "Livegang & Overdracht",
     description:
-      "Na livegang monitoren we prestaties en optimaliseren we workflows waar nodig zodat systemen stabiel blijven en met uw organisatie meegroeien.",
+      "We verzorgen een gecontroleerde livegang en leveren volledige documentatie zodat uw organisatie eigenaar blijft van het systeem.",
+  },
+  {
+    step: "06",
+    icon: BarChart3,
+    title: "Doorontwikkeling & Ondersteuning",
+    description:
+      "Na livegang blijven we systemen monitoren en optimaliseren zodat automatiseringen blijven aansluiten op nieuwe processen en groei.",
   },
 ];
 

@@ -15,12 +15,12 @@ const services = [
     icon: Cog,
     title: "Procesautomatisering",
     slug: "procesautomatisering",
-    intro: "Wij automatiseren terugkerende processen zodat werk doorloopt zonder handmatige tussenstappen.",
+    intro: "Wij automatiseren terugkerende processen zodat werk kan doorlopen zonder handmatige tussenstappen.",
     impact: [
-      { title: "Tot 70% minder handmatige verwerkingstijd", sub: "Routinetaken worden volledig geautomatiseerd" },
-      { title: "Foutreductie door gestandaardiseerde workflows", sub: "Consistente uitvoering zonder menselijke fouten" },
-      { title: "Snellere doorlooptijden bij goedkeuringen", sub: "Escalaties en approvals verlopen automatisch" },
-      { title: "Schaalbaarheid zonder extra personeel", sub: "Groei zonder lineaire personeelskosten" },
+      { title: "Minder handmatige verwerking", sub: "Tot 70% minder tijd besteed aan repetitieve taken." },
+      { title: "Minder fouten", sub: "Gestandaardiseerde workflows zorgen voor consistente uitvoering." },
+      { title: "Snellere doorlooptijden", sub: "Goedkeuringen en escalaties verlopen automatisch." },
+      { title: "Schaalbaarheid", sub: "Processen kunnen groeien zonder dat personeelskosten evenredig toenemen." },
     ],
     image: serviceAutomation,
   },
@@ -28,12 +28,12 @@ const services = [
     icon: Link2,
     title: "Systeemintegraties",
     slug: "systeemintegraties",
-    intro: "Wij koppelen systemen via API's zodat data automatisch en consistent stroomt.",
+    intro: "Wij koppelen systemen via API's zodat data automatisch en consistent wordt uitgewisseld.",
     impact: [
-      { title: "Eén consistente datastroom tussen kernsystemen", sub: "Alle data synchroon en betrouwbaar" },
-      { title: "Eliminatie van dubbele data-invoer", sub: "Eénmalig invoeren, overal beschikbaar" },
-      { title: "Realtime synchronisatie zonder exports", sub: "Geen handmatige CSV- of Excel-exports meer" },
-      { title: "Proactieve foutdetectie en logging", sub: "Problemen worden gesignaleerd vóór ze escaleren" },
+      { title: "Consistente datastromen", sub: "Kernsystemen werken met dezelfde actuele informatie." },
+      { title: "Geen dubbele invoer", sub: "Data wordt één keer ingevoerd en automatisch gesynchroniseerd." },
+      { title: "Realtime synchronisatie", sub: "Gegevens worden direct bijgewerkt zonder exports of handmatige bestanden." },
+      { title: "Betrouwbare monitoring", sub: "Fouten worden vroegtijdig gedetecteerd en gelogd." },
     ],
     image: serviceIntegration,
   },
@@ -41,12 +41,12 @@ const services = [
     icon: PieChart,
     title: "Data & Rapportage",
     slug: "data-rapportage",
-    intro: "Realtime dashboards en geautomatiseerde rapportages voor volledig inzicht.",
+    intro: "Realtime dashboards en geautomatiseerde rapportages geven continu inzicht in prestaties en processen.",
     impact: [
-      { title: "Direct inzicht in KPI's en prestaties", sub: "Realtime dashboards altijd up-to-date" },
-      { title: "Geautomatiseerde rapportages zonder handmatig werk", sub: "Wekelijks, maandelijks of op maat" },
-      { title: "Eén bron van waarheid voor alle bedrijfsdata", sub: "Geen conflicterende spreadsheets meer" },
-      { title: "Vroegtijdige detectie van afwijkingen", sub: "Anomalieën worden direct gesignaleerd" },
+      { title: "Direct inzicht in prestaties", sub: "Dashboards tonen actuele KPI's en trends." },
+      { title: "Geautomatiseerde rapportages", sub: "Rapportages worden automatisch gegenereerd en verspreid." },
+      { title: "Eén bron van waarheid", sub: "Alle teams werken met dezelfde consistente data." },
+      { title: "Snelle signalering van afwijkingen", sub: "Problemen en afwijkingen worden vroegtijdig zichtbaar." },
     ],
     image: serviceData,
   },
@@ -128,7 +128,7 @@ const ServiceCard = ({
               {/* Security trust line */}
               <div className="mt-4 pt-3 border-t border-border/30">
                 <p className="text-[11px] text-muted-foreground/80 leading-relaxed">
-                  Inclusief role-based access, logging en overdraagbare architectuur.
+                  Inclusief toegangsbeheer, logging en een overdraagbare architectuur.
                 </p>
                 <a href="#beveiliging" className="group inline-flex items-center gap-1 text-[11px] text-foreground/70 hover:text-primary/70 transition-colors mt-1">
                   Bekijk onze Beveiligingsaanpak

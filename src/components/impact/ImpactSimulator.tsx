@@ -132,12 +132,133 @@ const ImpactSimulator = () => {
         {/* Single block */}
         <div className="max-w-6xl mx-auto rounded-2xl border border-border bg-card p-6 sm:p-8 lg:p-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
-            {/* LEFT — Inputs */}
+            {/* LEFT — Results first */}
             <motion.div
+              className="space-y-5"
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+            >
+              {/* Primary KPIs */}
+              <div>
+                <p className="text-sm font-semibold text-foreground mb-4">Resultaten</p>
+                <div className="grid grid-cols-2 gap-4">
+                  <KPICard
+                    label="Jaarlijkse besparing"
+                    value={formatCurrency(animYearly)}
+                    icon={<TrendingUp size={16} />}
+                    highlight
+                  />
+                  <KPICard
+                    label="Break-even punt"
+                    value={`${results.breakEvenMonths} mnd`}
+                    icon={<Calendar size={16} />}
+                  />
+                </div>
+              </div>
+
+              {/* Secondary KPIs */}
+              <div className="grid grid-cols-2 gap-4">
+                <KPICard
+                  label="Netto voordeel jaar 1"
+                  value={formatCurrency(animNet)}
+                  icon={<Euro size={16} />}
+                />
+                <div className="rounded-xl border border-primary/30 bg-primary/[0.04] p-4 flex flex-col justify-between">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Percent size={16} className="text-primary" />
+                    <p className="text-xs text-muted-foreground">ROI Multiplier</p>
+                  </div>
+                  <p className="text-2xl font-bold text-primary tabular-nums">
+                    {results.roiMultiplier.toFixed(1)}x
+                  </p>
+                </div>
+              </div>
+
+              {/* Bar chart */}
+              <BarChart data={chartData} />
+
+              {/* Confidence score */}
+              <div className="rounded-xl border border-border p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-sm font-medium text-foreground">Impact Confidence Score</p>
+                  <span className="text-sm font-semibold text-primary tabular-nums">{results.confidence}%</span>
+                </div>
+                <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
+                  <motion.div
+                    className="h-full rounded-full bg-primary"
+                    animate={{ width: `${results.confidence}%` }}
+                    transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+                  />
+                </div>
+                <p className="text-xs text-muted-foreground mt-2.5">
+                  Indicatie van hoe realistisch deze berekening is, gebaseerd op automatiseringspercentage, foutreductie en vergelijkbare implementaties bij MKB-organisaties.
+                </p>
+              </div>
+
+              {/* Transparency accordion */}
+              <div className="rounded-xl border border-border overflow-hidden">
+                <button
+                  onClick={() => setShowTransparency((p) => !p)}
+                  className="w-full flex items-center justify-between p-4 text-left hover:bg-muted/30 transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <Info size={14} className="text-primary" />
+                    <p className="text-sm font-medium text-foreground">Wat zit er in deze berekening?</p>
+                  </div>
+                  <motion.div animate={{ rotate: showTransparency ? 180 : 0 }} transition={{ duration: 0.25 }}>
+                    <ChevronDown size={16} className="text-muted-foreground" />
+                  </motion.div>
+                </button>
+                <AnimatePresence initial={false}>
+                  {showTransparency && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-4 pb-4 space-y-3">
+                        <div>
+                          <p className="text-xs font-medium text-foreground mb-1.5">Inbegrepen</p>
+                          <ul className="space-y-1">
+                            {["Besparing op handmatige verwerkingstijd", "Besparing door foutreductie", "Structurele capaciteitsvrijmaking"].map((item) => (
+                              <li key={item} className="flex items-center gap-2 text-xs text-foreground/80">
+                                <span className="w-1 h-1 rounded-full bg-primary shrink-0" />
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div>
+                          <p className="text-xs font-medium text-foreground mb-1.5">Niet inbegrepen</p>
+                          <ul className="space-y-1">
+                            {["Extra omzetgroei", "Strategische schaalvoordelen", "Langetermijnoptimalisaties"].map((item) => (
+                              <li key={item} className="flex items-center gap-2 text-xs text-muted-foreground">
+                                <span className="w-1 h-1 rounded-full bg-muted-foreground/40 shrink-0" />
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-3 leading-relaxed">
+                          Tijdens de impactanalyse vertalen wij deze aannames naar een volledige businesscase op basis van uw processen en systemen.
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </motion.div>
+
+            {/* RIGHT — Parameters */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
             >
               <p className="text-sm font-semibold text-foreground mb-6">Parameters</p>
               <div className="space-y-7">
@@ -192,13 +313,16 @@ const ImpactSimulator = () => {
                 <p className="text-xs text-muted-foreground">
                   Gebaseerd op vergelijkbare implementaties binnen MKB-organisaties.
                 </p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Omvat analyse, ontwerp, implementatie, integraties, testen en documentatie.
+                </p>
               </div>
 
               {/* Disclaimer + CTA */}
               <div className="mt-8 pt-6 border-t border-border">
                 <p className="text-sm text-muted-foreground leading-relaxed mb-5 italic flex items-start gap-1.5">
                   <AlertTriangle size={14} className="text-primary shrink-0 mt-0.5 not-italic" />
-                  Deze berekening is indicatief. Tijdens de impactanalyse wordt een volledige businesscase opgesteld inclusief risico-inschatting, implementatieplanning en validatie van aannames.
+                  Deze berekening is indicatief. Tijdens de impactanalyse wordt een volledige businesscase opgesteld inclusief risico-inschatting en implementatieplanning.
                 </p>
                 <Button asChild size="lg">
                   <Link to="/book">
@@ -218,124 +342,8 @@ const ImpactSimulator = () => {
               </div>
             </motion.div>
 
-            {/* RIGHT — Results */}
-            <motion.div
-              className="space-y-5"
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
-            >
-              {/* Primary KPIs */}
-              <div className="grid grid-cols-2 gap-4">
-                <KPICard
-                  label="Jaarlijkse besparing"
-                  value={formatCurrency(animYearly)}
-                  icon={<TrendingUp size={16} />}
-                  highlight
-                />
-                <KPICard
-                  label="Break-even punt"
-                  value={`${results.breakEvenMonths} mnd`}
-                  icon={<Calendar size={16} />}
-                />
-              </div>
 
-              {/* Secondary KPIs */}
-              <div className="grid grid-cols-2 gap-4">
-                <KPICard
-                  label="Netto voordeel jaar 1"
-                  value={formatCurrency(animNet)}
-                  icon={<Euro size={16} />}
-                />
-                <div className="rounded-xl border border-primary/30 bg-primary/[0.04] p-4 flex flex-col justify-between">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Percent size={16} className="text-primary" />
-                    <p className="text-xs text-muted-foreground">ROI Multiplier</p>
-                  </div>
-                  <p className="text-2xl font-bold text-primary tabular-nums">
-                    {results.roiMultiplier.toFixed(1)}x
-                  </p>
-                </div>
-              </div>
 
-              {/* Bar chart */}
-              <BarChart data={chartData} />
-
-              {/* Confidence score */}
-              <div className="rounded-xl border border-border p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-sm font-medium text-foreground">Impact Confidence Score</p>
-                  <span className="text-sm font-semibold text-primary tabular-nums">{results.confidence}%</span>
-                </div>
-                <div className="w-full h-2 rounded-full bg-muted overflow-hidden">
-                  <motion.div
-                    className="h-full rounded-full bg-primary"
-                    animate={{ width: `${results.confidence}%` }}
-                    transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-                  />
-                </div>
-                <p className="text-xs text-muted-foreground mt-2.5">
-                  Gebaseerd op automatiseringspercentage, procescomplexiteit en vergelijkbare implementaties.
-                </p>
-              </div>
-
-              {/* Transparency accordion */}
-              <div className="rounded-xl border border-border overflow-hidden">
-                <button
-                  onClick={() => setShowTransparency((p) => !p)}
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-muted/30 transition-colors"
-                >
-                  <div className="flex items-center gap-2">
-                    <Info size={14} className="text-primary" />
-                    <p className="text-sm font-medium text-foreground">Wat zit er in deze berekening?</p>
-                  </div>
-                  <motion.div animate={{ rotate: showTransparency ? 180 : 0 }} transition={{ duration: 0.25 }}>
-                    <ChevronDown size={16} className="text-muted-foreground" />
-                  </motion.div>
-                </button>
-                <AnimatePresence initial={false}>
-                  {showTransparency && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-                      className="overflow-hidden"
-                    >
-                      <div className="px-4 pb-4 space-y-3">
-                        <div>
-                          <p className="text-xs font-medium text-foreground mb-1.5">Inbegrepen</p>
-                          <ul className="space-y-1">
-                            {["Besparing op handmatige verwerkingstijd", "Vermindering van fouten en correctiewerk", "Structurele capaciteitsvrijmaking"].map((item) => (
-                              <li key={item} className="flex items-center gap-2 text-xs text-foreground/80">
-                                <span className="w-1 h-1 rounded-full bg-primary shrink-0" />
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div>
-                          <p className="text-xs font-medium text-foreground mb-1.5">Niet inbegrepen</p>
-                          <ul className="space-y-1">
-                             {["Extra omzetgroei", "Strategische schaalvoordelen", "Langetermijnoptimalisaties"].map((item) => (
-                              <li key={item} className="flex items-center gap-2 text-xs text-muted-foreground">
-                                <span className="w-1 h-1 rounded-full bg-muted-foreground/40 shrink-0" />
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        <p className="text-xs text-muted-foreground mt-3 leading-relaxed">
-                          Tijdens de impactanalyse wordt deze berekening vertaald naar een volledige businesscase op basis van uw organisatie.
-                        </p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-            </motion.div>
           </div>
         </div>
       </div>

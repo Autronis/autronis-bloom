@@ -47,7 +47,7 @@
 
     --accent-light: 174 64% 44%;
     --accent-dark: 174 78% 25%;
-    --img-invert: 1;
+    --img-invert: 0;
     --img-hue: 180deg;
     --bubble-boost: 2.5;
     --grid-opacity: 0;

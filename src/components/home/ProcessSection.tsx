@@ -11,35 +11,35 @@ const phases = [
     icon: Search,
     title: "Analyse & Prioritering",
     description:
-      "Wij brengen uw processen, systemen en knelpunten in kaart. U ontvangt een geprioriteerd overzicht van de grootste verbetermogelijkheden.",
+      "We analyseren processen, systemen en datastromen en identificeren waar automatisering de meeste impact oplevert. U ontvangt een helder overzicht van verbeterkansen en prioriteiten.",
   },
   {
     step: "02",
     icon: PenTool,
-    title: "Architectuur & Blueprint",
+    title: "Ontwerp & Structuur",
     description:
-      "We ontwerpen een schaalbare systeemarchitectuur met duidelijke integratiepunten, dataflows en verwachte impact per automatisering.",
+      "We ontwerpen een schaalbare systeemstructuur waarin integraties, datastromen en toegangsrechten logisch zijn ingericht. De technische basis wordt vastgelegd voordat ontwikkeling start.",
   },
   {
     step: "03",
     icon: Wrench,
     title: "Bouw & Integratie",
     description:
-      "De automatiseringen worden gebouwd en geïntegreerd met uw bestaande systemen. Iteratief, met tussentijdse validatie.",
+      "De automatiseringen worden modulair ontwikkeld en geïntegreerd met uw bestaande systemen. Elke stap wordt getest en gevalideerd tijdens de bouw.",
   },
   {
     step: "04",
     icon: CheckCircle,
     title: "Validatie & Overdracht",
     description:
-      "Uitgebreid testen, documentatie en kennisoverdracht. U bent volledig eigenaar van het resultaat.",
+      "We testen stabiliteit, prestaties en uitzonderingssituaties. Daarna leveren we volledige documentatie en dragen we het systeem overdraagbaar over.",
   },
   {
     step: "05",
     icon: BarChart3,
     title: "Monitoring & Optimalisatie",
     description:
-      "Na go-live monitoren we prestaties en optimaliseren we continu. Uw systemen worden beter over tijd.",
+      "Na livegang monitoren we prestaties en optimaliseren we workflows waar nodig zodat systemen stabiel blijven en met uw organisatie meegroeien.",
   },
 ];
 

@@ -133,7 +133,7 @@ const Navbar = () => {
             height={32}
             className="w-auto transform-gpu transition-all duration-300 ease-out"
             style={{ height: scrolled ? "26px" : "32px" }}
-            fetchPriority="high"
+            loading="eager"
             decoding="async"
           />
           <span

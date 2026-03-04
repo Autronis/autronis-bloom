@@ -23,9 +23,16 @@ const Footer = () => {
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Twitter">
                 <Twitter size={18} />
               </a>
-              <a href="mailto:zakelijk@autronis.com" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Email">
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText("zakelijk@autronis.com");
+                }}
+                className="text-muted-foreground hover:text-primary transition-colors"
+                aria-label="Kopieer e-mailadres"
+                title="Kopieer zakelijk@autronis.com"
+              >
                 <Mail size={18} />
-              </a>
+              </button>
             </div>
           </div>
 

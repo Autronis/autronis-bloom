@@ -73,21 +73,21 @@ const Index = () => {
             <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.35] tracking-tight mb-4 sm:mb-6">
               Breng structuur in je
               <br />
-              <span className="relative inline-flex h-[1.2em] min-w-[14ch] items-end justify-center sm:h-[1.35em] align-bottom overflow-hidden">
+              <span className="relative inline-flex h-[1.4em] min-w-[14ch] items-end justify-center sm:h-[1.5em] align-bottom overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={rotatingWords[wordIndex]}
-                    className="absolute inset-0 flex items-end justify-center text-primary"
-                    initial={{ opacity: 0, y: 18, filter: "blur(2px)" }}
+                    className="absolute inset-x-0 bottom-0 flex items-end justify-center text-primary"
+                    initial={{ opacity: 0, y: 14, filter: "blur(2px)" }}
                     animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    exit={{ opacity: 0, y: -18, filter: "blur(2px)" }}
+                    exit={{ opacity: 0, y: -14, filter: "blur(2px)" }}
                     transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                   >
                     {rotatingWords[wordIndex]}.
                   </motion.span>
                 </AnimatePresence>
                 {/* Invisible sizer for width */}
-                <span className="invisible">schaalbaarheid.</span>
+                <span className="invisible leading-none">schaalbaarheid.</span>
               </span>
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8 leading-relaxed">

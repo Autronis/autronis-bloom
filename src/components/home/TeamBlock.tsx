@@ -64,6 +64,8 @@ const TeamBlock = () => {
               <img
                 src={teamFoto}
                 alt="Autronis team - Sem en Syb"
+                width={800}
+                height={600}
                 className="w-full h-auto object-cover rounded-xl"
                 loading="lazy"
               />

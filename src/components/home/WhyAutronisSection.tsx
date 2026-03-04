@@ -145,6 +145,8 @@ const WhyAutronisSection = () => {
                   <motion.img
                     src={teamFoto}
                     alt="Autronis team - Sem en Syb"
+                    width={800}
+                    height={600}
                     className="w-full h-full object-cover object-center scale-110 rotate-[2deg]"
                     initial={{ opacity: 0, scale: 1.03 }}
                     animate={imgInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.03 }}

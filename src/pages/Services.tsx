@@ -82,6 +82,8 @@ const toolIconsRow1: Array<{ name: string; logo: string; dark?: boolean }> = [
   { name: "LangChain", logo: "/logos/langchain.svg", dark: true },
   { name: "Pinecone", logo: "/logos/pinecone.svg", dark: true },
   { name: "Firebase", logo: "/logos/firebase.svg" },
+  { name: "Instagram", logo: "/logos/instagram.svg" },
+  { name: "WhatsApp", logo: "/logos/whatsapp.svg" },
 ];
 
 const toolIconsRow2: Array<{ name: string; logo: string; dark?: boolean }> = [
@@ -103,6 +105,8 @@ const toolIconsRow2: Array<{ name: string; logo: string; dark?: boolean }> = [
   { name: "Google Analytics", logo: "/logos/google-analytics.svg" },
   { name: "Sentry", logo: "/logos/sentry.svg", dark: true },
   { name: "Datadog", logo: "/logos/datadog.svg" },
+  { name: "Facebook", logo: "/logos/facebook.svg" },
+  { name: "LinkedIn", logo: "/logos/linkedin.svg" },
 ];
 
 const InteractiveGridBg = () => {

@@ -132,7 +132,7 @@ const WhyAutronisSection = () => {
                       variant="outline"
                       className="border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors duration-300"
                     >
-                      <Link to="/team#team-section">
+                      <Link to="/team">
                         Bekijk ons team
                         <ArrowRight size={18} />
                       </Link>

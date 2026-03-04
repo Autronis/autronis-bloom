@@ -150,20 +150,6 @@ const ServiceCard = ({
                 transition={{ duration: 0.35, ease: "easeOut" }}
                 loading="lazy"
               />
-              {/* Edge gradient overlays */}
-              <div
-                className="absolute inset-0 z-[3] pointer-events-none"
-                style={{
-                  background: isEven
-                    ? "linear-gradient(to right, hsl(var(--card)) 0%, transparent 25%)"
-                    : "linear-gradient(to left, hsl(var(--card)) 0%, transparent 25%)",
-                }}
-              />
-              <div
-                className="absolute inset-0 z-[3] pointer-events-none"
-                style={{ background: "linear-gradient(to bottom, hsl(var(--card)) 0%, transparent 8%, transparent 92%, hsl(var(--card)) 100%)" }}
-              />
-              {/* Hover glow overlay */}
             </div>
           </div>
         </div>

@@ -141,12 +141,12 @@ const Team = () => {
                 { icon: Cable, title: "Integraties", text: "Systemen en software die naadloos met elkaar samenwerken." },
                 { icon: BarChart3, title: "Data", text: "Inzicht, controle en rapportages op basis van betrouwbare data." },
               ].map((block) => (
-                <div key={block.title} className="rounded-lg border border-border bg-card p-3 text-center">
+                <div key={block.title} className="rounded-lg border border-border bg-card p-3 text-center flex flex-col h-full">
                   <div className="w-7 h-7 rounded-md bg-primary/10 flex items-center justify-center text-primary mb-2 mx-auto">
                     <block.icon size={14} />
                   </div>
                   <p className="font-semibold text-xs mb-0.5">{block.title}</p>
-                  <p className="text-[11px] text-muted-foreground leading-relaxed">{block.text}</p>
+                  <p className="text-[11px] text-muted-foreground leading-relaxed flex-1">{block.text}</p>
                 </div>
               ))}
             </div>

@@ -224,11 +224,21 @@
   }
 }
 
-/* ── Mobile: disable hover scale effects on touch devices ── */
-@media (hover: none) and (pointer: coarse) {
+/* ── Mobile: disable hover glow/scale on phone (hero keeps only tap-active feedback) ── */
+@media (max-width: 767px) {
+  main :where(a, button, [role="button"], [class*="card"], [class*="Card"], .werkstandaard-card):hover {
+    transform: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+    border-color: inherit !important;
+  }
+
   .werkstandaard-card:hover {
     transform: none !important;
+    box-shadow: none !important;
+    border-color: hsl(var(--border)) !important;
   }
+
   .werkstandaard-card:hover .werkstandaard-icon-wrap {
     transform: none !important;
   }
@@ -236,11 +246,17 @@
 
 /* ── Mobile: tap feedback only inside hero section ── */
 @media (max-width: 767px) and (hover: none) and (pointer: coarse) {
-  .hero-section :where(a, button, [role="button"], [class*="card"], [class*="Card"]) {
+  main :where(a, button, [role="button"], [class*="card"], [class*="Card"]) {
     transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1),
                 box-shadow 180ms ease,
                 border-color 180ms ease;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  main :where(a, button, [role="button"], [class*="card"], [class*="Card"]):active {
+    transform: none;
+    border-color: inherit;
+    box-shadow: none;
   }
 
   .hero-section :where(a, button, [role="button"], [class*="card"], [class*="Card"]):active {

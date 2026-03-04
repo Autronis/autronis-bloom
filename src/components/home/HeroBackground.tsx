@@ -1,5 +1,8 @@
 import { useEffect, useRef } from "react";
 
+// Track if hero has been mounted before (skip delay on subsequent navigations)
+let heroMountedBefore = false;
+
 interface GlowDot {
   lineIndex: number;
   t: number;
@@ -140,8 +143,9 @@ const HeroBackground = () => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     let startDelay: ReturnType<typeof setTimeout> | undefined;
     if (!motionQuery.matches) {
-      // Delay canvas animation to let LCP text paint first
-      startDelay = setTimeout(() => { animate(); }, 200);
+      const delay = heroMountedBefore ? 0 : 200;
+      heroMountedBefore = true;
+      startDelay = setTimeout(() => { animate(); }, delay);
     } else {
       time = 0;
       const w = window.innerWidth;

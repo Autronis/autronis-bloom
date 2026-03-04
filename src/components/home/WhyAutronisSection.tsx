@@ -148,18 +148,25 @@ const WhyAutronisSection = () => {
                       background: "radial-gradient(ellipse 55% 65% at 50% 40%, transparent 0%, hsl(0 0% 0% / 0.55) 100%)",
                     }}
                   />
-                  {/* Left fade into card - dark mode */}
+                  {/* Left fade into card - dark mode (desktop only) */}
                   <div
-                    className="absolute inset-0 pointer-events-none dark:block hidden"
+                    className="absolute inset-0 pointer-events-none dark:hidden lg:dark:block hidden"
                     style={{
                       background: "linear-gradient(to right, hsl(var(--card)) 0%, hsl(var(--card) / 0.3) 8%, transparent 25%)",
                     }}
                   />
-                  {/* Left fade into card - light mode */}
+                  {/* Left fade into card - light mode (desktop only) */}
                   <div
-                    className="absolute inset-0 pointer-events-none dark:hidden"
+                    className="absolute inset-0 pointer-events-none dark:hidden hidden lg:block"
                     style={{
                       background: "linear-gradient(to right, hsl(var(--card)) 0%, hsl(var(--card) / 0.15) 6%, transparent 18%)",
+                    }}
+                  />
+                  {/* Top fade - mobile only */}
+                  <div
+                    className="absolute inset-0 pointer-events-none lg:hidden"
+                    style={{
+                      background: "linear-gradient(to bottom, hsl(var(--card)) 0%, hsl(var(--card) / 0.3) 8%, transparent 25%)",
                     }}
                   />
                 </div>

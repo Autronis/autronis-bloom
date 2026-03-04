@@ -108,22 +108,22 @@ const phases = [
 const securityClaims = [
   {
     icon: ShieldCheck,
-    title: "Minimale toegangsrechten",
+    title: "Minimale rechten",
     description: "Toegang tot systemen en data wordt strikt beperkt op basis van rollen en verantwoordelijkheden.",
   },
   {
     icon: FileText,
-    title: "Volledige documentatie",
+    title: "Documentatie",
     description: "Architectuur, integraties en datastromen worden volledig vastgelegd en overdraagbaar opgeleverd.",
   },
   {
     icon: BarChart3,
-    title: "Logging & monitoring",
+    title: "Logging",
     description: "Integraties bevatten standaard logging, foutdetectie en monitoring voor volledige traceerbaarheid.",
   },
   {
     icon: Shield,
-    title: "AVG-conforme aanpak",
+    title: "AVG-conform",
     description: "Dataverwerking wordt ingericht conform geldende privacywetgeving en interne datarichtlijnen.",
   },
 ];
@@ -419,11 +419,13 @@ const Process = () => {
         {/* ── Intro block: Onze werkwijze ── */}
         <ScrollReveal className="max-w-3xl mx-auto mb-20">
           <ScrollRevealItem>
-            <div
-              className="rounded-xl border border-primary/20 bg-card p-8 sm:p-10 relative overflow-hidden"
-              style={{
-                boxShadow:
-                  "0 0 40px hsl(174 78% 41% / 0.06), inset 0 0 60px hsl(174 78% 41% / 0.02)",
+            <motion.div
+              className="rounded-xl border border-border bg-card p-8 sm:p-10 relative overflow-hidden"
+              whileHover={{
+                scale: 1.015,
+                borderColor: "hsl(174, 78%, 41%, 0.5)",
+                boxShadow: "0 4px 24px hsl(174, 78%, 41%, 0.08)",
+                transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] },
               }}
             >
               <h2 className="text-xl sm:text-2xl font-bold mb-3">
@@ -458,7 +460,7 @@ const Process = () => {
                   </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </ScrollRevealItem>
         </ScrollReveal>
 

@@ -25,9 +25,9 @@ const Contact = () => {
                 <br />Stuur ons een bericht of plan direct een vrijblijvende Automation Scan.
               </p>
               <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground mb-4">
-                <span>✓ Vrijblijvend advies</span>
-                <span>✓ Reactie binnen één werkdag</span>
-                <span>✓ Direct contact met engineers</span>
+                <span><span className="text-primary">✓</span> Vrijblijvend advies</span>
+                <span><span className="text-primary">✓</span> Reactie binnen één werkdag</span>
+                <span><span className="text-primary">✓</span> Direct contact met engineers</span>
               </div>
               <p className="text-xs text-muted-foreground/70">
                 Wij werken voornamelijk met groeiende MKB-bedrijven die processen willen automatiseren en systemen schaalbaar willen laten samenwerken.

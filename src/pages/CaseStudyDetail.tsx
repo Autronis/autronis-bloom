@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+// Layout is provided by App.tsx
 import { Button } from "@/components/ui/button";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { ArrowRight, ArrowLeft } from "lucide-react";
@@ -48,7 +48,7 @@ const CaseStudyDetail = () => {
   const nextSlug = slugs[(currentIndex + 1) % slugs.length];
 
   return (
-    <Layout>
+    <>
       <section className="pt-16 pb-24 relative overflow-hidden">
         
         <div className="container mx-auto px-4 lg:px-8">
@@ -100,7 +100,7 @@ const CaseStudyDetail = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 

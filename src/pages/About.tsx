@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+// Layout is provided by App.tsx
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Target, Shield, Users, Handshake } from "lucide-react";
@@ -64,7 +64,7 @@ const TeamCard = ({ member }: { member: typeof team[0] }) => {
 
 const About = () => {
   return (
-    <Layout>
+    <>
       <section className="pt-16 pb-24 relative overflow-hidden">
         
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
@@ -121,7 +121,7 @@ const About = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 

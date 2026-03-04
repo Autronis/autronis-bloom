@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+// Layout is provided by App.tsx
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Users, Eye, Shield, Clock, Boxes, Cable, BarChart3 } from "lucide-react";
@@ -118,7 +118,7 @@ const WerkstandaardSection = ({ reasons }: { reasons: typeof directReasons }) =>
 
 const Team = () => {
   return (
-    <Layout>
+    <>
       <section className="pt-16 pb-24 relative overflow-hidden">
         
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
@@ -194,7 +194,7 @@ const Team = () => {
 
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 

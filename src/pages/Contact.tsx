@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+// Layout is provided by App.tsx
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,7 +12,7 @@ const Contact = () => {
   const [sent, setSent] = useState(false);
 
   return (
-    <Layout>
+    <>
       <section className="pt-16 pb-24 relative overflow-hidden">
         
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
@@ -111,7 +111,7 @@ const Contact = () => {
           </ScrollReveal>
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 

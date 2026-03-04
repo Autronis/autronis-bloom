@@ -1,4 +1,3 @@
-import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, ShieldCheck, Play } from "lucide-react";
@@ -30,7 +29,7 @@ const Index = () => {
   }, []);
 
   return (
-    <Layout>
+    <>
       {/* Hero */}
       <section className="relative min-h-[80vh] sm:min-h-screen flex flex-col items-center justify-center overflow-hidden" >
         <HeroBackground />
@@ -110,7 +109,7 @@ const Index = () => {
       <SecurityBlock />
       <FAQSection />
       <FinalCTA />
-    </Layout>
+    </>
   );
 };
 

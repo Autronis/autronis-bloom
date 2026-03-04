@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+// Layout is provided by App.tsx
 import { Link } from "react-router-dom";
 import { ArrowRight, ShoppingCart, FileText, Users, CheckCircle2, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -70,7 +70,7 @@ const cases: CaseItem[] = [
 
 const CaseStudies = () => {
   return (
-    <Layout>
+    <>
       <section className="pt-16 pb-24 relative overflow-hidden">
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <ScrollReveal className="max-w-2xl mx-auto text-center mb-16">
@@ -169,7 +169,7 @@ const CaseStudies = () => {
           </ScrollReveal>
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 

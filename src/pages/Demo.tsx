@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+// Layout is provided by App.tsx
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Play, ArrowRight } from "lucide-react";
@@ -6,7 +6,7 @@ import { Play, ArrowRight } from "lucide-react";
 
 const Demo = () => {
   return (
-    <Layout>
+    <>
       <section className="pt-16 pb-24 relative overflow-hidden">
         
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
@@ -51,7 +51,7 @@ const Demo = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 

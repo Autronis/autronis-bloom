@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+// Layout is provided by App.tsx
 import ImpactSimulator from "@/components/impact/ImpactSimulator";
 import { Clock, CheckCircle, Users, TrendingUp, Shield, BarChart3, Calculator } from "lucide-react";
 import { motion } from "framer-motion";
@@ -45,7 +45,7 @@ const factors = [
 
 const ImpactROI = () => {
   return (
-    <Layout>
+    <>
       {/* Impact Simulator */}
       <ImpactSimulator />
 
@@ -132,7 +132,7 @@ const ImpactROI = () => {
           </ScrollReveal>
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 

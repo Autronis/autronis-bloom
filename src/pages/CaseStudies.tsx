@@ -4,37 +4,67 @@ import { ArrowRight, ShoppingCart, FileText, Users, CheckCircle2, Clock } from "
 import { Button } from "@/components/ui/button";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
-/* ─── Flow Diagram Visuals ─── */
+/* ─── Architecture Diagram ─── */
 
-const FlowDiagram = ({ steps }: { steps: string[] }) => (
-  <div className="w-full h-full flex items-center justify-center p-6 sm:p-8">
-    <div className="w-full max-w-[200px] space-y-0">
-      {steps.map((step, i) => (
-        <div key={i}>
-          <div className="rounded-lg border border-primary/25 bg-primary/5 px-4 py-2.5 text-center">
-            <p className="text-[11px] sm:text-xs font-medium text-foreground">{step}</p>
-          </div>
-          {i < steps.length - 1 && (
-            <div className="flex justify-center">
-              <div className="w-px h-5 bg-primary/30" />
-            </div>
-          )}
-        </div>
-      ))}
-    </div>
+const ArchitectureDiagram = ({ nodes }: { nodes: string[] }) => (
+  <div className="w-full h-full flex items-center justify-center p-8">
+    <svg viewBox="0 0 300 360" className="w-full max-w-[260px]" fill="none">
+      {nodes.map((node, i) => {
+        const y = i * (320 / (nodes.length - 1 || 1)) + 20;
+        const x = i % 2 === 0 ? 150 : 150;
+        return (
+          <g key={i}>
+            {/* Connecting line to next node */}
+            {i < nodes.length - 1 && (
+              <line
+                x1={x}
+                y1={y + 16}
+                x2={150}
+                y2={(i + 1) * (320 / (nodes.length - 1 || 1)) + 20 - 16}
+                stroke="hsl(174, 78%, 41%)"
+                strokeWidth="1"
+                strokeOpacity="0.3"
+              />
+            )}
+            {/* Arrow head */}
+            {i < nodes.length - 1 && (
+              <polygon
+                points={`146,${(i + 1) * (320 / (nodes.length - 1 || 1)) + 20 - 18} 150,${(i + 1) * (320 / (nodes.length - 1 || 1)) + 20 - 12} 154,${(i + 1) * (320 / (nodes.length - 1 || 1)) + 20 - 18}`}
+                fill="hsl(174, 78%, 41%)"
+                fillOpacity="0.4"
+              />
+            )}
+            {/* Node box */}
+            <rect
+              x={x - 70}
+              y={y - 14}
+              width="140"
+              height="28"
+              rx="6"
+              fill="hsl(174, 78%, 41%)"
+              fillOpacity="0.08"
+              stroke="hsl(174, 78%, 41%)"
+              strokeWidth="1"
+              strokeOpacity="0.25"
+            />
+            {/* Node dot */}
+            <circle cx={x - 54} cy={y} r="3" fill="hsl(174, 78%, 41%)" fillOpacity="0.5" />
+            {/* Node text */}
+            <text
+              x={x - 44}
+              y={y + 4}
+              fontSize="11"
+              fill="hsl(174, 78%, 41%)"
+              fontFamily="inherit"
+              fontWeight="500"
+            >
+              {node}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
   </div>
-);
-
-const EcommerceVisual = () => (
-  <FlowDiagram steps={["Leverancier", "Productdata", "Automatisering", "Webshop", "ERP", "Fulfilment"]} />
-);
-
-const FinanceVisual = () => (
-  <FlowDiagram steps={["Facturen", "Document parsing", "Boekhoudsoftware", "Rapportage dashboard"]} />
-);
-
-const LeadVisual = () => (
-  <FlowDiagram steps={["Website formulier", "Lead verrijking", "CRM synchronisatie", "Opvolgworkflow"]} />
 );
 
 /* ─── Data ─── */
@@ -46,7 +76,7 @@ interface ImplementedCase {
   problem: string;
   solution: string;
   results: string[];
-  visual: React.ElementType;
+  architectureNodes: string[];
   upcoming?: false;
 }
 
@@ -54,7 +84,7 @@ interface UpcomingCase {
   title: string;
   icon: React.ElementType;
   body: string;
-  visual: React.ElementType;
+  architectureNodes: string[];
   upcoming: true;
 }
 
@@ -73,7 +103,7 @@ const cases: CaseItem[] = [
       "Snellere productupdates en lanceringen",
       "Consistente productdata tussen systemen",
     ],
-    visual: EcommerceVisual,
+    architectureNodes: ["Leverancier", "Productdata", "Automatisering", "Webshop", "ERP", "Fulfilment"],
   },
   {
     title: "Financiële procesautomatisering",
@@ -87,13 +117,13 @@ const cases: CaseItem[] = [
       "Betere datakwaliteit in financiële systemen",
       "Minder correctiewerk",
     ],
-    visual: FinanceVisual,
+    architectureNodes: ["Facturen", "Document parsing", "Boekhoudsoftware", "Rapportage dashboard"],
   },
   {
     title: "Leadmanagement en CRM automatisering",
     icon: Users,
     body: "We bouwen momenteel een systeem waarin inkomende leads automatisch worden verrijkt, gesynchroniseerd met het CRM en direct in opvolgworkflows worden geplaatst.\n\nBinnenkort delen we de volledige implementatie en resultaten.",
-    visual: LeadVisual,
+    architectureNodes: ["Website formulier", "Lead verrijking", "CRM synchronisatie", "Opvolgworkflow"],
     upcoming: true,
   },
 ];
@@ -118,16 +148,15 @@ const CaseStudies = () => {
           <div className="space-y-8">
             {cases.map((cs, i) => {
               const Icon = cs.icon;
-              const Visual = cs.visual;
               const isUpcoming = cs.upcoming;
 
               return (
                 <ScrollReveal key={i}>
                   <ScrollRevealItem>
                     <div className="rounded-xl border border-border bg-card overflow-hidden transition-all duration-300 hover:border-primary/30">
-                      <div className={`grid grid-cols-1 lg:grid-cols-2`}>
-                        {/* Content */}
-                        <div className={`p-8 sm:p-10 flex flex-col justify-center ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
+                      <div className="grid grid-cols-1 lg:grid-cols-5">
+                        {/* Content — 3 cols */}
+                        <div className={`lg:col-span-3 p-8 sm:p-10 flex flex-col justify-center ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
                           <div className="flex items-center gap-3 mb-6">
                             <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
                               <Icon size={20} />
@@ -174,12 +203,10 @@ const CaseStudies = () => {
                           )}
                         </div>
 
-                        {/* Visual */}
-                        <div className={`border-t lg:border-t-0 ${i % 2 === 1 ? 'lg:order-1 lg:border-r lg:border-l-0' : 'lg:border-l'} border-border bg-muted/10 min-h-[280px] flex items-center justify-center`}>
-                          <div className="w-full">
-                            <p className="text-[10px] font-semibold text-muted-foreground/60 tracking-widest uppercase text-center pt-6 mb-0">Automatiseringsarchitectuur</p>
-                            <Visual />
-                          </div>
+                        {/* Architecture Visual — 2 cols */}
+                        <div className={`lg:col-span-2 border-t lg:border-t-0 ${i % 2 === 1 ? 'lg:order-1 lg:border-r lg:border-l-0' : 'lg:border-l'} border-border bg-muted/5 min-h-[320px] flex flex-col items-center justify-center`}>
+                          <p className="text-[10px] font-semibold text-muted-foreground/50 tracking-widest uppercase pt-6">Architectuur</p>
+                          <ArchitectureDiagram nodes={cs.architectureNodes} />
                         </div>
                       </div>
                     </div>

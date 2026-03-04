@@ -79,34 +79,12 @@ const Navbar = () => {
     setMobileOpen(false);
   }, [location.pathname]);
 
-  // Animate mobile menu height with CSS
-  useEffect(() => {
-    const el = mobileMenuRef.current;
-    if (!el) return;
-    if (mobileOpen) {
-      el.style.display = "block";
-      const h = el.scrollHeight;
-      el.style.maxHeight = "0px";
-      el.style.opacity = "0";
-      // Force reflow
-      el.offsetHeight;
-      el.style.maxHeight = h + "px";
-      el.style.opacity = "1";
-    } else {
-      el.style.maxHeight = "0px";
-      el.style.opacity = "0";
-      const onEnd = () => { el.style.display = "none"; };
-      el.addEventListener("transitionend", onEnd, { once: true });
-      // Fallback hide
-      setTimeout(onEnd, 350);
-    }
-  }, [mobileOpen]);
+  // No JS animation needed — use CSS grid trick for height animation
 
   return (
     <header
       className="fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ease-out"
       style={{
-        height: scrolled ? "52px" : "64px",
         backgroundColor: scrolled
           ? "hsl(var(--background) / 0.95)"
           : "hsl(var(--background) / 0.72)",
@@ -120,9 +98,10 @@ const Navbar = () => {
       }}
     >
       <nav
-        className="container mx-auto h-full flex items-center justify-between transition-all duration-300 ease-out"
+        className="container mx-auto flex items-center justify-between transition-all duration-300 ease-out"
         style={{
-          padding: scrolled ? "0 1rem" : "0 1rem",
+          height: scrolled ? "52px" : "64px",
+          padding: "0 1rem",
         }}
       >
         <Link to="/" className="flex items-center gap-2 shrink-0 min-w-[130px]">
@@ -241,16 +220,14 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Mobile menu - CSS-only animation, no framer-motion */}
+      {/* Mobile menu */}
       <div
         ref={mobileMenuRef}
-        className="lg:hidden border-b border-border overflow-hidden"
+        className="lg:hidden border-b border-border overflow-hidden transition-all duration-300 ease-out"
         style={{
           backgroundColor: "hsl(var(--background) / 0.98)",
-          display: "none",
-          maxHeight: 0,
-          opacity: 0,
-          transition: "max-height 0.3s ease-out, opacity 0.25s ease-out",
+          maxHeight: mobileOpen ? "600px" : "0px",
+          opacity: mobileOpen ? 1 : 0,
         }}
       >
         <div className="container mx-auto px-4 py-4 flex flex-col gap-1">

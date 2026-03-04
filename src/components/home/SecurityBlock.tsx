@@ -31,7 +31,7 @@ const layers = [
       { icon: Eye, text: "Data is niet toegankelijk voor onbevoegden, ook niet voor derden" },
       { icon: FolderLock, text: "Datasegmentatie en toegangscontrole per rol" },
     ],
-    closing: "Uw data blijft volledig onder uw controle, zowel technisch als contractueel.",
+    closing: "Uw data blijft onder uw controle en eigendom, zowel technisch als contractueel geborgd.",
   },
   {
     icon: FileCheck,

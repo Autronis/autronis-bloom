@@ -76,19 +76,19 @@ const ServiceCard = ({
           onMouseEnter={() => setHoveredIndex(i)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
-          <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-6 sm:gap-8`}>
+          <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-4 sm:gap-6`}>
             {/* Text */}
-            <div className="flex-1 p-6 sm:p-8 flex flex-col justify-center">
+            <div className="flex-1 p-5 sm:p-6 flex flex-col justify-center">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
                   <s.icon size={18} />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold">{s.title}</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold">{s.title}</h3>
               </div>
-              <p className="text-sm text-muted-foreground mb-5 leading-relaxed">{s.intro}</p>
+              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{s.intro}</p>
 
               {/* Wat levert dit op? */}
-              <div className="mb-5">
+              <div className="mb-4">
                 <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
                   Wat levert dit op?
                 </p>
@@ -137,7 +137,7 @@ const ServiceCard = ({
               </div>
             </div>
             {/* Image */}
-            <div className="flex-1 min-h-[300px] sm:min-h-[400px] relative overflow-hidden rounded-xl bg-card">
+            <div className="flex-1 min-h-[250px] sm:min-h-[320px] relative overflow-hidden rounded-xl bg-card">
               {/* Glow only on hover */}
               <motion.img
                 src={s.image}
@@ -192,7 +192,7 @@ const ServicePillars = () => {
           </ScrollRevealItem>
         </ScrollReveal>
 
-        <div className="space-y-8 sm:space-y-12 mb-12">
+        <div className="space-y-6 sm:space-y-8 mb-12">
           {services.map((s, i) => (
             <ServiceCard key={s.title} s={s} i={i} hoveredIndex={hoveredIndex} setHoveredIndex={setHoveredIndex} />
           ))}

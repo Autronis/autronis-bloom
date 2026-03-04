@@ -84,6 +84,7 @@ const toolIconsRow1: Array<{ name: string; logo: string; dark?: boolean }> = [
   { name: "Firebase", logo: "/logos/firebase.svg" },
   { name: "Instagram", logo: "/logos/instagram.svg" },
   { name: "WhatsApp", logo: "/logos/whatsapp.svg" },
+  { name: "GitHub", logo: "/logos/github.svg", dark: true },
 ];
 
 const toolIconsRow2: Array<{ name: string; logo: string; dark?: boolean }> = [
@@ -493,6 +494,8 @@ const Services = () => {
             </div>
 
             <div className="relative mb-4 overflow-hidden py-10">
+              <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-background to-transparent pointer-events-none" />
+              <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-background to-transparent pointer-events-none" />
               <div className="flex animate-marquee-right gap-14 w-max items-center justify-center">
                 {[...toolIconsRow1, ...toolIconsRow1, ...toolIconsRow1].map((tool, i) => (
                   <div key={i} className="relative group hover:scale-110 transition-transform duration-200">
@@ -506,6 +509,8 @@ const Services = () => {
             </div>
 
             <div className="relative overflow-hidden py-10">
+              <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-background to-transparent pointer-events-none" />
+              <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-background to-transparent pointer-events-none" />
               <div className="flex animate-marquee-left gap-14 w-max items-center justify-center">
                 {[...toolIconsRow2, ...toolIconsRow2, ...toolIconsRow2].map((tool, i) => (
                   <div key={i} className="relative group hover:scale-110 transition-transform duration-200">

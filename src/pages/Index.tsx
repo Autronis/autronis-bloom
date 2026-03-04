@@ -58,20 +58,20 @@ const Index = () => {
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
               Wij transformeren processen tot slimme systemen die schaalbaar en beheersbaar blijven.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12">
-              <Button asChild size="lg">
-                <Link to="/book">
-                  Plan een Automation Scan
-                  <ArrowRight size={18} />
-                </Link>
-              </Button>
-              <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center mb-12">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <Button asChild size="lg">
+                  <Link to="/book">
+                    Plan een Automation Scan
+                    <ArrowRight size={18} />
+                  </Link>
+                </Button>
                 <Button size="lg" variant="outline" onClick={() => setVideoOpen(true)}>
                   <Play size={16} />
                   Bekijk 2 min demo
                 </Button>
-                <p className="text-[11px] italic text-muted-foreground mt-1.5">Zie hoe automatisering in de praktijk werkt in 2 minuten.</p>
               </div>
+              <p className="text-[11px] italic text-muted-foreground mt-2">Zie hoe automatisering in de praktijk werkt in 2 minuten.</p>
             </div>
 
             {/* Video Modal */}

@@ -1,9 +1,10 @@
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, ShieldCheck } from "lucide-react";
+import { ArrowRight, ShieldCheck, Play } from "lucide-react";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import HeroBackground from "@/components/home/HeroBackground";
 import StatisticsBlock from "@/components/home/StatisticsBlock";
 import ProblemSolutionSection from "@/components/home/ProblemSolutionSection";
@@ -20,7 +21,7 @@ const rotatingWords = ["groei", "processen", "systemen", "datastromen", "schaalb
 
 const Index = () => {
   const [wordIndex, setWordIndex] = useState(0);
-
+  const [videoOpen, setVideoOpen] = useState(false);
   useEffect(() => {
     const interval = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % rotatingWords.length);
@@ -57,12 +58,35 @@ const Index = () => {
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
               Wij transformeren processen tot slimme systemen die schaalbaar en beheersbaar blijven.
             </p>
-            <Button asChild size="lg" className="mb-12">
-              <Link to="/book">
-                Plan een Automation Scan
-                <ArrowRight size={18} />
-              </Link>
-            </Button>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12">
+              <Button asChild size="lg">
+                <Link to="/book">
+                  Plan een Automation Scan
+                  <ArrowRight size={18} />
+                </Link>
+              </Button>
+              <Button size="lg" variant="outline" onClick={() => setVideoOpen(true)}>
+                <Play size={16} />
+                Bekijk demo
+              </Button>
+            </div>
+
+            {/* Video Modal */}
+            <Dialog open={videoOpen} onOpenChange={setVideoOpen}>
+              <DialogContent className="sm:max-w-4xl p-0 bg-card border-border overflow-hidden">
+                <div className="p-4 pb-0">
+                  <p className="text-[10px] font-semibold text-primary tracking-widest uppercase">Systeemdemo</p>
+                </div>
+                <div className="aspect-video bg-muted/10 flex items-center justify-center m-4 mt-2 rounded-lg border border-border">
+                  <div className="text-center text-muted-foreground/50">
+                    <div className="w-16 h-16 rounded-full border-2 border-primary/30 flex items-center justify-center mx-auto mb-3">
+                      <div className="w-0 h-0 border-t-[10px] border-t-transparent border-b-[10px] border-b-transparent border-l-[16px] border-l-primary/50 ml-1" />
+                    </div>
+                    <p className="text-xs">Video binnenkort beschikbaar</p>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
 
             {/* Statistics directly under CTA */}
             <StatisticsBlock />
@@ -70,28 +94,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Demo Video */}
-      <section className="py-12 sm:py-20 border-t border-border">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-10">
-            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Demo</p>
-            <h2 className="text-2xl sm:text-3xl font-bold mb-4">Zie hoe automatisering in de praktijk werkt</h2>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Een korte demonstratie van hoe workflows, integraties en systemen automatisch samenwerken.
-            </p>
-          </div>
-          <div className="max-w-4xl mx-auto">
-            <div className="aspect-video rounded-xl border border-border bg-card overflow-hidden flex items-center justify-center">
-              <div className="text-center text-muted-foreground/50">
-                <div className="w-16 h-16 rounded-full border-2 border-primary/30 flex items-center justify-center mx-auto mb-3">
-                  <div className="w-0 h-0 border-t-[10px] border-t-transparent border-b-[10px] border-b-transparent border-l-[16px] border-l-primary/50 ml-1" />
-                </div>
-                <p className="text-xs">Video binnenkort beschikbaar</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       <ProblemSolutionSection />
       <ServicePillars />

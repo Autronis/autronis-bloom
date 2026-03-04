@@ -143,7 +143,7 @@ const CaseStudies = () => {
                         </div>
 
                         {/* Isometric Visual — 2 cols */}
-                        <div className={`lg:col-span-2 border-t lg:border-t-0 ${i % 2 === 1 ? 'lg:order-1 lg:border-r lg:border-l-0' : 'lg:border-l'} border-border bg-muted/5 min-h-[280px] flex items-center justify-center p-6`}>
+                        <div className={`lg:col-span-2 border-t lg:border-t-0 ${i % 2 === 1 ? 'lg:order-1 lg:border-r lg:border-l-0' : 'lg:border-l'} border-border bg-[hsl(192,30%,6%)] min-h-[320px] flex items-center justify-center p-4`}>
                           <Visual />
                         </div>
                       </div>

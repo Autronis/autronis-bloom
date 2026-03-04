@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Play } from "lucide-react";
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import HeroBackground from "@/components/home/HeroBackground";
 import StatisticsBlock from "@/components/home/StatisticsBlock";
@@ -42,6 +42,8 @@ const SectionFallback = () => (
 const Index = () => {
   const [wordIndex, setWordIndex] = useState(0);
   const [videoOpen, setVideoOpen] = useState(false);
+  const [showSkip, setShowSkip] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
   useEffect(() => {
     // Preload all sections shortly after hero renders
     const preloadTimer = setTimeout(preloadSections, 1000);
@@ -112,7 +114,7 @@ const Index = () => {
             </div>
 
             {/* Video Modal */}
-            <Dialog open={videoOpen} onOpenChange={setVideoOpen}>
+            <Dialog open={videoOpen} onOpenChange={(open) => { setVideoOpen(open); if (open) setShowSkip(true); }}>
               <DialogContent className="sm:max-w-4xl p-0 bg-card border-border overflow-hidden">
                 <div className="p-4 pb-0 flex items-center justify-between">
                   <p className="text-[10px] font-semibold text-primary tracking-widest uppercase">Systeemdemo</p>
@@ -120,26 +122,31 @@ const Index = () => {
                 <div className="relative m-4 mt-2 rounded-lg overflow-hidden border border-border bg-black">
                   {videoOpen && (
                     <>
-                      <iframe
-                        id="demo-video-iframe"
-                        src="https://www.youtube-nocookie.com/embed/2pZ5mX64K3k?autoplay=1&rel=0&modestbranding=1&showinfo=0&fs=1"
-                        title="Autronis demo"
+                      <video
+                        ref={videoRef}
+                        src="https://www.autronis.nl/videos/videodemo.mp4"
                         className="w-full aspect-video block"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                        allowFullScreen
-                        style={{ border: 0 }}
-                      />
-                      <button
-                        onClick={() => {
-                          const iframe = document.getElementById('demo-video-iframe') as HTMLIFrameElement;
-                          if (iframe) {
-                            iframe.src = "https://www.youtube-nocookie.com/embed/2pZ5mX64K3k?autoplay=1&start=10&rel=0&modestbranding=1&showinfo=0&fs=1";
-                          }
+                        autoPlay
+                        controls
+                        controlsList="nodownload noplaybackrate"
+                        disablePictureInPicture
+                        onTimeUpdate={(e) => {
+                          if (e.currentTarget.currentTime >= 10) setShowSkip(false);
                         }}
-                        className="absolute bottom-3 right-3 px-3 py-1.5 rounded-md bg-card/90 backdrop-blur-sm border border-border text-xs font-medium text-foreground hover:bg-card transition-colors"
-                      >
-                        Skip intro →
-                      </button>
+                      />
+                      {showSkip && (
+                        <button
+                          onClick={() => {
+                            if (videoRef.current) {
+                              videoRef.current.currentTime = 10;
+                              setShowSkip(false);
+                            }
+                          }}
+                          className="absolute top-3 right-3 px-3 py-1.5 rounded-md bg-card/90 backdrop-blur-sm border border-border text-xs font-medium text-foreground hover:bg-card transition-colors"
+                        >
+                          Skip intro →
+                        </button>
+                      )}
                     </>
                   )}
                 </div>

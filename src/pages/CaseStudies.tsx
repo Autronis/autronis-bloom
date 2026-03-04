@@ -62,7 +62,7 @@ const cases: ImplementedCase[] = [
       "Meer klantgesprekken zonder extra teamcapaciteit",
     ],
     visual: LeadIsometric,
-    videoUrl: "https://www.youtube-nocookie.com/embed/2pZ5mX64K3k?rel=0&modestbranding=1&showinfo=0&fs=1",
+    videoUrl: "https://www.autronis.nl/videos/videodemo.mp4",
   },
 ];
 
@@ -133,12 +133,12 @@ const CaseStudies = () => {
                         {/* Visual — 2 cols */}
                         <div className={`lg:col-span-2 border-t lg:border-t-0 ${i % 2 === 1 ? 'lg:order-1 lg:border-r lg:border-l-0' : 'lg:border-l'} border-border min-h-[320px] flex items-center justify-center p-4`}>
                           {impl.videoUrl ? (
-                            <iframe
+                            <video
                               src={impl.videoUrl}
-                              title={cs.title}
                               className="w-full aspect-video rounded-lg"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
+                              controls
+                              controlsList="nodownload noplaybackrate"
+                              disablePictureInPicture
                             />
                           ) : (
                             <Visual />

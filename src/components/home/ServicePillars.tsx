@@ -69,7 +69,7 @@ const ServiceCard = ({
     <ScrollReveal key={s.title}>
       <ScrollRevealItem>
          <div
-          className="rounded-xl border border-primary/15 bg-card transition-all duration-300 ease-out"
+          className="rounded-xl border border-primary/15 bg-card transition-all duration-300 ease-out overflow-hidden"
           style={{
             borderColor: hoveredIndex === i ? "hsl(var(--primary) / 0.4)" : undefined,
           }}
@@ -137,12 +137,12 @@ const ServiceCard = ({
               </div>
             </div>
             {/* Image */}
-            <div className="flex-1 min-h-[180px] sm:min-h-[220px] relative overflow-hidden rounded-xl bg-card">
+            <div className="flex-1 min-h-[180px] self-stretch relative overflow-hidden bg-card">
               {/* Glow only on hover */}
               <motion.img
                 src={s.image}
                 alt={s.title}
-                className="w-full h-full object-contain relative z-[1] mix-blend-screen"
+                className="w-full h-full object-contain relative z-[1] mix-blend-screen p-4"
                 style={{ opacity: 0.85 }}
                 animate={
                   hoveredIndex === i

@@ -139,8 +139,11 @@ const SectionHeader = ({ label, title, description }: { label?: string; title: s
 );
 
 const Resources = () => {
+  const [scanOpen, setScanOpen] = useState(false);
+
   return (
     <section className="pt-16 pb-24 relative overflow-hidden">
+      <AutomationImpactScan open={scanOpen} onOpenChange={setScanOpen} />
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Page header */}
         <div className="max-w-2xl mx-auto text-center mb-16">
@@ -174,11 +177,15 @@ const Resources = () => {
             title="Praktische tools"
             description="Interactieve tools om automatiseringskansen en impact binnen uw organisatie te analyseren."
           />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
             {tools.map((tool) => (
               <ScrollReveal key={tool.title}>
                 <ScrollRevealItem>
-                  <IconCard {...tool} />
+                  <IconCard
+                    {...tool}
+                    onClick={tool.href === "__impact-scan__" ? () => setScanOpen(true) : undefined}
+                    href={tool.href === "__impact-scan__" ? undefined : tool.href}
+                  />
                 </ScrollRevealItem>
               </ScrollReveal>
             ))}

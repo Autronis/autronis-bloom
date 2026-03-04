@@ -123,12 +123,12 @@ const Team = () => {
         
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           {/* Over Autronis */}
-          <div className="max-w-3xl mx-auto mb-20">
+          <div className="max-w-3xl mx-auto text-center mb-20">
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Over Autronis</p>
             <h2 className="text-3xl sm:text-4xl font-bold mb-8 leading-tight">
               Van handmatig werk naar schaalbare systemen
             </h2>
-            <div className="space-y-4 text-muted-foreground leading-relaxed">
+            <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
               <p>Veel groeiende bedrijven lopen vast in handmatige processen, losse tools en spreadsheets die niet meer schaalbaar zijn.</p>
               <p>Autronis is opgericht met één doel: processen omzetten in betrouwbare systemen die automatisch draaien.</p>
               <p>We ontwerpen en implementeren automatiseringsstructuren waarin workflows, integraties en data samenkomen in één logisch geheel.</p>
@@ -153,13 +153,14 @@ const Team = () => {
           </div>
 
           {/* Team header */}
+          <div id="team-section" className="scroll-mt-24" />
           <ScrollReveal className="max-w-3xl mx-auto text-center mb-16">
             <ScrollRevealItem>
               <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Team</p>
               <h2 className="text-3xl sm:text-4xl font-bold mb-6 leading-tight">
                 Werk direct met de engineers die uw systemen bouwen.
               </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 Wij ontwerpen, bouwen en optimaliseren automatiseringen zelf. U werkt direct samen met de engineers die verantwoordelijk zijn voor analyse, ontwikkeling en implementatie. Geen accountmanagers of overdrachtslagen, maar directe samenwerking met het team dat uw systemen realiseert.
               </p>
             </ScrollRevealItem>

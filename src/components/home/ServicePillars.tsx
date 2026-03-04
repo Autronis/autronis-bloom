@@ -83,7 +83,7 @@ const ServiceCard = ({
                 <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
                   <s.icon size={18} />
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-bold">{s.title}</h3>
+                <h3 className="text-xl sm:text-2xl font-bold">{s.title}</h3>
               </div>
               <p className="text-sm text-muted-foreground mb-5 leading-relaxed">{s.intro}</p>
 

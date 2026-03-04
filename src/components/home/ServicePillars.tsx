@@ -137,7 +137,7 @@ const ServiceCard = ({
               </div>
             </div>
             {/* Image */}
-            <div className={`flex-1 ${i === 0 ? 'min-h-[340px] sm:min-h-[460px]' : 'min-h-[220px] sm:min-h-[280px]'} relative overflow-hidden rounded-xl bg-card`}>
+            <div className="flex-1 min-h-[300px] sm:min-h-[400px] relative overflow-hidden rounded-xl bg-card">
               {/* Glow only on hover */}
               <motion.img
                 src={s.image}

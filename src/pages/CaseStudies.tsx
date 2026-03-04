@@ -1,109 +1,40 @@
 import Layout from "@/components/Layout";
 import { Link } from "react-router-dom";
-import { ArrowRight, ShoppingCart, FileText, Users, CheckCircle2, Clock, ArrowRightLeft, Database, BarChart3, Workflow } from "lucide-react";
+import { ArrowRight, ShoppingCart, FileText, Users, CheckCircle2, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
-/* ─── Technical visuals (SVG-based diagrams) ─── */
+/* ─── Flow Diagram Visuals ─── */
 
-const EcommerceVisual = () => (
-  <div className="w-full h-full flex items-center justify-center p-6">
-    <div className="w-full max-w-xs space-y-3">
-      {/* System nodes */}
-      <div className="flex items-center justify-between">
-        <div className="rounded-lg border border-border bg-muted/30 px-3 py-2 text-[11px] font-medium flex items-center gap-1.5">
-          <Database size={12} className="text-primary" /> Leverancier
+const FlowDiagram = ({ steps }: { steps: string[] }) => (
+  <div className="w-full h-full flex items-center justify-center p-6 sm:p-8">
+    <div className="w-full max-w-[200px] space-y-0">
+      {steps.map((step, i) => (
+        <div key={i}>
+          <div className="rounded-lg border border-primary/25 bg-primary/5 px-4 py-2.5 text-center">
+            <p className="text-[11px] sm:text-xs font-medium text-foreground">{step}</p>
+          </div>
+          {i < steps.length - 1 && (
+            <div className="flex justify-center">
+              <div className="w-px h-5 bg-primary/30" />
+            </div>
+          )}
         </div>
-        <ArrowRightLeft size={14} className="text-primary/50" />
-        <div className="rounded-lg border border-border bg-muted/30 px-3 py-2 text-[11px] font-medium flex items-center gap-1.5">
-          <ShoppingCart size={12} className="text-primary" /> Webshop
-        </div>
-      </div>
-      <div className="flex justify-center">
-        <div className="w-px h-6 bg-border" />
-      </div>
-      <div className="rounded-lg border border-primary/30 bg-primary/5 px-4 py-3 text-center">
-        <p className="text-[10px] font-semibold text-primary tracking-wide uppercase mb-1">Automatisering</p>
-        <p className="text-[11px] text-muted-foreground">Productdata • Voorraad • Prijzen</p>
-      </div>
-      <div className="flex justify-center">
-        <div className="w-px h-6 bg-border" />
-      </div>
-      <div className="flex items-center justify-between">
-        <div className="rounded-lg border border-border bg-muted/30 px-3 py-2 text-[11px] font-medium flex items-center gap-1.5">
-          <BarChart3 size={12} className="text-primary" /> ERP
-        </div>
-        <ArrowRightLeft size={14} className="text-primary/50" />
-        <div className="rounded-lg border border-border bg-muted/30 px-3 py-2 text-[11px] font-medium flex items-center gap-1.5">
-          <Workflow size={12} className="text-primary" /> Fulfilment
-        </div>
-      </div>
+      ))}
     </div>
   </div>
+);
+
+const EcommerceVisual = () => (
+  <FlowDiagram steps={["Leverancier", "Productdata", "Automatisering", "Webshop", "ERP", "Fulfilment"]} />
 );
 
 const FinanceVisual = () => (
-  <div className="w-full h-full flex items-center justify-center p-6">
-    <div className="w-full max-w-xs space-y-3">
-      {/* Dashboard mockup */}
-      <div className="rounded-lg border border-border bg-muted/30 p-3 space-y-2">
-        <div className="flex items-center gap-2 mb-2">
-          <div className="w-2 h-2 rounded-full bg-primary/60" />
-          <p className="text-[10px] font-semibold tracking-wide uppercase text-muted-foreground">Financieel Dashboard</p>
-        </div>
-        <div className="grid grid-cols-2 gap-2">
-          <div className="rounded border border-border bg-background/50 p-2">
-            <p className="text-[9px] text-muted-foreground/60">Facturen verwerkt</p>
-            <p className="text-sm font-bold text-primary">2.847</p>
-          </div>
-          <div className="rounded border border-border bg-background/50 p-2">
-            <p className="text-[9px] text-muted-foreground/60">Handmatig</p>
-            <p className="text-sm font-bold text-muted-foreground">↓ 70%</p>
-          </div>
-        </div>
-        {/* Mini bar chart */}
-        <div className="flex items-end gap-1 h-10 pt-1">
-          {[40, 65, 35, 80, 55, 90, 70, 85, 95, 60, 75, 88].map((h, i) => (
-            <div key={i} className="flex-1 rounded-sm bg-primary/20" style={{ height: `${h}%` }} />
-          ))}
-        </div>
-      </div>
-      <div className="flex items-center gap-2">
-        <div className="rounded border border-border bg-muted/30 px-2.5 py-1.5 text-[10px] flex items-center gap-1">
-          <FileText size={10} className="text-primary" /> Boekhouding
-        </div>
-        <ArrowRightLeft size={12} className="text-primary/40" />
-        <div className="rounded border border-border bg-muted/30 px-2.5 py-1.5 text-[10px] flex items-center gap-1">
-          <BarChart3 size={10} className="text-primary" /> Rapportage
-        </div>
-      </div>
-    </div>
-  </div>
+  <FlowDiagram steps={["Facturen", "Document parsing", "Boekhoudsoftware", "Rapportage dashboard"]} />
 );
 
 const LeadVisual = () => (
-  <div className="w-full h-full flex items-center justify-center p-6">
-    <div className="w-full max-w-xs space-y-3">
-      <div className="rounded-lg border border-border bg-muted/30 p-3">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="w-2 h-2 rounded-full bg-primary/40 animate-pulse" />
-          <p className="text-[10px] font-semibold tracking-wide uppercase text-muted-foreground">Coming soon</p>
-        </div>
-        <div className="space-y-2">
-          {["Lead intake", "Verrijking", "CRM sync", "Opvolgworkflow"].map((step, i) => (
-            <div key={i} className="flex items-center gap-2">
-              <div className={`w-5 h-5 rounded-full border flex items-center justify-center text-[9px] ${i < 2 ? 'border-primary/40 text-primary/60' : 'border-border text-muted-foreground/40'}`}>
-                {i + 1}
-              </div>
-              <div className={`flex-1 rounded border px-2.5 py-1.5 text-[11px] ${i < 2 ? 'border-primary/20 bg-primary/5 text-muted-foreground' : 'border-border bg-muted/20 text-muted-foreground/50'}`}>
-                {step}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </div>
+  <FlowDiagram steps={["Website formulier", "Lead verrijking", "CRM synchronisatie", "Opvolgworkflow"]} />
 );
 
 /* ─── Data ─── */
@@ -111,7 +42,9 @@ const LeadVisual = () => (
 interface ImplementedCase {
   title: string;
   icon: React.ElementType;
-  description: string;
+  context: string;
+  problem: string;
+  solution: string;
   results: string[];
   visual: React.ElementType;
   upcoming?: false;
@@ -120,7 +53,6 @@ interface ImplementedCase {
 interface UpcomingCase {
   title: string;
   icon: React.ElementType;
-  description: string;
   body: string;
   visual: React.ElementType;
   upcoming: true;
@@ -132,7 +64,9 @@ const cases: CaseItem[] = [
   {
     title: "E-commerce product- en orderautomatisering",
     icon: ShoppingCart,
-    description: "Automatisering van productdata, voorraadbeheer en orderverwerking tussen leverancierssystemen, webshop en interne systemen.",
+    context: "Veel e-commerce organisaties beheren productinformatie, leveranciersdata, voorraad en prijzen in meerdere systemen. Hierdoor ontstaan inconsistenties en kost productbeheer onnodig veel tijd.",
+    problem: "Productinformatie, voorraad en prijzen moesten handmatig worden bijgewerkt en gesynchroniseerd tussen leveranciersdata, webshop en interne systemen.",
+    solution: "We implementeerden een automatiseringsstructuur waarin productdata, leveranciersfeeds, voorraadbeheer en webshopintegraties automatisch worden gesynchroniseerd en bijgewerkt.",
     results: [
       "Tot 65% minder handmatig productbeheer",
       "Realtime voorraad- en prijsupdates",
@@ -144,7 +78,9 @@ const cases: CaseItem[] = [
   {
     title: "Financiële procesautomatisering",
     icon: FileText,
-    description: "Automatisering van factuurverwerking, rapportages en financiële datastromen via integraties tussen boekhoudsoftware en dashboards.",
+    context: "Financiële teams besteden vaak veel tijd aan handmatige administratie, factuurverwerking en rapportages.",
+    problem: "Facturen, betalingen en rapportages werden handmatig verwerkt in verschillende systemen.",
+    solution: "We automatiseerden financiële workflows via document parsing, integratie met boekhoudsoftware en automatische rapportage dashboards.",
     results: [
       "Tot 70% minder handmatige verwerking",
       "Snellere maandrapportages",
@@ -156,7 +92,6 @@ const cases: CaseItem[] = [
   {
     title: "Leadmanagement en CRM automatisering",
     icon: Users,
-    description: "Een implementatie waarin inkomende leads automatisch worden verrijkt en gesynchroniseerd met het CRM.",
     body: "We bouwen momenteel een systeem waarin inkomende leads automatisch worden verrijkt, gesynchroniseerd met het CRM en direct in opvolgworkflows worden geplaatst.\n\nBinnenkort delen we de volledige implementatie en resultaten.",
     visual: LeadVisual,
     upcoming: true,
@@ -190,29 +125,41 @@ const CaseStudies = () => {
                 <ScrollReveal key={i}>
                   <ScrollRevealItem>
                     <div className="rounded-xl border border-border bg-card overflow-hidden transition-all duration-300 hover:border-primary/30">
-                      <div className={`grid grid-cols-1 lg:grid-cols-2 ${i % 2 === 1 ? 'lg:direction-rtl' : ''}`}>
+                      <div className={`grid grid-cols-1 lg:grid-cols-2`}>
                         {/* Content */}
                         <div className={`p-8 sm:p-10 flex flex-col justify-center ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
-                          <div className="flex items-center gap-3 mb-4">
+                          <div className="flex items-center gap-3 mb-6">
                             <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
                               <Icon size={20} />
                             </div>
                             <h2 className="text-xl sm:text-2xl font-bold">{cs.title}</h2>
                           </div>
 
-                          <p className="text-sm text-muted-foreground leading-relaxed mb-6">{cs.description}</p>
-
                           {!isUpcoming ? (
-                            <div>
-                              <p className="text-xs font-semibold text-primary mb-3 tracking-wide uppercase">Resultaat</p>
-                              <ul className="space-y-2">
-                                {(cs as ImplementedCase).results.map((r, j) => (
-                                  <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground">
-                                    <CheckCircle2 size={15} className="text-primary mt-0.5 shrink-0" />
-                                    {r}
-                                  </li>
-                                ))}
-                              </ul>
+                            <div className="space-y-5">
+                              <div>
+                                <p className="text-xs font-semibold text-primary mb-1.5 tracking-wide uppercase">Context</p>
+                                <p className="text-sm text-muted-foreground leading-relaxed">{(cs as ImplementedCase).context}</p>
+                              </div>
+                              <div>
+                                <p className="text-xs font-semibold text-primary mb-1.5 tracking-wide uppercase">Probleem</p>
+                                <p className="text-sm text-muted-foreground leading-relaxed">{(cs as ImplementedCase).problem}</p>
+                              </div>
+                              <div>
+                                <p className="text-xs font-semibold text-primary mb-1.5 tracking-wide uppercase">Oplossing</p>
+                                <p className="text-sm text-muted-foreground leading-relaxed">{(cs as ImplementedCase).solution}</p>
+                              </div>
+                              <div>
+                                <p className="text-xs font-semibold text-primary mb-3 tracking-wide uppercase">Resultaat</p>
+                                <ul className="space-y-2">
+                                  {(cs as ImplementedCase).results.map((r, j) => (
+                                    <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground">
+                                      <CheckCircle2 size={15} className="text-primary mt-0.5 shrink-0" />
+                                      {r}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
                             </div>
                           ) : (
                             <div className="rounded-lg border border-border bg-muted/30 p-4">
@@ -228,8 +175,11 @@ const CaseStudies = () => {
                         </div>
 
                         {/* Visual */}
-                        <div className={`border-t lg:border-t-0 ${i % 2 === 1 ? 'lg:order-1 lg:border-r lg:border-l-0' : 'lg:border-l'} border-border bg-muted/10 min-h-[280px]`}>
-                          <Visual />
+                        <div className={`border-t lg:border-t-0 ${i % 2 === 1 ? 'lg:order-1 lg:border-r lg:border-l-0' : 'lg:border-l'} border-border bg-muted/10 min-h-[280px] flex items-center justify-center`}>
+                          <div className="w-full">
+                            <p className="text-[10px] font-semibold text-muted-foreground/60 tracking-widest uppercase text-center pt-6 mb-0">Automatiseringsarchitectuur</p>
+                            <Visual />
+                          </div>
                         </div>
                       </div>
                     </div>

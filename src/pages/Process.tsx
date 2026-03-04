@@ -29,7 +29,7 @@ const phases = [
     step: "01",
     icon: Brain,
     title: "Analyse & Architectuur",
-    timing: "Indicatieve doorlooptijd: week 1",
+    timing: "Week 1",
     description:
       "We analyseren processen, systemen en datastromen en definiëren een onderbouwde strategie. Besluiten worden gebaseerd op impact-, risico- en ROI-berekeningen.",
     deliverables: [
@@ -45,9 +45,9 @@ const phases = [
     step: "02",
     icon: Layers,
     title: "Ontwerp & Structuur",
-    timing: "Indicatieve doorlooptijd: week 1–2",
+    timing: "Week 1–2",
     description:
-      "We ontwerpen een schaalbare en veilige architectuur waarin systemen logisch samenwerken en data gecontroleerd stroomt. Beveiliging en datakwaliteit worden vanaf het ontwerp geborgd.",
+      "We ontwerpen een schaalbare en veilige architectuur waarin systemen logisch samenwerken en data gecontroleerd stroomt.",
     deliverables: [
       "Technisch architectuurdocument",
       "Integratieschema",
@@ -61,7 +61,7 @@ const phases = [
     step: "03",
     icon: Cog,
     title: "Bouw & Implementatie",
-    timing: "Indicatieve doorlooptijd: week 2–4",
+    timing: "Week 2–4",
     description:
       "We realiseren de oplossingen modulair, gecontroleerd en volgens vastgestelde architectuurprincipes.",
     deliverables: [
@@ -76,7 +76,7 @@ const phases = [
     step: "04",
     icon: ScanSearch,
     title: "Validatie & Optimalisatie",
-    timing: "Indicatieve doorlooptijd: week 3–5",
+    timing: "Week 3–5",
     description:
       "We testen stabiliteit, performance en uitzonderingssituaties voordat livegang plaatsvindt.",
     deliverables: [
@@ -92,7 +92,7 @@ const phases = [
     step: "05",
     icon: Rocket,
     title: "Livegang & Overdracht",
-    timing: "Indicatieve doorlooptijd: week 4–6",
+    timing: "Week 4–6",
     description:
       "We realiseren een gecontroleerde livegang en dragen het systeem volledig overdraagbaar over.",
     deliverables: [
@@ -110,7 +110,7 @@ const phases = [
     title: "Doorontwikkeling & ondersteuning",
     timing: "Doorlopend",
     description:
-      "Na livegang blijven systemen zich ontwikkelen. Naarmate processen veranderen of nieuwe systemen worden toegevoegd, passen wij de architectuur waar nodig aan. Veel organisaties kiezen voor doorlopende samenwerking zodat oplossingen blijven aansluiten op groei, nieuwe workflows en veranderende bedrijfsprocessen.",
+      "Na livegang blijven systemen zich ontwikkelen. Naarmate processen veranderen of nieuwe systemen worden toegevoegd, passen wij de architectuur waar nodig aan.",
     deliverables: [
       "Monitoring van integraties",
       "Optimalisatie van bestaande workflows",
@@ -124,22 +124,22 @@ const securityClaims = [
   {
     icon: ShieldCheck,
     title: "Minimale rechten",
-    description: "Toegang tot systemen en data wordt strikt beperkt op basis van rollen en verantwoordelijkheden.",
+    description: "Toegang strikt beperkt op basis van rollen.",
   },
   {
     icon: FileText,
     title: "Documentatie",
-    description: "Architectuur, integraties en datastromen worden volledig vastgelegd en overdraagbaar opgeleverd.",
+    description: "Alles vastgelegd en overdraagbaar opgeleverd.",
   },
   {
     icon: BarChart3,
     title: "Logging",
-    description: "Integraties bevatten standaard logging, foutdetectie en monitoring voor volledige traceerbaarheid.",
+    description: "Standaard foutdetectie en monitoring ingebouwd.",
   },
   {
     icon: Shield,
     title: "AVG-conform",
-    description: "Dataverwerking wordt ingericht conform geldende privacywetgeving en interne datarichtlijnen.",
+    description: "Ingericht conform privacywetgeving.",
   },
 ];
 
@@ -332,7 +332,7 @@ const PhaseCard = ({
                 <phase.icon size={18} className="text-primary shrink-0" />
                 {phase.title}
               </h3>
-              <span className="text-[10px] sm:text-xs text-muted-foreground bg-muted px-2.5 py-0.5 rounded-full shrink-0 self-start border-0">
+              <span className="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full shrink-0 self-start">
                 {phase.timing}
               </span>
             </div>
@@ -480,7 +480,7 @@ const Process = () => {
         </ScrollReveal>
 
         {/* ── Security & Reliability ── */}
-        <ScrollReveal className="max-w-3xl mx-auto mb-20">
+        <ScrollReveal className="max-w-4xl mx-auto mb-20">
           <ScrollRevealItem>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {securityClaims.map((claim, idx) => (

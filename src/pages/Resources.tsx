@@ -103,7 +103,7 @@ const ArticleCard = ({ post }: { post: typeof guides[0] }) => (
   </Link>
 );
 
-const IconCard = ({ icon: Icon, title, description, href }: { icon: any; title: string; description: string; href?: string }) => {
+const IconCard = ({ icon: Icon, title, description, href, onClick }: { icon: any; title: string; description: string; href?: string; onClick?: () => void }) => {
   const content = (
     <div className="group rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/30 flex flex-col h-full">
       <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:bg-primary/15 transition-colors">
@@ -111,7 +111,7 @@ const IconCard = ({ icon: Icon, title, description, href }: { icon: any; title: 
       </div>
       <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">{title}</h3>
       <p className="text-sm text-muted-foreground leading-relaxed flex-1">{description}</p>
-      {href && (
+      {(href || onClick) && (
         <span className="mt-4 text-sm text-primary inline-flex items-center gap-1 group-hover:underline">
           Bekijk <ArrowRight size={14} />
         </span>
@@ -119,6 +119,9 @@ const IconCard = ({ icon: Icon, title, description, href }: { icon: any; title: 
     </div>
   );
 
+  if (onClick) {
+    return <button onClick={onClick} className="flex text-left w-full">{content}</button>;
+  }
   if (href && href !== "#") {
     return <Link to={href} className="flex">{content}</Link>;
   }

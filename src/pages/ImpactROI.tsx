@@ -69,8 +69,8 @@ const ImpactROI = () => {
           {/* 3x2 grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto mb-10 auto-rows-fr">
             {factors.map((factor, idx) => (
-              <ScrollReveal key={factor.title}>
-                <ScrollRevealItem>
+              <ScrollReveal key={factor.title} className="h-full">
+                <ScrollRevealItem className="h-full">
                   <motion.div
                     className="rounded-xl border border-border bg-card p-5 flex flex-col h-full"
                     initial={{ opacity: 0, y: 12 }}

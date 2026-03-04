@@ -76,9 +76,9 @@ const ServiceCard = ({
           onMouseEnter={() => setHoveredIndex(i)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
-           <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-0`}>
+           <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} items-start gap-0`}>
             {/* Text */}
-              <div className="flex-1 p-4 sm:p-5 flex flex-col justify-center">
+              <div className="flex-1 p-4 sm:p-5 flex flex-col justify-start">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
                   <s.icon size={18} />
@@ -142,7 +142,7 @@ const ServiceCard = ({
               <motion.img
                 src={s.image}
                 alt={s.title}
-                className="w-full h-full object-contain relative z-[1] mix-blend-screen p-4"
+                className="w-full h-full object-contain relative z-[1] mix-blend-screen"
                 style={{ opacity: 0.85 }}
                 animate={
                   hoveredIndex === i

@@ -128,8 +128,10 @@ const HeroBackground = () => {
     };
 
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let startDelay: ReturnType<typeof setTimeout> | undefined;
     if (!motionQuery.matches) {
-      animate();
+      // Delay canvas animation to let LCP text paint first
+      startDelay = setTimeout(() => { animate(); }, 80);
     } else {
       time = 0;
       const w = window.innerWidth;
@@ -140,6 +142,7 @@ const HeroBackground = () => {
     }
 
     return () => {
+      if (startDelay) clearTimeout(startDelay);
       cancelAnimationFrame(animationId);
       window.removeEventListener("resize", resize);
     };

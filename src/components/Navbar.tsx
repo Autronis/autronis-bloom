@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Sun, Moon, ChevronDown, Users, Workflow } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
 
 const dropdownItems = [
@@ -68,6 +67,7 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = useLocation();
   const { theme, setTheme } = useTheme();
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -78,6 +78,29 @@ const Navbar = () => {
   useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
+
+  // Animate mobile menu height with CSS
+  useEffect(() => {
+    const el = mobileMenuRef.current;
+    if (!el) return;
+    if (mobileOpen) {
+      el.style.display = "block";
+      const h = el.scrollHeight;
+      el.style.maxHeight = "0px";
+      el.style.opacity = "0";
+      // Force reflow
+      el.offsetHeight;
+      el.style.maxHeight = h + "px";
+      el.style.opacity = "1";
+    } else {
+      el.style.maxHeight = "0px";
+      el.style.opacity = "0";
+      const onEnd = () => { el.style.display = "none"; };
+      el.addEventListener("transitionend", onEnd, { once: true });
+      // Fallback hide
+      setTimeout(onEnd, 350);
+    }
+  }, [mobileOpen]);
 
   return (
     <header
@@ -147,31 +170,25 @@ const Navbar = () => {
                     className={`transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`}
                   />
                 </button>
-                <AnimatePresence>
-                  {dropdownOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 6, scale: 0.98 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 6, scale: 0.98 }}
-                      transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[320px] rounded-xl p-2 z-50"
-                      style={{
-                        backgroundColor: "hsl(var(--card))",
-                        border: "1px solid hsl(var(--border) / 0.4)",
-                        boxShadow:
-                          "0 8px 32px hsl(0 0% 0% / 0.18), 0 2px 8px hsl(0 0% 0% / 0.1)",
-                      }}
-                    >
-                      {link.children.map((child) => (
-                        <DropdownItem
-                          key={child.href}
-                          item={child}
-                          isActive={location.pathname === child.href}
-                        />
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <div
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[320px] rounded-xl p-2 z-50 transition-all duration-200 ease-out"
+                  style={{
+                    backgroundColor: "hsl(var(--card))",
+                    border: "1px solid hsl(var(--border) / 0.4)",
+                    boxShadow: "0 8px 32px hsl(0 0% 0% / 0.18), 0 2px 8px hsl(0 0% 0% / 0.1)",
+                    opacity: dropdownOpen ? 1 : 0,
+                    transform: dropdownOpen ? "translateY(0) scale(1)" : "translateY(6px) scale(0.98)",
+                    pointerEvents: dropdownOpen ? "auto" : "none",
+                  }}
+                >
+                  {link.children.map((child) => (
+                    <DropdownItem
+                      key={child.href}
+                      item={child}
+                      isActive={location.pathname === child.href}
+                    />
+                  ))}
+                </div>
               </div>
             ) : (
               <Link
@@ -218,65 +235,66 @@ const Navbar = () => {
         </div>
       </nav>
 
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden border-b border-border overflow-hidden"
-            style={{ backgroundColor: "hsl(var(--background) / 0.98)" }}
-          >
-            <div className="container mx-auto px-4 py-4 flex flex-col gap-1">
-              {navLinks.map((link: NavItem) =>
-                "children" in link && link.children ? (
-                  <div key={link.label} className="flex flex-col">
-                    <span className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                      {link.label}
-                    </span>
-                    {link.children.map((child) => (
-                      <Link
-                        key={child.href}
-                        to={child.href}
-                        className={`px-6 py-3 rounded-md text-sm font-medium transition-colors flex items-center gap-3 ${
-                          location.pathname === child.href
-                            ? "text-primary bg-primary/10"
-                            : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                        }`}
-                      >
-                        <child.icon size={16} />
-                        <div>
-                          <span className="block">{child.label}</span>
-                          <span className="text-xs text-muted-foreground font-normal">{child.description}</span>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                ) : (
+      {/* Mobile menu - CSS-only animation, no framer-motion */}
+      <div
+        ref={mobileMenuRef}
+        className="lg:hidden border-b border-border overflow-hidden"
+        style={{
+          backgroundColor: "hsl(var(--background) / 0.98)",
+          display: "none",
+          maxHeight: 0,
+          opacity: 0,
+          transition: "max-height 0.3s ease-out, opacity 0.25s ease-out",
+        }}
+      >
+        <div className="container mx-auto px-4 py-4 flex flex-col gap-1">
+          {navLinks.map((link: NavItem) =>
+            "children" in link && link.children ? (
+              <div key={link.label} className="flex flex-col">
+                <span className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                  {link.label}
+                </span>
+                {link.children.map((child) => (
                   <Link
-                    key={"href" in link ? link.href : link.label}
-                    to={"href" in link ? link.href! : "/"}
-                    className={`px-4 py-3 rounded-md text-sm font-medium transition-colors ${
-                      "href" in link && location.pathname === link.href
+                    key={child.href}
+                    to={child.href}
+                    className={`px-6 py-3 rounded-md text-sm font-medium transition-colors flex items-center gap-3 ${
+                      location.pathname === child.href
                         ? "text-primary bg-primary/10"
                         : "text-muted-foreground hover:text-foreground hover:bg-muted"
                     }`}
                   >
-                    {link.label}
+                    <child.icon size={16} />
+                    <div>
+                      <span className="block">{child.label}</span>
+                      <span className="text-xs text-muted-foreground font-normal">{child.description}</span>
+                    </div>
                   </Link>
-                )
-              )}
-              <div className="flex items-center gap-2 px-4 py-2">
-                <button className="px-2 py-1 rounded bg-primary/10 text-primary text-xs font-semibold">NL</button>
-                <button className="px-2 py-1 rounded text-xs text-muted-foreground opacity-50 cursor-not-allowed">EN</button>
+                ))}
               </div>
-              <Button asChild size="lg" className="mt-2">
-                <Link to="/book">Plan Automation Scan</Link>
-              </Button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            ) : (
+              <Link
+                key={"href" in link ? link.href : link.label}
+                to={"href" in link ? link.href! : "/"}
+                className={`px-4 py-3 rounded-md text-sm font-medium transition-colors ${
+                  "href" in link && location.pathname === link.href
+                    ? "text-primary bg-primary/10"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                }`}
+              >
+                {link.label}
+              </Link>
+            )
+          )}
+          <div className="flex items-center gap-2 px-4 py-2">
+            <button className="px-2 py-1 rounded bg-primary/10 text-primary text-xs font-semibold">NL</button>
+            <button className="px-2 py-1 rounded text-xs text-muted-foreground opacity-50 cursor-not-allowed">EN</button>
+          </div>
+          <Button asChild size="lg" className="mt-2">
+            <Link to="/book">Plan Automation Scan</Link>
+          </Button>
+        </div>
+      </div>
     </header>
   );
 };

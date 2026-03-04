@@ -42,7 +42,13 @@ const TeamCard = ({ member }: { member: typeof team[0] }) => {
         <img
           src={member.photo}
           alt={member.name}
-          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+          className="w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-105 opacity-0"
+          loading="eager"
+          decoding="async"
+          onLoad={(e) => {
+            (e.currentTarget as HTMLImageElement).classList.remove('opacity-0');
+            (e.currentTarget as HTMLImageElement).classList.add('opacity-100');
+          }}
         />
         <div
           className={`absolute inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center p-6 transition-opacity duration-300 ${

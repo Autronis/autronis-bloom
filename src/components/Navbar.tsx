@@ -26,7 +26,7 @@ const navLinks = [
   { label: "Impact & ROI", href: "/impact-roi" },
   { label: "Over ons", children: dropdownItems },
   { label: "Case Studies", href: "/case-studies" },
-  { label: "Resources", href: "/resources" },
+  { label: "Inzichten", href: "/resources" },
   { label: "Contact", href: "/contact" },
 ];
 

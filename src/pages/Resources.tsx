@@ -1,68 +1,225 @@
 import Layout from "@/components/Layout";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BookOpen, Calculator, ClipboardCheck, BarChart3, Workflow, DollarSign, Settings, UserPlus, Layers, Link2, ShieldCheck } from "lucide-react";
+import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
-
-const posts = [
+const guides = [
   {
     slug: "5-processen-die-elk-mkb-kan-automatiseren",
     title: "5 processen die elk MKB-bedrijf vandaag kan automatiseren",
-    excerpt: "Van factuurverwerking tot lead follow-ups — deze vijf workflows kosten u onnodig tijd en zijn eenvoudig te automatiseren.",
+    excerpt: "Van factuurverwerking tot lead opvolging – deze workflows kosten vaak onnodig tijd en zijn eenvoudig te automatiseren.",
     date: "2026-02-10",
     category: "Gids",
   },
   {
     slug: "roi-van-automatisering-berekenen",
     title: "Hoe berekent u de ROI van automatisering?",
-    excerpt: "Een praktisch framework om de business case voor automatisering te onderbouwen — inclusief een gratis rekentool.",
+    excerpt: "Een praktisch framework om de businesscase voor automatisering te onderbouwen.",
     date: "2026-01-28",
     category: "Business",
   },
   {
     slug: "ai-vs-rpa-wat-past-bij-uw-bedrijf",
-    title: "AI vs. RPA: wat past bij uw bedrijf?",
-    excerpt: "Niet elke automatisering vereist AI. We leggen uit wanneer AI meerwaarde biedt en wanneer simpele RPA volstaat.",
+    title: "AI vs. RPA: wat past bij uw organisatie?",
+    excerpt: "Wanneer AI meerwaarde biedt en wanneer eenvoudige automatisering voldoende is.",
     date: "2026-01-15",
     category: "Technisch",
   },
 ];
 
+const tools = [
+  {
+    icon: Calculator,
+    title: "ROI Calculator",
+    description: "Bereken indicatieve besparing, terugverdientijd en ROI van automatisering.",
+    href: "/impact-roi",
+  },
+  {
+    icon: ClipboardCheck,
+    title: "Automation Maturity Check",
+    description: "Een korte scan om te bepalen hoe volwassen uw organisatie is op het gebied van automatisering en integraties.",
+    href: "#",
+  },
+  {
+    icon: BarChart3,
+    title: "Automation Impact Scan",
+    description: "Analyseer waar automatisering binnen uw organisatie de grootste operationele impact kan realiseren.",
+    href: "#",
+  },
+];
+
+const processes = [
+  {
+    icon: Workflow,
+    title: "Sales workflow automatisering",
+    description: "Automatische leadopvolging, CRM-updates en pipelinebeheer.",
+  },
+  {
+    icon: DollarSign,
+    title: "Finance procesautomatisering",
+    description: "Factuurverwerking, rapportages en financiële workflows.",
+  },
+  {
+    icon: Settings,
+    title: "Operations automatisering",
+    description: "Orderverwerking, taakbeheer en interne workflows.",
+  },
+  {
+    icon: UserPlus,
+    title: "Customer onboarding automatisering",
+    description: "Gestroomlijnde onboarding met automatische accountcreatie en notificaties.",
+  },
+];
+
+const frameworks = [
+  {
+    icon: Layers,
+    title: "Automation Impact Framework",
+    description: "Hoe operationele verbeteringen worden vertaald naar een financiële businesscase.",
+  },
+  {
+    icon: Link2,
+    title: "Integratiemodel voor systemen",
+    description: "Hoe systemen veilig en schaalbaar met elkaar worden verbonden.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Datagovernance en beveiliging",
+    description: "Hoe datakwaliteit, toegangscontrole en logging structureel worden ingericht.",
+  },
+];
+
+const ArticleCard = ({ post }: { post: typeof guides[0] }) => (
+  <Link
+    to={`/resources/${post.slug}`}
+    className="group rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/30 flex flex-col"
+  >
+    <div className="flex items-center gap-2 mb-4">
+      <span className="text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full">{post.category}</span>
+      <span className="text-xs text-muted-foreground">{post.date}</span>
+    </div>
+    <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">{post.title}</h3>
+    <p className="text-sm text-muted-foreground leading-relaxed flex-1">{post.excerpt}</p>
+    <span className="mt-4 text-sm text-primary inline-flex items-center gap-1 group-hover:underline">
+      Lees meer <ArrowRight size={14} />
+    </span>
+  </Link>
+);
+
+const IconCard = ({ icon: Icon, title, description, href }: { icon: any; title: string; description: string; href?: string }) => {
+  const content = (
+    <div className="group rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/30 flex flex-col h-full">
+      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:bg-primary/15 transition-colors">
+        <Icon size={20} />
+      </div>
+      <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">{title}</h3>
+      <p className="text-sm text-muted-foreground leading-relaxed flex-1">{description}</p>
+      {href && (
+        <span className="mt-4 text-sm text-primary inline-flex items-center gap-1 group-hover:underline">
+          Bekijk <ArrowRight size={14} />
+        </span>
+      )}
+    </div>
+  );
+
+  if (href && href !== "#") {
+    return <Link to={href} className="flex">{content}</Link>;
+  }
+  return <div className="cursor-default">{content}</div>;
+};
+
+const SectionHeader = ({ label, title, description }: { label?: string; title: string; description: string }) => (
+  <ScrollReveal className="mb-8">
+    <ScrollRevealItem>
+      {label && <p className="text-xs font-semibold text-primary mb-2 tracking-widest uppercase">{label}</p>}
+      <h2 className="text-2xl sm:text-3xl font-bold mb-3">{title}</h2>
+      <p className="text-muted-foreground leading-relaxed max-w-2xl">{description}</p>
+    </ScrollRevealItem>
+  </ScrollReveal>
+);
+
 const Resources = () => {
   return (
-    <Layout>
-      <section className="pt-16 pb-24 relative overflow-hidden">
-        
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <div className="max-w-2xl mx-auto text-center mb-12">
-            <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Resources</p>
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4">Inzichten & gidsen</h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Praktische inzichten over automatisering en AI voor MKB-bedrijven. Geen vage theorie — concrete kennis die u direct kunt toepassen.
-            </p>
-          </div>
+    <section className="pt-16 pb-24 relative overflow-hidden">
+      <div className="container mx-auto px-4 lg:px-8 relative z-10">
+        {/* Page header */}
+        <div className="max-w-2xl mx-auto text-center mb-16">
+          <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Inzichten</p>
+          <h1 className="text-4xl sm:text-5xl font-bold mb-4">Inzichten en gidsen</h1>
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            Praktische inzichten over automatisering en AI voor MKB-bedrijven. Geen vage theorie, maar concrete kennis die direct toepasbaar is binnen processen en systemen.
+          </p>
+        </div>
 
+        {/* Sectie 1: Praktische gidsen */}
+        <div className="mb-20">
+          <SectionHeader
+            title="Praktische gidsen over automatisering"
+            description="Artikelen en inzichten over procesautomatisering, systeemintegraties en data-infrastructuur voor groeiende organisaties."
+          />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {posts.map((post) => (
-              <Link
-                key={post.slug}
-                to={`/resources/${post.slug}`}
-                className="group rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/30 flex flex-col"
-              >
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full">{post.category}</span>
-                  <span className="text-xs text-muted-foreground">{post.date}</span>
-                </div>
-                <h2 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">{post.title}</h2>
-                <p className="text-sm text-muted-foreground leading-relaxed flex-1">{post.excerpt}</p>
-                <span className="mt-4 text-sm text-primary inline-flex items-center gap-1 group-hover:underline">
-                  Lees meer <ArrowRight size={14} />
-                </span>
-              </Link>
+            {guides.map((post) => (
+              <ScrollReveal key={post.slug}>
+                <ScrollRevealItem>
+                  <ArticleCard post={post} />
+                </ScrollRevealItem>
+              </ScrollReveal>
             ))}
           </div>
         </div>
-      </section>
-    </Layout>
+
+        {/* Sectie 2: Praktische tools */}
+        <div className="mb-20">
+          <SectionHeader
+            title="Praktische tools"
+            description="Interactieve tools om automatiseringskansen en impact binnen uw organisatie te analyseren."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {tools.map((tool) => (
+              <ScrollReveal key={tool.title}>
+                <ScrollRevealItem>
+                  <IconCard {...tool} />
+                </ScrollRevealItem>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+
+        {/* Sectie 3: Voorbeelden van automatiseringsprocessen */}
+        <div className="mb-20">
+          <SectionHeader
+            title="Voorbeelden van automatiseringsprocessen"
+            description="Concrete voorbeelden van processen die vaak geautomatiseerd worden binnen groeiende organisaties."
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {processes.map((proc) => (
+              <ScrollReveal key={proc.title}>
+                <ScrollRevealItem>
+                  <IconCard {...proc} />
+                </ScrollRevealItem>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+
+        {/* Sectie 4: Frameworks en methodiek */}
+        <div>
+          <SectionHeader
+            title="Frameworks en methodiek"
+            description="Hoe wij automatisering analyseren, ontwerpen en implementeren binnen organisaties."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {frameworks.map((fw) => (
+              <ScrollReveal key={fw.title}>
+                <ScrollRevealItem>
+                  <IconCard {...fw} />
+                </ScrollRevealItem>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 

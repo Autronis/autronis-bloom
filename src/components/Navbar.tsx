@@ -71,7 +71,7 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const isMobile = useIsMobile();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const compactNavbar = scrolled && !isMobile;
+  const compactNavbar = scrolled;
   const headerElevated = scrolled || mobileOpen;
 
   useEffect(() => {

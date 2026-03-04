@@ -65,11 +65,13 @@ const Index = () => {
                   <ArrowRight size={18} />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" onClick={() => setVideoOpen(true)}>
-                <Play size={16} />
-                Bekijk 2 min demo
-              </Button>
-              <p className="text-xs text-muted-foreground mt-1">Zie hoe automatisering in de praktijk werkt in 2 minuten.</p>
+              <div className="flex flex-col items-center">
+                <Button size="lg" variant="outline" onClick={() => setVideoOpen(true)}>
+                  <Play size={16} />
+                  Bekijk 2 min demo
+                </Button>
+                <p className="text-[11px] italic text-muted-foreground mt-1.5">Zie hoe automatisering in de praktijk werkt in 2 minuten.</p>
+              </div>
             </div>
 
             {/* Video Modal */}

@@ -202,6 +202,18 @@
   66% { transform: translate(-52%, -48%) scale(0.97); }
 }
 
+/* ── FinalCTA butterfly animations (CSS-only, composited) ── */
+@keyframes finalcta-breathe {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(1.5deg); }
+  75% { transform: rotate(-1.5deg); }
+}
+
+@keyframes finalcta-pulse {
+  0%, 100% { stroke-opacity: 0.3; }
+  50% { stroke-opacity: 0.5; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

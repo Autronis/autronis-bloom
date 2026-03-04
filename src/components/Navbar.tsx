@@ -111,6 +111,7 @@ const Navbar = () => {
             className="w-auto transform-gpu transition-all duration-300 ease-out"
             style={{ height: scrolled ? "26px" : "32px" }}
             fetchPriority="high"
+            decoding="async"
           />
           <span
             className="font-bold tracking-tight transition-all duration-300 ease-out"

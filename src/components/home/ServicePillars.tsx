@@ -4,8 +4,6 @@ import { ArrowRight, Cog, Link2, PieChart, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
-
-import { motion } from "framer-motion";
 import serviceAutomation from "@/assets/service_automation_gen.png";
 import serviceIntegration from "@/assets/service_integration_gen.png";
 import serviceData from "@/assets/service_data_gen.png";
@@ -93,18 +91,10 @@ const ServiceCard = ({
                   Wat levert dit op?
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                  {s.impact.map((item, idx) => (
-                    <motion.div
+                  {s.impact.map((item) => (
+                    <div
                       key={item.title}
-                      className="flex items-start gap-2 p-2.5 rounded-lg bg-card border border-primary/15 transition-all duration-300 ease-out group cursor-default"
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.08, duration: 0.4 }}
-                      whileHover={{
-                        scale: 1.03,
-                        borderColor: "hsl(174, 78%, 41%, 0.5)",
-                      }}
+                      className="flex items-start gap-2 p-2.5 rounded-lg bg-card border border-primary/15 transition-all duration-300 ease-out group cursor-default hover:scale-[1.03] hover:border-primary/50"
                     >
                       <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
                         <CheckCircle2 size={12} className="text-primary" />
@@ -113,7 +103,7 @@ const ServiceCard = ({
                         <p className="text-sm font-semibold text-foreground leading-tight">{item.title}</p>
                         <p className="text-xs text-muted-foreground mt-0.5">{item.sub}</p>
                       </div>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -138,19 +128,17 @@ const ServiceCard = ({
             </div>
             {/* Image */}
             <div className="flex-1 relative overflow-hidden bg-card flex items-center justify-center min-h-[200px] md:min-h-0 aspect-[4/3] md:aspect-auto md:self-stretch">
-              <motion.img
+              <img
                 src={s.image}
                 alt={s.title}
                 width={600}
                 height={450}
-                className="absolute inset-0 w-full h-full object-contain z-[1] scale-[1.5] dark:mix-blend-screen dark:invert-0 dark:hue-rotate-0 dark:brightness-[0.85] dark:opacity-85 invert hue-rotate-180 mix-blend-multiply brightness-100 opacity-80"
-                animate={
-                  hoveredIndex === i
-                    ? { scale: 1.55 }
-                    : { scale: 1.5 }
-                }
-                transition={{ duration: 0.35, ease: "easeOut" }}
+                className="absolute inset-0 w-full h-full object-contain z-[1] scale-[1.5] dark:mix-blend-screen dark:invert-0 dark:hue-rotate-0 dark:brightness-[0.85] dark:opacity-85 invert hue-rotate-180 mix-blend-multiply brightness-100 opacity-80 transition-transform duration-300 ease-out"
+                style={{
+                  transform: hoveredIndex === i ? "scale(1.55)" : "scale(1.5)",
+                }}
                 loading="lazy"
+                decoding="async"
               />
               {/* Edge gradient overlay */}
               <div
@@ -165,7 +153,6 @@ const ServiceCard = ({
                 className="absolute inset-0 z-[3] pointer-events-none"
                 style={{ background: "linear-gradient(to bottom, hsl(var(--card)) 0%, transparent 8%, transparent 92%, hsl(var(--card)) 100%)" }}
               />
-              {/* Hover glow overlay */}
             </div>
           </div>
         </div>

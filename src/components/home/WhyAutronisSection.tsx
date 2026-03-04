@@ -2,7 +2,6 @@ import { Blocks, BarChart3, Users, ShieldCheck, ArrowRight } from "lucide-react"
 import { useState, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { motion, useInView } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 import teamFoto from "@/assets/team_wall_cropped.png";
@@ -47,21 +46,14 @@ const ReasonCard = ({
   onHover: () => void;
   onLeave: () => void;
 }) => {
-  const [glowPos, setGlowPos] = useState({ x: 0, y: 0 });
   const isHovered = hoveredIndex === index;
   const isAnyHovered = hoveredIndex !== null;
   const Icon = reason.icon;
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setGlowPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  }, []);
 
   return (
     <div
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
-      onMouseMove={handleMouseMove}
       className="relative rounded-xl border border-border p-6 overflow-hidden transition-all duration-[300ms] ease-out bg-card"
       style={{
         transform: isHovered ? "scale(1.01) translateY(-4px)" : "scale(1) translateY(0)",
@@ -82,12 +74,9 @@ const ReasonCard = ({
 
 const WhyAutronisSection = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const imgRef = useRef<HTMLDivElement>(null);
-  const imgInView = useInView(imgRef, { once: true, amount: 0.3 });
 
   return (
     <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
-      
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <ScrollReveal className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
@@ -141,19 +130,17 @@ const WhyAutronisSection = () => {
                 </div>
 
                 {/* Right: Team photo */}
-                <div ref={imgRef} className="relative min-h-[400px] lg:min-h-0 overflow-hidden">
-                  <motion.img
+                <div className="relative min-h-[400px] lg:min-h-0 overflow-hidden">
+                  <img
                     src={teamFoto}
                     alt="Autronis team - Sem en Syb"
                     width={800}
                     height={600}
                     className="w-full h-full object-cover object-center scale-110 rotate-[2deg]"
-                    initial={{ opacity: 0, scale: 1.03 }}
-                    animate={imgInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.03 }}
-                    transition={{ duration: 0.7, ease: "easeOut" }}
                     loading="lazy"
+                    decoding="async"
                   />
-                  {/* Radial vignette: darkens bricks around edges, keeps center (people) bright */}
+                  {/* Radial vignette */}
                   <div
                     className="absolute inset-0 pointer-events-none"
                     style={{

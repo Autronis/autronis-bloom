@@ -10,7 +10,6 @@ import {
   Brain,
   TrendingUp,
   Clock,
-  DollarSign,
   Target,
   Layers,
   Cog,
@@ -154,28 +153,32 @@ const impactCards = [
   {
     icon: Clock,
     title: "Tot 30–70% minder handmatig werk",
-    description: "Repetitieve taken worden structureel geëlimineerd. Vrijgekomen uren worden direct vertaald naar FTE-waarde en herinzetbare capaciteit.",
+    description: "Repetitieve taken worden structureel geëlimineerd. Vrijgekomen uren worden direct vertaald naar herinzetbare capaciteit binnen bestaande teams.",
     sub: "Gebaseerd op procesanalyse en gemiddelde loonkosten inclusief overhead.",
     primary: true,
+    customIcon: null,
   },
   {
-    icon: DollarSign,
+    icon: null,
     title: "Structurele kostenreductie",
-    description: "Correctiewerk, dubbele invoer en inefficiënte overdracht verdwijnen uit het proces. Besparingen werken cumulatief door per kwartaal.",
+    description: "Correctiewerk, dubbele invoer en inefficiënte overdracht verdwijnen uit het proces. Besparingen werken cumulatief door naarmate processen verder worden geoptimaliseerd.",
     sub: "Direct vertaald naar operationele kostenbesparing in de businesscase.",
     primary: true,
+    customIcon: "€",
   },
   {
     icon: Shield,
     title: "Lager operationeel risico",
     description: "Gestandaardiseerde processen met logging, toegangsbeheer en documentatie verminderen foutkans en escalaties.",
     primary: false,
+    customIcon: null,
   },
   {
     icon: TrendingUp,
     title: "Schaalbaarheid zonder lineaire personeelsgroei",
     description: "Meer output met hetzelfde team. Groei wordt mogelijk zonder proportionele stijging in personeelskosten.",
     primary: false,
+    customIcon: null,
   },
 ];
 
@@ -584,8 +587,12 @@ const Process = () => {
                     boxShadow: "0 0 12px hsl(174, 78%, 41%, 0.08)",
                   }}
                 >
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-foreground mb-4 group-hover:text-primary transition-colors duration-300">
-                    <card.icon size={20} />
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
+                    {card.customIcon ? (
+                      <span className="text-lg font-bold">{card.customIcon}</span>
+                    ) : card.icon ? (
+                      <card.icon size={20} />
+                    ) : null}
                   </div>
                   <h3 className="text-base font-bold mb-2">{card.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
@@ -615,8 +622,12 @@ const Process = () => {
                     boxShadow: "0 0 12px hsl(174, 78%, 41%, 0.06)",
                   }}
                 >
-                  <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
-                    <card.icon size={18} />
+                  <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3">
+                    {card.customIcon ? (
+                      <span className="text-base font-bold">{card.customIcon}</span>
+                    ) : card.icon ? (
+                      <card.icon size={18} />
+                    ) : null}
                   </div>
                   <h3 className="text-base font-bold mb-1.5">{card.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">

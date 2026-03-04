@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const ToolStackBlock = () => {
   return (
-    <section className="py-10 sm:py-16 border-t border-border relative overflow-hidden">
+    <section className="py-6 sm:py-10 border-t border-border relative overflow-hidden">
       {/* Subtle animated background */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
@@ -33,17 +33,17 @@ const ToolStackBlock = () => {
         />
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 text-center max-w-xl relative z-10">
-        <p className="text-xs font-semibold text-primary mb-2 tracking-widest uppercase">
+      <div className="container mx-auto px-4 lg:px-8 text-center max-w-md relative z-10">
+        <p className="text-[10px] font-semibold text-primary mb-1.5 tracking-widest uppercase">
           Integraties
         </p>
-        <h2 className="text-xl sm:text-2xl font-bold mb-2">
+        <h2 className="text-lg sm:text-xl font-bold mb-1.5">
           Werkt met uw huidige stack
         </h2>
-        <p className="text-sm text-muted-foreground mb-3">
+        <p className="text-xs text-muted-foreground mb-2">
           We koppelen CRM, finance, operations en maatwerksystemen.
         </p>
-        <p className="text-xs text-muted-foreground/70 italic">
+        <p className="text-[11px] text-muted-foreground/70 italic">
           Heeft uw systeem een API? Dan kunnen wij integreren.
         </p>
       </div>

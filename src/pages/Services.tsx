@@ -12,54 +12,54 @@ const pillars = [
     id: "procesautomatisering",
     icon: Cog,
     title: "Procesautomatisering",
-    intro: "Wij automatiseren terugkerende processen zodat werk doorloopt zonder handmatige tussenstappen.",
+    intro: "Wij automatiseren terugkerende processen zodat werk kan doorlopen zonder handmatige tussenstappen.",
     impact: [
-      { title: "Tot 70% minder handmatige verwerkingstijd", sub: "Routinetaken worden volledig geautomatiseerd" },
-      { title: "Foutreductie door gestandaardiseerde workflows", sub: "Consistente uitvoering zonder menselijke fouten" },
-      { title: "Snellere doorlooptijden bij goedkeuringen", sub: "Escalaties en approvals verlopen automatisch" },
-      { title: "Schaalbaarheid zonder extra personeel", sub: "Groei zonder lineaire personeelskosten" },
+      { title: "Minder handmatige verwerking", sub: "Tot 70% minder tijd besteed aan repetitieve taken." },
+      { title: "Minder fouten", sub: "Gestandaardiseerde workflows zorgen voor consistente uitvoering." },
+      { title: "Snellere doorlooptijden", sub: "Goedkeuringen en escalaties verlopen automatisch." },
+      { title: "Schaalbaarheid", sub: "Processen kunnen groeien zonder dat personeelskosten evenredig toenemen." },
     ],
     categories: [
-      { icon: FolderOpen, title: "Interne Workflow Automatisering", items: ["Goedkeuringsflows", "Taaktoewijzing", "Notificaties en escalaties", "Documentgeneratie"] },
-      { icon: Briefcase, title: "Sales- en Orderautomatisering", items: ["Orderverwerking", "CRM-updates", "Facturatie workflows", "Leadopvolging"] },
-      { icon: Rocket, title: "Onboarding & Offboarding", items: ["Accountcreatie", "Checklist automatisering", "Rolgebaseerde toegangsrechten", "E-signature integraties"] },
-      { icon: ShoppingCart, title: "E-commerce Automatisering", items: ["Voorraadbeheer", "Retourafhandeling", "Orderstatus synchronisatie", "Dynamische pricing"] },
+      { icon: FolderOpen, title: "Interne workflow automatisering", items: ["Goedkeuringsflows", "Taaktoewijzing", "Notificaties en escalaties", "Documentgeneratie"] },
+      { icon: Briefcase, title: "Sales- en orderautomatisering", items: ["Orderverwerking", "CRM-updates", "Facturatieprocessen", "Leadopvolging"] },
+      { icon: Rocket, title: "Onboarding en offboarding", items: ["Accountcreatie", "Checklist automatisering", "Rolgebaseerde toegangsrechten", "E-signature integraties"] },
+      { icon: ShoppingCart, title: "E-commerce automatisering", items: ["Voorraadbeheer", "Retourafhandeling", "Orderstatus synchronisatie", "Dynamische prijsregels"] },
     ],
   },
   {
     id: "systeemintegraties",
     icon: Link2,
     title: "Systeemintegraties",
-    intro: "Wij koppelen systemen via API's zodat data automatisch en consistent stroomt.",
+    intro: "Wij koppelen systemen via API's zodat data automatisch en consistent wordt uitgewisseld.",
     impact: [
-      { title: "Eén consistente datastroom tussen kernsystemen", sub: "Alle data synchroon en betrouwbaar" },
-      { title: "Eliminatie van dubbele data-invoer", sub: "Eénmalig invoeren, overal beschikbaar" },
-      { title: "Realtime synchronisatie zonder exports", sub: "Geen handmatige CSV- of Excel-exports meer" },
-      { title: "Proactieve foutdetectie en logging", sub: "Problemen worden gesignaleerd vóór ze escaleren" },
+      { title: "Consistente datastromen", sub: "Kernsystemen werken met dezelfde actuele informatie." },
+      { title: "Geen dubbele invoer", sub: "Data wordt één keer ingevoerd en automatisch gesynchroniseerd." },
+      { title: "Realtime synchronisatie", sub: "Gegevens worden direct bijgewerkt zonder exports of handmatige bestanden." },
+      { title: "Betrouwbare monitoring", sub: "Fouten worden vroegtijdig gedetecteerd en gelogd." },
     ],
     categories: [
-      { icon: LinkIcon, title: "API Koppelingen", items: ["REST API integraties", "Webhooks", "Event-based triggers", "Retry-logica"] },
-      { icon: CreditCard, title: "CRM & Finance Integraties", items: ["CRM ↔ Boekhouding synchronisatie", "ERP koppelingen", "Grootboekkoppelingen", "Realtime data-uitwisseling"] },
-      { icon: Puzzle, title: "Legacy Systemen", items: ["Datamigraties", "Middleware implementatie", "Maatwerk API lagen", "Systeemmodernisering"] },
-      { icon: BarChart3, title: "Monitoring & Logging", items: ["Foutdetectie", "Audit logging", "Datavalidatie", "Integratie monitoring"] },
+      { icon: LinkIcon, title: "API-koppelingen", items: ["REST API integraties", "Webhooks", "Event-based triggers", "Retry-logica"] },
+      { icon: CreditCard, title: "CRM- en finance-integraties", items: ["CRM ↔ boekhouding synchronisatie", "ERP-koppelingen", "Grootboekkoppelingen", "Realtime data-uitwisseling"] },
+      { icon: Puzzle, title: "Legacy systemen", items: ["Datamigraties", "Middleware implementaties", "Maatwerk API-lagen", "Modernisering van bestaande systemen"] },
+      { icon: BarChart3, title: "Monitoring en logging", items: ["Foutdetectie", "Audit logging", "Datavalidatie", "Integratie monitoring"] },
     ],
   },
   {
     id: "data-rapportage",
     icon: PieChart,
     title: "Data & Rapportage",
-    intro: "Realtime dashboards en geautomatiseerde rapportages voor volledig inzicht.",
+    intro: "Realtime dashboards en geautomatiseerde rapportages geven continu inzicht in prestaties en processen.",
     impact: [
-      { title: "Direct inzicht in KPI's en prestaties", sub: "Realtime dashboards altijd up-to-date" },
-      { title: "Geautomatiseerde rapportages zonder handmatig werk", sub: "Wekelijks, maandelijks of op maat" },
-      { title: "Eén bron van waarheid voor alle bedrijfsdata", sub: "Geen conflicterende spreadsheets meer" },
-      { title: "Vroegtijdige detectie van afwijkingen", sub: "Anomalieën worden direct gesignaleerd" },
+      { title: "Direct inzicht in prestaties", sub: "Dashboards tonen actuele KPI's en trends." },
+      { title: "Geautomatiseerde rapportages", sub: "Rapportages worden automatisch gegenereerd en verspreid." },
+      { title: "Eén bron van waarheid", sub: "Alle teams werken met dezelfde consistente data." },
+      { title: "Snelle signalering van afwijkingen", sub: "Problemen en afwijkingen worden vroegtijdig zichtbaar." },
     ],
     categories: [
-      { icon: LayoutDashboard, title: "KPI Dashboards", items: ["Management dashboards", "Team dashboards", "Realtime visualisaties", "Performance monitoring"] },
-      { icon: FileText, title: "Geautomatiseerde Rapportages", items: ["Wekelijkse exports", "PDF rapportages", "E-mail distributie", "Custom rapportageflows"] },
-      { icon: Database, title: "Dataconsolidatie", items: ["Multi-source data", "Eén bron van waarheid", "Datamodel optimalisatie", "Datakwaliteitscontrole"] },
-      { icon: AlertTriangle, title: "Alerts & Monitoring", items: ["Anomaly detection", "Performance alerts", "SLA bewaking", "Datastroom monitoring"] },
+      { icon: LayoutDashboard, title: "KPI dashboards", items: ["Management dashboards", "Team dashboards", "Realtime visualisaties", "Performance monitoring"] },
+      { icon: FileText, title: "Geautomatiseerde rapportages", items: ["Wekelijkse exports", "PDF rapportages", "E-mail distributie", "Custom rapportageflows"] },
+      { icon: Database, title: "Dataconsolidatie", items: ["Multi-source data", "Eén centrale datalaag", "Datamodel optimalisatie", "Datakwaliteitscontrole"] },
+      { icon: AlertTriangle, title: "Alerts en monitoring", items: ["Anomaly detectie", "Performance alerts", "SLA monitoring", "Datastroom monitoring"] },
     ],
   },
 ];
@@ -334,7 +334,7 @@ const PillarCard = ({
           onClick={() => setExpanded(!expanded)}
           className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-all duration-200 mb-4 relative py-1 group"
         >
-          <span>{expanded ? "Verberg concrete toepassingen" : "Bekijk concrete toepassingen"}</span>
+          <span>{expanded ? "Verberg voorbeelden" : "Voorbeelden van toepassingen"}</span>
           <ChevronDown
             size={16}
             className="transition-transform duration-300 ease-out"
@@ -393,7 +393,7 @@ const PillarCard = ({
         {/* Security CTA */}
         <div className="mt-4 pt-3 border-t border-border/30">
           <p className="text-[11px] text-muted-foreground/80 leading-relaxed">
-            Inclusief role-based access, logging en overdraagbare architectuur.
+            Inclusief toegangsbeheer, logging en een overdraagbare architectuur.
           </p>
           <Link
             to="/#beveiliging"

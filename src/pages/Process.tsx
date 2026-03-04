@@ -109,30 +109,30 @@ const securityClaims = [
   {
     icon: ShieldCheck,
     title: "Minimale toegangsrechten",
-    description: "Toegang wordt strikt beperkt per rol en per systeem.",
+    description: "Toegang tot systemen en data wordt strikt beperkt op basis van rollen en verantwoordelijkheden.",
   },
   {
     icon: FileText,
     title: "Volledige documentatie",
-    description: "Architectuur, datastromen en logica zijn volledig vastgelegd.",
+    description: "Architectuur, integraties en datastromen worden volledig vastgelegd en overdraagbaar opgeleverd.",
   },
   {
     icon: BarChart3,
     title: "Logging & monitoring",
-    description: "Elke integratie bevat foutdetectie en audit logging.",
+    description: "Integraties bevatten standaard logging, foutdetectie en monitoring voor volledige traceerbaarheid.",
   },
   {
     icon: Shield,
-    title: "AVG-proof aanpak",
-    description: "Dataverwerking wordt afgestemd op privacyrichtlijnen.",
+    title: "AVG-conforme aanpak",
+    description: "Dataverwerking wordt ingericht conform geldende privacywetgeving en interne datarichtlijnen.",
   },
 ];
 
 const introPoints = [
-  { icon: Search, text: "Doordachte analyse", sub: "Elke implementatie start met proces- en systeemanalyse inclusief impact- en ROI-berekening." },
-  { icon: Brain, text: "Architectuur vóór automatisering", sub: "Structuur en schaalbaarheid worden geborgd voordat er gebouwd wordt." },
-  { icon: Target, text: "Meetbare besluitvorming", sub: "Automatiseringen worden alleen gerealiseerd wanneer de zakelijke waarde aantoonbaar is." },
-  { icon: TrendingUp, text: "Schaalbaar vanaf dag één", sub: "Ontworpen om mee te groeien zonder lineaire personeelskosten." },
+  { icon: Search, text: "Doordachte analyse", sub: "Elke implementatie start met een analyse van processen en systemen, inclusief impact- en ROI-berekening." },
+  { icon: Brain, text: "Architectuur vóór automatisering", sub: "Structuur, datastromen en schaalbaarheid worden vastgesteld voordat er gebouwd wordt." },
+  { icon: Target, text: "Meetbare besluitvorming", sub: "Automatisering wordt alleen geïmplementeerd wanneer de zakelijke impact aantoonbaar is." },
+  { icon: TrendingUp, text: "Schaalbaar vanaf dag één", sub: "Systemen worden ontworpen om mee te groeien zonder lineaire stijging van personeelskosten." },
 ];
 
 const impactCards = [
@@ -411,7 +411,7 @@ const Process = () => {
           </ScrollRevealItem>
           <ScrollRevealItem>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Wij ontwerpen en implementeren schaalbare automatiseringsarchitecturen waarin beveiliging, datakwaliteit en governance vanaf dag één zijn geïntegreerd.
+              Wij combineren procesautomatisering, systeemintegraties en data-architectuur tot één schaalbaar fundament. Geen losse oplossingen, maar een robuuste structuur die met uw organisatie meegroeit.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>
@@ -432,7 +432,7 @@ const Process = () => {
               <p className="text-sm text-muted-foreground leading-relaxed mb-6">
                 Wij combineren procesautomatisering, systeemintegraties en
                 data-architectuur tot één schaalbaar fundament. Geen losse
-                oplossingen — maar een robuuste structuur die met u meegroeit.
+                oplossingen, maar een robuuste structuur die met uw organisatie meegroeit.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {introPoints.map((point, idx) => (

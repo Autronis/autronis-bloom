@@ -17,7 +17,7 @@ const layers = [
       { icon: Link2, text: "API-koppelingen met gecontroleerde toegang" },
       { icon: Unlock, text: "Geen vendor lock-in of verborgen afhankelijkheden" },
     ],
-    closing: "Hier wordt vastgelegd hoe systemen met elkaar communiceren en wie toegang heeft — vóórdat data wordt verwerkt.",
+    closing: "In deze laag wordt bepaald hoe systemen met elkaar communiceren en wie toegang heeft, voordat data wordt verwerkt.",
   },
   {
     icon: Database,
@@ -31,7 +31,7 @@ const layers = [
       { icon: Eye, text: "Data is niet toegankelijk voor onbevoegden, ook niet voor derden" },
       { icon: FolderLock, text: "Datasegmentatie en toegangscontrole per rol" },
     ],
-    closing: "Uw data blijft onder uw controle — technisch én contractueel.",
+    closing: "Uw data blijft volledig onder uw controle, zowel technisch als contractueel.",
   },
   {
     icon: FileCheck,

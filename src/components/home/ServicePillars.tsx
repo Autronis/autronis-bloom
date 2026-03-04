@@ -78,18 +78,18 @@ const ServiceCard = ({
         >
            <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} items-stretch gap-0`}>
             {/* Text */}
-              <div className="flex-1 p-4 sm:p-5 flex flex-col justify-center">
-              <div className="flex items-center gap-3 mb-2">
+              <div className="flex-1 px-4 py-2.5 sm:px-5 sm:py-3 flex flex-col justify-center">
+              <div className="flex items-center gap-3 mb-1">
                 <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
                   <s.icon size={18} />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold">{s.title}</h3>
               </div>
-              <p className="text-xs text-muted-foreground mb-3 leading-relaxed">{s.intro}</p>
+              <p className="text-xs text-muted-foreground mb-2 leading-relaxed">{s.intro}</p>
 
               {/* Wat levert dit op? */}
-              <div className="mb-3">
-                <p className="text-xs font-semibold text-primary mb-2 tracking-widest uppercase">
+              <div className="mb-2">
+                <p className="text-xs font-semibold text-primary mb-1.5 tracking-widest uppercase">
                   Wat levert dit op?
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
@@ -126,7 +126,7 @@ const ServiceCard = ({
               </Button>
 
               {/* Security trust line */}
-              <div className="mt-3 pt-2 border-t border-border/30">
+              <div className="mt-2 pt-1.5 border-t border-border/30">
                 <p className="text-[11px] text-muted-foreground/80 leading-relaxed">
                   Inclusief toegangsbeheer, logging en een overdraagbare architectuur.
                 </p>

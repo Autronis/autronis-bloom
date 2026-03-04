@@ -468,7 +468,7 @@ const Services = () => {
           >
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Services</p>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
-              Automatisering zonder complexiteit.
+              Automatisering zonder complexiteit
             </h1>
             <motion.p
               className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto"
@@ -476,8 +476,7 @@ const Services = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.15, ease: [0.23, 1, 0.32, 1] }}
             >
-              Wij ontwerpen en implementeren schaalbare systemen die processen verbinden,
-              handmatige stappen elimineren en realtime inzicht geven.
+              Wij ontwerpen en implementeren schaalbare systemen die processen verbinden, handmatige stappen verminderen en realtime inzicht geven.
             </motion.p>
           </motion.div>
 
@@ -485,8 +484,8 @@ const Services = () => {
           <div className="mb-20">
             <div className="text-center mb-10">
               <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Integraties</p>
-              <h2 className="text-2xl sm:text-3xl font-bold mb-3">Werkt met uw huidige stack</h2>
-              <p className="text-muted-foreground">Heeft uw systeem een API? Dan kunnen wij integreren.</p>
+              <h2 className="text-2xl sm:text-3xl font-bold mb-3">Werkt met uw huidige systemen</h2>
+              <p className="text-muted-foreground">Staat uw systeem er niet tussen? Als het een API heeft, kunnen we het vrijwel altijd integreren.</p>
             </div>
 
             <div className="relative mb-4 overflow-hidden py-10">

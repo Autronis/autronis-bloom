@@ -7,11 +7,11 @@ import { useState, useEffect } from "react";
 import fotoSyb from "@/assets/foto_syb.jpg";
 import fotoSem from "@/assets/foto_sem.jpg";
 
-// Preload both team photos immediately on module load
-[fotoSyb, fotoSem].forEach((src) => {
-  const img = new Image();
-  img.src = src;
-});
+// Prioritize Syb photo so it is fully available when users reach the team section on mobile
+if (typeof window !== "undefined") {
+  const sybPreload = new Image();
+  sybPreload.src = fotoSyb;
+}
 
 const values = [
   { icon: Target, title: "Resultaatgericht", description: "We meten succes in bespaarde uren, minder fouten en snellere processen — niet in opgeleverde features." },
@@ -25,6 +25,7 @@ const team = [
     name: "Syb Sprenkeler",
     role: "Co-founder",
     photo: fotoSyb,
+    priority: true,
     description: "Syb heeft een scherp oog voor technische details en is de drijvende kracht achter de bouw. Hij denkt altijd een stap verder en zorgt dat elk systeem niet alleen werkt maar ook schaalbaar en toekomstbestendig is.",
   },
   {
@@ -37,6 +38,29 @@ const team = [
 
 const TeamCard = ({ member }: { member: typeof team[0] }) => {
   const [hovered, setHovered] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const img = new Image();
+    img.src = member.photo;
+
+    if (img.complete) {
+      setImageLoaded(true);
+      return;
+    }
+
+    img.onload = () => {
+      if (!cancelled) setImageLoaded(true);
+    };
+    img.onerror = () => {
+      if (!cancelled) setImageLoaded(true);
+    };
+
+    return () => {
+      cancelled = true;
+    };
+  }, [member.photo]);
 
   return (
     <div
@@ -48,13 +72,14 @@ const TeamCard = ({ member }: { member: typeof team[0] }) => {
         <img
           src={member.photo}
           alt={member.name}
-          className="w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-105 opacity-0"
-          loading="eager"
-          decoding="async"
-          onLoad={(e) => {
-            (e.currentTarget as HTMLImageElement).classList.remove('opacity-0');
-            (e.currentTarget as HTMLImageElement).classList.add('opacity-100');
-          }}
+          className={`w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-105 ${
+            imageLoaded ? "opacity-100 blur-0" : "opacity-80 blur-[2px]"
+          }`}
+          loading={member.priority ? "eager" : "lazy"}
+          fetchPriority={member.priority ? "high" : "auto"}
+          decoding={member.priority ? "sync" : "async"}
+          onLoad={() => setImageLoaded(true)}
+          onError={() => setImageLoaded(true)}
         />
         <div
           className={`absolute inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center p-6 transition-opacity duration-300 ${

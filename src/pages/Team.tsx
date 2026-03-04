@@ -135,18 +135,18 @@ const Team = () => {
               <p>Van AI-gestuurde workflows tot systeemintegraties en dashboards: wij bouwen de digitale infrastructuur waarop bedrijven kunnen doorgroeien.</p>
               <p>Geen losse automatiseringen, maar systemen die blijven werken wanneer uw organisatie groeit.</p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10">
+            <div className="grid grid-cols-3 gap-3 mt-8 max-w-lg mx-auto">
               {[
                 { icon: Boxes, title: "Systemen", text: "Automatisering die processen structureert en schaalbaar maakt." },
                 { icon: Cable, title: "Integraties", text: "Systemen en software die naadloos met elkaar samenwerken." },
                 { icon: BarChart3, title: "Data", text: "Inzicht, controle en rapportages op basis van betrouwbare data." },
               ].map((block) => (
-                <div key={block.title} className="rounded-xl border border-border bg-card p-5">
-                  <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3">
-                    <block.icon size={18} />
+                <div key={block.title} className="rounded-lg border border-border bg-card p-3 text-center">
+                  <div className="w-7 h-7 rounded-md bg-primary/10 flex items-center justify-center text-primary mb-2 mx-auto">
+                    <block.icon size={14} />
                   </div>
-                  <p className="font-semibold text-sm mb-1">{block.title}</p>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{block.text}</p>
+                  <p className="font-semibold text-xs mb-0.5">{block.title}</p>
+                  <p className="text-[11px] text-muted-foreground leading-relaxed">{block.text}</p>
                 </div>
               ))}
             </div>

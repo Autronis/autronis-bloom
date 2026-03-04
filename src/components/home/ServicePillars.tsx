@@ -67,10 +67,11 @@ const ServiceCard = ({
     <ScrollReveal key={s.title}>
       <ScrollRevealItem>
          <div
-          className="rounded-xl border border-primary/15 bg-card transition-all duration-300 ease-out overflow-hidden"
-          style={{
-            borderColor: hoveredIndex === i ? "hsl(var(--primary) / 0.4)" : undefined,
-          }}
+          className="rounded-xl border border-border bg-card transition-all duration-200 ease-out overflow-hidden"
+           style={{
+             borderColor: hoveredIndex === i ? "hsl(var(--primary) / 0.5)" : undefined,
+             boxShadow: hoveredIndex === i ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none",
+           }}
           onMouseEnter={() => setHoveredIndex(i)}
           onMouseLeave={() => setHoveredIndex(null)}
         >

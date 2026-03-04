@@ -21,14 +21,9 @@ const HeroBackground = () => {
     let time = 0;
     const isMobile = window.innerWidth < 768;
 
-    // On mobile, skip canvas animation entirely to prioritize LCP
-    if (isMobile) {
-      return;
-    }
-
-    const lineCount = 6;
-    const dotCount = 5;
-    const stepSize = 2;
+    const lineCount = isMobile ? 4 : 6;
+    const dotCount = isMobile ? 3 : 5;
+    const stepSize = isMobile ? 4 : 2;
 
     const dots: GlowDot[] = [];
     const usedLines = new Set<number>();

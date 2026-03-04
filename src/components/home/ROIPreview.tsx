@@ -71,7 +71,7 @@ const ROIPreview = () => {
               {impactBlocks.map((block) => (
                 <div
                   key={block.title}
-                  className="rounded-xl border border-border bg-card p-6 sm:p-7 transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-[3px] hover:border-primary/50"
+                  className="rounded-xl border border-border bg-card p-6 sm:p-7 transition-all duration-200 ease-out hover:scale-[1.015] hover:-translate-y-[2px] hover:border-primary/50 hover:shadow-[0_0_20px_hsl(174_78%_41%_/_0.12)]"
                 >
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
                     <block.icon size={20} />
@@ -104,7 +104,7 @@ const ROIPreview = () => {
         <ScrollReveal className="max-w-4xl mx-auto">
           <ScrollRevealItem>
             <div
-              className="rounded-xl border border-border bg-card p-6 sm:p-8 mb-10 transition-all duration-300 ease-out hover:scale-[1.015] hover:-translate-y-[2px] hover:border-primary/50"
+              className="rounded-xl border border-border bg-card p-6 sm:p-8 mb-10 transition-all duration-200 ease-out hover:scale-[1.015] hover:-translate-y-[2px] hover:border-primary/50 hover:shadow-[0_0_20px_hsl(174_78%_41%_/_0.12)]"
             >
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 lg:gap-10 items-start">
                 <div>

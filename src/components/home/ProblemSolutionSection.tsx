@@ -169,7 +169,7 @@ const ProblemSolutionSection = () => {
             {solutions.map((s, i) => (
               <ScrollRevealItem key={s.title}>
                 <GlowCard
-                  className="rounded-xl border border-primary/20 bg-card p-6"
+                  className="rounded-xl border border-border bg-card p-6"
                   isAnyHovered={solutionHovered !== null}
                   isHovered={solutionHovered === i}
                   onHover={() => setSolutionHovered(i)}

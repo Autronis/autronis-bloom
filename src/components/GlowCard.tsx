@@ -32,11 +32,12 @@ const GlowCard = ({
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       onMouseMove={handleMouseMove}
-      className={`relative overflow-hidden transition-all duration-[300ms] ease-out ${className}`}
+      className={`relative overflow-hidden transition-all duration-200 ease-out ${className}`}
       style={{
-        transform: isHovered && !noScale ? "scale(1.02) translateY(-4px)" : "scale(1) translateY(0)",
+        transform: isHovered && !noScale ? "scale(1.015) translateY(-2px)" : "scale(1) translateY(0)",
         opacity: isAnyHovered && !isHovered ? 0.88 : 1,
-        borderColor: isHovered ? "hsl(var(--primary) / 0.6)" : undefined,
+        borderColor: isHovered ? "hsl(var(--primary) / 0.5)" : undefined,
+        boxShadow: isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none",
       }}
     >
       <div className="relative z-10">{children}</div>

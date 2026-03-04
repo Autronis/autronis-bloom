@@ -82,10 +82,10 @@ const SecurityBlock = () => {
               <ScrollReveal key={layer.title}>
                 <ScrollRevealItem>
                   <div
-                    className="rounded-2xl border bg-card overflow-hidden transition-all duration-300 ease-out hover:scale-[1.015] hover:-translate-y-[2px]"
+                    className="rounded-2xl border bg-card overflow-hidden transition-all duration-200 ease-out hover:scale-[1.015] hover:-translate-y-[2px]"
                     style={{
                       borderColor: isHovered ? "hsl(var(--primary) / 0.35)" : "hsl(var(--border))",
-                      boxShadow: isHovered ? "0 4px 24px hsl(174 78% 33% / 0.08)" : "0 0 0 transparent",
+                      boxShadow: isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "0 0 0 transparent",
                     }}
                     onMouseEnter={() => setHoveredIndex(i)}
                     onMouseLeave={() => setHoveredIndex(null)}

@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout";
 import { Link } from "react-router-dom";
 import { ArrowRight, BookOpen, Calculator, ClipboardCheck, BarChart3, Workflow, DollarSign, Settings, UserPlus, Layers, Link2, ShieldCheck } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 const guides = [
@@ -36,14 +37,14 @@ const tools = [
   },
   {
     icon: ClipboardCheck,
-    title: "Automation Maturity Check",
-    description: "Een korte scan om te bepalen hoe volwassen uw organisatie is op het gebied van automatisering en integraties.",
+    title: "Automatiseringsscan",
+    description: "Een korte scan om te bepalen hoe volwassen uw organisatie is op het gebied van automatisering en systeemintegraties.",
     href: "#",
   },
   {
     icon: BarChart3,
-    title: "Automation Impact Scan",
-    description: "Analyseer waar automatisering binnen uw organisatie de grootste operationele impact kan realiseren.",
+    title: "Impactanalyse automatisering",
+    description: "Analyseer waar automatisering binnen uw organisatie de grootste operationele en financiële impact kan realiseren.",
     href: "#",
   },
 ];
@@ -79,8 +80,8 @@ const frameworks = [
   },
   {
     icon: Link2,
-    title: "Integratiemodel voor systemen",
-    description: "Hoe systemen veilig en schaalbaar met elkaar worden verbonden.",
+    title: "Integratiemodel voor bedrijfssystemen",
+    description: "Hoe systemen veilig, schaalbaar en gecontroleerd met elkaar worden verbonden.",
   },
   {
     icon: ShieldCheck,
@@ -145,9 +146,9 @@ const Resources = () => {
         {/* Page header */}
         <div className="max-w-2xl mx-auto text-center mb-16">
           <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Inzichten</p>
-          <h1 className="text-4xl sm:text-5xl font-bold mb-4">Inzichten en gidsen</h1>
+          <h1 className="text-4xl sm:text-5xl font-bold mb-4">Inzichten & gidsen</h1>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Praktische inzichten over automatisering en AI voor MKB-bedrijven. Geen vage theorie, maar concrete kennis die direct toepasbaar is binnen processen en systemen.
+            Praktische inzichten over automatisering en AI voor MKB-bedrijven. Geen theorie, maar concrete kennis die direct toepasbaar is in bedrijfsprocessen en systemen.
           </p>
         </div>
 
@@ -155,7 +156,7 @@ const Resources = () => {
         <div className="mb-20">
           <SectionHeader
             title="Praktische gidsen over automatisering"
-            description="Artikelen en inzichten over procesautomatisering, systeemintegraties en data-infrastructuur voor groeiende organisaties."
+            description="Artikelen en praktische inzichten over procesautomatisering, systeemintegraties en data-infrastructuur voor groeiende MKB-organisaties."
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {guides.map((post) => (
@@ -203,7 +204,7 @@ const Resources = () => {
         </div>
 
         {/* Sectie 4: Frameworks en methodiek */}
-        <div>
+        <div className="mb-20">
           <SectionHeader
             title="Frameworks en methodiek"
             description="Hoe wij automatisering analyseren, ontwerpen en implementeren binnen organisaties."
@@ -218,6 +219,25 @@ const Resources = () => {
             ))}
           </div>
         </div>
+
+        {/* Lead CTA */}
+        <ScrollReveal>
+          <ScrollRevealItem>
+            <div className="rounded-xl border border-border bg-card p-8 sm:p-10 text-center max-w-2xl mx-auto">
+              <h2 className="text-xl sm:text-2xl font-bold mb-3">
+                Wilt u weten waar automatisering binnen uw organisatie de meeste impact heeft?
+              </h2>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                Plan een Automation Scan en ontvang een eerste analyse van automatiseringskansen binnen uw processen.
+              </p>
+              <Button asChild size="lg">
+                <Link to="/book">
+                  Plan Automation Scan <ArrowRight size={16} />
+                </Link>
+              </Button>
+            </div>
+          </ScrollRevealItem>
+        </ScrollReveal>
       </div>
     </section>
   );

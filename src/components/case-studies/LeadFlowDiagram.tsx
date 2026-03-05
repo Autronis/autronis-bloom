@@ -39,21 +39,18 @@ const buildContinuousPath = (segments: Point[][]) => {
 };
 
 /* ─── Visibility wrapper ─── */
-const VisibleSvg = ({ children, viewBox, className }: { children: ReactNode; viewBox: string; className?: string }) => {
+const VisibleSvg = ({ children, viewBox, className, onVisibilityChange }: {
+  children: ReactNode; viewBox: string; className?: string;
+  onVisibilityChange?: (vis: boolean) => void;
+}) => {
   const ref = useRef<SVGSVGElement>(null);
-  const [vis, setVis] = useState(false);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const obs = new IntersectionObserver(([e]) => setVis(e.isIntersecting), { threshold: 0.1 });
+    const obs = new IntersectionObserver(([e]) => onVisibilityChange?.(e.isIntersecting), { threshold: 0.1 });
     obs.observe(el);
     return () => obs.disconnect();
-  }, []);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    vis ? el.unpauseAnimations?.() : el.pauseAnimations?.();
-  }, [vis]);
+  }, [onVisibilityChange]);
   return (
     <svg ref={ref} viewBox={viewBox} className={className} fill="none" overflow="visible"
       role="img" aria-label="Automatiseringsdiagram">{children}</svg>

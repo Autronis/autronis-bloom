@@ -3,10 +3,21 @@ import SupportFlowDiagram from "./SupportFlowDiagram";
 import MarketingFlowDiagram from "./MarketingFlowDiagram";
 import LeadFlowDiagram from "./LeadFlowDiagram";
 
+export interface MetricAnimation {
+  from: number;
+  to: number;
+  suffix?: string;
+  prefix?: string;
+  separator?: string; // e.g. " → " for "25 → 5 min"
+  fromSuffix?: string;
+  toSuffix?: string;
+}
+
 export interface CaseMetric {
   icon: React.ElementType;
   value: string;
   label: string;
+  animation?: MetricAnimation;
 }
 
 export interface CaseStudy {
@@ -36,10 +47,10 @@ export const cases: CaseStudy[] = [
     icon: Users,
     logoSrc: "/logo.png",
     metrics: [
-      { icon: Clock, value: "25 → 5 min", label: "Leadverwerking per lead" },
+      { icon: Clock, value: "25 → 5 min", label: "Leadverwerking per lead", animation: { from: 25, to: 5, suffix: " min", separator: " → " } },
       { icon: TrendingUp, value: "3–5×", label: "Hogere outreach efficiëntie" },
-      { icon: Mail, value: "0 → 50+", label: "Gepersonaliseerde e-mails/dag" },
-      { icon: Zap, value: "100%", label: "Automatische verrijking" },
+      { icon: Mail, value: "0 → 50+", label: "Gepersonaliseerde e-mails/dag", animation: { from: 0, to: 50, suffix: "+", separator: " → " } },
+      { icon: Zap, value: "100%", label: "Automatische verrijking", animation: { from: 0, to: 100, suffix: "%" } },
     ],
     context: "Jobby wilde met een klein team meer bedrijven bereiken. Het vinden van leads en verzamelen van contactinformatie kostte veel tijd. Het team werkte voornamelijk met handmatig zoeken en telefonische outreach.",
     problem: [
@@ -81,9 +92,9 @@ export const cases: CaseStudy[] = [
     title: "AI klantenservice automatisering",
     icon: Bot,
     metrics: [
-      { icon: Target, value: "70%+", label: "Vragen automatisch afgehandeld" },
+      { icon: Target, value: "70%+", label: "Vragen automatisch afgehandeld", animation: { from: 0, to: 70, suffix: "%+" } },
       { icon: Clock, value: "2 uur → direct", label: "Reactietijd" },
-      { icon: TrendingUp, value: "60%+", label: "Minder support tickets" },
+      { icon: TrendingUp, value: "60%+", label: "Minder support tickets", animation: { from: 0, to: 60, suffix: "%+" } },
       { icon: Zap, value: "24/7", label: "Beschikbaarheid" },
     ],
     context: "Een groeiend e-commerce bedrijf ontving dagelijks veel klantvragen over bestellingen, verzending en retouren. Het supportteam besteedde het merendeel van hun tijd aan repetitieve vragen.",
@@ -119,7 +130,7 @@ export const cases: CaseStudy[] = [
     icon: BarChart3,
     metrics: [
       { icon: Clock, value: "6 uur → 10 min", label: "Rapportagetijd" },
-      { icon: Zap, value: "100%", label: "Automatische dataverzameling" },
+      { icon: Zap, value: "100%", label: "Automatische dataverzameling", animation: { from: 0, to: 100, suffix: "%" } },
       { icon: TrendingUp, value: "Realtime", label: "Dashboards voor klanten" },
       { icon: Target, value: "0", label: "Handmatige rapportages" },
     ],

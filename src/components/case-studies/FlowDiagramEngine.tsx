@@ -229,14 +229,13 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   const TOTAL_CYCLE = TRAVEL_DURATION + END_PAUSE;
   const MASK_PAD = 2;
 
-  // Segment-speed mapping: accelerate around node 02 and the L-connector
+  // Segment-speed mapping: keep 02→03 normal, speed up 03→04
   const timingWindows = useMemo(() => {
     if (checkpoints.length < 2) return [] as Array<{ cpStart: number; cpEnd: number; tStart: number; tEnd: number }>;
 
     const segmentCount = checkpoints.length - 1;
     const speeds = Array.from({ length: segmentCount }, (_, i) => {
-      if (i === 1) return 1.8; // faster through hidden area behind node 1→2
-      if (i === 2) return 1.6; // L-connector (zigzag) faster
+      if (i === 2) return 2.1; // faster from node 03 → 04 (zigzag)
       return 1;
     });
 
@@ -268,7 +267,18 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       if (clamped <= w.tEnd || i === timingWindows.length - 1) {
         const denom = Math.max(0.0001, w.tEnd - w.tStart);
         const local = Math.max(0, Math.min(1, (clamped - w.tStart) / denom));
-        return w.cpStart + local * (w.cpEnd - w.cpStart);
+
+        let mappedLocal = local;
+        if (i === 1) {
+          // Around node 02: move faster while hidden behind the card, slower once visible
+          if (local < 0.45) {
+            mappedLocal = 0.72 * easeInOut(local / 0.45);
+          } else {
+            mappedLocal = 0.72 + 0.28 * easeInOut((local - 0.45) / 0.55);
+          }
+        }
+
+        return w.cpStart + mappedLocal * (w.cpEnd - w.cpStart);
       }
     }
 
@@ -350,7 +360,8 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       }
 
       for (let i = checkpointIndexRef.current + 1; i < checkpoints.length; i++) {
-        if (progress >= checkpoints[i]) {
+        const triggerOffset = i === 1 ? -0.02 : 0; // node 02 should pulse earlier
+        if (progress >= Math.max(0, checkpoints[i] + triggerOffset)) {
           checkpointIndexRef.current = i;
           triggerHighlight(i);
         } else {
@@ -438,7 +449,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       </g>
 
       {nodes.map((n, i) => {
-        const pulseCfg = { upMs: 140, holdMs: 600, downMs: 600 };
+        const pulseCfg = i === 1 ? { upMs: 120, holdMs: 900, downMs: 700 } : { upMs: 140, holdMs: 600, downMs: 600 };
         return <NodeCard key={n.title} node={n} pulseSignal={pulseSignals[i] ?? 0} {...pulseCfg} />;
       })}
     </VisibleSvg>

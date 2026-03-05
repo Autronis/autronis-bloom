@@ -57,6 +57,11 @@ const team: TeamMember[] = [
       { label: "Dashboards", icon: BarChart3, category: "data" },
       { label: "API integrations", icon: Radio, category: "data" },
     ],
+    customCategoryLabels: {
+      automation: "System Design",
+      ai: "AI Systems",
+      data: "Data & Lead Intelligence",
+    },
     mail: "mailto:sem@autronis.com",
     linkedin: "https://www.linkedin.com/in/sem-gijsberts-65ba543b3/",
   },

@@ -1,4 +1,4 @@
-import { CheckCircle2, AlertTriangle, Star } from "lucide-react";
+import { CheckCircle2, AlertTriangle, Star, UserCircle } from "lucide-react";
 import { useEffect, useRef, useState, useCallback } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import { TechTagList } from "@/components/case-studies/TechTag";
@@ -212,12 +212,16 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
 
                   {/* Author row */}
                   <div className="flex items-center gap-3 pt-0.5">
-                    {cs.testimonial.logo && (
+                    {cs.testimonial.logo ? (
                       <img
                         src={cs.testimonial.logo}
                         alt={cs.testimonial.company}
                         className="h-8 object-contain shrink-0"
                       />
+                    ) : (
+                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                        <UserCircle size={20} className="text-primary/70" />
+                      </div>
                     )}
                     <div className="min-w-0">
                       <p className="text-[13px] font-bold text-foreground leading-tight">{cs.testimonial.name}</p>

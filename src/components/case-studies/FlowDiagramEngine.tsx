@@ -217,18 +217,19 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   const TOTAL_CYCLE = TRAVEL_DURATION + END_PAUSE;
   const MASK_PAD = 2;
 
-  // Remap progress so the horizontal top-row section (0..checkpoint[2]) moves 40% faster
+  // Remap progress so the L-shaped connector (segment[2], between checkpoint[2] and checkpoint[3]) moves 40% faster
   const remapProgress = useCallback((t: number) => {
-    if (checkpoints.length < 4) return t;
-    const horizEnd = checkpoints[2]; // end of horizontal section
-    // Time allocated to horizontal: 60% of what it would normally take
-    const horizTime = horizEnd * 0.6;
-    const vertTime = 1 - horizTime;
-    const vertPath = 1 - horizEnd;
-    if (t < horizTime) {
-      return (t / horizTime) * horizEnd;
+    if (checkpoints.length < 5) return t;
+    const segStart = checkpoints[2]; // start of L-connector
+    const segEnd = checkpoints[3];   // end of L-connector
+    const segLen = segEnd - segStart;
+    const fastSegLen = segLen * 0.6; // 40% faster
+    const shift = segLen - fastSegLen;
+    if (t <= segStart) return t;
+    if (t <= segStart + fastSegLen) {
+      return segStart + ((t - segStart) / fastSegLen) * segLen;
     }
-    return horizEnd + ((t - horizTime) / vertTime) * vertPath;
+    return t + shift;
   }, [checkpoints]);
 
   useEffect(() => {

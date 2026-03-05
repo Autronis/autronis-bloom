@@ -71,7 +71,7 @@ const ServiceCard = ({
     <ScrollReveal key={s.title}>
       <ScrollRevealItem>
          <div
-          className="rounded-xl border border-border bg-card transition-all duration-200 ease-out overflow-hidden"
+          className="group/card rounded-xl border border-border bg-card transition-all duration-200 ease-out overflow-hidden"
            style={{
              borderColor: isHovered ? "hsl(var(--primary) / 0.5)" : undefined,
              boxShadow: isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none",
@@ -138,7 +138,7 @@ const ServiceCard = ({
                 alt={s.title}
                 width={600}
                 height={450}
-                className="absolute inset-0 w-full h-full object-contain z-[1] scale-[1.15] dark:mix-blend-screen dark:invert-0 dark:hue-rotate-0 dark:brightness-[0.85] dark:opacity-85 invert hue-rotate-180 mix-blend-multiply brightness-100 opacity-80 transition-transform duration-500 ease-out group-hover:scale-[1.22]"
+                className="absolute inset-0 w-full h-full object-contain z-[1] scale-[1.15] dark:mix-blend-screen dark:invert-0 dark:hue-rotate-0 dark:brightness-[0.85] dark:opacity-85 invert hue-rotate-180 mix-blend-multiply brightness-100 opacity-80 transition-transform duration-500 ease-out group-hover/card:scale-[1.22]"
                 loading="lazy"
                 decoding="async"
               />

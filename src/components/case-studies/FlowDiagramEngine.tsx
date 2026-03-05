@@ -93,17 +93,18 @@ const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs }: {
   node: DiagramNode; pulseSignal: number; upMs?: number; holdMs?: number; downMs?: number;
 }) => {
   const gRef = useRef<SVGGElement>(null);
-  const glowRef = useRef<SVGRectElement>(null);
+  const borderRef = useRef<SVGRectElement>(null);
   const rafRef = useRef(0);
 
   const setVisualState = useCallback((scale: number) => {
     const g = gRef.current;
     if (g) g.setAttribute("transform", `translate(${node.x}, ${node.y}) scale(${scale}) translate(${-node.x}, ${-node.y})`);
 
-    const glow = glowRef.current;
-    if (glow) {
-      const opacity = Math.max(0, Math.min(1, (scale - 1) / 0.06)) * 0.3;
-      glow.setAttribute("opacity", String(opacity));
+    const border = borderRef.current;
+    if (border) {
+      const t = Math.max(0, Math.min(1, (scale - 1) / 0.06));
+      border.setAttribute("stroke-width", String(0.8 + t * 0.8));
+      border.setAttribute("stroke", `hsl(var(--primary) / ${0.2 + t * 0.45})`);
     }
   }, [node.x, node.y]);
 
@@ -163,13 +164,9 @@ const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs }: {
       <rect x={node.x - node.w / 2} y={node.y - node.h / 2}
         width={node.w} height={node.h} rx={6}
         fill="hsl(var(--primary) / 0.05)" />
-      <rect x={node.x - node.w / 2} y={node.y - node.h / 2}
+      <rect ref={borderRef} x={node.x - node.w / 2} y={node.y - node.h / 2}
         width={node.w} height={node.h} rx={6}
         fill="none" stroke="hsl(var(--primary) / 0.2)" strokeWidth="0.8" />
-      <rect ref={glowRef}
-        x={node.x - node.w / 2 - 1} y={node.y - node.h / 2 - 1}
-        width={node.w + 2} height={node.h + 2} rx={7}
-        fill="none" stroke="hsl(var(--primary))" strokeWidth="0.6" opacity="0" />
 
       {/* Step indicator inside card */}
       {node.step != null && (
@@ -406,9 +403,9 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 
       {nodes.map((n, i) => {
         const pulseCfg = i === 0
-          ? { upMs: 200, holdMs: 900, downMs: 450 }
+          ? { upMs: 200, holdMs: 850, downMs: 420 }
           : i === 1
-            ? { upMs: 200, holdMs: 3200, downMs: 600 }
+            ? { upMs: 180, holdMs: 820, downMs: 420 }
             : { upMs: 220, holdMs: 600, downMs: 500 };
         return <NodeCard key={n.title} node={n} pulseSignal={pulseSignals[i] ?? 0} {...pulseCfg} />;
       })}

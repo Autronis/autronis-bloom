@@ -1,7 +1,58 @@
 import { CheckCircle2, Info, Star } from "lucide-react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
-import type { CaseStudy, CaseMetric } from "./caseStudiesData";
+import type { CaseStudy, CaseMetric, MetricAnimation } from "./caseStudiesData";
+
+/* ─── Animated Value ─── */
+const AnimatedValue = ({ animation, fallback }: { animation: MetricAnimation; fallback: string }) => {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [hasTriggered, setHasTriggered] = useState(false);
+  const [current, setCurrent] = useState(animation.from);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting && !hasTriggered) setHasTriggered(true); },
+      { threshold: 0.5 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [hasTriggered]);
+
+  useEffect(() => {
+    if (!hasTriggered) return;
+    const { from, to } = animation;
+    const duration = 1200;
+    const steps = Math.abs(to - from);
+    const stepTime = Math.max(duration / steps, 16);
+    let frame = from;
+
+    const interval = setInterval(() => {
+      frame += from < to ? 1 : -1;
+      setCurrent(frame);
+      if (frame === to) clearInterval(interval);
+    }, stepTime);
+
+    return () => clearInterval(interval);
+  }, [hasTriggered, animation]);
+
+  if (animation.separator) {
+    // "from → to suffix" format — animate the 'to' part, show from as static
+    return (
+      <span ref={ref}>
+        {animation.from}{animation.separator}{current}{animation.suffix || ""}
+      </span>
+    );
+  }
+
+  return (
+    <span ref={ref}>
+      {animation.prefix || ""}{current}{animation.suffix || ""}
+    </span>
+  );
+};
 
 /* ─── Metric Card ─── */
 const MetricCard = ({ metric }: { metric: CaseMetric }) => {
@@ -12,7 +63,13 @@ const MetricCard = ({ metric }: { metric: CaseMetric }) => {
         <Icon size={16} />
       </div>
       <div className="min-w-0">
-        <p className="text-base font-bold text-foreground leading-tight">{metric.value}</p>
+        <p className="text-base font-bold text-foreground leading-tight">
+          {metric.animation ? (
+            <AnimatedValue animation={metric.animation} fallback={metric.value} />
+          ) : (
+            metric.value
+          )}
+        </p>
         <p className="text-[11px] text-muted-foreground leading-snug">{metric.label}</p>
       </div>
     </div>
@@ -53,7 +110,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
           {/* ── Header + Metrics ── */}
           <div className="p-5 sm:p-6 pb-0 sm:pb-0">
             <div className="flex items-center gap-3 mb-4">
-              <img src="/logo.png" alt="Autronis" className="w-9 h-9 object-contain shrink-0" />
+              <img src="/logo.png" alt="Autronis" className="w-11 h-11 object-contain shrink-0" />
               <h2 className="text-lg sm:text-xl font-bold text-foreground flex items-center gap-2">
                 {cs.title}
                 <Icon size={16} className="text-primary/60" />

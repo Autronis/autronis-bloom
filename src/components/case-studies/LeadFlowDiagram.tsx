@@ -105,10 +105,6 @@ const NodeCard = ({ node, index, highlighted }: {
 
   return (
     <g ref={gRef}>
-      {/* Gentle float */}
-      <animateTransform attributeName="transform" type="translate"
-        values="0 0;0 -1;0 0" dur={`${3.5 + (index % 3) * 0.5}s`}
-        begin={`${index * 0.15}s`} repeatCount="indefinite" additive="sum" />
 
       {/* Card bg */}
       <rect x={node.x - node.w / 2} y={node.y - node.h / 2}

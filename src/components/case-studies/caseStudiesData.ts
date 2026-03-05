@@ -1,5 +1,6 @@
 import { ShoppingCart, FileText, Users, TrendingUp, Clock, Zap, Mail, BarChart3, Target, Database, Globe, Bot } from "lucide-react";
 import { EcommerceIsometric, FinanceIsometric, LeadIsometric } from "./IsometricVisuals";
+import LeadFlowDiagram from "./LeadFlowDiagram";
 
 export interface CaseMetric {
   icon: React.ElementType;
@@ -140,7 +141,6 @@ export const cases: CaseStudy[] = [
       "CRM-synchronisatie",
       "Workflow automatisering",
     ],
-    visual: LeadIsometric,
-    videoUrl: "https://www.autronis.nl/videos/videodemo.mp4",
+    visual: LeadFlowDiagram,
   },
 ];

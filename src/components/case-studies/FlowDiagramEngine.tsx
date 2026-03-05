@@ -269,15 +269,25 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         const local = Math.max(0, Math.min(1, (clamped - w.tStart) / denom));
 
         let mappedLocal = local;
-        if (i === 1) {
-          // Around node 02: move faster while hidden behind the card, slower once visible
-          if (local < 0.45) {
-            mappedLocal = 0.72 * easeInOut(local / 0.45);
+        if (i === 0) {
+          // Through node 02 (entry side): keep pre-node travel calm, then pass hidden area quickly
+          const hiddenStart = 0.73;
+          const timeAtHiddenStart = 0.86;
+          if (local < timeAtHiddenStart) {
+            mappedLocal = hiddenStart * easeInOut(local / timeAtHiddenStart);
           } else {
-            mappedLocal = 0.72 + 0.28 * easeInOut((local - 0.45) / 0.55);
+            mappedLocal = hiddenStart + (1 - hiddenStart) * easeInOut((local - timeAtHiddenStart) / (1 - timeAtHiddenStart));
+          }
+        } else if (i === 1) {
+          // Through node 02 (exit side): get out from behind the card sooner, then continue normally
+          const hiddenEnd = 0.47;
+          const timeForHiddenEnd = 0.16;
+          if (local < timeForHiddenEnd) {
+            mappedLocal = hiddenEnd * easeInOut(local / timeForHiddenEnd);
+          } else {
+            mappedLocal = hiddenEnd + (1 - hiddenEnd) * easeInOut((local - timeForHiddenEnd) / (1 - timeForHiddenEnd));
           }
         }
-
         return w.cpStart + mappedLocal * (w.cpEnd - w.cpStart);
       }
     }

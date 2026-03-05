@@ -2,13 +2,14 @@ import { Bot, FileText, Users, TrendingUp, Clock, Zap, Mail, BarChart3, Target }
 import SupportFlowDiagram from "./SupportFlowDiagram";
 import MarketingFlowDiagram from "./MarketingFlowDiagram";
 import LeadFlowDiagram from "./LeadFlowDiagram";
+import type { TagCategory, TechTagData } from "./TechTag";
 
 export interface MetricAnimation {
   from: number;
   to: number;
   suffix?: string;
   prefix?: string;
-  separator?: string; // e.g. " → " for "25 → 5 min"
+  separator?: string;
   fromSuffix?: string;
   toSuffix?: string;
 }
@@ -29,6 +30,7 @@ export interface CaseStudy {
   solution: string[];
   results: string[];
   technology: string[];
+  technologyTags: TechTagData[];
   visual: React.ElementType;
   videoUrl?: string;
   testimonial?: {
@@ -72,12 +74,21 @@ export const cases: CaseStudy[] = [
       "Meer klantgesprekken zonder extra teamcapaciteit",
     ],
     technology: [
-      "AI personalisatie",
-      "Lead scraping",
-      "Data verrijking",
-      "API integraties",
-      "Batch e-mail outreach",
-      "CRM synchronisatie",
+      "LLM personalisatie", "Web scraping pipelines", "Data enrichment APIs",
+      "Workflow orchestration", "Lead scoring AI", "Batch outreach automation",
+      "CRM synchronisatie", "API integraties", "Data processing pipelines", "Prospect intelligence",
+    ],
+    technologyTags: [
+      { label: "LLM personalisatie", category: "ai", tooltip: "AI schrijft outreach op basis van bedrijfscontext. Voorbeeld: pijnpunt + aanbod." },
+      { label: "Web scraping pipelines", category: "data", tooltip: "Automatisch leads verzamelen uit directories en sites." },
+      { label: "Data enrichment APIs", category: "data", tooltip: "Verrijkt bedrijfsdata via externe dataproviders." },
+      { label: "Workflow orchestration", category: "automation", tooltip: "Orkestreert stappen en routes in de pipeline." },
+      { label: "Lead scoring AI", category: "ai", tooltip: "Prioriteert leads op match en intent-signalen." },
+      { label: "Batch outreach automation", category: "automation", tooltip: "Verstuurt outreach in batches met throttling en logging." },
+      { label: "CRM synchronisatie", category: "integrations", tooltip: "Schrijft leads en status terug naar CRM automatisch." },
+      { label: "API integraties", category: "integrations", tooltip: "Koppelingen tussen tools en systemen via API's." },
+      { label: "Data processing pipelines", category: "data", tooltip: "Opschonen, normaliseren en dedupliceren van data." },
+      { label: "Prospect intelligence", category: "ai", tooltip: "Haalt signalen uit website/sector voor betere targeting." },
     ],
     visual: LeadFlowDiagram,
     testimonial: {
@@ -117,11 +128,21 @@ export const cases: CaseStudy[] = [
       "Klantenservice 24/7 beschikbaar",
     ],
     technology: [
-      "AI chatbot",
-      "API integraties",
-      "Workflow automatisering",
-      "Knowledge base",
-      "CRM synchronisatie",
+      "LLM support agent", "RAG knowledge retrieval", "Vector search",
+      "Intent classification", "Conversation orchestration", "API integraties",
+      "CRM synchronisatie", "Context enrichment", "Automated escalation", "Response generation",
+    ],
+    technologyTags: [
+      { label: "LLM support agent", category: "ai", tooltip: "AI-agent die vragen oplost in natuurlijke taal." },
+      { label: "RAG knowledge retrieval", category: "ai", tooltip: "Zoekt relevante kennis en laat AI daarop antwoorden." },
+      { label: "Vector search", category: "data", tooltip: "Semantisch zoeken op basis van embeddings." },
+      { label: "Intent classification", category: "ai", tooltip: "Detecteert type vraag: orderstatus, retour, klacht, etc." },
+      { label: "Conversation orchestration", category: "automation", tooltip: "Regels en flows voor gesprekken en handoffs." },
+      { label: "API integraties", category: "integrations", tooltip: "Koppelt webshop, ticketsysteem en CRM." },
+      { label: "CRM synchronisatie", category: "integrations", tooltip: "Slaat interacties op voor context en follow-up." },
+      { label: "Context enrichment", category: "data", tooltip: "Voegt order- en klantdata toe aan het gesprek." },
+      { label: "Automated escalation", category: "automation", tooltip: "Stuurt complexe cases automatisch door naar medewerker." },
+      { label: "Response generation", category: "ai", tooltip: "Genereert consistente antwoorden in tone-of-voice." },
     ],
     visual: SupportFlowDiagram,
   },
@@ -154,11 +175,21 @@ export const cases: CaseStudy[] = [
       "Minder handmatig werk en fouten",
     ],
     technology: [
-      "Data pipelines",
-      "API integraties",
-      "Realtime dashboards",
-      "Workflow automatisering",
-      "Marketing platform koppelingen",
+      "Marketing data pipelines", "API data ingestion", "Realtime data processing",
+      "Data transformation", "AI performance analysis", "Dashboard automation",
+      "Workflow orchestration", "Cross-platform integraties", "Automated reporting", "Attribution analytics",
+    ],
+    technologyTags: [
+      { label: "Marketing data pipelines", category: "data", tooltip: "Datastromen uit ads en analytics naar één model." },
+      { label: "API data ingestion", category: "integrations", tooltip: "Haalt data op via Google/Meta/GA API's." },
+      { label: "Realtime data processing", category: "data", tooltip: "Verwerkt nieuwe data continu of op interval." },
+      { label: "Data transformation", category: "data", tooltip: "Normaliseert metrics en maakt berekeningen uniform." },
+      { label: "AI performance analysis", category: "ai", tooltip: "AI analyseert trends en afwijkingen in performance." },
+      { label: "Dashboard automation", category: "automation", tooltip: "Automatisch dashboards vullen en updaten." },
+      { label: "Workflow orchestration", category: "automation", tooltip: "Jobs, retries en monitoring van de pipeline." },
+      { label: "Cross-platform integraties", category: "integrations", tooltip: "Combineert data over meerdere platformen." },
+      { label: "Automated reporting", category: "analytics", tooltip: "Automatisch rapporten genereren en versturen." },
+      { label: "Attribution analytics", category: "analytics", tooltip: "Inzicht in kanaalbijdrage en conversie-impact." },
     ],
     visual: MarketingFlowDiagram,
   },

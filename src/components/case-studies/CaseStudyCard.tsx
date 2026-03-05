@@ -159,8 +159,8 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
                   Bekijk de video om te zien hoe het automatiseringssysteem werkt.
                 </p>
               ) : (
-                <div className="mb-3 flex items-start gap-1.5 text-[12px] text-muted-foreground leading-relaxed italic">
-                  <AlertTriangle size={12} className="text-primary shrink-0 translate-y-[1px]" />
+                <div className="mb-3 flex items-center gap-1.5 text-[12px] text-muted-foreground leading-relaxed italic">
+                  <AlertTriangle size={12} className="text-primary shrink-0" />
                   <span>Vereenvoudigde weergave van de automatiseringspipeline.</span>
                 </div>
               )}

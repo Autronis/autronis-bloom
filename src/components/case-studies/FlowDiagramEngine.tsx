@@ -197,7 +197,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   const pathRef = useRef<SVGPathElement>(null);
   const dotRef = useRef<SVGCircleElement>(null);
   const trailRefs = useRef<(SVGCircleElement | null)[]>([]);
-  const segmentGlowRefs = useRef<(SVGPathElement | null)[]>([]);
+  
   const [pulseSignals, setPulseSignals] = useState<number[]>(() => nodes.map(() => 0));
   const visibleRef = useRef(false);
   const animIdRef = useRef(0);

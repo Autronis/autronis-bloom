@@ -116,9 +116,9 @@ const NodeCard = ({ node, pulseSignal }: {
 
     cancelAnimationFrame(rafRef.current);
 
-    const UP = 300;
-    const HOLD = 400;
-    const DOWN = 400;
+    const UP = 220;
+    const HOLD = 450;
+    const DOWN = 430;
     const TOTAL = UP + HOLD + DOWN;
 
     let start = 0;
@@ -270,12 +270,25 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       return;
     }
 
-    if (startRef.current === null) startRef.current = now - elapsedRef.current;
+    if (startRef.current === null) {
+      startRef.current = now - elapsedRef.current;
+      if (checkpointIndexRef.current < 0 && checkpoints.length) {
+        checkpointIndexRef.current = 0;
+        triggerHighlight(0);
+        dotPulseRef.current = now;
+      }
+    }
 
     const elapsedInCycle = (now - startRef.current) % TOTAL_CYCLE;
     const wrapped = elapsedInCycle < prevElapsedRef.current;
 
-    if (wrapped) checkpointIndexRef.current = -1;
+    if (wrapped) {
+      checkpointIndexRef.current = 0;
+      if (checkpoints.length) {
+        triggerHighlight(0);
+        dotPulseRef.current = now;
+      }
+    }
 
     prevElapsedRef.current = elapsedInCycle;
     elapsedRef.current = elapsedInCycle;

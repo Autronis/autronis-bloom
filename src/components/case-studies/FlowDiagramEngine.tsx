@@ -179,8 +179,8 @@ const clipSegmentToRect = (a: Point, b: Point, rect: Rect) => {
 };
 
 /* ─── Main diagram with smooth single-path dot + strict mask ─── */
-export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
-  viewBox: string; nodes: DiagramNode[]; segments: Point[][];
+export const FlowDiagramSvg = ({ viewBox, nodes, segments, travelDuration: travelDurationProp }: {
+  viewBox: string; nodes: DiagramNode[]; segments: Point[][]; travelDuration?: number;
 }) => {
   const pathRef = useRef<SVGPathElement>(null);
   const dotRef = useRef<SVGCircleElement>(null);
@@ -200,7 +200,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   const { path: continuousPath, points, cumulative, totalLength } = useMemo(() => buildPathData(segments), [segments]);
   const [, , vbWidth, vbHeight] = viewBox.split(" ").map(Number);
 
-  const TRAVEL_DURATION = 18000; // slightly slower
+  const TRAVEL_DURATION = travelDurationProp ?? 18000;
   const END_PAUSE = 1200;
   const TOTAL_CYCLE = TRAVEL_DURATION + END_PAUSE;
   const MASK_PAD = 2;

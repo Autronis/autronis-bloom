@@ -1,24 +1,24 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ShoppingCart, FileText, Users, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import useCanHover from "@/hooks/use-can-hover";
 
 interface CaseStudy {
   slug: string;
-  icon: React.ElementType;
   title: string;
   description: string;
   results: string[];
-  quotePreview: string;
-  logoSrc: string;
+  review?: {
+    quote: string;
+    logoSrc: string;
+  };
 }
 
 const cases: CaseStudy[] = [
   {
     slug: "e-commerce-product-orderautomatisering",
-    icon: ShoppingCart,
     title: "E-commerce product- en orderautomatisering",
     description: "Automatisering van productdata, voorraadbeheer en orderverwerking tussen leverancierssystemen, webshop en interne systemen.",
     results: [
@@ -26,12 +26,9 @@ const cases: CaseStudy[] = [
       "Realtime voorraad- en prijsupdates",
       "Consistente productdata tussen systemen",
     ],
-    quotePreview: "Sinds de automatisering hebben we veel minder handmatig werk rondom productdata en voorraadupdates. Alles loopt nu automatisch tussen onze systemen...",
-    logoSrc: "/logo.png",
   },
   {
     slug: "financiele-procesautomatisering",
-    icon: FileText,
     title: "Financiële procesautomatisering",
     description: "Automatisering van factuurverwerking, rapportages en financiële datastromen via integraties tussen boekhoudsoftware en dashboards.",
     results: [
@@ -39,12 +36,9 @@ const cases: CaseStudy[] = [
       "Snellere maandrapportages",
       "Betere datakwaliteit in financiële systemen",
     ],
-    quotePreview: "Voorheen kostte het ons veel tijd om rapportages samen te stellen. Nu worden financiële data en dashboards automatisch bijgewerkt...",
-    logoSrc: "/logo.png",
   },
   {
     slug: "leadwerving-outreach-automatisering",
-    icon: Users,
     title: "Leadwerving en outreach automatisering",
     description: "Automatisch leads verzamelen, contactinformatie verrijken en gepersonaliseerde e-mail outreach genereren met AI.",
     results: [
@@ -52,12 +46,14 @@ const cases: CaseStudy[] = [
       "3–5× hogere outreach efficiëntie",
       "50+ gepersonaliseerde e-mails per dag",
     ],
-    quotePreview: "Dankzij Autronis werken we een stuk efficiënter met onze outreach. Waar het eerst ongeveer 25 minuten kostte om een lead te vinden en te benaderen...",
-    logoSrc: "/assets/jobby-logo.png",
+    review: {
+      quote: "Dankzij Autronis werken we veel efficiënter met onze outreach… van 25 minuten naar 5–10 minuten per lead.",
+      logoSrc: "/assets/jobby-logo.png",
+    },
   },
 ];
 
-const ImplementedCard = ({
+const CaseCard = ({
   cs,
   isHovered,
   isAnyHovered,
@@ -72,7 +68,6 @@ const ImplementedCard = ({
   onLeave: () => void;
   canHover: boolean;
 }) => {
-  const Icon = cs.icon;
   const showHover = canHover && isHovered;
   const showDim = canHover && isAnyHovered && !isHovered;
 
@@ -81,7 +76,7 @@ const ImplementedCard = ({
       to="/case-studies"
       onMouseEnter={canHover ? onHover : undefined}
       onMouseLeave={canHover ? onLeave : undefined}
-      className="relative group rounded-xl border border-border bg-card p-4 sm:p-6 flex flex-col h-full overflow-hidden transition-all duration-200 ease-out"
+      className="relative group rounded-xl border border-border bg-card p-4 sm:p-5 flex flex-col h-full overflow-hidden transition-all duration-200 ease-out"
       style={{
         transform: showHover ? "scale(1.015) translateY(-2px)" : "none",
         opacity: showDim ? 0.88 : 1,
@@ -90,42 +85,44 @@ const ImplementedCard = ({
       }}
     >
       <div className="relative z-10 flex flex-col h-full">
-        <div className="flex items-center gap-3 mb-3 sm:mb-4">
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-            <Icon size={16} />
-          </div>
-          <h3 className="text-base sm:text-lg font-bold">{cs.title}</h3>
+        {/* Header with Autronis logo + title */}
+        <div className="flex items-center gap-2.5 mb-3">
+          <img src="/logo.png" alt="Autronis" className="h-[18px] w-[18px] object-contain opacity-90 shrink-0" />
+          <h3 className="text-sm sm:text-base font-bold leading-snug">{cs.title}</h3>
         </div>
 
-        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-4 sm:mb-5">{cs.description}</p>
+        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-3">{cs.description}</p>
 
-        <div className="border-t border-border pt-3 sm:pt-4 flex-1">
-          <p className="text-xs font-semibold text-primary mb-2 tracking-wide uppercase">Resultaat</p>
-          <ul className="space-y-1.5">
+        {/* Results */}
+        <div className="border-t border-border pt-3 flex-1">
+          <p className="text-[10px] font-semibold text-primary mb-1.5 tracking-wide uppercase">Resultaat</p>
+          <ul className="space-y-1">
             {cs.results.map((r, i) => (
-              <li key={i} className="flex items-start gap-2 text-xs sm:text-sm text-muted-foreground">
-                <CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0" />
+              <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground leading-relaxed">
+                <CheckCircle2 size={13} className="text-primary mt-0.5 shrink-0" />
                 {r}
               </li>
             ))}
           </ul>
         </div>
 
-        <div className="border-t border-border pt-3 sm:pt-4 mt-3 sm:mt-4">
-          <img src={cs.logoSrc} alt="" className="h-6 object-contain mb-2 opacity-70" />
-          <p className="text-[12px] sm:text-[13px] text-foreground/70 leading-relaxed italic">
-            "{cs.quotePreview}"
-          </p>
-        </div>
+        {/* Review (only Jobby) */}
+        {cs.review && (
+          <div className="border-t border-border pt-3 mt-3">
+            <img src={cs.review.logoSrc} alt="" className="h-5 object-contain mb-1.5 opacity-70" />
+            <p className="text-[11px] sm:text-[12px] text-foreground/60 leading-relaxed italic line-clamp-2">
+              "{cs.review.quote}"
+            </p>
+          </div>
+        )}
 
-        <span className="mt-4 sm:mt-5 text-sm text-primary inline-flex items-center gap-1 group-hover:underline">
+        <span className="mt-3 text-sm text-primary inline-flex items-center gap-1 group-hover:underline">
           Lees volledige case <ArrowRight size={14} />
         </span>
       </div>
     </Link>
   );
 };
-
 
 const CaseStudiesPreview = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -144,10 +141,10 @@ const CaseStudiesPreview = () => {
           </ScrollRevealItem>
         </ScrollReveal>
 
-        <ScrollReveal className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
+        <ScrollReveal className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 mb-8 sm:mb-12">
           {cases.map((cs, i) => (
             <ScrollRevealItem key={cs.slug}>
-              <ImplementedCard
+              <CaseCard
                 cs={cs}
                 isHovered={hoveredIndex === i}
                 isAnyHovered={hoveredIndex !== null}

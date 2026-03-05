@@ -230,6 +230,15 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
                   </div>
                 </div>
               )}
+
+              {cs.implementationResult && (
+                <div className="rounded-lg border border-primary/15 bg-primary/[0.03] p-5 space-y-3 transition-all duration-200 ease-out hover:scale-[1.015] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_0_16px_hsl(174_78%_41%/0.1)]">
+                  <SectionHeader>Resultaat uit implementatie</SectionHeader>
+                  <p className="text-[13px] text-foreground/80 leading-[1.7] italic">
+                    "{cs.implementationResult}"
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>

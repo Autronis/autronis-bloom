@@ -106,7 +106,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
   return (
     <ScrollReveal>
       <ScrollRevealItem>
-        <div className="rounded-xl border border-border bg-card overflow-hidden">
+        <div id={`case-${index}`} className="rounded-xl border border-border bg-card overflow-hidden scroll-mt-24">
           {/* ── Header + Metrics ── */}
           <div className="p-5 sm:p-6 pb-0 sm:pb-0">
             <div className="flex items-center gap-3 mb-4">

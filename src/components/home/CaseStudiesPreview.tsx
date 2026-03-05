@@ -10,6 +10,8 @@ interface CaseStudy {
   title: string;
   description: string;
   results: string[];
+  /** Index in the main caseStudiesData array */
+  caseIndex: number;
   trust?: {
     logoSrc: string;
   };
@@ -20,6 +22,7 @@ const cases: CaseStudy[] = [
     slug: "leadwerving-outreach-automatisering",
     title: "Leadgeneratie en outreach automatisering",
     description: "Automatisch leads verzamelen, contactinformatie verrijken en gepersonaliseerde e-mail outreach genereren met AI.",
+    caseIndex: 0,
     results: [
       "Leadverwerking van 25 → 5 min per lead",
       "3–5× hogere outreach efficiëntie",
@@ -33,6 +36,7 @@ const cases: CaseStudy[] = [
     slug: "ai-klantenservice-automatisering",
     title: "AI klantenservice automatisering",
     description: "AI-gedreven systeem dat veelgestelde klantvragen automatisch beantwoordt en complexe cases doorstuurt naar medewerkers.",
+    caseIndex: 1,
     results: [
       "70%+ vragen automatisch afgehandeld",
       "Reactietijd van uren naar direct",
@@ -43,6 +47,7 @@ const cases: CaseStudy[] = [
     slug: "marketing-rapportage-automatisering",
     title: "Marketing en rapportage automatisering",
     description: "Automatisch marketingdata verzamelen, combineren en visualiseren in realtime dashboards met automatische rapportverzending.",
+    caseIndex: 2,
     results: [
       "Rapportagetijd van 6 uur naar 10 min",
       "100% automatische dataverzameling",
@@ -71,7 +76,7 @@ const CaseCard = ({
 
   return (
     <Link
-      to="/case-studies"
+      to={`/case-studies#case-${cs.caseIndex}`}
       onMouseEnter={canHover ? onHover : undefined}
       onMouseLeave={canHover ? onLeave : undefined}
       className="relative group rounded-xl border border-border bg-card p-4 sm:p-5 flex flex-col h-full overflow-hidden transition-all duration-200 ease-out"

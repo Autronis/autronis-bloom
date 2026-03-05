@@ -1,11 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import CaseStudyCard from "@/components/case-studies/CaseStudyCard";
 import { cases } from "@/components/case-studies/caseStudiesData";
+import { useEffect } from "react";
 
 const CaseStudies = () => {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (hash) {
+      setTimeout(() => {
+        const el = document.querySelector(hash);
+        el?.scrollIntoView({ behavior: "smooth" });
+      }, 300);
+    }
+  }, [hash]);
   return (
     <section className="pt-16 pb-24 relative overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8 relative z-10">

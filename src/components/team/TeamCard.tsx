@@ -167,7 +167,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
                     <p className="text-[8px] font-semibold tracking-[0.12em] uppercase text-white/50 mb-1">
                       {memberLabels[cat]}
                     </p>
-                    <div className="grid grid-cols-2 gap-1.5">
+                    <div className="flex flex-wrap gap-1.5">
                       {grouped[cat].slice(0, 3).map((s) => {
                         const i = tagIndex++;
                         return <OverlaySkillBadge key={s.label} skill={s} index={i} />;

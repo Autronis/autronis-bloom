@@ -294,7 +294,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
     }
 
     animIdRef.current = requestAnimationFrame(tick);
-  }, [checkpoints, TOTAL_CYCLE, TRAVEL_DURATION, triggerHighlight]);
+  }, [checkpoints, TOTAL_CYCLE, TRAVEL_DURATION, triggerHighlight, remapProgress]);
 
   const handleVisibility = useCallback((vis: boolean) => {
     visibleRef.current = vis;

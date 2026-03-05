@@ -87,69 +87,11 @@ const VisibleSvg = ({ children, viewBox, className, onVisibilityChange }: {
   );
 };
 
-/* ─── Node card (arrival pulse animation) ─── */
-const easeInOut = (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs, scaleDisabled }: {
-  node: DiagramNode; pulseSignal: number; upMs?: number; holdMs?: number; downMs?: number; scaleDisabled?: boolean;
+/* ─── Node card (progress-driven pulse) ─── */
+const NodeCard = ({ node, intensity }: {
+  node: DiagramNode; intensity: number;
 }) => {
-  const gRef = useRef<SVGGElement>(null);
-  const borderRef = useRef<SVGRectElement>(null);
-  const rafRef = useRef(0);
-
-  const setVisualState = useCallback((scale: number, opacity: number) => {
-    const g = gRef.current;
-    if (g) g.setAttribute("transform", `translate(${node.x}, ${node.y}) scale(${scale}) translate(${-node.x}, ${-node.y})`);
-
-    const border = borderRef.current;
-    if (border) {
-      border.setAttribute("stroke-width", String(0.8 + opacity * 0.6));
-      border.setAttribute("stroke", `hsl(var(--primary) / ${0.2 + opacity * 0.4})`);
-    }
-  }, [node.x, node.y]);
-
-  useEffect(() => {
-    setVisualState(1, 0);
-  }, [setVisualState]);
-
-  useEffect(() => {
-    if (pulseSignal === 0) return;
-
-    cancelAnimationFrame(rafRef.current);
-
-    const UP = upMs ?? 220;
-    const HOLD = holdMs ?? 600;
-    const DOWN = downMs ?? 500;
-    const TOTAL = UP + HOLD + DOWN;
-
-    let start = 0;
-
-    const run = (now: number) => {
-      if (!start) start = now;
-      const elapsed = now - start;
-
-      let intensity = 0;
-      if (elapsed < UP) {
-        intensity = easeInOut(elapsed / UP);
-      } else if (elapsed < UP + HOLD) {
-        intensity = 1;
-      } else if (elapsed < TOTAL) {
-        intensity = 1 - easeInOut((elapsed - UP - HOLD) / DOWN);
-      }
-
-      const scale = scaleDisabled ? 1 : 1 + 0.04 * intensity;
-      setVisualState(scale, intensity);
-
-      if (elapsed < TOTAL) {
-        rafRef.current = requestAnimationFrame(run);
-      } else {
-        setVisualState(1, 0);
-      }
-    };
-
-    rafRef.current = requestAnimationFrame(run);
-    return () => cancelAnimationFrame(rafRef.current);
-  }, [pulseSignal, setVisualState, upMs, holdMs, downMs, scaleDisabled]);
+  const scale = 1 + 0.04 * intensity;
 
   const padX = 5;
   const iconBoxSize = 16;
@@ -161,13 +103,15 @@ const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs, scaleDisabled }: {
   const stepY = node.y + 1.5;
 
   return (
-    <g ref={gRef}>
+    <g transform={`translate(${node.x}, ${node.y}) scale(${scale}) translate(${-node.x}, ${-node.y})`}>
       <rect x={node.x - node.w / 2} y={node.y - node.h / 2}
         width={node.w} height={node.h} rx={6}
         fill="hsl(var(--primary) / 0.05)" />
-      <rect ref={borderRef} x={node.x - node.w / 2} y={node.y - node.h / 2}
+      <rect x={node.x - node.w / 2} y={node.y - node.h / 2}
         width={node.w} height={node.h} rx={6}
-        fill="none" stroke="hsl(var(--primary) / 0.2)" strokeWidth="0.8" />
+        fill="none"
+        stroke={`hsl(var(--primary) / ${0.2 + intensity * 0.4})`}
+        strokeWidth={0.8 + intensity * 0.6} />
 
       {/* Step indicator inside card */}
       {node.step != null && (
@@ -201,6 +145,39 @@ const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs, scaleDisabled }: {
   );
 };
 
+const smoothstep = (t: number) => t * t * (3 - 2 * t);
+
+type Rect = { left: number; right: number; top: number; bottom: number };
+
+const clipSegmentToRect = (a: Point, b: Point, rect: Rect) => {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+
+  const p = [-dx, dx, -dy, dy];
+  const q = [a.x - rect.left, rect.right - a.x, a.y - rect.top, rect.bottom - a.y];
+
+  let t0 = 0;
+  let t1 = 1;
+
+  for (let i = 0; i < 4; i++) {
+    if (Math.abs(p[i]) < 1e-9) {
+      if (q[i] < 0) return null;
+      continue;
+    }
+
+    const r = q[i] / p[i];
+    if (p[i] < 0) {
+      if (r > t1) return null;
+      if (r > t0) t0 = r;
+    } else {
+      if (r < t0) return null;
+      if (r < t1) t1 = r;
+    }
+  }
+
+  return t1 >= t0 ? { t0, t1 } : null;
+};
+
 /* ─── Main diagram with smooth single-path dot + strict mask ─── */
 export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   viewBox: string; nodes: DiagramNode[]; segments: Point[][];
@@ -209,13 +186,11 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   const dotRef = useRef<SVGCircleElement>(null);
   const trailRefs = useRef<(SVGCircleElement | null)[]>([]);
   
-  const [pulseSignals, setPulseSignals] = useState<number[]>(() => nodes.map(() => 0));
+  const [nodeIntensities, setNodeIntensities] = useState<number[]>(() => nodes.map(() => 0));
   const visibleRef = useRef(false);
   const animIdRef = useRef(0);
   const startRef = useRef<number | null>(null);
   const elapsedRef = useRef(0);
-  const prevElapsedRef = useRef(0);
-  const nodeTriggeredRef = useRef<boolean[]>(nodes.map(() => false));
   const pathLengthRef = useRef(1);
 
   const uid = useId().replace(/:/g, "");
@@ -230,14 +205,97 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   const TOTAL_CYCLE = TRAVEL_DURATION + END_PAUSE;
   const MASK_PAD = 2;
 
-  // Linear progress: constant px/s across entire path
-  const remapProgress = useCallback((t: number) => t, []);
+  const segmentRanges = useMemo(() => {
+    let cursor = 0;
+    let prevEnd: Point | null = null;
 
-  // Exact arrival progress per node (nearest point projection on path)
-  const nodeArrivalProgress = useMemo(() => {
-    if (points.length < 2) return nodes.map(() => 1);
+    return segments.map((seg) => {
+      if (!seg.length) return { start: cursor, end: cursor };
+
+      if (prevEnd && (prevEnd.x !== seg[0].x || prevEnd.y !== seg[0].y)) {
+        cursor += Math.hypot(seg[0].x - prevEnd.x, seg[0].y - prevEnd.y);
+      }
+
+      const start = cursor;
+      for (let i = 1; i < seg.length; i++) {
+        cursor += Math.hypot(seg[i].x - seg[i - 1].x, seg[i].y - seg[i - 1].y);
+      }
+      const end = cursor;
+      prevEnd = seg[seg.length - 1];
+
+      return { start, end };
+    });
+  }, [segments]);
+
+  const remapProgress = useCallback((t: number) => {
+    const zigzag = segmentRanges[2];
+    if (!zigzag) return t;
+
+    const zigzagLength = Math.max(zigzag.end - zigzag.start, 0);
+    if (zigzagLength <= 0 || totalLength <= 0) return t;
+
+    const ZIGZAG_SPEED_MULTIPLIER = 1.9;
+
+    const effectiveBefore = zigzag.start;
+    const effectiveZigzag = zigzagLength / ZIGZAG_SPEED_MULTIPLIER;
+    const effectiveAfter = Math.max(totalLength - zigzag.end, 0);
+    const effectiveTotal = effectiveBefore + effectiveZigzag + effectiveAfter || 1;
+
+    const target = Math.min(Math.max(t, 0), 1) * effectiveTotal;
+
+    let distance = 0;
+    if (target <= effectiveBefore) {
+      distance = target;
+    } else if (target <= effectiveBefore + effectiveZigzag) {
+      distance = zigzag.start + (target - effectiveBefore) * ZIGZAG_SPEED_MULTIPLIER;
+    } else {
+      distance = zigzag.end + (target - effectiveBefore - effectiveZigzag);
+    }
+
+    return Math.min(distance / totalLength, 1);
+  }, [segmentRanges, totalLength]);
+
+  const nodeCheckpoints = useMemo(() => {
+    if (points.length < 2) {
+      return nodes.map(() => ({ arrivalProgress: 1, halfWindowPx: 12 }));
+    }
 
     return nodes.map((node) => {
+      const rect: Rect = {
+        left: node.x - node.w / 2 - MASK_PAD,
+        right: node.x + node.w / 2 + MASK_PAD,
+        top: node.y - node.h / 2 - MASK_PAD,
+        bottom: node.y + node.h / 2 + MASK_PAD,
+      };
+
+      let insideStart = Number.POSITIVE_INFINITY;
+      let insideEnd = Number.NEGATIVE_INFINITY;
+
+      for (let i = 1; i < points.length; i++) {
+        const clip = clipSegmentToRect(points[i - 1], points[i], rect);
+        if (!clip) continue;
+
+        const segStart = cumulative[i - 1] ?? 0;
+        const segEnd = cumulative[i] ?? segStart;
+        const segLen = segEnd - segStart;
+
+        const localStart = segStart + segLen * clip.t0;
+        const localEnd = segStart + segLen * clip.t1;
+
+        insideStart = Math.min(insideStart, localStart);
+        insideEnd = Math.max(insideEnd, localEnd);
+      }
+
+      if (insideEnd > insideStart && Number.isFinite(insideStart) && Number.isFinite(insideEnd)) {
+        const centerLen = (insideStart + insideEnd) / 2;
+        const halfWindowPx = Math.max((insideEnd - insideStart) / 2, 10);
+        return {
+          arrivalProgress: Math.min(centerLen / totalLength, 0.999),
+          halfWindowPx,
+        };
+      }
+
+      // Fallback: nearest projection to node center
       let bestDistSq = Number.POSITIVE_INFINITY;
       let bestLen = 0;
 
@@ -260,9 +318,12 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         }
       }
 
-      return Math.min(bestLen / totalLength, 0.999);
+      return {
+        arrivalProgress: Math.min(bestLen / totalLength, 0.999),
+        halfWindowPx: 14,
+      };
     });
-  }, [nodes, points, cumulative, totalLength]);
+  }, [nodes, points, cumulative, totalLength, MASK_PAD]);
 
   useEffect(() => {
     if (!import.meta.env.DEV) return;
@@ -281,9 +342,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   }, [segments]);
 
   useEffect(() => {
-    setPulseSignals(nodes.map(() => 0));
-    nodeTriggeredRef.current = nodes.map(() => false);
-    prevElapsedRef.current = 0;
+    setNodeIntensities(nodes.map(() => 0));
   }, [nodes]);
 
   useEffect(() => {
@@ -292,13 +351,6 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
     pathLengthRef.current = path.getTotalLength() || 1;
   }, [continuousPath, viewBox]);
 
-  const triggerHighlight = useCallback((nodeIndex: number) => {
-    setPulseSignals((prev) => {
-      const next = prev.length === nodes.length ? [...prev] : nodes.map(() => 0);
-      next[nodeIndex] = (next[nodeIndex] ?? 0) + 1;
-      return next;
-    });
-  }, [nodes]);
 
   const TRAIL_COUNT = 6;
   const TRAIL_SPACING = 0.005;
@@ -319,13 +371,6 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
     }
 
     const elapsedInCycle = (now - startRef.current) % TOTAL_CYCLE;
-    const wrapped = elapsedInCycle < prevElapsedRef.current;
-
-    if (wrapped) {
-      nodeTriggeredRef.current = nodes.map(() => false);
-    }
-
-    prevElapsedRef.current = elapsedInCycle;
     elapsedRef.current = elapsedInCycle;
 
     const linearProgress = Math.min(elapsedInCycle / TRAVEL_DURATION, 1);
@@ -348,31 +393,36 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         trailEl.setAttribute("cy", String(tpt.y));
         trailEl.setAttribute("opacity", String(0.3 - t * 0.045));
       }
-
-      // Exact checkpoint-based highlight trigger (non-blocking)
-      for (let i = 0; i < nodes.length; i++) {
-        if (nodeTriggeredRef.current[i]) continue;
-        if (progress >= nodeArrivalProgress[i]) {
-          nodeTriggeredRef.current[i] = true;
-          triggerHighlight(i);
-        }
-      }
     } else {
-      // Trigger any remaining nodes at end of cycle
-      for (let i = 0; i < nodes.length; i++) {
-        if (!nodeTriggeredRef.current[i]) {
-          nodeTriggeredRef.current[i] = true;
-          triggerHighlight(i);
-        }
-      }
       dot.setAttribute("opacity", "0");
       for (let t = 0; t < TRAIL_COUNT; t++) {
         trailRefs.current[t]?.setAttribute("opacity", "0");
       }
     }
 
+    const nextIntensities = progress < 1
+      ? nodeCheckpoints.map(({ arrivalProgress, halfWindowPx }) => {
+          const deltaPx = Math.abs(progress - arrivalProgress) * totalLength;
+          if (deltaPx >= halfWindowPx) return 0;
+          const norm = deltaPx / halfWindowPx;
+          return 1 - smoothstep(norm);
+        })
+      : nodes.map(() => 0);
+
+    setNodeIntensities((prev) => {
+      if (prev.length !== nextIntensities.length) return nextIntensities;
+      let changed = false;
+      for (let i = 0; i < prev.length; i++) {
+        if (Math.abs((prev[i] ?? 0) - nextIntensities[i]) > 0.015) {
+          changed = true;
+          break;
+        }
+      }
+      return changed ? nextIntensities : prev;
+    });
+
     animIdRef.current = requestAnimationFrame(tick);
-  }, [nodes, nodeArrivalProgress, TOTAL_CYCLE, TRAVEL_DURATION, triggerHighlight, remapProgress]);
+  }, [nodes, nodeCheckpoints, totalLength, TOTAL_CYCLE, TRAVEL_DURATION, remapProgress]);
 
   const handleVisibility = useCallback((vis: boolean) => {
     visibleRef.current = vis;
@@ -386,7 +436,6 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
     if (startRef.current !== null) {
       const now = performance.now();
       elapsedRef.current = (now - startRef.current) % TOTAL_CYCLE;
-      prevElapsedRef.current = elapsedRef.current;
     }
 
     startRef.current = null;
@@ -439,10 +488,9 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         <circle ref={dotRef} cx="0" cy="0" r="3" fill="hsl(var(--primary))" opacity="0" />
       </g>
 
-      {nodes.map((n, i) => {
-        const pulseCfg = { upMs: 160, holdMs: 450, downMs: 500 };
-        return <NodeCard key={n.title} node={n} pulseSignal={pulseSignals[i] ?? 0} {...pulseCfg} />;
-      })}
+      {nodes.map((n, i) => (
+        <NodeCard key={n.title} node={n} intensity={nodeIntensities[i] ?? 0} />
+      ))}
     </VisibleSvg>
   );
 };

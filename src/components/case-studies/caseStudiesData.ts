@@ -122,7 +122,7 @@ export const cases: CaseStudy[] = [
       "Website-analyse automatisering om pijnpunten te identificeren",
       "AI-gestuurde generatie van gepersonaliseerde outreach e-mails",
       "Batch e-mail outreach systeem voor schaalbare campagnes",
-      "Automatische synchronisatie van leaddata met CRM",
+      "Automatische synchronisatie van leaddata met dashboard",
     ],
     results: [
       "Leadverwerking van 25 naar 5–10 minuten per lead",

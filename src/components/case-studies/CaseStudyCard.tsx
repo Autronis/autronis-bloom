@@ -1,4 +1,4 @@
-import { CheckCircle2, Star } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import type { CaseStudy, CaseMetric } from "./caseStudiesData";
@@ -96,11 +96,16 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
             {/* Diagram with label above */}
             <div className={`lg:col-span-3 p-4 sm:p-5 ${isEven ? '' : 'lg:order-2'}`}>
               <SectionHeader>Systeemoverzicht</SectionHeader>
-              <p className="text-[12px] text-muted-foreground leading-relaxed mb-3">
-                {cs.videoUrl
-                  ? "Bekijk de video om te zien hoe het automatiseringssysteem werkt."
-                  : "Vereenvoudigde weergave van de automatiseringspipeline."}
-              </p>
+              {cs.videoUrl ? (
+                <p className="text-[12px] text-muted-foreground leading-relaxed mb-3">
+                  Bekijk de video om te zien hoe het automatiseringssysteem werkt.
+                </p>
+              ) : (
+                <div className="mb-3 flex items-start gap-1.5 text-[12px] text-muted-foreground leading-relaxed italic">
+                  <AlertTriangle size={12} className="text-primary mt-0.5 shrink-0" />
+                  <span>Vereenvoudigde weergave van de automatiseringspipeline.</span>
+                </div>
+              )}
               {cs.videoUrl ? (
                 <video
                   src={cs.videoUrl}

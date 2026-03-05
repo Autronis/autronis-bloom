@@ -41,29 +41,30 @@ const toPath = (pts: Point[]) => pts.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x
 
 const buildPathData = (segments: Point[][]) => {
   const points: Point[] = [];
-  const segmentEndIndices: number[] = [];
 
   segments.forEach((seg) => {
     seg.forEach((p) => {
       const last = points[points.length - 1];
       if (!last || last.x !== p.x || last.y !== p.y) points.push(p);
     });
-    segmentEndIndices.push(points.length - 1);
   });
 
-  if (!points.length) return { path: "", checkpoints: [0] };
+  if (!points.length) {
+    return { path: "", points: [] as Point[], cumulative: [0], totalLength: 1 };
+  }
 
   const cumulative: number[] = [0];
   for (let i = 1; i < points.length; i++) {
     cumulative[i] = cumulative[i - 1] + Math.hypot(points[i].x - points[i - 1].x, points[i].y - points[i - 1].y);
   }
 
-  const total = cumulative[cumulative.length - 1] || 1;
-  const checkpoints = [0, ...segmentEndIndices.map((idx) => Math.min(cumulative[idx] / total, 0.999))];
+  const totalLength = cumulative[cumulative.length - 1] || 1;
 
   return {
     path: points.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" "),
-    checkpoints,
+    points,
+    cumulative,
+    totalLength,
   };
 };
 
@@ -221,7 +222,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   const markerId = `${uid}-arrow`;
   const maskId = `${uid}-mask`;
 
-  const { path: continuousPath, checkpoints } = useMemo(() => buildPathData(segments), [segments]);
+  const { path: continuousPath, points, cumulative, totalLength } = useMemo(() => buildPathData(segments), [segments]);
   const [, , vbWidth, vbHeight] = viewBox.split(" ").map(Number);
 
   const TRAVEL_DURATION = 18000; // slightly slower
@@ -231,6 +232,53 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 
   // Linear progress: constant px/s across entire path
   const remapProgress = useCallback((t: number) => t, []);
+
+  // Exact arrival progress per node (nearest point projection on path)
+  const nodeArrivalProgress = useMemo(() => {
+    if (points.length < 2) return nodes.map(() => 1);
+
+    return nodes.map((node) => {
+      let bestDistSq = Number.POSITIVE_INFINITY;
+      let bestLen = 0;
+
+      for (let i = 1; i < points.length; i++) {
+        const a = points[i - 1];
+        const b = points[i];
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        const segLenSq = dx * dx + dy * dy;
+        if (segLenSq <= 0) continue;
+
+        const t = Math.max(0, Math.min(1, ((node.x - a.x) * dx + (node.y - a.y) * dy) / segLenSq));
+        const px = a.x + dx * t;
+        const py = a.y + dy * t;
+        const distSq = (node.x - px) * (node.x - px) + (node.y - py) * (node.y - py);
+
+        if (distSq < bestDistSq) {
+          bestDistSq = distSq;
+          bestLen = cumulative[i - 1] + Math.sqrt(segLenSq) * t;
+        }
+      }
+
+      return Math.min(bestLen / totalLength, 0.999);
+    });
+  }, [nodes, points, cumulative, totalLength]);
+
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
+
+    const segmentLengths = segments.map((seg) =>
+      seg.slice(1).reduce((acc, p, i) => acc + Math.hypot(p.x - seg[i].x, p.y - seg[i].y), 0)
+    );
+    const interSegmentJumps = segments.slice(1).map((seg, i) => {
+      const prevEnd = segments[i][segments[i].length - 1];
+      const nextStart = seg[0];
+      return Math.hypot(nextStart.x - prevEnd.x, nextStart.y - prevEnd.y);
+    });
+
+    console.debug("[FlowDiagram] segment lengths px", segmentLengths.map((v) => Number(v.toFixed(2))));
+    console.debug("[FlowDiagram] inter-segment jumps px", interSegmentJumps.map((v) => Number(v.toFixed(2))));
+  }, [segments]);
 
   useEffect(() => {
     setPulseSignals(nodes.map(() => 0));
@@ -301,17 +349,10 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         trailEl.setAttribute("opacity", String(0.3 - t * 0.045));
       }
 
-      // Position-based node highlight: trigger when dot enters node bounding box
-      const HIT_PAD = 4;
+      // Exact checkpoint-based highlight trigger (non-blocking)
       for (let i = 0; i < nodes.length; i++) {
         if (nodeTriggeredRef.current[i]) continue;
-        const n = nodes[i];
-        if (
-          pt.x >= n.x - n.w / 2 - HIT_PAD &&
-          pt.x <= n.x + n.w / 2 + HIT_PAD &&
-          pt.y >= n.y - n.h / 2 - HIT_PAD &&
-          pt.y <= n.y + n.h / 2 + HIT_PAD
-        ) {
+        if (progress >= nodeArrivalProgress[i]) {
           nodeTriggeredRef.current[i] = true;
           triggerHighlight(i);
         }
@@ -331,7 +372,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
     }
 
     animIdRef.current = requestAnimationFrame(tick);
-  }, [nodes, TOTAL_CYCLE, TRAVEL_DURATION, triggerHighlight, remapProgress]);
+  }, [nodes, nodeArrivalProgress, TOTAL_CYCLE, TRAVEL_DURATION, triggerHighlight, remapProgress]);
 
   const handleVisibility = useCallback((vis: boolean) => {
     visibleRef.current = vis;
@@ -399,7 +440,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       </g>
 
       {nodes.map((n, i) => {
-        const pulseCfg = { upMs: 160, holdMs: 700, downMs: 500 };
+        const pulseCfg = i === 1 ? { upMs: 140, holdMs: 250, downMs: 420 } : { upMs: 160, holdMs: 450, downMs: 500 };
         return <NodeCard key={n.title} node={n} pulseSignal={pulseSignals[i] ?? 0} {...pulseCfg} />;
       })}
     </VisibleSvg>

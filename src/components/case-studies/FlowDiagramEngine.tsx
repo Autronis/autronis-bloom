@@ -214,7 +214,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   const startRef = useRef<number | null>(null);
   const elapsedRef = useRef(0);
   const prevElapsedRef = useRef(0);
-  const checkpointIndexRef = useRef(-1);
+  const nodeTriggeredRef = useRef<boolean[]>(nodes.map(() => false));
   const pathLengthRef = useRef(1);
 
   const uid = useId().replace(/:/g, "");
@@ -297,7 +297,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 
   useEffect(() => {
     setPulseSignals(nodes.map(() => 0));
-    checkpointIndexRef.current = -1;
+    nodeTriggeredRef.current = nodes.map(() => false);
     prevElapsedRef.current = 0;
   }, [nodes]);
 
@@ -331,18 +331,13 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 
     if (startRef.current === null) {
       startRef.current = now - elapsedRef.current;
-      if (checkpointIndexRef.current < 0 && checkpoints.length) {
-        checkpointIndexRef.current = 0;
-        triggerHighlight(0);
-      }
     }
 
     const elapsedInCycle = (now - startRef.current) % TOTAL_CYCLE;
     const wrapped = elapsedInCycle < prevElapsedRef.current;
 
     if (wrapped) {
-      checkpointIndexRef.current = 0;
-      if (checkpoints.length) triggerHighlight(0);
+      nodeTriggeredRef.current = nodes.map(() => false);
     }
 
     prevElapsedRef.current = elapsedInCycle;
@@ -369,20 +364,28 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         trailEl.setAttribute("opacity", String(0.3 - t * 0.045));
       }
 
-      for (let i = checkpointIndexRef.current + 1; i < checkpoints.length; i++) {
-        const triggerOffset = i === 1 ? -0.02 : 0; // node 02 should pulse earlier
-        if (progress >= Math.max(0, checkpoints[i] + triggerOffset)) {
-          checkpointIndexRef.current = i;
+      // Position-based node highlight: trigger when dot enters node bounding box
+      const HIT_PAD = 4;
+      for (let i = 0; i < nodes.length; i++) {
+        if (nodeTriggeredRef.current[i]) continue;
+        const n = nodes[i];
+        if (
+          pt.x >= n.x - n.w / 2 - HIT_PAD &&
+          pt.x <= n.x + n.w / 2 + HIT_PAD &&
+          pt.y >= n.y - n.h / 2 - HIT_PAD &&
+          pt.y <= n.y + n.h / 2 + HIT_PAD
+        ) {
+          nodeTriggeredRef.current[i] = true;
           triggerHighlight(i);
-        } else {
-          break;
         }
       }
     } else {
-      // Trigger any remaining checkpoints (especially the last node)
-      for (let i = checkpointIndexRef.current + 1; i < checkpoints.length; i++) {
-        checkpointIndexRef.current = i;
-        triggerHighlight(i);
+      // Trigger any remaining nodes at end of cycle
+      for (let i = 0; i < nodes.length; i++) {
+        if (!nodeTriggeredRef.current[i]) {
+          nodeTriggeredRef.current[i] = true;
+          triggerHighlight(i);
+        }
       }
       dot.setAttribute("opacity", "0");
       for (let t = 0; t < TRAIL_COUNT; t++) {
@@ -391,7 +394,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
     }
 
     animIdRef.current = requestAnimationFrame(tick);
-  }, [checkpoints, TOTAL_CYCLE, TRAVEL_DURATION, triggerHighlight, remapProgress]);
+  }, [nodes, TOTAL_CYCLE, TRAVEL_DURATION, triggerHighlight, remapProgress]);
 
   const handleVisibility = useCallback((vis: boolean) => {
     visibleRef.current = vis;
@@ -459,7 +462,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       </g>
 
       {nodes.map((n, i) => {
-        const pulseCfg = i === 1 ? { upMs: 120, holdMs: 900, downMs: 700 } : { upMs: 140, holdMs: 600, downMs: 600 };
+        const pulseCfg = { upMs: 140, holdMs: 600, downMs: 600 };
         return <NodeCard key={n.title} node={n} pulseSignal={pulseSignals[i] ?? 0} {...pulseCfg} />;
       })}
     </VisibleSvg>

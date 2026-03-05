@@ -9,16 +9,17 @@ import { categoryMeta, categoryLabels } from "./types";
 /* ── Skill tag (TechTag style) for card footer ── */
 const SkillTag = ({ skill, index }: { skill: Skill; index: number }) => {
   const cfg = categoryMeta[skill.category];
+  const Icon = skill.icon;
   return (
     <motion.span
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.04, duration: 0.25, ease: "easeOut" }}
-      className={`inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-1 rounded-full border
+      className={`inline-flex items-center gap-1.5 text-[11px] font-medium px-2.5 py-1 rounded-full border
         ${cfg.border} ${cfg.bg} ${cfg.text} ${cfg.glow}
         transition-all duration-200 cursor-default select-none`}
     >
-      <span className="text-[12px] leading-none">{skill.emoji}</span>
+      <Icon size={13} strokeWidth={2} className="shrink-0" />
       {skill.label}
     </motion.span>
   );
@@ -27,16 +28,17 @@ const SkillTag = ({ skill, index }: { skill: Skill; index: number }) => {
 /* ── Overlay skill badge (on photo, white-based) ── */
 const OverlaySkillBadge = ({ skill, index }: { skill: Skill; index: number }) => {
   const cfg = categoryMeta[skill.category];
+  const Icon = skill.icon;
   return (
     <motion.span
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.06, duration: 0.25, ease: "easeOut" }}
-      className={`inline-flex items-center gap-1 text-[10px] font-medium px-2.5 py-1 rounded-full border
+      className={`inline-flex items-center gap-1.5 text-[10px] font-medium px-2.5 py-1 rounded-full border
         ${cfg.overlayBorder} ${cfg.overlayBg}
         text-white/90 transition-colors duration-200 cursor-default`}
     >
-      <span className="text-[11px] leading-none">{skill.emoji}</span>
+      <Icon size={12} strokeWidth={2} className="shrink-0" />
       {skill.label}
     </motion.span>
   );
@@ -44,12 +46,13 @@ const OverlaySkillBadge = ({ skill, index }: { skill: Skill; index: number }) =>
 
 const PreviewBadge = ({ skill }: { skill: Skill }) => {
   const cfg = categoryMeta[skill.category];
+  const Icon = skill.icon;
   return (
     <span
-      className={`inline-flex items-center gap-1 text-[10px] font-medium px-2.5 py-1 rounded-full border
+      className={`inline-flex items-center gap-1.5 text-[10px] font-medium px-2.5 py-1 rounded-full border
         ${cfg.overlayBorder} ${cfg.overlayBg} text-white`}
     >
-      <span className="text-[11px] leading-none">{skill.emoji}</span>
+      <Icon size={12} strokeWidth={2} className="shrink-0" />
       {skill.label}
     </span>
   );

@@ -27,14 +27,8 @@ export interface CaseStudy {
     company: string;
     logo?: string;
   };
+  logoSrc?: string;
 }
-
-const AutronisLogo = (props: React.SVGProps<SVGSVGElement> & { size?: number }) => {
-  const { size = 18, ...rest } = props;
-  return (
-    <img src="/logo.png" alt="Autronis" width={size} height={size} className="object-contain" /> as unknown as React.ReactElement
-  ) as any;
-};
 
 export const cases: CaseStudy[] = [
   {

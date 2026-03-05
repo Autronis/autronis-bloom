@@ -173,7 +173,7 @@ const Index = () => {
                     <>
                       <video
                         ref={videoRef}
-                        src="https://www.autronis.nl/videos/videodemo.mp4"
+                        src="/videos/demo-lead-system.mp4"
                         className="w-full aspect-video block"
                         autoPlay
                         controls

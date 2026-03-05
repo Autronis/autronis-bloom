@@ -203,7 +203,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
               </div>
 
               {cs.testimonial && (
-                <div className="rounded-lg border border-primary/15 bg-primary/[0.03] p-5 space-y-3.5">
+                <div className="rounded-lg border border-primary/15 bg-primary/[0.03] p-5 space-y-3.5 transition-all duration-200 ease-out hover:scale-[1.015] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_0_16px_hsl(174_78%_41%/0.1)]">
                   {/* 5-star rating */}
                   <div className="flex items-center gap-0.5">
                     {Array.from({ length: 5 }).map((_, s) => (

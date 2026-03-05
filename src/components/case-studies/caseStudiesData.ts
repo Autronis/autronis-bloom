@@ -98,7 +98,7 @@ export const cases: CaseStudy[] = [
     visual: MarketingFlowDiagram,
   },
   {
-    title: "Leadwerving en outreach automatisering",
+    title: "Leadgeneratie en outreach automatisering",
     icon: Users,
     metrics: [
       { icon: Clock, value: "25 → 5 min", label: "Leadverwerking per lead" },

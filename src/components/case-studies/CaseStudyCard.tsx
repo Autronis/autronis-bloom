@@ -221,6 +221,16 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
                     <div className="min-w-0">
                       <p className="text-[13px] font-bold text-foreground leading-tight">{cs.testimonial.name}</p>
                       <p className="text-[11px] text-muted-foreground leading-tight">{cs.testimonial.role} — {cs.testimonial.company}</p>
+                      {cs.testimonial.website && (
+                        <a
+                          href={cs.testimonial.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[11px] text-primary/70 hover:text-primary transition-colors duration-200"
+                        >
+                          {cs.testimonial.website.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>

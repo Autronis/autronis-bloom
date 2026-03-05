@@ -1,4 +1,4 @@
-import { CheckCircle2, Info, Star } from "lucide-react";
+import { CheckCircle2, AlertTriangle, Star } from "lucide-react";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Badge } from "@/components/ui/badge";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";

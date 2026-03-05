@@ -235,6 +235,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 
     const segmentCount = checkpoints.length - 1;
     const speeds = Array.from({ length: segmentCount }, (_, i) => {
+      if (i === 1) return 2.5; // fast through hidden area behind node 1→2
       if (i === 2) return 1.4; // L-connector slightly faster
       return 1;
     });
@@ -432,7 +433,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       </g>
 
       {nodes.map((n, i) => {
-        const pulseCfg = { upMs: 160, holdMs: 400, downMs: 300 };
+        const pulseCfg = { upMs: 140, holdMs: 600, downMs: 600 };
         return <NodeCard key={n.title} node={n} pulseSignal={pulseSignals[i] ?? 0} {...pulseCfg} />;
       })}
     </VisibleSvg>

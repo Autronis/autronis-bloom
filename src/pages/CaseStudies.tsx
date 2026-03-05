@@ -58,6 +58,7 @@ const CaseStudies = () => {
         </ScrollReveal>
       </div>
     </section>
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 // Layout is provided by App.tsx
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Users, Eye, Shield, Clock, Boxes, Cable, BarChart3, Wrench, Cog, Bot, Brain, MessageCircle, Globe, Search, Radio, Database, Puzzle, FolderOpen, Zap, TrendingUp, BookOpen, FileBarChart } from "lucide-react";
+import { ArrowRight, Users, Eye, Shield, Clock, Boxes, Cable, BarChart3, Wrench, Cog, Bot, Brain, MessageCircle, Globe, Search, Radio, Database, Puzzle, FolderOpen, Zap, TrendingUp, BookOpen, FileBarChart, Link2 } from "lucide-react";
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import fotoSyb from "@/assets/foto_syb.jpg";
@@ -35,7 +35,9 @@ const team: TeamMember[] = [
       { label: "LLM integrations", icon: Brain, category: "ai" },
       { label: "Web scraping", icon: Globe, category: "data" },
       { label: "API integrations", icon: Radio, category: "data" },
-      { label: "Data pipelines", icon: TrendingUp, category: "data" },
+      { label: "Data pipelines", icon: TrendingUp, category: "infrastructure" },
+      { label: "Dashboards", icon: BarChart3, category: "infrastructure" },
+      { label: "Data processing", icon: Zap, category: "infrastructure" },
     ],
     mail: "mailto:syb@autronis.com",
     linkedin: "https://www.linkedin.com/in/syb-sprenkeler-1b9b01323/",
@@ -49,18 +51,20 @@ const team: TeamMember[] = [
     description:
       "Sem vertaalt complexe processen naar duidelijke systeemstructuren en bewaakt documentatie, datalogica en overdraagbaarheid. Hij zorgt voor overzicht, duidelijke planning en consistente besluitvorming, zodat implementaties niet alleen werken, maar ook logisch en beheersbaar blijven.",
     skills: [
-      { label: "System architecture", icon: Cog, category: "automation" },
-      { label: "Workflow automation", icon: Wrench, category: "automation" },
+      { label: "System architecture", icon: Puzzle, category: "automation" },
+      { label: "Workflow automation", icon: Cog, category: "automation" },
       { label: "AI automation", icon: Bot, category: "ai" },
       { label: "AI chatbots", icon: MessageCircle, category: "ai" },
       { label: "Lead scraping", icon: Search, category: "data" },
       { label: "Dashboards", icon: BarChart3, category: "data" },
-      { label: "API integrations", icon: Radio, category: "data" },
+      { label: "API integrations", icon: Radio, category: "integrations" },
+      { label: "System integrations", icon: Link2, category: "integrations" },
+      { label: "Data pipelines", icon: TrendingUp, category: "integrations" },
     ],
     customCategoryLabels: {
-      automation: "System Design",
+      automation: "System Architecture",
       ai: "AI Systems",
-      data: "Data & Lead Intelligence",
+      data: "Data & Intelligence",
     },
     mail: "mailto:sem@autronis.com",
     linkedin: "https://www.linkedin.com/in/sem-gijsberts-65ba543b3/",

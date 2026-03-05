@@ -97,7 +97,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
   }, {} as Record<SkillCategory, Skill[]>);
 
   const memberLabels = { ...categoryLabels, ...member.customCategoryLabels };
-  const categoryOrder: SkillCategory[] = ["automation", "ai", "data", "operations"];
+  const categoryOrder: SkillCategory[] = ["automation", "ai", "data", "infrastructure", "integrations", "operations"];
   let tagIndex = 0;
 
   return (

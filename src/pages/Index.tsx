@@ -130,7 +130,7 @@ const Index = () => {
                     <Play size={16} />
                     Bekijk 2 min demo
                   </Button>
-                  <p className="text-[11px] italic text-muted-foreground mt-1.5 hidden sm:block">Zie hoe automatisering in de praktijk werkt in 2 minuten.</p>
+                  <p className="text-[11px] italic text-muted-foreground mt-1.5">Zie hoe automatisering in de praktijk werkt in 2 min.</p>
                 </div>
               </div>
             </div>

@@ -116,9 +116,9 @@ const NodeCard = ({ node, pulseSignal }: {
 
     cancelAnimationFrame(rafRef.current);
 
-    const UP = 220;
-    const HOLD = 450;
-    const DOWN = 430;
+    const UP = 280;
+    const HOLD = 600;
+    const DOWN = 500;
     const TOTAL = UP + HOLD + DOWN;
 
     let start = 0;
@@ -196,9 +196,8 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 }) => {
   const pathRef = useRef<SVGPathElement>(null);
   const dotRef = useRef<SVGCircleElement>(null);
-  const glowRef = useRef<SVGCircleElement>(null);
   const trailRefs = useRef<(SVGCircleElement | null)[]>([]);
-  const dotPulseRef = useRef(0);
+  const segmentGlowRefs = useRef<(SVGPathElement | null)[]>([]);
   const [pulseSignals, setPulseSignals] = useState<number[]>(() => nodes.map(() => 0));
   const visibleRef = useRef(false);
   const animIdRef = useRef(0);
@@ -255,17 +254,18 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
     });
   }, [nodes]);
 
-  const TRAIL_COUNT = 5;
-  const TRAIL_SPACING = 0.008; // progress gap between trail dots
+  const TRAIL_COUNT = 6;
+  const TRAIL_SPACING = 0.006;
+  const activeSegRef = useRef(-1);
+  const segFadeTimers = useRef<number[]>([]);
 
   const tick = useCallback((now: number) => {
     if (!visibleRef.current) return;
 
     const path = pathRef.current;
     const dot = dotRef.current;
-    const glow = glowRef.current;
 
-    if (!path || !dot || !glow) {
+    if (!path || !dot) {
       animIdRef.current = requestAnimationFrame(tick);
       return;
     }
@@ -275,7 +275,6 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       if (checkpointIndexRef.current < 0 && checkpoints.length) {
         checkpointIndexRef.current = 0;
         triggerHighlight(0);
-        dotPulseRef.current = now;
       }
     }
 
@@ -284,10 +283,8 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 
     if (wrapped) {
       checkpointIndexRef.current = 0;
-      if (checkpoints.length) {
-        triggerHighlight(0);
-        dotPulseRef.current = now;
-      }
+      activeSegRef.current = -1;
+      if (checkpoints.length) triggerHighlight(0);
     }
 
     prevElapsedRef.current = elapsedInCycle;
@@ -302,24 +299,6 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       dot.setAttribute("cx", String(pt.x));
       dot.setAttribute("cy", String(pt.y));
       dot.setAttribute("opacity", "1");
-      glow.setAttribute("cx", String(pt.x));
-      glow.setAttribute("cy", String(pt.y));
-      glow.setAttribute("opacity", "1");
-
-      // Dot pulse on checkpoint arrival
-      if (dotPulseRef.current > 0) {
-        const pulseAge = now - dotPulseRef.current;
-        if (pulseAge < 300) {
-          const p = pulseAge / 300;
-          const s = 1 + 0.4 * Math.sin(p * Math.PI);
-          dot.setAttribute("r", String(3.5 * s));
-          glow.setAttribute("r", String(9 * s));
-        } else {
-          dot.setAttribute("r", "3.5");
-          glow.setAttribute("r", "9");
-          dotPulseRef.current = 0;
-        }
-      }
 
       // Trail dots
       for (let t = 0; t < TRAIL_COUNT; t++) {
@@ -329,26 +308,59 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         const tpt = path.getPointAtLength(tp * len);
         trailEl.setAttribute("cx", String(tpt.x));
         trailEl.setAttribute("cy", String(tpt.y));
-        trailEl.setAttribute("opacity", String(0.3 - t * 0.055));
+        trailEl.setAttribute("opacity", String(0.35 - t * 0.055));
+      }
+
+      // Line brightening: detect which segment the dot is in
+      let currentSeg = -1;
+      for (let i = 0; i < checkpoints.length - 1; i++) {
+        if (progress >= checkpoints[i] && progress < (checkpoints[i + 1] ?? 1)) {
+          currentSeg = i;
+          break;
+        }
+      }
+      if (currentSeg !== activeSegRef.current) {
+        // Fade out previous segment
+        if (activeSegRef.current >= 0) {
+          const prevEl = segmentGlowRefs.current[activeSegRef.current];
+          if (prevEl) {
+            const idx = activeSegRef.current;
+            prevEl.setAttribute("stroke-opacity", "0.5");
+            clearTimeout(segFadeTimers.current[idx]);
+            segFadeTimers.current[idx] = window.setTimeout(() => {
+              prevEl.setAttribute("stroke-opacity", "0.15");
+            }, 400);
+          }
+        }
+        // Brighten current segment
+        if (currentSeg >= 0) {
+          const el = segmentGlowRefs.current[currentSeg];
+          if (el) {
+            clearTimeout(segFadeTimers.current[currentSeg]);
+            el.setAttribute("stroke-opacity", "0.5");
+          }
+        }
+        activeSegRef.current = currentSeg;
       }
 
       for (let i = checkpointIndexRef.current + 1; i < checkpoints.length; i++) {
         if (progress >= checkpoints[i]) {
           checkpointIndexRef.current = i;
           triggerHighlight(i);
-          dotPulseRef.current = now;
         } else {
           break;
         }
       }
     } else {
       dot.setAttribute("opacity", "0");
-      glow.setAttribute("opacity", "0");
-      dot.setAttribute("r", "3.5");
-      glow.setAttribute("r", "9");
       for (let t = 0; t < TRAIL_COUNT; t++) {
         trailRefs.current[t]?.setAttribute("opacity", "0");
       }
+      // Fade all segment glows
+      segmentGlowRefs.current.forEach((el) => {
+        if (el) el.setAttribute("stroke-opacity", "0.15");
+      });
+      activeSegRef.current = -1;
     }
 
     animIdRef.current = requestAnimationFrame(tick);
@@ -406,17 +418,19 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
           <g key={idx}>
             <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="3"
               strokeOpacity="0.08" strokeLinecap="round" />
-            <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="1.2"
-              strokeOpacity="1" strokeLinecap="round" markerEnd={`url(#${markerId})`} />
+            <path
+              ref={(el) => { segmentGlowRefs.current[idx] = el; }}
+              d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="1.2"
+              strokeOpacity="0.15" strokeLinecap="round" markerEnd={`url(#${markerId})`}
+              style={{ transition: "stroke-opacity 0.4s ease-out" }} />
           </g>
         ))}
 
         <path ref={pathRef} d={continuousPath} fill="none" stroke="none" />
-        {Array.from({ length: 5 }).map((_, i) => (
+        {Array.from({ length: 6 }).map((_, i) => (
           <circle key={`trail-${i}`} ref={(el) => { trailRefs.current[i] = el; }}
-            cx="0" cy="0" r={3 - i * 0.4} fill="hsl(var(--primary))" opacity="0" />
+            cx="0" cy="0" r={2.8 - i * 0.35} fill="hsl(var(--primary))" opacity="0" />
         ))}
-        <circle ref={glowRef} cx="0" cy="0" r="9" fill="hsl(var(--primary) / 0.12)" opacity="0" />
         <circle ref={dotRef} cx="0" cy="0" r="3.5" fill="hsl(var(--primary))" opacity="0" />
       </g>
 

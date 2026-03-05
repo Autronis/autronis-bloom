@@ -129,10 +129,10 @@ export const cases: CaseStudy[] = [
     title: "Marketing en rapportage automatisering",
     icon: BarChart3,
     metrics: [
-      { icon: Clock, value: "6 uur → 10 min", label: "Rapportagetijd" },
+      { icon: Clock, value: "6 uur → 10 min", label: "Rapportagetijd", animation: { from: 6, to: 0, suffix: " uur", separator: " → " } },
       { icon: Zap, value: "100%", label: "Automatische dataverzameling", animation: { from: 0, to: 100, suffix: "%" } },
       { icon: TrendingUp, value: "Realtime", label: "Dashboards voor klanten" },
-      { icon: Target, value: "0", label: "Handmatige rapportages" },
+      { icon: Target, value: "0", label: "Handmatige rapportages", animation: { from: 10, to: 0, suffix: "" } },
     ],
     context: "Een marketingbureau moest wekelijks rapportages maken voor klanten over advertentieprestaties en websiteverkeer. Deze werden handmatig samengesteld in spreadsheets.",
     problem: [

@@ -1,7 +1,7 @@
 // Layout is provided by App.tsx
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Users, Eye, Shield, Clock, Boxes, Cable, BarChart3 } from "lucide-react";
+import { ArrowRight, Users, Eye, Shield, Clock, Boxes, Cable, BarChart3, Wrench, Cog, Bot, Brain, MessageCircle, Globe, Search, Radio, Database, Puzzle, FolderOpen, Zap, TrendingUp, BookOpen, FileBarChart } from "lucide-react";
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import fotoSyb from "@/assets/foto_syb.jpg";
@@ -29,18 +29,18 @@ const team: TeamMember[] = [
     description:
       "Syb realiseert schaalbare automatiseringssystemen en AI-integraties met nadruk op codekwaliteit, prestaties en onderhoudbaarheid. Hij vertaalt architectuur naar stabiele implementaties en zorgt dat systemen ook op lange termijn logisch, uitbreidbaar en efficiënt blijven functioneren.",
     skills: [
-      { label: "Workflow automation", emoji: "🔧", category: "automation" },
-      { label: "System integrations", emoji: "⚙️", category: "automation" },
-      { label: "Dashboard automation", emoji: "📊", category: "automation" },
-      { label: "AI automation", emoji: "🤖", category: "ai" },
-      { label: "LLM integrations", emoji: "🧠", category: "ai" },
-      { label: "AI chatbots", emoji: "💬", category: "ai" },
-      { label: "Web scraping", emoji: "🌐", category: "data" },
-      { label: "API integrations", emoji: "📡", category: "data" },
-      { label: "Data enrichment", emoji: "🗄️", category: "data" },
-      { label: "Process automation", emoji: "🧩", category: "operations" },
-      { label: "CRM integrations", emoji: "📁", category: "operations" },
-      { label: "Growth automation", emoji: "⚡", category: "operations" },
+      { label: "Workflow automation", icon: Wrench, category: "automation" },
+      { label: "System integrations", icon: Cog, category: "automation" },
+      { label: "Dashboard automation", icon: BarChart3, category: "automation" },
+      { label: "AI automation", icon: Bot, category: "ai" },
+      { label: "LLM integrations", icon: Brain, category: "ai" },
+      { label: "AI chatbots", icon: MessageCircle, category: "ai" },
+      { label: "Web scraping", icon: Globe, category: "data" },
+      { label: "API integrations", icon: Radio, category: "data" },
+      { label: "Data enrichment", icon: Database, category: "data" },
+      { label: "Process automation", icon: Puzzle, category: "operations" },
+      { label: "CRM integrations", icon: FolderOpen, category: "operations" },
+      { label: "Growth automation", icon: Zap, category: "operations" },
     ],
     mail: "mailto:syb@autronis.com",
     linkedin: "https://www.linkedin.com/in/syb-sprenkeler-1b9b01323/",
@@ -54,18 +54,18 @@ const team: TeamMember[] = [
     description:
       "Sem vertaalt complexe processen naar duidelijke systeemstructuren en bewaakt documentatie, datalogica en overdraagbaarheid. Hij zorgt voor overzicht, duidelijke planning en consistente besluitvorming, zodat implementaties niet alleen werken, maar ook logisch en beheersbaar blijven.",
     skills: [
-      { label: "System integrations", emoji: "⚙️", category: "automation" },
-      { label: "Data pipelines", emoji: "📈", category: "automation" },
-      { label: "Dashboard automation", emoji: "📊", category: "automation" },
-      { label: "AI automation", emoji: "🤖", category: "ai" },
-      { label: "Knowledge base systems", emoji: "📚", category: "ai" },
-      { label: "LLM integrations", emoji: "🧠", category: "ai" },
-      { label: "Lead scraping", emoji: "🔎", category: "data" },
-      { label: "API integrations", emoji: "📡", category: "data" },
-      { label: "Data enrichment", emoji: "🗄️", category: "data" },
-      { label: "Reporting automation", emoji: "📊", category: "operations" },
-      { label: "CRM integrations", emoji: "📁", category: "operations" },
-      { label: "Process automation", emoji: "🧩", category: "operations" },
+      { label: "System integrations", icon: Cog, category: "automation" },
+      { label: "Data pipelines", icon: TrendingUp, category: "automation" },
+      { label: "Dashboard automation", icon: BarChart3, category: "automation" },
+      { label: "AI automation", icon: Bot, category: "ai" },
+      { label: "Knowledge base systems", icon: BookOpen, category: "ai" },
+      { label: "LLM integrations", icon: Brain, category: "ai" },
+      { label: "Lead scraping", icon: Search, category: "data" },
+      { label: "API integrations", icon: Radio, category: "data" },
+      { label: "Data enrichment", icon: Database, category: "data" },
+      { label: "Reporting automation", icon: FileBarChart, category: "operations" },
+      { label: "CRM integrations", icon: FolderOpen, category: "operations" },
+      { label: "Process automation", icon: Puzzle, category: "operations" },
     ],
     mail: "mailto:sem@autronis.com",
     linkedin: "https://www.linkedin.com/in/sem-gijsberts-65ba543b3/",

@@ -272,7 +272,8 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
     prevElapsedRef.current = elapsedInCycle;
     elapsedRef.current = elapsedInCycle;
 
-    const progress = Math.min(elapsedInCycle / TRAVEL_DURATION, 1);
+    const linearProgress = Math.min(elapsedInCycle / TRAVEL_DURATION, 1);
+    const progress = remapProgress(linearProgress);
 
     if (progress < 1) {
       const pt = path.getPointAtLength(progress * pathLengthRef.current);

@@ -212,10 +212,24 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   const { path: continuousPath, checkpoints } = useMemo(() => buildPathData(segments), [segments]);
   const [, , vbWidth, vbHeight] = viewBox.split(" ").map(Number);
 
-  const TRAVEL_DURATION = 9600;
-  const END_PAUSE = 800;
+  const TRAVEL_DURATION = 16000;
+  const END_PAUSE = 1000;
   const TOTAL_CYCLE = TRAVEL_DURATION + END_PAUSE;
-  const MASK_PAD = 5;
+  const MASK_PAD = 2;
+
+  // Remap progress so the horizontal top-row section (0..checkpoint[2]) moves 40% faster
+  const remapProgress = useCallback((t: number) => {
+    if (checkpoints.length < 4) return t;
+    const horizEnd = checkpoints[2]; // end of horizontal section
+    // Time allocated to horizontal: 60% of what it would normally take
+    const horizTime = horizEnd * 0.6;
+    const vertTime = 1 - horizTime;
+    const vertPath = 1 - horizEnd;
+    if (t < horizTime) {
+      return (t / horizTime) * horizEnd;
+    }
+    return horizEnd + ((t - horizTime) / vertTime) * vertPath;
+  }, [checkpoints]);
 
   useEffect(() => {
     setPulseSignals(nodes.map(() => 0));

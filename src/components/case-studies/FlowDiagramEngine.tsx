@@ -103,8 +103,8 @@ const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs }: {
     const border = borderRef.current;
     if (border) {
       const t = Math.max(0, Math.min(1, (scale - 1) / 0.06));
-      border.setAttribute("stroke-width", String(0.8 + t * 0.8));
-      border.setAttribute("stroke", `hsl(var(--primary) / ${0.2 + t * 0.45})`);
+      border.setAttribute("stroke-width", String(0.8 + t * 0.4));
+      border.setAttribute("stroke", `hsl(var(--primary) / ${0.2 + t * 0.3})`);
     }
   }, [node.x, node.y]);
 
@@ -130,11 +130,11 @@ const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs }: {
 
       let scale = 1;
       if (elapsed < UP) {
-        scale = 1 + 0.06 * easeInOut(elapsed / UP);
+        scale = 1 + 0.04 * easeInOut(elapsed / UP);
       } else if (elapsed < UP + HOLD) {
-        scale = 1.06;
+        scale = 1.04;
       } else if (elapsed < TOTAL) {
-        scale = 1.06 - 0.06 * easeInOut((elapsed - UP - HOLD) / DOWN);
+        scale = 1.04 - 0.04 * easeInOut((elapsed - UP - HOLD) / DOWN);
       }
 
       setVisualState(scale);
@@ -235,8 +235,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 
     const segmentCount = checkpoints.length - 1;
     const speeds = Array.from({ length: segmentCount }, (_, i) => {
-      if (i === 1) return 2.8; // much faster around node 02 area
-      if (i === 2) return 1.6; // keep L-connector faster
+      if (i === 2) return 1.4; // L-connector slightly faster
       return 1;
     });
 
@@ -433,11 +432,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       </g>
 
       {nodes.map((n, i) => {
-        const pulseCfg = i === 0
-          ? { upMs: 200, holdMs: 850, downMs: 420 }
-          : i === 1
-            ? { upMs: 180, holdMs: 820, downMs: 420 }
-            : { upMs: 220, holdMs: 600, downMs: 500 };
+        const pulseCfg = { upMs: 160, holdMs: 400, downMs: 300 };
         return <NodeCard key={n.title} node={n} pulseSignal={pulseSignals[i] ?? 0} {...pulseCfg} />;
       })}
     </VisibleSvg>

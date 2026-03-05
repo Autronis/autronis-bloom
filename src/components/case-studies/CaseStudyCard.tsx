@@ -91,16 +91,10 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
             </div>
           </div>
 
-          {/* ── System Overview + Results ── */}
+          {/* ── System Overview (diagram left, info right) ── */}
           <div className="grid grid-cols-1 lg:grid-cols-5 border-t border-border">
-            <div className={`lg:col-span-3 p-4 sm:p-5 ${isEven ? '' : 'lg:order-2'}`}>
-              <SectionHeader>Systeemoverzicht</SectionHeader>
-              <p className="text-[12px] text-muted-foreground leading-relaxed mb-3">
-                {cs.videoUrl
-                  ? "Bekijk de video om te zien hoe het automatiseringssysteem werkt."
-                  : "Vereenvoudigde weergave van de automatiseringspipeline."}
-              </p>
-
+            {/* Diagram */}
+            <div className={`lg:col-span-3 p-4 sm:p-5 flex items-start ${isEven ? '' : 'lg:order-2'}`}>
               {cs.videoUrl ? (
                 <video
                   src={cs.videoUrl}
@@ -110,10 +104,36 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
                   disablePictureInPicture
                 />
               ) : (
-                <Visual />
+                <div className="w-full -mt-1">
+                  <Visual />
+                </div>
               )}
+            </div>
 
-              <div className="mt-3">
+            {/* Info: overview label, results, technology */}
+            <div className={`lg:col-span-2 border-t lg:border-t-0 ${isEven ? 'lg:border-l' : 'lg:border-r lg:order-1'} border-border p-5 sm:p-6 space-y-4`}>
+              <div>
+                <SectionHeader>Systeemoverzicht</SectionHeader>
+                <p className="text-[12px] text-muted-foreground leading-relaxed">
+                  {cs.videoUrl
+                    ? "Bekijk de video om te zien hoe het automatiseringssysteem werkt."
+                    : "Vereenvoudigde weergave van de automatiseringspipeline."}
+                </p>
+              </div>
+
+              <div>
+                <SectionHeader>Resultaat & Impact</SectionHeader>
+                <div className="space-y-1.5">
+                  {cs.results.map((r, j) => (
+                    <div key={j} className="flex items-start gap-2 text-[13px] text-muted-foreground leading-relaxed">
+                      <CheckCircle2 size={13} className="text-primary mt-0.5 shrink-0" />
+                      {r}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
                 <SectionHeader>Technologie</SectionHeader>
                 <div className="flex flex-wrap gap-1.5">
                   {cs.technology.map((t, j) => (
@@ -122,18 +142,6 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
                     </Badge>
                   ))}
                 </div>
-              </div>
-            </div>
-
-            <div className={`lg:col-span-2 border-t lg:border-t-0 ${isEven ? 'lg:border-l' : 'lg:border-r lg:order-1'} border-border p-5 sm:p-6`}>
-              <SectionHeader>Resultaat & Impact</SectionHeader>
-              <div className="space-y-1.5">
-                {cs.results.map((r, j) => (
-                  <div key={j} className="flex items-start gap-2 text-[13px] text-muted-foreground leading-relaxed">
-                    <CheckCircle2 size={13} className="text-primary mt-0.5 shrink-0" />
-                    {r}
-                  </div>
-                ))}
               </div>
             </div>
           </div>

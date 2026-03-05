@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState, useCallback } from "react";
+import { ReactNode, useEffect, useRef, useState, useCallback, useId, useMemo } from "react";
 
 type Point = { x: number; y: number };
 type DiagramNode = {
@@ -29,13 +29,32 @@ const polylineLength = (pts: Point[]) => {
 
 const toPath = (pts: Point[]) => pts.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ");
 
-const buildContinuousPath = (segments: Point[][]) => {
-  const all: Point[] = [];
-  segments.forEach((seg) => seg.forEach((p) => {
-    const last = all[all.length - 1];
-    if (!last || last.x !== p.x || last.y !== p.y) all.push(p);
-  }));
-  return all.length ? all.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ") : "";
+const buildPathData = (segments: Point[][]) => {
+  const points: Point[] = [];
+  const segmentEndIndices: number[] = [];
+
+  segments.forEach((seg) => {
+    seg.forEach((p) => {
+      const last = points[points.length - 1];
+      if (!last || last.x !== p.x || last.y !== p.y) points.push(p);
+    });
+    segmentEndIndices.push(points.length - 1);
+  });
+
+  if (!points.length) return { path: "", checkpoints: [0] };
+
+  const cumulative: number[] = [0];
+  for (let i = 1; i < points.length; i++) {
+    cumulative[i] = cumulative[i - 1] + Math.hypot(points[i].x - points[i - 1].x, points[i].y - points[i - 1].y);
+  }
+
+  const total = cumulative[cumulative.length - 1] || 1;
+  const checkpoints = [0, ...segmentEndIndices.map((idx) => cumulative[idx] / total)];
+
+  return {
+    path: points.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" "),
+    checkpoints,
+  };
 };
 
 /* ─── Visibility wrapper ─── */
@@ -57,43 +76,68 @@ const VisibleSvg = ({ children, viewBox, className, onVisibilityChange }: {
   );
 };
 
-/* ─── Node card (JS-driven highlight) ─── */
-const NodeCard = ({ node, index, highlighted }: {
-  node: DiagramNode; index: number; highlighted: boolean;
+/* ─── Node card (arrival pulse animation) ─── */
+const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
+
+const NodeCard = ({ node, pulseSignal }: {
+  node: DiagramNode; pulseSignal: number;
 }) => {
   const gRef = useRef<SVGGElement>(null);
   const glowRef = useRef<SVGRectElement>(null);
-  const scaleRef = useRef(1);
-  const targetRef = useRef(1);
-  const raf = useRef(0);
+  const rafRef = useRef(0);
 
-  // Smooth spring-like interpolation for scale
+  const setVisualState = useCallback((scale: number) => {
+    const g = gRef.current;
+    if (g) g.setAttribute("transform", `translate(${node.x}, ${node.y}) scale(${scale}) translate(${-node.x}, ${-node.y})`);
+
+    const glow = glowRef.current;
+    if (glow) {
+      const opacity = Math.max(0, Math.min(1, (scale - 1) / 0.06)) * 0.55;
+      glow.setAttribute("opacity", String(opacity));
+    }
+  }, [node.x, node.y]);
+
   useEffect(() => {
-    targetRef.current = highlighted ? 1.06 : 1;
-    const animate = () => {
-      const diff = targetRef.current - scaleRef.current;
-      // Speed: ~350ms ramp up, ~450ms ramp down (exponential decay)
-      const speed = diff > 0 ? 0.21 : 0.16;
-      scaleRef.current += diff * speed;
-      if (Math.abs(diff) < 0.0005) scaleRef.current = targetRef.current;
+    setVisualState(1);
+  }, [setVisualState]);
 
-      const g = gRef.current;
-      if (g) {
-        g.setAttribute("transform", `translate(${node.x}, ${node.y}) scale(${scaleRef.current}) translate(${-node.x}, ${-node.y})`);
-      }
-      const glow = glowRef.current;
-      if (glow) {
-        const opacity = Math.max(0, (scaleRef.current - 1) / 0.06) * 0.55;
-        glow.setAttribute("opacity", String(opacity));
+  useEffect(() => {
+    if (pulseSignal === 0) return;
+
+    cancelAnimationFrame(rafRef.current);
+
+    const UP = 250;
+    const HOLD = 200;
+    const DOWN = 250;
+    const TOTAL = UP + HOLD + DOWN;
+
+    let start = 0;
+
+    const run = (now: number) => {
+      if (!start) start = now;
+      const elapsed = now - start;
+
+      let scale = 1;
+      if (elapsed < UP) {
+        scale = 1 + 0.06 * easeOut(elapsed / UP);
+      } else if (elapsed < UP + HOLD) {
+        scale = 1.06;
+      } else if (elapsed < TOTAL) {
+        scale = 1.06 - 0.06 * easeOut((elapsed - UP - HOLD) / DOWN);
       }
 
-      if (scaleRef.current !== targetRef.current) {
-        raf.current = requestAnimationFrame(animate);
+      setVisualState(scale);
+
+      if (elapsed < TOTAL) {
+        rafRef.current = requestAnimationFrame(run);
+      } else {
+        setVisualState(1);
       }
     };
-    raf.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(raf.current);
-  }, [highlighted, node.x, node.y]);
+
+    rafRef.current = requestAnimationFrame(run);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [pulseSignal, setVisualState]);
 
   const padX = 7;
   const iconBoxSize = 20;
@@ -102,22 +146,17 @@ const NodeCard = ({ node, index, highlighted }: {
 
   return (
     <g ref={gRef}>
-
-      {/* Card bg */}
       <rect x={node.x - node.w / 2} y={node.y - node.h / 2}
         width={node.w} height={node.h} rx={8}
         fill="hsl(var(--primary) / 0.05)" />
-      {/* Card border */}
       <rect x={node.x - node.w / 2} y={node.y - node.h / 2}
         width={node.w} height={node.h} rx={8}
         fill="none" stroke="hsl(var(--primary) / 0.2)" strokeWidth="1" />
-      {/* Glow border on highlight */}
       <rect ref={glowRef}
         x={node.x - node.w / 2 - 1} y={node.y - node.h / 2 - 1}
         width={node.w + 2} height={node.h + 2} rx={9}
         fill="none" stroke="hsl(var(--primary))" strokeWidth="1.5" opacity="0" />
 
-      {/* Icon box */}
       <rect x={iconBoxX} y={iconBoxY} width={iconBoxSize} height={iconBoxSize} rx={4}
         fill="hsl(var(--primary) / 0.1)" />
       <g transform={`translate(${iconBoxX + 3.5}, ${iconBoxY + 3.5})`}>
@@ -127,13 +166,11 @@ const NodeCard = ({ node, index, highlighted }: {
           transform="scale(0.542)" />
       </g>
 
-      {/* Title */}
       <text x={iconBoxX + iconBoxSize + 6} y={node.y - 2}
         fontSize="8" fontWeight="700"
         fill="hsl(var(--foreground))" fontFamily="inherit" letterSpacing="0.1">
         {node.title}
       </text>
-      {/* Desc */}
       <text x={iconBoxX + iconBoxSize + 6} y={node.y + 8.5}
         fontSize="6.5"
         fill="hsl(var(--muted-foreground))" fontFamily="inherit">
@@ -143,69 +180,80 @@ const NodeCard = ({ node, index, highlighted }: {
   );
 };
 
-/* ─── Main diagram with JS-driven dot + per-node highlights ─── */
+/* ─── Main diagram with smooth single-path dot + strict mask ─── */
 const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   viewBox: string; nodes: DiagramNode[]; segments: Point[][];
 }) => {
   const pathRef = useRef<SVGPathElement>(null);
   const dotRef = useRef<SVGCircleElement>(null);
   const glowDotRef = useRef<SVGCircleElement>(null);
-  const [highlightedNodes, setHighlightedNodes] = useState<Set<number>>(new Set());
-  const highlightTimers = useRef<number[]>([]);
+  const [pulseSignals, setPulseSignals] = useState<number[]>(() => nodes.map(() => 0));
   const visibleRef = useRef(false);
   const animIdRef = useRef(0);
   const startRef = useRef<number | null>(null);
-  const lastTriggeredRef = useRef(-1);
+  const elapsedRef = useRef(0);
+  const prevElapsedRef = useRef(0);
+  const checkpointIndexRef = useRef(-1);
+  const pathLengthRef = useRef(1);
 
-  const continuousPath = buildContinuousPath(segments);
-  const segLens = segments.map(polylineLength);
-  const totalLen = segLens.reduce((a, b) => a + b, 0) || 1;
+  const uid = useId().replace(/:/g, "");
+  const markerId = `${uid}-lead-arrow`;
+  const maskId = `${uid}-flow-mask`;
 
-  const nodeArrivals = [0, ...segLens.map((_, i) => segLens.slice(0, i + 1).reduce((a, b) => a + b, 0) / totalLen)];
+  const { path: continuousPath, checkpoints } = useMemo(() => buildPathData(segments), [segments]);
+  const [, , vbWidth, vbHeight] = viewBox.split(" ").map(Number);
 
-  const vb = viewBox.split(" ").map(Number);
-  const PAD = 12;
-
-  const clipHoles = nodes.map((n) => {
-    const x = n.x - n.w / 2 - PAD;
-    const y = n.y - n.h / 2 - PAD;
-    const w = n.w + PAD * 2;
-    const h = n.h + PAD * 2;
-    const r = 10;
-    return `M${x + r},${y} H${x + w - r} Q${x + w},${y} ${x + w},${y + r} V${y + h - r} Q${x + w},${y + h} ${x + w - r},${y + h} H${x + r} Q${x},${y + h} ${x},${y + h - r} V${y + r} Q${x},${y} ${x + r},${y} Z`;
-  }).join(" ");
-
-  const TRAVEL_DURATION = 12000;
-  const END_PAUSE = 600;
-  const HOLD_DURATION = 350;
+  const TRAVEL_DURATION = 16000;
+  const END_PAUSE = 1000;
   const TOTAL_CYCLE = TRAVEL_DURATION + END_PAUSE;
+  const MASK_PAD = 2;
+
+  useEffect(() => {
+    setPulseSignals(nodes.map(() => 0));
+    checkpointIndexRef.current = -1;
+    prevElapsedRef.current = 0;
+  }, [nodes]);
+
+  useEffect(() => {
+    const path = pathRef.current;
+    if (!path) return;
+    pathLengthRef.current = path.getTotalLength() || 1;
+  }, [continuousPath, viewBox]);
 
   const triggerHighlight = useCallback((nodeIndex: number) => {
-    if (highlightTimers.current[nodeIndex]) clearTimeout(highlightTimers.current[nodeIndex]);
-    setHighlightedNodes((prev) => new Set(prev).add(nodeIndex));
-    highlightTimers.current[nodeIndex] = window.setTimeout(() => {
-      setHighlightedNodes((prev) => {
-        const next = new Set(prev);
-        next.delete(nodeIndex);
-        return next;
-      });
-    }, HOLD_DURATION);
-  }, []);
+    setPulseSignals((prev) => {
+      const next = prev.length === nodes.length ? [...prev] : nodes.map(() => 0);
+      next[nodeIndex] = (next[nodeIndex] ?? 0) + 1;
+      return next;
+    });
+  }, [nodes]);
 
   const tick = useCallback((now: number) => {
     if (!visibleRef.current) return;
+
     const path = pathRef.current;
     const dot = dotRef.current;
     const glow = glowDotRef.current;
-    if (!path || !dot || !glow) { animIdRef.current = requestAnimationFrame(tick); return; }
 
-    if (startRef.current === null) startRef.current = now;
-    const elapsed = (now - startRef.current) % TOTAL_CYCLE;
-    const fraction = Math.min(elapsed / TRAVEL_DURATION, 1);
-    const pathLength = path.getTotalLength();
+    if (!path || !dot || !glow) {
+      animIdRef.current = requestAnimationFrame(tick);
+      return;
+    }
 
-    if (fraction < 1) {
-      const pt = path.getPointAtLength(fraction * pathLength);
+    if (startRef.current === null) startRef.current = now - elapsedRef.current;
+
+    const elapsedInCycle = (now - startRef.current) % TOTAL_CYCLE;
+    const wrapped = elapsedInCycle < prevElapsedRef.current;
+
+    if (wrapped) checkpointIndexRef.current = -1;
+
+    prevElapsedRef.current = elapsedInCycle;
+    elapsedRef.current = elapsedInCycle;
+
+    const progress = Math.min(elapsedInCycle / TRAVEL_DURATION, 1);
+
+    if (progress < 1) {
+      const pt = path.getPointAtLength(progress * pathLengthRef.current);
       dot.setAttribute("cx", String(pt.x));
       dot.setAttribute("cy", String(pt.y));
       glow.setAttribute("cx", String(pt.x));
@@ -213,69 +261,87 @@ const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       dot.setAttribute("opacity", "1");
       glow.setAttribute("opacity", "1");
 
-      for (let i = 0; i < nodeArrivals.length; i++) {
-        if (fraction >= nodeArrivals[i] - 0.005 && lastTriggeredRef.current < i) {
-          lastTriggeredRef.current = i;
+      for (let i = checkpointIndexRef.current + 1; i < checkpoints.length; i++) {
+        if (progress >= checkpoints[i]) {
+          checkpointIndexRef.current = i;
           triggerHighlight(i);
+        } else {
+          break;
         }
       }
     } else {
       dot.setAttribute("opacity", "0");
       glow.setAttribute("opacity", "0");
-      if (elapsed >= TOTAL_CYCLE - 50) lastTriggeredRef.current = -1;
     }
 
     animIdRef.current = requestAnimationFrame(tick);
-  }, [nodeArrivals, triggerHighlight, TOTAL_CYCLE, TRAVEL_DURATION]);
+  }, [checkpoints, TOTAL_CYCLE, TRAVEL_DURATION, triggerHighlight]);
 
   const handleVisibility = useCallback((vis: boolean) => {
     visibleRef.current = vis;
+
     if (vis) {
-      startRef.current = null; // reset so it starts fresh
-      animIdRef.current = requestAnimationFrame(tick);
-    } else {
       cancelAnimationFrame(animIdRef.current);
+      animIdRef.current = requestAnimationFrame(tick);
+      return;
     }
-  }, [tick]);
+
+    if (startRef.current !== null) {
+      const now = performance.now();
+      elapsedRef.current = (now - startRef.current) % TOTAL_CYCLE;
+      prevElapsedRef.current = elapsedRef.current;
+    }
+
+    startRef.current = null;
+    cancelAnimationFrame(animIdRef.current);
+  }, [tick, TOTAL_CYCLE]);
 
   useEffect(() => {
-    return () => {
-      cancelAnimationFrame(animIdRef.current);
-      highlightTimers.current.forEach(clearTimeout);
-    };
+    return () => cancelAnimationFrame(animIdRef.current);
   }, []);
 
   return (
     <VisibleSvg viewBox={viewBox} className="w-full h-auto" onVisibilityChange={handleVisibility}>
       <defs>
-        <marker id="lead-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5"
+        <marker id={markerId} markerWidth="7" markerHeight="7" refX="6" refY="3.5"
           orient="auto" markerUnits="strokeWidth">
           <path d="M0,0 L0,7 L7,3.5 z" fill="hsl(var(--primary) / 0.45)" />
         </marker>
-        <clipPath id="dot-clip">
-          <path d={`M0,0 H${vb[2]} V${vb[3]} H0 Z ${clipHoles}`}
-            fillRule="evenodd" fill="white" />
-        </clipPath>
+
+        <mask id={maskId} maskUnits="userSpaceOnUse" x="0" y="0" width={vbWidth} height={vbHeight}>
+          <rect x="0" y="0" width={vbWidth} height={vbHeight} fill="white" />
+          {nodes.map((n) => (
+            <rect
+              key={`mask-${n.title}`}
+              x={n.x - n.w / 2 - MASK_PAD}
+              y={n.y - n.h / 2 - MASK_PAD}
+              width={n.w + MASK_PAD * 2}
+              height={n.h + MASK_PAD * 2}
+              rx={8 + MASK_PAD}
+              fill="black"
+            />
+          ))}
+        </mask>
       </defs>
 
-      {segments.map((seg, idx) => (
-        <g key={idx}>
-          <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="3"
-            strokeOpacity="0.06" strokeLinecap="round" />
-          <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="1.2"
-            strokeOpacity="0.22" strokeLinecap="round" markerEnd="url(#lead-arrow)" />
-        </g>
-      ))}
+      <g mask={`url(#${maskId})`}>
+        {segments.map((seg, idx) => (
+          <g key={idx}>
+            <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="3"
+              strokeOpacity="0.06" strokeLinecap="round" />
+            <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="1.2"
+              strokeOpacity="0.22" strokeLinecap="round" markerEnd={`url(#${markerId})`} />
+          </g>
+        ))}
 
-      {nodes.map((n, i) => (
-        <NodeCard key={n.title} node={n} index={i} highlighted={highlightedNodes.has(i)} />
-      ))}
-
-      <g clipPath="url(#dot-clip)">
         <path ref={pathRef} d={continuousPath} fill="none" stroke="none" />
         <circle ref={glowDotRef} cx="0" cy="0" r="8" fill="hsl(var(--primary) / 0.12)" opacity="0" />
         <circle ref={dotRef} cx="0" cy="0" r="3.5" fill="hsl(var(--primary))" opacity="0" />
       </g>
+
+      {nodes.map((n, i) => (
+        <NodeCard key={n.title} node={n} pulseSignal={pulseSignals[i] ?? 0} />
+      ))}
     </VisibleSvg>
   );
 };

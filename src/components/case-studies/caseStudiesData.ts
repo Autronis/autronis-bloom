@@ -40,6 +40,7 @@ export interface CaseStudy {
     company: string;
     logo?: string;
   };
+  implementationResult?: string;
   logoSrc?: string;
 }
 

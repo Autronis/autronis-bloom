@@ -102,7 +102,7 @@ const NodeCard = ({ node, pulseSignal }: {
 
     const glow = glowRef.current;
     if (glow) {
-      const opacity = Math.max(0, Math.min(1, (scale - 1) / 0.06)) * 0.55;
+      const opacity = Math.max(0, Math.min(1, (scale - 1) / 0.06)) * 0.35;
       glow.setAttribute("opacity", String(opacity));
     }
   }, [node.x, node.y]);
@@ -116,9 +116,9 @@ const NodeCard = ({ node, pulseSignal }: {
 
     cancelAnimationFrame(rafRef.current);
 
-    const UP = 250;
-    const HOLD = 600;
-    const DOWN = 500;
+    const UP = 400;
+    const HOLD = 800;
+    const DOWN = 700;
     const TOTAL = UP + HOLD + DOWN;
 
     let start = 0;
@@ -165,7 +165,7 @@ const NodeCard = ({ node, pulseSignal }: {
       <rect ref={glowRef}
         x={node.x - node.w / 2 - 1} y={node.y - node.h / 2 - 1}
         width={node.w + 2} height={node.h + 2} rx={8}
-        fill="none" stroke="hsl(var(--primary))" strokeWidth="1.5" opacity="0" />
+        fill="none" stroke="hsl(var(--primary))" strokeWidth="0.8" opacity="0" />
 
       <rect x={iconBoxX} y={iconBoxY} width={iconBoxSize} height={iconBoxSize} rx={3.5}
         fill="hsl(var(--primary) / 0.1)" />
@@ -307,9 +307,9 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   return (
     <VisibleSvg viewBox={viewBox} className="w-full h-auto" onVisibilityChange={handleVisibility}>
       <defs>
-        <marker id={markerId} markerWidth="6" markerHeight="6" refX="5.5" refY="3"
+        <marker id={markerId} markerWidth="5" markerHeight="5" refX="4.5" refY="2.5"
           orient="auto" markerUnits="strokeWidth">
-          <path d="M0,0.5 L0,5.5 L5.5,3 z" fill="hsl(var(--primary))" />
+          <path d="M0,0.4 L0,4.6 L4.6,2.5 z" fill="hsl(var(--primary))" />
         </marker>
 
         <mask id={maskId} maskUnits="userSpaceOnUse" x="0" y="0" width={vbWidth} height={vbHeight}>
@@ -331,10 +331,10 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       <g mask={`url(#${maskId})`}>
         {segments.map((seg, idx) => (
           <g key={idx}>
-            <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="3.5"
-              strokeOpacity="0.10" strokeLinecap="round" />
-            <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="1.5"
-              strokeOpacity="0.45" strokeLinecap="round" markerEnd={`url(#${markerId})`} />
+            <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="3"
+              strokeOpacity="0.08" strokeLinecap="round" />
+            <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="1.2"
+              strokeOpacity="1" strokeLinecap="round" markerEnd={`url(#${markerId})`} />
           </g>
         ))}
 

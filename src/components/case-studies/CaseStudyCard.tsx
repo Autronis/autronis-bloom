@@ -53,14 +53,11 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
           {/* ── Header + Metrics ── */}
           <div className="p-5 sm:p-6 pb-0 sm:pb-0">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                {cs.logoSrc ? (
-                  <img src={cs.logoSrc} alt="" className="w-5 h-5 object-contain" />
-                ) : (
-                  <Icon size={18} className="text-primary" />
-                )}
-              </div>
-              <h2 className="text-lg sm:text-xl font-bold text-foreground">{cs.title}</h2>
+              <img src="/logo.png" alt="Autronis" className="w-7 h-7 object-contain shrink-0" />
+              <h2 className="text-lg sm:text-xl font-bold text-foreground flex items-center gap-2">
+                {cs.title}
+                <Icon size={16} className="text-primary/60" />
+              </h2>
             </div>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 mb-5">

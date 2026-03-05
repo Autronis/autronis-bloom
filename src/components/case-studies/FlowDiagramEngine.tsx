@@ -408,15 +408,17 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
     const nextIntensities = progress < 1
       ? nodeCheckpoints.map(({ arrivalProgress, halfWindowPx, isLastNode }) => {
           const deltaPx = (progress - arrivalProgress) * totalLength;
-          // Last node: only glow when dot arrives (not before), and hold glow longer after
+          // Last node: only glow when dot arrives (not before), and hold glow much longer after
           if (isLastNode) {
             if (deltaPx < -2) return 0; // dot hasn't arrived yet — no glow
             if (deltaPx >= 0) {
-              // dot has passed — hold glow, then fade over a longer window
-              const fadeWindow = halfWindowPx * 2.5;
-              if (deltaPx >= fadeWindow) return 0;
-              const norm = deltaPx / fadeWindow;
-              return 1 - smoothstep(norm);
+              // dot has passed — hold glow at full intensity for a while, then fade slowly
+              const holdPx = halfWindowPx * 1.5; // hold at full intensity
+              if (deltaPx < holdPx) return 1;
+              const fadeWindow = halfWindowPx * 4;
+              const fadeProgress = (deltaPx - holdPx) / fadeWindow;
+              if (fadeProgress >= 1) return 0;
+              return 1 - smoothstep(fadeProgress);
             }
             // dot is just about to arrive (-2 to 0)
             const norm = Math.abs(deltaPx) / 2;

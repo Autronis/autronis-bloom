@@ -17,31 +17,31 @@ interface CaseStudy {
 
 const cases: CaseStudy[] = [
   {
-    slug: "e-commerce-product-orderautomatisering",
-    title: "E-commerce product- en orderautomatisering",
-    description: "Automatisering van productdata, voorraadbeheer en orderverwerking tussen leverancierssystemen, webshop en interne systemen.",
+    slug: "ai-klantenservice-automatisering",
+    title: "AI klantenservice automatisering",
+    description: "AI-gedreven systeem dat veelgestelde klantvragen automatisch beantwoordt en complexe cases doorstuurt naar medewerkers.",
     results: [
-      "Tot 65% minder handmatig productbeheer",
-      "Realtime voorraad- en prijsupdates",
-      "Consistente productdata tussen systemen",
+      "70%+ vragen automatisch afgehandeld",
+      "Reactietijd van uren naar direct",
+      "24/7 beschikbaarheid",
     ],
   },
   {
-    slug: "financiele-procesautomatisering",
-    title: "Financiële procesautomatisering",
-    description: "Automatisering van factuurverwerking, rapportages en financiële datastromen via integraties tussen boekhoudsoftware en dashboards.",
+    slug: "marketing-rapportage-automatisering",
+    title: "Marketing en rapportage automatisering",
+    description: "Automatisch marketingdata verzamelen, combineren en visualiseren in realtime dashboards met automatische rapportverzending.",
     results: [
-      "Tot 70% minder handmatige verwerking",
-      "Snellere maandrapportages",
-      "Betere datakwaliteit in financiële systemen",
+      "Rapportagetijd van 6 uur naar 10 min",
+      "100% automatische dataverzameling",
+      "Realtime dashboards voor klanten",
     ],
   },
   {
     slug: "leadwerving-outreach-automatisering",
-    title: "Leadwerving en outreach automatisering",
+    title: "Leadgeneratie en outreach automatisering",
     description: "Automatisch leads verzamelen, contactinformatie verrijken en gepersonaliseerde e-mail outreach genereren met AI.",
     results: [
-      "Leadverwerking van 25 → 5–10 min per lead",
+      "Leadverwerking van 25 → 5 min per lead",
       "3–5× hogere outreach efficiëntie",
       "50+ gepersonaliseerde e-mails per dag",
     ],

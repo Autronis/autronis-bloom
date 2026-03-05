@@ -160,7 +160,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
                 </p>
               ) : (
                 <div className="mb-3 flex items-start gap-1.5 text-[12px] text-muted-foreground leading-relaxed italic">
-                  <Info size={12} className="text-primary mt-0.5 shrink-0" />
+                  <AlertTriangle size={12} className="text-primary shrink-0 translate-y-[1px]" />
                   <span>Vereenvoudigde weergave van de automatiseringspipeline.</span>
                 </div>
               )}

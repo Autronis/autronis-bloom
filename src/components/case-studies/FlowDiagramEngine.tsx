@@ -212,10 +212,10 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   const { path: continuousPath, checkpoints } = useMemo(() => buildPathData(segments), [segments]);
   const [, , vbWidth, vbHeight] = viewBox.split(" ").map(Number);
 
-  const TRAVEL_DURATION = 16000;
-  const END_PAUSE = 1000;
+  const TRAVEL_DURATION = 9600;
+  const END_PAUSE = 800;
   const TOTAL_CYCLE = TRAVEL_DURATION + END_PAUSE;
-  const MASK_PAD = 2;
+  const MASK_PAD = 5;
 
   useEffect(() => {
     setPulseSignals(nodes.map(() => 0));
@@ -307,8 +307,8 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   return (
     <VisibleSvg viewBox={viewBox} className="w-full h-auto" onVisibilityChange={handleVisibility}>
       <defs>
-        <marker id={markerId} markerWidth="5" markerHeight="5" refX="4.5" refY="2.5"
-          orient="auto" markerUnits="strokeWidth">
+        <marker id={markerId} markerWidth="5" markerHeight="5" refX="1" refY="2.5"
+          orient="auto" markerUnits="strokeWidth" overflow="visible">
           <path d="M0,0.4 L0,4.6 L4.6,2.5 z" fill="hsl(var(--primary))" />
         </marker>
 

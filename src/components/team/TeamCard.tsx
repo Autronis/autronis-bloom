@@ -154,7 +154,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
               }`}
             style={isMobile && expanded ? { maxHeight: "700px" } : undefined}
           >
-            <p className="text-[13px] text-white leading-relaxed mb-4 pr-6">
+            <p className="text-[13px] text-white leading-relaxed mb-4 pr-6 line-clamp-4">
               {member.description}
             </p>
 
@@ -167,7 +167,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
                       {categoryLabels[cat]}
                     </p>
                     <div className="grid grid-cols-2 gap-1.5">
-                      {grouped[cat].slice(0, 4).map((s) => {
+                      {grouped[cat].slice(0, 3).map((s) => {
                         const i = tagIndex++;
                         return <OverlaySkillBadge key={s.label} skill={s} index={i} />;
                       })}

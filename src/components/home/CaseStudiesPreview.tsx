@@ -12,8 +12,7 @@ interface CaseStudy {
   description: string;
   results: string[];
   quotePreview: string;
-  quoteAttribution?: string;
-  quoteLabel: string;
+  logoSrc: string;
 }
 
 const cases: CaseStudy[] = [
@@ -25,9 +24,10 @@ const cases: CaseStudy[] = [
     results: [
       "Tot 65% minder handmatig productbeheer",
       "Realtime voorraad- en prijsupdates",
+      "Consistente productdata tussen systemen",
     ],
-    quoteLabel: "Implementatieresultaat",
-    quotePreview: "Na implementatie wordt een groot deel van de supportvragen automatisch afgehandeld en kan het team sneller reageren op complexere vragen...",
+    quotePreview: "Sinds de automatisering hebben we veel minder handmatig werk rondom productdata en voorraadupdates. Alles loopt nu automatisch tussen onze systemen...",
+    logoSrc: "/logo.png",
   },
   {
     slug: "financiele-procesautomatisering",
@@ -37,9 +37,10 @@ const cases: CaseStudy[] = [
     results: [
       "Tot 70% minder handmatige verwerking",
       "Snellere maandrapportages",
+      "Betere datakwaliteit in financiële systemen",
     ],
-    quoteLabel: "Implementatieresultaat",
-    quotePreview: "Rapportages die voorheen meerdere uren per week kostten om samen te stellen worden nu automatisch gegenereerd. Teams hebben realtime inzicht...",
+    quotePreview: "Voorheen kostte het ons veel tijd om rapportages samen te stellen. Nu worden financiële data en dashboards automatisch bijgewerkt...",
+    logoSrc: "/logo.png",
   },
   {
     slug: "leadwerving-outreach-automatisering",
@@ -47,13 +48,12 @@ const cases: CaseStudy[] = [
     title: "Leadwerving en outreach automatisering",
     description: "Automatisch leads verzamelen, contactinformatie verrijken en gepersonaliseerde e-mail outreach genereren met AI.",
     results: [
-      "Leadverwerking van 25 naar 5–10 min per lead",
+      "Leadverwerking van 25 → 5–10 min per lead",
       "3–5× hogere outreach efficiëntie",
       "50+ gepersonaliseerde e-mails per dag",
     ],
-    quoteLabel: "Klantreview",
     quotePreview: "Dankzij Autronis werken we een stuk efficiënter met onze outreach. Waar het eerst ongeveer 25 minuten kostte om een lead te vinden en te benaderen...",
-    quoteAttribution: "Jobby",
+    logoSrc: "/assets/jobby-logo.png",
   },
 ];
 
@@ -112,13 +112,10 @@ const ImplementedCard = ({
         </div>
 
         <div className="border-t border-border pt-3 sm:pt-4 mt-3 sm:mt-4">
-          <p className="text-xs font-semibold text-primary mb-2 tracking-wide uppercase">{cs.quoteLabel}</p>
+          <img src={cs.logoSrc} alt="" className="h-6 object-contain mb-2 opacity-70" />
           <p className="text-[12px] sm:text-[13px] text-foreground/70 leading-relaxed italic">
             "{cs.quotePreview}"
           </p>
-          {cs.quoteAttribution && (
-            <p className="text-[11px] text-muted-foreground mt-1.5">— {cs.quoteAttribution}</p>
-          )}
         </div>
 
         <span className="mt-4 sm:mt-5 text-sm text-primary inline-flex items-center gap-1 group-hover:underline">

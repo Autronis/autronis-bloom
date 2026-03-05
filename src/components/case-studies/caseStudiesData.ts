@@ -81,9 +81,9 @@ export const cases: CaseStudy[] = [
     title: "AI klantenservice automatisering",
     icon: Bot,
     metrics: [
-      { icon: Target, value: "70%", label: "Vragen automatisch afgehandeld" },
+      { icon: Target, value: "70%+", label: "Vragen automatisch afgehandeld" },
       { icon: Clock, value: "2 uur → direct", label: "Reactietijd" },
-      { icon: TrendingUp, value: "60%", label: "Minder support tickets" },
+      { icon: TrendingUp, value: "60%+", label: "Minder support tickets" },
       { icon: Zap, value: "24/7", label: "Beschikbaarheid" },
     ],
     context: "Een groeiend e-commerce bedrijf ontving dagelijks veel klantvragen over bestellingen, verzending en retouren. Het supportteam besteedde het merendeel van hun tijd aan repetitieve vragen.",

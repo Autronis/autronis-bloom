@@ -7,7 +7,7 @@ import type { CaseStudy, CaseMetric } from "./caseStudiesData";
 const MetricCard = ({ metric }: { metric: CaseMetric }) => {
   const Icon = metric.icon;
   return (
-    <div className="flex items-center gap-3 rounded-lg border border-primary/20 bg-primary/5 px-3.5 py-2.5">
+    <div className="flex items-center gap-3 rounded-lg border border-primary/20 bg-primary/5 px-3.5 py-2.5 transition-all duration-200 ease-out hover:scale-[1.015] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_0_16px_hsl(174_78%_41%/0.1)]">
       <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center text-primary shrink-0">
         <Icon size={16} />
       </div>
@@ -53,7 +53,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
           {/* ── Header + Metrics ── */}
           <div className="p-5 sm:p-6 pb-0 sm:pb-0">
             <div className="flex items-center gap-3 mb-4">
-              <img src="/logo.png" alt="Autronis" className="w-7 h-7 object-contain shrink-0" />
+              <img src="/logo.png" alt="Autronis" className="w-9 h-9 object-contain shrink-0" />
               <h2 className="text-lg sm:text-xl font-bold text-foreground flex items-center gap-2">
                 {cs.title}
                 <Icon size={16} className="text-primary/60" />

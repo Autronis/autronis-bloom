@@ -39,6 +39,7 @@ export interface CaseStudy {
     role: string;
     company: string;
     logo?: string;
+    website?: string;
   };
   implementationResult?: string;
   logoSrc?: string;
@@ -94,10 +95,11 @@ export const cases: CaseStudy[] = [
     visual: LeadFlowDiagram,
     testimonial: {
       quote: "Dankzij Autronis werken we een stuk efficiënter met onze outreach. Waar het eerst ongeveer 25 minuten kostte om een lead te vinden en te benaderen, doen we dat nu in zo'n 5 tot 10 minuten. Daarnaast versturen we nu dagelijks tientallen gepersonaliseerde e-mails, iets wat we voorheen nauwelijks deden. Het systeem heeft ons echt geholpen om met een klein team veel meer bedrijven te bereiken.",
-      name: "Naam",
-      role: "Functie",
+      name: "Rick Ruiterkamp",
+      role: "Eigenaar",
       company: "Jobby",
       logo: "/assets/jobby-logo.png",
+      website: "https://teamjobby.nl/",
     },
   },
   {

@@ -325,7 +325,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       <defs>
         <marker id={markerId} markerWidth="7" markerHeight="7" refX="6" refY="3.5"
           orient="auto" markerUnits="strokeWidth">
-          <path d="M0,0 L0,7 L7,3.5 z" fill="hsl(var(--primary) / 0.45)" />
+          <path d="M0,0 L0,7 L7,3.5 z" fill="hsl(var(--primary) / 0.7)" />
         </marker>
 
         <mask id={maskId} maskUnits="userSpaceOnUse" x="0" y="0" width={vbWidth} height={vbHeight}>
@@ -347,17 +347,15 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       <g mask={`url(#${maskId})`}>
         {segments.map((seg, idx) => (
           <g key={idx}>
-            <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="3"
-              strokeOpacity="0.06" strokeLinecap="round" />
-            <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="1.2"
-              strokeOpacity="0.22" strokeLinecap="round" markerEnd={`url(#${markerId})`} />
+            <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="3.5"
+              strokeOpacity="0.10" strokeLinecap="round" />
+            <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="1.5"
+              strokeOpacity="0.45" strokeLinecap="round" markerEnd={`url(#${markerId})`} />
           </g>
         ))}
 
         <path ref={pathRef} d={continuousPath} fill="none" stroke="none" />
-        <circle ref={glowDotRef} cx="0" cy="0" r="10" fill="hsl(var(--primary) / 0.10)" opacity="0" />
-        <circle ref={trailRef} cx="0" cy="0" r="6" fill="hsl(var(--primary) / 0.06)" opacity="0" />
-        <circle ref={dotRef} cx="0" cy="0" r="4" fill="hsl(var(--primary))" opacity="0" />
+        <circle ref={dotRef} cx="0" cy="0" r="3.5" fill="hsl(var(--primary))" opacity="0" />
       </g>
 
       {nodes.map((n, i) => (

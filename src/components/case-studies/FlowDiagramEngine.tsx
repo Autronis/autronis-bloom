@@ -307,9 +307,9 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   return (
     <VisibleSvg viewBox={viewBox} className="w-full h-auto" onVisibilityChange={handleVisibility}>
       <defs>
-        <marker id={markerId} markerWidth="8" markerHeight="8" refX="7.5" refY="4"
+        <marker id={markerId} markerWidth="6" markerHeight="6" refX="5.5" refY="3"
           orient="auto" markerUnits="strokeWidth">
-          <path d="M0,0.5 L0,7.5 L7.5,4 z" fill="hsl(var(--primary))" fillOpacity="0.85" />
+          <path d="M0,0.5 L0,5.5 L5.5,3 z" fill="hsl(var(--primary))" />
         </marker>
 
         <mask id={maskId} maskUnits="userSpaceOnUse" x="0" y="0" width={vbWidth} height={vbHeight}>

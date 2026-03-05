@@ -72,8 +72,8 @@ const NodeCard = ({ node, index, highlighted }: {
     targetRef.current = highlighted ? 1.06 : 1;
     const animate = () => {
       const diff = targetRef.current - scaleRef.current;
-      // Speed: ramp up fast (350ms feel), ramp down slower (450ms feel)
-      const speed = diff > 0 ? 0.08 : 0.055;
+      // Speed: ~350ms ramp up, ~450ms ramp down (exponential decay)
+      const speed = diff > 0 ? 0.21 : 0.16;
       scaleRef.current += diff * speed;
       if (Math.abs(diff) < 0.0005) scaleRef.current = targetRef.current;
 
@@ -150,7 +150,7 @@ const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   const pathRef = useRef<SVGPathElement>(null);
   const dotRef = useRef<SVGCircleElement>(null);
   const glowDotRef = useRef<SVGCircleElement>(null);
-  const [highlightedNode, setHighlightedNode] = useState<number>(-1);
+  const [highlightedNodes, setHighlightedNodes] = useState<Set<number>>(new Set());
   const highlightTimers = useRef<number[]>([]);
   const visibleRef = useRef(false);
   const animIdRef = useRef(0);
@@ -182,9 +182,13 @@ const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 
   const triggerHighlight = useCallback((nodeIndex: number) => {
     if (highlightTimers.current[nodeIndex]) clearTimeout(highlightTimers.current[nodeIndex]);
-    setHighlightedNode(nodeIndex);
+    setHighlightedNodes((prev) => new Set(prev).add(nodeIndex));
     highlightTimers.current[nodeIndex] = window.setTimeout(() => {
-      setHighlightedNode((cur) => cur === nodeIndex ? -1 : cur);
+      setHighlightedNodes((prev) => {
+        const next = new Set(prev);
+        next.delete(nodeIndex);
+        return next;
+      });
     }, HOLD_DURATION);
   }, []);
 
@@ -264,7 +268,7 @@ const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       ))}
 
       {nodes.map((n, i) => (
-        <NodeCard key={n.title} node={n} index={i} highlighted={highlightedNode === i} />
+        <NodeCard key={n.title} node={n} index={i} highlighted={highlightedNodes.has(i)} />
       ))}
 
       <g clipPath="url(#dot-clip)">

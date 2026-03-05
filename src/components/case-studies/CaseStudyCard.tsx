@@ -91,9 +91,16 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
             </div>
           </div>
 
-          {/* ── System Overview Visual ── */}
+          {/* ── System Overview + Results ── */}
           <div className="grid grid-cols-1 lg:grid-cols-5 border-t border-border">
-            <div className={`lg:col-span-3 min-h-[260px] flex items-center justify-center p-4 sm:p-5 ${isEven ? '' : 'lg:order-2'}`}>
+            <div className={`lg:col-span-3 p-4 sm:p-5 ${isEven ? '' : 'lg:order-2'}`}>
+              <SectionHeader>Systeemoverzicht</SectionHeader>
+              <p className="text-[12px] text-muted-foreground leading-relaxed mb-3">
+                {cs.videoUrl
+                  ? "Bekijk de video om te zien hoe het automatiseringssysteem werkt."
+                  : "Vereenvoudigde weergave van de automatiseringspipeline."}
+              </p>
+
               {cs.videoUrl ? (
                 <video
                   src={cs.videoUrl}
@@ -105,35 +112,29 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
               ) : (
                 <Visual />
               )}
-            </div>
-            <div className={`lg:col-span-2 border-t lg:border-t-0 ${isEven ? 'lg:border-l' : 'lg:border-r lg:order-1'} border-border p-5 sm:p-6`}>
-              <SectionHeader>Systeemoverzicht</SectionHeader>
-              <p className="text-[13px] text-muted-foreground leading-relaxed mb-3">
-                {cs.videoUrl
-                  ? "Bekijk de video om te zien hoe het automatiseringssysteem werkt — van leadbronnen tot CRM-synchronisatie."
-                  : "Het diagram toont de volledige automatiseringspipeline — van databronnen tot output."}
-              </p>
-              <SectionHeader>Technologie</SectionHeader>
-              <div className="flex flex-wrap gap-1.5">
-                {cs.technology.map((t, j) => (
-                  <Badge key={j} variant="secondary" className="text-[11px] font-medium px-2 py-0.5">
-                    {t}
-                  </Badge>
-                ))}
+
+              <div className="mt-3">
+                <SectionHeader>Technologie</SectionHeader>
+                <div className="flex flex-wrap gap-1.5">
+                  {cs.technology.map((t, j) => (
+                    <Badge key={j} variant="secondary" className="text-[11px] font-medium px-2 py-0.5">
+                      {t}
+                    </Badge>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* ── Results ── */}
-          <div className="border-t border-border p-5 sm:p-6">
-            <SectionHeader>Resultaat & Impact</SectionHeader>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">
-              {cs.results.map((r, j) => (
-                <div key={j} className="flex items-start gap-2 text-[13px] text-muted-foreground leading-relaxed">
-                  <CheckCircle2 size={13} className="text-primary mt-0.5 shrink-0" />
-                  {r}
-                </div>
-              ))}
+            <div className={`lg:col-span-2 border-t lg:border-t-0 ${isEven ? 'lg:border-l' : 'lg:border-r lg:order-1'} border-border p-5 sm:p-6`}>
+              <SectionHeader>Resultaat & Impact</SectionHeader>
+              <div className="space-y-1.5">
+                {cs.results.map((r, j) => (
+                  <div key={j} className="flex items-start gap-2 text-[13px] text-muted-foreground leading-relaxed">
+                    <CheckCircle2 size={13} className="text-primary mt-0.5 shrink-0" />
+                    {r}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

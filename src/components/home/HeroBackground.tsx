@@ -145,7 +145,7 @@ const HeroBackground = () => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     let startDelay: ReturnType<typeof setTimeout> | undefined;
     if (!motionQuery.matches) {
-      const delay = heroMountedBefore ? 0 : 200;
+      const delay = heroMountedBefore ? 0 : 500;
       heroMountedBefore = true;
       startDelay = setTimeout(() => { animate(); }, delay);
     } else {
@@ -169,6 +169,7 @@ const HeroBackground = () => {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 z-0 pointer-events-none"
+      style={{ willChange: "transform", contain: "strict" }}
       aria-hidden="true"
     />
   );

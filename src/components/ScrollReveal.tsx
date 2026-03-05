@@ -15,7 +15,7 @@ const ScrollReveal = ({
   delay = 0,
 }: ScrollRevealProps) => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.25 });
+  const isInView = useInView(ref, { once: true, amount: 0.15 });
 
   return (
     <motion.div

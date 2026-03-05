@@ -357,7 +357,8 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments, travelDuration: trave
   }, [continuousPath, viewBox]);
 
 
-  const TRAIL_COUNT = 6;
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const TRAIL_COUNT = isMobile ? 3 : 6;
   const TRAIL_SPACING = 0.005;
 
   const tick = useCallback((now: number) => {

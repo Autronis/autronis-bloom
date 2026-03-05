@@ -96,6 +96,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
     return acc;
   }, {} as Record<SkillCategory, Skill[]>);
 
+  const memberLabels = { ...categoryLabels, ...member.customCategoryLabels };
   const categoryOrder: SkillCategory[] = ["automation", "ai", "data", "operations"];
   let tagIndex = 0;
 
@@ -164,7 +165,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
                 grouped[cat]?.length ? (
                   <div key={cat}>
                     <p className="text-[8px] font-semibold tracking-[0.12em] uppercase text-white/50 mb-1">
-                      {categoryLabels[cat]}
+                      {memberLabels[cat]}
                     </p>
                     <div className="grid grid-cols-2 gap-1.5">
                       {grouped[cat].slice(0, 2).map((s) => {

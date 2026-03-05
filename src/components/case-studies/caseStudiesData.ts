@@ -29,7 +29,60 @@ export interface CaseStudy {
   };
 }
 
+const AutronisLogo = (props: React.SVGProps<SVGSVGElement> & { size?: number }) => {
+  const { size = 18, ...rest } = props;
+  return (
+    <img src="/logo.png" alt="Autronis" width={size} height={size} className="object-contain" /> as unknown as React.ReactElement
+  ) as any;
+};
+
 export const cases: CaseStudy[] = [
+  {
+    title: "Leadgeneratie en outreach automatisering",
+    icon: Users,
+    logoSrc: "/logo.png",
+    metrics: [
+      { icon: Clock, value: "25 → 5 min", label: "Leadverwerking per lead" },
+      { icon: TrendingUp, value: "3–5×", label: "Hogere outreach efficiëntie" },
+      { icon: Mail, value: "0 → 50+", label: "Gepersonaliseerde e-mails/dag" },
+      { icon: Zap, value: "100%", label: "Automatische verrijking" },
+    ],
+    context: "Jobby wilde met een klein team meer bedrijven bereiken. Het vinden van leads en verzamelen van contactinformatie kostte veel tijd. Het team werkte voornamelijk met handmatig zoeken en telefonische outreach.",
+    problem: [
+      "Leads handmatig zoeken via platformen en databases",
+      "Contactinfo en bedrijfsgegevens apart opzoeken (±25 min/lead)",
+      "Geen inzicht in pijnpunten van prospects",
+      "E-mail outreach te tijdrovend om in te zetten",
+    ],
+    solution: [
+      "Automatisch leads verzamelen uit meerdere bronnen",
+      "Bedrijfsinformatie direct verrijken via data-API's",
+      "AI-gestuurde generatie van gepersonaliseerde outreach e-mails",
+      "Automatische synchronisatie van leaddata met dashboard",
+    ],
+    results: [
+      "Leadverwerking van 25 naar 5 minuten per lead",
+      "3–5× hogere outreach efficiëntie",
+      "Van 0 naar 50+ gepersonaliseerde e-mails per dag",
+      "Meer klantgesprekken zonder extra teamcapaciteit",
+    ],
+    technology: [
+      "AI personalisatie",
+      "Lead scraping",
+      "Data verrijking",
+      "API integraties",
+      "Batch e-mail outreach",
+      "CRM synchronisatie",
+    ],
+    visual: LeadFlowDiagram,
+    testimonial: {
+      quote: "Dankzij Autronis werken we een stuk efficiënter met onze outreach. Waar het eerst ongeveer 25 minuten kostte om een lead te vinden en te benaderen, doen we dat nu in zo'n 5 tot 10 minuten. Daarnaast versturen we nu dagelijks tientallen gepersonaliseerde e-mails, iets wat we voorheen nauwelijks deden. Het systeem heeft ons echt geholpen om met een klein team veel meer bedrijven te bereiken.",
+      name: "Naam",
+      role: "Functie",
+      company: "Jobby",
+      logo: "/assets/jobby-logo.png",
+    },
+  },
   {
     title: "AI klantenservice automatisering",
     icon: Bot,
@@ -103,50 +156,5 @@ export const cases: CaseStudy[] = [
       "Marketing platform koppelingen",
     ],
     visual: MarketingFlowDiagram,
-  },
-  {
-    title: "Leadgeneratie en outreach automatisering",
-    icon: Users,
-    metrics: [
-      { icon: Clock, value: "25 → 5 min", label: "Leadverwerking per lead" },
-      { icon: TrendingUp, value: "3–5×", label: "Hogere outreach efficiëntie" },
-      { icon: Mail, value: "0 → 50+", label: "Gepersonaliseerde e-mails/dag" },
-      { icon: Zap, value: "100%", label: "Automatische verrijking" },
-    ],
-    context: "Jobby wilde met een klein team meer bedrijven bereiken. Het vinden van leads en verzamelen van contactinformatie kostte veel tijd. Het team werkte voornamelijk met handmatig zoeken en telefonische outreach.",
-    problem: [
-      "Leads handmatig zoeken via platformen en databases",
-      "Contactinfo en bedrijfsgegevens apart opzoeken (±25 min/lead)",
-      "Geen inzicht in pijnpunten van prospects",
-      "E-mail outreach te tijdrovend om in te zetten",
-    ],
-    solution: [
-      "Automatisch leads verzamelen uit meerdere bronnen",
-      "Bedrijfsinformatie direct verrijken via data-API's",
-      "AI-gestuurde generatie van gepersonaliseerde outreach e-mails",
-      "Automatische synchronisatie van leaddata met dashboard",
-    ],
-    results: [
-      "Leadverwerking van 25 naar 5 minuten per lead",
-      "3–5× hogere outreach efficiëntie",
-      "Van 0 naar 50+ gepersonaliseerde e-mails per dag",
-      "Meer klantgesprekken zonder extra teamcapaciteit",
-    ],
-    technology: [
-      "AI personalisatie",
-      "Lead scraping",
-      "Data verrijking",
-      "API integraties",
-      "Batch e-mail outreach",
-      "CRM synchronisatie",
-    ],
-    visual: LeadFlowDiagram,
-    testimonial: {
-      quote: "Dankzij Autronis werken we een stuk efficiënter met onze outreach. Waar het eerst ongeveer 25 minuten kostte om een lead te vinden en te benaderen, doen we dat nu in zo'n 5 tot 10 minuten. Daarnaast versturen we nu dagelijks tientallen gepersonaliseerde e-mails, iets wat we voorheen nauwelijks deden. Het systeem heeft ons echt geholpen om met een klein team veel meer bedrijven te bereiken.",
-      name: "Naam",
-      role: "Functie",
-      company: "Jobby",
-      logo: "/assets/jobby-logo.png",
-    },
   },
 ];

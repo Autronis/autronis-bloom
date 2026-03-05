@@ -14,7 +14,7 @@ const desktopNodes: DiagramNode[] = [
 ];
 
 const desktopSegments: Point[][] = [
-  [{ x: 142, y: 60 }, { x: 169, y: 60 }],
+  [{ x: 114, y: 60 }, { x: 169, y: 60 }],
   [{ x: 281, y: 60 }, { x: 308, y: 60 }],
   [{ x: 364, y: 78 }, { x: 364, y: 105 }, { x: 225, y: 105 }, { x: 225, y: 122 }],
   [{ x: 225, y: 158 }, { x: 225, y: 182 }],

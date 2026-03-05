@@ -89,8 +89,8 @@ const VisibleSvg = ({ children, viewBox, className, onVisibilityChange }: {
 /* ─── Node card (arrival pulse animation) ─── */
 const easeInOut = (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-const NodeCard = ({ node, pulseSignal }: {
-  node: DiagramNode; pulseSignal: number;
+const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs }: {
+  node: DiagramNode; pulseSignal: number; upMs?: number; holdMs?: number; downMs?: number;
 }) => {
   const gRef = useRef<SVGGElement>(null);
   const glowRef = useRef<SVGRectElement>(null);
@@ -116,9 +116,9 @@ const NodeCard = ({ node, pulseSignal }: {
 
     cancelAnimationFrame(rafRef.current);
 
-    const UP = 180;
-    const HOLD = 1200;
-    const DOWN = 300;
+    const UP = upMs ?? 220;
+    const HOLD = holdMs ?? 600;
+    const DOWN = downMs ?? 500;
     const TOTAL = UP + HOLD + DOWN;
 
     let start = 0;
@@ -147,7 +147,7 @@ const NodeCard = ({ node, pulseSignal }: {
 
     rafRef.current = requestAnimationFrame(run);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [pulseSignal, setVisualState]);
+  }, [pulseSignal, setVisualState, upMs, holdMs, downMs]);
 
   const padX = 6;
   const iconBoxSize = 17;
@@ -391,9 +391,14 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         <circle ref={dotRef} cx="0" cy="0" r="3.5" fill="hsl(var(--primary))" opacity="0" />
       </g>
 
-      {nodes.map((n, i) => (
-        <NodeCard key={n.title} node={n} pulseSignal={pulseSignals[i] ?? 0} />
-      ))}
+      {nodes.map((n, i) => {
+        const pulseCfg = i === 0
+          ? { upMs: 200, holdMs: 900, downMs: 450 }
+          : i === 1
+            ? { upMs: 200, holdMs: 3200, downMs: 600 }
+            : { upMs: 220, holdMs: 600, downMs: 500 };
+        return <NodeCard key={n.title} node={n} pulseSignal={pulseSignals[i] ?? 0} {...pulseCfg} />;
+      })}
     </VisibleSvg>
   );
 };

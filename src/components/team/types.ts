@@ -67,7 +67,7 @@ export const categoryMeta: Record<SkillCategory, {
 export const categoryLabels: Record<SkillCategory, string> = {
   automation: "Automation & Systems",
   ai: "AI & Intelligence",
-  data: "Data & Scraping",
+  data: "Data & Infrastructure",
   operations: "Operations",
 };
 

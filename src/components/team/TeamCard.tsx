@@ -154,7 +154,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
               }`}
             style={isMobile && expanded ? { maxHeight: "700px" } : undefined}
           >
-            <p className="text-[13px] text-white leading-relaxed mb-4 pr-6 line-clamp-4">
+            <p className="text-[13px] text-white leading-relaxed mb-4 pr-6">
               {member.description}
             </p>
 

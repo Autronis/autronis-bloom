@@ -87,7 +87,7 @@ const VisibleSvg = ({ children, viewBox, className, onVisibilityChange }: {
 };
 
 /* ─── Node card (arrival pulse animation) ─── */
-const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
+const easeInOut = (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
 const NodeCard = ({ node, pulseSignal }: {
   node: DiagramNode; pulseSignal: number;
@@ -117,8 +117,8 @@ const NodeCard = ({ node, pulseSignal }: {
     cancelAnimationFrame(rafRef.current);
 
     const UP = 250;
-    const HOLD = 200;
-    const DOWN = 250;
+    const HOLD = 600;
+    const DOWN = 500;
     const TOTAL = UP + HOLD + DOWN;
 
     let start = 0;
@@ -129,11 +129,11 @@ const NodeCard = ({ node, pulseSignal }: {
 
       let scale = 1;
       if (elapsed < UP) {
-        scale = 1 + 0.06 * easeOut(elapsed / UP);
+        scale = 1 + 0.06 * easeInOut(elapsed / UP);
       } else if (elapsed < UP + HOLD) {
         scale = 1.06;
       } else if (elapsed < TOTAL) {
-        scale = 1.06 - 0.06 * easeOut((elapsed - UP - HOLD) / DOWN);
+        scale = 1.06 - 0.06 * easeInOut((elapsed - UP - HOLD) / DOWN);
       }
 
       setVisualState(scale);
@@ -149,40 +149,40 @@ const NodeCard = ({ node, pulseSignal }: {
     return () => cancelAnimationFrame(rafRef.current);
   }, [pulseSignal, setVisualState]);
 
-  const padX = 7;
-  const iconBoxSize = 20;
+  const padX = 6;
+  const iconBoxSize = 17;
   const iconBoxX = node.x - node.w / 2 + padX;
   const iconBoxY = node.y - iconBoxSize / 2;
 
   return (
     <g ref={gRef}>
       <rect x={node.x - node.w / 2} y={node.y - node.h / 2}
-        width={node.w} height={node.h} rx={8}
+        width={node.w} height={node.h} rx={7}
         fill="hsl(var(--primary) / 0.05)" />
       <rect x={node.x - node.w / 2} y={node.y - node.h / 2}
-        width={node.w} height={node.h} rx={8}
+        width={node.w} height={node.h} rx={7}
         fill="none" stroke="hsl(var(--primary) / 0.2)" strokeWidth="1" />
       <rect ref={glowRef}
         x={node.x - node.w / 2 - 1} y={node.y - node.h / 2 - 1}
-        width={node.w + 2} height={node.h + 2} rx={9}
+        width={node.w + 2} height={node.h + 2} rx={8}
         fill="none" stroke="hsl(var(--primary))" strokeWidth="1.5" opacity="0" />
 
-      <rect x={iconBoxX} y={iconBoxY} width={iconBoxSize} height={iconBoxSize} rx={4}
+      <rect x={iconBoxX} y={iconBoxY} width={iconBoxSize} height={iconBoxSize} rx={3.5}
         fill="hsl(var(--primary) / 0.1)" />
-      <g transform={`translate(${iconBoxX + 3.5}, ${iconBoxY + 3.5})`}>
+      <g transform={`translate(${iconBoxX + 3}, ${iconBoxY + 3})`}>
         <path d={ICONS[node.icon] || ""} fill="none"
           stroke="hsl(var(--primary))" strokeWidth="1.4"
           strokeLinecap="round" strokeLinejoin="round"
-          transform="scale(0.542)" />
+          transform="scale(0.458)" />
       </g>
 
-      <text x={iconBoxX + iconBoxSize + 6} y={node.y - 2}
-        fontSize="8" fontWeight="700"
+      <text x={iconBoxX + iconBoxSize + 5} y={node.y - 2}
+        fontSize="7.5" fontWeight="700"
         fill="hsl(var(--foreground))" fontFamily="inherit" letterSpacing="0.1">
         {node.title}
       </text>
-      <text x={iconBoxX + iconBoxSize + 6} y={node.y + 8.5}
-        fontSize="6.5"
+      <text x={iconBoxX + iconBoxSize + 5} y={node.y + 7.5}
+        fontSize="6"
         fill="hsl(var(--muted-foreground))" fontFamily="inherit">
         {node.desc}
       </text>

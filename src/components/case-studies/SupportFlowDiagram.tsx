@@ -1,59 +1,54 @@
 import { FlowDiagramSvg, type DiagramNode, type Point } from "./FlowDiagramEngine";
 
-/* ═══ AI Klantenservice — Desktop layout ═══
-   Top row: Klantvragen → Vraag analyse → Context ophalen
-   Then vertical: AI antwoord → Automatische reactie → CRM sync → Support escalatie
-*/
-const CW = 128, CH = 40;
+const CW = 112, CH = 35;
 
 const desktopNodes: DiagramNode[] = [
-  { title: "Klantvragen", desc: "Chat, e-mail & formulieren", icon: "messageCircle", x: 86, y: 70, w: CW, h: CH },
-  { title: "Analyse", desc: "AI begrijpt de vraag", icon: "brain", x: 240, y: 70, w: CW, h: CH },
-  { title: "Context", desc: "Order- & klantgegevens", icon: "database", x: 394, y: 70, w: CW, h: CH },
-  { title: "AI antwoord", desc: "Passend antwoord", icon: "bot", x: 240, y: 165, w: CW + 10, h: CH + 4 },
-  { title: "Reactie", desc: "Chat of e-mail verzending", icon: "reply", x: 240, y: 240, w: CW + 10, h: CH + 4 },
-  { title: "CRM sync", desc: "Interactie opslaan", icon: "userCheck", x: 240, y: 315, w: CW + 10, h: CH + 4 },
-  { title: "Escalatie", desc: "Complexe vragen → agent", icon: "alertTriangle", x: 240, y: 390, w: CW + 10, h: CH + 4 },
+  { title: "Klantvragen", desc: "Chat, e-mail & formulieren", icon: "messageCircle", x: 86, y: 60, w: CW, h: CH },
+  { title: "Analyse", desc: "AI begrijpt de vraag", icon: "brain", x: 225, y: 60, w: CW, h: CH },
+  { title: "Context", desc: "Order- & klantgegevens", icon: "database", x: 364, y: 60, w: CW, h: CH },
+  { title: "AI antwoord", desc: "Passend antwoord", icon: "bot", x: 225, y: 140, w: CW, h: CH },
+  { title: "Reactie", desc: "Chat of e-mail verzending", icon: "reply", x: 225, y: 200, w: CW, h: CH },
+  { title: "CRM sync", desc: "Interactie opslaan", icon: "userCheck", x: 225, y: 260, w: CW, h: CH },
+  { title: "Escalatie", desc: "Complexe vragen → agent", icon: "alertTriangle", x: 225, y: 320, w: CW, h: CH },
 ];
 
 const desktopSegments: Point[][] = [
-  [{ x: 150, y: 70 }, { x: 176, y: 70 }],
-  [{ x: 304, y: 70 }, { x: 330, y: 70 }],
-  [{ x: 394, y: 90 }, { x: 394, y: 125 }, { x: 240, y: 125 }, { x: 240, y: 143 }],
-  [{ x: 240, y: 189 }, { x: 240, y: 218 }],
-  [{ x: 240, y: 264 }, { x: 240, y: 293 }],
-  [{ x: 240, y: 339 }, { x: 240, y: 368 }],
+  [{ x: 142, y: 60 }, { x: 169, y: 60 }],
+  [{ x: 281, y: 60 }, { x: 308, y: 60 }],
+  [{ x: 364, y: 78 }, { x: 364, y: 105 }, { x: 225, y: 105 }, { x: 225, y: 122 }],
+  [{ x: 225, y: 158 }, { x: 225, y: 182 }],
+  [{ x: 225, y: 218 }, { x: 225, y: 242 }],
+  [{ x: 225, y: 278 }, { x: 225, y: 302 }],
 ];
 
-/* ═══ Mobile layout ═══ */
-const MW = 198, MH = 40;
+const MW = 175, MH = 35;
 
 const mobileNodes: DiagramNode[] = [
-  { title: "Klantvragen", desc: "Chat, e-mail & formulieren", icon: "messageCircle", x: 155, y: 48, w: MW, h: MH },
-  { title: "Analyse", desc: "AI begrijpt de vraag", icon: "brain", x: 155, y: 110, w: MW, h: MH },
-  { title: "Context", desc: "Order- & klantgegevens", icon: "database", x: 155, y: 172, w: MW, h: MH },
-  { title: "AI antwoord", desc: "Passend antwoord", icon: "bot", x: 155, y: 234, w: MW, h: MH },
-  { title: "Reactie", desc: "Chat of e-mail verzending", icon: "reply", x: 155, y: 296, w: MW, h: MH },
-  { title: "CRM sync", desc: "Interactie opslaan", icon: "userCheck", x: 155, y: 358, w: MW, h: MH },
-  { title: "Escalatie", desc: "Complexe vragen → agent", icon: "alertTriangle", x: 155, y: 420, w: MW, h: MH },
+  { title: "Klantvragen", desc: "Chat, e-mail & formulieren", icon: "messageCircle", x: 140, y: 42, w: MW, h: MH },
+  { title: "Analyse", desc: "AI begrijpt de vraag", icon: "brain", x: 140, y: 96, w: MW, h: MH },
+  { title: "Context", desc: "Order- & klantgegevens", icon: "database", x: 140, y: 150, w: MW, h: MH },
+  { title: "AI antwoord", desc: "Passend antwoord", icon: "bot", x: 140, y: 204, w: MW, h: MH },
+  { title: "Reactie", desc: "Chat of e-mail verzending", icon: "reply", x: 140, y: 258, w: MW, h: MH },
+  { title: "CRM sync", desc: "Interactie opslaan", icon: "userCheck", x: 140, y: 312, w: MW, h: MH },
+  { title: "Escalatie", desc: "Complexe vragen → agent", icon: "alertTriangle", x: 140, y: 366, w: MW, h: MH },
 ];
 
 const mobileSegments: Point[][] = [
-  [{ x: 155, y: 68 }, { x: 155, y: 90 }],
-  [{ x: 155, y: 130 }, { x: 155, y: 152 }],
-  [{ x: 155, y: 192 }, { x: 155, y: 214 }],
-  [{ x: 155, y: 254 }, { x: 155, y: 276 }],
-  [{ x: 155, y: 316 }, { x: 155, y: 338 }],
-  [{ x: 155, y: 378 }, { x: 155, y: 400 }],
+  [{ x: 140, y: 60 }, { x: 140, y: 78 }],
+  [{ x: 140, y: 114 }, { x: 140, y: 132 }],
+  [{ x: 140, y: 168 }, { x: 140, y: 186 }],
+  [{ x: 140, y: 222 }, { x: 140, y: 240 }],
+  [{ x: 140, y: 276 }, { x: 140, y: 294 }],
+  [{ x: 140, y: 330 }, { x: 140, y: 348 }],
 ];
 
 const SupportFlowDiagram = () => (
   <div className="w-full">
     <div className="hidden sm:block">
-      <FlowDiagramSvg viewBox="0 0 480 435" nodes={desktopNodes} segments={desktopSegments} />
+      <FlowDiagramSvg viewBox="0 0 450 360" nodes={desktopNodes} segments={desktopSegments} />
     </div>
     <div className="sm:hidden">
-      <FlowDiagramSvg viewBox="0 0 310 460" nodes={mobileNodes} segments={mobileSegments} />
+      <FlowDiagramSvg viewBox="0 0 280 400" nodes={mobileNodes} segments={mobileSegments} />
     </div>
   </div>
 );

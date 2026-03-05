@@ -48,7 +48,7 @@ const SupportFlowDiagram = () => (
       <FlowDiagramSvg viewBox="0 0 450 350" nodes={desktopNodes} segments={desktopSegments} />
     </div>
     <div className="sm:hidden">
-      <FlowDiagramSvg viewBox="0 0 280 390" nodes={mobileNodes} segments={mobileSegments} travelDuration={10000} />
+      <FlowDiagramSvg viewBox="0 0 280 390" nodes={mobileNodes} segments={mobileSegments} travelDuration={6000} />
     </div>
   </div>
 );

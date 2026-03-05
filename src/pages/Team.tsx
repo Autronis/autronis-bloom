@@ -11,12 +11,20 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import TeamCard from "@/components/team/TeamCard";
 import type { TeamMember } from "@/components/team/types";
 
+if (typeof window !== "undefined") {
+  [fotoSyb, fotoSem].forEach((src) => {
+    const img = new Image();
+    img.src = src;
+  });
+}
+
 const team: TeamMember[] = [
   {
     name: "Syb Sprenkeler",
     role: "Automatiseringsarchitect",
     subtitle: "Co-founder",
     photo: fotoSyb,
+    priority: true,
     focusLabel: "Technische realisatie en AI-integraties",
     description:
       "Syb realiseert schaalbare automatiseringssystemen en AI-integraties met nadruk op codekwaliteit, prestaties en onderhoudbaarheid. Hij vertaalt architectuur naar stabiele implementaties en zorgt dat systemen ook op lange termijn logisch, uitbreidbaar en efficiënt blijven functioneren.",

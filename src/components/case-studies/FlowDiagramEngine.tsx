@@ -59,7 +59,7 @@ const buildPathData = (segments: Point[][]) => {
   }
 
   const total = cumulative[cumulative.length - 1] || 1;
-  const checkpoints = [0, ...segmentEndIndices.map((idx) => cumulative[idx] / total)];
+  const checkpoints = [0, ...segmentEndIndices.map((idx) => Math.min(cumulative[idx] / total, 0.999))];
 
   return {
     path: points.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" "),

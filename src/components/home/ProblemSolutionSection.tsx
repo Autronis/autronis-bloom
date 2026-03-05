@@ -127,20 +127,22 @@ const ProblemSolutionSection = () => {
               </p>
             </ScrollRevealItem>
           </ScrollReveal>
-          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 auto-rows-fr">
             {problems.map((p, i) => (
-              <ScrollRevealItem key={p.title}>
+              <ScrollRevealItem key={p.title} className="h-full">
                 <GlowCard
-                  className="rounded-xl border border-border bg-card p-4 sm:p-6"
+                  className="rounded-xl border border-border bg-card p-4 sm:p-6 h-full"
                   isAnyHovered={problemHovered !== null}
                   isHovered={problemHovered === i}
                   onHover={() => setProblemHovered(i)}
                   onLeave={() => setProblemHovered(null)}
                 >
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-destructive/10 flex items-center justify-center text-destructive mb-3 sm:mb-4">
-                    <p.icon size={18} />
+                  <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
+                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-destructive/10 flex items-center justify-center text-destructive shrink-0">
+                      <p.icon size={16} />
+                    </div>
+                    <h3 className="font-semibold text-sm sm:text-base">{p.title}</h3>
                   </div>
-                  <h3 className="font-semibold text-sm sm:text-base mb-1.5 sm:mb-2">{p.title}</h3>
                   <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                     {p.description}
                   </p>
@@ -165,20 +167,22 @@ const ProblemSolutionSection = () => {
               </p>
             </ScrollRevealItem>
           </ScrollReveal>
-          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
+          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-8 sm:mb-12 auto-rows-fr">
             {solutions.map((s, i) => (
-              <ScrollRevealItem key={s.title}>
+              <ScrollRevealItem key={s.title} className="h-full">
                 <GlowCard
-                  className="rounded-xl border border-border bg-card p-4 sm:p-6"
+                  className="rounded-xl border border-border bg-card p-4 sm:p-6 h-full"
                   isAnyHovered={solutionHovered !== null}
                   isHovered={solutionHovered === i}
                   onHover={() => setSolutionHovered(i)}
                   onLeave={() => setSolutionHovered(null)}
                 >
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3 sm:mb-4">
-                    <s.icon size={18} />
+                  <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
+                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                      <s.icon size={16} />
+                    </div>
+                    <h3 className="font-semibold text-sm sm:text-base">{s.title}</h3>
                   </div>
-                  <h3 className="font-semibold text-sm sm:text-base mb-1.5 sm:mb-2">{s.title}</h3>
                   <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                     {s.description}
                   </p>

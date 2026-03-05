@@ -164,7 +164,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
                       <img
                         src={cs.testimonial.logo}
                         alt={cs.testimonial.company}
-                        className="h-7 w-7 rounded-md object-contain bg-background border border-border p-0.5 shrink-0"
+                        className="h-8 object-contain shrink-0"
                       />
                     )}
                     <div className="min-w-0">

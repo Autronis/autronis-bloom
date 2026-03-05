@@ -286,9 +286,8 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         insideEnd = Math.max(insideEnd, localEnd);
       }
 
-      // Last node gets a larger glow window
       const isLastNode = nodeIdx === nodes.length - 1;
-      const baseHalfWindow = isLastNode ? 28 : 10;
+      const baseHalfWindow = 10;
 
       if (insideEnd > insideStart && Number.isFinite(insideStart) && Number.isFinite(insideEnd)) {
         const centerLen = (insideStart + insideEnd) / 2;
@@ -296,6 +295,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         return {
           arrivalProgress: Math.min(centerLen / totalLength, 0.999),
           halfWindowPx,
+          isLastNode,
         };
       }
 
@@ -324,7 +324,8 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 
       return {
         arrivalProgress: Math.min(bestLen / totalLength, 0.999),
-        halfWindowPx: isLastNode ? 28 : 14,
+        halfWindowPx: 14,
+        isLastNode,
       };
     });
   }, [nodes, points, cumulative, totalLength, MASK_PAD]);
@@ -405,10 +406,26 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
     }
 
     const nextIntensities = progress < 1
-      ? nodeCheckpoints.map(({ arrivalProgress, halfWindowPx }) => {
-          const deltaPx = Math.abs(progress - arrivalProgress) * totalLength;
-          if (deltaPx >= halfWindowPx) return 0;
-          const norm = deltaPx / halfWindowPx;
+      ? nodeCheckpoints.map(({ arrivalProgress, halfWindowPx, isLastNode }) => {
+          const deltaPx = (progress - arrivalProgress) * totalLength;
+          // Last node: only glow when dot arrives (not before), and hold glow longer after
+          if (isLastNode) {
+            if (deltaPx < -2) return 0; // dot hasn't arrived yet — no glow
+            if (deltaPx >= 0) {
+              // dot has passed — hold glow, then fade over a longer window
+              const fadeWindow = halfWindowPx * 2.5;
+              if (deltaPx >= fadeWindow) return 0;
+              const norm = deltaPx / fadeWindow;
+              return 1 - smoothstep(norm);
+            }
+            // dot is just about to arrive (-2 to 0)
+            const norm = Math.abs(deltaPx) / 2;
+            return 1 - smoothstep(norm);
+          }
+          // Normal nodes: symmetric proximity glow
+          const absDelta = Math.abs(deltaPx);
+          if (absDelta >= halfWindowPx) return 0;
+          const norm = absDelta / halfWindowPx;
           return 1 - smoothstep(norm);
         })
       : nodes.map(() => 0);

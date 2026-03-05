@@ -1,7 +1,7 @@
 import type { ElementType } from "react";
 import { Wrench, Cog, BarChart3, TrendingUp, Bot, Brain, MessageCircle, BookOpen, Globe, Search, Radio, Database, Puzzle, FolderOpen, FileBarChart, Zap } from "lucide-react";
 
-export type SkillCategory = "automation" | "ai" | "data" | "operations";
+export type SkillCategory = "automation" | "ai" | "data" | "operations" | "infrastructure" | "integrations";
 
 export interface Skill {
   label: string;

@@ -509,12 +509,13 @@ const Process = () => {
                   }}
                   style={{ transition: "all 300ms ease-out" }}
                 >
-                  <div className="flex items-center gap-2.5 mb-2">
-                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:bg-primary/15 transition-colors">
-                      <claim.icon size={16} />
+                  <div className="flex items-center gap-2.5 sm:block mb-2 sm:mb-0">
+                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:bg-primary/15 transition-colors sm:mb-3">
+                      <claim.icon size={16} className="sm:w-[18px] sm:h-[18px]" />
                     </div>
-                    <h4 className="text-sm font-bold">{claim.title}</h4>
+                    <h4 className="text-sm font-bold sm:hidden">{claim.title}</h4>
                   </div>
+                  <h4 className="hidden sm:block text-sm font-bold mb-1">{claim.title}</h4>
                   <p className="text-xs text-muted-foreground leading-relaxed">
                     {claim.description}
                   </p>

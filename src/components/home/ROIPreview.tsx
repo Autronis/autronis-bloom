@@ -73,10 +73,12 @@ const ROIPreview = () => {
                   key={block.title}
                   className="rounded-xl border border-border bg-card p-4 sm:p-6 md:p-7 transition-all duration-200 ease-out md:hover:scale-[1.015] md:hover:-translate-y-[2px] md:hover:border-primary/50 md:hover:shadow-[0_0_20px_hsl(174_78%_41%_/_0.12)]"
                 >
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3 sm:mb-4">
-                    <block.icon size={18} />
+                  <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
+                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                      <block.icon size={16} />
+                    </div>
+                    <h3 className="text-base sm:text-lg font-bold text-foreground">{block.title}</h3>
                   </div>
-                  <h3 className="text-base sm:text-lg font-bold mb-2 sm:mb-3 text-foreground">{block.title}</h3>
                   <p className="text-xs sm:text-sm font-semibold text-primary mb-1 leading-snug">
                     {block.highlight}
                   </p>

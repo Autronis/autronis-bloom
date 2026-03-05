@@ -595,14 +595,16 @@ const Process = () => {
                     boxShadow: "0 0 12px hsl(174, 78%, 41%, 0.08)",
                   }}
                 >
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
-                    {card.customIcon ? (
-                      <span className="text-lg font-bold">{card.customIcon}</span>
-                    ) : card.icon ? (
-                      <card.icon size={20} />
-                    ) : null}
+                  <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                      {card.customIcon ? (
+                        <span className="text-lg font-bold">{card.customIcon}</span>
+                      ) : card.icon ? (
+                        <card.icon size={20} />
+                      ) : null}
+                    </div>
+                    <h3 className="text-base font-bold">{card.title}</h3>
                   </div>
-                  <h3 className="text-base font-bold mb-2">{card.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     {card.description}
                   </p>
@@ -630,14 +632,16 @@ const Process = () => {
                     boxShadow: "0 0 12px hsl(174, 78%, 41%, 0.06)",
                   }}
                 >
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
-                    {card.customIcon ? (
-                      <span className="text-lg font-bold">{card.customIcon}</span>
-                    ) : card.icon ? (
-                      <card.icon size={20} />
-                    ) : null}
+                  <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                      {card.customIcon ? (
+                        <span className="text-lg font-bold">{card.customIcon}</span>
+                      ) : card.icon ? (
+                        <card.icon size={20} />
+                      ) : null}
+                    </div>
+                    <h3 className="text-base font-bold">{card.title}</h3>
                   </div>
-                  <h3 className="text-base font-bold mb-2">{card.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     {card.description}
                   </p>

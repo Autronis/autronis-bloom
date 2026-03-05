@@ -405,31 +405,37 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       }
     }
 
-    const nextIntensities = progress < 1
-      ? nodeCheckpoints.map(({ arrivalProgress, halfWindowPx, isLastNode }) => {
-          const deltaPx = (progress - arrivalProgress) * totalLength;
-          // Last node: only glow when dot arrives, then hold at full intensity for a long time
-          if (isLastNode) {
-            if (deltaPx < -2) return 0; // dot hasn't arrived yet — no glow
-            if (deltaPx >= 0) {
-              // Hold at full intensity for a generous window before fading
-              const holdPx = halfWindowPx * 3;
-              if (deltaPx < holdPx) return 1; // stay fully lit
-              const fadeWindow = halfWindowPx * 5;
-              const fadeProgress = (deltaPx - holdPx) / fadeWindow;
-              if (fadeProgress >= 1) return 0;
-              return 1 - (fadeProgress * fadeProgress); // quadratic ease-out
-            }
-            // dot is just about to arrive (-2 to 0) — quick ramp up
-            return 1 - (Math.abs(deltaPx) / 2);
-          }
-          // Normal nodes: symmetric proximity glow
-          const absDelta = Math.abs(deltaPx);
-          if (absDelta >= halfWindowPx) return 0;
-          const norm = absDelta / halfWindowPx;
-          return 1 - smoothstep(norm);
-        })
-      : nodes.map(() => 0);
+    // Time since dot finished traveling (ms) — used for last node hold+fade
+    const timePastTravel = Math.max(0, elapsedInCycle - TRAVEL_DURATION);
+
+    const nextIntensities = nodeCheckpoints.map(({ arrivalProgress, halfWindowPx, isLastNode }, idx) => {
+      if (isLastNode) {
+        const deltaPx = (progress - arrivalProgress) * totalLength;
+        if (progress < 1) {
+          // Dot still traveling
+          if (deltaPx < -2) return 0;
+          if (deltaPx >= 0) return 1; // hold at full while dot is past
+          return 1 - (Math.abs(deltaPx) / 2); // quick ramp up
+        }
+        // Dot has disappeared — hold for 700ms then fade over 500ms
+        const HOLD_MS = 700;
+        const FADE_MS = 500;
+        if (timePastTravel < HOLD_MS) return 1;
+        const fadeProgress = (timePastTravel - HOLD_MS) / FADE_MS;
+        if (fadeProgress >= 1) return 0;
+        // easeInOut
+        return 1 - (fadeProgress < 0.5
+          ? 2 * fadeProgress * fadeProgress
+          : 1 - Math.pow(-2 * fadeProgress + 2, 2) / 2);
+      }
+      // Normal nodes: symmetric proximity glow (only while dot is traveling)
+      if (progress >= 1) return 0;
+      const deltaPx = (progress - arrivalProgress) * totalLength;
+      const absDelta = Math.abs(deltaPx);
+      if (absDelta >= halfWindowPx) return 0;
+      const norm = absDelta / halfWindowPx;
+      return 1 - smoothstep(norm);
+    });
 
     setNodeIntensities((prev) => {
       if (prev.length !== nextIntensities.length) return nextIntensities;

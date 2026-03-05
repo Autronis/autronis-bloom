@@ -20,6 +20,8 @@ export interface TeamMember {
   skills: Skill[];
   mail: string;
   linkedin: string;
+  /** Override default category labels per member */
+  customCategoryLabels?: Partial<Record<SkillCategory, string>>;
 }
 
 export const categoryMeta: Record<SkillCategory, {

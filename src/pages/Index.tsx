@@ -54,8 +54,9 @@ const Index = () => {
     handleViewportChange();
     mediaQuery.addEventListener("change", handleViewportChange);
 
-    // Preload all sections shortly after hero renders
-    const preloadTimer = setTimeout(preloadSections, 1000);
+    // Preload sections: faster on desktop (likely faster connection)
+    const isDesktop = window.innerWidth >= 768;
+    const preloadTimer = setTimeout(preloadSections, isDesktop ? 500 : 1000);
 
     // Delay first word rotation to reduce initial JS work and let LCP paint
     let interval: ReturnType<typeof setInterval> | undefined;

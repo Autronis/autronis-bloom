@@ -36,7 +36,7 @@ const OverlaySkillBadge = ({ skill, index }: { skill: Skill; index: number }) =>
       transition={{ delay: index * 0.06, duration: 0.25, ease: "easeOut" }}
       className={`inline-flex items-center gap-1.5 text-[10px] font-medium px-2.5 py-1 rounded-full border
         ${cfg.overlayBorder} ${cfg.overlayBg}
-        text-white/90 transition-colors duration-200 cursor-default`}
+        text-white transition-colors duration-200 cursor-default`}
     >
       <Icon size={12} strokeWidth={2} className="shrink-0" />
       {skill.label}
@@ -244,15 +244,6 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
           </div>
         </div>
 
-        {/* Specialisaties - TechTag style */}
-        <div>
-          <p className="text-[10px] font-semibold text-primary mb-2 tracking-wide uppercase">Specialisaties</p>
-          <div className="flex flex-wrap gap-1.5">
-            {member.skills.map((skill, i) => (
-              <SkillTag key={skill.label} skill={skill} index={i} />
-            ))}
-          </div>
-        </div>
       </div>
 
       {/* Hover lift + scale – desktop only */}

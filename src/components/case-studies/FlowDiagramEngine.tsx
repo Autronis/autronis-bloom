@@ -260,7 +260,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       return nodes.map(() => ({ arrivalProgress: 1, halfWindowPx: 12 }));
     }
 
-    return nodes.map((node) => {
+    return nodes.map((node, nodeIdx) => {
       const rect: Rect = {
         left: node.x - node.w / 2 - MASK_PAD,
         right: node.x + node.w / 2 + MASK_PAD,
@@ -286,9 +286,13 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         insideEnd = Math.max(insideEnd, localEnd);
       }
 
+      // Last node gets a larger glow window
+      const isLastNode = nodeIdx === nodes.length - 1;
+      const baseHalfWindow = isLastNode ? 28 : 10;
+
       if (insideEnd > insideStart && Number.isFinite(insideStart) && Number.isFinite(insideEnd)) {
         const centerLen = (insideStart + insideEnd) / 2;
-        const halfWindowPx = Math.max((insideEnd - insideStart) / 2, 10);
+        const halfWindowPx = Math.max((insideEnd - insideStart) / 2, baseHalfWindow);
         return {
           arrivalProgress: Math.min(centerLen / totalLength, 0.999),
           halfWindowPx,
@@ -320,7 +324,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 
       return {
         arrivalProgress: Math.min(bestLen / totalLength, 0.999),
-        halfWindowPx: 14,
+        halfWindowPx: isLastNode ? 28 : 14,
       };
     });
   }, [nodes, points, cumulative, totalLength, MASK_PAD]);

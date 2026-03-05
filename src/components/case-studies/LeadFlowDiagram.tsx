@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState, useCallback } from "react";
 
 type Point = { x: number; y: number };
 type DiagramNode = {
@@ -11,10 +11,6 @@ type DiagramNode = {
   h: number;
 };
 
-const DURATION = 16;
-const fmt = (n: number) => (Number.isFinite(n) ? n.toFixed(5).replace(/\.?0+$/, "") : "0");
-
-/* Lucide-style SVG path data (24×24 viewBox) */
 const ICONS: Record<string, string> = {
   globe: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z",
   search: "M11 17.25a6.25 6.25 0 1 1 0-12.5 6.25 6.25 0 0 1 0 12.5zM16 16l4.5 4.5",
@@ -31,23 +27,16 @@ const polylineLength = (pts: Point[]) => {
   return t;
 };
 
-/* Build a SINGLE continuous SVG path from all segments */
-const buildContinuousPath = (segments: Point[][]) => {
-  const allPoints: Point[] = [];
-  segments.forEach((seg) => {
-    seg.forEach((p) => {
-      // Avoid exact duplicates at segment boundaries
-      const last = allPoints[allPoints.length - 1];
-      if (!last || last.x !== p.x || last.y !== p.y) {
-        allPoints.push(p);
-      }
-    });
-  });
-  if (!allPoints.length) return "";
-  return allPoints.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ");
-};
-
 const toPath = (pts: Point[]) => pts.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ");
+
+const buildContinuousPath = (segments: Point[][]) => {
+  const all: Point[] = [];
+  segments.forEach((seg) => seg.forEach((p) => {
+    const last = all[all.length - 1];
+    if (!last || last.x !== p.x || last.y !== p.y) all.push(p);
+  }));
+  return all.length ? all.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ") : "";
+};
 
 /* ─── Visibility wrapper ─── */
 const VisibleSvg = ({ children, viewBox, className }: { children: ReactNode; viewBox: string; className?: string }) => {
@@ -67,65 +56,75 @@ const VisibleSvg = ({ children, viewBox, className }: { children: ReactNode; vie
   }, [vis]);
   return (
     <svg ref={ref} viewBox={viewBox} className={className} fill="none" overflow="visible"
-      role="img" aria-label="Automatiseringsdiagram">
-      {children}
-    </svg>
+      role="img" aria-label="Automatiseringsdiagram">{children}</svg>
   );
 };
 
-/* ─── Node card ───
-   Styled to match MetricCard: border-primary/20, bg-primary/5,
-   icon box bg-primary/10 with primary icon color.
-   Uses HSL from CSS vars so it works in both themes. */
-const NodeCard = ({ node, index, arrivalFrac }: { node: DiagramNode; index: number; arrivalFrac: number }) => {
+/* ─── Node card (JS-driven highlight) ─── */
+const NodeCard = ({ node, index, highlighted }: {
+  node: DiagramNode; index: number; highlighted: boolean;
+}) => {
+  const gRef = useRef<SVGGElement>(null);
+  const glowRef = useRef<SVGRectElement>(null);
+  const scaleRef = useRef(1);
+  const targetRef = useRef(1);
+  const raf = useRef(0);
+
+  // Smooth spring-like interpolation for scale
+  useEffect(() => {
+    targetRef.current = highlighted ? 1.06 : 1;
+    const animate = () => {
+      const diff = targetRef.current - scaleRef.current;
+      // Speed: ramp up fast (350ms feel), ramp down slower (450ms feel)
+      const speed = diff > 0 ? 0.08 : 0.055;
+      scaleRef.current += diff * speed;
+      if (Math.abs(diff) < 0.0005) scaleRef.current = targetRef.current;
+
+      const g = gRef.current;
+      if (g) {
+        g.setAttribute("transform", `translate(${node.x}, ${node.y}) scale(${scaleRef.current}) translate(${-node.x}, ${-node.y})`);
+      }
+      const glow = glowRef.current;
+      if (glow) {
+        const opacity = Math.max(0, (scaleRef.current - 1) / 0.06) * 0.55;
+        glow.setAttribute("opacity", String(opacity));
+      }
+
+      if (scaleRef.current !== targetRef.current) {
+        raf.current = requestAnimationFrame(animate);
+      }
+    };
+    raf.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf.current);
+  }, [highlighted, node.x, node.y]);
+
   const padX = 7;
   const iconBoxSize = 20;
   const iconBoxX = node.x - node.w / 2 + padX;
   const iconBoxY = node.y - iconBoxSize / 2;
 
-  // Smooth scale pulse: matches site hover (200ms ease-out, scale 1.015)
-  // Mapped to fraction of DURATION with smooth splines
-  const t0 = fmt(Math.max(0, arrivalFrac - 0.015));
-  const t1 = fmt(arrivalFrac);
-  const t2 = fmt(Math.min(1, arrivalFrac + 0.025));
-  const t3 = fmt(Math.min(1, arrivalFrac + 0.065));
-  const kT = `0;${t0};${t1};${t2};${t3};1`;
-  const splines = "0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1";
-
   return (
-    <g style={{ transformOrigin: `${node.x}px ${node.y}px` }}>
+    <g ref={gRef}>
       {/* Gentle float */}
       <animateTransform attributeName="transform" type="translate"
         values="0 0;0 -1;0 0" dur={`${3.5 + (index % 3) * 0.5}s`}
-        begin={`${index * 0.15}s`} repeatCount="indefinite" />
+        begin={`${index * 0.15}s`} repeatCount="indefinite" additive="sum" />
 
-      {/* Scale pulse – same feel as site hover: 1.015, ease-out */}
-      <animateTransform attributeName="transform" type="scale"
-        values="1;1;1;1.015;1.015;1" keyTimes={kT}
-        calcMode="spline" keySplines={splines}
-        dur={`${DURATION}s`} repeatCount="indefinite" additive="sum" />
-
-      {/* ── Card background: matches MetricCard bg-primary/5 ── */}
+      {/* Card bg */}
       <rect x={node.x - node.w / 2} y={node.y - node.h / 2}
         width={node.w} height={node.h} rx={8}
         fill="hsl(var(--primary) / 0.05)" />
-
-      {/* ── Card border: matches MetricCard border-primary/20 ── */}
+      {/* Card border */}
       <rect x={node.x - node.w / 2} y={node.y - node.h / 2}
         width={node.w} height={node.h} rx={8}
         fill="none" stroke="hsl(var(--primary) / 0.2)" strokeWidth="1" />
-
-      {/* ── Arrival glow border (turquoise pulse) ── */}
-      <rect x={node.x - node.w / 2 - 1} y={node.y - node.h / 2 - 1}
+      {/* Glow border on highlight */}
+      <rect ref={glowRef}
+        x={node.x - node.w / 2 - 1} y={node.y - node.h / 2 - 1}
         width={node.w + 2} height={node.h + 2} rx={9}
-        fill="none" stroke="hsl(var(--primary))" strokeWidth="1.5" opacity="0">
-        <animate attributeName="opacity"
-          values="0;0;0;0.55;0.55;0" keyTimes={kT}
-          calcMode="spline" keySplines={splines}
-          dur={`${DURATION}s`} repeatCount="indefinite" />
-      </rect>
+        fill="none" stroke="hsl(var(--primary))" strokeWidth="1.5" opacity="0" />
 
-      {/* ── Icon container: matches bg-primary/10 rounded-md ── */}
+      {/* Icon box */}
       <rect x={iconBoxX} y={iconBoxY} width={iconBoxSize} height={iconBoxSize} rx={4}
         fill="hsl(var(--primary) / 0.1)" />
       <g transform={`translate(${iconBoxX + 3.5}, ${iconBoxY + 3.5})`}>
@@ -135,14 +134,13 @@ const NodeCard = ({ node, index, arrivalFrac }: { node: DiagramNode; index: numb
           transform="scale(0.542)" />
       </g>
 
-      {/* ── Title: font-bold text-foreground ── */}
+      {/* Title */}
       <text x={iconBoxX + iconBoxSize + 6} y={node.y - 2}
         fontSize="8" fontWeight="700"
         fill="hsl(var(--foreground))" fontFamily="inherit" letterSpacing="0.1">
         {node.title}
       </text>
-
-      {/* ── Description: text-muted-foreground ── */}
+      {/* Desc */}
       <text x={iconBoxX + iconBoxSize + 6} y={node.y + 8.5}
         fontSize="6.5"
         fill="hsl(var(--muted-foreground))" fontFamily="inherit">
@@ -152,37 +150,109 @@ const NodeCard = ({ node, index, arrivalFrac }: { node: DiagramNode; index: numb
   );
 };
 
-/* ─── Diagram renderer ─── */
+/* ─── Main diagram with JS-driven dot + per-node highlights ─── */
 const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   viewBox: string; nodes: DiagramNode[]; segments: Point[][];
 }) => {
-  // Build one continuous path so the dot never jumps
-  const continuousPath = buildContinuousPath(segments);
+  const pathRef = useRef<SVGPathElement>(null);
+  const dotRef = useRef<SVGCircleElement>(null);
+  const glowDotRef = useRef<SVGCircleElement>(null);
+  const [highlightedNode, setHighlightedNode] = useState<number>(-1);
+  const highlightTimers = useRef<number[]>([]);
 
+  const continuousPath = buildContinuousPath(segments);
   const segLens = segments.map(polylineLength);
   const totalLen = segLens.reduce((a, b) => a + b, 0) || 1;
-  const cumulative: number[] = [0];
-  segLens.forEach((len, i) => cumulative.push(cumulative[i] + len / totalLen));
-  const segTimes = segLens.map((_, i) => ({
-    start: cumulative[i],
-    mid: (cumulative[i] + cumulative[i + 1]) / 2,
-    end: cumulative[i + 1],
+  const segTimes = segments.map((_, i) => ({
+    start: segLens.slice(0, i).reduce((a, b) => a + b, 0) / totalLen,
+    mid: (segLens.slice(0, i).reduce((a, b) => a + b, 0) + segLens[i] / 2) / totalLen,
+    end: segLens.slice(0, i + 1).reduce((a, b) => a + b, 0) / totalLen,
   }));
 
-  const vb = viewBox.split(" ").map(Number);
+  // Node arrival fractions (where each node sits along the full path)
+  // Node 0 = start, Node 1 = after seg 0, Node 2 = after seg 1, etc.
+  const nodeArrivals = [0, ...segLens.map((_, i) => segLens.slice(0, i + 1).reduce((a, b) => a + b, 0) / totalLen)];
 
-  // Clip-path: full viewport with card-shaped holes so dot is hidden behind cards
-  // Use card dimensions + enough padding to cover dot glow radius (r=8)
+  const vb = viewBox.split(" ").map(Number);
   const PAD = 12;
+
+  // Mask rectangles for card areas
   const clipHoles = nodes.map((n) => {
     const x = n.x - n.w / 2 - PAD;
     const y = n.y - n.h / 2 - PAD;
     const w = n.w + PAD * 2;
     const h = n.h + PAD * 2;
     const r = 10;
-    // Counter-clockwise rect to punch a hole (evenodd fill rule)
     return `M${x + r},${y} H${x + w - r} Q${x + w},${y} ${x + w},${y + r} V${y + h - r} Q${x + w},${y + h} ${x + w - r},${y + h} H${x + r} Q${x},${y + h} ${x},${y + h - r} V${y + r} Q${x},${y} ${x + r},${y} Z`;
   }).join(" ");
+
+  // JS animation loop for the dot
+  const TRAVEL_DURATION = 12000; // ms for full path travel
+  const END_PAUSE = 600; // ms pause after last node
+  const HOLD_DURATION = 350; // ms hold at scale
+  const TOTAL_CYCLE = TRAVEL_DURATION + END_PAUSE;
+
+  const triggerHighlight = useCallback((nodeIndex: number) => {
+    // Clear any existing timer for this node
+    if (highlightTimers.current[nodeIndex]) {
+      clearTimeout(highlightTimers.current[nodeIndex]);
+    }
+    setHighlightedNode(nodeIndex);
+    highlightTimers.current[nodeIndex] = window.setTimeout(() => {
+      setHighlightedNode((current) => current === nodeIndex ? -1 : current);
+    }, HOLD_DURATION);
+  }, []);
+
+  useEffect(() => {
+    const path = pathRef.current;
+    const dot = dotRef.current;
+    const glow = glowDotRef.current;
+    if (!path || !dot || !glow) return;
+
+    const pathLength = path.getTotalLength();
+    let start: number | null = null;
+    let lastTriggered = -1;
+    let animId = 0;
+
+    const tick = (now: number) => {
+      if (start === null) start = now;
+      const elapsed = (now - start) % TOTAL_CYCLE;
+      const fraction = Math.min(elapsed / TRAVEL_DURATION, 1);
+
+      if (fraction < 1) {
+        const pt = path.getPointAtLength(fraction * pathLength);
+        dot.setAttribute("cx", String(pt.x));
+        dot.setAttribute("cy", String(pt.y));
+        glow.setAttribute("cx", String(pt.x));
+        glow.setAttribute("cy", String(pt.y));
+        dot.setAttribute("opacity", "1");
+        glow.setAttribute("opacity", "1");
+
+        // Check if dot has reached a node
+        for (let i = 0; i < nodeArrivals.length; i++) {
+          if (fraction >= nodeArrivals[i] - 0.005 && lastTriggered < i) {
+            lastTriggered = i;
+            triggerHighlight(i);
+          }
+        }
+      } else {
+        // End pause: hide dot
+        dot.setAttribute("opacity", "0");
+        glow.setAttribute("opacity", "0");
+        if (elapsed >= TOTAL_CYCLE - 50) {
+          lastTriggered = -1; // reset for next loop
+        }
+      }
+
+      animId = requestAnimationFrame(tick);
+    };
+
+    animId = requestAnimationFrame(tick);
+    return () => {
+      cancelAnimationFrame(animId);
+      highlightTimers.current.forEach(clearTimeout);
+    };
+  }, [nodeArrivals, triggerHighlight]);
 
   return (
     <VisibleSvg viewBox={viewBox} className="w-full h-auto">
@@ -197,59 +267,33 @@ const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         </clipPath>
       </defs>
 
-      {/* ── Connector lines with arrows ── */}
-      {segments.map((seg, idx) => {
-        const d = toPath(seg);
-        const t = segTimes[idx];
-        return (
-          <g key={idx}>
-            {/* Soft glow underlay */}
-            <path d={d} stroke="hsl(var(--primary))" strokeWidth="3"
-              strokeOpacity="0.06" strokeLinecap="round" />
-            {/* Main line with arrow */}
-            <path d={d} stroke="hsl(var(--primary))" strokeWidth="1.2"
-              strokeOpacity="0.22" strokeLinecap="round" markerEnd="url(#lead-arrow)">
-              <animate attributeName="stroke-opacity"
-                values="0.22;0.22;0.5;0.22;0.22"
-                keyTimes={`0;${fmt(t.start)};${fmt(t.mid)};${fmt(t.end)};1`}
-                dur={`${DURATION}s`} repeatCount="indefinite" />
-            </path>
-          </g>
-        );
-      })}
-
-      {/* ── Cards (rendered on top of lines) ── */}
-      {nodes.map((n, i) => (
-        <NodeCard key={n.title} node={n} index={i} arrivalFrac={cumulative[i]} />
+      {/* Connector lines */}
+      {segments.map((seg, idx) => (
+        <g key={idx}>
+          <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="3"
+            strokeOpacity="0.06" strokeLinecap="round" />
+          <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="1.2"
+            strokeOpacity="0.22" strokeLinecap="round" markerEnd="url(#lead-arrow)" />
+        </g>
       ))}
 
-      {/* ── Travelling dot – clipped behind cards ── */}
+      {/* Cards on top */}
+      {nodes.map((n, i) => (
+        <NodeCard key={n.title} node={n} index={i} highlighted={highlightedNode === i} />
+      ))}
+
+      {/* Dot – clipped behind cards */}
       <g clipPath="url(#dot-clip)">
-        <path id="lead-flow-route" d={continuousPath} fill="none" stroke="none" />
-        {/* Glow halo */}
-        <circle r="8" fill="hsl(var(--primary) / 0.1)">
-          <animateMotion dur={`${DURATION}s`} repeatCount="indefinite">
-            <mpath xlinkHref="#lead-flow-route" />
-          </animateMotion>
-        </circle>
-        {/* Core dot */}
-        <circle r="3" fill="hsl(var(--primary))">
-          <animate attributeName="r" values="2.5;3.8;2.5" dur="1.3s" repeatCount="indefinite" />
-          <animateMotion dur={`${DURATION}s`} repeatCount="indefinite">
-            <mpath xlinkHref="#lead-flow-route" />
-          </animateMotion>
-        </circle>
+        <path ref={pathRef} id="lead-flow-route" d={continuousPath} fill="none" stroke="none" />
+        <circle ref={glowDotRef} cx="0" cy="0" r="8" fill="hsl(var(--primary) / 0.12)" opacity="0" />
+        <circle ref={dotRef} cx="0" cy="0" r="3.5" fill="hsl(var(--primary))" opacity="0" />
       </g>
     </VisibleSvg>
   );
 };
 
-/* ═══════════════════════════════════════
-   Layout definitions
-   ═══════════════════════════════════════ */
-
-const CW = 128;
-const CH = 40;
+/* ═══ Layouts ═══ */
+const CW = 128, CH = 40;
 
 const desktopNodes: DiagramNode[] = [
   { title: "Leadbronnen", desc: "Gidsen & databases", icon: "globe", x: 86, y: 70, w: CW, h: CH },
@@ -261,29 +305,16 @@ const desktopNodes: DiagramNode[] = [
   { title: "Sales opvolging", desc: "Gesprekken & pipeline", icon: "phone", x: 240, y: 474, w: CW + 18, h: CH + 4 },
 ];
 
-/*
-  Connector segments: each segment goes from one card edge to the next card edge.
-  The continuous path builder merges them into one seamless path.
-  Endpoints are placed at card edge + a small gap so the dot enters/exits cleanly.
-*/
 const desktopSegments: Point[][] = [
-  // 0→1: Leadbronnen right → Leadverzameling left
   [{ x: 150, y: 70 }, { x: 174, y: 70 }],
-  // 1→2: Leadverzameling right → Data verwerking left
   [{ x: 306, y: 70 }, { x: 330, y: 70 }],
-  // 2→3: Data verwerking bottom → route down and left → AI Analyse top
   [{ x: 394, y: 90 }, { x: 394, y: 130 }, { x: 240, y: 130 }, { x: 240, y: 158 }],
-  // 3→4: AI Analyse bottom → Outreach top
   [{ x: 240, y: 204 }, { x: 240, y: 256 }],
-  // 4→5: Outreach bottom → Dashboard top
   [{ x: 240, y: 302 }, { x: 240, y: 354 }],
-  // 5→6: Dashboard bottom → Sales top
   [{ x: 240, y: 400 }, { x: 240, y: 452 }],
 ];
 
-/* Mobile: vertical pipeline */
-const MW = 198;
-const MH = 40;
+const MW = 198, MH = 40;
 
 const mobileNodes: DiagramNode[] = [
   { title: "Leadbronnen", desc: "Gidsen & databases", icon: "globe", x: 155, y: 48, w: MW, h: MH },

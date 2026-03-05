@@ -17,6 +17,19 @@ interface CaseStudy {
 
 const cases: CaseStudy[] = [
   {
+    slug: "leadwerving-outreach-automatisering",
+    title: "Leadgeneratie en outreach automatisering",
+    description: "Automatisch leads verzamelen, contactinformatie verrijken en gepersonaliseerde e-mail outreach genereren met AI.",
+    results: [
+      "Leadverwerking van 25 → 5 min per lead",
+      "3–5× hogere outreach efficiëntie",
+      "50+ gepersonaliseerde e-mails per dag",
+    ],
+    trust: {
+      logoSrc: "/assets/jobby-logo.png",
+    },
+  },
+  {
     slug: "ai-klantenservice-automatisering",
     title: "AI klantenservice automatisering",
     description: "AI-gedreven systeem dat veelgestelde klantvragen automatisch beantwoordt en complexe cases doorstuurt naar medewerkers.",
@@ -35,19 +48,6 @@ const cases: CaseStudy[] = [
       "100% automatische dataverzameling",
       "Realtime dashboards voor klanten",
     ],
-  },
-  {
-    slug: "leadwerving-outreach-automatisering",
-    title: "Leadgeneratie en outreach automatisering",
-    description: "Automatisch leads verzamelen, contactinformatie verrijken en gepersonaliseerde e-mail outreach genereren met AI.",
-    results: [
-      "Leadverwerking van 25 → 5 min per lead",
-      "3–5× hogere outreach efficiëntie",
-      "50+ gepersonaliseerde e-mails per dag",
-    ],
-    trust: {
-      logoSrc: "/assets/jobby-logo.png",
-    },
   },
 ];
 

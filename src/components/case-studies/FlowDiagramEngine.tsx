@@ -174,8 +174,8 @@ const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs }: {
       {/* Step indicator inside card */}
       {node.step != null && (
         <text x={stepX} y={stepY}
-          fontSize="6" fontWeight="700" textAnchor="end"
-          fill="hsl(var(--primary) / 0.5)" fontFamily="inherit" letterSpacing="0.4">
+          fontSize="7" fontWeight="800" textAnchor="end"
+          fill="hsl(var(--primary) / 0.7)" fontFamily="inherit" letterSpacing="0.5">
           {String(node.step).padStart(2, "0")}
         </text>
       )}

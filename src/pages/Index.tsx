@@ -160,6 +160,9 @@ const Index = () => {
                         controls
                         controlsList="nodownload noplaybackrate"
                         disablePictureInPicture
+                        onTouchStart={bumpSkipAboveControls}
+                        onClick={bumpSkipAboveControls}
+                        onPlay={bumpSkipAboveControls}
                         onTimeUpdate={(e) => {
                           if (e.currentTarget.currentTime >= 10) setShowSkip(false);
                         }}
@@ -172,7 +175,9 @@ const Index = () => {
                               setShowSkip(false);
                             }
                           }}
-                          className="absolute bottom-20 left-3 px-5 py-2.5 rounded-xl bg-white/5 backdrop-blur-xl border border-white/15 text-sm font-medium text-foreground hover:bg-white/15 transition-all shadow-2xl"
+                          className={`absolute left-3 px-5 py-2.5 rounded-xl bg-white/5 backdrop-blur-xl border border-white/15 text-sm font-medium text-foreground hover:bg-white/15 transition-all duration-300 shadow-2xl sm:bottom-20 ${
+                            mobileControlsActive ? "bottom-24" : "bottom-10"
+                          }`}
                         >
                           Skip intro →
                         </button>

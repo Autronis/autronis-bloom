@@ -45,8 +45,7 @@ const cases: CaseStudy[] = [
       "3–5× hogere outreach efficiëntie",
       "50+ gepersonaliseerde e-mails per dag",
     ],
-    review: {
-      quote: "Dankzij Autronis werken we veel efficiënter met onze outreach… van 25 minuten naar 5–10 minuten per lead.",
+    trust: {
       logoSrc: "/assets/jobby-logo.png",
     },
   },
@@ -105,13 +104,15 @@ const CaseCard = ({
           </ul>
         </div>
 
-        {/* Review (only Jobby) */}
-        {cs.review && (
-          <div className="border-t border-border pt-3 mt-3">
-            <img src={cs.review.logoSrc} alt="" className="h-5 object-contain mb-1.5 opacity-70" />
-            <p className="text-[11px] sm:text-[12px] text-foreground/60 leading-relaxed italic line-clamp-2">
-              "{cs.review.quote}"
-            </p>
+        {/* Trust indicator (only Jobby) */}
+        {cs.trust && (
+          <div className="border-t border-border pt-3 mt-3 flex items-center gap-2.5">
+            <img src={cs.trust.logoSrc} alt="" className="h-5 object-contain opacity-70 shrink-0" />
+            <div className="flex gap-0.5">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={13} className="fill-primary text-primary" />
+              ))}
+            </div>
           </div>
         )}
 

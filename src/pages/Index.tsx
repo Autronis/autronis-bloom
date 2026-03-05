@@ -97,7 +97,7 @@ const Index = () => {
             <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.35] tracking-tight mb-4 sm:mb-6">
               Breng structuur in je
               <br />
-              <span className="relative inline-block min-w-[14ch] align-bottom" style={{ height: "1.5em" }}>
+              <span className="relative inline-block min-w-[14ch] align-bottom" style={{ height: "1.25em" }}>
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={rotatingWords[wordIndex]}

@@ -265,7 +265,7 @@ const Navbar = () => {
                               : "text-muted-foreground hover:text-foreground hover:bg-muted"
                           }`}
                         >
-                          <child.icon size={16} />
+                          <child.icon size={16} className="text-primary" />
                           <div>
                             <span className="block">{child.label}</span>
                             <span className="text-xs text-muted-foreground font-normal">{child.description}</span>

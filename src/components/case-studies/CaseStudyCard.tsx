@@ -145,21 +145,31 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
               </div>
 
               {cs.testimonial && (
-                <div className="rounded-lg border border-border bg-muted/30 p-4 space-y-2.5">
-                  <div className="flex items-center gap-1.5">
-                    <Star size={12} className="text-primary fill-primary" />
-                    <p className="text-[11px] font-semibold text-primary tracking-wide uppercase">Klantreview</p>
+                <div className="rounded-lg border border-primary/15 bg-primary/[0.03] p-5 space-y-3.5">
+                  {/* 5-star rating */}
+                  <div className="flex items-center gap-0.5">
+                    {Array.from({ length: 5 }).map((_, s) => (
+                      <Star key={s} size={14} className="text-primary fill-primary" />
+                    ))}
                   </div>
-                  <p className="text-[12px] text-muted-foreground leading-relaxed italic">
+
+                  {/* Quote */}
+                  <p className="text-[13px] text-foreground/80 leading-[1.7] italic">
                     "{cs.testimonial.quote}"
                   </p>
-                  <div className="flex items-center gap-2.5 pt-1">
+
+                  {/* Author row */}
+                  <div className="flex items-center gap-3 pt-0.5">
                     {cs.testimonial.logo && (
-                      <img src={cs.testimonial.logo} alt={cs.testimonial.company} className="h-5 object-contain" />
+                      <img
+                        src={cs.testimonial.logo}
+                        alt={cs.testimonial.company}
+                        className="h-7 w-7 rounded-md object-contain bg-background border border-border p-0.5 shrink-0"
+                      />
                     )}
-                    <div>
-                      <p className="text-[12px] font-semibold text-foreground leading-tight">— {cs.testimonial.name}</p>
-                      <p className="text-[11px] text-muted-foreground">{cs.testimonial.role}, {cs.testimonial.company}</p>
+                    <div className="min-w-0">
+                      <p className="text-[13px] font-bold text-foreground leading-tight">{cs.testimonial.name}</p>
+                      <p className="text-[11px] text-muted-foreground leading-tight">{cs.testimonial.role} — {cs.testimonial.company}</p>
                     </div>
                   </div>
                 </div>

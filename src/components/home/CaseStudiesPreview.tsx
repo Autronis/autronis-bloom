@@ -10,6 +10,8 @@ interface CaseStudy {
   title: string;
   description: string;
   results: string[];
+  /** Index in the main caseStudiesData array */
+  caseIndex: number;
   trust?: {
     logoSrc: string;
   };

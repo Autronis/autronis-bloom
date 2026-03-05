@@ -345,8 +345,9 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         ))}
 
         <path ref={pathRef} d={continuousPath} fill="none" stroke="none" />
-        <circle ref={glowDotRef} cx="0" cy="0" r="8" fill="hsl(var(--primary) / 0.12)" opacity="0" />
-        <circle ref={dotRef} cx="0" cy="0" r="3.5" fill="hsl(var(--primary))" opacity="0" />
+        <circle ref={glowDotRef} cx="0" cy="0" r="10" fill="hsl(var(--primary) / 0.10)" opacity="0" />
+        <circle cx="0" cy="0" r="6" fill="hsl(var(--primary) / 0.06)" opacity="0" ref={(el) => { if (el) el.setAttribute("data-trail", "1"); }} />
+        <circle ref={dotRef} cx="0" cy="0" r="4" fill="hsl(var(--primary))" opacity="0" />
       </g>
 
       {nodes.map((n, i) => (

@@ -84,10 +84,12 @@ const ImpactROI = () => {
                       transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] },
                     }}
                   >
-                    <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-3">
-                      <factor.icon size={18} />
+                    <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
+                      <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                        <factor.icon size={18} />
+                      </div>
+                      <h3 className="text-sm font-semibold text-foreground">{factor.title}</h3>
                     </div>
-                    <h3 className="text-sm font-semibold text-foreground mb-2 min-h-[2.5rem]">{factor.title}</h3>
                     <p className="text-xs text-muted-foreground leading-relaxed mb-3">
                       {factor.description}
                     </p>

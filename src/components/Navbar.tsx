@@ -242,7 +242,11 @@ const Navbar = () => {
                 <div key={link.label} className="flex flex-col">
                   <button
                     onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
-                    className="px-4 py-3 rounded-md text-sm font-medium transition-colors text-muted-foreground hover:text-foreground hover:bg-muted flex items-center justify-between"
+                    className={`px-4 py-3 rounded-md text-sm font-medium transition-colors flex items-center justify-between ${
+                      link.children.some((c) => location.pathname === c.href)
+                        ? "text-primary"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    }`}
                   >
                     {link.label}
                     <ChevronDown

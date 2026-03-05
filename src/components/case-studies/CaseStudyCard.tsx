@@ -124,7 +124,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
             </div>
           </div>
 
-          {/* ── Context + Problem ── */}
+          {/* ── Section 1: Context + Probleem (side by side) ── */}
           <div className="grid grid-cols-1 lg:grid-cols-2 border-t border-border">
             <div className="p-5 sm:p-6 lg:border-r border-border">
               <SectionHeader>Context</SectionHeader>
@@ -136,7 +136,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
             </div>
           </div>
 
-          {/* ── Solution ── */}
+          {/* ── Section 2: Oplossing (full width) ── */}
           <div className="border-t border-border p-5 sm:p-6">
             <SectionHeader>Oplossing</SectionHeader>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">
@@ -149,10 +149,10 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
             </div>
           </div>
 
-          {/* ── System Overview (diagram left, info right) ── */}
+          {/* ── Section 3: Systeemoverzicht (left) + Resultaat/Tech/Review (right) ── */}
           <div className="grid grid-cols-1 lg:grid-cols-5 border-t border-border">
-            {/* Diagram with label above */}
-            <div className={`lg:col-span-3 p-4 sm:p-5 ${isEven ? '' : 'lg:order-2'}`}>
+            {/* Diagram */}
+            <div className="lg:col-span-3 p-5 sm:p-6 lg:border-r border-border">
               <SectionHeader>Systeemoverzicht</SectionHeader>
               {cs.videoUrl ? (
                 <p className="text-[12px] text-muted-foreground leading-relaxed mb-3">
@@ -177,8 +177,8 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
               )}
             </div>
 
-            {/* Info: results, technology, testimonial */}
-            <div className={`lg:col-span-2 border-t lg:border-t-0 ${isEven ? 'lg:border-l' : 'lg:border-r lg:order-1'} border-border p-5 sm:p-6 space-y-4`}>
+            {/* Resultaat + Technologie + Review */}
+            <div className="lg:col-span-2 border-t lg:border-t-0 border-border p-5 sm:p-6 space-y-5">
               <div>
                 <SectionHeader>Resultaat & Impact</SectionHeader>
                 <div className="space-y-1.5">
@@ -198,19 +198,14 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
 
               {cs.testimonial && (
                 <div className="rounded-lg border border-primary/15 bg-primary/[0.03] p-5 space-y-3.5 transition-all duration-200 ease-out hover:scale-[1.015] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_0_16px_hsl(174_78%_41%/0.1)]">
-                  {/* 5-star rating */}
                   <div className="flex items-center gap-0.5">
                     {Array.from({ length: 5 }).map((_, s) => (
                       <Star key={s} size={14} className="text-primary fill-primary" />
                     ))}
                   </div>
-
-                  {/* Quote */}
                   <p className="text-[13px] text-foreground/80 leading-[1.7] italic">
                     "{cs.testimonial.quote}"
                   </p>
-
-                  {/* Author row */}
                   <div className="flex items-center gap-3 pt-0.5">
                     {cs.testimonial.logo ? (
                       <img

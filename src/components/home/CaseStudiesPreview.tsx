@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, Star } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import useCanHover from "@/hooks/use-can-hover";
@@ -10,8 +10,7 @@ interface CaseStudy {
   title: string;
   description: string;
   results: string[];
-  review?: {
-    quote: string;
+  trust?: {
     logoSrc: string;
   };
 }

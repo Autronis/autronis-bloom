@@ -141,7 +141,6 @@ export const cases: CaseStudy[] = [
       "CRM-synchronisatie",
       "Workflow automatisering",
     ],
-    visual: LeadIsometric,
-    videoUrl: "https://www.autronis.nl/videos/videodemo.mp4",
+    visual: LeadFlowDiagram,
   },
 ];

@@ -76,7 +76,7 @@ const CaseCard = ({
 
   return (
     <Link
-      to="/case-studies"
+      to={`/case-studies#case-${cs.caseIndex}`}
       onMouseEnter={canHover ? onHover : undefined}
       onMouseLeave={canHover ? onLeave : undefined}
       className="relative group rounded-xl border border-border bg-card p-4 sm:p-5 flex flex-col h-full overflow-hidden transition-all duration-200 ease-out"

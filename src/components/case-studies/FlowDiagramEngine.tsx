@@ -13,6 +13,7 @@ export type DiagramNode = {
   y: number;
   w: number;
   h: number;
+  step?: number;
 };
 
 export const ICONS: Record<string, string> = {
@@ -23,7 +24,6 @@ export const ICONS: Record<string, string> = {
   mail: "M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM22 6l-10 7L2 6",
   dashboard: "M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z",
   phone: "M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.65 2.36a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.76.29 1.55.52 2.36.65A2 2 0 0 1 22 16.92z",
-  // New icons for support & marketing diagrams
   messageCircle: "M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z",
   brain: "M12 2a4 4 0 0 0-4 4v1a3 3 0 0 0-3 3v1a3 3 0 0 0 0 6v1a3 3 0 0 0 3 3v1a4 4 0 0 0 8 0v-1a3 3 0 0 0 3-3v-1a3 3 0 0 0 0-6v-1a3 3 0 0 0-3-3V6a4 4 0 0 0-4-4z",
   reply: "M9 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-5l-5 5v-5z",
@@ -102,7 +102,7 @@ const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs }: {
 
     const glow = glowRef.current;
     if (glow) {
-      const opacity = Math.max(0, Math.min(1, (scale - 1) / 0.06)) * 0.35;
+      const opacity = Math.max(0, Math.min(1, (scale - 1) / 0.06)) * 0.3;
       glow.setAttribute("opacity", String(opacity));
     }
   }, [node.x, node.y]);
@@ -149,40 +149,53 @@ const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs }: {
     return () => cancelAnimationFrame(rafRef.current);
   }, [pulseSignal, setVisualState, upMs, holdMs, downMs]);
 
-  const padX = 6;
-  const iconBoxSize = 17;
+  const padX = 5;
+  const iconBoxSize = 16;
   const iconBoxX = node.x - node.w / 2 + padX;
   const iconBoxY = node.y - iconBoxSize / 2;
+
+  // Step indicator position (top-left corner, small)
+  const stepX = node.x - node.w / 2 + 2;
+  const stepY = node.y - node.h / 2 - 1;
 
   return (
     <g ref={gRef}>
       <rect x={node.x - node.w / 2} y={node.y - node.h / 2}
-        width={node.w} height={node.h} rx={7}
+        width={node.w} height={node.h} rx={6}
         fill="hsl(var(--primary) / 0.05)" />
       <rect x={node.x - node.w / 2} y={node.y - node.h / 2}
-        width={node.w} height={node.h} rx={7}
-        fill="none" stroke="hsl(var(--primary) / 0.2)" strokeWidth="1" />
+        width={node.w} height={node.h} rx={6}
+        fill="none" stroke="hsl(var(--primary) / 0.2)" strokeWidth="0.8" />
       <rect ref={glowRef}
         x={node.x - node.w / 2 - 1} y={node.y - node.h / 2 - 1}
-        width={node.w + 2} height={node.h + 2} rx={8}
-        fill="none" stroke="hsl(var(--primary))" strokeWidth="0.8" opacity="0" />
+        width={node.w + 2} height={node.h + 2} rx={7}
+        fill="none" stroke="hsl(var(--primary))" strokeWidth="0.6" opacity="0" />
 
-      <rect x={iconBoxX} y={iconBoxY} width={iconBoxSize} height={iconBoxSize} rx={3.5}
+      {/* Step indicator */}
+      {node.step != null && (
+        <text x={stepX} y={stepY}
+          fontSize="4.5" fontWeight="600"
+          fill="hsl(var(--primary) / 0.4)" fontFamily="inherit" letterSpacing="0.3">
+          {String(node.step).padStart(2, "0")}
+        </text>
+      )}
+
+      <rect x={iconBoxX} y={iconBoxY} width={iconBoxSize} height={iconBoxSize} rx={3}
         fill="hsl(var(--primary) / 0.1)" />
-      <g transform={`translate(${iconBoxX + 3}, ${iconBoxY + 3})`}>
+      <g transform={`translate(${iconBoxX + 2.5}, ${iconBoxY + 2.5})`}>
         <path d={ICONS[node.icon] || ""} fill="none"
           stroke="hsl(var(--primary))" strokeWidth="1.4"
           strokeLinecap="round" strokeLinejoin="round"
           transform="scale(0.458)" />
       </g>
 
-      <text x={iconBoxX + iconBoxSize + 5} y={node.y - 2}
-        fontSize="7.5" fontWeight="700"
+      <text x={iconBoxX + iconBoxSize + 4} y={node.y - 2}
+        fontSize="7" fontWeight="700"
         fill="hsl(var(--foreground))" fontFamily="inherit" letterSpacing="0.1">
         {node.title}
       </text>
-      <text x={iconBoxX + iconBoxSize + 5} y={node.y + 7.5}
-        fontSize="6"
+      <text x={iconBoxX + iconBoxSize + 4} y={node.y + 7}
+        fontSize="5.5"
         fill="hsl(var(--muted-foreground))" fontFamily="inherit">
         {node.desc}
       </text>
@@ -214,18 +227,18 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   const { path: continuousPath, checkpoints } = useMemo(() => buildPathData(segments), [segments]);
   const [, , vbWidth, vbHeight] = viewBox.split(" ").map(Number);
 
-  const TRAVEL_DURATION = 16000;
-  const END_PAUSE = 1000;
+  const TRAVEL_DURATION = 18000; // slightly slower
+  const END_PAUSE = 1200;
   const TOTAL_CYCLE = TRAVEL_DURATION + END_PAUSE;
   const MASK_PAD = 2;
 
-  // Remap progress so the L-shaped connector (segment[2], between checkpoint[2] and checkpoint[3]) moves 40% faster
+  // Remap progress so the L-shaped connector moves 40% faster
   const remapProgress = useCallback((t: number) => {
     if (checkpoints.length < 5) return t;
-    const segStart = checkpoints[2]; // start of L-connector
-    const segEnd = checkpoints[3];   // end of L-connector
+    const segStart = checkpoints[2];
+    const segEnd = checkpoints[3];
     const segLen = segEnd - segStart;
-    const fastSegLen = segLen * 0.6; // 40% faster
+    const fastSegLen = segLen * 0.6;
     const shift = segLen - fastSegLen;
     if (t <= segStart) return t;
     if (t <= segStart + fastSegLen) {
@@ -255,7 +268,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   }, [nodes]);
 
   const TRAIL_COUNT = 6;
-  const TRAIL_SPACING = 0.006;
+  const TRAIL_SPACING = 0.005;
 
   const tick = useCallback((now: number) => {
     if (!visibleRef.current) return;
@@ -305,7 +318,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         const tpt = path.getPointAtLength(tp * len);
         trailEl.setAttribute("cx", String(tpt.x));
         trailEl.setAttribute("cy", String(tpt.y));
-        trailEl.setAttribute("opacity", String(0.35 - t * 0.055));
+        trailEl.setAttribute("opacity", String(0.3 - t * 0.045));
       }
 
       for (let i = checkpointIndexRef.current + 1; i < checkpoints.length; i++) {
@@ -366,7 +379,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
               y={n.y - n.h / 2 - MASK_PAD}
               width={n.w + MASK_PAD * 2}
               height={n.h + MASK_PAD * 2}
-              rx={8 + MASK_PAD}
+              rx={7 + MASK_PAD}
               fill="black"
             />
           ))}
@@ -376,19 +389,19 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       <g mask={`url(#${maskId})`}>
         {segments.map((seg, idx) => (
           <g key={idx}>
-            <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="3"
-              strokeOpacity="0.08" strokeLinecap="round" />
-            <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="1.2"
+            <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="2.5"
+              strokeOpacity="0.06" strokeLinecap="round" />
+            <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="1"
               strokeOpacity="1" strokeLinecap="round" markerEnd={`url(#${markerId})`} />
           </g>
         ))}
 
         <path ref={pathRef} d={continuousPath} fill="none" stroke="none" />
-        {Array.from({ length: 6 }).map((_, i) => (
+        {Array.from({ length: TRAIL_COUNT }).map((_, i) => (
           <circle key={`trail-${i}`} ref={(el) => { trailRefs.current[i] = el; }}
-            cx="0" cy="0" r={2.8 - i * 0.35} fill="hsl(var(--primary))" opacity="0" />
+            cx="0" cy="0" r={2.5 - i * 0.3} fill="hsl(var(--primary))" opacity="0" />
         ))}
-        <circle ref={dotRef} cx="0" cy="0" r="3.5" fill="hsl(var(--primary))" opacity="0" />
+        <circle ref={dotRef} cx="0" cy="0" r="3" fill="hsl(var(--primary))" opacity="0" />
       </g>
 
       {nodes.map((n, i) => {

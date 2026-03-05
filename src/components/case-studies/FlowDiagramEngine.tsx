@@ -90,27 +90,26 @@ const VisibleSvg = ({ children, viewBox, className, onVisibilityChange }: {
 /* ─── Node card (arrival pulse animation) ─── */
 const easeInOut = (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs }: {
-  node: DiagramNode; pulseSignal: number; upMs?: number; holdMs?: number; downMs?: number;
+const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs, scaleDisabled }: {
+  node: DiagramNode; pulseSignal: number; upMs?: number; holdMs?: number; downMs?: number; scaleDisabled?: boolean;
 }) => {
   const gRef = useRef<SVGGElement>(null);
   const borderRef = useRef<SVGRectElement>(null);
   const rafRef = useRef(0);
 
-  const setVisualState = useCallback((scale: number) => {
+  const setVisualState = useCallback((scale: number, opacity: number) => {
     const g = gRef.current;
     if (g) g.setAttribute("transform", `translate(${node.x}, ${node.y}) scale(${scale}) translate(${-node.x}, ${-node.y})`);
 
     const border = borderRef.current;
     if (border) {
-      const t = Math.max(0, Math.min(1, (scale - 1) / 0.06));
-      border.setAttribute("stroke-width", String(0.8 + t * 0.4));
-      border.setAttribute("stroke", `hsl(var(--primary) / ${0.2 + t * 0.3})`);
+      border.setAttribute("stroke-width", String(0.8 + opacity * 0.6));
+      border.setAttribute("stroke", `hsl(var(--primary) / ${0.2 + opacity * 0.4})`);
     }
   }, [node.x, node.y]);
 
   useEffect(() => {
-    setVisualState(1);
+    setVisualState(1, 0);
   }, [setVisualState]);
 
   useEffect(() => {
@@ -129,27 +128,28 @@ const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs }: {
       if (!start) start = now;
       const elapsed = now - start;
 
-      let scale = 1;
+      let intensity = 0;
       if (elapsed < UP) {
-        scale = 1 + 0.04 * easeInOut(elapsed / UP);
+        intensity = easeInOut(elapsed / UP);
       } else if (elapsed < UP + HOLD) {
-        scale = 1.04;
+        intensity = 1;
       } else if (elapsed < TOTAL) {
-        scale = 1.04 - 0.04 * easeInOut((elapsed - UP - HOLD) / DOWN);
+        intensity = 1 - easeInOut((elapsed - UP - HOLD) / DOWN);
       }
 
-      setVisualState(scale);
+      const scale = scaleDisabled ? 1 : 1 + 0.04 * intensity;
+      setVisualState(scale, intensity);
 
       if (elapsed < TOTAL) {
         rafRef.current = requestAnimationFrame(run);
       } else {
-        setVisualState(1);
+        setVisualState(1, 0);
       }
     };
 
     rafRef.current = requestAnimationFrame(run);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [pulseSignal, setVisualState, upMs, holdMs, downMs]);
+  }, [pulseSignal, setVisualState, upMs, holdMs, downMs, scaleDisabled]);
 
   const padX = 5;
   const iconBoxSize = 16;
@@ -440,7 +440,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       </g>
 
       {nodes.map((n, i) => {
-        const pulseCfg = i === 1 ? { upMs: 140, holdMs: 250, downMs: 420 } : { upMs: 160, holdMs: 450, downMs: 500 };
+        const pulseCfg = i === 1 ? { upMs: 140, holdMs: 0, downMs: 420, scaleDisabled: true } : { upMs: 160, holdMs: 450, downMs: 500 };
         return <NodeCard key={n.title} node={n} pulseSignal={pulseSignals[i] ?? 0} {...pulseCfg} />;
       })}
     </VisibleSvg>

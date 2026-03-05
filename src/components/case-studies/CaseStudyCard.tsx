@@ -1,4 +1,4 @@
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import type { CaseStudy, CaseMetric } from "./caseStudiesData";
@@ -93,8 +93,14 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
 
           {/* ── System Overview (diagram left, info right) ── */}
           <div className="grid grid-cols-1 lg:grid-cols-5 border-t border-border">
-            {/* Diagram */}
-            <div className={`lg:col-span-3 p-4 sm:p-5 flex items-start ${isEven ? '' : 'lg:order-2'}`}>
+            {/* Diagram with label above */}
+            <div className={`lg:col-span-3 p-4 sm:p-5 ${isEven ? '' : 'lg:order-2'}`}>
+              <SectionHeader>Systeemoverzicht</SectionHeader>
+              <p className="text-[12px] text-muted-foreground leading-relaxed mb-3">
+                {cs.videoUrl
+                  ? "Bekijk de video om te zien hoe het automatiseringssysteem werkt."
+                  : "Vereenvoudigde weergave van de automatiseringspipeline."}
+              </p>
               {cs.videoUrl ? (
                 <video
                   src={cs.videoUrl}
@@ -104,23 +110,12 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
                   disablePictureInPicture
                 />
               ) : (
-                <div className="w-full -mt-1">
-                  <Visual />
-                </div>
+                <Visual />
               )}
             </div>
 
-            {/* Info: overview label, results, technology */}
+            {/* Info: results, technology, testimonial */}
             <div className={`lg:col-span-2 border-t lg:border-t-0 ${isEven ? 'lg:border-l' : 'lg:border-r lg:order-1'} border-border p-5 sm:p-6 space-y-4`}>
-              <div>
-                <SectionHeader>Systeemoverzicht</SectionHeader>
-                <p className="text-[12px] text-muted-foreground leading-relaxed">
-                  {cs.videoUrl
-                    ? "Bekijk de video om te zien hoe het automatiseringssysteem werkt."
-                    : "Vereenvoudigde weergave van de automatiseringspipeline."}
-                </p>
-              </div>
-
               <div>
                 <SectionHeader>Resultaat & Impact</SectionHeader>
                 <div className="space-y-1.5">
@@ -143,6 +138,27 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
                   ))}
                 </div>
               </div>
+
+              {cs.testimonial && (
+                <div className="rounded-lg border border-border bg-muted/30 p-4 space-y-2.5">
+                  <div className="flex items-center gap-1.5">
+                    <Star size={12} className="text-primary fill-primary" />
+                    <p className="text-[11px] font-semibold text-primary tracking-wide uppercase">Klantreview</p>
+                  </div>
+                  <p className="text-[12px] text-muted-foreground leading-relaxed italic">
+                    "{cs.testimonial.quote}"
+                  </p>
+                  <div className="flex items-center gap-2.5 pt-1">
+                    {cs.testimonial.logo && (
+                      <img src={cs.testimonial.logo} alt={cs.testimonial.company} className="h-5 object-contain" />
+                    )}
+                    <div>
+                      <p className="text-[12px] font-semibold text-foreground leading-tight">— {cs.testimonial.name}</p>
+                      <p className="text-[11px] text-muted-foreground">{cs.testimonial.role}, {cs.testimonial.company}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

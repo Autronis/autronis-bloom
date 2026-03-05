@@ -5,6 +5,7 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import CaseStudyCard from "@/components/case-studies/CaseStudyCard";
 import { cases } from "@/components/case-studies/caseStudiesData";
 import { useEffect } from "react";
+import SEOHead from "@/components/SEOHead";
 
 const CaseStudies = () => {
   const { hash } = useLocation();

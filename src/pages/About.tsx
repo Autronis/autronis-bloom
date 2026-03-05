@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Target, Shield, Users, Handshake } from "lucide-react";
+import SEOHead from "@/components/SEOHead";
 
 import { useState, useEffect } from "react";
 import fotoSyb from "@/assets/foto_syb.jpg";
@@ -102,6 +103,11 @@ const TeamCard = ({ member }: { member: typeof team[0] }) => {
 const About = () => {
   return (
     <>
+      <SEOHead
+        title="Autronis | Over Ons — Systeemarchitectuur & Automatisering"
+        description="Leer meer over Autronis: ons team, onze waarden en onze missie om bedrijven te helpen groeien met schaalbare automatisering."
+        path="/about"
+      />
       <section className="pt-16 pb-24 relative overflow-hidden">
         
         <div className="container mx-auto px-4 lg:px-8 relative z-10">

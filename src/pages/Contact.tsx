@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 import { ArrowRight, Mail, Linkedin, Clock } from "lucide-react";
 import { useState } from "react";
+import SEOHead from "@/components/SEOHead";
 
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
@@ -13,6 +14,11 @@ const Contact = () => {
 
   return (
     <>
+      <SEOHead
+        title="Autronis | Contact — Neem Contact Op"
+        description="Neem contact op met Autronis voor vragen over automatisering, integraties of een vrijblijvende Automation Scan. We reageren binnen 24 uur."
+        path="/contact"
+      />
       <section className="pt-16 pb-24 relative overflow-hidden">
         
         <div className="container mx-auto px-4 lg:px-8 relative z-10">

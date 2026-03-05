@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SEOHead from "@/components/SEOHead";
 import Layout from "@/components/Layout";
 import { Link } from "react-router-dom";
 import { ArrowRight, BookOpen, Calculator, BarChart3, Workflow, Euro, Settings, UserPlus, Layers, Link2, ShieldCheck } from "lucide-react";
@@ -145,6 +146,12 @@ const Resources = () => {
   const [scanOpen, setScanOpen] = useState(false);
 
   return (
+    <>
+    <SEOHead
+      title="Autronis | Inzichten & Gidsen — Automatisering voor MKB"
+      description="Praktische inzichten en gidsen over procesautomatisering, systeemintegraties en AI voor groeiende MKB-bedrijven."
+      path="/resources"
+    />
     <section className="pt-16 pb-24 relative overflow-hidden">
       <AutomationImpactScan open={scanOpen} onOpenChange={setScanOpen} />
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
@@ -249,6 +256,7 @@ const Resources = () => {
         </ScrollReveal>
       </div>
     </section>
+    </>
   );
 };
 

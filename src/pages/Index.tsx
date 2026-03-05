@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import HeroBackground from "@/components/home/HeroBackground";
 import StatisticsBlock from "@/components/home/StatisticsBlock";
 import { AnimatePresence, motion } from "framer-motion";
+import SEOHead, { organizationSchema, websiteSchema } from "@/components/SEOHead";
 
 // Lazy-load all below-fold sections
 const ProblemSolutionSection = lazy(() => import("@/components/home/ProblemSolutionSection"));
@@ -87,6 +88,23 @@ const Index = () => {
 
   return (
     <>
+      <SEOHead
+        title="Autronis | AI automatisering & workflow automatisering voor groeiende bedrijven"
+        description="Autronis automatiseert processen, integreert systemen en bouwt realtime data-inzichten. Schaalbare architectuur voor groeiende bedrijven in Nederland."
+        path="/"
+        jsonLd={[
+          organizationSchema,
+          websiteSchema,
+          {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            name: "Autronis — Systeemarchitectuur & Automatisering",
+            description: "Autronis automatiseert processen, integreert systemen en bouwt realtime data-inzichten.",
+            url: "https://autronis-bloom.lovable.app/",
+            publisher: { "@type": "Organization", name: "Autronis" },
+          },
+        ]}
+      />
       {/* Hero */}
       <section className="hero-section relative min-h-[75vh] sm:min-h-screen flex flex-col items-center justify-center pt-16 sm:pt-0" >
         <HeroBackground />

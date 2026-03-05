@@ -5,6 +5,7 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import CaseStudyCard from "@/components/case-studies/CaseStudyCard";
 import { cases } from "@/components/case-studies/caseStudiesData";
 import { useEffect } from "react";
+import SEOHead from "@/components/SEOHead";
 
 const CaseStudies = () => {
   const { hash } = useLocation();
@@ -18,6 +19,12 @@ const CaseStudies = () => {
     }
   }, [hash]);
   return (
+    <>
+    <SEOHead
+      title="Autronis | Case Studies — Automatiseringsimplementaties"
+      description="Bekijk concrete voorbeelden van hoe Autronis processen automatiseert, systemen integreert en schaalbaarheid realiseert voor groeiende bedrijven."
+      path="/case-studies"
+    />
     <section className="pt-16 pb-24 relative overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <ScrollReveal className="max-w-2xl mx-auto text-center mb-16">
@@ -51,6 +58,7 @@ const CaseStudies = () => {
         </ScrollReveal>
       </div>
     </section>
+    </>
   );
 };
 

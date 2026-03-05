@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Users, Eye, Shield, Clock, Boxes, Cable, BarChart3, Wrench, Cog, Bot, Brain, MessageCircle, Globe, Search, Radio, Database, Puzzle, FolderOpen, Zap, TrendingUp, BookOpen, FileBarChart, Link2 } from "lucide-react";
+import SEOHead from "@/components/SEOHead";
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import fotoSyb from "@/assets/foto_syb.jpg";
@@ -127,6 +128,11 @@ const WerkstandaardSection = ({ reasons }: { reasons: typeof directReasons }) =>
 const Team = () => {
   return (
     <>
+      <SEOHead
+        title="Autronis | Team — De Engineers Achter Uw Automatisering"
+        description="Maak kennis met het Autronis team. Wij zijn de engineers die uw processen, systemen en datastromen structureel verbeteren."
+        path="/team"
+      />
       <section className="pt-16 pb-24 relative overflow-hidden">
         
         <div className="container mx-auto px-4 lg:px-8 relative z-10">

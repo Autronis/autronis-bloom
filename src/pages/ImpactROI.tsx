@@ -1,5 +1,6 @@
 // Layout is provided by App.tsx
 import ImpactSimulator from "@/components/impact/ImpactSimulator";
+import SEOHead from "@/components/SEOHead";
 import { Clock, CheckCircle, Users, TrendingUp, Shield, BarChart3, Calculator } from "lucide-react";
 import { motion } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
@@ -46,6 +47,11 @@ const factors = [
 const ImpactROI = () => {
   return (
     <>
+      <SEOHead
+        title="Autronis | Impact & ROI — Bereken Uw Automatiseringspotentieel"
+        description="Bereken de ROI van automatisering voor uw organisatie. Ontdek hoeveel tijd en kosten u kunt besparen met onze impact calculator."
+        path="/impact-roi"
+      />
       {/* Impact Simulator */}
       <ImpactSimulator />
 

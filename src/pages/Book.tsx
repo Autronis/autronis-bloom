@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
+import SEOHead from "@/components/SEOHead";
 
 
 const Book = () => {
@@ -32,6 +33,11 @@ const Book = () => {
 
   return (
     <>
+      <SEOHead
+        title="Autronis | Plan Uw Automation Scan"
+        description="Plan een vrijblijvende Automation Scan en ontdek waar automatisering de grootste impact heeft voor uw organisatie. We reageren binnen 24 uur."
+        path="/book"
+      />
       <section className="pt-16 pb-24 relative overflow-hidden">
         
         <div className="container mx-auto px-4 lg:px-8 relative z-10">

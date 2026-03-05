@@ -7,13 +7,13 @@ import type { CaseStudy, CaseMetric } from "./caseStudiesData";
 const MetricCard = ({ metric }: { metric: CaseMetric }) => {
   const Icon = metric.icon;
   return (
-    <div className="flex items-center gap-3 rounded-lg border border-primary/20 bg-primary/5 px-4 py-3">
-      <div className="w-9 h-9 rounded-md bg-primary/10 flex items-center justify-center text-primary shrink-0">
-        <Icon size={18} />
+    <div className="flex items-center gap-3 rounded-lg border border-primary/20 bg-primary/5 px-3.5 py-2.5">
+      <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center text-primary shrink-0">
+        <Icon size={16} />
       </div>
       <div className="min-w-0">
-        <p className="text-lg font-bold text-foreground leading-tight">{metric.value}</p>
-        <p className="text-xs text-muted-foreground leading-snug">{metric.label}</p>
+        <p className="text-base font-bold text-foreground leading-tight">{metric.value}</p>
+        <p className="text-[11px] text-muted-foreground leading-snug">{metric.label}</p>
       </div>
     </div>
   );
@@ -21,18 +21,18 @@ const MetricCard = ({ metric }: { metric: CaseMetric }) => {
 
 /* ─── Section Header ─── */
 const SectionHeader = ({ children }: { children: string }) => (
-  <p className="text-xs font-semibold text-primary mb-2 tracking-wide uppercase">{children}</p>
+  <p className="text-[11px] font-semibold text-primary mb-1.5 tracking-wide uppercase">{children}</p>
 );
 
 /* ─── Bullet List ─── */
 const BulletList = ({ items, icon }: { items: string[]; icon?: "check" | "dot" }) => (
-  <ul className="space-y-1.5">
+  <ul className="space-y-1">
     {items.map((item, i) => (
-      <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground leading-relaxed">
+      <li key={i} className="flex items-start gap-2 text-[13px] text-muted-foreground leading-relaxed">
         {icon === "check" ? (
-          <CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0" />
+          <CheckCircle2 size={13} className="text-primary mt-0.5 shrink-0" />
         ) : (
-          <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-2 shrink-0" />
+          <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-[7px] shrink-0" />
         )}
         {item}
       </li>
@@ -51,15 +51,15 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
       <ScrollRevealItem>
         <div className="rounded-xl border border-border bg-card overflow-hidden">
           {/* ── Header + Metrics ── */}
-          <div className="p-6 sm:p-8 pb-0 sm:pb-0">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                <Icon size={20} />
+          <div className="p-5 sm:p-6 pb-0 sm:pb-0">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                <Icon size={18} />
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-foreground">{cs.title}</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-foreground">{cs.title}</h2>
             </div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 mb-5">
               {cs.metrics.map((m, j) => (
                 <MetricCard key={j} metric={m} />
               ))}
@@ -68,23 +68,23 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
 
           {/* ── Context + Problem ── */}
           <div className="grid grid-cols-1 lg:grid-cols-2 border-t border-border">
-            <div className="p-6 sm:p-8 lg:border-r border-border">
+            <div className="p-5 sm:p-6 lg:border-r border-border">
               <SectionHeader>Context</SectionHeader>
-              <p className="text-sm text-muted-foreground leading-relaxed">{cs.context}</p>
+              <p className="text-[13px] text-muted-foreground leading-relaxed">{cs.context}</p>
             </div>
-            <div className="p-6 sm:p-8 border-t lg:border-t-0 border-border">
+            <div className="p-5 sm:p-6 border-t lg:border-t-0 border-border">
               <SectionHeader>Probleem</SectionHeader>
               <BulletList items={cs.problem} />
             </div>
           </div>
 
           {/* ── Solution ── */}
-          <div className="border-t border-border p-6 sm:p-8">
+          <div className="border-t border-border p-5 sm:p-6">
             <SectionHeader>Oplossing</SectionHeader>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">
               {cs.solution.map((item, i) => (
-                <div key={i} className="flex items-start gap-2 text-sm text-muted-foreground leading-relaxed">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-2 shrink-0" />
+                <div key={i} className="flex items-start gap-2 text-[13px] text-muted-foreground leading-relaxed">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-[7px] shrink-0" />
                   {item}
                 </div>
               ))}
@@ -93,7 +93,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
 
           {/* ── System Overview Visual ── */}
           <div className="grid grid-cols-1 lg:grid-cols-5 border-t border-border">
-            <div className={`lg:col-span-3 min-h-[280px] flex items-center justify-center p-4 sm:p-6 ${isEven ? '' : 'lg:order-2'}`}>
+            <div className={`lg:col-span-3 min-h-[260px] flex items-center justify-center p-4 sm:p-5 ${isEven ? '' : 'lg:order-2'}`}>
               {cs.videoUrl ? (
                 <video
                   src={cs.videoUrl}
@@ -106,9 +106,9 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
                 <Visual />
               )}
             </div>
-            <div className={`lg:col-span-2 border-t lg:border-t-0 ${isEven ? 'lg:border-l' : 'lg:border-r lg:order-1'} border-border p-6 sm:p-8`}>
+            <div className={`lg:col-span-2 border-t lg:border-t-0 ${isEven ? 'lg:border-l' : 'lg:border-r lg:order-1'} border-border p-5 sm:p-6`}>
               <SectionHeader>Systeemoverzicht</SectionHeader>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+              <p className="text-[13px] text-muted-foreground leading-relaxed mb-3">
                 {cs.videoUrl
                   ? "Bekijk de video om te zien hoe het automatiseringssysteem werkt — van leadbronnen tot CRM-synchronisatie."
                   : "Het diagram toont de volledige automatiseringspipeline — van databronnen tot output."}
@@ -116,7 +116,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
               <SectionHeader>Technologie</SectionHeader>
               <div className="flex flex-wrap gap-1.5">
                 {cs.technology.map((t, j) => (
-                  <Badge key={j} variant="secondary" className="text-xs font-medium">
+                  <Badge key={j} variant="secondary" className="text-[11px] font-medium px-2 py-0.5">
                     {t}
                   </Badge>
                 ))}
@@ -125,12 +125,12 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
           </div>
 
           {/* ── Results ── */}
-          <div className="border-t border-border p-6 sm:p-8">
+          <div className="border-t border-border p-5 sm:p-6">
             <SectionHeader>Resultaat & Impact</SectionHeader>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">
               {cs.results.map((r, j) => (
-                <div key={j} className="flex items-start gap-2 text-sm text-muted-foreground leading-relaxed">
-                  <CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0" />
+                <div key={j} className="flex items-start gap-2 text-[13px] text-muted-foreground leading-relaxed">
+                  <CheckCircle2 size={13} className="text-primary mt-0.5 shrink-0" />
                   {r}
                 </div>
               ))}

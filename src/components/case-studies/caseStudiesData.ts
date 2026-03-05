@@ -145,6 +145,12 @@ export const cases: CaseStudy[] = [
       { label: "Response generation", category: "ai", tooltip: "Genereert consistente antwoorden in tone-of-voice." },
     ],
     visual: SupportFlowDiagram,
+    testimonial: {
+      quote: "Het systeem heeft ons supportteam enorm ontlast. Veel terugkerende vragen worden nu automatisch afgehandeld, waardoor we sneller kunnen reageren en meer tijd hebben voor complexe cases.",
+      name: "Operations manager",
+      role: "E-commerce bedrijf",
+      company: "(klant anoniem)",
+    },
   },
   {
     title: "Marketing en rapportage automatisering",
@@ -192,5 +198,11 @@ export const cases: CaseStudy[] = [
       { label: "Attribution analytics", category: "analytics", tooltip: "Inzicht in kanaalbijdrage en conversie-impact." },
     ],
     visual: MarketingFlowDiagram,
+    testimonial: {
+      quote: "Voorheen kostte het ons meerdere uren per week om rapportages samen te stellen. Nu worden dashboards automatisch bijgewerkt en hebben we realtime inzicht in campagnes.",
+      name: "Marketing lead",
+      role: "Marketingbureau",
+      company: "(klant anoniem)",
+    },
   },
 ];

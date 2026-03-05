@@ -138,7 +138,7 @@ export const cases: CaseStudy[] = [
       "Website-analyse automatisering",
       "API-integraties",
       "Batch e-mail outreach systeem",
-      "CRM-synchronisatie",
+      "Dashboard-synchronisatie",
       "Workflow automatisering",
     ],
     visual: LeadFlowDiagram,

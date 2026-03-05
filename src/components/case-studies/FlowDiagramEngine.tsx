@@ -229,20 +229,51 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   const TOTAL_CYCLE = TRAVEL_DURATION + END_PAUSE;
   const MASK_PAD = 2;
 
-  // Remap progress so the L-shaped connector moves 40% faster
-  const remapProgress = useCallback((t: number) => {
-    if (checkpoints.length < 5) return t;
-    const segStart = checkpoints[2];
-    const segEnd = checkpoints[3];
-    const segLen = segEnd - segStart;
-    const fastSegLen = segLen * 0.6;
-    const shift = segLen - fastSegLen;
-    if (t <= segStart) return t;
-    if (t <= segStart + fastSegLen) {
-      return segStart + ((t - segStart) / fastSegLen) * segLen;
-    }
-    return t + shift;
+  // Segment-speed mapping: accelerate around node 02 and the L-connector
+  const timingWindows = useMemo(() => {
+    if (checkpoints.length < 2) return [] as Array<{ cpStart: number; cpEnd: number; tStart: number; tEnd: number }>;
+
+    const segmentCount = checkpoints.length - 1;
+    const speeds = Array.from({ length: segmentCount }, (_, i) => {
+      if (i === 1) return 2.8; // much faster around node 02 area
+      if (i === 2) return 1.6; // keep L-connector faster
+      return 1;
+    });
+
+    const lengths = Array.from({ length: segmentCount }, (_, i) => Math.max(0.0001, checkpoints[i + 1] - checkpoints[i]));
+    const effective = lengths.map((len, i) => len / speeds[i]);
+    const totalEffective = effective.reduce((acc, v) => acc + v, 0) || 1;
+
+    let tCursor = 0;
+    return lengths.map((len, i) => {
+      const tLen = effective[i] / totalEffective;
+      const window = {
+        cpStart: checkpoints[i],
+        cpEnd: checkpoints[i + 1],
+        tStart: tCursor,
+        tEnd: tCursor + tLen,
+      };
+      tCursor += tLen;
+      return window;
+    });
   }, [checkpoints]);
+
+  const remapProgress = useCallback((t: number) => {
+    if (t >= 1) return 1;
+    if (!timingWindows.length) return t;
+
+    const clamped = Math.max(0, Math.min(1, t));
+    for (let i = 0; i < timingWindows.length; i++) {
+      const w = timingWindows[i];
+      if (clamped <= w.tEnd || i === timingWindows.length - 1) {
+        const denom = Math.max(0.0001, w.tEnd - w.tStart);
+        const local = Math.max(0, Math.min(1, (clamped - w.tStart) / denom));
+        return w.cpStart + local * (w.cpEnd - w.cpStart);
+      }
+    }
+
+    return clamped;
+  }, [timingWindows]);
 
   useEffect(() => {
     setPulseSignals(nodes.map(() => 0));

@@ -1,7 +1,7 @@
 import { CheckCircle2, AlertTriangle, Star } from "lucide-react";
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Badge } from "@/components/ui/badge";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import { TechTagList } from "@/components/case-studies/TechTag";
 import type { CaseStudy, CaseMetric, MetricAnimation } from "./caseStudiesData";
 
 /* ─── Animated Value ─── */
@@ -193,13 +193,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
 
               <div>
                 <SectionHeader>Technologie</SectionHeader>
-                <div className="flex flex-wrap gap-1.5">
-                  {cs.technology.map((t, j) => (
-                    <Badge key={j} variant="secondary" className="text-[11px] font-medium px-2 py-0.5">
-                      {t}
-                    </Badge>
-                  ))}
-                </div>
+                <TechTagList tags={cs.technologyTags} />
               </div>
 
               {cs.testimonial && (

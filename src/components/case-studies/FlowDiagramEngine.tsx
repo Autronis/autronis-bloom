@@ -154,9 +154,9 @@ const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs }: {
   const iconBoxX = node.x - node.w / 2 + padX;
   const iconBoxY = node.y - iconBoxSize / 2;
 
-  // Step indicator position (top-left corner, small)
-  const stepX = node.x - node.w / 2 + 2;
-  const stepY = node.y - node.h / 2 - 1;
+  // Step number right-aligned inside the card
+  const stepX = node.x + node.w / 2 - 6;
+  const stepY = node.y + 1.5;
 
   return (
     <g ref={gRef}>
@@ -171,7 +171,7 @@ const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs }: {
         width={node.w + 2} height={node.h + 2} rx={7}
         fill="none" stroke="hsl(var(--primary))" strokeWidth="0.6" opacity="0" />
 
-      {/* Step indicator */}
+      {/* Step indicator inside card */}
       {node.step != null && (
         <text x={stepX} y={stepY}
           fontSize="4.5" fontWeight="600"

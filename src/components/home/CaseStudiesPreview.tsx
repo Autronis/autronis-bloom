@@ -10,10 +10,10 @@ interface CaseStudy {
   title: string;
   description: string;
   results: string[];
-  /** Index in the main caseStudiesData array */
   caseIndex: number;
   trust?: {
     logoSrc: string;
+    website?: string;
   };
 }
 
@@ -30,6 +30,7 @@ const cases: CaseStudy[] = [
     ],
     trust: {
       logoSrc: "/assets/jobby-logo.png",
+      website: "https://teamjobby.nl/",
     },
   },
   {
@@ -111,13 +112,26 @@ const CaseCard = ({
 
         {/* Trust indicator (only Jobby) */}
         {cs.trust && (
-          <div className="border-t border-border pt-3 mt-3 flex items-center gap-2.5">
-            <img src={cs.trust.logoSrc} alt="" className="h-5 object-contain opacity-70 shrink-0" />
-            <div className="flex gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} size={13} className="fill-primary text-primary" />
-              ))}
+          <div className="border-t border-border pt-3 mt-3">
+            <div className="flex items-center gap-2.5">
+              <img src={cs.trust.logoSrc} alt="" className="h-5 object-contain opacity-70 shrink-0" />
+              <div className="flex gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={13} className="fill-primary text-primary" />
+                ))}
+              </div>
             </div>
+            {cs.trust.website && (
+              <a
+                href={cs.trust.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[11px] text-primary/60 hover:text-primary transition-colors duration-200 mt-1.5 inline-block"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {cs.trust.website.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+              </a>
+            )}
           </div>
         )}
 

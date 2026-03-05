@@ -39,21 +39,18 @@ const buildContinuousPath = (segments: Point[][]) => {
 };
 
 /* ─── Visibility wrapper ─── */
-const VisibleSvg = ({ children, viewBox, className }: { children: ReactNode; viewBox: string; className?: string }) => {
+const VisibleSvg = ({ children, viewBox, className, onVisibilityChange }: {
+  children: ReactNode; viewBox: string; className?: string;
+  onVisibilityChange?: (vis: boolean) => void;
+}) => {
   const ref = useRef<SVGSVGElement>(null);
-  const [vis, setVis] = useState(false);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const obs = new IntersectionObserver(([e]) => setVis(e.isIntersecting), { threshold: 0.1 });
+    const obs = new IntersectionObserver(([e]) => onVisibilityChange?.(e.isIntersecting), { threshold: 0.1 });
     obs.observe(el);
     return () => obs.disconnect();
-  }, []);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    vis ? el.unpauseAnimations?.() : el.pauseAnimations?.();
-  }, [vis]);
+  }, [onVisibilityChange]);
   return (
     <svg ref={ref} viewBox={viewBox} className={className} fill="none" overflow="visible"
       role="img" aria-label="Automatiseringsdiagram">{children}</svg>
@@ -105,10 +102,6 @@ const NodeCard = ({ node, index, highlighted }: {
 
   return (
     <g ref={gRef}>
-      {/* Gentle float */}
-      <animateTransform attributeName="transform" type="translate"
-        values="0 0;0 -1;0 0" dur={`${3.5 + (index % 3) * 0.5}s`}
-        begin={`${index * 0.15}s`} repeatCount="indefinite" additive="sum" />
 
       {/* Card bg */}
       <rect x={node.x - node.w / 2} y={node.y - node.h / 2}
@@ -159,24 +152,20 @@ const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   const glowDotRef = useRef<SVGCircleElement>(null);
   const [highlightedNode, setHighlightedNode] = useState<number>(-1);
   const highlightTimers = useRef<number[]>([]);
+  const visibleRef = useRef(false);
+  const animIdRef = useRef(0);
+  const startRef = useRef<number | null>(null);
+  const lastTriggeredRef = useRef(-1);
 
   const continuousPath = buildContinuousPath(segments);
   const segLens = segments.map(polylineLength);
   const totalLen = segLens.reduce((a, b) => a + b, 0) || 1;
-  const segTimes = segments.map((_, i) => ({
-    start: segLens.slice(0, i).reduce((a, b) => a + b, 0) / totalLen,
-    mid: (segLens.slice(0, i).reduce((a, b) => a + b, 0) + segLens[i] / 2) / totalLen,
-    end: segLens.slice(0, i + 1).reduce((a, b) => a + b, 0) / totalLen,
-  }));
 
-  // Node arrival fractions (where each node sits along the full path)
-  // Node 0 = start, Node 1 = after seg 0, Node 2 = after seg 1, etc.
   const nodeArrivals = [0, ...segLens.map((_, i) => segLens.slice(0, i + 1).reduce((a, b) => a + b, 0) / totalLen)];
 
   const vb = viewBox.split(" ").map(Number);
   const PAD = 12;
 
-  // Mask rectangles for card areas
   const clipHoles = nodes.map((n) => {
     const x = n.x - n.w / 2 - PAD;
     const y = n.y - n.h / 2 - PAD;
@@ -186,76 +175,74 @@ const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
     return `M${x + r},${y} H${x + w - r} Q${x + w},${y} ${x + w},${y + r} V${y + h - r} Q${x + w},${y + h} ${x + w - r},${y + h} H${x + r} Q${x},${y + h} ${x},${y + h - r} V${y + r} Q${x},${y} ${x + r},${y} Z`;
   }).join(" ");
 
-  // JS animation loop for the dot
-  const TRAVEL_DURATION = 12000; // ms for full path travel
-  const END_PAUSE = 600; // ms pause after last node
-  const HOLD_DURATION = 350; // ms hold at scale
+  const TRAVEL_DURATION = 12000;
+  const END_PAUSE = 600;
+  const HOLD_DURATION = 350;
   const TOTAL_CYCLE = TRAVEL_DURATION + END_PAUSE;
 
   const triggerHighlight = useCallback((nodeIndex: number) => {
-    // Clear any existing timer for this node
-    if (highlightTimers.current[nodeIndex]) {
-      clearTimeout(highlightTimers.current[nodeIndex]);
-    }
+    if (highlightTimers.current[nodeIndex]) clearTimeout(highlightTimers.current[nodeIndex]);
     setHighlightedNode(nodeIndex);
     highlightTimers.current[nodeIndex] = window.setTimeout(() => {
-      setHighlightedNode((current) => current === nodeIndex ? -1 : current);
+      setHighlightedNode((cur) => cur === nodeIndex ? -1 : cur);
     }, HOLD_DURATION);
   }, []);
 
-  useEffect(() => {
+  const tick = useCallback((now: number) => {
+    if (!visibleRef.current) return;
     const path = pathRef.current;
     const dot = dotRef.current;
     const glow = glowDotRef.current;
-    if (!path || !dot || !glow) return;
+    if (!path || !dot || !glow) { animIdRef.current = requestAnimationFrame(tick); return; }
 
+    if (startRef.current === null) startRef.current = now;
+    const elapsed = (now - startRef.current) % TOTAL_CYCLE;
+    const fraction = Math.min(elapsed / TRAVEL_DURATION, 1);
     const pathLength = path.getTotalLength();
-    let start: number | null = null;
-    let lastTriggered = -1;
-    let animId = 0;
 
-    const tick = (now: number) => {
-      if (start === null) start = now;
-      const elapsed = (now - start) % TOTAL_CYCLE;
-      const fraction = Math.min(elapsed / TRAVEL_DURATION, 1);
+    if (fraction < 1) {
+      const pt = path.getPointAtLength(fraction * pathLength);
+      dot.setAttribute("cx", String(pt.x));
+      dot.setAttribute("cy", String(pt.y));
+      glow.setAttribute("cx", String(pt.x));
+      glow.setAttribute("cy", String(pt.y));
+      dot.setAttribute("opacity", "1");
+      glow.setAttribute("opacity", "1");
 
-      if (fraction < 1) {
-        const pt = path.getPointAtLength(fraction * pathLength);
-        dot.setAttribute("cx", String(pt.x));
-        dot.setAttribute("cy", String(pt.y));
-        glow.setAttribute("cx", String(pt.x));
-        glow.setAttribute("cy", String(pt.y));
-        dot.setAttribute("opacity", "1");
-        glow.setAttribute("opacity", "1");
-
-        // Check if dot has reached a node
-        for (let i = 0; i < nodeArrivals.length; i++) {
-          if (fraction >= nodeArrivals[i] - 0.005 && lastTriggered < i) {
-            lastTriggered = i;
-            triggerHighlight(i);
-          }
-        }
-      } else {
-        // End pause: hide dot
-        dot.setAttribute("opacity", "0");
-        glow.setAttribute("opacity", "0");
-        if (elapsed >= TOTAL_CYCLE - 50) {
-          lastTriggered = -1; // reset for next loop
+      for (let i = 0; i < nodeArrivals.length; i++) {
+        if (fraction >= nodeArrivals[i] - 0.005 && lastTriggeredRef.current < i) {
+          lastTriggeredRef.current = i;
+          triggerHighlight(i);
         }
       }
+    } else {
+      dot.setAttribute("opacity", "0");
+      glow.setAttribute("opacity", "0");
+      if (elapsed >= TOTAL_CYCLE - 50) lastTriggeredRef.current = -1;
+    }
 
-      animId = requestAnimationFrame(tick);
-    };
+    animIdRef.current = requestAnimationFrame(tick);
+  }, [nodeArrivals, triggerHighlight, TOTAL_CYCLE, TRAVEL_DURATION]);
 
-    animId = requestAnimationFrame(tick);
+  const handleVisibility = useCallback((vis: boolean) => {
+    visibleRef.current = vis;
+    if (vis) {
+      startRef.current = null; // reset so it starts fresh
+      animIdRef.current = requestAnimationFrame(tick);
+    } else {
+      cancelAnimationFrame(animIdRef.current);
+    }
+  }, [tick]);
+
+  useEffect(() => {
     return () => {
-      cancelAnimationFrame(animId);
+      cancelAnimationFrame(animIdRef.current);
       highlightTimers.current.forEach(clearTimeout);
     };
-  }, [nodeArrivals, triggerHighlight]);
+  }, []);
 
   return (
-    <VisibleSvg viewBox={viewBox} className="w-full h-auto">
+    <VisibleSvg viewBox={viewBox} className="w-full h-auto" onVisibilityChange={handleVisibility}>
       <defs>
         <marker id="lead-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5"
           orient="auto" markerUnits="strokeWidth">
@@ -267,7 +254,6 @@ const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         </clipPath>
       </defs>
 
-      {/* Connector lines */}
       {segments.map((seg, idx) => (
         <g key={idx}>
           <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="3"
@@ -277,14 +263,12 @@ const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         </g>
       ))}
 
-      {/* Cards on top */}
       {nodes.map((n, i) => (
         <NodeCard key={n.title} node={n} index={i} highlighted={highlightedNode === i} />
       ))}
 
-      {/* Dot – clipped behind cards */}
       <g clipPath="url(#dot-clip)">
-        <path ref={pathRef} id="lead-flow-route" d={continuousPath} fill="none" stroke="none" />
+        <path ref={pathRef} d={continuousPath} fill="none" stroke="none" />
         <circle ref={glowDotRef} cx="0" cy="0" r="8" fill="hsl(var(--primary) / 0.12)" opacity="0" />
         <circle ref={dotRef} cx="0" cy="0" r="3.5" fill="hsl(var(--primary))" opacity="0" />
       </g>

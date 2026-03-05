@@ -116,9 +116,9 @@ const NodeCard = ({ node, pulseSignal }: {
 
     cancelAnimationFrame(rafRef.current);
 
-    const UP = 280;
-    const HOLD = 600;
-    const DOWN = 500;
+    const UP = 180;
+    const HOLD = 1200;
+    const DOWN = 300;
     const TOTAL = UP + HOLD + DOWN;
 
     let start = 0;

@@ -50,7 +50,7 @@ const PreviewBadge = ({ skill }: { skill: Skill }) => {
   return (
     <span
       className={`inline-flex items-center gap-1.5 text-[10px] font-medium px-2.5 py-1 rounded-full border
-        ${cfg.overlayBorder} ${cfg.overlayBg} text-white`}
+        ${cfg.overlayBorder} ${cfg.overlayBg} ${cfg.text}`}
     >
       <Icon size={12} strokeWidth={2} className="shrink-0" />
       {skill.label}

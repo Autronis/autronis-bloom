@@ -86,7 +86,7 @@ const TimelineCard = ({
           ? "hsl(var(--primary) / 0.5)"
           : undefined,
         boxShadow: isActive || isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none",
-        transition: "all 200ms ease-out",
+        transition: "transform 200ms ease-out, opacity 200ms ease-out, border-color 200ms ease-out, box-shadow 200ms ease-out",
       }}
     >
       <div className="relative z-10">

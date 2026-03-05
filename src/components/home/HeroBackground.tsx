@@ -23,6 +23,7 @@ const HeroBackground = () => {
     let animationId: number;
     let time = 0;
     let isVisible = true;
+    let tabVisible = true;
     const isMobile = window.innerWidth < 768;
 
     // Pause when off-screen
@@ -94,7 +95,7 @@ const HeroBackground = () => {
     };
 
     const animate = () => {
-      if (!isVisible) { animationId = requestAnimationFrame(animate); return; }
+      if (!isVisible || !tabVisible) { animationId = requestAnimationFrame(animate); return; }
       const w = window.innerWidth;
       const h = window.innerHeight;
 
@@ -143,9 +144,14 @@ const HeroBackground = () => {
     };
 
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    // Pause when tab is hidden (Page Visibility API)
+    const handleVisChange = () => { tabVisible = document.visibilityState === "visible"; };
+    document.addEventListener("visibilitychange", handleVisChange);
+
     let startDelay: ReturnType<typeof setTimeout> | undefined;
     if (!motionQuery.matches) {
-      const delay = heroMountedBefore ? 0 : 500;
+      const delay = heroMountedBefore ? 0 : (isMobile ? 500 : 300);
       heroMountedBefore = true;
       startDelay = setTimeout(() => { animate(); }, delay);
     } else {
@@ -161,6 +167,7 @@ const HeroBackground = () => {
       if (startDelay) clearTimeout(startDelay);
       cancelAnimationFrame(animationId);
       visObserver.disconnect();
+      document.removeEventListener("visibilitychange", handleVisChange);
       window.removeEventListener("resize", resize);
     };
   }, []);

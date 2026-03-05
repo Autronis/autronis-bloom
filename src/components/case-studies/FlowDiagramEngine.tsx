@@ -456,7 +456,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments, travelDuration: trave
   const handleVisibility = useCallback((vis: boolean) => {
     visibleRef.current = vis;
 
-    if (vis) {
+    if (vis && document.visibilityState === "visible") {
       cancelAnimationFrame(animIdRef.current);
       animIdRef.current = requestAnimationFrame(tick);
       return;
@@ -469,6 +469,24 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments, travelDuration: trave
 
     startRef.current = null;
     cancelAnimationFrame(animIdRef.current);
+  }, [tick, TOTAL_CYCLE]);
+
+  // Pause/resume on tab visibility change (Page Visibility API)
+  useEffect(() => {
+    const onVisChange = () => {
+      if (document.visibilityState === "hidden") {
+        if (startRef.current !== null) {
+          elapsedRef.current = (performance.now() - startRef.current) % TOTAL_CYCLE;
+        }
+        startRef.current = null;
+        cancelAnimationFrame(animIdRef.current);
+      } else if (visibleRef.current) {
+        cancelAnimationFrame(animIdRef.current);
+        animIdRef.current = requestAnimationFrame(tick);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisChange);
+    return () => document.removeEventListener("visibilitychange", onVisChange);
   }, [tick, TOTAL_CYCLE]);
 
   useEffect(() => {

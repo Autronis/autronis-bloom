@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Target, Shield, Users, Handshake } from "lucide-react";
+import SEOHead from "@/components/SEOHead";
 
 import { useState, useEffect } from "react";
 import fotoSyb from "@/assets/foto_syb.jpg";

@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Users, Eye, Shield, Clock, Boxes, Cable, BarChart3, Wrench, Cog, Bot, Brain, MessageCircle, Globe, Search, Radio, Database, Puzzle, FolderOpen, Zap, TrendingUp, BookOpen, FileBarChart, Link2 } from "lucide-react";
+import SEOHead from "@/components/SEOHead";
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import fotoSyb from "@/assets/foto_syb.jpg";

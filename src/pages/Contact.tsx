@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 import { ArrowRight, Mail, Linkedin, Clock } from "lucide-react";
 import { useState } from "react";
+import SEOHead from "@/components/SEOHead";
 
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 

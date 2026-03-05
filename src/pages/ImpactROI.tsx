@@ -1,5 +1,6 @@
 // Layout is provided by App.tsx
 import ImpactSimulator from "@/components/impact/ImpactSimulator";
+import SEOHead from "@/components/SEOHead";
 import { Clock, CheckCircle, Users, TrendingUp, Shield, BarChart3, Calculator } from "lucide-react";
 import { motion } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";

@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { ArrowRight, ArrowLeft } from "lucide-react";
-
+import SEOHead from "@/components/SEOHead";
 
 const caseData: Record<string, {
   client: string; industry: string; metric: string;

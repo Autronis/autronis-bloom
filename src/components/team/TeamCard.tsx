@@ -36,7 +36,7 @@ const OverlaySkillBadge = ({ skill, index }: { skill: Skill; index: number }) =>
       transition={{ delay: index * 0.06, duration: 0.25, ease: "easeOut" }}
       className={`inline-flex items-center gap-1.5 text-[10px] font-medium px-2.5 py-1 rounded-full border
         ${cfg.overlayBorder} ${cfg.overlayBg}
-        text-white transition-colors duration-200 cursor-default`}
+        ${cfg.text} transition-colors duration-200 cursor-default`}
     >
       <Icon size={12} strokeWidth={2} className="shrink-0" />
       {skill.label}

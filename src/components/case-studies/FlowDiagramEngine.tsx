@@ -90,8 +90,8 @@ const VisibleSvg = ({ children, viewBox, className, onVisibilityChange }: {
 /* ─── Node card (arrival pulse animation) ─── */
 const easeInOut = (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs }: {
-  node: DiagramNode; pulseSignal: number; upMs?: number; holdMs?: number; downMs?: number;
+const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs, scaleDisabled }: {
+  node: DiagramNode; pulseSignal: number; upMs?: number; holdMs?: number; downMs?: number; scaleDisabled?: boolean;
 }) => {
   const gRef = useRef<SVGGElement>(null);
   const borderRef = useRef<SVGRectElement>(null);

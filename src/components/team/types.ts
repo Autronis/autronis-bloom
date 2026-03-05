@@ -64,13 +64,31 @@ export const categoryMeta: Record<SkillCategory, {
     overlayBorder: "border-[hsla(270,30%,55%,0.55)]",
     overlayBg: "bg-[hsla(270,25%,28%,0.90)]",
   },
+  infrastructure: {
+    border: "border-[hsl(30_55%_50%/0.35)]",
+    bg: "bg-[hsl(30_55%_50%/0.12)] dark:bg-[hsl(30_55%_50%/0.08)]",
+    text: "text-[hsl(30_55%_35%)] dark:text-[hsl(30_55%_70%)]",
+    glow: "hover:border-[hsl(30_55%_50%/0.55)] hover:shadow-[0_0_10px_hsl(30_55%_50%/0.12)]",
+    overlayBorder: "border-[hsla(30,45%,55%,0.55)]",
+    overlayBg: "bg-[hsla(30,40%,28%,0.92)]",
+  },
+  integrations: {
+    border: "border-[hsl(200_50%_50%/0.35)]",
+    bg: "bg-[hsl(200_50%_50%/0.12)] dark:bg-[hsl(200_50%_50%/0.08)]",
+    text: "text-[hsl(200_50%_35%)] dark:text-[hsl(200_50%_70%)]",
+    glow: "hover:border-[hsl(200_50%_50%/0.55)] hover:shadow-[0_0_10px_hsl(200_50%_50%/0.12)]",
+    overlayBorder: "border-[hsla(200,45%,55%,0.55)]",
+    overlayBg: "bg-[hsla(200,40%,28%,0.92)]",
+  },
 };
 
 export const categoryLabels: Record<SkillCategory, string> = {
   automation: "Automation & Systems",
   ai: "AI & Intelligence",
-  data: "Data & Infrastructure",
+  data: "Data & Scraping",
   operations: "Operations",
+  infrastructure: "Data Infrastructure",
+  integrations: "Integrations",
 };
 
 // Icon mapping for skills

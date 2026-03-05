@@ -462,7 +462,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       </g>
 
       {nodes.map((n, i) => {
-        const pulseCfg = { upMs: 140, holdMs: 600, downMs: 600 };
+        const pulseCfg = { upMs: 160, holdMs: 700, downMs: 500 };
         return <NodeCard key={n.title} node={n} pulseSignal={pulseSignals[i] ?? 0} {...pulseCfg} />;
       })}
     </VisibleSvg>

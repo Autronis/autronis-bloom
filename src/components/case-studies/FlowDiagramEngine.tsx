@@ -257,7 +257,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 
   const nodeCheckpoints = useMemo(() => {
     if (points.length < 2) {
-      return nodes.map(() => ({ arrivalProgress: 1, halfWindowPx: 12 }));
+      return nodes.map(() => ({ arrivalProgress: 1, halfWindowPx: 12, isLastNode: false }));
     }
 
     return nodes.map((node, nodeIdx) => {

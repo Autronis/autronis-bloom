@@ -106,12 +106,13 @@ const ArticleCard = ({ post }: { post: typeof guides[0] }) => (
 const IconCard = ({ icon: Icon, title, description, href, onClick }: { icon: any; title: string; description: string; href?: string; onClick?: () => void }) => {
   const content = (
     <div className="group rounded-xl border border-border bg-card p-4 sm:p-6 transition-all duration-300 hover:border-primary/30 md:hover:scale-[1.015] md:hover:-translate-y-0.5 flex flex-col h-full">
-      <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
-        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:bg-primary/15 transition-colors">
-          <Icon size={18} />
+      <div className="flex items-center gap-2.5 sm:block mb-2 sm:mb-0">
+        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:bg-primary/15 transition-colors sm:mb-4">
+          <Icon size={16} className="sm:w-5 sm:h-5" />
         </div>
-        <h3 className="text-base sm:text-lg font-semibold">{title}</h3>
+        <h3 className="text-base font-semibold sm:hidden">{title}</h3>
       </div>
+      <h3 className="hidden sm:block text-lg font-semibold mb-2">{title}</h3>
       <p className="text-sm text-muted-foreground leading-relaxed flex-1">{description}</p>
       {(href || onClick) && (
         <span className="mt-4 text-sm text-primary inline-flex items-center gap-1 group-hover:underline">

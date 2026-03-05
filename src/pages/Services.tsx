@@ -603,12 +603,13 @@ const Services = () => {
                     boxShadow: "0 4px 24px hsl(174, 78%, 33%, 0.08)",
                   }}
                 >
-                  <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                      <item.icon size={18} />
+                  <div className="flex items-center gap-2.5 sm:block mb-2 sm:mb-0">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0 sm:mb-4">
+                      <item.icon size={18} className="sm:w-5 sm:h-5" />
                     </div>
-                    <p className="text-sm sm:text-base font-semibold text-foreground">{item.title}</p>
+                    <p className="text-sm font-semibold text-foreground sm:hidden">{item.title}</p>
                   </div>
+                  <p className="hidden sm:block text-base font-semibold text-foreground mb-2">{item.title}</p>
                   <p className="text-sm text-foreground/90 leading-relaxed">{item.desc}</p>
                 </motion.div>
               ))}

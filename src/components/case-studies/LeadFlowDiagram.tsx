@@ -1,218 +1,285 @@
-import { useRef, useEffect, useState, useCallback } from "react";
-import { motion, useInView } from "framer-motion";
-import { Globe, Search, Database, Bot, Mail, RefreshCw, Phone } from "lucide-react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
-/* ─── Step data ─── */
-const steps = [
-  { icon: Globe, title: "Leadbronnen", desc: "Bedrijvengidsen, databases en websites" },
-  { icon: Search, title: "Leadverzameling", desc: "Automatisch verzamelen van bedrijven en contactgegevens" },
-  { icon: Database, title: "Data verwerking", desc: "Extractie en verrijking van bedrijfsinformatie" },
-  { icon: Bot, title: "AI Analyse", desc: "Analyse van bedrijfswebsites en identificatie van pijnpunten" },
-  { icon: Mail, title: "Outreach automatisering", desc: "Genereren en versturen van gepersonaliseerde e-mails" },
-  { icon: RefreshCw, title: "CRM synchronisatie", desc: "Opslaan en beheren van leads in het CRM" },
-  { icon: Phone, title: "Sales opvolging", desc: "Opvolgen via gesprekken, e-mail en pipeline" },
-];
+type Point = { x: number; y: number };
 
-/* ─── Glowing animated dot on SVG path ─── */
-const TravellingDot = ({ pathRef, active }: { pathRef: React.RefObject<SVGPathElement | null>; active: boolean }) => {
-  const dotRef = useRef<SVGCircleElement>(null);
-  const glowRef = useRef<SVGCircleElement>(null);
-  const raf = useRef<number>(0);
-  const progress = useRef(0);
-
-  useEffect(() => {
-    if (!active) return;
-    const path = pathRef.current;
-    const dot = dotRef.current;
-    const glow = glowRef.current;
-    if (!path || !dot || !glow) return;
-
-    const totalLen = path.getTotalLength();
-    const speed = 60; // px per second
-
-    let last = performance.now();
-    const tick = (now: number) => {
-      const dt = (now - last) / 1000;
-      last = now;
-      progress.current = (progress.current + (dt * speed) / totalLen) % 1;
-      const pt = path.getPointAtLength(progress.current * totalLen);
-      dot.setAttribute("cx", String(pt.x));
-      dot.setAttribute("cy", String(pt.y));
-      glow.setAttribute("cx", String(pt.x));
-      glow.setAttribute("cy", String(pt.y));
-      raf.current = requestAnimationFrame(tick);
-    };
-    raf.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf.current);
-  }, [active, pathRef]);
-
-  return (
-    <>
-      <circle ref={glowRef} r="10" fill="hsl(174 78% 50%)" opacity="0.18" />
-      <circle ref={dotRef} r="4" fill="hsl(174 78% 65%)" opacity="0.95">
-        <animate attributeName="r" values="3;5;3" dur="1.2s" repeatCount="indefinite" />
-      </circle>
-    </>
-  );
+type DiagramNode = {
+  title: string;
+  desc: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
 };
 
-/* ─── Node card ─── */
-const NodeCard = ({
-  step,
-  index,
-  isActive,
-  onHover,
-}: {
-  step: (typeof steps)[0];
-  index: number;
-  isActive: boolean;
-  onHover: (i: number | null) => void;
-}) => {
-  const Icon = step.icon;
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.4 });
-
-  return (
-    <motion.div
-      ref={ref}
-      className="relative"
-      initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ delay: index * 0.09, duration: 0.5, ease: "easeOut" }}
-      onMouseEnter={() => onHover(index)}
-      onMouseLeave={() => onHover(null)}
-    >
-      <motion.div
-        className="relative rounded-xl border border-primary/20 bg-card/80 backdrop-blur-sm px-5 py-4 flex items-start gap-3.5 cursor-default overflow-hidden transition-colors duration-200"
-        animate={{
-          borderColor: isActive ? "hsl(174 78% 45% / 0.55)" : "hsl(174 78% 45% / 0.15)",
-          boxShadow: isActive
-            ? "0 0 24px -4px hsl(174 78% 45% / 0.25), inset 0 1px 0 hsl(174 78% 80% / 0.06)"
-            : "0 2px 12px -4px hsl(0 0% 0% / 0.3), inset 0 1px 0 hsl(174 78% 80% / 0.03)",
-        }}
-        transition={{ duration: 0.25 }}
-        whileHover={{ scale: 1.015 }}
-      >
-        {/* Glow bg */}
-        <motion.div
-          className="absolute inset-0 rounded-xl bg-primary/5 pointer-events-none"
-          animate={{ opacity: isActive ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
-        />
-
-        <div className="relative z-10 w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 mt-0.5">
-          <Icon size={18} />
-        </div>
-
-        <div className="relative z-10 min-w-0">
-          <p className="text-sm font-semibold text-foreground leading-tight">{step.title}</p>
-          <motion.p
-            className="text-xs text-muted-foreground leading-snug mt-0.5 origin-top"
-            initial={false}
-            animate={{ height: isActive ? "auto" : "1.1em", opacity: isActive ? 1 : 0.7 }}
-            transition={{ duration: 0.25 }}
-          >
-            {step.desc}
-          </motion.p>
-        </div>
-
-        {/* Step number */}
-        <span className="absolute top-2 right-3 text-[10px] font-bold text-primary/25 tabular-nums">
-          {String(index + 1).padStart(2, "0")}
-        </span>
-      </motion.div>
-    </motion.div>
-  );
+type FlowDiagramProps = {
+  viewBox: string;
+  nodes: DiagramNode[];
+  segments: Point[][];
 };
 
-/* ─── Main diagram ─── */
-const LeadFlowDiagram = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const svgRef = useRef<SVGSVGElement>(null);
-  const pathRef = useRef<SVGPathElement>(null);
-  const [hovered, setHovered] = useState<number | null>(null);
-  const [nodePositions, setNodePositions] = useState<{ x: number; y: number }[]>([]);
+const DURATION = 10;
+
+const fmt = (n: number) => Number.isFinite(n) ? n.toFixed(4).replace(/\.?0+$/, "") : "0";
+
+const polylineLength = (points: Point[]) => {
+  let total = 0;
+  for (let i = 1; i < points.length; i += 1) {
+    const dx = points[i].x - points[i - 1].x;
+    const dy = points[i].y - points[i - 1].y;
+    total += Math.hypot(dx, dy);
+  }
+  return total;
+};
+
+const toPolylinePath = (points: Point[]) =>
+  points.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ");
+
+const toFullPath = (segments: Point[][]) => {
+  if (!segments.length || !segments[0].length) return "";
+  let d = `M ${segments[0][0].x} ${segments[0][0].y}`;
+  segments.forEach((segment) => {
+    segment.slice(1).forEach((p) => {
+      d += ` L ${p.x} ${p.y}`;
+    });
+  });
+  return d;
+};
+
+const keyTimesForPulse = (t: number) => {
+  const a = Math.max(0, t - 0.03);
+  const b = t;
+  const c = Math.min(1, t + 0.045);
+  return `0;${fmt(a)};${fmt(b)};${fmt(c)};1`;
+};
+
+const VisibleSvg = ({ children, viewBox, className }: { children: ReactNode; viewBox: string; className?: string }) => {
+  const ref = useRef<SVGSVGElement>(null);
   const [visible, setVisible] = useState(false);
 
-  const inView = useInView(containerRef, { once: false, amount: 0.15 });
-
   useEffect(() => {
-    setVisible(inView);
-  }, [inView]);
-
-  /* Measure node positions for SVG connector path */
-  const measure = useCallback(() => {
-    const container = containerRef.current;
-    if (!container) return;
-    const cards = container.querySelectorAll<HTMLElement>("[data-node]");
-    const rect = container.getBoundingClientRect();
-    const positions: { x: number; y: number }[] = [];
-    cards.forEach((card) => {
-      const cr = card.getBoundingClientRect();
-      positions.push({
-        x: cr.left - rect.left + cr.width / 2,
-        y: cr.top - rect.top + cr.height / 2,
-      });
-    });
-    setNodePositions(positions);
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: 0.1 });
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, [measure]);
-
-  /* Build SVG path through all nodes */
-  const pathD =
-    nodePositions.length >= 2
-      ? nodePositions
-          .map((p, i) => (i === 0 ? `M ${p.x},${p.y}` : `L ${p.x},${p.y}`))
-          .join(" ")
-      : "";
+    const el = ref.current;
+    if (!el) return;
+    if (visible) el.unpauseAnimations?.();
+    else el.pauseAnimations?.();
+  }, [visible]);
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-sm mx-auto py-4">
-      {/* SVG connector lines */}
-      {nodePositions.length >= 2 && (
-        <svg
-          ref={svgRef}
-          className="absolute inset-0 w-full h-full pointer-events-none"
-          style={{ zIndex: 0 }}
-        >
-          {/* Glow line */}
-          <path d={pathD} fill="none" stroke="hsl(174 78% 45%)" strokeWidth="3" strokeOpacity="0.07" strokeLinecap="round" />
-          {/* Main line */}
-          <path ref={pathRef} d={pathD} fill="none" stroke="hsl(174 78% 45%)" strokeWidth="1.5" strokeOpacity="0.25" strokeLinecap="round" strokeDasharray="6 4" />
-          {/* Travelling dot */}
-          {visible && <TravellingDot pathRef={pathRef} active={visible} />}
-          {/* Node glow circles */}
-          {nodePositions.map((p, i) => (
-            <circle
-              key={i}
-              cx={p.x}
-              cy={p.y}
-              r="6"
-              fill="hsl(174 78% 50%)"
-              opacity={hovered === i ? 0.35 : 0.08}
-              style={{ transition: "opacity 0.3s" }}
-            />
-          ))}
-        </svg>
-      )}
+    <svg ref={ref} viewBox={viewBox} className={className} fill="none" role="img" aria-label="Geanimeerd automatiseringsdiagram">
+      {children}
+    </svg>
+  );
+};
 
-      {/* Node cards */}
-      <div className="relative z-10 flex flex-col gap-3">
-        {steps.map((step, i) => (
-          <div key={i} data-node>
-            <NodeCard
-              step={step}
-              index={i}
-              isActive={hovered === i}
-              onHover={setHovered}
-            />
-          </div>
-        ))}
+const NodeCard = ({ node, index, arrival }: { node: DiagramNode; index: number; arrival: number }) => {
+  const x = node.x - node.w / 2;
+  const y = node.y - node.h / 2;
+
+  return (
+    <g>
+      <g transform={`translate(${node.x} ${node.y})`}>
+        <animateTransform
+          attributeName="transform"
+          type="translate"
+          values={`${node.x} ${node.y}; ${node.x} ${node.y - 2}; ${node.x} ${node.y}`}
+          dur={`${4 + (index % 3) * 0.6}s`}
+          begin={`${index * 0.18}s`}
+          repeatCount="indefinite"
+        />
+
+        <rect
+          x={-node.w / 2 - 4}
+          y={-node.h / 2 - 4}
+          width={node.w + 8}
+          height={node.h + 8}
+          rx={11}
+          fill="hsl(var(--primary) / 0.06)"
+          opacity="0"
+        >
+          <animate
+            attributeName="opacity"
+            values="0;0;0.9;0;0"
+            keyTimes={keyTimesForPulse(arrival)}
+            dur={`${DURATION}s`}
+            repeatCount="indefinite"
+          />
+        </rect>
+
+        <rect
+          x={-node.w / 2}
+          y={-node.h / 2 + 2}
+          width={node.w}
+          height={node.h}
+          rx={10}
+          fill="hsl(var(--background) / 0.35)"
+          opacity="0.55"
+        />
+
+        <rect
+          x={-node.w / 2}
+          y={-node.h / 2}
+          width={node.w}
+          height={node.h}
+          rx={10}
+          fill="hsl(var(--card) / 0.92)"
+          stroke="hsl(var(--primary) / 0.34)"
+          strokeWidth="1"
+        />
+
+        <text
+          x="0"
+          y="-5"
+          textAnchor="middle"
+          fontSize="9"
+          fontWeight="700"
+          fill="hsl(var(--primary) / 0.92)"
+          fontFamily="inherit"
+          letterSpacing="0.2"
+        >
+          {node.title}
+        </text>
+        <text
+          x="0"
+          y="9"
+          textAnchor="middle"
+          fontSize="7.1"
+          fill="hsl(var(--muted-foreground))"
+          fontFamily="inherit"
+        >
+          {node.desc}
+        </text>
+      </g>
+
+      <title>{`${index + 1}. ${node.title}`}</title>
+
+      <rect
+        x={x}
+        y={y}
+        width={node.w}
+        height={node.h}
+        rx={10}
+        fill="transparent"
+        className="cursor-pointer"
+      />
+    </g>
+  );
+};
+
+const FlowDiagramSvg = ({ viewBox, nodes, segments }: FlowDiagramProps) => {
+  const fullPath = toFullPath(segments);
+  const segmentLengths = segments.map(polylineLength);
+  const totalLength = segmentLengths.reduce((sum, len) => sum + len, 0) || 1;
+
+  const segmentTimes = segmentLengths.map((len, i) => {
+    const start = segmentLengths.slice(0, i).reduce((sum, v) => sum + v, 0) / totalLength;
+    const end = (segmentLengths.slice(0, i + 1).reduce((sum, v) => sum + v, 0)) / totalLength;
+    return { start, mid: (start + end) / 2, end };
+  });
+
+  const arrivalTimes = [0, ...segmentLengths.map((_, i) => segmentLengths.slice(0, i + 1).reduce((sum, v) => sum + v, 0) / totalLength)];
+
+  return (
+    <VisibleSvg viewBox={viewBox} className="w-full h-auto">
+      <defs>
+        <marker id="flow-arrow" markerWidth="8" markerHeight="8" refX="6.8" refY="3.8" orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0 L0,7.6 L7.2,3.8 z" fill="hsl(var(--primary) / 0.7)" />
+        </marker>
+      </defs>
+
+      {segments.map((segment, idx) => {
+        const d = toPolylinePath(segment);
+        const t = segmentTimes[idx];
+
+        return (
+          <g key={`segment-${idx}`}>
+            <path d={d} fill="none" stroke="hsl(var(--primary) / 0.09)" strokeWidth="4" strokeLinecap="round" />
+            <path d={d} fill="none" stroke="hsl(var(--primary) / 0.28)" strokeWidth="1.25" strokeLinecap="round" markerEnd="url(#flow-arrow)">
+              <animate
+                attributeName="stroke-opacity"
+                values="0.28;0.28;0.8;0.28;0.28"
+                keyTimes={`0;${fmt(t.start)};${fmt(t.mid)};${fmt(t.end)};1`}
+                dur={`${DURATION}s`}
+                repeatCount="indefinite"
+              />
+            </path>
+          </g>
+        );
+      })}
+
+      <path id="automation-flow-route" d={fullPath} fill="none" stroke="none" />
+
+      <circle r="8" fill="hsl(var(--primary) / 0.14)">
+        <animateMotion dur={`${DURATION}s`} repeatCount="indefinite" rotate="auto">
+          <mpath xlinkHref="#automation-flow-route" />
+        </animateMotion>
+      </circle>
+      <circle r="3.2" fill="hsl(var(--primary) / 0.95)">
+        <animate attributeName="r" values="2.6;3.6;2.6" dur="1.1s" repeatCount="indefinite" />
+        <animateMotion dur={`${DURATION}s`} repeatCount="indefinite" rotate="auto">
+          <mpath xlinkHref="#automation-flow-route" />
+        </animateMotion>
+      </circle>
+
+      {nodes.map((node, index) => (
+        <NodeCard key={node.title} node={node} index={index} arrival={arrivalTimes[index]} />
+      ))}
+    </VisibleSvg>
+  );
+};
+
+const desktopNodes: DiagramNode[] = [
+  { title: "Leadbronnen", desc: "Gidsen, databases", x: 86, y: 74, w: 104, h: 48 },
+  { title: "Leadverzameling", desc: "Automatisch verzamelen", x: 230, y: 74, w: 124, h: 48 },
+  { title: "Data verwerking", desc: "Extractie & verrijking", x: 374, y: 74, w: 116, h: 48 },
+  { title: "AI Analyse", desc: "Website & pijnpunten", x: 230, y: 206, w: 152, h: 52 },
+  { title: "Outreach automatisering", desc: "Persoonlijke e-mails", x: 230, y: 316, w: 170, h: 52 },
+  { title: "CRM synchronisatie", desc: "Opslaan van leads", x: 230, y: 426, w: 150, h: 52 },
+  { title: "Sales opvolging", desc: "Gesprekken & pipeline", x: 230, y: 536, w: 150, h: 52 },
+];
+
+const desktopSegments: Point[][] = [
+  [{ x: 138, y: 74 }, { x: 168, y: 74 }],
+  [{ x: 292, y: 74 }, { x: 316, y: 74 }],
+  [{ x: 374, y: 98 }, { x: 374, y: 152 }, { x: 230, y: 152 }, { x: 230, y: 180 }],
+  [{ x: 230, y: 232 }, { x: 230, y: 290 }],
+  [{ x: 230, y: 342 }, { x: 230, y: 400 }],
+  [{ x: 230, y: 452 }, { x: 230, y: 510 }],
+];
+
+const mobileNodes: DiagramNode[] = [
+  { title: "Leadbronnen", desc: "Gidsen, databases", x: 180, y: 68, w: 190, h: 48 },
+  { title: "Leadverzameling", desc: "Automatisch verzamelen", x: 180, y: 156, w: 206, h: 48 },
+  { title: "Data verwerking", desc: "Extractie & verrijking", x: 180, y: 244, w: 198, h: 48 },
+  { title: "AI Analyse", desc: "Website & pijnpunten", x: 180, y: 332, w: 198, h: 50 },
+  { title: "Outreach automatisering", desc: "Persoonlijke e-mails", x: 180, y: 424, w: 214, h: 50 },
+  { title: "CRM synchronisatie", desc: "Opslaan van leads", x: 180, y: 516, w: 198, h: 50 },
+  { title: "Sales opvolging", desc: "Gesprekken & pipeline", x: 180, y: 608, w: 198, h: 50 },
+];
+
+const mobileSegments: Point[][] = [
+  [{ x: 180, y: 92 }, { x: 180, y: 132 }],
+  [{ x: 180, y: 180 }, { x: 180, y: 220 }],
+  [{ x: 180, y: 268 }, { x: 180, y: 306 }],
+  [{ x: 180, y: 357 }, { x: 180, y: 398 }],
+  [{ x: 180, y: 449 }, { x: 180, y: 490 }],
+  [{ x: 180, y: 541 }, { x: 180, y: 582 }],
+];
+
+const LeadFlowDiagram = () => {
+  return (
+    <div className="w-full rounded-xl border border-primary/15 bg-gradient-to-b from-background via-card/30 to-background p-2 sm:p-3">
+      <div className="hidden sm:block">
+        <FlowDiagramSvg viewBox="0 0 460 590" nodes={desktopNodes} segments={desktopSegments} />
+      </div>
+      <div className="sm:hidden">
+        <FlowDiagramSvg viewBox="0 0 360 670" nodes={mobileNodes} segments={mobileSegments} />
       </div>
     </div>
   );

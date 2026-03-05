@@ -1,5 +1,5 @@
-import { ShoppingCart, FileText, Users, TrendingUp, Clock, Zap, Mail, BarChart3, Target, Database, Globe, Bot } from "lucide-react";
-import { EcommerceIsometric, FinanceIsometric, LeadIsometric } from "./IsometricVisuals";
+import { ShoppingCart, FileText, Users, TrendingUp, Clock, Zap, Mail, BarChart3, Target } from "lucide-react";
+import { EcommerceIsometric, FinanceIsometric } from "./IsometricVisuals";
 import LeadFlowDiagram from "./LeadFlowDiagram";
 
 export interface CaseMetric {

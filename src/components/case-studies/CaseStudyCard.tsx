@@ -1,7 +1,7 @@
 import { CheckCircle2, AlertTriangle, Star } from "lucide-react";
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Badge } from "@/components/ui/badge";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import { TechTagList } from "@/components/case-studies/TechTag";
 import type { CaseStudy, CaseMetric, MetricAnimation } from "./caseStudiesData";
 
 /* ─── Animated Value ─── */
@@ -159,8 +159,8 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
                   Bekijk de video om te zien hoe het automatiseringssysteem werkt.
                 </p>
               ) : (
-                <div className="mb-3 flex items-start gap-1.5 text-[12px] text-muted-foreground leading-relaxed italic">
-                  <AlertTriangle size={12} className="text-primary shrink-0 translate-y-[1px]" />
+                <div className="mb-3 flex items-center gap-1.5 text-[12px] text-muted-foreground leading-relaxed italic">
+                  <AlertTriangle size={12} className="text-primary shrink-0" />
                   <span>Vereenvoudigde weergave van de automatiseringspipeline.</span>
                 </div>
               )}
@@ -193,13 +193,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
 
               <div>
                 <SectionHeader>Technologie</SectionHeader>
-                <div className="flex flex-wrap gap-1.5">
-                  {cs.technology.map((t, j) => (
-                    <Badge key={j} variant="secondary" className="text-[11px] font-medium px-2 py-0.5">
-                      {t}
-                    </Badge>
-                  ))}
-                </div>
+                <TechTagList tags={cs.technologyTags} />
               </div>
 
               {cs.testimonial && (

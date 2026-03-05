@@ -49,6 +49,20 @@ const CaseStudyDetail = () => {
 
   return (
     <>
+      <SEOHead
+        title={`Autronis | ${cs.client} — Case Study`}
+        description={`${cs.metric}. Lees hoe Autronis ${cs.client} heeft geholpen met automatisering in de ${cs.industry} sector.`}
+        path={`/case-studies/${slug}`}
+        type="article"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: `${cs.client} — ${cs.metric}`,
+          description: cs.context,
+          author: { "@type": "Organization", name: "Autronis" },
+          publisher: { "@type": "Organization", name: "Autronis" },
+        }}
+      />
       <section className="pt-16 pb-24 relative overflow-hidden">
         
         <div className="container mx-auto px-4 lg:px-8">

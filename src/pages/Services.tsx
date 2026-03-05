@@ -476,6 +476,11 @@ const Services = () => {
 
   return (
     <>
+      <SEOHead
+        title="Autronis | Services — Procesautomatisering, Integraties & Data"
+        description="Ontdek onze services: procesautomatisering, systeemintegraties en data & rapportage. Schaalbare oplossingen voor groeiende bedrijven."
+        path="/services"
+      />
       {/* Single continuous section — hero + integrations + pillars */}
       <section className="relative pt-16 pb-24 overflow-hidden">
         

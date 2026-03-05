@@ -128,6 +128,11 @@ const WerkstandaardSection = ({ reasons }: { reasons: typeof directReasons }) =>
 const Team = () => {
   return (
     <>
+      <SEOHead
+        title="Autronis | Team — De Engineers Achter Uw Automatisering"
+        description="Maak kennis met het Autronis team. Wij zijn de engineers die uw processen, systemen en datastromen structureel verbeteren."
+        path="/team"
+      />
       <section className="pt-16 pb-24 relative overflow-hidden">
         
         <div className="container mx-auto px-4 lg:px-8 relative z-10">

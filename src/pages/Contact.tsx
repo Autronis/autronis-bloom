@@ -14,6 +14,11 @@ const Contact = () => {
 
   return (
     <>
+      <SEOHead
+        title="Autronis | Contact — Neem Contact Op"
+        description="Neem contact op met Autronis voor vragen over automatisering, integraties of een vrijblijvende Automation Scan. We reageren binnen 24 uur."
+        path="/contact"
+      />
       <section className="pt-16 pb-24 relative overflow-hidden">
         
         <div className="container mx-auto px-4 lg:px-8 relative z-10">

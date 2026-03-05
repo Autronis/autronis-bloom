@@ -421,6 +421,12 @@ const Process = () => {
   }, [updateActivePhase]);
 
   return (
+    <>
+    <SEOHead
+      title="Autronis | Proces — Van Analyse tot Livegang"
+      description="Ontdek ons bewezen proces: van strategische analyse en architectuur tot implementatie, validatie en doorontwikkeling van automatiseringen."
+      path="/process"
+    />
     <section className="pt-16 pb-24 relative overflow-hidden">
       
       <div className="container mx-auto px-4 lg:px-8 relative z-10">

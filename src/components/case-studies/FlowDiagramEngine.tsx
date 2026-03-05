@@ -196,8 +196,6 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 }) => {
   const pathRef = useRef<SVGPathElement>(null);
   const dotRef = useRef<SVGCircleElement>(null);
-  const glowDotRef = useRef<SVGCircleElement>(null);
-  const trailRef = useRef<SVGCircleElement>(null);
   const [pulseSignals, setPulseSignals] = useState<number[]>(() => nodes.map(() => 0));
   const visibleRef = useRef(false);
   const animIdRef = useRef(0);
@@ -244,10 +242,8 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 
     const path = pathRef.current;
     const dot = dotRef.current;
-    const glow = glowDotRef.current;
-    const trail = trailRef.current;
 
-    if (!path || !dot || !glow) {
+    if (!path || !dot) {
       animIdRef.current = requestAnimationFrame(tick);
       return;
     }
@@ -266,19 +262,9 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 
     if (progress < 1) {
       const pt = path.getPointAtLength(progress * pathLengthRef.current);
-      const trailProgress = Math.max(0, progress - 0.012);
-      const trailPt = path.getPointAtLength(trailProgress * pathLengthRef.current);
       dot.setAttribute("cx", String(pt.x));
       dot.setAttribute("cy", String(pt.y));
-      glow.setAttribute("cx", String(pt.x));
-      glow.setAttribute("cy", String(pt.y));
-      if (trail) {
-        trail.setAttribute("cx", String(trailPt.x));
-        trail.setAttribute("cy", String(trailPt.y));
-        trail.setAttribute("opacity", "1");
-      }
       dot.setAttribute("opacity", "1");
-      glow.setAttribute("opacity", "1");
 
       for (let i = checkpointIndexRef.current + 1; i < checkpoints.length; i++) {
         if (progress >= checkpoints[i]) {
@@ -290,8 +276,6 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       }
     } else {
       dot.setAttribute("opacity", "0");
-      glow.setAttribute("opacity", "0");
-      if (trail) trail.setAttribute("opacity", "0");
     }
 
     animIdRef.current = requestAnimationFrame(tick);

@@ -235,8 +235,8 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 
     const segmentCount = checkpoints.length - 1;
     const speeds = Array.from({ length: segmentCount }, (_, i) => {
-      if (i === 1) return 2.5; // fast through hidden area behind node 1→2
-      if (i === 2) return 1.4; // L-connector slightly faster
+      if (i === 1) return 1.8; // faster through hidden area behind node 1→2
+      if (i === 2) return 1.6; // L-connector (zigzag) faster
       return 1;
     });
 
@@ -358,6 +358,11 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         }
       }
     } else {
+      // Trigger any remaining checkpoints (especially the last node)
+      for (let i = checkpointIndexRef.current + 1; i < checkpoints.length; i++) {
+        checkpointIndexRef.current = i;
+        triggerHighlight(i);
+      }
       dot.setAttribute("opacity", "0");
       for (let t = 0; t < TRAIL_COUNT; t++) {
         trailRefs.current[t]?.setAttribute("opacity", "0");

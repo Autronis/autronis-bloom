@@ -53,8 +53,12 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
           {/* ── Header + Metrics ── */}
           <div className="p-5 sm:p-6 pb-0 sm:pb-0">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                <Icon size={18} />
+              <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                {cs.logoSrc ? (
+                  <img src={cs.logoSrc} alt="" className="w-5 h-5 object-contain" />
+                ) : (
+                  <Icon size={18} className="text-primary" />
+                )}
               </div>
               <h2 className="text-lg sm:text-xl font-bold text-foreground">{cs.title}</h2>
             </div>

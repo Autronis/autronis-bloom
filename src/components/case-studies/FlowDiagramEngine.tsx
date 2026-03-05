@@ -201,12 +201,13 @@ const NodeCard = ({ node, pulseSignal, upMs, holdMs, downMs, scaleDisabled }: {
   );
 };
 
-/* ─── Main diagram with arrow indicator + strict mask ─── */
+/* ─── Main diagram with smooth single-path dot + strict mask ─── */
 export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   viewBox: string; nodes: DiagramNode[]; segments: Point[][];
 }) => {
   const pathRef = useRef<SVGPathElement>(null);
-  const arrowRef = useRef<SVGGElement>(null);
+  const dotRef = useRef<SVGCircleElement>(null);
+  const trailRefs = useRef<(SVGCircleElement | null)[]>([]);
   
   const [pulseSignals, setPulseSignals] = useState<number[]>(() => nodes.map(() => 0));
   const visibleRef = useRef(false);
@@ -216,23 +217,23 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   const prevElapsedRef = useRef(0);
   const nodeTriggeredRef = useRef<boolean[]>(nodes.map(() => false));
   const pathLengthRef = useRef(1);
-  const smoothAngleRef = useRef<number | null>(null);
 
   const uid = useId().replace(/:/g, "");
-  const lineMarkerId = `${uid}-line-arrow`;
+  const markerId = `${uid}-arrow`;
   const maskId = `${uid}-mask`;
 
   const { path: continuousPath, points, cumulative, totalLength } = useMemo(() => buildPathData(segments), [segments]);
   const [, , vbWidth, vbHeight] = viewBox.split(" ").map(Number);
 
-  const TRAVEL_DURATION = 18000;
+  const TRAVEL_DURATION = 18000; // slightly slower
   const END_PAUSE = 1200;
   const TOTAL_CYCLE = TRAVEL_DURATION + END_PAUSE;
   const MASK_PAD = 2;
-  const ANGLE_LERP = 0.18; // smoothing factor for rotation
 
+  // Linear progress: constant px/s across entire path
   const remapProgress = useCallback((t: number) => t, []);
 
+  // Exact arrival progress per node (nearest point projection on path)
   const nodeArrivalProgress = useMemo(() => {
     if (points.length < 2) return nodes.map(() => 1);
 
@@ -264,10 +265,25 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   }, [nodes, points, cumulative, totalLength]);
 
   useEffect(() => {
+    if (!import.meta.env.DEV) return;
+
+    const segmentLengths = segments.map((seg) =>
+      seg.slice(1).reduce((acc, p, i) => acc + Math.hypot(p.x - seg[i].x, p.y - seg[i].y), 0)
+    );
+    const interSegmentJumps = segments.slice(1).map((seg, i) => {
+      const prevEnd = segments[i][segments[i].length - 1];
+      const nextStart = seg[0];
+      return Math.hypot(nextStart.x - prevEnd.x, nextStart.y - prevEnd.y);
+    });
+
+    console.debug("[FlowDiagram] segment lengths px", segmentLengths.map((v) => Number(v.toFixed(2))));
+    console.debug("[FlowDiagram] inter-segment jumps px", interSegmentJumps.map((v) => Number(v.toFixed(2))));
+  }, [segments]);
+
+  useEffect(() => {
     setPulseSignals(nodes.map(() => 0));
     nodeTriggeredRef.current = nodes.map(() => false);
     prevElapsedRef.current = 0;
-    smoothAngleRef.current = null;
   }, [nodes]);
 
   useEffect(() => {
@@ -284,21 +300,16 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
     });
   }, [nodes]);
 
-  // Shortest-angle lerp
-  const lerpAngle = (from: number, to: number, t: number) => {
-    let diff = to - from;
-    while (diff > 180) diff -= 360;
-    while (diff < -180) diff += 360;
-    return from + diff * t;
-  };
+  const TRAIL_COUNT = 6;
+  const TRAIL_SPACING = 0.005;
 
   const tick = useCallback((now: number) => {
     if (!visibleRef.current) return;
 
     const path = pathRef.current;
-    const arrow = arrowRef.current;
+    const dot = dotRef.current;
 
-    if (!path || !arrow) {
+    if (!path || !dot) {
       animIdRef.current = requestAnimationFrame(tick);
       return;
     }
@@ -312,7 +323,6 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 
     if (wrapped) {
       nodeTriggeredRef.current = nodes.map(() => false);
-      smoothAngleRef.current = null;
     }
 
     prevElapsedRef.current = elapsedInCycle;
@@ -324,21 +334,22 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
     if (progress < 1) {
       const len = pathLengthRef.current;
       const pt = path.getPointAtLength(progress * len);
+      dot.setAttribute("cx", String(pt.x));
+      dot.setAttribute("cy", String(pt.y));
+      dot.setAttribute("opacity", "1");
 
-      // Compute tangent angle from a small lookahead
-      const lookahead = Math.min(progress + 0.003, 1);
-      const pt2 = path.getPointAtLength(lookahead * len);
-      const rawAngle = Math.atan2(pt2.y - pt.y, pt2.x - pt.x) * (180 / Math.PI);
+      // Trail dots
+      for (let t = 0; t < TRAIL_COUNT; t++) {
+        const trailEl = trailRefs.current[t];
+        if (!trailEl) continue;
+        const tp = Math.max(0, progress - TRAIL_SPACING * (t + 1));
+        const tpt = path.getPointAtLength(tp * len);
+        trailEl.setAttribute("cx", String(tpt.x));
+        trailEl.setAttribute("cy", String(tpt.y));
+        trailEl.setAttribute("opacity", String(0.3 - t * 0.045));
+      }
 
-      // Smooth the angle
-      const currentSmooth = smoothAngleRef.current;
-      const angle = currentSmooth === null ? rawAngle : lerpAngle(currentSmooth, rawAngle, ANGLE_LERP);
-      smoothAngleRef.current = angle;
-
-      arrow.setAttribute("transform", `translate(${pt.x}, ${pt.y}) rotate(${angle})`);
-      arrow.setAttribute("opacity", "1");
-
-      // Non-blocking checkpoint triggers
+      // Exact checkpoint-based highlight trigger (non-blocking)
       for (let i = 0; i < nodes.length; i++) {
         if (nodeTriggeredRef.current[i]) continue;
         if (progress >= nodeArrivalProgress[i]) {
@@ -347,17 +358,21 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         }
       }
     } else {
+      // Trigger any remaining nodes at end of cycle
       for (let i = 0; i < nodes.length; i++) {
         if (!nodeTriggeredRef.current[i]) {
           nodeTriggeredRef.current[i] = true;
           triggerHighlight(i);
         }
       }
-      arrow.setAttribute("opacity", "0");
+      dot.setAttribute("opacity", "0");
+      for (let t = 0; t < TRAIL_COUNT; t++) {
+        trailRefs.current[t]?.setAttribute("opacity", "0");
+      }
     }
 
     animIdRef.current = requestAnimationFrame(tick);
-  }, [nodes, nodeArrivalProgress, TOTAL_CYCLE, TRAVEL_DURATION, triggerHighlight, remapProgress, ANGLE_LERP]);
+  }, [nodes, nodeArrivalProgress, TOTAL_CYCLE, TRAVEL_DURATION, triggerHighlight, remapProgress]);
 
   const handleVisibility = useCallback((vis: boolean) => {
     visibleRef.current = vis;
@@ -385,7 +400,7 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   return (
     <VisibleSvg viewBox={viewBox} className="w-full h-auto" onVisibilityChange={handleVisibility}>
       <defs>
-        <marker id={lineMarkerId} markerWidth="5" markerHeight="5" refX="1" refY="2.5"
+        <marker id={markerId} markerWidth="5" markerHeight="5" refX="1" refY="2.5"
           orient="auto" markerUnits="strokeWidth" overflow="visible">
           <path d="M0,0.4 L0,4.6 L4.6,2.5 z" fill="hsl(var(--primary))" />
         </marker>
@@ -412,23 +427,20 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
             <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="2.5"
               strokeOpacity="0.06" strokeLinecap="round" />
             <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="1"
-              strokeOpacity="1" strokeLinecap="round" markerEnd={`url(#${lineMarkerId})`} />
+              strokeOpacity="1" strokeLinecap="round" markerEnd={`url(#${markerId})`} />
           </g>
         ))}
 
         <path ref={pathRef} d={continuousPath} fill="none" stroke="none" />
-
-        {/* Arrow indicator — chevron/arrowhead shape */}
-        <g ref={arrowRef} opacity="0">
-          <polygon
-            points="-5,-3.5 5,0 -5,3.5"
-            fill="hsl(var(--primary))"
-          />
-        </g>
+        {Array.from({ length: TRAIL_COUNT }).map((_, i) => (
+          <circle key={`trail-${i}`} ref={(el) => { trailRefs.current[i] = el; }}
+            cx="0" cy="0" r={2.5 - i * 0.3} fill="hsl(var(--primary))" opacity="0" />
+        ))}
+        <circle ref={dotRef} cx="0" cy="0" r="3" fill="hsl(var(--primary))" opacity="0" />
       </g>
 
       {nodes.map((n, i) => {
-        const pulseCfg = { upMs: 140, holdMs: 250, downMs: 420 };
+        const pulseCfg = i === 1 ? { upMs: 140, holdMs: 0, downMs: 420, scaleDisabled: true } : { upMs: 160, holdMs: 450, downMs: 500 };
         return <NodeCard key={n.title} node={n} pulseSignal={pulseSignals[i] ?? 0} {...pulseCfg} />;
       })}
     </VisibleSvg>

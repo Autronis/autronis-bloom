@@ -1,4 +1,4 @@
-import { AlertTriangle, CheckCircle2, Star } from "lucide-react";
+import { CheckCircle2, Info, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import type { CaseStudy, CaseMetric } from "./caseStudiesData";
@@ -102,7 +102,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
                 </p>
               ) : (
                 <div className="mb-3 flex items-start gap-1.5 text-[12px] text-muted-foreground leading-relaxed italic">
-                  <AlertTriangle size={12} className="text-primary mt-0.5 shrink-0" />
+                  <Info size={12} className="text-primary mt-0.5 shrink-0" />
                   <span>Vereenvoudigde weergave van de automatiseringspipeline.</span>
                 </div>
               )}

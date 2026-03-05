@@ -159,15 +159,15 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
             </p>
 
             {/* Skills grouped by category (overlay style) */}
-            <div className="space-y-2.5">
+            <div className="space-y-2">
               {categoryOrder.map((cat) =>
                 grouped[cat]?.length ? (
                   <div key={cat}>
                     <p className="text-[8px] font-semibold tracking-[0.12em] uppercase text-white/50 mb-1">
                       {categoryLabels[cat]}
                     </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {grouped[cat].map((s) => {
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {grouped[cat].slice(0, 4).map((s) => {
                         const i = tagIndex++;
                         return <OverlaySkillBadge key={s.label} skill={s} index={i} />;
                       })}

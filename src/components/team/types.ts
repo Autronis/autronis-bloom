@@ -10,6 +10,7 @@ export interface TeamMember {
   role: string;
   subtitle: string;
   photo: string;
+  priority?: boolean;
   focusLabel: string;
   description: string;
   skills: Skill[];

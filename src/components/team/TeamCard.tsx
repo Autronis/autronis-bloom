@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Linkedin, X } from "lucide-react";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
@@ -33,7 +33,30 @@ const PreviewBadge = ({ skill }: { skill: Skill }) => (
 
 const TeamCard = ({ member }: { member: TeamMember }) => {
   const [expanded, setExpanded] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    let cancelled = false;
+    const img = new Image();
+    img.src = member.photo;
+
+    if (img.complete) {
+      setImageLoaded(true);
+      return;
+    }
+
+    img.onload = () => {
+      if (!cancelled) setImageLoaded(true);
+    };
+    img.onerror = () => {
+      if (!cancelled) setImageLoaded(true);
+    };
+
+    return () => {
+      cancelled = true;
+    };
+  }, [member.photo]);
 
   const handleToggle = useCallback(() => {
     if (isMobile) setExpanded((prev) => !prev);
@@ -60,17 +83,23 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
         <img
           src={member.photo}
           alt={member.name}
-          className="w-full h-full object-cover object-top transition-transform duration-500
-            group-hover:scale-[1.02]"
-          style={isMobile && expanded ? { transform: "scale(1.02)" } : undefined}
+          className={`w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-[1.02] ${
+            imageLoaded ? "opacity-100 blur-0" : "opacity-80 blur-[2px]"
+          }`}
+          loading={member.priority ? "eager" : "lazy"}
+          fetchPriority={member.priority ? "high" : "auto"}
+          decoding={member.priority ? "sync" : "async"}
+          onLoad={() => setImageLoaded(true)}
+          onError={() => setImageLoaded(true)}
+          style={isMobile && isOpen ? { transform: "scale(1.02)" } : undefined}
         />
 
         {/* Dark overlay – desktop hover + mobile expanded */}
         <div
           className={`absolute inset-0 pointer-events-none transition-all duration-400
             ${isMobile
-              ? expanded
-                ? "bg-black/75 backdrop-blur-[8px]"
+              ? isOpen
+                ? "bg-gradient-to-b from-primary/25 via-background/75 to-background/90 backdrop-blur-[8px]"
                 : "bg-gradient-to-t from-black/60 via-black/20 to-transparent"
               : "bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:bg-black/75 group-hover:backdrop-blur-[8px]"
             }`}

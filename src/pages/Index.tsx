@@ -43,8 +43,17 @@ const Index = () => {
   const [wordIndex, setWordIndex] = useState(0);
   const [videoOpen, setVideoOpen] = useState(false);
   const [showSkip, setShowSkip] = useState(true);
+  const [mobileControlsActive, setMobileControlsActive] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const controlsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const handleViewportChange = () => setIsMobileViewport(window.innerWidth < 768);
+
+    handleViewportChange();
+    mediaQuery.addEventListener("change", handleViewportChange);
+
     // Preload all sections shortly after hero renders
     const preloadTimer = setTimeout(preloadSections, 1000);
 
@@ -55,12 +64,25 @@ const Index = () => {
         setWordIndex((prev) => (prev + 1) % rotatingWords.length);
       }, 3500);
     }, 2000);
+
     return () => {
+      mediaQuery.removeEventListener("change", handleViewportChange);
       clearTimeout(preloadTimer);
       clearTimeout(startDelay);
       if (interval) clearInterval(interval);
+      if (controlsTimerRef.current) clearTimeout(controlsTimerRef.current);
     };
   }, []);
+
+  const bumpSkipAboveControls = () => {
+    if (!isMobileViewport) return;
+    setMobileControlsActive(true);
+
+    if (controlsTimerRef.current) clearTimeout(controlsTimerRef.current);
+    controlsTimerRef.current = setTimeout(() => {
+      setMobileControlsActive(false);
+    }, 2200);
+  };
 
   return (
     <>
@@ -114,7 +136,14 @@ const Index = () => {
             </div>
 
             {/* Video Modal */}
-            <Dialog open={videoOpen} onOpenChange={(open) => { setVideoOpen(open); if (open) setShowSkip(true); }}>
+            <Dialog
+              open={videoOpen}
+              onOpenChange={(open) => {
+                setVideoOpen(open);
+                setMobileControlsActive(false);
+                if (open) setShowSkip(true);
+              }}
+            >
               <DialogContent className="sm:max-w-4xl p-0 bg-card border-border overflow-hidden" aria-describedby={undefined}>
                 <DialogTitle className="sr-only">Lead-systeem Demo Jobby</DialogTitle>
                 <div className="p-4 pb-0 flex items-center justify-between">
@@ -131,6 +160,9 @@ const Index = () => {
                         controls
                         controlsList="nodownload noplaybackrate"
                         disablePictureInPicture
+                        onTouchStart={bumpSkipAboveControls}
+                        onClick={bumpSkipAboveControls}
+                        onPlay={bumpSkipAboveControls}
                         onTimeUpdate={(e) => {
                           if (e.currentTarget.currentTime >= 10) setShowSkip(false);
                         }}
@@ -143,7 +175,9 @@ const Index = () => {
                               setShowSkip(false);
                             }
                           }}
-                          className="absolute bottom-20 left-3 px-5 py-2.5 rounded-xl bg-white/5 backdrop-blur-xl border border-white/15 text-sm font-medium text-foreground hover:bg-white/15 transition-all shadow-2xl"
+                          className={`absolute left-3 px-5 py-2.5 rounded-xl bg-white/5 backdrop-blur-xl border border-white/15 text-sm font-medium text-foreground hover:bg-white/15 transition-all duration-300 shadow-2xl sm:bottom-20 ${
+                            mobileControlsActive ? "bottom-24" : "bottom-10"
+                          }`}
                         >
                           Skip intro →
                         </button>

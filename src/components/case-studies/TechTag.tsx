@@ -85,15 +85,14 @@ const TechTag = ({ tag, index }: { tag: TechTagData; index: number }) => {
             ref={ref}
             tabIndex={0}
             className={`
-              inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 cursor-default select-none
+              tech-tag inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 cursor-default select-none
               text-[11px] font-medium leading-none
               ${cfg.border} ${cfg.bg} ${cfg.text}
               transition-all duration-200 ease-out
-              ${cfg.glow}
-              can-hover:hover:-translate-y-0.5
               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-1 focus-visible:ring-offset-background
-              motion-reduce:transition-none motion-reduce:hover:translate-y-0
+              motion-reduce:transition-none
             `}
+            data-glow={tag.category}
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateY(0)" : "translateY(8px)",
@@ -107,7 +106,7 @@ const TechTag = ({ tag, index }: { tag: TechTagData; index: number }) => {
         <TooltipContent
           side="top"
           sideOffset={6}
-          className="max-w-[240px] rounded-lg border border-primary/20 bg-card px-3 py-2.5 shadow-lg shadow-black/20 text-[12px] leading-relaxed text-muted-foreground animate-in fade-in-0 zoom-in-[0.98] duration-150 hidden can-hover:block"
+          className="tech-tooltip max-w-[240px] rounded-lg border border-primary/20 bg-card px-3 py-2.5 shadow-lg shadow-black/20 text-[12px] leading-relaxed text-muted-foreground animate-in fade-in-0 zoom-in-[0.98] duration-150"
         >
           {tag.tooltip}
         </TooltipContent>

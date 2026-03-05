@@ -229,71 +229,8 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
   const TOTAL_CYCLE = TRAVEL_DURATION + END_PAUSE;
   const MASK_PAD = 2;
 
-  // Segment-speed mapping: keep 02→03 normal, speed up 03→04
-  const timingWindows = useMemo(() => {
-    if (checkpoints.length < 2) return [] as Array<{ cpStart: number; cpEnd: number; tStart: number; tEnd: number }>;
-
-    const segmentCount = checkpoints.length - 1;
-    const speeds = Array.from({ length: segmentCount }, (_, i) => {
-      if (i === 2) return 2.1; // faster from node 03 → 04 (zigzag)
-      return 1;
-    });
-
-    const lengths = Array.from({ length: segmentCount }, (_, i) => Math.max(0.0001, checkpoints[i + 1] - checkpoints[i]));
-    const effective = lengths.map((len, i) => len / speeds[i]);
-    const totalEffective = effective.reduce((acc, v) => acc + v, 0) || 1;
-
-    let tCursor = 0;
-    return lengths.map((len, i) => {
-      const tLen = effective[i] / totalEffective;
-      const window = {
-        cpStart: checkpoints[i],
-        cpEnd: checkpoints[i + 1],
-        tStart: tCursor,
-        tEnd: tCursor + tLen,
-      };
-      tCursor += tLen;
-      return window;
-    });
-  }, [checkpoints]);
-
-  const remapProgress = useCallback((t: number) => {
-    if (t >= 1) return 1;
-    if (!timingWindows.length) return t;
-
-    const clamped = Math.max(0, Math.min(1, t));
-    for (let i = 0; i < timingWindows.length; i++) {
-      const w = timingWindows[i];
-      if (clamped <= w.tEnd || i === timingWindows.length - 1) {
-        const denom = Math.max(0.0001, w.tEnd - w.tStart);
-        const local = Math.max(0, Math.min(1, (clamped - w.tStart) / denom));
-
-        let mappedLocal = local;
-        if (i === 0) {
-          // Through node 02 (entry side): keep pre-node travel calm, then pass hidden area quickly
-          const hiddenStart = 0.73;
-          const timeAtHiddenStart = 0.86;
-          if (local < timeAtHiddenStart) {
-            mappedLocal = hiddenStart * easeInOut(local / timeAtHiddenStart);
-          } else {
-            mappedLocal = hiddenStart + (1 - hiddenStart) * easeInOut((local - timeAtHiddenStart) / (1 - timeAtHiddenStart));
-          }
-        } else if (i === 1) {
-          // Through node 02 (exit side): get out from behind the card sooner, then continue normally
-          const hiddenEnd = 0.47;
-          const timeForHiddenEnd = 0.16;
-          if (local < timeForHiddenEnd) {
-            mappedLocal = hiddenEnd * easeInOut(local / timeForHiddenEnd);
-          } else {
-            mappedLocal = hiddenEnd + (1 - hiddenEnd) * easeInOut((local - timeForHiddenEnd) / (1 - timeForHiddenEnd));
-          }
-        }
-        return w.cpStart + mappedLocal * (w.cpEnd - w.cpStart);
-      }
-    }
-
-    return clamped;
-  }, [timingWindows]);
+  // Linear progress: constant px/s across entire path
+  const remapProgress = useCallback((t: number) => t, []);
 
   useEffect(() => {
     setPulseSignals(nodes.map(() => 0));

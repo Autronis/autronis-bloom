@@ -116,37 +116,39 @@ const ProcessSection = () => {
   const [fillHeight, setFillHeight] = useState(0);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      if (!sectionRef.current || !timelineRef.current) return;
-      const viewportH = window.innerHeight;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        if (!sectionRef.current || !timelineRef.current) return;
+        const viewportH = window.innerHeight;
 
-      // Calculate fill height based on active card positions
-      let newActive = -1;
-      let targetFillHeight = 0;
+        let newActive = -1;
+        let targetFillHeight = 0;
 
-      cardRefs.current.forEach((ref, i) => {
-        if (!ref) return;
-        const cardRect = ref.getBoundingClientRect();
-        const cardCenter = cardRect.top + cardRect.height / 2;
-        // Card becomes active when its center passes 60% of viewport
-        if (cardCenter < viewportH * 0.55) {
-          newActive = i;
+        cardRefs.current.forEach((ref, i) => {
+          if (!ref) return;
+          const cardRect = ref.getBoundingClientRect();
+          const cardCenter = cardRect.top + cardRect.height / 2;
+          if (cardCenter < viewportH * 0.55) {
+            newActive = i;
+          }
+        });
+
+        if (newActive >= 0 && timelineRef.current) {
+          const timelineRect = timelineRef.current.getBoundingClientRect();
+          const activeCard = cardRefs.current[newActive];
+          if (activeCard) {
+            const activeRect = activeCard.getBoundingClientRect();
+            targetFillHeight = activeRect.top + 20 - timelineRect.top;
+          }
         }
+
+        setActiveIndex(newActive);
+        setFillHeight(Math.max(0, targetFillHeight));
       });
-
-      // Calculate fill height to reach the active node
-      if (newActive >= 0 && timelineRef.current) {
-        const timelineRect = timelineRef.current.getBoundingClientRect();
-        const activeCard = cardRefs.current[newActive];
-        if (activeCard) {
-          const activeRect = activeCard.getBoundingClientRect();
-          // Fill to the center of the active node (which is at the top of the card + ~20px for the node center)
-          targetFillHeight = activeRect.top + 20 - timelineRect.top;
-        }
-      }
-
-      setActiveIndex(newActive);
-      setFillHeight(Math.max(0, targetFillHeight));
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });

@@ -214,6 +214,18 @@
   50% { stroke-opacity: 0.5; }
 }
 
+/* ── GPU hints for animated containers ── */
+.hero-section canvas,
+[class*="animate-"],
+.werkstandaard-card {
+  will-change: transform;
+}
+
+/* ── Layout containment for sections ── */
+section {
+  contain: layout style;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

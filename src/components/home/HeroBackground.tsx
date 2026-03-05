@@ -71,7 +71,7 @@ const HeroBackground = () => {
       const t_pos = (lineIdx + 1) / (lineCount + 1);
       // On mobile, shift lines higher (20%-56%) vs desktop (28%-72%)
       const yBase = isMobile
-        ? h * (0.14 + t_pos * 0.34)
+        ? h * (0.08 + t_pos * 0.32)
         : h * (0.28 + t_pos * 0.44);
       const freq = 0.004 + (lineIdx % 3) * 0.0006;
       const speed = 0.08 + lineIdx * 0.025;

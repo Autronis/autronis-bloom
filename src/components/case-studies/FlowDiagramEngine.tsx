@@ -378,11 +378,8 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
           <g key={idx}>
             <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="3"
               strokeOpacity="0.08" strokeLinecap="round" />
-            <path
-              ref={(el) => { segmentGlowRefs.current[idx] = el; }}
-              d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="1.2"
-              strokeOpacity="0.15" strokeLinecap="round" markerEnd={`url(#${markerId})`}
-              style={{ transition: "stroke-opacity 0.4s ease-out" }} />
+            <path d={toPath(seg)} stroke="hsl(var(--primary))" strokeWidth="1.2"
+              strokeOpacity="1" strokeLinecap="round" markerEnd={`url(#${markerId})`} />
           </g>
         ))}
 

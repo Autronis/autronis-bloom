@@ -45,10 +45,10 @@ const mobileSegments: Point[][] = [
 const SupportFlowDiagram = () => (
   <div className="w-full">
     <div className="hidden sm:block">
-      <FlowDiagramSvg viewBox="0 0 450 350" nodes={desktopNodes} segments={desktopSegments} />
+      <FlowDiagramSvg viewBox="0 0 450 365" nodes={desktopNodes} segments={desktopSegments} />
     </div>
     <div className="sm:hidden">
-      <FlowDiagramSvg viewBox="0 0 280 390" nodes={mobileNodes} segments={mobileSegments} travelDuration={6000} />
+      <FlowDiagramSvg viewBox="0 0 280 405" nodes={mobileNodes} segments={mobileSegments} travelDuration={6000} />
     </div>
   </div>
 );

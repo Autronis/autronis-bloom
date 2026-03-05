@@ -1,7 +1,8 @@
-export type SkillCategory = "arch" | "ai" | "gov";
+export type SkillCategory = "automation" | "ai" | "data" | "operations";
 
 export interface Skill {
   label: string;
+  emoji: string;
   category: SkillCategory;
 }
 
@@ -18,26 +19,52 @@ export interface TeamMember {
   linkedin: string;
 }
 
-export const categoryMeta: Record<SkillCategory, { border: string; bg: string; glow: string }> = {
-  arch: {
-    border: "border-[hsla(210,45%,55%,0.55)]",
-    bg: "bg-[hsla(210,40%,28%,0.92)]",
-    glow: "hover:bg-[hsla(210,40%,32%,0.95)]",
+export const categoryMeta: Record<SkillCategory, {
+  border: string;
+  bg: string;
+  text: string;
+  glow: string;
+  /** For overlay on photo (white-based) */
+  overlayBorder: string;
+  overlayBg: string;
+}> = {
+  automation: {
+    border: "border-[hsl(210_55%_50%/0.35)] dark:border-[hsl(210_55%_50%/0.35)]",
+    bg: "bg-[hsl(210_55%_50%/0.12)] dark:bg-[hsl(210_55%_50%/0.08)]",
+    text: "text-[hsl(210_55%_35%)] dark:text-[hsl(210_55%_70%)]",
+    glow: "hover:border-[hsl(210_55%_50%/0.55)] hover:shadow-[0_0_10px_hsl(210_55%_50%/0.12)]",
+    overlayBorder: "border-[hsla(210,45%,55%,0.55)]",
+    overlayBg: "bg-[hsla(210,40%,28%,0.92)]",
   },
   ai: {
-    border: "border-[hsla(174,45%,45%,0.55)]",
-    bg: "bg-[hsla(174,40%,23%,0.92)]",
-    glow: "hover:bg-[hsla(174,40%,27%,0.95)]",
+    border: "border-[hsl(150_45%_45%/0.35)] dark:border-[hsl(150_45%_45%/0.35)]",
+    bg: "bg-[hsl(150_45%_45%/0.12)] dark:bg-[hsl(150_45%_45%/0.08)]",
+    text: "text-[hsl(150_45%_28%)] dark:text-[hsl(150_45%_65%)]",
+    glow: "hover:border-[hsl(150_45%_45%/0.55)] hover:shadow-[0_0_10px_hsl(150_45%_45%/0.12)]",
+    overlayBorder: "border-[hsla(150,45%,45%,0.55)]",
+    overlayBg: "bg-[hsla(150,40%,23%,0.92)]",
   },
-  gov: {
-    border: "border-[hsla(270,30%,55%,0.55)]",
-    bg: "bg-[hsla(270,25%,28%,0.90)]",
-    glow: "hover:bg-[hsla(270,25%,32%,0.93)]",
+  data: {
+    border: "border-[hsl(174_60%_45%/0.35)] dark:border-[hsl(174_60%_45%/0.35)]",
+    bg: "bg-[hsl(174_60%_45%/0.12)] dark:bg-[hsl(174_60%_45%/0.08)]",
+    text: "text-[hsl(174_60%_30%)] dark:text-[hsl(174_60%_65%)]",
+    glow: "hover:border-[hsl(174_60%_45%/0.55)] hover:shadow-[0_0_10px_hsl(174_60%_45%/0.12)]",
+    overlayBorder: "border-[hsla(174,45%,45%,0.55)]",
+    overlayBg: "bg-[hsla(174,40%,23%,0.92)]",
+  },
+  operations: {
+    border: "border-[hsl(260_45%_55%/0.35)] dark:border-[hsl(260_45%_55%/0.35)]",
+    bg: "bg-[hsl(260_45%_55%/0.12)] dark:bg-[hsl(260_45%_55%/0.08)]",
+    text: "text-[hsl(260_45%_40%)] dark:text-[hsl(260_45%_72%)]",
+    glow: "hover:border-[hsl(260_45%_55%/0.55)] hover:shadow-[0_0_10px_hsl(260_45%_55%/0.12)]",
+    overlayBorder: "border-[hsla(270,30%,55%,0.55)]",
+    overlayBg: "bg-[hsla(270,25%,28%,0.90)]",
   },
 };
 
 export const categoryLabels: Record<SkillCategory, string> = {
-  arch: "Architectuur",
-  ai: "AI & Integraties",
-  gov: "Beheer & Beveiliging",
+  automation: "Automation & Systems",
+  ai: "AI & Intelligence",
+  data: "Data & Scraping",
+  operations: "Operations",
 };

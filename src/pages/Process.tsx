@@ -696,6 +696,7 @@ const Process = () => {
         </ScrollReveal>
       </div>
     </section>
+    </>
   );
 };
 

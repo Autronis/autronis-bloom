@@ -256,6 +256,7 @@ const Resources = () => {
         </ScrollReveal>
       </div>
     </section>
+    </>
   );
 };
 

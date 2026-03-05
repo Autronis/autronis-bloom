@@ -256,8 +256,6 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 
   const TRAIL_COUNT = 6;
   const TRAIL_SPACING = 0.006;
-  const activeSegRef = useRef(-1);
-  const segFadeTimers = useRef<number[]>([]);
 
   const tick = useCallback((now: number) => {
     if (!visibleRef.current) return;
@@ -283,7 +281,6 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
 
     if (wrapped) {
       checkpointIndexRef.current = 0;
-      activeSegRef.current = -1;
       if (checkpoints.length) triggerHighlight(0);
     }
 
@@ -311,38 +308,6 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
         trailEl.setAttribute("opacity", String(0.35 - t * 0.055));
       }
 
-      // Line brightening: detect which segment the dot is in
-      let currentSeg = -1;
-      for (let i = 0; i < checkpoints.length - 1; i++) {
-        if (progress >= checkpoints[i] && progress < (checkpoints[i + 1] ?? 1)) {
-          currentSeg = i;
-          break;
-        }
-      }
-      if (currentSeg !== activeSegRef.current) {
-        // Fade out previous segment
-        if (activeSegRef.current >= 0) {
-          const prevEl = segmentGlowRefs.current[activeSegRef.current];
-          if (prevEl) {
-            const idx = activeSegRef.current;
-            prevEl.setAttribute("stroke-opacity", "0.5");
-            clearTimeout(segFadeTimers.current[idx]);
-            segFadeTimers.current[idx] = window.setTimeout(() => {
-              prevEl.setAttribute("stroke-opacity", "0.15");
-            }, 400);
-          }
-        }
-        // Brighten current segment
-        if (currentSeg >= 0) {
-          const el = segmentGlowRefs.current[currentSeg];
-          if (el) {
-            clearTimeout(segFadeTimers.current[currentSeg]);
-            el.setAttribute("stroke-opacity", "0.5");
-          }
-        }
-        activeSegRef.current = currentSeg;
-      }
-
       for (let i = checkpointIndexRef.current + 1; i < checkpoints.length; i++) {
         if (progress >= checkpoints[i]) {
           checkpointIndexRef.current = i;
@@ -356,11 +321,6 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments }: {
       for (let t = 0; t < TRAIL_COUNT; t++) {
         trailRefs.current[t]?.setAttribute("opacity", "0");
       }
-      // Fade all segment glows
-      segmentGlowRefs.current.forEach((el) => {
-        if (el) el.setAttribute("stroke-opacity", "0.15");
-      });
-      activeSegRef.current = -1;
     }
 
     animIdRef.current = requestAnimationFrame(tick);

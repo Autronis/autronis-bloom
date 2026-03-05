@@ -20,6 +20,8 @@ export interface TeamMember {
   skills: Skill[];
   mail: string;
   linkedin: string;
+  /** Override default category labels per member */
+  customCategoryLabels?: Partial<Record<SkillCategory, string>>;
 }
 
 export const categoryMeta: Record<SkillCategory, {
@@ -67,7 +69,7 @@ export const categoryMeta: Record<SkillCategory, {
 export const categoryLabels: Record<SkillCategory, string> = {
   automation: "Automation & Systems",
   ai: "AI & Intelligence",
-  data: "Data & Scraping",
+  data: "Data & Infrastructure",
   operations: "Operations",
 };
 

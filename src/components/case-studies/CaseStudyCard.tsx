@@ -1,4 +1,5 @@
-import { CheckCircle2, AlertTriangle, Star, UserCircle } from "lucide-react";
+import { CheckCircle2, AlertTriangle, Star, UserCircle, ArrowRight, Play } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState, useCallback } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import { TechTagList } from "@/components/case-studies/TechTag";
@@ -232,6 +233,21 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
                         </a>
                       )}
                     </div>
+                  </div>
+                  <div className="mt-4">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors duration-300"
+                      onClick={() => {
+                        window.location.href = '/#demo-video';
+                        const hero = document.querySelector('.hero-section');
+                        if (hero) hero.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                    >
+                      <Play size={14} />
+                      Bekijk onze demo
+                    </Button>
                   </div>
                 </div>
               )}

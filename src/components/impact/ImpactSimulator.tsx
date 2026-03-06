@@ -5,7 +5,7 @@ import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import {
   AlertTriangle, TrendingUp, Calendar, Percent, Euro,
-  ArrowRight, Calculator, Info, ChevronDown,
+  ArrowRight, Info, ChevronDown,
 } from "lucide-react";
 import {
   Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,
@@ -88,7 +88,6 @@ const ImpactSimulator = () => {
   const animMonthly = useAnimatedValue(Math.round(results.monthlySavings));
   const animNet = useAnimatedValue(Math.round(results.netBenefitYear1));
   const animTotal3Year = useAnimatedValue(Math.round(results.totalValue3Year));
-  const animInvestment = useAnimatedValue(Math.round(results.investment));
 
   const chartData = [
     { name: "Huidige kosten", value: Math.round(hours * rate * 4.33), type: "current" },

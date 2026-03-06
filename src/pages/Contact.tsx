@@ -108,8 +108,18 @@ const Contact = () => {
                 <div className="space-y-1">
                   <p className="text-xs font-medium text-muted-foreground mb-2">Direct contact</p>
                   <div className="space-y-3 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <Linkedin size={16} className="text-primary" />
+                      <a
+                        href="https://www.linkedin.com/company/autronis"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-foreground transition-colors"
+                      >
+                        linkedin.com/company/autronis
+                      </a>
+                    </div>
                     <div className="flex items-center gap-2"><Mail size={16} className="text-primary" /> zakelijk@autronis.com</div>
-                    <div className="flex items-center gap-2"><Linkedin size={16} className="text-primary" /> linkedin.com/company/autronisgroup</div>
                   </div>
                 </div>
               </div>

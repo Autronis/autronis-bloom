@@ -205,60 +205,6 @@ const ImpactSimulator = () => {
                 </p>
               </div>
 
-              {/* Transparency accordion */}
-              <div className="rounded-xl border border-border overflow-hidden">
-                <button
-                  onClick={() => setShowTransparency((p) => !p)}
-                  className="w-full flex items-center justify-between p-4 text-left hover:bg-muted/30 transition-colors"
-                >
-                  <div className="flex items-center gap-2">
-                    <Info size={14} className="text-primary" />
-                    <p className="text-sm font-medium text-foreground">Wat zit er in deze berekening?</p>
-                  </div>
-                  <motion.div animate={{ rotate: showTransparency ? 180 : 0 }} transition={{ duration: 0.25 }}>
-                    <ChevronDown size={16} className="text-muted-foreground" />
-                  </motion.div>
-                </button>
-                <AnimatePresence initial={false}>
-                  {showTransparency && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-                      className="overflow-hidden"
-                    >
-                      <div className="px-4 pb-4 space-y-3">
-                        <div>
-                          <p className="text-xs font-medium text-foreground mb-1.5">Inbegrepen</p>
-                          <ul className="space-y-1">
-                            {["Besparing op handmatige verwerkingstijd", "Besparing door foutreductie", "Structurele capaciteitsvrijmaking"].map((item) => (
-                              <li key={item} className="flex items-center gap-2 text-xs text-foreground/80">
-                                <span className="w-1 h-1 rounded-full bg-primary shrink-0" />
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div>
-                          <p className="text-xs font-medium text-foreground mb-1.5">Niet inbegrepen</p>
-                          <ul className="space-y-1">
-                            {["Extra omzetgroei", "Strategische schaalvoordelen", "Langetermijnoptimalisaties"].map((item) => (
-                              <li key={item} className="flex items-center gap-2 text-xs text-muted-foreground">
-                                <span className="w-1 h-1 rounded-full bg-muted-foreground/40 shrink-0" />
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        <p className="text-xs text-muted-foreground mt-3 leading-relaxed">
-                          Tijdens de impactanalyse vertalen wij deze aannames naar een volledige businesscase op basis van uw processen en systemen.
-                        </p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
             </motion.div>
 
             {/* RIGHT — Parameters */}
@@ -312,6 +258,61 @@ const ImpactSimulator = () => {
                     <ArrowRight size={18} />
                   </Link>
                 </Button>
+
+                <div className="mt-5 rounded-xl border border-border overflow-hidden">
+                  <button
+                    onClick={() => setShowTransparency((p) => !p)}
+                    className="w-full flex items-center justify-between p-4 text-left hover:bg-muted/30 transition-colors"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Info size={14} className="text-primary" />
+                      <p className="text-sm font-medium text-foreground">Wat zit er in deze berekening?</p>
+                    </div>
+                    <motion.div animate={{ rotate: showTransparency ? 180 : 0 }} transition={{ duration: 0.25 }}>
+                      <ChevronDown size={16} className="text-muted-foreground" />
+                    </motion.div>
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {showTransparency && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-4 pb-4 space-y-3">
+                          <div>
+                            <p className="text-xs font-medium text-foreground mb-1.5">Inbegrepen</p>
+                            <ul className="space-y-1">
+                              {["Besparing op handmatige verwerkingstijd", "Besparing door foutreductie", "Structurele capaciteitsvrijmaking"].map((item) => (
+                                <li key={item} className="flex items-center gap-2 text-xs text-foreground/80">
+                                  <span className="w-1 h-1 rounded-full bg-primary shrink-0" />
+                                  {item}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="text-xs font-medium text-foreground mb-1.5">Niet inbegrepen</p>
+                            <ul className="space-y-1">
+                              {["Extra omzetgroei", "Strategische schaalvoordelen", "Langetermijnoptimalisaties"].map((item) => (
+                                <li key={item} className="flex items-center gap-2 text-xs text-muted-foreground">
+                                  <span className="w-1 h-1 rounded-full bg-muted-foreground/40 shrink-0" />
+                                  {item}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          <p className="text-xs text-muted-foreground mt-3 leading-relaxed">
+                            Tijdens de impactanalyse vertalen wij deze aannames naar een volledige businesscase op basis van uw processen en systemen.
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
                 <div className="mt-4">
                   <Link
                     to="/#beveiliging"

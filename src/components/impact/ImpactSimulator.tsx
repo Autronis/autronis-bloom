@@ -5,7 +5,7 @@ import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import {
   AlertTriangle, TrendingUp, Calendar, Percent, Euro,
-  ArrowRight, Calculator, Info, ChevronDown,
+  ArrowRight, Info, ChevronDown,
 } from "lucide-react";
 import {
   Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,
@@ -88,7 +88,6 @@ const ImpactSimulator = () => {
   const animMonthly = useAnimatedValue(Math.round(results.monthlySavings));
   const animNet = useAnimatedValue(Math.round(results.netBenefitYear1));
   const animTotal3Year = useAnimatedValue(Math.round(results.totalValue3Year));
-  const animInvestment = useAnimatedValue(Math.round(results.investment));
 
   const chartData = [
     { name: "Huidige kosten", value: Math.round(hours * rate * 4.33), type: "current" },
@@ -298,24 +297,8 @@ const ImpactSimulator = () => {
                 ))}
               </div>
 
-              {/* Investment summary */}
-              <div className="mt-7 pt-5 border-t border-border">
-                <div className="flex items-center justify-between mb-1">
-                  <div className="flex items-center gap-2">
-                    <Calculator size={14} className="text-primary" />
-                    <p className="text-sm font-medium text-foreground">Indicatieve projectinvestering</p>
-                  </div>
-                  <span className="text-lg font-bold text-foreground tabular-nums">
-                    {formatCurrency(animInvestment)}
-                  </span>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  Gebaseerd op vergelijkbare implementaties binnen MKB-organisaties.
-                </p>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Omvat analyse, ontwerp, implementatie, integraties, testen en documentatie.
-                </p>
-              </div>
+              {/* Spacer */}
+              <div className="mt-7" />
 
               {/* Disclaimer + CTA */}
               <div className="mt-8 pt-6 border-t border-border">

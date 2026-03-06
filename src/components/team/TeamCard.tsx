@@ -1,9 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { X } from "lucide-react";
-import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { copyTextToClipboard } from "@/lib/copyToClipboard";
+import { copyTextToClipboard, showClipboardFeedback } from "@/lib/copyToClipboard";
 import type { TeamMember, Skill, SkillCategory } from "./types";
 import { categoryMeta, categoryLabels } from "./types";
 

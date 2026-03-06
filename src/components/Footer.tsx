@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Linkedin, Mail } from "lucide-react";
-import { toast } from "sonner";
-import { copyTextToClipboard } from "@/lib/copyToClipboard";
+import { copyTextToClipboard, showClipboardFeedback } from "@/lib/copyToClipboard";
 
 const Footer = () => {
   return (

@@ -1,9 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { X } from "lucide-react";
-import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { copyTextToClipboard } from "@/lib/copyToClipboard";
+import { copyTextToClipboard, showClipboardFeedback } from "@/lib/copyToClipboard";
 import type { TeamMember, Skill, SkillCategory } from "./types";
 import { categoryMeta, categoryLabels } from "./types";
 
@@ -221,10 +220,11 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
                 e.stopPropagation();
                 const email = member.mail.replace("mailto:", "");
                 const copied = await copyTextToClipboard(email);
+
                 if (copied) {
-                  toast.success("Gekopieerd naar klembord", { duration: 2000 });
+                  showClipboardFeedback("E-mailadres gekopieerd naar klembord", "success");
                 } else {
-                  toast.error("Kopiëren mislukt", { duration: 2000 });
+                  showClipboardFeedback("Kopiëren mislukt", "error");
                 }
               }}
             >

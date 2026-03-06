@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Linkedin, Mail } from "lucide-react";
-import { toast } from "sonner";
-import { copyTextToClipboard } from "@/lib/copyToClipboard";
+import { copyTextToClipboard, showClipboardFeedback } from "@/lib/copyToClipboard";
 
 const Footer = () => {
   return (
@@ -63,9 +62,9 @@ const Footer = () => {
                   onClick={async () => {
                     const copied = await copyTextToClipboard("zakelijk@autronis.com");
                     if (copied) {
-                      toast.success("Gekopieerd naar klembord", { duration: 2000 });
+                      showClipboardFeedback("E-mailadres gekopieerd naar klembord", "success");
                     } else {
-                      toast.error("Kopiëren mislukt", { duration: 2000 });
+                      showClipboardFeedback("Kopiëren mislukt", "error");
                     }
                   }}
                   className="hover:text-foreground transition-colors inline-flex items-center gap-1.5"

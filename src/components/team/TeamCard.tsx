@@ -3,6 +3,7 @@ import { X } from "lucide-react";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { copyTextToClipboard } from "@/lib/copyToClipboard";
 import type { TeamMember, Skill, SkillCategory } from "./types";
 import { categoryMeta, categoryLabels } from "./types";
 
@@ -216,11 +217,15 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
                 flex items-center justify-center
                 hover:border-primary/40
                 transition-all duration-200 hover:scale-[1.08]"
-              onClick={(e) => {
+              onClick={async (e) => {
                 e.stopPropagation();
                 const email = member.mail.replace("mailto:", "");
-                navigator.clipboard.writeText(email);
-                toast.success("E-mailadres gekopieerd naar klembord");
+                const copied = await copyTextToClipboard(email);
+                if (copied) {
+                  toast.success("Gekopieerd naar klembord", { duration: 2000 });
+                } else {
+                  toast.error("Kopiëren mislukt", { duration: 2000 });
+                }
               }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

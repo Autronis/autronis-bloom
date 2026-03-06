@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { Linkedin, Twitter, Mail } from "lucide-react";
+import { Linkedin, Mail } from "lucide-react";
 import { toast } from "sonner";
+import { copyTextToClipboard } from "@/lib/copyToClipboard";
 
 const Footer = () => {
   return (
@@ -17,17 +18,24 @@ const Footer = () => {
               Wij ontwerpen en implementeren automatiserings- en datasystemen voor
               groeiende MKB-bedrijven.
             </p>
-            <div className="flex gap-3">
-              <a href="https://www.linkedin.com/company/autronis" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors" aria-label="LinkedIn">
+            <div className="flex flex-col gap-2 items-start">
+              <a
+                href="https://www.linkedin.com/company/autronis"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                aria-label="LinkedIn"
+              >
                 <Linkedin size={18} />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Twitter">
-                <Twitter size={18} />
-              </a>
               <button
-                onClick={() => {
-                  navigator.clipboard.writeText("zakelijk@autronis.com");
-                  toast("E-mailadres gekopieerd naar klembord");
+                onClick={async () => {
+                  const copied = await copyTextToClipboard("zakelijk@autronis.com");
+                  if (copied) {
+                    toast.success("Gekopieerd naar klembord", { duration: 2000 });
+                  } else {
+                    toast.error("Kopiëren mislukt", { duration: 2000 });
+                  }
                 }}
                 className="text-muted-foreground hover:text-primary transition-colors"
                 aria-label="Kopieer e-mailadres"
@@ -73,7 +81,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="hover:text-foreground transition-colors inline-flex items-center gap-1.5"
                 >
-                  <img src="/logos/linkedin.svg" alt="" className="w-3.5 h-3.5" />
+                  <Linkedin size={14} />
                   LinkedIn
                 </a>
               </li>

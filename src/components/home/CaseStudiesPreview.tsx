@@ -193,7 +193,13 @@ const CaseStudiesPreview = () => {
                 <a href="#" onClick={(e) => {
                   e.preventDefault();
                   const hero = document.querySelector('.hero-section');
-                  if (hero) hero.scrollIntoView({ behavior: 'smooth' });
+                  if (hero) {
+                    hero.scrollIntoView({ behavior: 'smooth' });
+                    setTimeout(() => {
+                      const demoBtn = hero.querySelector('button[class*="outline"]') as HTMLButtonElement;
+                      if (demoBtn) demoBtn.click();
+                    }, 600);
+                  }
                 }}>
                   Bekijk onze demo
                   <ArrowRight size={14} />

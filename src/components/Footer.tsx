@@ -61,20 +61,11 @@ const Footer = () => {
                 <button
                   onClick={async () => {
                     const copied = await copyTextToClipboard("zakelijk@autronis.com");
-                    const message = copied ? "E-mailadres gekopieerd naar klembord" : "Kopiëren mislukt";
-
                     if (copied) {
-                      toast.success("Gekopieerd naar klembord", { duration: 2000 });
+                      showClipboardFeedback("E-mailadres gekopieerd naar klembord", "success");
                     } else {
-                      toast.error("Kopiëren mislukt", { duration: 2000 });
+                      showClipboardFeedback("Kopiëren mislukt", "error");
                     }
-
-                    window.setTimeout(() => {
-                      const hasVisibleToast = document.querySelector("[data-sonner-toast]");
-                      if (!hasVisibleToast) {
-                        window.alert(message);
-                      }
-                    }, 120);
                   }}
                   className="hover:text-foreground transition-colors inline-flex items-center gap-1.5"
                 >

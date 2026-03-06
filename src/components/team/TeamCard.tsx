@@ -221,11 +221,20 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
                 e.stopPropagation();
                 const email = member.mail.replace("mailto:", "");
                 const copied = await copyTextToClipboard(email);
+                const message = copied ? "E-mailadres gekopieerd naar klembord" : "Kopiëren mislukt";
+
                 if (copied) {
                   toast.success("Gekopieerd naar klembord", { duration: 2000 });
                 } else {
                   toast.error("Kopiëren mislukt", { duration: 2000 });
                 }
+
+                window.setTimeout(() => {
+                  const hasVisibleToast = document.querySelector("[data-sonner-toast]");
+                  if (!hasVisibleToast) {
+                    window.alert(message);
+                  }
+                }, 120);
               }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

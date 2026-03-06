@@ -1,7 +1,12 @@
 export async function copyTextToClipboard(text: string): Promise<boolean> {
   try {
     if (navigator.clipboard?.writeText) {
-      await navigator.clipboard.writeText(text);
+      await Promise.race([
+        navigator.clipboard.writeText(text),
+        new Promise((_, reject) => {
+          window.setTimeout(() => reject(new Error("clipboard-timeout")), 700);
+        }),
+      ]);
       return true;
     }
   } catch {

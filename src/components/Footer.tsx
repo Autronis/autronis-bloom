@@ -18,32 +18,6 @@ const Footer = () => {
               Wij ontwerpen en implementeren automatiserings- en datasystemen voor
               groeiende MKB-bedrijven.
             </p>
-            <div className="flex flex-col gap-2 items-start">
-              <a
-                href="https://www.linkedin.com/company/autronis"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={18} />
-              </a>
-              <button
-                onClick={async () => {
-                  const copied = await copyTextToClipboard("zakelijk@autronis.com");
-                  if (copied) {
-                    toast.success("Gekopieerd naar klembord", { duration: 2000 });
-                  } else {
-                    toast.error("Kopiëren mislukt", { duration: 2000 });
-                  }
-                }}
-                className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="Kopieer e-mailadres"
-                title="Kopieer zakelijk@autronis.com"
-              >
-                <Mail size={18} />
-              </button>
-            </div>
           </div>
 
           {/* Services */}
@@ -68,7 +42,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
             <h4 className="text-sm font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
@@ -84,6 +57,22 @@ const Footer = () => {
                   <Linkedin size={14} />
                   LinkedIn
                 </a>
+              </li>
+              <li>
+                <button
+                  onClick={async () => {
+                    const copied = await copyTextToClipboard("zakelijk@autronis.com");
+                    if (copied) {
+                      toast.success("Gekopieerd naar klembord", { duration: 2000 });
+                    } else {
+                      toast.error("Kopiëren mislukt", { duration: 2000 });
+                    }
+                  }}
+                  className="hover:text-foreground transition-colors inline-flex items-center gap-1.5"
+                >
+                  <Mail size={14} />
+                  E-mail
+                </button>
               </li>
             </ul>
           </div>

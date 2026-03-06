@@ -1,6 +1,7 @@
 import { CheckCircle2, AlertTriangle, Star, UserCircle, ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import { TechTagList } from "@/components/case-studies/TechTag";
 import type { CaseStudy, CaseMetric, MetricAnimation } from "./caseStudiesData";

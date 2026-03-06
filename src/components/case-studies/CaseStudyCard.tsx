@@ -242,7 +242,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
                       variant="outline"
                       className="w-full border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors duration-300"
                       onClick={() => {
-                        window.location.href = '/';
+                        navigate('/');
                         setTimeout(() => {
                           const heroSection = document.querySelector('.hero-section');
                           if (heroSection) {

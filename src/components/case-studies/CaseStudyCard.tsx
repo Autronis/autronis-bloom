@@ -104,6 +104,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
   const Icon = cs.icon;
   const Visual = cs.visual;
   const isEven = index % 2 === 0;
+  const navigate = useNavigate();
 
   return (
     <ScrollReveal>

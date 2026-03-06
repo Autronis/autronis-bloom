@@ -146,7 +146,7 @@ const ImpactSimulator = () => {
                 <p className="text-sm font-semibold text-foreground mb-4">Resultaten</p>
                 <div className="grid grid-cols-2 gap-4">
                   <KPICard
-                    label="Jaarlijkse besparing per jaar"
+                    label="Jaarlijkse besparing"
                     value={formatCurrency(animYearly)}
                     icon={<TrendingUp size={16} />}
                     highlight
@@ -161,27 +161,21 @@ const ImpactSimulator = () => {
 
               {/* Secondary KPIs */}
               <div className="grid grid-cols-2 gap-4">
-                  <KPICard
-                    label="Besparing jaar 1"
-                    value={formatCurrency(animNet)}
-                  icon={<Euro size={16} />}
-                />
-                  <KPICard
-                    label="Besparing over 3 jaar"
-                    value={formatCurrency(animTotal3Year)}
+                <KPICard
+                  label="Besparing over 3 jaar"
+                  value={formatCurrency(animTotal3Year)}
                   icon={<TrendingUp size={16} />}
                 />
-              </div>
-
-              {/* ROI Multiplier */}
-              <div className="rounded-xl border border-primary/30 bg-primary/[0.04] p-4 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Percent size={16} className="text-primary" />
-                  <p className="text-xs text-muted-foreground">ROI Multiplier</p>
+                {/* ROI Multiplier as KPI card */}
+                <div className="rounded-xl border border-primary/30 bg-primary/[0.04] p-4 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Percent size={16} className="text-primary" />
+                    <p className="text-xs text-muted-foreground">ROI Multiplier</p>
+                  </div>
+                  <p className="text-2xl font-bold text-primary tabular-nums">
+                    {results.roiMultiplier.toFixed(1)}x
+                  </p>
                 </div>
-                <p className="text-2xl font-bold text-primary tabular-nums">
-                  {results.roiMultiplier.toFixed(1)}x
-                </p>
               </div>
 
               {/* Bar chart */}

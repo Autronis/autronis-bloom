@@ -314,7 +314,7 @@ const PillarCard = ({
 
   return (
     <div ref={sectionRef} className="scroll-mt-28">
-      <div className="rounded-xl border border-border bg-card/80 backdrop-blur-sm p-6 sm:p-8 transition-all duration-300 ease-out hover:border-primary/40">
+      <div className="rounded-xl border border-border bg-card/80 backdrop-blur-sm p-6 sm:p-8 transition-all duration-300 ease-out hover:scale-[1.01] hover:border-primary/40">
         {/* Header */}
         <div className="flex items-center gap-3 mb-2">
           <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">

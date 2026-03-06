@@ -314,7 +314,7 @@ const PillarCard = ({
 
   return (
     <div ref={sectionRef} className="scroll-mt-28">
-      <div className="rounded-xl border border-border bg-card/80 backdrop-blur-sm p-6 sm:p-8 transition-all duration-300 ease-out hover:scale-[1.01] hover:border-primary/40">
+      <div className="rounded-xl border border-border bg-card/80 backdrop-blur-sm p-6 sm:p-8 transition-all duration-300 ease-out hover:border-primary/40">
         {/* Header */}
         <div className="flex items-center gap-3 mb-2">
           <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
@@ -388,7 +388,6 @@ const PillarCard = ({
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: catIdx * 0.08, duration: 0.4 }}
                     whileHover={{
-                      scale: 1.02,
                       borderColor: "hsl(174, 78%, 41%, 0.3)",
                       boxShadow: "0 0 12px hsl(174, 78%, 41%, 0.08)",
                     }}
@@ -518,7 +517,7 @@ const Services = () => {
             <div className="relative mb-4 overflow-hidden py-10">
               <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-background to-transparent pointer-events-none" />
               <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-background to-transparent pointer-events-none" />
-              <div className="flex animate-marquee-right gap-6 sm:gap-14 w-max items-center justify-center">
+              <div className="flex animate-marquee-right gap-6 sm:gap-8 w-max items-center justify-center">
                 {[...toolIconsRow1, ...toolIconsRow1, ...toolIconsRow1].map((tool, i) => (
                   <div key={i} className="relative group hover:scale-110 transition-transform duration-200">
                     <img src={tool.logo} alt={tool.name} className={`w-7 h-7 sm:w-12 sm:h-12 object-contain opacity-70 group-hover:opacity-100 transition-all duration-200 ${tool.dark ? 'dark:invert' : ''}`} loading="lazy" />
@@ -533,7 +532,7 @@ const Services = () => {
             <div className="relative overflow-hidden py-10">
               <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-background to-transparent pointer-events-none" />
               <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-background to-transparent pointer-events-none" />
-              <div className="flex animate-marquee-left gap-6 sm:gap-14 w-max items-center justify-center">
+              <div className="flex animate-marquee-left gap-6 sm:gap-8 w-max items-center justify-center">
                 {[...toolIconsRow2, ...toolIconsRow2, ...toolIconsRow2].map((tool, i) => (
                   <div key={i} className="relative group hover:scale-110 transition-transform duration-200">
                     <img src={tool.logo} alt={tool.name} className={`w-7 h-7 sm:w-12 sm:h-12 object-contain opacity-70 group-hover:opacity-100 transition-all duration-200 ${tool.dark ? 'dark:invert' : ''}`} loading="lazy" />

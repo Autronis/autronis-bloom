@@ -18,7 +18,7 @@ const Footer = () => {
               groeiende MKB-bedrijven.
             </p>
             <div className="flex gap-3">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/company/autronis" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors" aria-label="LinkedIn">
                 <Linkedin size={18} />
               </a>
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Twitter">
@@ -66,6 +66,17 @@ const Footer = () => {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link to="/contact" className="hover:text-foreground transition-colors">Neem contact op</Link></li>
               <li><Link to="/book" className="hover:text-primary transition-colors text-primary">Plan Automation Scan</Link></li>
+              <li>
+                <a
+                  href="https://www.linkedin.com/company/autronis"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-colors inline-flex items-center gap-1.5"
+                >
+                  <img src="/logos/linkedin.svg" alt="" className="w-3.5 h-3.5" />
+                  LinkedIn
+                </a>
+              </li>
             </ul>
           </div>
         </div>

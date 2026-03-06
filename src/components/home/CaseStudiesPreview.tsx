@@ -183,6 +183,23 @@ const CaseStudiesPreview = () => {
                 <ArrowRight size={18} />
               </Link>
             </Button>
+            <div className="mt-4">
+              <Button
+                asChild
+                size="sm"
+                variant="outline"
+                className="w-full sm:w-auto border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors duration-300"
+              >
+                <a href="#" onClick={(e) => {
+                  e.preventDefault();
+                  const hero = document.querySelector('.hero-section');
+                  if (hero) hero.scrollIntoView({ behavior: 'smooth' });
+                }}>
+                  Bekijk onze demo
+                  <ArrowRight size={14} />
+                </a>
+              </Button>
+            </div>
           </ScrollRevealItem>
         </ScrollReveal>
       </div>

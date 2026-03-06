@@ -240,9 +240,17 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
                       variant="outline"
                       className="w-full border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors duration-300"
                       onClick={() => {
-                        window.location.href = '/#demo-video';
-                        const hero = document.querySelector('.hero-section');
-                        if (hero) hero.scrollIntoView({ behavior: 'smooth' });
+                        window.location.href = '/';
+                        setTimeout(() => {
+                          const heroSection = document.querySelector('.hero-section');
+                          if (heroSection) {
+                            heroSection.scrollIntoView({ behavior: 'smooth' });
+                            setTimeout(() => {
+                              const demoBtn = heroSection.querySelector('button[class*="outline"]') as HTMLButtonElement;
+                              if (demoBtn) demoBtn.click();
+                            }, 600);
+                          }
+                        }, 300);
                       }}
                     >
                       <Play size={14} />

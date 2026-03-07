@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 const BASE_URL = "https://autronis-bloom.lovable.app";
-const OG_IMAGE = "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5dbe20cc-6391-43fb-8083-b6f9d16fe356/id-preview-0e3d4c60--1ea61a22-1939-426f-b87d-cfadab734899.lovable.app-1771852282557.png";
+const OG_IMAGE = "https://autronis-bloom.lovable.app/og-image.png";
 
 interface SEOHeadProps {
   title: string;

@@ -158,6 +158,10 @@ const Index = () => {
             <Dialog
               open={videoOpen}
               onOpenChange={(open) => {
+                if (!open && videoRef.current) {
+                  videoRef.current.pause();
+                  videoRef.current.currentTime = 0;
+                }
                 setVideoOpen(open);
                 setMobileControlsActive(false);
                 if (open) setShowSkip(true);
@@ -173,10 +177,11 @@ const Index = () => {
                     <>
                       <video
                         ref={videoRef}
-                        src="/videos/demo-lead-system.mp4"
                         className="w-full aspect-video block"
                         autoPlay
                         controls
+                        playsInline
+                        preload="metadata"
                         controlsList="nodownload noplaybackrate"
                         disablePictureInPicture
                         onTouchStart={bumpSkipAboveControls}
@@ -185,7 +190,10 @@ const Index = () => {
                         onTimeUpdate={(e) => {
                           if (e.currentTarget.currentTime >= 10) setShowSkip(false);
                         }}
-                      />
+                      >
+                        <source src="https://qmtnmisdmchydrriuont.supabase.co/storage/v1/object/public/Jobby%20lead%20systeem/0301%20(1)(2).mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
                       {showSkip && (
                         <button
                           onClick={() => {

@@ -164,7 +164,7 @@ const Index = () => {
                 }
                 setVideoOpen(open);
                 setMobileControlsActive(false);
-                if (open) setShowSkip(true);
+                setShowSkip(true);
               }}
             >
               <DialogContent className="sm:max-w-4xl p-0 bg-card border-border overflow-hidden" aria-describedby={undefined}>

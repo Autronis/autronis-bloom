@@ -6,119 +6,158 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Mail, Linkedin, Clock } from "lucide-react";
 import { useState } from "react";
 import SEOHead from "@/components/SEOHead";
-
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import { useLanguage } from "@/i18n/context";
+
+const text = {
+  en: {
+    seoTitle: "Autronis | Contact — Get in Touch",
+    seoDesc: "Contact Autronis for questions about automation, integrations, or a free Automation Scan. We respond within 24 hours.",
+    label: "Contact",
+    title: "Let's get acquainted",
+    desc: "Want to automate, scale, or explore what's possible?",
+    descLine2: "Send us a message or schedule a free Automation Scan directly.",
+    check1: "No-obligation advice",
+    check2: "Response within one business day",
+    check3: "Direct contact with engineers",
+    subtext: "We primarily work with growing SMB companies that want to automate processes and make systems work together at scale.",
+    sent: "Message sent!",
+    sentSub: "We'll respond within 24 hours.",
+    nameLabel: "Name *",
+    namePlaceholder: "Your name",
+    emailLabel: "Email *",
+    emailPlaceholder: "you@company.com",
+    companyLabel: "Company",
+    companyPlaceholder: "Your company name",
+    messageLabel: "Message *",
+    messagePlaceholder: "Briefly describe which process you'd like to automate or what challenges you're currently facing.",
+    afterSubmit: "What happens after you submit?",
+    afterStep1: "We review your inquiry",
+    afterStep2: "You'll receive a response within one business day",
+    afterStep3: "If relevant, we'll schedule a short Automation Scan",
+    submitBtn: "Start conversation",
+    noSales: "No sales pressure. We first check whether automation actually adds value.",
+    directTitle: "Prefer to schedule directly?",
+    directDesc: "An Automation Scan is the fastest way to gain insight into automation opportunities within your organization.",
+    directDescSub: "Short, concrete, and completely free of obligation.",
+    directCta: "Schedule Automation Scan",
+    directFooter: "No obligation • No commitments • ~30 minute call",
+    responseTitle: "Response within 24 hours",
+    responseDesc: "We respond to every inquiry within one business day.",
+    responseDescSub: "You'll quickly receive a substantive reply about the possibilities for your situation.",
+    directContact: "Direct contact",
+  },
+  nl: {
+    seoTitle: "Autronis | Contact — Neem Contact Op",
+    seoDesc: "Neem contact op met Autronis voor vragen over automatisering, integraties of een gratis Automation Scan. We reageren binnen 24 uur.",
+    label: "Contact",
+    title: "Laten we kennismaken",
+    desc: "Wil je automatiseren, opschalen of ontdekken wat er mogelijk is?",
+    descLine2: "Stuur ons een bericht of plan direct een gratis Automation Scan.",
+    check1: "Vrijblijvend advies",
+    check2: "Reactie binnen één werkdag",
+    check3: "Direct contact met engineers",
+    subtext: "Wij werken vooral met groeiende mkb-bedrijven die processen willen automatiseren en systemen op schaal willen laten samenwerken.",
+    sent: "Bericht verzonden!",
+    sentSub: "We reageren binnen 24 uur.",
+    nameLabel: "Naam *",
+    namePlaceholder: "Je naam",
+    emailLabel: "E-mail *",
+    emailPlaceholder: "je@bedrijf.nl",
+    companyLabel: "Bedrijf",
+    companyPlaceholder: "Je bedrijfsnaam",
+    messageLabel: "Bericht *",
+    messagePlaceholder: "Beschrijf kort welk proces je wilt automatiseren of welke uitdagingen je ervaart.",
+    afterSubmit: "Wat gebeurt er na het versturen?",
+    afterStep1: "We bekijken je aanvraag",
+    afterStep2: "Je ontvangt binnen één werkdag een reactie",
+    afterStep3: "Indien relevant plannen we een korte Automation Scan",
+    submitBtn: "Start gesprek",
+    noSales: "Geen verkoopdruk. We checken eerst of automatisering daadwerkelijk waarde toevoegt.",
+    directTitle: "Liever direct inplannen?",
+    directDesc: "Een Automation Scan is de snelste manier om inzicht te krijgen in automatiseringsmogelijkheden binnen je organisatie.",
+    directDescSub: "Kort, concreet en volledig vrijblijvend.",
+    directCta: "Plan een Automation Scan",
+    directFooter: "Vrijblijvend • Geen verplichtingen • ~30 minuten",
+    responseTitle: "Reactie binnen 24 uur",
+    responseDesc: "Wij reageren op elke aanvraag binnen één werkdag.",
+    responseDescSub: "Je ontvangt snel een inhoudelijke reactie over de mogelijkheden voor jouw situatie.",
+    directContact: "Direct contact",
+  },
+};
 
 const Contact = () => {
+  const lang = useLanguage();
+  const t = text[lang];
   const [sent, setSent] = useState(false);
 
   return (
     <>
-      <SEOHead
-        title="Autronis | Contact — Get in Touch"
-        description="Contact Autronis for questions about automation, integrations, or a free Automation Scan. We respond within 24 hours."
-        path="/contact"
-      />
+      <SEOHead title={t.seoTitle} description={t.seoDesc} path="/contact" />
       <section className="pt-16 pb-24 relative overflow-hidden">
-        
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <ScrollReveal className="max-w-2xl mx-auto text-center mb-12">
             <ScrollRevealItem>
-              <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Contact</p>
-              <h1 className="text-3xl sm:text-4xl font-bold mb-4">Let's get acquainted</h1>
+              <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">{t.label}</p>
+              <h1 className="text-3xl sm:text-4xl font-bold mb-4">{t.title}</h1>
               <p className="text-muted-foreground leading-relaxed mb-6">
-                Want to automate, scale, or explore what's possible?
-                <br />Send us a message or schedule a free Automation Scan directly.
+                {t.desc}<br />{t.descLine2}
               </p>
               <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground mb-4">
-                <span><span className="text-primary">✓</span> No-obligation advice</span>
-                <span><span className="text-primary">✓</span> Response within one business day</span>
-                <span><span className="text-primary">✓</span> Direct contact with engineers</span>
+                <span><span className="text-primary">✓</span> {t.check1}</span>
+                <span><span className="text-primary">✓</span> {t.check2}</span>
+                <span><span className="text-primary">✓</span> {t.check3}</span>
               </div>
-              <p className="text-xs text-muted-foreground/70">
-                We primarily work with growing SMB companies that want to automate processes and make systems work together at scale.
-              </p>
+              <p className="text-xs text-muted-foreground/70">{t.subtext}</p>
             </ScrollRevealItem>
           </ScrollReveal>
           <ScrollReveal className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <ScrollRevealItem>
               {sent ? (
                 <div className="rounded-xl border border-primary/30 bg-primary/5 p-8 text-center">
-                  <p className="text-lg font-semibold mb-2">Message sent!</p>
-                  <p className="text-sm text-muted-foreground">We'll respond within 24 hours.</p>
+                  <p className="text-lg font-semibold mb-2">{t.sent}</p>
+                  <p className="text-sm text-muted-foreground">{t.sentSub}</p>
                 </div>
               ) : (
                 <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Name *</Label>
-                      <Input id="name" placeholder="Your name" required />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email *</Label>
-                      <Input id="email" type="email" placeholder="you@company.com" required />
-                    </div>
+                    <div className="space-y-2"><Label htmlFor="name">{t.nameLabel}</Label><Input id="name" placeholder={t.namePlaceholder} required /></div>
+                    <div className="space-y-2"><Label htmlFor="email">{t.emailLabel}</Label><Input id="email" type="email" placeholder={t.emailPlaceholder} required /></div>
+                  </div>
+                  <div className="space-y-2"><Label htmlFor="company">{t.companyLabel}</Label><Input id="company" placeholder={t.companyPlaceholder} /></div>
+                  <div className="space-y-2">
+                    <Label htmlFor="message">{t.messageLabel}</Label>
+                    <textarea id="message" required placeholder={t.messagePlaceholder} className="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none" />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="company">Company</Label>
-                    <Input id="company" placeholder="Your company name" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Message *</Label>
-                    <textarea
-                      id="message"
-                      required
-                      placeholder="Briefly describe which process you'd like to automate or what challenges you're currently facing."
-                      className="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <p className="text-xs font-medium text-muted-foreground">What happens after you submit?</p>
+                    <p className="text-xs font-medium text-muted-foreground">{t.afterSubmit}</p>
                     <ul className="text-xs text-muted-foreground/70 space-y-1">
-                      <li>• We review your inquiry</li>
-                      <li>• You'll receive a response within one business day</li>
-                      <li>• If relevant, we'll schedule a short Automation Scan</li>
+                      <li>• {t.afterStep1}</li>
+                      <li>• {t.afterStep2}</li>
+                      <li>• {t.afterStep3}</li>
                     </ul>
                   </div>
-
-                  <Button type="submit" size="lg">Start conversation <ArrowRight size={18} /></Button>
-                  <p className="text-xs text-muted-foreground/60">No sales pressure. We first check whether automation actually adds value.</p>
+                  <Button type="submit" size="lg">{t.submitBtn} <ArrowRight size={18} /></Button>
+                  <p className="text-xs text-muted-foreground/60">{t.noSales}</p>
                 </form>
               )}
             </ScrollRevealItem>
-
             <ScrollRevealItem>
               <div className="flex flex-col justify-center space-y-6">
                 <div className="rounded-xl border border-border bg-card p-6">
-                  <h3 className="font-semibold mb-3">Prefer to schedule directly?</h3>
-                  <p className="text-sm text-muted-foreground mb-4">An Automation Scan is the fastest way to gain insight into automation opportunities within your organization.<br />Short, concrete, and completely free of obligation.</p>
-                  <Button asChild className="w-full">
-                    <Link to="/book">Schedule Automation Scan <ArrowRight size={14} /></Link>
-                  </Button>
-                  <p className="text-xs text-muted-foreground/60 text-center mt-3">No obligation • No commitments • ~30 minute call</p>
+                  <h3 className="font-semibold mb-3">{t.directTitle}</h3>
+                  <p className="text-sm text-muted-foreground mb-4">{t.directDesc}<br />{t.directDescSub}</p>
+                  <Button asChild className="w-full"><Link to="/book">{t.directCta} <ArrowRight size={14} /></Link></Button>
+                  <p className="text-xs text-muted-foreground/60 text-center mt-3">{t.directFooter}</p>
                 </div>
                 <div className="rounded-xl border border-border bg-card p-6">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Clock size={16} className="text-primary" />
-                    <h3 className="font-semibold">Response within 24 hours</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground">We respond to every inquiry within one business day.<br />You'll quickly receive a substantive reply about the possibilities for your situation.</p>
+                  <div className="flex items-center gap-2 mb-3"><Clock size={16} className="text-primary" /><h3 className="font-semibold">{t.responseTitle}</h3></div>
+                  <p className="text-sm text-muted-foreground">{t.responseDesc}<br />{t.responseDescSub}</p>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-xs font-medium text-muted-foreground mb-2">Direct contact</p>
+                  <p className="text-xs font-medium text-muted-foreground mb-2">{t.directContact}</p>
                   <div className="space-y-3 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <Linkedin size={16} className="text-primary" />
-                      <a
-                        href="https://www.linkedin.com/company/autronis"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-foreground transition-colors"
-                      >
-                        linkedin.com/company/autronis
-                      </a>
-                    </div>
+                    <div className="flex items-center gap-2"><Linkedin size={16} className="text-primary" /><a href="https://www.linkedin.com/company/autronis" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">linkedin.com/company/autronis</a></div>
                     <div className="flex items-center gap-2"><Mail size={16} className="text-primary" /> info@autronis.com</div>
                   </div>
                 </div>

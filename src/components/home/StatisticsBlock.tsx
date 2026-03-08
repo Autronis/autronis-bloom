@@ -5,18 +5,18 @@ import useCanHover from "@/hooks/use-can-hover";
 const capabilities = [
   {
     icon: Workflow,
-    title: "Workflow automatisering",
-    description: "Terugkerende processen worden volledig geautomatiseerd zodat werk zonder handmatige tussenstappen kan doorlopen.",
+    title: "Workflow automation",
+    description: "Recurring processes are fully automated so work flows without manual steps.",
   },
   {
     icon: Cable,
-    title: "Systeemintegraties",
-    description: "Bedrijfssystemen zoals CRM, ERP en andere tools worden verbonden zodat data automatisch wordt gesynchroniseerd.",
+    title: "System integrations",
+    description: "Business systems like CRM, ERP and other tools are connected so data syncs automatically.",
   },
   {
     icon: BarChart3,
-    title: "Data en dashboards",
-    description: "Realtime inzicht in processen via automatische rapportages en dashboards.",
+    title: "Data and dashboards",
+    description: "Real-time insight into processes via automated reports and dashboards.",
   },
 ];
 

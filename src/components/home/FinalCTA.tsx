@@ -52,7 +52,6 @@ const FinalCTA = () => {
               transition: "opacity 0.8s ease-out 0.3s, transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94) 0.3s",
             }}
           />
-          {/* Left lower wing */}
           <path
             d="M -8 4 L -22 12 C -38 22, -55 35, -58 50 C -52 60, -35 55, -25 40 L -10 12 Z"
             fill="hsl(174, 78%, 41%)"
@@ -67,8 +66,6 @@ const FinalCTA = () => {
               transition: "opacity 0.8s ease-out 0.4s, transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94) 0.4s",
             }}
           />
-
-          {/* Right upper wing */}
           <path
             d="M 8 -4 L 20 -20 C 28 -38, 50 -52, 72 -42 C 82 -35, 78 -18, 60 -10 L 35 -4 Z"
             fill="hsl(174, 78%, 41%)"
@@ -83,7 +80,6 @@ const FinalCTA = () => {
               transition: "opacity 0.8s ease-out 0.3s, transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94) 0.3s",
             }}
           />
-          {/* Right lower wing */}
           <path
             d="M 8 4 L 22 12 C 38 22, 55 35, 58 50 C 52 60, 35 55, 25 40 L 10 12 Z"
             fill="hsl(174, 78%, 41%)"
@@ -98,17 +94,12 @@ const FinalCTA = () => {
               transition: "opacity 0.8s ease-out 0.4s, transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94) 0.4s",
             }}
           />
-
-          {/* Circuit traces on wings - left */}
           <g
             opacity="0.22"
             stroke="hsl(174, 78%, 41%)"
             strokeWidth="0.7"
             fill="none"
-            style={{
-              opacity: isVisible ? 0.22 : 0,
-              transition: "opacity 0.6s ease-out 0.7s",
-            }}
+            style={{ opacity: isVisible ? 0.22 : 0, transition: "opacity 0.6s ease-out 0.7s" }}
           >
             <path d="M -8 -2 L -30 -15 L -50 -30" />
             <path d="M -8 0 L -40 -8 L -65 -20" />
@@ -119,17 +110,12 @@ const FinalCTA = () => {
             <circle cx="-40" cy="30" r="2.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.25" />
             <circle cx="-25" cy="10" r="1.8" fill="hsl(174, 78%, 41%)" fillOpacity="0.3" />
           </g>
-
-          {/* Circuit traces on wings - right */}
           <g
             opacity="0.22"
             stroke="hsl(174, 78%, 41%)"
             strokeWidth="0.7"
             fill="none"
-            style={{
-              opacity: isVisible ? 0.22 : 0,
-              transition: "opacity 0.6s ease-out 0.7s",
-            }}
+            style={{ opacity: isVisible ? 0.22 : 0, transition: "opacity 0.6s ease-out 0.7s" }}
           >
             <path d="M 8 -2 L 30 -15 L 50 -30" />
             <path d="M 8 0 L 40 -8 L 65 -20" />
@@ -140,8 +126,6 @@ const FinalCTA = () => {
             <circle cx="40" cy="30" r="2.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.25" />
             <circle cx="25" cy="10" r="1.8" fill="hsl(174, 78%, 41%)" fillOpacity="0.3" />
           </g>
-
-          {/* Gear body - 6 teeth */}
           <g
             opacity="0.25"
             style={{
@@ -167,48 +151,10 @@ const FinalCTA = () => {
             ))}
             <circle cx="0" cy="0" r="12" fill="hsl(174, 78%, 41%)" fillOpacity="0.15" stroke="hsl(174, 78%, 41%)" strokeOpacity="0.35" strokeWidth="1.2" />
           </g>
-
-          {/* Inner turquoise ring */}
-          <circle
-            cx="0"
-            cy="0"
-            r="8"
-            fill="none"
-            stroke="hsl(174, 78%, 41%)"
-            strokeWidth="2.5"
-            strokeOpacity="0.4"
-            className={isVisible ? "animate-[finalcta-pulse_3s_ease-in-out_infinite]" : ""}
-            style={{
-              opacity: isVisible ? 1 : 0,
-              transition: "opacity 0.5s ease-out 0.2s",
-            }}
-          />
-
-          {/* Center pulse */}
-          <circle
-            cx="0"
-            cy="0"
-            r="4"
-            fill="hsl(174, 78%, 41%)"
-            fillOpacity="0.13"
-            style={{
-              opacity: isVisible ? 1 : 0,
-              transition: "opacity 0.4s ease-out 0.1s",
-            }}
-          />
-
-          {/* Antennae */}
-          <g style={{
-            opacity: isVisible ? 1 : 0,
-            transition: "opacity 0.6s ease-out 0.6s",
-          }}>
-            <path
-              d="M -2.5 -14 Q -8 -35 -12 -48 M 2.5 -14 Q 8 -35 12 -48"
-              stroke="hsl(174, 78%, 41%)"
-              strokeOpacity="0.22"
-              strokeWidth="0.8"
-              fill="none"
-            />
+          <circle cx="0" cy="0" r="8" fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="2.5" strokeOpacity="0.4" className={isVisible ? "animate-[finalcta-pulse_3s_ease-in-out_infinite]" : ""} style={{ opacity: isVisible ? 1 : 0, transition: "opacity 0.5s ease-out 0.2s" }} />
+          <circle cx="0" cy="0" r="4" fill="hsl(174, 78%, 41%)" fillOpacity="0.13" style={{ opacity: isVisible ? 1 : 0, transition: "opacity 0.4s ease-out 0.1s" }} />
+          <g style={{ opacity: isVisible ? 1 : 0, transition: "opacity 0.6s ease-out 0.6s" }}>
+            <path d="M -2.5 -14 Q -8 -35 -12 -48 M 2.5 -14 Q 8 -35 12 -48" stroke="hsl(174, 78%, 41%)" strokeOpacity="0.22" strokeWidth="0.8" fill="none" />
             <circle cx="-12" cy="-48" r="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.22" />
             <circle cx="12" cy="-48" r="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.22" />
           </g>
@@ -217,15 +163,15 @@ const FinalCTA = () => {
 
       <div className="container mx-auto px-4 lg:px-8 text-center relative z-10">
         <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 max-w-2xl mx-auto">
-          Klaar om uw processen structureel te verbeteren?
+          Ready to structurally improve your processes?
         </h2>
         <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-xl mx-auto">
-          Plan een vrijblijvende Automation Scan en ontdek waar de grootste impact ligt
-          voor uw organisatie.
+          Schedule a free Automation Scan and discover where the biggest impact lies
+          for your organization.
         </p>
         <Button asChild size="lg" className="w-full sm:w-auto text-base px-10">
           <Link to="/book">
-            Plan Automation Scan
+            Schedule Automation Scan
             <ArrowRight size={18} />
           </Link>
         </Button>

@@ -8,9 +8,7 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 const TeamBlock = () => {
   return (
-    <section
-      className="py-12 sm:py-24 border-t border-border relative overflow-hidden"
-    >
+    <section className="py-12 sm:py-24 border-t border-border relative overflow-hidden">
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
@@ -22,22 +20,22 @@ const TeamBlock = () => {
                   Team
                 </p>
                 <h2 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">
-                  Klaar om te zien hoe het werkt voor uw bedrijf?
+                  Ready to see how it works for your business?
                 </h2>
                 <p className="text-muted-foreground leading-relaxed mb-8">
-                  Plan een vrijblijvend gesprek. Wij brengen uw workflows in kaart,
-                  identificeren de quick wins en laten zien hoe het pad naar productie eruitziet.
+                  Schedule a free consultation. We'll map your workflows,
+                  identify the quick wins and show you what the path to production looks like.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">
                   <Button asChild size="lg">
                     <Link to="/book">
-                      Plan een kennismaking
+                      Schedule an introduction
                       <ArrowRight size={18} />
                     </Link>
                   </Button>
                   <Button asChild size="lg" variant="outline" className="border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors duration-300">
                     <Link to="/team">
-                      Bekijk ons team
+                      Meet our team
                       <ArrowRight size={18} />
                     </Link>
                   </Button>
@@ -51,7 +49,7 @@ const TeamBlock = () => {
             <div className="rounded-xl overflow-hidden">
               <img
                 src={teamFoto}
-                alt="Autronis team - Sem en Syb"
+                alt="Autronis team - Sem and Syb"
                 width={800}
                 height={600}
                 className="w-full h-auto object-cover rounded-xl opacity-0 transition-opacity duration-700 ease-out"

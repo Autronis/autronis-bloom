@@ -10,72 +10,72 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 const faqs = [
   {
-    q: "Wat kost een automatiseringsproject?",
-    a: "De investering hangt af van de complexiteit van de processen, het aantal systemen en de gewenste automatiseringen. Na de Automation Scan ontvangt u een transparante offerte met een duidelijke scope en planning. We werken niet met standaardpakketten; u investeert alleen in wat daadwerkelijk nodig is.",
+    q: "What does an automation project cost?",
+    a: "The investment depends on the complexity of the processes, the number of systems and the desired automations. After the Automation Scan you'll receive a transparent proposal with a clear scope and timeline. We don't work with standard packages; you only invest in what's actually needed.",
   },
   {
-    q: "Hoe lang duurt een gemiddeld project?",
-    a: "De meeste implementaties duren tussen 2 en 8 weken, afhankelijk van de omvang en complexiteit. Na de Automation Scan ontvangt u een realistisch tijdspad met duidelijke fases en oplevermomenten.",
+    q: "How long does an average project take?",
+    a: "Most implementations take between 2 and 8 weeks, depending on scope and complexity. After the Automation Scan you'll receive a realistic timeline with clear phases and delivery milestones.",
   },
   {
-    q: "Zijn jullie gebonden aan specifieke tools?",
-    a: "Nee. Wij werken tool-agnostisch. Dat betekent dat we aansluiten op uw bestaande systemen en alleen technologie inzetten die past bij uw situatie en schaal.",
+    q: "Are you tied to specific tools?",
+    a: "No. We work tool-agnostic. This means we connect to your existing systems and only deploy technology that fits your situation and scale.",
   },
   {
-    q: "Moet ik mijn huidige systemen vervangen?",
-    a: "Nee. In de meeste gevallen koppelen we bestaande systemen met elkaar zodat data automatisch wordt uitgewisseld. Alleen wanneer een systeem duidelijke beperkingen heeft adviseren we een alternatief.",
+    q: "Do I need to replace my current systems?",
+    a: "No. In most cases we connect existing systems so data is exchanged automatically. Only when a system has clear limitations do we recommend an alternative.",
   },
   {
-    q: "Is mijn data veilig?",
-    a: "Ja. We werken met versleutelde verbindingen en volgen de geldende privacywetgeving (AVG/GDPR). Toegang tot systemen wordt beperkt tot wat nodig is voor de automatisering en we gebruiken geen bedrijfsdata voor AI-training.",
+    q: "Is my data safe?",
+    a: "Yes. We work with encrypted connections and follow applicable privacy legislation (GDPR). System access is limited to what's needed for the automation and we don't use business data for AI training.",
   },
   {
-    q: "Wie is eigenaar van de gebouwde oplossing?",
-    a: "U blijft eigenaar van de automatiseringen, configuraties en integraties die voor uw organisatie worden ontwikkeld. De oplossing wordt gedocumenteerd zodat deze overdraagbaar blijft.",
+    q: "Who owns the built solution?",
+    a: "You remain the owner of the automations, configurations and integrations developed for your organization. The solution is documented to ensure transferability.",
   },
   {
-    q: "Wat als ik al bestaande systemen en processen heb?",
-    a: "Dat is juist het uitgangspunt. Onze aanpak is integratie-eerst: we bouwen voort op bestaande systemen en verbinden deze waar nodig, in plaats van alles te vervangen.",
+    q: "What if I already have existing systems and processes?",
+    a: "That's actually our starting point. Our approach is integration-first: we build on existing systems and connect them where needed, rather than replacing everything.",
   },
   {
-    q: "Hoe waarborgen jullie beveiliging en datakwaliteit?",
-    a: "Beveiliging en datakwaliteit worden vanaf het ontwerp meegenomen. We werken met minimale toegangsrechten, logging en monitoring, en zorgen voor duidelijke documentatie van architectuur en datastromen.",
-    link: { text: "Bekijk onze kwaliteitsnorm", href: "/services#kwaliteitsnorm" },
+    q: "How do you ensure security and data quality?",
+    a: "Security and data quality are built in from the design phase. We work with minimal access rights, logging and monitoring, and provide clear documentation of architecture and data flows.",
+    link: { text: "View our quality standard", href: "/services#kwaliteitsnorm" },
   },
   {
-    q: "Wat levert automatisering financieel op?",
-    a: "De impact verschilt per organisatie, maar automatisering leidt vaak tot minder handmatig werk, minder fouten en snellere processen. Tijdens de Automation Scan maken we een indicatieve businesscase zodat u vooraf inzicht krijgt in mogelijke besparingen en terugverdientijd.",
+    q: "What does automation deliver financially?",
+    a: "The impact varies by organization, but automation often leads to less manual work, fewer errors and faster processes. During the Automation Scan we create an indicative business case so you get upfront insight into potential savings and payback period.",
   },
   {
-    q: "Is automatisering niet risicovol voor onze processen?",
-    a: "Niet wanneer het goed wordt ontworpen. We analyseren processen vooraf en testen automatiseringen voordat ze live gaan. Hierdoor blijven processen stabiel en worden fouten voorkomen.",
+    q: "Isn't automation risky for our processes?",
+    a: "Not when it's designed properly. We analyze processes upfront and test automations before they go live. This keeps processes stable and prevents errors.",
   },
   {
-    q: "Bieden jullie support na oplevering?",
-    a: "Ja. Na de implementatie kunnen we automatiseringen blijven monitoren en optimaliseren. Afhankelijk van uw behoefte bieden we ondersteuning voor onderhoud, uitbreidingen en verdere automatisering.",
+    q: "Do you offer support after delivery?",
+    a: "Yes. After implementation we can continue to monitor and optimize automations. Depending on your needs we offer support for maintenance, extensions and further automation.",
   },
   {
-    q: "Hoe starten we een samenwerking?",
-    a: "De samenwerking begint met een Automation Scan. Daarin analyseren we processen, systemen en automatiseringsmogelijkheden. Op basis daarvan ontvangt u een concreet voorstel met impact, planning en investering.",
+    q: "How do we start a collaboration?",
+    a: "The collaboration starts with an Automation Scan. In it we analyze processes, systems and automation opportunities. Based on this you receive a concrete proposal with impact, timeline and investment.",
   },
   {
-    q: "Voor welke organisaties is dit het meest geschikt?",
-    a: "Onze oplossingen zijn vooral waardevol voor groeiende MKB-organisaties (10–500 medewerkers) die processen willen opschalen zonder dat de personeelsdruk evenredig meegroeit.",
+    q: "What type of organizations is this best suited for?",
+    a: "Our solutions are especially valuable for growing SMB organizations (10–500 employees) that want to scale processes without staffing pressure increasing proportionally.",
   },
 ];
 
 const extraFaqs = [
   {
-    q: "Wat als automatisering uiteindelijk niet goed werkt?",
-    a: "Automatiseringen worden eerst getest voordat ze volledig in gebruik worden genomen. Daarnaast blijven bestaande processen beschikbaar als fallback totdat de nieuwe workflow stabiel draait.",
+    q: "What if automation ultimately doesn't work well?",
+    a: "Automations are tested first before being fully deployed. Additionally, existing processes remain available as a fallback until the new workflow runs stably.",
   },
   {
-    q: "Moet mijn team technisch zijn om hiermee te werken?",
-    a: "Nee. Automatiseringen worden zo ingericht dat ze eenvoudig te gebruiken zijn binnen de bestaande tools. Waar nodig zorgen we voor duidelijke uitleg of documentatie voor het team.",
+    q: "Does my team need to be technical to work with this?",
+    a: "No. Automations are set up to be easy to use within existing tools. Where needed we provide clear instructions or documentation for the team.",
   },
   {
-    q: "Hoeveel tijd kost dit voor ons interne team?",
-    a: "We proberen de belasting voor uw team zo beperkt mogelijk te houden. Tijdens de implementatie hebben we meestal enkele korte sessies nodig om processen te begrijpen en te testen. De rest van het werk gebeurt aan onze kant.",
+    q: "How much time does this require from our internal team?",
+    a: "We try to keep the burden on your team as limited as possible. During implementation we usually need a few short sessions to understand and test processes. The rest of the work happens on our end.",
   },
 ];
 
@@ -87,9 +87,9 @@ const FAQSection = () => {
           <ScrollReveal className="text-center mb-12">
             <ScrollRevealItem>
               <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">FAQ</p>
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4">Veelgestelde vragen</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4">Frequently asked questions</h2>
               <p className="text-muted-foreground">
-                Antwoorden op de belangrijkste vragen over onze aanpak, het proces en de samenwerking.
+                Answers to the most important questions about our approach, process and collaboration.
               </p>
             </ScrollRevealItem>
           </ScrollReveal>
@@ -120,11 +120,11 @@ const FAQSection = () => {
             </Accordion>
           </ScrollReveal>
 
-          {/* Extra vragen */}
+          {/* Extra questions */}
           <ScrollReveal className="mt-10">
             <ScrollRevealItem>
               <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase text-center">
-                Extra vragen die twijfels wegnemen
+                Additional questions to address concerns
               </p>
             </ScrollRevealItem>
           </ScrollReveal>

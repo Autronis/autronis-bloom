@@ -8,7 +8,6 @@ import StatisticsBlock from "@/components/home/StatisticsBlock";
 import { AnimatePresence, motion } from "framer-motion";
 import SEOHead, { organizationSchema, websiteSchema } from "@/components/SEOHead";
 
-// Lazy-load all below-fold sections
 const ProblemSolutionSection = lazy(() => import("@/components/home/ProblemSolutionSection"));
 const ServicePillars = lazy(() => import("@/components/home/ServicePillars"));
 const ProcessSection = lazy(() => import("@/components/home/ProcessSection"));
@@ -19,7 +18,6 @@ const SecurityBlock = lazy(() => import("@/components/home/SecurityBlock"));
 const FAQSection = lazy(() => import("@/components/home/FAQSection"));
 const FinalCTA = lazy(() => import("@/components/home/FinalCTA"));
 
-// Preload all lazy sections after initial render so they're ready before scrolling
 const preloadSections = () => {
   import("@/components/home/ProblemSolutionSection");
   import("@/components/home/ServicePillars");
@@ -32,7 +30,7 @@ const preloadSections = () => {
   import("@/components/home/FinalCTA");
 };
 
-const rotatingWords = ["groei", "processen", "systemen", "datastromen", "schaalbaarheid"];
+const rotatingWords = ["growth", "processes", "systems", "data flows", "scalability"];
 
 const SectionFallback = () => (
   <div className="py-24 flex items-center justify-center">
@@ -55,11 +53,9 @@ const Index = () => {
     handleViewportChange();
     mediaQuery.addEventListener("change", handleViewportChange);
 
-    // Preload sections: faster on desktop (likely faster connection)
     const isDesktop = window.innerWidth >= 768;
     const preloadTimer = setTimeout(preloadSections, isDesktop ? 500 : 1000);
 
-    // Delay first word rotation to reduce initial JS work and let LCP paint
     let interval: ReturnType<typeof setInterval> | undefined;
     const startDelay = setTimeout(() => {
       interval = setInterval(() => {
@@ -89,8 +85,8 @@ const Index = () => {
   return (
     <>
       <SEOHead
-        title="Autronis | AI automatisering & workflow automatisering voor groeiende bedrijven"
-        description="Autronis automatiseert processen, integreert systemen en bouwt realtime data-inzichten. Schaalbare architectuur voor groeiende bedrijven in Nederland."
+        title="Autronis | AI Automation & Workflow Automation for Growing Businesses"
+        description="Autronis automates processes, integrates systems and builds real-time data insights. Scalable architecture for growing businesses."
         path="/"
         jsonLd={[
           organizationSchema,
@@ -98,9 +94,9 @@ const Index = () => {
           {
             "@context": "https://schema.org",
             "@type": "WebPage",
-            name: "Autronis — Systeemarchitectuur & Automatisering",
-            description: "Autronis automatiseert processen, integreert systemen en bouwt realtime data-inzichten.",
-            url: "https://autronis-bloom.lovable.app/",
+            name: "Autronis — System Architecture & Automation",
+            description: "Autronis automates processes, integrates systems and builds real-time data insights.",
+            url: "https://autronis.com/",
             publisher: { "@type": "Organization", name: "Autronis" },
           },
         ]}
@@ -111,10 +107,10 @@ const Index = () => {
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase">
-              Systeemarchitectuur & Automatisering
+              System Architecture & Automation
             </p>
             <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.35] tracking-tight mb-4 sm:mb-6">
-              Breng structuur in je
+              Bring structure to your
               <br />
               <span className="relative inline-block min-w-[14ch] align-bottom" style={{ height: "1.25em" }}>
                 <AnimatePresence mode="wait">
@@ -129,27 +125,26 @@ const Index = () => {
                     {rotatingWords[wordIndex]}.
                   </motion.span>
                 </AnimatePresence>
-                {/* Invisible sizer for width */}
-                <span className="invisible">schaalbaarheid.</span>
+                <span className="invisible">scalability.</span>
               </span>
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8 leading-relaxed">
-              Wij transformeren processen tot slimme systemen die schaalbaar en beheersbaar blijven.
+              We transform processes into smart systems that remain scalable and manageable.
             </p>
             <div className="flex flex-col items-center mb-8 sm:mb-12">
               <div className="flex flex-col sm:flex-row items-stretch sm:items-start justify-center gap-3 w-full sm:w-auto">
                 <Button asChild size="lg" className="w-full sm:w-auto mt-0">
                   <Link to="/book">
-                    Plan een Automation Scan
+                    Schedule an Automation Scan
                     <ArrowRight size={18} />
                   </Link>
                 </Button>
                 <div className="flex flex-col items-center">
                   <Button size="lg" variant="outline" className="w-full sm:w-auto" onClick={() => setVideoOpen(true)}>
                     <Play size={16} />
-                    Bekijk 2 min demo
+                    Watch 2 min demo
                   </Button>
-                  <p className="text-[11px] italic text-muted-foreground mt-1.5">Zie hoe automatisering in de praktijk werkt in 2 min.</p>
+                  <p className="text-[11px] italic text-muted-foreground mt-1.5">See how automation works in practice in 2 min.</p>
                 </div>
               </div>
             </div>
@@ -168,9 +163,9 @@ const Index = () => {
               }}
             >
               <DialogContent className="sm:max-w-4xl p-0 bg-card border-border overflow-hidden" aria-describedby={undefined}>
-                <DialogTitle className="sr-only">Lead-systeem Demo Jobby</DialogTitle>
+                <DialogTitle className="sr-only">Lead System Demo Jobby</DialogTitle>
                 <div className="p-4 pb-0 flex items-center justify-between">
-                  <p className="text-[10px] font-semibold text-primary tracking-widest uppercase">Lead-systeem Demo Jobby</p>
+                  <p className="text-[10px] font-semibold text-primary tracking-widest uppercase">Lead System Demo Jobby</p>
                 </div>
                 <div className="relative m-4 mt-2 rounded-lg overflow-hidden border border-border bg-black">
                   {videoOpen && (
@@ -215,7 +210,6 @@ const Index = () => {
               </DialogContent>
             </Dialog>
 
-            {/* Statistics directly under CTA */}
             <StatisticsBlock />
           </div>
         </div>

@@ -10,57 +10,57 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 const pillars = [
   {
-    id: "procesautomatisering",
+    id: "process-automation",
     icon: Cog,
-    title: "Procesautomatisering",
-    intro: "Wij automatiseren terugkerende processen zodat werk kan doorlopen zonder handmatige tussenstappen.",
+    title: "Process Automation",
+    intro: "We automate recurring processes so work flows without manual intervention.",
     impact: [
-      { title: "Minder handmatige verwerking", sub: "Tot 70% minder tijd besteed aan repetitieve taken." },
-      { title: "Minder fouten", sub: "Gestandaardiseerde workflows zorgen voor consistente uitvoering." },
-      { title: "Snellere doorlooptijden", sub: "Goedkeuringen en escalaties verlopen automatisch." },
-      { title: "Schaalbaarheid", sub: "Processen kunnen groeien zonder dat personeelskosten evenredig toenemen." },
+      { title: "Less manual processing", sub: "Up to 70% less time spent on repetitive tasks." },
+      { title: "Fewer errors", sub: "Standardized workflows ensure consistent execution." },
+      { title: "Faster turnaround", sub: "Approvals and escalations run automatically." },
+      { title: "Scalability", sub: "Processes can grow without proportional staffing increases." },
     ],
     categories: [
-      { icon: FolderOpen, title: "Interne workflow automatisering", items: ["Goedkeuringsflows", "Taaktoewijzing", "Notificaties en escalaties", "Documentgeneratie"] },
-      { icon: Briefcase, title: "Sales- en orderautomatisering", items: ["Orderverwerking", "CRM-updates", "Facturatieprocessen", "Leadopvolging"] },
-      { icon: Rocket, title: "Onboarding en offboarding", items: ["Accountcreatie", "Checklist automatisering", "Rolgebaseerde toegangsrechten", "E-signature integraties"] },
-      { icon: ShoppingCart, title: "E-commerce automatisering", items: ["Order & fulfilment automatisering", "Voorraad & retourbeheer", "Pricing & merchandising", "Product discovery & personalisatie"] },
+      { icon: FolderOpen, title: "Internal workflow automation", items: ["Approval flows", "Task assignment", "Notifications and escalations", "Document generation"] },
+      { icon: Briefcase, title: "Sales & order automation", items: ["Order processing", "CRM updates", "Invoicing workflows", "Lead follow-up"] },
+      { icon: Rocket, title: "Onboarding & offboarding", items: ["Account creation", "Checklist automation", "Role-based access control", "E-signature integrations"] },
+      { icon: ShoppingCart, title: "E-commerce automation", items: ["Order & fulfillment automation", "Inventory & returns management", "Pricing & merchandising", "Product discovery & personalization"] },
     ],
   },
   {
-    id: "systeemintegraties",
+    id: "system-integrations",
     icon: Link2,
-    title: "Systeemintegraties",
-    intro: "Wij koppelen systemen via API's zodat data automatisch en consistent wordt uitgewisseld.",
+    title: "System Integrations",
+    intro: "We connect systems via APIs so data is exchanged automatically and consistently.",
     impact: [
-      { title: "Consistente datastromen", sub: "Kernsystemen werken met dezelfde actuele informatie." },
-      { title: "Geen dubbele invoer", sub: "Data wordt één keer ingevoerd en automatisch gesynchroniseerd." },
-      { title: "Realtime synchronisatie", sub: "Gegevens worden direct bijgewerkt zonder exports of handmatige bestanden." },
-      { title: "Betrouwbare monitoring", sub: "Fouten worden vroegtijdig gedetecteerd en gelogd." },
+      { title: "Consistent data flows", sub: "Core systems work with the same up-to-date information." },
+      { title: "No duplicate entry", sub: "Data is entered once and synchronized automatically." },
+      { title: "Real-time synchronization", sub: "Records are updated instantly without exports or manual files." },
+      { title: "Reliable monitoring", sub: "Errors are detected early and logged." },
     ],
     categories: [
-      { icon: LinkIcon, title: "API-koppelingen", items: ["REST API integraties", "Webhooks", "Event-based triggers", "Retry-logica"] },
-      { icon: CreditCard, title: "CRM- en finance-integraties", items: ["CRM ↔ boekhouding synchronisatie", "ERP-koppelingen", "Grootboekkoppelingen", "Realtime data-uitwisseling"] },
-      { icon: Puzzle, title: "Legacy systemen", items: ["Datamigraties", "Middleware implementaties", "Maatwerk API-lagen", "Modernisering van bestaande systemen"] },
-      { icon: BarChart3, title: "Monitoring en logging", items: ["Foutdetectie", "Audit logging", "Datavalidatie", "Integratie monitoring"] },
+      { icon: LinkIcon, title: "API connections", items: ["REST API integrations", "Webhooks", "Event-based triggers", "Retry logic"] },
+      { icon: CreditCard, title: "CRM & finance integrations", items: ["CRM ↔ accounting sync", "ERP connections", "General ledger links", "Real-time data exchange"] },
+      { icon: Puzzle, title: "Legacy systems", items: ["Data migrations", "Middleware implementations", "Custom API layers", "Modernization of existing systems"] },
+      { icon: BarChart3, title: "Monitoring & logging", items: ["Error detection", "Audit logging", "Data validation", "Integration monitoring"] },
     ],
   },
   {
-    id: "data-rapportage",
+    id: "data-reporting",
     icon: PieChart,
-    title: "Data & Rapportage",
-    intro: "Realtime dashboards en geautomatiseerde rapportages geven continu inzicht in prestaties en processen.",
+    title: "Data & Reporting",
+    intro: "Real-time dashboards and automated reports provide continuous insight into performance and processes.",
     impact: [
-      { title: "Direct inzicht in prestaties", sub: "Dashboards tonen actuele KPI's en trends." },
-      { title: "Geautomatiseerde rapportages", sub: "Rapportages worden automatisch gegenereerd en verspreid." },
-      { title: "Eén bron van waarheid", sub: "Alle teams werken met dezelfde consistente data." },
-      { title: "Snelle signalering van afwijkingen", sub: "Problemen en afwijkingen worden vroegtijdig zichtbaar." },
+      { title: "Instant performance insights", sub: "Dashboards show up-to-date KPIs and trends." },
+      { title: "Automated reports", sub: "Reports are generated and distributed automatically." },
+      { title: "Single source of truth", sub: "All teams work with the same consistent data." },
+      { title: "Early anomaly detection", sub: "Issues and deviations are spotted early." },
     ],
     categories: [
-      { icon: LayoutDashboard, title: "KPI dashboards", items: ["Management dashboards", "Team dashboards", "Realtime visualisaties", "Performance monitoring"] },
-      { icon: FileText, title: "Geautomatiseerde rapportages", items: ["Wekelijkse exports", "PDF rapportages", "E-mail distributie", "Custom rapportageflows"] },
-      { icon: Database, title: "Dataconsolidatie", items: ["Multi-source data", "Eén centrale datalaag", "Datamodel optimalisatie", "Datakwaliteitscontrole"] },
-      { icon: AlertTriangle, title: "Alerts en monitoring", items: ["Anomaly detectie", "Performance alerts", "SLA monitoring", "Datastroom monitoring"] },
+      { icon: LayoutDashboard, title: "KPI dashboards", items: ["Management dashboards", "Team dashboards", "Real-time visualizations", "Performance monitoring"] },
+      { icon: FileText, title: "Automated reports", items: ["Weekly exports", "PDF reports", "Email distribution", "Custom reporting flows"] },
+      { icon: Database, title: "Data consolidation", items: ["Multi-source data", "Single central data layer", "Data model optimization", "Data quality control"] },
+      { icon: AlertTriangle, title: "Alerts & monitoring", items: ["Anomaly detection", "Performance alerts", "SLA monitoring", "Data flow monitoring"] },
     ],
   },
 ];
@@ -327,7 +327,7 @@ const PillarCard = ({
         {/* Impact block */}
         <div className="rounded-lg border border-border/50 bg-muted/40 p-5 mb-5">
           <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
-            Wat levert dit op?
+            What does this deliver?
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             {pillar.impact.map((item, idx) => (
@@ -351,12 +351,12 @@ const PillarCard = ({
           </div>
         </div>
 
-        {/* Toggle for concrete toepassingen */}
+        {/* Toggle for use cases */}
         <button
           onClick={() => setExpanded(!expanded)}
           className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-all duration-200 mb-4 relative py-1 group"
         >
-          <span>{expanded ? "Verberg voorbeelden" : "Voorbeelden van toepassingen"}</span>
+          <span>{expanded ? "Hide examples" : "Example use cases"}</span>
           <ChevronDown
             size={16}
             className="transition-transform duration-300 ease-out"
@@ -365,7 +365,7 @@ const PillarCard = ({
           <span className="absolute bottom-0 left-0 h-px w-0 bg-primary/40 group-hover:w-full transition-all duration-300" />
         </button>
 
-        {/* Expandable categories — inside the same card */}
+        {/* Expandable categories */}
         <AnimatePresence>
           {expanded && (
             <motion.div
@@ -414,13 +414,13 @@ const PillarCard = ({
         {/* Security CTA */}
         <div className="mt-4 pt-3 border-t border-border/30">
           <p className="text-[11px] text-muted-foreground/80 leading-relaxed">
-            Inclusief toegangsbeheer, logging en een overdraagbare architectuur.
+            Including access control, logging, and a transferable architecture.
           </p>
           <Link
             to="/#beveiliging"
             className="group inline-flex items-center gap-1 text-[11px] text-foreground/70 hover:text-primary/70 transition-colors mt-1"
           >
-            Bekijk onze Beveiligingsaanpak
+            View our Security Approach
             <ArrowRight size={10} className="transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
         </div>
@@ -443,7 +443,6 @@ const Services = () => {
     }
   }, []);
 
-  // IntersectionObserver for scroll-reactive nav
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
 
@@ -476,11 +475,10 @@ const Services = () => {
   return (
     <>
       <SEOHead
-        title="Autronis | Services — Procesautomatisering, Integraties & Data"
-        description="Ontdek onze services: procesautomatisering, systeemintegraties en data & rapportage. Schaalbare oplossingen voor groeiende bedrijven."
+        title="Autronis | Services — Process Automation, Integrations & Data"
+        description="Discover our services: process automation, system integrations, and data & reporting. Scalable solutions for growing businesses."
         path="/services"
       />
-      {/* Single continuous section — hero + integrations + pillars */}
       <section className="relative pt-16 pb-24 overflow-hidden">
         
 
@@ -494,7 +492,7 @@ const Services = () => {
           >
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Services</p>
             <h1 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">
-              Automatisering zonder complexiteit
+              Automation without complexity
             </h1>
             <motion.p
               className="text-sm text-muted-foreground leading-relaxed max-w-2xl mx-auto"
@@ -502,16 +500,16 @@ const Services = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.15, ease: [0.23, 1, 0.32, 1] }}
             >
-              Wij ontwerpen en implementeren schaalbare systemen die processen verbinden, handmatige stappen verminderen en realtime inzicht geven.
+              We design and implement scalable systems that connect processes, reduce manual steps, and provide real-time insight.
             </motion.p>
           </motion.div>
 
           {/* Integrations marquee */}
           <div className="mb-20">
             <div className="text-center mb-10">
-              <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Integraties</p>
-              <h2 className="text-2xl sm:text-3xl font-bold mb-3">Werkt met uw huidige systemen</h2>
-              <p className="text-muted-foreground">Staat uw systeem er niet tussen? Als het een API heeft, kunnen we het vrijwel altijd integreren.</p>
+              <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Integrations</p>
+              <h2 className="text-2xl sm:text-3xl font-bold mb-3">Works with your current systems</h2>
+              <p className="text-muted-foreground">Don't see your system? If it has an API, we can almost always integrate it.</p>
             </div>
 
             <div className="relative mb-4 overflow-hidden py-10">
@@ -562,7 +560,6 @@ const Services = () => {
           </nav>
 
           <div>
-            {/* Content */}
             <div className="space-y-12">
               {pillars.map((pillar) => (
                 <PillarCard
@@ -574,25 +571,25 @@ const Services = () => {
             </div>
           </div>
 
-        {/* Kwaliteitsnorm */}
+        {/* Quality standard */}
           <div className="mt-16 pt-12 max-w-5xl mx-auto">
             <ScrollReveal className="text-center mb-10">
               <ScrollRevealItem>
-                <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Kwaliteitsnorm</p>
-                <h2 className="text-2xl sm:text-3xl font-bold mb-4">Onze vaste standaard binnen elke implementatie</h2>
+                <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Quality Standard</p>
+                <h2 className="text-2xl sm:text-3xl font-bold mb-4">Our baseline standard for every implementation</h2>
                 <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl mx-auto">
-                  Elke implementatie voldoet aan vaste technische en organisatorische randvoorwaarden. Beveiliging, controle en overdraagbaarheid zijn geen toevoeging, maar het uitgangspunt.
+                  Every implementation meets strict technical and organizational requirements. Security, control, and transferability are not add-ons — they are the foundation.
                 </p>
               </ScrollRevealItem>
             </ScrollReveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr">
               {[
-                { icon: ShieldCheck, title: "Toegangscontrole als basis", desc: "Least-privilege en rolgebaseerde toegang zijn standaard. Overmatige systeemrechten worden niet toegepast." },
-                { icon: BarChart3, title: "Logging en traceerbaarheid", desc: "Logging, audittrails en foutdetectie zijn standaard actief binnen elke implementatie." },
-                { icon: Layers, title: "Overdraagbare architectuur", desc: "Architectuur blijft beheersbaar, uitbreidbaar en overdraagbaar, zonder onnodige afhankelijkheid van één leverancier." },
-                { icon: Database, title: "Datagovernance en AVG-afstemming", desc: "Dataverwerking wordt ingericht conform privacywetgeving en duidelijke compliance-richtlijnen." },
-                { icon: FileText, title: "Volledige technische documentatie", desc: "Architectuur, integraties en configuraties worden vastgelegd en overdraagbaar opgeleverd." },
-                { icon: Cog, title: "Stabiele en schaalbare infrastructuur", desc: "De technische basis wordt zo ingericht dat systemen betrouwbaar functioneren en kunnen meegroeien met de organisatie." },
+                { icon: ShieldCheck, title: "Access control as a baseline", desc: "Least-privilege and role-based access are standard. Excessive system permissions are never applied." },
+                { icon: BarChart3, title: "Logging & traceability", desc: "Logging, audit trails, and error detection are active by default in every implementation." },
+                { icon: Layers, title: "Transferable architecture", desc: "Architecture remains manageable, extensible, and transferable — without unnecessary vendor lock-in." },
+                { icon: Database, title: "Data governance & GDPR alignment", desc: "Data processing is set up in compliance with privacy legislation and clear guidelines." },
+                { icon: FileText, title: "Complete technical documentation", desc: "Architecture, integrations, and configurations are documented and delivered in a transferable format." },
+                { icon: Cog, title: "Stable & scalable infrastructure", desc: "The technical foundation is designed so systems operate reliably and can scale with your organization." },
               ].map((item, idx) => (
                 <motion.div
                   key={item.title}
@@ -620,31 +617,31 @@ const Services = () => {
               ))}
             </div>
             <p className="text-xs text-muted-foreground text-center mt-8 italic">
-              Deze randvoorwaarden vormen de basis van elke implementatie.
+              These requirements form the foundation of every implementation.
             </p>
           </div>
 
           {/* ROI reference */}
           <div className="mt-16 text-center pt-12">
             <p className="text-sm text-muted-foreground mb-4">
-              Elke implementatie wordt vooraf onderbouwd met een impact- en ROI-analyse.
+              Every implementation is backed by an upfront impact and ROI analysis.
             </p>
             <Button asChild variant="outline" size="lg">
               <Link to="/impact-roi#roi-scan">
-                Bekijk hoe wij ROI berekenen <ArrowRight size={18} />
+                See how we calculate ROI <ArrowRight size={18} />
               </Link>
             </Button>
           </div>
 
           {/* Bottom CTA */}
           <div className="text-center mt-16">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-3">Uw proces staat er niet tussen?</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-3">Don't see your process listed?</h2>
             <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
-              Wij automatiseren elk voorspelbaar proces. Plan een vrijblijvende scan en ontdek wat er mogelijk is.
+              We automate any predictable process. Schedule a free scan and discover what's possible.
             </p>
             <Button asChild size="lg">
               <Link to="/book">
-                Plan Automation Scan <ArrowRight size={18} />
+                Schedule Automation Scan <ArrowRight size={18} />
               </Link>
             </Button>
           </div>

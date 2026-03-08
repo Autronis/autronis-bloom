@@ -21,8 +21,8 @@ const CaseStudies = () => {
   return (
     <>
     <SEOHead
-      title="Autronis | Case Studies — Automatiseringsimplementaties"
-      description="Bekijk concrete voorbeelden van hoe Autronis processen automatiseert, systemen integreert en schaalbaarheid realiseert voor groeiende bedrijven."
+      title="Autronis | Case Studies — Automation Implementations"
+      description="See concrete examples of how Autronis automates processes, integrates systems, and delivers scalability for growing businesses."
       path="/case-studies"
     />
     <section className="pt-16 pb-24 relative overflow-hidden">
@@ -30,9 +30,9 @@ const CaseStudies = () => {
         <ScrollReveal className="max-w-2xl mx-auto text-center mb-16">
           <ScrollRevealItem>
             <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Case Studies</p>
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4">Onze implementaties</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4">Our implementations</h1>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Concrete voorbeelden van hoe automatisering processen versnelt, fouten vermindert en schaalbaarheid mogelijk maakt.
+              Concrete examples of how automation accelerates processes, reduces errors, and enables scalability.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>
@@ -47,12 +47,12 @@ const CaseStudies = () => {
           <ScrollRevealItem>
             <Button asChild size="lg">
               <Link to="/book">
-                Plan Automation Scan
+                Schedule Automation Scan
                 <ArrowRight size={18} />
               </Link>
             </Button>
             <p className="text-xs text-muted-foreground mt-3">
-              Ontdek wat automatisering voor uw organisatie kan betekenen.
+              Discover what automation can do for your organization.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>

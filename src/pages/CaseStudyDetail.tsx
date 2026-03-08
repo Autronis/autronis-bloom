@@ -8,32 +8,32 @@ const caseData: Record<string, {
   client: string; industry: string; metric: string;
   context: string; challenge: string; solution: string; result: string;
 }> = {
-  "logistiek-bedrijf": {
+  "logistics-company": {
     client: "TransFlow B.V.",
-    industry: "Logistiek",
-    metric: "73% snellere orderverwerking",
-    context: "TransFlow is een middelgroot logistiek bedrijf (120 medewerkers) gespecialiseerd in last-mile delivery voor e-commerce. Het team verwerkte dagelijks honderden orders handmatig.",
-    challenge: "Orderinvoer, validatie en routeplanning kostten het operations-team gemiddeld 6 uur per dag. Fouten in adressen en dubbele boekingen leidden tot vertragingen en klachten.",
-    solution: "We bouwden een end-to-end automatisering: orders worden automatisch gevalideerd via API-koppelingen, gerouteerd op basis van postcode en capaciteit, en klanten ontvangen real-time statusupdates.",
-    result: "Orderverwerkingstijd daalde met 73%. Foutpercentage zakte van 8% naar 0.3%. Het team herbezette 4 FTE naar strategisch werk. Klanttevredenheid steeg met 22 punten.",
+    industry: "Logistics",
+    metric: "73% faster order processing",
+    context: "TransFlow is a mid-sized logistics company (120 employees) specialized in last-mile delivery for e-commerce. The team processed hundreds of orders manually every day.",
+    challenge: "Order entry, validation, and route planning cost the operations team an average of 6 hours per day. Address errors and duplicate bookings led to delays and complaints.",
+    solution: "We built an end-to-end automation: orders are automatically validated via API connections, routed based on postal code and capacity, and customers receive real-time status updates.",
+    result: "Order processing time decreased by 73%. Error rate dropped from 8% to 0.3%. The team redeployed 4 FTE to strategic work. Customer satisfaction increased by 22 points.",
   },
   "saas-scale-up": {
     client: "CloudMetrics",
     industry: "SaaS",
-    metric: "40 uur/week bespaard",
-    context: "CloudMetrics is een snelgroeiende SaaS-startup (45 medewerkers) met een analytics platform. Het customer success team werd overspoeld door groeiende onboarding- en supportvragen.",
-    challenge: "Handmatige onboarding duurde 2 weken per klant. Billing-issues werden ad hoc afgehandeld. Churn-signalen werden pas opgemerkt als het te laat was.",
-    solution: "We automatiseerden de volledige onboarding flow (welkomstmails, setup-checklists, training-scheduling), koppelden billing aan usage-data, en bouwden proactieve churn-alerts op basis van engagement-metrics.",
-    result: "Het CS-team bespaart 40 uur per week. Onboarding-tijd daalde van 14 naar 3 dagen. Churn daalde met 18% in het eerste kwartaal na implementatie.",
+    metric: "40 hours/week saved",
+    context: "CloudMetrics is a fast-growing SaaS startup (45 employees) with an analytics platform. The customer success team was overwhelmed by growing onboarding and support requests.",
+    challenge: "Manual onboarding took 2 weeks per customer. Billing issues were handled ad hoc. Churn signals were only noticed when it was too late.",
+    solution: "We automated the complete onboarding flow (welcome emails, setup checklists, training scheduling), connected billing to usage data, and built proactive churn alerts based on engagement metrics.",
+    result: "The CS team saves 40 hours per week. Onboarding time decreased from 14 to 3 days. Churn decreased by 18% in the first quarter after implementation.",
   },
-  "e-commerce-groei": {
+  "e-commerce-growth": {
     client: "StyleDirect",
     industry: "E-commerce",
-    metric: "2.4x meer conversies",
-    context: "StyleDirect is een direct-to-consumer fashion merk (30 medewerkers) dat worstelde met lage conversiepercentages en hoge CAC ondanks stijgend verkeer.",
-    challenge: "Productaanbevelingen waren statisch, abandoned cart follow-ups waren handmatig, en pricing werd niet geoptimaliseerd op basis van vraag en voorraad.",
-    solution: "We implementeerden AI-gedreven productaanbevelingen, geautomatiseerde abandoned cart sequences (email + SMS), en een dynamisch pricing model gekoppeld aan voorraad en competitordata.",
-    result: "Conversieratio steeg van 1.8% naar 4.3% (2.4x). Gemiddelde orderwaarde steeg met 15%. CAC daalde met 30% door hogere organische conversie.",
+    metric: "2.4x more conversions",
+    context: "StyleDirect is a direct-to-consumer fashion brand (30 employees) that struggled with low conversion rates and high CAC despite growing traffic.",
+    challenge: "Product recommendations were static, abandoned cart follow-ups were manual, and pricing was not optimized based on demand and inventory.",
+    solution: "We implemented AI-driven product recommendations, automated abandoned cart sequences (email + SMS), and a dynamic pricing model connected to inventory and competitor data.",
+    result: "Conversion rate increased from 1.8% to 4.3% (2.4x). Average order value increased by 15%. CAC decreased by 30% due to higher organic conversion.",
   },
 };
 
@@ -51,7 +51,7 @@ const CaseStudyDetail = () => {
     <>
       <SEOHead
         title={`Autronis | ${cs.client} — Case Study`}
-        description={`${cs.metric}. Lees hoe Autronis ${cs.client} heeft geholpen met automatisering in de ${cs.industry} sector.`}
+        description={`${cs.metric}. Read how Autronis helped ${cs.client} with automation in the ${cs.industry} sector.`}
         path={`/case-studies/${slug}`}
         type="article"
         jsonLd={{
@@ -67,11 +67,10 @@ const CaseStudyDetail = () => {
         
         <div className="container mx-auto px-4 lg:px-8">
           <Link to="/case-studies" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-8">
-            <ArrowLeft size={14} /> Alle case studies
+            <ArrowLeft size={14} /> All case studies
           </Link>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Content */}
             <div className="lg:col-span-2 space-y-8">
               <div>
                 <span className="text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full">{cs.industry}</span>
@@ -84,30 +83,29 @@ const CaseStudyDetail = () => {
                 <p className="text-muted-foreground leading-relaxed">{cs.context}</p>
               </div>
               <div>
-                <h2 className="text-lg font-semibold mb-2">Uitdaging</h2>
+                <h2 className="text-lg font-semibold mb-2">Challenge</h2>
                 <p className="text-muted-foreground leading-relaxed">{cs.challenge}</p>
               </div>
               <div>
-                <h2 className="text-lg font-semibold mb-2">Oplossing</h2>
+                <h2 className="text-lg font-semibold mb-2">Solution</h2>
                 <p className="text-muted-foreground leading-relaxed">{cs.solution}</p>
               </div>
               <div>
-                <h2 className="text-lg font-semibold mb-2">Resultaat</h2>
+                <h2 className="text-lg font-semibold mb-2">Result</h2>
                 <p className="text-muted-foreground leading-relaxed">{cs.result}</p>
               </div>
 
               <Link to={`/case-studies/${nextSlug}`} className="inline-flex items-center gap-1 text-sm text-primary hover:underline">
-                Volgende case study <ArrowRight size={14} />
+                Next case study <ArrowRight size={14} />
               </Link>
             </div>
 
-            {/* Sidebar CTA */}
             <div className="lg:sticky lg:top-24 self-start">
               <div className="rounded-xl border border-border bg-card p-6 space-y-4">
-                <h3 className="font-semibold">Vergelijkbare resultaten behalen?</h3>
-                <p className="text-sm text-muted-foreground">Plan een vrijblijvende Automation Scan en ontdek wat wij voor uw bedrijf kunnen automatiseren.</p>
+                <h3 className="font-semibold">Want to achieve similar results?</h3>
+                <p className="text-sm text-muted-foreground">Schedule a free Automation Scan and discover what we can automate for your business.</p>
                 <Button asChild className="w-full">
-                  <Link to="/book">Plan Automation Scan <ArrowRight size={14} /></Link>
+                  <Link to="/book">Schedule Automation Scan <ArrowRight size={14} /></Link>
                 </Button>
               </div>
             </div>

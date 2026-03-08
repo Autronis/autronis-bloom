@@ -8,17 +8,16 @@ import { useState, useEffect } from "react";
 import fotoSyb from "@/assets/foto_syb.jpg";
 import fotoSem from "@/assets/foto_sem.jpg";
 
-// Prioritize Syb photo so it is fully available when users reach the team section on mobile
 if (typeof window !== "undefined") {
   const sybPreload = new Image();
   sybPreload.src = fotoSyb;
 }
 
 const values = [
-  { icon: Target, title: "Resultaatgericht", description: "We meten succes in bespaarde uren, minder fouten en snellere processen — niet in opgeleverde features." },
-  { icon: Shield, title: "Transparant", description: "Geen verborgen kosten, geen black boxes. U begrijpt wat we bouwen en waarom. Alles is gedocumenteerd en overdraagbaar." },
-  { icon: Users, title: "Persoonlijk", description: "Geen accountmanagers, geen tussenlagen. U werkt direct met de engineers die uw systemen ontwerpen en bouwen." },
-  { icon: Handshake, title: "Langetermijn partnership", description: "Wij zijn geen leverancier maar uw automation partner. Uw groei is onze groei — we denken mee, ook na oplevering." },
+  { icon: Target, title: "Results-driven", description: "We measure success in saved hours, fewer errors, and faster processes — not in delivered features." },
+  { icon: Shield, title: "Transparent", description: "No hidden costs, no black boxes. You understand what we build and why. Everything is documented and transferable." },
+  { icon: Users, title: "Personal", description: "No account managers, no middle layers. You work directly with the engineers who design and build your systems." },
+  { icon: Handshake, title: "Long-term partnership", description: "We're not a vendor but your automation partner. Your growth is our growth — we think along, even after delivery." },
 ];
 
 const team = [
@@ -27,13 +26,13 @@ const team = [
     role: "Co-founder",
     photo: fotoSyb,
     priority: true,
-    description: "Syb heeft een scherp oog voor technische details en is de drijvende kracht achter de bouw. Hij denkt altijd een stap verder en zorgt dat elk systeem niet alleen werkt maar ook schaalbaar en toekomstbestendig is.",
+    description: "Syb has a keen eye for technical detail and is the driving force behind the build. He always thinks one step ahead and ensures every system not only works but is also scalable and future-proof.",
   },
   {
     name: "Sem Gijsberts",
     role: "Co-founder",
     photo: fotoSem,
-    description: "Sem bouwt mee, denkt vooruit en houdt overzicht. Van het eerste klantgesprek tot het opgeleverde systeem — hij is betrokken bij elke stap en zorgt dat niets tussen wal en schip valt.",
+    description: "Sem builds alongside, thinks ahead, and maintains oversight. From the first client conversation to the delivered system — he's involved in every step and makes sure nothing falls through the cracks.",
   },
 ];
 
@@ -104,8 +103,8 @@ const About = () => {
   return (
     <>
       <SEOHead
-        title="Autronis | Over Ons — Systeemarchitectuur & Automatisering"
-        description="Leer meer over Autronis: ons team, onze waarden en onze missie om bedrijven te helpen groeien met schaalbare automatisering."
+        title="Autronis | About Us — System Architecture & Automation"
+        description="Learn more about Autronis: our team, our values, and our mission to help businesses grow with scalable automation."
         path="/about"
       />
       <section className="pt-16 pb-24 relative overflow-hidden">
@@ -113,24 +112,24 @@ const About = () => {
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           {/* Intro */}
           <div className="max-w-3xl mx-auto text-center mb-20">
-            <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Over Ons</p>
+            <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">About Us</p>
             <h1 className="text-3xl sm:text-4xl font-bold mb-6 leading-tight">
-              Systemen die <span className="text-gradient">tot leven komen</span>
+              Systems that <span className="text-gradient">come to life</span>
             </h1>
             <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-              Autronis is opgericht met één missie: bedrijven bevrijden van repetitief handmatig werk. Wij geloven dat elk proces dat voorspelbaar is, geautomatiseerd kan worden.
+              Autronis was founded with one mission: freeing businesses from repetitive manual work. We believe that every predictable process can be automated.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-              Wij zijn Sem en Syb. U werkt direct met de bouwers — de mensen die uw systemen ontwerpen, bouwen en optimaliseren.
+              We are Sem and Syb. You work directly with the builders — the people who design, build, and optimize your systems.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Ons team combineert diepgaande technische expertise met business-inzicht. We bouwen geen tools om het bouwen — we bouwen oplossingen die direct meetbaar impact leveren op uw operatie.
+              Our team combines deep technical expertise with business insight. We don't build tools for the sake of building — we build solutions that deliver directly measurable impact on your operations.
             </p>
           </div>
 
           {/* Values */}
           <div className="mb-20">
-            <h2 className="text-2xl font-bold mb-8">Onze waarden</h2>
+            <h2 className="text-2xl font-bold mb-8">Our values</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {values.map((v) => (
                 <div key={v.title} className="rounded-xl border border-border bg-card p-6">
@@ -146,7 +145,7 @@ const About = () => {
 
           {/* Team */}
           <div className="mb-20">
-            <h2 className="text-2xl font-bold mb-8">Het team</h2>
+            <h2 className="text-2xl font-bold mb-8">The team</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl">
               {team.map((member) => (
                 <TeamCard key={member.name} member={member} />
@@ -156,10 +155,10 @@ const About = () => {
 
           {/* CTA */}
           <div className="text-center">
-            <h2 className="text-2xl font-bold mb-3">Klaar om samen te werken?</h2>
-            <p className="text-muted-foreground mb-6">Laten we kennismaken en kijken wat we kunnen automatiseren.</p>
+            <h2 className="text-2xl font-bold mb-3">Ready to work together?</h2>
+            <p className="text-muted-foreground mb-6">Let's get acquainted and explore what we can automate.</p>
             <Button asChild size="lg">
-              <Link to="/book">Plan Automation Scan <ArrowRight size={18} /></Link>
+              <Link to="/book">Schedule Automation Scan <ArrowRight size={18} /></Link>
             </Button>
           </div>
         </div>

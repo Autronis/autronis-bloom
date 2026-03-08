@@ -179,7 +179,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
             </div>
           </div>
 
-          {/* Pre-hover state: preview skills + bekijk meer */}
+          {/* Pre-hover state: preview skills */}
           <div
             className={`flex flex-wrap gap-1.5 items-center transition-all duration-250
               ${isMobile
@@ -188,25 +188,25 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
               }`}
           >
             <span className="text-[8px] font-bold tracking-[0.14em] uppercase text-white/85 mr-1 block w-full mb-1">
-              Specialisaties
+              Specializations
             </span>
             {categoryOrder.map((cat) => {
               const first = member.skills.find((s) => s.category === cat);
               return first ? <PreviewBadge key={first.label} skill={first} /> : null;
             })}
             <span className="text-[10px] text-white/50 mt-1.5 block w-full italic">
-              {isMobile ? "Tik voor meer →" : "Hover voor meer →"}
+              {isMobile ? "Tap for more →" : "Hover for more →"}
             </span>
           </div>
         </div>
       </div>
 
-      {/* Name / focus / specialisaties footer */}
+      {/* Name / focus / specializations footer */}
       <div className="p-5 bg-card">
         <div className="flex items-start justify-between gap-3 mb-4">
           <div className="min-w-0">
             <p className="font-semibold text-foreground">{member.name}</p>
-            <p className="text-[8px] font-semibold tracking-[0.14em] uppercase text-primary/70 mt-1">Kernfocus</p>
+            <p className="text-[8px] font-semibold tracking-[0.14em] uppercase text-primary/70 mt-1">Core Focus</p>
             <p className="text-sm text-muted-foreground">{member.focusLabel}</p>
             <p className="text-xs text-muted-foreground/55 mt-0.5">{member.subtitle}</p>
           </div>
@@ -222,9 +222,9 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
                 const copied = await copyTextToClipboard(email);
 
                 if (copied) {
-                  showClipboardFeedback("E-mailadres gekopieerd naar klembord", "success");
+                  showClipboardFeedback("Email address copied to clipboard", "success");
                 } else {
-                  showClipboardFeedback("Kopiëren mislukt", "error");
+                  showClipboardFeedback("Copy failed", "error");
                 }
               }}
             >

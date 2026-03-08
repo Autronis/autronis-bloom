@@ -6,43 +6,43 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 const impactBlocks = [
   {
     icon: Building2,
-    title: "Operations-team",
-    highlight: "Tot €85.000 per jaar aan structurele besparing",
-    sub: "Gebaseerd op 40+ uur per week aan repetitieve verwerking.",
+    title: "Operations team",
+    highlight: "Up to €85,000 per year in structural savings",
+    sub: "Based on 40+ hours per week of repetitive processing.",
     bullets: [
-      "40+ uur per week geautomatiseerd",
-      "Aanzienlijk kortere doorlooptijden",
-      "Minder handmatige overdrachten",
+      "40+ hours per week automated",
+      "Significantly shorter turnaround times",
+      "Fewer manual handovers",
     ],
   },
   {
     icon: ShoppingCart,
-    title: "Sales-team",
-    highlight: "Tot €52.000 per jaar aan efficiëntiewinst",
-    sub: "Gebaseerd op tijdsbesparing binnen CRM en opvolgprocessen.",
+    title: "Sales team",
+    highlight: "Up to €52,000 per year in efficiency gains",
+    sub: "Based on time savings within CRM and follow-up processes.",
     bullets: [
-      "Minder administratieve CRM-taken",
-      "Snellere leadopvolging",
-      "Meer tijd voor omzetgeneratie",
+      "Fewer administrative CRM tasks",
+      "Faster lead follow-up",
+      "More time for revenue generation",
     ],
   },
   {
     icon: FileText,
-    title: "Finance / Backoffice",
-    highlight: "Tot €42.000 per jaar aan kostenreductie",
-    sub: "Gebaseerd op foutreductie en automatisering van rapportage.",
+    title: "Finance / Back office",
+    highlight: "Up to €42,000 per year in cost reduction",
+    sub: "Based on error reduction and reporting automation.",
     bullets: [
-      "Aanzienlijke foutreductie",
-      "Snellere rapportages",
-      "Minder correctiewerk",
+      "Significant error reduction",
+      "Faster reporting",
+      "Less correction work",
     ],
   },
 ];
 
 const kernpunten = [
-  { icon: TrendingUp, text: "Structurele jaarlijkse besparing*" },
-  { icon: Timer, text: "Direct inzicht in bespaarde uren" },
-  { icon: Clock, text: "Structurele kostenoptimalisatie" },
+  { icon: TrendingUp, text: "Structural annual savings*" },
+  { icon: Timer, text: "Instant insight into saved hours" },
+  { icon: Clock, text: "Structural cost optimization" },
 ];
 
 const ROIPreview = () => {
@@ -53,13 +53,13 @@ const ROIPreview = () => {
         <ScrollReveal className="max-w-2xl mx-auto text-center mb-8 sm:mb-14">
           <ScrollRevealItem>
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
-              Voorbeeldscenario's
+              Example Scenarios
             </p>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
-              Indicatieve impact per team
+              Indicative impact per team
             </h2>
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xl mx-auto">
-              Onderstaande scenario's zijn gebaseerd op conservatieve aannames bij een gemiddeld MKB-bedrijf.
+              The scenarios below are based on conservative assumptions for an average SMB company.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>
@@ -97,7 +97,7 @@ const ROIPreview = () => {
               ))}
             </div>
             <p className="text-xs text-muted-foreground text-center max-w-3xl mx-auto mb-8 sm:mb-12 italic">
-              Scenario's gebaseerd op conservatieve aannames binnen middelgrote MKB-organisaties. Werkelijke impact is afhankelijk van procescomplexiteit en volumes.
+              Scenarios based on conservative assumptions within mid-sized SMB organizations. Actual impact depends on process complexity and volumes.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>
@@ -111,10 +111,10 @@ const ROIPreview = () => {
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-4 sm:gap-6 lg:gap-10 items-start">
                 <div>
                   <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 sm:mb-3">
-                    Efficiëntie zonder lineaire personeelsgroei
+                    Efficiency without linear headcount growth
                   </h3>
                   <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                    Automatisering verlaagt niet alleen kosten, maar verhoogt ook schaalbaarheid en voorspelbaarheid. Vrijgekomen capaciteit kan worden ingezet voor groei, zonder dat personeelskosten evenredig stijgen.
+                    Automation not only reduces costs but also increases scalability and predictability. Freed-up capacity can be deployed for growth without proportional increases in staffing costs.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2.5 sm:gap-3 lg:min-w-[240px]">
@@ -130,7 +130,7 @@ const ROIPreview = () => {
               </div>
             </div>
             <p className="text-xs text-muted-foreground text-center max-w-2xl mx-auto mb-8 sm:mb-10">
-              *Afhankelijk van implementatieomvang en procescomplexiteit.
+              *Dependent on implementation scope and process complexity.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>
@@ -140,12 +140,12 @@ const ROIPreview = () => {
           <ScrollRevealItem>
             <Button asChild size="lg" className="w-full sm:w-auto">
               <Link to="/impact-roi#roi-scan">
-                Bereken uw potentiële impact
+                Calculate your potential impact
                 <ArrowRight size={18} />
               </Link>
             </Button>
             <p className="text-xs text-muted-foreground mt-3">
-              Gebruik onze ROI-calculator en ontvang direct een indicatieve businesscase inclusief terugverdientijd.
+              Use our ROI calculator and receive an indicative business case including payback period.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>

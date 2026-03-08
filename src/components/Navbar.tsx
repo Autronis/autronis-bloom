@@ -160,23 +160,11 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-2">
+          <LanguageSwitcher />
+
           <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors" aria-label="Toggle theme">
             {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
-
-          <div className="hidden md:flex items-center gap-1 text-xs text-muted-foreground">
-            {isEN ? (
-              <>
-                <button className="px-2 py-1 rounded bg-primary/10 text-primary font-semibold">EN</button>
-                <a href="https://autronis.nl" className="px-2 py-1 rounded hover:bg-muted transition-colors">NL</a>
-              </>
-            ) : (
-              <>
-                <a href="https://autronis.com" className="px-2 py-1 rounded hover:bg-muted transition-colors">EN</a>
-                <button className="px-2 py-1 rounded bg-primary/10 text-primary font-semibold">NL</button>
-              </>
-            )}
-          </div>
 
           <Button asChild size="sm" className="hidden sm:inline-flex">
             <Link to="/book">{t.cta}</Link>

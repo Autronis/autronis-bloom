@@ -15,7 +15,7 @@ const LanguageSwitcher = ({ size = "sm" }: Props) => {
     <div className="flex items-center gap-1.5">
       {isEN ? (
         <>
-          <button className={`${dim} rounded-[4px] overflow-hidden ring-2 ring-primary shadow-md shadow-primary/20`} aria-label="English (active)">
+          <button className={`${dim} rounded-[4px] overflow-hidden ring-2 ring-primary/50 shadow-sm`} aria-label="English (active)">
             <img src={flagEN} alt="EN" className="w-full h-full object-cover" />
           </button>
           <a href="https://autronis.nl" className={`${dim} rounded-[4px] overflow-hidden opacity-50 hover:opacity-80 transition-opacity ring-1 ring-border`} aria-label="Nederlands">

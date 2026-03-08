@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle2, Star } from "lucide-react";
+import { ArrowRight, CheckCircle2, Star, Clock } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import useCanHover from "@/hooks/use-can-hover";
@@ -19,11 +19,9 @@ const text = {
     resultLabel: "Result",
     readFull: "Read full case",
     ctaBtn: "View more implementations",
-    cases: [
-      { slug: "lead-generation-outreach-automation", title: "Lead generation and outreach automation", description: "Automatically collect leads, enrich contact information, and generate personalized email outreach with AI.", caseIndex: 0, results: ["Lead processing from 25 → 5 min per lead", "3–5× higher outreach efficiency", "50+ personalized emails per day"], trust: { logoSrc: "/assets/jobby-logo.png", website: "https://teamjobby.nl/" } },
-      { slug: "ai-customer-service-automation", title: "AI customer service automation", description: "AI-driven system that automatically answers common customer questions and routes complex cases to team members.", caseIndex: 1, results: ["70%+ questions handled automatically", "Response time from hours to instant", "24/7 availability"] },
-      { slug: "marketing-reporting-automation", title: "Marketing and reporting automation", description: "Automatically collect, combine, and visualize marketing data in real-time dashboards with automatic report delivery.", caseIndex: 2, results: ["Reporting time from 6 hrs to 10 min", "100% automatic data collection", "Real-time client dashboards"] },
-    ],
+    comingSoon: "Coming soon",
+    comingSoonDesc: "A new implementation case is being prepared.",
+    case: { slug: "lead-generation-outreach-automation", title: "Lead generation and outreach automation", description: "Automatically collect leads, enrich contact information, and generate personalized email outreach with AI.", caseIndex: 0, results: ["Lead processing from 25 → 5 min per lead", "3–5× higher outreach efficiency", "50+ personalized emails per day"], trust: { logoSrc: "/assets/jobby-logo.png", website: "https://teamjobby.nl/" } } as CaseStudy,
   },
   nl: {
     label: "Case Studies",
@@ -32,11 +30,9 @@ const text = {
     resultLabel: "Resultaat",
     readFull: "Lees volledige case",
     ctaBtn: "Bekijk meer implementaties",
-    cases: [
-      { slug: "lead-generation-outreach-automation", title: "Leadgeneratie en outreach-automatisering", description: "Automatisch leads verzamelen, contactgegevens verrijken en gepersonaliseerde e-mail outreach genereren met AI.", caseIndex: 0, results: ["Leadverwerking van 25 → 5 min per lead", "3–5× hogere outreach-efficiëntie", "50+ gepersonaliseerde e-mails per dag"], trust: { logoSrc: "/assets/jobby-logo.png", website: "https://teamjobby.nl/" } },
-      { slug: "ai-customer-service-automation", title: "AI-klantenservice automatisering", description: "AI-gestuurd systeem dat veelgestelde klantvragen automatisch beantwoordt en complexe cases naar teamleden routeert.", caseIndex: 1, results: ["70%+ vragen automatisch afgehandeld", "Responstijd van uren naar direct", "24/7 beschikbaarheid"] },
-      { slug: "marketing-reporting-automation", title: "Marketing- en rapportage-automatisering", description: "Automatisch marketingdata verzamelen, combineren en visualiseren in realtime dashboards met automatische rapportlevering.", caseIndex: 2, results: ["Rapportagetijd van 6 uur naar 10 min", "100% automatische dataverzameling", "Realtime klantdashboards"] },
-    ],
+    comingSoon: "Binnenkort beschikbaar",
+    comingSoonDesc: "Een nieuwe implementatiecase wordt voorbereid.",
+    case: { slug: "lead-generation-outreach-automation", title: "Leadgeneratie en outreach-automatisering", description: "Automatisch leads verzamelen, contactgegevens verrijken en gepersonaliseerde e-mail outreach genereren met AI.", caseIndex: 0, results: ["Leadverwerking van 25 → 5 min per lead", "3–5× hogere outreach-efficiëntie", "50+ gepersonaliseerde e-mails per dag"], trust: { logoSrc: "/assets/jobby-logo.png", website: "https://teamjobby.nl/" } } as CaseStudy,
   },
 };
 
@@ -67,6 +63,14 @@ const CaseCard = ({ cs, isHovered, isAnyHovered, onHover, onLeave, canHover, res
   );
 };
 
+const ComingSoonCard = ({ label, desc }: { label: string; desc: string }) => (
+  <div className="rounded-xl border border-border/60 border-dashed bg-card/50 p-4 sm:p-5 flex flex-col items-center justify-center h-full min-h-[200px] text-center">
+    <Clock size={24} className="text-muted-foreground/40 mb-3" />
+    <p className="text-sm font-semibold text-muted-foreground/70 mb-1">{label}</p>
+    <p className="text-xs text-muted-foreground/50">{desc}</p>
+  </div>
+);
+
 const CaseStudiesPreview = () => {
   const lang = useLanguage();
   const t = text[lang];
@@ -83,7 +87,11 @@ const CaseStudiesPreview = () => {
         </ScrollRevealItem></ScrollReveal>
 
         <ScrollReveal className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 mb-8 sm:mb-12">
-          {t.cases.map((cs, i) => <ScrollRevealItem key={cs.slug}><CaseCard cs={cs} isHovered={hoveredIndex === i} isAnyHovered={hoveredIndex !== null} onHover={() => setHoveredIndex(i)} onLeave={() => setHoveredIndex(null)} canHover={canHover} resultLabel={t.resultLabel} readFull={t.readFull} /></ScrollRevealItem>)}
+          <ScrollRevealItem>
+            <CaseCard cs={t.case} isHovered={hoveredIndex === 0} isAnyHovered={hoveredIndex !== null} onHover={() => setHoveredIndex(0)} onLeave={() => setHoveredIndex(null)} canHover={canHover} resultLabel={t.resultLabel} readFull={t.readFull} />
+          </ScrollRevealItem>
+          <ScrollRevealItem><ComingSoonCard label={t.comingSoon} desc={t.comingSoonDesc} /></ScrollRevealItem>
+          <ScrollRevealItem><ComingSoonCard label={t.comingSoon} desc={t.comingSoonDesc} /></ScrollRevealItem>
         </ScrollReveal>
 
         <ScrollReveal className="text-center"><ScrollRevealItem>

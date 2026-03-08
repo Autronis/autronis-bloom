@@ -74,10 +74,8 @@ const Index = () => {
   const [wordIndex, setWordIndex] = useState(0);
   const [videoOpen, setVideoOpen] = useState(false);
   const [showSkip, setShowSkip] = useState(true);
-  const [mobileControlsActive, setMobileControlsActive] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const controlsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
@@ -100,16 +98,9 @@ const Index = () => {
       clearTimeout(preloadTimer);
       clearTimeout(startDelay);
       if (interval) clearInterval(interval);
-      if (controlsTimerRef.current) clearTimeout(controlsTimerRef.current);
     };
   }, []);
 
-  const bumpSkipAboveControls = () => {
-    if (!isMobileViewport) return;
-    setMobileControlsActive(true);
-    if (controlsTimerRef.current) clearTimeout(controlsTimerRef.current);
-    controlsTimerRef.current = setTimeout(() => setMobileControlsActive(false), 2200);
-  };
 
   return (
     <>
@@ -170,7 +161,6 @@ const Index = () => {
               onOpenChange={(open) => {
                 if (!open && videoRef.current) { videoRef.current.pause(); videoRef.current.currentTime = 0; }
                 setVideoOpen(open);
-                setMobileControlsActive(false);
                 setShowSkip(true);
               }}
             >
@@ -187,9 +177,6 @@ const Index = () => {
                         className="w-full aspect-video block"
                         autoPlay controls playsInline preload="metadata"
                         controlsList="nodownload noplaybackrate" disablePictureInPicture
-                        onTouchStart={bumpSkipAboveControls}
-                        onClick={bumpSkipAboveControls}
-                        onPlay={bumpSkipAboveControls}
                         onTimeUpdate={(e) => { if (e.currentTarget.currentTime >= 13) setShowSkip(false); }}
                       >
                         <source src="https://qmtnmisdmchydrriuont.supabase.co/storage/v1/object/public/Jobby%20lead%20systeem/0301%20(1)(4)%20(1).mp4" type="video/mp4" />
@@ -197,7 +184,7 @@ const Index = () => {
                       {showSkip && (
                         <button
                           onClick={() => { if (videoRef.current) { videoRef.current.currentTime = 13; setShowSkip(false); } }}
-                          className={`absolute left-3 px-5 py-2.5 rounded-xl bg-black/70 backdrop-blur-md border border-primary/40 text-sm font-semibold text-white hover:bg-primary/30 hover:border-primary transition-all duration-300 shadow-2xl sm:bottom-20 ${mobileControlsActive ? "bottom-16" : "bottom-4"}`}
+                          className="absolute left-3 bottom-14 sm:bottom-20 px-5 py-2.5 rounded-xl bg-black/70 backdrop-blur-md border border-primary/40 text-sm font-semibold text-white hover:bg-primary/30 hover:border-primary transition-all duration-300 shadow-2xl"
                         >
                           {t.skipIntro}
                         </button>

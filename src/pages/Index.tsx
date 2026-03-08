@@ -161,7 +161,6 @@ const Index = () => {
               onOpenChange={(open) => {
                 if (!open && videoRef.current) { videoRef.current.pause(); videoRef.current.currentTime = 0; }
                 setVideoOpen(open);
-                setMobileControlsActive(false);
                 setShowSkip(true);
               }}
             >

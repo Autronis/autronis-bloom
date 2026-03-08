@@ -196,8 +196,8 @@ const Index = () => {
                       </video>
                       {showSkip && (
                         <button
-                          onClick={() => { if (videoRef.current) { videoRef.current.currentTime = 10; setShowSkip(false); } }}
-                          className={`absolute left-3 px-5 py-2.5 rounded-xl bg-black/70 backdrop-blur-md border border-primary/40 text-sm font-semibold text-white hover:bg-primary/30 hover:border-primary transition-all duration-300 shadow-2xl sm:bottom-20 ${mobileControlsActive ? "bottom-24" : "bottom-10"}`}
+                          onClick={() => { if (videoRef.current) { videoRef.current.currentTime = 13; setShowSkip(false); } }}
+                          className={`absolute left-3 px-5 py-2.5 rounded-xl bg-black/70 backdrop-blur-md border border-primary/40 text-sm font-semibold text-white hover:bg-primary/30 hover:border-primary transition-all duration-300 shadow-2xl sm:bottom-20 ${mobileControlsActive ? "bottom-16" : "bottom-4"}`}
                         >
                           {t.skipIntro}
                         </button>

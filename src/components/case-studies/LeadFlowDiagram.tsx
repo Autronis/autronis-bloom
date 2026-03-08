@@ -21,25 +21,25 @@ const desktopSegments: Point[][] = [
   [{ x: 225, y: 271 }, { x: 225, y: 295 }],
 ];
 
-const MW = 215, MH = 42;
+const MW = 235, MH = 48;
 
 const mobileNodes: DiagramNode[] = [
-  { title: "Leadbronnen", desc: "Gidsen & databases", icon: "globe", x: 165, y: 52, w: MW, h: MH, step: 1 },
-  { title: "Verzameling", desc: "Automatisch verzamelen", icon: "search", x: 165, y: 118, w: MW, h: MH, step: 2 },
-  { title: "Verwerking", desc: "Extractie & verrijking", icon: "database", x: 165, y: 184, w: MW, h: MH, step: 3 },
-  { title: "AI Analyse", desc: "Website & pijnpunten", icon: "bot", x: 165, y: 250, w: MW, h: MH, step: 4 },
-  { title: "Outreach", desc: "Persoonlijke e-mails", icon: "mail", x: 165, y: 316, w: MW, h: MH, step: 5 },
-  { title: "Dashboard", desc: "Opslaan van leads", icon: "dashboard", x: 165, y: 382, w: MW, h: MH, step: 6 },
-  { title: "Sales opvolging", desc: "Gesprekken & pipeline", icon: "phone", x: 165, y: 448, w: MW, h: MH, step: 7 },
+  { title: "Leadbronnen", desc: "Gidsen & databases", icon: "globe", x: 170, y: 55, w: MW, h: MH, step: 1 },
+  { title: "Verzameling", desc: "Automatisch verzamelen", icon: "search", x: 170, y: 128, w: MW, h: MH, step: 2 },
+  { title: "Verwerking", desc: "Extractie & verrijking", icon: "database", x: 170, y: 201, w: MW, h: MH, step: 3 },
+  { title: "AI Analyse", desc: "Website & pijnpunten", icon: "bot", x: 170, y: 274, w: MW, h: MH, step: 4 },
+  { title: "Outreach", desc: "Persoonlijke e-mails", icon: "mail", x: 170, y: 347, w: MW, h: MH, step: 5 },
+  { title: "Dashboard", desc: "Opslaan van leads", icon: "dashboard", x: 170, y: 420, w: MW, h: MH, step: 6 },
+  { title: "Sales opvolging", desc: "Gesprekken & pipeline", icon: "phone", x: 170, y: 493, w: MW, h: MH, step: 7 },
 ];
 
 const mobileSegments: Point[][] = [
-  [{ x: 165, y: 73 }, { x: 165, y: 97 }],
-  [{ x: 165, y: 139 }, { x: 165, y: 163 }],
-  [{ x: 165, y: 205 }, { x: 165, y: 229 }],
-  [{ x: 165, y: 271 }, { x: 165, y: 295 }],
-  [{ x: 165, y: 337 }, { x: 165, y: 361 }],
-  [{ x: 165, y: 403 }, { x: 165, y: 427 }],
+  [{ x: 170, y: 79 }, { x: 170, y: 104 }],
+  [{ x: 170, y: 152 }, { x: 170, y: 177 }],
+  [{ x: 170, y: 225 }, { x: 170, y: 250 }],
+  [{ x: 170, y: 298 }, { x: 170, y: 323 }],
+  [{ x: 170, y: 371 }, { x: 170, y: 396 }],
+  [{ x: 170, y: 444 }, { x: 170, y: 469 }],
 ];
 
 const LeadFlowDiagram = () => (
@@ -48,7 +48,7 @@ const LeadFlowDiagram = () => (
       <FlowDiagramSvg viewBox="0 0 450 365" nodes={desktopNodes} segments={desktopSegments} />
     </div>
     <div className="sm:hidden">
-      <FlowDiagramSvg viewBox="0 0 335 500" nodes={mobileNodes} segments={mobileSegments} travelDuration={8000} />
+      <FlowDiagramSvg viewBox="0 0 345 545" nodes={mobileNodes} segments={mobileSegments} travelDuration={8000} />
     </div>
   </div>
 );

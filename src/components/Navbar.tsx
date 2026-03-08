@@ -7,16 +7,16 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const dropdownItems = [
   {
-    label: "Ons Proces",
+    label: "Our Process",
     href: "/process",
     icon: Workflow,
-    description: "Van analyse tot livegang. Gestructureerd, transparant en schaalbaar.",
+    description: "From analysis to go-live. Structured, transparent and scalable.",
   },
   {
-    label: "Ons Team",
+    label: "Our Team",
     href: "/team",
     icon: Users,
-    description: "De engineers die uw systemen ontwerpen, bouwen en optimaliseren.",
+    description: "The engineers who design, build and optimize your systems.",
   },
 ];
 
@@ -24,9 +24,9 @@ const navLinks = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
   { label: "Impact & ROI", href: "/impact-roi" },
-  { label: "Over ons", children: dropdownItems },
+  { label: "About Us", children: dropdownItems },
   { label: "Case Studies", href: "/case-studies" },
-  { label: "Inzichten", href: "/resources" },
+  { label: "Insights", href: "/resources" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -83,8 +83,6 @@ const Navbar = () => {
   useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
-
-  // No JS animation needed — use CSS grid trick for height animation
 
   return (
     <header
@@ -158,7 +156,6 @@ const Navbar = () => {
                     className={`transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`}
                   />
                 </button>
-                {/* Hover bridge - invisible area connecting trigger to dropdown */}
                 <div className="absolute top-full left-0 right-0 h-3" />
                 <div
                   className="absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2 w-[320px] rounded-xl p-2 z-50 transition-all duration-200 ease-out"
@@ -201,18 +198,18 @@ const Navbar = () => {
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-            aria-label="Wissel thema"
+            aria-label="Toggle theme"
           >
             {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
           <div className="hidden md:flex items-center gap-1 text-xs text-muted-foreground">
-            <button className="px-2 py-1 rounded bg-primary/10 text-primary font-semibold">NL</button>
-            <button className="px-2 py-1 rounded hover:bg-muted transition-colors opacity-50 cursor-not-allowed" title="Binnenkort beschikbaar">EN</button>
+            <button className="px-2 py-1 rounded bg-primary/10 text-primary font-semibold">EN</button>
+            <a href="https://autronis.nl" className="px-2 py-1 rounded hover:bg-muted transition-colors">NL</a>
           </div>
 
           <Button asChild size="sm" className="hidden sm:inline-flex">
-            <Link to="/book">Plan Automation Scan</Link>
+            <Link to="/book">Schedule Automation Scan</Link>
           </Button>
 
           <button
@@ -294,11 +291,11 @@ const Navbar = () => {
               )
             )}
             <div className="flex items-center gap-2 px-4 py-2">
-              <button className="px-2 py-1 rounded bg-primary/10 text-primary text-xs font-semibold">NL</button>
-              <button className="px-2 py-1 rounded text-xs text-muted-foreground opacity-50 cursor-not-allowed">EN</button>
+              <button className="px-2 py-1 rounded bg-primary/10 text-primary text-xs font-semibold">EN</button>
+              <a href="https://autronis.nl" className="px-2 py-1 rounded text-xs text-muted-foreground hover:bg-muted transition-colors">NL</a>
             </div>
             <Button asChild size="lg" className="mt-2">
-              <Link to="/book">Plan Automation Scan</Link>
+              <Link to="/book">Schedule Automation Scan</Link>
             </Button>
           </div>
         </div>

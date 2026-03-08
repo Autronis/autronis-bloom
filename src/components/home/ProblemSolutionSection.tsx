@@ -10,42 +10,42 @@ import GlowCard from "@/components/GlowCard";
 const problems = [
   {
     icon: Layers,
-    title: "Losstaande systemen",
+    title: "Disconnected systems",
     description:
-      "Afdelingen werken vaak in verschillende tools zonder één gedeelde datastroom. Informatie wordt handmatig overgezet tussen bijvoorbeeld CRM, finance en operations, wat extra werk en vertraging kan veroorzaken.",
+      "Departments often work in different tools without a shared data flow. Information is manually transferred between CRM, finance and operations, causing extra work and delays.",
   },
   {
     icon: Users,
-    title: "Afhankelijkheid van handmatige stappen",
+    title: "Dependency on manual steps",
     description:
-      "In veel processen zitten nog handmatige overdrachten en controles. Naarmate het volume toeneemt, groeit ook de werkdruk en neemt de kans op fouten toe.",
+      "Many processes still contain manual handoffs and checks. As volume increases, so does workload and the chance of errors.",
   },
   {
     icon: BarChart3,
-    title: "Beperkt actueel inzicht",
+    title: "Limited real-time insight",
     description:
-      "Rapportages zijn regelmatig gebaseerd op data die achteraf wordt verzameld. Daardoor ontbreekt realtime overzicht en wordt bijsturen minder tijdig.",
+      "Reports are often based on data collected after the fact. This means real-time overview is missing and adjustments are less timely.",
   },
 ];
 
 const solutions = [
   {
     icon: Cog,
-    title: "Procesautomatisering",
+    title: "Process automation",
     description:
-      "Terugkerende en handmatige taken worden geautomatiseerd, zodat processen consistenter en met minder tussenkomst verlopen.",
+      "Recurring and manual tasks are automated, so processes run more consistently with less intervention.",
   },
   {
     icon: Link2,
-    title: "Systeemintegraties",
+    title: "System integrations",
     description:
-      "Applicaties worden via API-koppelingen met elkaar verbonden, waardoor data automatisch en betrouwbaar tussen systemen wordt uitgewisseld.",
+      "Applications are connected via API integrations, allowing data to be exchanged automatically and reliably between systems.",
   },
   {
     icon: PieChart,
-    title: "Data & rapportage",
+    title: "Data & reporting",
     description:
-      "Realtime dashboards bieden actueel inzicht in prestaties, capaciteit en knelpunten, zodat tijdig kan worden bijgestuurd.",
+      "Real-time dashboards provide up-to-date insight into performance, capacity and bottlenecks, enabling timely adjustments.",
   },
 ];
 
@@ -68,7 +68,7 @@ const StrikeThroughText = () => {
           color: isHovered ? "hsl(174, 78%, 55%)" : undefined,
         }}
       >
-        "te weinig capaciteit"
+        "not enough capacity"
       </span>
       <svg
         className="absolute left-0 top-1/2 w-full pointer-events-none"
@@ -108,22 +108,21 @@ const ProblemSolutionSection = () => {
     <section className="py-10 sm:py-24 border-t border-border relative overflow-hidden">
       
 
-
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        {/* PROBLEEM */}
+        {/* PROBLEM */}
         <div className="mb-12 sm:mb-24">
           <ScrollReveal className="text-center max-w-2xl mx-auto mb-6 sm:mb-10">
             <ScrollRevealItem>
               <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
-                Probleem
+                Problem
               </p>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
-                Het probleem is niet <StrikeThroughText />.
+                The problem isn't <StrikeThroughText />.
               </h2>
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                Veel groeiende organisaties denken dat ze extra personeel nodig hebben om bij te
-                blijven. In werkelijkheid ontstaan vertragingen doordat processen niet goed op
-                elkaar zijn afgestemd en systemen onvoldoende samenwerken.
+                Many growing organizations think they need more staff to keep up.
+                In reality, delays occur because processes are not well aligned and
+                systems don't work together effectively.
               </p>
             </ScrollRevealItem>
           </ScrollReveal>
@@ -152,18 +151,18 @@ const ProblemSolutionSection = () => {
           </ScrollReveal>
         </div>
 
-        {/* OPLOSSING */}
+        {/* SOLUTION */}
         <div>
           <ScrollReveal className="text-center max-w-2xl mx-auto mb-6 sm:mb-10">
             <ScrollRevealItem>
               <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
-                Oplossing
+                Solution
               </p>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
-                Structuur vóór capaciteit.
+                Structure before capacity.
               </h2>
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                Wanneer systemen goed op elkaar aansluiten en processen logisch zijn ingericht, kan een organisatie groeien zonder dat de personeelsdruk evenredig toeneemt.
+                When systems are properly aligned and processes are logically structured, an organization can grow without staffing pressure increasing proportionally.
               </p>
             </ScrollRevealItem>
           </ScrollReveal>

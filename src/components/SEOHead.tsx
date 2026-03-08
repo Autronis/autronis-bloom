@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
-const BASE_URL = "https://autronis-bloom.lovable.app";
-const OG_IMAGE = "https://autronis-bloom.lovable.app/og-image.png";
+const BASE_URL = "https://autronis.com";
+const OG_IMAGE = "https://autronis.com/og-image.png";
 
 interface SEOHeadProps {
   title: string;
@@ -69,7 +69,7 @@ const SEOHead = ({ title, description, path, type = "website", jsonLd }: SEOHead
     setMeta("property", "og:type", type);
     setMeta("property", "og:image", OG_IMAGE);
     setMeta("property", "og:site_name", "Autronis");
-    setMeta("property", "og:locale", "nl_NL");
+    setMeta("property", "og:locale", "en_US");
 
     // Twitter
     setMeta("name", "twitter:card", "summary_large_image");
@@ -111,11 +111,11 @@ export const organizationSchema = {
   name: "Autronis",
   url: BASE_URL,
   logo: `${BASE_URL}/logo.png`,
-  description: "Autronis automatiseert processen, integreert systemen en bouwt realtime data-inzichten voor groeiende bedrijven.",
+  description: "Autronis automates processes, integrates systems and builds real-time data insights for growing businesses.",
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "sales",
-    availableLanguage: "Dutch",
+    availableLanguage: "English",
   },
 };
 
@@ -124,6 +124,6 @@ export const websiteSchema = {
   "@type": "WebSite",
   name: "Autronis",
   url: BASE_URL,
-  description: "Systeemarchitectuur & automatisering voor groeiende bedrijven.",
+  description: "System architecture & automation for growing businesses.",
   publisher: { "@type": "Organization", name: "Autronis" },
 };

@@ -56,7 +56,7 @@ const CaseStudies = () => {
             </ScrollRevealItem>
           </ScrollReveal>
           <div className="space-y-12">
-            {cases.map((cs, i) => <CaseStudyCard key={i} cs={cs} index={i} />)}
+            {casesByLang[lang].map((cs, i) => <CaseStudyCard key={i} cs={cs} index={i} />)}
           </div>
           <ScrollReveal className="text-center mt-12">
             <ScrollRevealItem>

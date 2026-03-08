@@ -114,7 +114,7 @@ const ImpactSimulator = () => {
             </h1>
             <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               Automatisering is alleen waardevol wanneer de zakelijke impact aantoonbaar is.
-              Daarom berekenen wij vooraf een conservatieve businesscase met verwachte besparing, break-even punt en ROI.
+              Daarom berekenen wij vooraf een conservatieve businesscase met verwachte besparing en tijdswinst.
             </p>
             <p className="text-sm text-foreground/80 mt-6 font-medium">
               Vul uw situatie in en bereken direct de potentiële impact.

@@ -58,28 +58,20 @@ const ImpactSimulator = () => {
     const monthlyErrorSavings = hours * errorFraction * rate * weeksPerMonth * 0.5;
     const totalMonthlySavings = monthlySavingsHours + monthlyErrorSavings;
     const totalYearlySavings = totalMonthlySavings * 12;
+    const totalValue3Year = totalYearlySavings * 3;
+    const savedHoursPerWeek = Math.round(hours * autoFraction);
 
-    const complexityVariation = autoPercent <= 50 ? 0 : autoPercent <= 70 ? 800 : 1500;
-    const investment = 18500 + complexityVariation;
-
-    const netBenefitYear1 = totalYearlySavings - investment;
-    const totalValue3Year = (totalYearlySavings * 3) - investment;
-    const breakEvenMonths = totalMonthlySavings > 0 ? investment / totalMonthlySavings : 0;
-    const roiMultiplier = investment > 0 ? totalYearlySavings / investment : 0;
-
-    const hoursFactor = Math.min(hours / 60, 1) * 30;
-    const autoFactor = autoFraction * 40;
-    const investFactor = Math.min(investment / 30000, 1) * 30;
-    const confidence = Math.round(Math.min(hoursFactor + autoFactor + investFactor, 95));
+    const hoursFactor = Math.min(hours / 60, 1) * 35;
+    const autoFactor = autoFraction * 45;
+    const errorFactor = Math.min(errorPercent / 15, 1) * 15;
+    const confidence = Math.round(Math.min(hoursFactor + autoFactor + errorFactor, 95));
 
     return {
       monthlySavings: totalMonthlySavings,
       yearlySavings: totalYearlySavings,
-      investment,
-      netBenefitYear1,
       totalValue3Year,
-      breakEvenMonths: Math.round(breakEvenMonths * 10) / 10,
-      roiMultiplier,
+      savedHoursPerWeek,
+      autoPercent,
       confidence,
     };
   }, [hours, rate, autoPercent, errorPercent]);

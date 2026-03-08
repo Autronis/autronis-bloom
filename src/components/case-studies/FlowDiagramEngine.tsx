@@ -92,23 +92,30 @@ const NodeCard = ({ node, intensity }: {
   node: DiagramNode; intensity: number;
 }) => {
   const scale = 1 + 0.04 * intensity;
+  const isLarge = node.h >= 44;
 
-  const padX = 5;
-  const iconBoxSize = 16;
+  const padX = isLarge ? 7 : 5;
+  const iconBoxSize = isLarge ? 20 : 16;
   const iconBoxX = node.x - node.w / 2 + padX;
   const iconBoxY = node.y - iconBoxSize / 2;
 
+  const titleSize = isLarge ? 9.5 : 7;
+  const descSize = isLarge ? 7.5 : 5.5;
+  const stepSize = isLarge ? 9.5 : 7;
+  const iconScale = isLarge ? 0.625 : 0.458;
+  const iconOffset = isLarge ? 3 : 2.5;
+
   // Step number right-aligned inside the card
-  const stepX = node.x + node.w / 2 - 6;
-  const stepY = node.y + 1.5;
+  const stepX = node.x + node.w / 2 - (isLarge ? 8 : 6);
+  const stepY = node.y + (isLarge ? 2.5 : 1.5);
 
   return (
     <g transform={`translate(${node.x}, ${node.y}) scale(${scale}) translate(${-node.x}, ${-node.y})`}>
       <rect x={node.x - node.w / 2} y={node.y - node.h / 2}
-        width={node.w} height={node.h} rx={6}
+        width={node.w} height={node.h} rx={isLarge ? 8 : 6}
         fill="hsl(var(--primary) / 0.05)" />
       <rect x={node.x - node.w / 2} y={node.y - node.h / 2}
-        width={node.w} height={node.h} rx={6}
+        width={node.w} height={node.h} rx={isLarge ? 8 : 6}
         fill="none"
         stroke={`hsl(var(--primary) / ${0.2 + intensity * 0.4})`}
         strokeWidth={0.8 + intensity * 0.6} />
@@ -116,28 +123,28 @@ const NodeCard = ({ node, intensity }: {
       {/* Step indicator inside card */}
       {node.step != null && (
         <text x={stepX} y={stepY}
-          fontSize="7" fontWeight="800" textAnchor="end"
+          fontSize={stepSize} fontWeight="800" textAnchor="end"
           fill="hsl(var(--primary) / 0.7)" fontFamily="inherit" letterSpacing="0.5">
           {String(node.step).padStart(2, "0")}
         </text>
       )}
 
-      <rect x={iconBoxX} y={iconBoxY} width={iconBoxSize} height={iconBoxSize} rx={3}
+      <rect x={iconBoxX} y={iconBoxY} width={iconBoxSize} height={iconBoxSize} rx={isLarge ? 4 : 3}
         fill="hsl(var(--primary) / 0.1)" />
-      <g transform={`translate(${iconBoxX + 2.5}, ${iconBoxY + 2.5})`}>
+      <g transform={`translate(${iconBoxX + iconOffset}, ${iconBoxY + iconOffset})`}>
         <path d={ICONS[node.icon] || ""} fill="none"
           stroke="hsl(var(--primary))" strokeWidth="1.4"
           strokeLinecap="round" strokeLinejoin="round"
-          transform="scale(0.458)" />
+          transform={`scale(${iconScale})`} />
       </g>
 
-      <text x={iconBoxX + iconBoxSize + 4} y={node.y - 2}
-        fontSize="7" fontWeight="700"
+      <text x={iconBoxX + iconBoxSize + (isLarge ? 6 : 4)} y={node.y - (isLarge ? 3 : 2)}
+        fontSize={titleSize} fontWeight="700"
         fill="hsl(var(--foreground))" fontFamily="inherit" letterSpacing="0.1">
         {node.title}
       </text>
-      <text x={iconBoxX + iconBoxSize + 4} y={node.y + 7}
-        fontSize="5.5"
+      <text x={iconBoxX + iconBoxSize + (isLarge ? 6 : 4)} y={node.y + (isLarge ? 9 : 7)}
+        fontSize={descSize}
         fill="hsl(var(--muted-foreground))" fontFamily="inherit">
         {node.desc}
       </text>

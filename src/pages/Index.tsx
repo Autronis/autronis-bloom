@@ -192,7 +192,7 @@ const Index = () => {
                         onPlay={bumpSkipAboveControls}
                         onTimeUpdate={(e) => { if (e.currentTarget.currentTime >= 10) setShowSkip(false); }}
                       >
-                        <source src="https://qmtnmisdmchydrriuont.supabase.co/storage/v1/object/public/Jobby%20lead%20systeem/0301%20(1)(2).mp4" type="video/mp4" />
+                        <source src="https://qmtnmisdmchydrriuont.supabase.co/storage/v1/object/public/Jobby%20lead%20systeem/0301%20(1)(4)%20(1).mp4" type="video/mp4" />
                       </video>
                       {showSkip && (
                         <button

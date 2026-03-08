@@ -333,9 +333,9 @@ const KPICard = ({
       highlight ? "border-primary/30 bg-primary/[0.04]" : "border-border bg-card"
     }`}
   >
-    <div className="flex items-center gap-2 mb-2">
-      <div className="text-primary">{icon}</div>
-      <p className="text-xs text-muted-foreground">{label}</p>
+    <div className="flex items-center gap-1.5 sm:gap-2 mb-2">
+      <div className="text-primary shrink-0">{icon}</div>
+      <p className="text-[10px] sm:text-xs text-muted-foreground leading-tight">{label}</p>
     </div>
     <p className={`text-2xl font-bold tabular-nums ${highlight ? "text-primary" : "text-foreground"}`}>
       {value}

@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://autronis-bloom.lovable.app/sitemap.xml
+Sitemap: https://autronis.com/sitemap.xml

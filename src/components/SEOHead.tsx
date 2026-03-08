@@ -31,6 +31,18 @@ const setLink = (rel: string, href: string) => {
   el.setAttribute("href", href);
 };
 
+const setHreflang = (hreflang: string, href: string) => {
+  const selector = `link[rel="alternate"][hreflang="${hreflang}"]`;
+  let el = document.querySelector(selector) as HTMLLinkElement | null;
+  if (!el) {
+    el = document.createElement("link");
+    el.setAttribute("rel", "alternate");
+    el.setAttribute("hreflang", hreflang);
+    document.head.appendChild(el);
+  }
+  el.setAttribute("href", href);
+};
+
 const SEOHead = ({ title, description, path, type = "website", jsonLd }: SEOHeadProps) => {
   useEffect(() => {
     const fullUrl = `${BASE_URL}${path}`;
@@ -44,6 +56,11 @@ const SEOHead = ({ title, description, path, type = "website", jsonLd }: SEOHead
 
     // Canonical
     setLink("canonical", fullUrl);
+
+    // Hreflang
+    setHreflang("en", `https://autronis.com${path}`);
+    setHreflang("nl", `https://autronis.nl${path}`);
+    setHreflang("x-default", `https://autronis.com${path}`);
 
     // Open Graph
     setMeta("property", "og:title", title);

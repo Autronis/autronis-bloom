@@ -58,36 +58,28 @@ const ImpactSimulator = () => {
     const monthlyErrorSavings = hours * errorFraction * rate * weeksPerMonth * 0.5;
     const totalMonthlySavings = monthlySavingsHours + monthlyErrorSavings;
     const totalYearlySavings = totalMonthlySavings * 12;
+    const totalValue3Year = totalYearlySavings * 3;
+    const savedHoursPerWeek = Math.round(hours * autoFraction);
 
-    const complexityVariation = autoPercent <= 50 ? 0 : autoPercent <= 70 ? 800 : 1500;
-    const investment = 18500 + complexityVariation;
-
-    const netBenefitYear1 = totalYearlySavings - investment;
-    const totalValue3Year = (totalYearlySavings * 3) - investment;
-    const breakEvenMonths = totalMonthlySavings > 0 ? investment / totalMonthlySavings : 0;
-    const roiMultiplier = investment > 0 ? totalYearlySavings / investment : 0;
-
-    const hoursFactor = Math.min(hours / 60, 1) * 30;
-    const autoFactor = autoFraction * 40;
-    const investFactor = Math.min(investment / 30000, 1) * 30;
-    const confidence = Math.round(Math.min(hoursFactor + autoFactor + investFactor, 95));
+    const hoursFactor = Math.min(hours / 60, 1) * 35;
+    const autoFactor = autoFraction * 45;
+    const errorFactor = Math.min(errorPercent / 15, 1) * 15;
+    const confidence = Math.round(Math.min(hoursFactor + autoFactor + errorFactor, 95));
 
     return {
       monthlySavings: totalMonthlySavings,
       yearlySavings: totalYearlySavings,
-      investment,
-      netBenefitYear1,
       totalValue3Year,
-      breakEvenMonths: Math.round(breakEvenMonths * 10) / 10,
-      roiMultiplier,
+      savedHoursPerWeek,
+      autoPercent,
       confidence,
     };
   }, [hours, rate, autoPercent, errorPercent]);
 
   const animYearly = useAnimatedValue(Math.round(results.yearlySavings));
   const animMonthly = useAnimatedValue(Math.round(results.monthlySavings));
-  const animNet = useAnimatedValue(Math.round(results.netBenefitYear1));
   const animTotal3Year = useAnimatedValue(Math.round(results.totalValue3Year));
+  const animSavedHours = useAnimatedValue(results.savedHoursPerWeek);
 
   const chartData = [
     { name: "Huidige kosten", value: Math.round(hours * rate * 4.33), type: "current" },
@@ -122,7 +114,7 @@ const ImpactSimulator = () => {
             </h1>
             <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               Automatisering is alleen waardevol wanneer de zakelijke impact aantoonbaar is.
-              Daarom berekenen wij vooraf een conservatieve businesscase met verwachte besparing, break-even punt en ROI.
+              Daarom berekenen wij vooraf een conservatieve businesscase met verwachte besparing en tijdswinst.
             </p>
             <p className="text-sm text-foreground/80 mt-6 font-medium">
               Vul uw situatie in en bereken direct de potentiële impact.
@@ -152,9 +144,10 @@ const ImpactSimulator = () => {
                     highlight
                   />
                   <KPICard
-                    label="Terugverdientijd"
-                    value={`${results.breakEvenMonths} mnd`}
+                    label="Bespaarde uren per week"
+                    value={`${animSavedHours} uur`}
                     icon={<Calendar size={16} />}
+                    subtitle="Geschatte tijdsbesparing door automatisering."
                   />
                 </div>
               </div>
@@ -166,16 +159,13 @@ const ImpactSimulator = () => {
                   value={formatCurrency(animTotal3Year)}
                   icon={<TrendingUp size={16} />}
                 />
-                {/* ROI Multiplier as KPI card */}
-                <div className="rounded-xl border border-primary/30 bg-primary/[0.04] p-4 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Percent size={16} className="text-primary" />
-                    <p className="text-xs text-muted-foreground">ROI Multiplier</p>
-                  </div>
-                  <p className="text-2xl font-bold text-primary tabular-nums">
-                    {results.roiMultiplier.toFixed(1)}x
-                  </p>
-                </div>
+                <KPICard
+                  label="Automatiseringspotentieel"
+                  value={`${results.autoPercent}%`}
+                  icon={<Percent size={16} />}
+                  highlight
+                  subtitle="Percentage handmatig werk dat geautomatiseerd kan worden."
+                />
               </div>
 
               {/* Bar chart */}
@@ -330,12 +320,13 @@ const ImpactSimulator = () => {
 
 /* ─── KPI Card ─── */
 const KPICard = ({
-  label, value, icon, highlight,
+  label, value, icon, highlight, subtitle,
 }: {
   label: string;
   value: string;
   icon: React.ReactNode;
   highlight?: boolean;
+  subtitle?: string;
 }) => (
   <div
     className={`rounded-xl border p-4 transition-colors duration-300 ${
@@ -349,6 +340,9 @@ const KPICard = ({
     <p className={`text-2xl font-bold tabular-nums ${highlight ? "text-primary" : "text-foreground"}`}>
       {value}
     </p>
+    {subtitle && (
+      <p className="text-[10px] text-muted-foreground mt-1.5 leading-snug">{subtitle}</p>
+    )}
   </div>
 );
 

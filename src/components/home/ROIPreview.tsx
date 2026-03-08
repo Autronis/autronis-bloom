@@ -40,8 +40,8 @@ const impactBlocks = [
 ];
 
 const kernpunten = [
-  { icon: TrendingUp, text: "Tot 4x ROI binnen 12 maanden*" },
-  { icon: Timer, text: "Break-even vaak binnen 3–6 maanden" },
+  { icon: TrendingUp, text: "Structurele jaarlijkse besparing*" },
+  { icon: Timer, text: "Direct inzicht in bespaarde uren" },
   { icon: Clock, text: "Structurele kostenoptimalisatie" },
 ];
 

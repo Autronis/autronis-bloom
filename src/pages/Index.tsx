@@ -98,7 +98,6 @@ const Index = () => {
       clearTimeout(preloadTimer);
       clearTimeout(startDelay);
       if (interval) clearInterval(interval);
-      if (controlsTimerRef.current) clearTimeout(controlsTimerRef.current);
     };
   }, []);
 

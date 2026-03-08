@@ -41,7 +41,6 @@ const AnimatedValue = ({ animation, fallback }: { animation: MetricAnimation; fa
   }, [hasTriggered, animation]);
 
   if (animation.separator) {
-    // "from → to suffix" format — animate the 'to' part, show from as static
     return (
       <span ref={ref}>
         {animation.from}{animation.separator}{current}{animation.suffix || ""}
@@ -127,21 +126,21 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
             </div>
           </div>
 
-          {/* ── Section 1: Context + Probleem (side by side) ── */}
+          {/* ── Section 1: Context + Problem ── */}
           <div className="grid grid-cols-1 lg:grid-cols-2 border-t border-border">
             <div className="p-5 sm:p-6 lg:border-r border-border">
               <SectionHeader>Context</SectionHeader>
               <p className="text-[13px] text-muted-foreground leading-relaxed">{cs.context}</p>
             </div>
             <div className="p-5 sm:p-6 border-t lg:border-t-0 border-border">
-              <SectionHeader>Probleem</SectionHeader>
+              <SectionHeader>Problem</SectionHeader>
               <BulletList items={cs.problem} />
             </div>
           </div>
 
-          {/* ── Section 2: Oplossing (full width) ── */}
+          {/* ── Section 2: Solution ── */}
           <div className="border-t border-border p-5 sm:p-6">
-            <SectionHeader>Oplossing</SectionHeader>
+            <SectionHeader>Solution</SectionHeader>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">
               {cs.solution.map((item, i) => (
                 <div key={i} className="flex items-start gap-2 text-[13px] text-muted-foreground leading-relaxed">
@@ -152,19 +151,19 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
             </div>
           </div>
 
-          {/* ── Section 3: Systeemoverzicht (left) + Resultaat/Tech/Review (right) ── */}
+          {/* ── Section 3: System Overview + Results/Tech/Review ── */}
           <div className="grid grid-cols-1 lg:grid-cols-5 border-t border-border">
             {/* Diagram */}
             <div className="lg:col-span-3 p-5 sm:p-6 lg:border-r border-border">
-              <SectionHeader>Systeemoverzicht</SectionHeader>
+              <SectionHeader>System Overview</SectionHeader>
               {cs.videoUrl ? (
                 <p className="text-[12px] text-muted-foreground leading-relaxed mb-3">
-                  Bekijk de video om te zien hoe het automatiseringssysteem werkt.
+                  Watch the video to see how the automation system works.
                 </p>
               ) : (
                 <div className="mb-3 flex items-center gap-1.5 text-[12px] text-muted-foreground leading-relaxed italic">
                   <AlertTriangle size={12} className="text-primary shrink-0" />
-                  <span>Vereenvoudigde weergave van de automatiseringspipeline.</span>
+                  <span>Simplified view of the automation pipeline.</span>
                 </div>
               )}
               {cs.videoUrl ? (
@@ -180,10 +179,10 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
               )}
             </div>
 
-            {/* Resultaat + Technologie + Review */}
+            {/* Results + Technology + Review */}
             <div className="lg:col-span-2 border-t lg:border-t-0 border-border p-5 sm:p-6 space-y-5">
               <div>
-                <SectionHeader>Resultaat & Impact</SectionHeader>
+                <SectionHeader>Results & Impact</SectionHeader>
                 <div className="space-y-1.5">
                   {cs.results.map((r, j) => (
                     <div key={j} className="flex items-start gap-2 text-[13px] text-muted-foreground leading-relaxed">
@@ -195,7 +194,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
               </div>
 
               <div>
-                <SectionHeader>Technologie</SectionHeader>
+                <SectionHeader>Technology</SectionHeader>
                 <TechTagList tags={cs.technologyTags} />
               </div>
 
@@ -256,7 +255,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
                       }}
                     >
                       <Play size={14} />
-                      Bekijk onze demo
+                      Watch our demo
                     </Button>
                   </div>
                 </div>
@@ -264,7 +263,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
 
               {cs.implementationResult && (
                 <div className="rounded-lg border border-primary/15 bg-primary/[0.03] p-5 space-y-3 transition-all duration-200 ease-out hover:scale-[1.015] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_0_16px_hsl(174_78%_41%/0.1)]">
-                  <SectionHeader>Geanonimiseerde implementatiecase</SectionHeader>
+                  <SectionHeader>Anonymized implementation case</SectionHeader>
                   <p className="text-[13px] text-foreground/80 leading-[1.7] italic">
                     "{cs.implementationResult}"
                   </p>

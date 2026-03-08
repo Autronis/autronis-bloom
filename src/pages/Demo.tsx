@@ -12,9 +12,9 @@ const Demo = () => {
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center mb-12">
             <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">Demo</p>
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4">Zie automatisering in actie</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4">See automation in action</h1>
             <p className="text-lg text-muted-foreground">
-              Bekijk in twee minuten hoe een volledig geautomatiseerde workflow werkt — van trigger tot resultaat.
+              Watch in two minutes how a fully automated workflow operates — from trigger to result.
             </p>
           </div>
 
@@ -27,7 +27,7 @@ const Demo = () => {
                 </div>
               </div>
               <div className="absolute bottom-4 left-4 text-sm text-muted-foreground">
-                2:00 — Automation in actie
+                2:00 — Automation in action
               </div>
             </div>
           </div>
@@ -35,17 +35,17 @@ const Demo = () => {
           {/* Interactive tour placeholder */}
           <div className="max-w-3xl mx-auto text-center">
             <div className="rounded-xl border border-dashed border-border bg-card/50 p-12">
-              <h2 className="text-xl font-semibold mb-2">Interactieve tour</h2>
+              <h2 className="text-xl font-semibold mb-2">Interactive tour</h2>
               <p className="text-sm text-muted-foreground mb-6">
-                Binnenkort kunt u hier zelf door een automatisering klikken en elke stap ervaren.
+                Soon you'll be able to click through an automation yourself and experience every step.
               </p>
               <p className="text-xs text-muted-foreground mb-8">Coming soon</p>
             </div>
 
             <div className="mt-12">
-              <p className="text-muted-foreground mb-4">Overtuigd? Laten we kijken wat we voor u kunnen automatiseren.</p>
+              <p className="text-muted-foreground mb-4">Convinced? Let's explore what we can automate for you.</p>
               <Button asChild size="lg">
-                <Link to="/book">Plan Automation Scan <ArrowRight size={18} /></Link>
+                <Link to="/book">Schedule Automation Scan <ArrowRight size={18} /></Link>
               </Button>
             </div>
           </div>

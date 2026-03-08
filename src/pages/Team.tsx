@@ -22,13 +22,13 @@ if (typeof window !== "undefined") {
 const team: TeamMember[] = [
   {
     name: "Syb Sprenkeler",
-    role: "Automatiseringsarchitect",
+    role: "Automation Architect",
     subtitle: "Co-founder",
     photo: fotoSyb,
     priority: true,
-    focusLabel: "Technische realisatie en AI-integraties",
+    focusLabel: "Technical delivery and AI integrations",
     description:
-      "Syb realiseert schaalbare automatiseringssystemen en AI-integraties met nadruk op codekwaliteit, prestaties en onderhoudbaarheid. Hij vertaalt architectuur naar stabiele implementaties en zorgt dat systemen ook op lange termijn logisch, uitbreidbaar en efficiënt blijven functioneren.",
+      "Syb builds scalable automation systems and AI integrations with a focus on code quality, performance, and maintainability. He translates architecture into stable implementations and ensures systems remain logical, extensible, and efficient over the long term.",
     skills: [
       { label: "Workflow automation", icon: Cog, category: "automation" },
       { label: "Process automation", icon: Wrench, category: "automation" },
@@ -45,12 +45,12 @@ const team: TeamMember[] = [
   },
   {
     name: "Sem Gijsberts",
-    role: "AI- en Systeemingenieur",
+    role: "AI & Systems Engineer",
     subtitle: "Co-founder",
     photo: fotoSem,
-    focusLabel: "Systeemstructuur, AI en datalogica",
+    focusLabel: "System structure, AI, and data logic",
     description:
-      "Sem vertaalt complexe processen naar duidelijke systeemstructuren en bewaakt documentatie, datalogica en overdraagbaarheid. Hij zorgt voor overzicht, duidelijke planning en consistente besluitvorming, zodat implementaties niet alleen werken, maar ook logisch en beheersbaar blijven.",
+      "Sem translates complex processes into clear system structures and oversees documentation, data logic, and transferability. He ensures oversight, clear planning, and consistent decision-making so implementations not only work but remain logical and manageable.",
     skills: [
       { label: "Workflow automation", icon: Cog, category: "automation" },
       { label: "System architecture", icon: Puzzle, category: "automation" },
@@ -68,10 +68,10 @@ const team: TeamMember[] = [
 ];
 
 const directReasons = [
-  { icon: Users, title: "Direct contact met engineers", description: "U werkt direct met de mensen die uw systemen analyseren, ontwerpen en bouwen. Geen overdrachtslagen, maar directe en inhoudelijke samenwerking." },
-  { icon: Clock, title: "Technische keuzes met lange termijnvisie", description: "Elke technische keuze is gericht op schaalbaarheid, onderhoudbaarheid en overdraagbaarheid. Geen snelle oplossingen die later opnieuw gebouwd moeten worden." },
-  { icon: Eye, title: "Volledige overdraagbaarheid", description: "Systemen worden logisch opgebouwd en volledig gedocumenteerd. U blijft eigenaar van uw automatiseringen en behoudt volledig inzicht in de werking." },
-  { icon: Shield, title: "Beveiliging vanaf dag één", description: "Toegangsbeheer, logging en databescherming worden vanaf het begin geïntegreerd in het systeemontwerp, niet achteraf toegevoegd." },
+  { icon: Users, title: "Direct contact with engineers", description: "You work directly with the people who analyze, design, and build your systems. No handoff layers — just direct, substantive collaboration." },
+  { icon: Clock, title: "Technical decisions with a long-term vision", description: "Every technical choice is focused on scalability, maintainability, and transferability. No quick fixes that need to be rebuilt later." },
+  { icon: Eye, title: "Full transferability", description: "Systems are built logically and fully documented. You remain the owner of your automations and retain complete insight into how they work." },
+  { icon: Shield, title: "Security from day one", description: "Access control, logging, and data protection are integrated into the system design from the start — not added as an afterthought." },
 ];
 
 
@@ -83,7 +83,6 @@ const WerkstandaardSection = ({ reasons }: { reasons: typeof directReasons }) =>
 
   return (
     <div ref={ref} className="max-w-2xl mx-auto mb-16 relative">
-      {/* Parallax background glow */}
       <div className="werkstandaard-glow" />
 
       <div className="text-center mb-6">
@@ -93,7 +92,7 @@ const WerkstandaardSection = ({ reasons }: { reasons: typeof directReasons }) =>
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5, ease: sectionEase }}
         >
-          Samenwerking
+          Collaboration
         </motion.p>
         <motion.h2
           className="text-xl font-bold"
@@ -101,7 +100,7 @@ const WerkstandaardSection = ({ reasons }: { reasons: typeof directReasons }) =>
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, ease: sectionEase }}
         >
-          Waarom organisaties met ons werken
+          Why organizations work with us
         </motion.h2>
       </div>
 
@@ -129,31 +128,31 @@ const Team = () => {
   return (
     <>
       <SEOHead
-        title="Autronis | Team — De Engineers Achter Uw Automatisering"
-        description="Maak kennis met het Autronis team. Wij zijn de engineers die uw processen, systemen en datastromen structureel verbeteren."
+        title="Autronis | Team — The Engineers Behind Your Automation"
+        description="Meet the Autronis team. We are the engineers who structurally improve your processes, systems, and data flows."
         path="/team"
       />
       <section className="pt-16 pb-24 relative overflow-hidden">
         
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          {/* Over Autronis */}
+          {/* About Autronis */}
           <div className="max-w-3xl mx-auto text-center mb-20">
-            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Over Autronis</p>
+            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">About Autronis</p>
             <h2 className="text-3xl sm:text-4xl font-bold mb-8 leading-tight">
-              Van handmatig werk naar schaalbare systemen
+              From manual work to scalable systems
             </h2>
             <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-              <p>Veel groeiende bedrijven lopen vast in handmatige processen, losse tools en spreadsheets die niet meer schaalbaar zijn.</p>
-              <p>Autronis is opgericht met één doel: processen omzetten in betrouwbare systemen die automatisch draaien.</p>
-              <p>We ontwerpen en implementeren automatiseringsstructuren waarin workflows, integraties en data samenkomen in één logisch geheel.</p>
-              <p>Van AI-gestuurde workflows tot systeemintegraties en dashboards: wij bouwen de digitale infrastructuur waarop bedrijven kunnen doorgroeien.</p>
-              <p>Geen losse automatiseringen, maar systemen die blijven werken wanneer uw organisatie groeit.</p>
+              <p>Many growing businesses get stuck with manual processes, disconnected tools, and spreadsheets that no longer scale.</p>
+              <p>Autronis was founded with one goal: turning processes into reliable systems that run automatically.</p>
+              <p>We design and implement automation structures where workflows, integrations, and data come together in one logical whole.</p>
+              <p>From AI-powered workflows to system integrations and dashboards — we build the digital infrastructure that businesses need to keep growing.</p>
+              <p>Not standalone automations, but systems that keep working as your organization scales.</p>
             </div>
             <div className="grid grid-cols-3 gap-3 mt-8 max-w-lg mx-auto">
               {[
-                { icon: Boxes, title: "Systemen", text: "Automatisering die processen structureert en schaalbaar maakt." },
-                { icon: Cable, title: "Integraties", text: "Systemen en software die naadloos met elkaar samenwerken." },
-                { icon: BarChart3, title: "Data", text: "Inzicht, controle en rapportages op basis van betrouwbare data." },
+                { icon: Boxes, title: "Systems", text: "Automation that structures processes and makes them scalable." },
+                { icon: Cable, title: "Integrations", text: "Systems and software that work seamlessly together." },
+                { icon: BarChart3, title: "Data", text: "Insight, control, and reporting based on reliable data." },
               ].map((block) => (
                 <div
                   key={block.title}
@@ -175,10 +174,10 @@ const Team = () => {
             <ScrollRevealItem>
               <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Team</p>
               <h2 className="text-3xl sm:text-4xl font-bold mb-6 leading-tight">
-                Werk direct met de engineers die uw systemen bouwen.
+                Work directly with the engineers who build your systems.
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Wij ontwerpen, bouwen en optimaliseren automatiseringen zelf. U werkt direct samen met de engineers die verantwoordelijk zijn voor analyse, ontwikkeling en implementatie. Geen accountmanagers of overdrachtslagen, maar directe samenwerking met het team dat uw systemen realiseert.
+                We design, build, and optimize automations ourselves. You work directly with the engineers responsible for analysis, development, and implementation. No account managers or handoff layers — just direct collaboration with the team that delivers your systems.
               </p>
             </ScrollRevealItem>
           </ScrollReveal>
@@ -195,11 +194,11 @@ const Team = () => {
 
           <ScrollReveal className="text-center mb-12">
             <ScrollRevealItem>
-              <h2 className="text-2xl font-bold mb-3">Wilt u direct met de engineers spreken?</h2>
-              <p className="text-muted-foreground mb-6">Plan een Automation Scan en bespreek uw processen en automatiseringsmogelijkheden met ons team.</p>
+              <h2 className="text-2xl font-bold mb-3">Want to speak directly with the engineers?</h2>
+              <p className="text-muted-foreground mb-6">Schedule an Automation Scan and discuss your processes and automation opportunities with our team.</p>
               <Button asChild size="lg" className="group/cta">
                 <Link to="/book">
-                  Plan een technisch gesprek
+                  Schedule a technical consultation
                   <ArrowRight size={18} className="transition-transform duration-300 group-hover/cta:translate-x-1" />
                 </Link>
               </Button>

@@ -15,7 +15,7 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 
 /* ─── helpers ─── */
 const formatCurrency = (v: number) =>
-  `€${Math.round(v).toLocaleString("nl-NL")}`;
+  `€${Math.round(v).toLocaleString("en-US")}`;
 
 const useAnimatedValue = (target: number, duration = 600) => {
   const [display, setDisplay] = useState(target);
@@ -82,16 +82,16 @@ const ImpactSimulator = () => {
   const animSavedHours = useAnimatedValue(results.savedHoursPerWeek);
 
   const chartData = [
-    { name: "Huidige kosten", value: Math.round(hours * rate * 4.33), type: "current" },
-    { name: "Na automatisering", value: Math.round(hours * (1 - autoPercent / 100) * rate * 4.33), type: "automated" },
-    { name: "Besparing", value: Math.round(results.monthlySavings), type: "savings" },
+    { name: "Current costs", value: Math.round(hours * rate * 4.33), type: "current" },
+    { name: "After automation", value: Math.round(hours * (1 - autoPercent / 100) * rate * 4.33), type: "automated" },
+    { name: "Savings", value: Math.round(results.monthlySavings), type: "savings" },
   ];
 
   const sliders = [
-    { id: "hours", label: "Handmatige uren per week", value: hours, onChange: setHours, min: 5, max: 80, step: 1, display: `${hours} uur`, hint: "Tijd besteed aan repetitieve of handmatige processen." },
-    { id: "rate", label: "Gemiddelde uurkosten", value: rate, onChange: setRate, min: 25, max: 120, step: 5, display: `€${rate}`, hint: "Inclusief salaris, werkgeverslasten en overige personeelskosten." },
-    { id: "auto", label: "Automatiseringspercentage", value: autoPercent, onChange: setAutoPercent, min: 30, max: 85, step: 1, display: `${autoPercent}%`, hint: "Conservatieve inschatting na validatie en controle." },
-    { id: "error", label: "Geschat foutpercentage", value: errorPercent, onChange: setErrorPercent, min: 0, max: 25, step: 1, display: `${errorPercent}%`, hint: "Percentage van totale werktijd besteed aan correcties, herstelwerk of dubbele invoer.", subHint: "Bij administratieve processen ligt dit vaak tussen 2–8%." },
+    { id: "hours", label: "Manual hours per week", value: hours, onChange: setHours, min: 5, max: 80, step: 1, display: `${hours} hrs`, hint: "Time spent on repetitive or manual processes." },
+    { id: "rate", label: "Average hourly cost", value: rate, onChange: setRate, min: 25, max: 120, step: 5, display: `€${rate}`, hint: "Including salary, employer costs, and other personnel expenses." },
+    { id: "auto", label: "Automation percentage", value: autoPercent, onChange: setAutoPercent, min: 30, max: 85, step: 1, display: `${autoPercent}%`, hint: "Conservative estimate after validation and review." },
+    { id: "error", label: "Estimated error rate", value: errorPercent, onChange: setErrorPercent, min: 0, max: 25, step: 1, display: `${errorPercent}%`, hint: "Percentage of total work time spent on corrections, rework, or duplicate entry.", subHint: "For administrative processes this is typically between 2–8%." },
   ];
 
   const handleSliderChange = useCallback((setter: (v: number) => void, id: string) => (v: number) => {
@@ -110,14 +110,14 @@ const ImpactSimulator = () => {
           <ScrollRevealItem>
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Impact & ROI</p>
             <h1 className="text-3xl sm:text-4xl font-bold mb-4">
-              Impact is meetbaar. Daarom rekenen wij voordat we bouwen.
+              Impact is measurable. That's why we calculate before we build.
             </h1>
             <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Automatisering is alleen waardevol wanneer de zakelijke impact aantoonbaar is.
-              Daarom berekenen wij vooraf een conservatieve businesscase met verwachte besparing en tijdswinst.
+              Automation is only valuable when the business impact is demonstrable.
+              That's why we calculate a conservative business case upfront with expected savings and time gains.
             </p>
             <p className="text-sm text-foreground/80 mt-6 font-medium">
-              Vul uw situatie in en bereken direct de potentiële impact.
+              Enter your situation and calculate the potential impact directly.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>
@@ -135,19 +135,19 @@ const ImpactSimulator = () => {
             >
               {/* Primary KPIs */}
               <div>
-                <p className="text-sm font-semibold text-foreground mb-4">Resultaten</p>
+                <p className="text-sm font-semibold text-foreground mb-4">Results</p>
                 <div className="grid grid-cols-2 gap-4">
                   <KPICard
-                    label="Jaarlijkse besparing"
+                    label="Annual savings"
                     value={formatCurrency(animYearly)}
                     icon={<TrendingUp size={16} />}
                     highlight
                   />
                   <KPICard
-                    label="Bespaarde uren per week"
-                    value={`${animSavedHours} uur`}
+                    label="Hours saved per week"
+                    value={`${animSavedHours} hrs`}
                     icon={<Calendar size={16} />}
-                    subtitle="Geschatte tijdsbesparing door automatisering."
+                    subtitle="Estimated time savings through automation."
                   />
                 </div>
               </div>
@@ -155,16 +155,16 @@ const ImpactSimulator = () => {
               {/* Secondary KPIs */}
               <div className="grid grid-cols-2 gap-4">
                 <KPICard
-                  label="Besparing over 3 jaar"
+                  label="Savings over 3 years"
                   value={formatCurrency(animTotal3Year)}
                   icon={<TrendingUp size={16} />}
                 />
                 <KPICard
-                  label="Automatiseringspotentieel"
+                  label="Automation potential"
                   value={`${results.autoPercent}%`}
                   icon={<Percent size={16} />}
                   highlight
-                  subtitle="Percentage handmatig werk dat geautomatiseerd kan worden."
+                  subtitle="Percentage of manual work that can be automated."
                 />
               </div>
 
@@ -185,7 +185,7 @@ const ImpactSimulator = () => {
                   />
                 </div>
                 <p className="text-xs text-muted-foreground mt-2.5">
-                  Indicatie van hoe realistisch deze berekening is, gebaseerd op automatiseringspercentage, foutreductie en vergelijkbare implementaties bij MKB-organisaties.
+                  Indication of how realistic this calculation is, based on automation percentage, error reduction, and comparable implementations at SMB organizations.
                 </p>
               </div>
 
@@ -227,18 +227,17 @@ const ImpactSimulator = () => {
                 ))}
               </div>
 
-              {/* Spacer */}
               <div className="mt-7" />
 
               {/* Disclaimer + CTA */}
               <div className="mt-8 pt-6 border-t border-border">
                 <p className="text-sm text-muted-foreground leading-relaxed mb-5 italic flex items-start gap-1.5">
                   <AlertTriangle size={14} className="text-primary shrink-0 mt-0.5 not-italic" />
-                  Deze berekening is indicatief. Tijdens de impactanalyse wordt een volledige businesscase opgesteld inclusief risico-inschatting en implementatieplanning.
+                  This calculation is indicative. During the impact analysis, a complete business case is prepared including risk assessment and implementation planning.
                 </p>
                 <Button asChild size="lg">
                   <Link to="/book">
-                    Plan een impactanalyse
+                    Schedule an impact analysis
                     <ArrowRight size={18} />
                   </Link>
                 </Button>
@@ -250,7 +249,7 @@ const ImpactSimulator = () => {
                   >
                     <div className="flex items-center gap-2">
                       <Info size={14} className="text-primary" />
-                      <p className="text-sm font-medium text-foreground">Wat zit er in deze berekening?</p>
+                      <p className="text-sm font-medium text-foreground">What's included in this calculation?</p>
                     </div>
                     <motion.div animate={{ rotate: showTransparency ? 180 : 0 }} transition={{ duration: 0.25 }}>
                       <ChevronDown size={16} className="text-muted-foreground" />
@@ -267,9 +266,9 @@ const ImpactSimulator = () => {
                       >
                         <div className="px-4 pb-4 space-y-3">
                           <div>
-                            <p className="text-xs font-medium text-foreground mb-1.5">Inbegrepen</p>
+                            <p className="text-xs font-medium text-foreground mb-1.5">Included</p>
                             <ul className="space-y-1">
-                              {["Besparing op handmatige verwerkingstijd", "Besparing door foutreductie", "Structurele capaciteitsvrijmaking"].map((item) => (
+                              {["Savings on manual processing time", "Savings through error reduction", "Structural capacity release"].map((item) => (
                                 <li key={item} className="flex items-center gap-2 text-xs text-foreground/80">
                                   <span className="w-1 h-1 rounded-full bg-primary shrink-0" />
                                   {item}
@@ -278,9 +277,9 @@ const ImpactSimulator = () => {
                             </ul>
                           </div>
                           <div>
-                            <p className="text-xs font-medium text-foreground mb-1.5">Niet inbegrepen</p>
+                            <p className="text-xs font-medium text-foreground mb-1.5">Not included</p>
                             <ul className="space-y-1">
-                              {["Extra omzetgroei", "Strategische schaalvoordelen", "Langetermijnoptimalisaties"].map((item) => (
+                              {["Additional revenue growth", "Strategic scaling advantages", "Long-term optimizations"].map((item) => (
                                 <li key={item} className="flex items-center gap-2 text-xs text-muted-foreground">
                                   <span className="w-1 h-1 rounded-full bg-muted-foreground/40 shrink-0" />
                                   {item}
@@ -289,7 +288,7 @@ const ImpactSimulator = () => {
                             </ul>
                           </div>
                           <p className="text-xs text-muted-foreground mt-3 leading-relaxed">
-                            Tijdens de impactanalyse vertalen wij deze aannames naar een volledige businesscase op basis van uw processen en systemen.
+                            During the impact analysis, we translate these assumptions into a complete business case based on your processes and systems.
                           </p>
                         </div>
                       </motion.div>
@@ -302,7 +301,7 @@ const ImpactSimulator = () => {
                     to="/#beveiliging"
                     className="group inline-flex items-center gap-1 text-[11px] text-foreground/70 hover:text-primary/70 transition-colors"
                   >
-                    Bekijk onze Beveiligingsaanpak
+                    View our Security Approach
                     <ArrowRight size={10} className="transition-transform duration-200 group-hover:translate-x-1" />
                   </Link>
                 </div>
@@ -351,7 +350,7 @@ const BarChart = ({ data }: { data: { name: string; value: number; type: string 
   const maxVal = Math.max(...data.map((d) => d.value));
   return (
     <div className="rounded-xl border border-border p-4">
-      <p className="text-sm font-medium text-foreground mb-5">Maandelijks kostenoverzicht</p>
+      <p className="text-sm font-medium text-foreground mb-5">Monthly cost overview</p>
       <div className="space-y-4">
         {data.map((item) => {
           const pct = maxVal > 0 ? (item.value / maxVal) * 100 : 0;

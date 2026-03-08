@@ -10,44 +10,44 @@ const phases = [
   {
     step: "01",
     icon: Brain,
-    title: "Analyse & Architectuur",
+    title: "Analysis & Architecture",
     description:
-      "We analyseren processen, systemen en datastromen en bepalen waar automatisering de meeste impact heeft. Op basis hiervan definiëren we een onderbouwde automatiseringsstrategie.",
+      "We analyze processes, systems, and data flows to determine where automation has the greatest impact. Based on this, we define an evidence-based automation strategy.",
   },
   {
     step: "02",
     icon: Layers,
-    title: "Ontwerp & Structuur",
+    title: "Design & Structure",
     description:
-      "We ontwerpen een schaalbare systeemstructuur waarin integraties, datastromen en toegangsrechten logisch zijn ingericht voordat ontwikkeling start.",
+      "We design a scalable system structure where integrations, data flows, and access controls are logically organized before development begins.",
   },
   {
     step: "03",
     icon: Cog,
-    title: "Bouw & Implementatie",
+    title: "Build & Implementation",
     description:
-      "Automatiseringen worden modulair ontwikkeld en gekoppeld aan uw bestaande systemen. Tijdens de bouw worden integraties en workflows continu getest.",
+      "Automations are developed modularly and connected to your existing systems. During the build, integrations and workflows are continuously tested.",
   },
   {
     step: "04",
     icon: ScanSearch,
-    title: "Validatie & Optimalisatie",
+    title: "Validation & Optimization",
     description:
-      "We testen stabiliteit, prestaties en uitzonderingssituaties zodat automatiseringen betrouwbaar functioneren voordat ze live gaan.",
+      "We test stability, performance, and edge cases so automations function reliably before going live.",
   },
   {
     step: "05",
     icon: Rocket,
-    title: "Livegang & Overdracht",
+    title: "Go-Live & Handover",
     description:
-      "We verzorgen een gecontroleerde livegang en leveren volledige documentatie zodat uw organisatie eigenaar blijft van het systeem.",
+      "We execute a controlled go-live and deliver complete documentation so your organization remains the owner of the system.",
   },
   {
     step: "06",
     icon: RefreshCw,
-    title: "Doorontwikkeling & Ondersteuning",
+    title: "Continuous Development & Support",
     description:
-      "Na livegang blijven we systemen monitoren en optimaliseren zodat automatiseringen blijven aansluiten op nieuwe processen en groei.",
+      "After go-live, we continue to monitor and optimize systems so automations keep pace with new processes and growth.",
   },
 ];
 
@@ -98,7 +98,7 @@ const TimelineCard = ({
         >
           <Icon size={16} className="text-primary sm:w-[18px] sm:h-[18px]" />
         </div>
-        <p className="text-xs font-bold text-primary mb-1">Stap {phase.step}</p>
+        <p className="text-xs font-bold text-primary mb-1">Step {phase.step}</p>
         <h3 className="font-semibold text-sm sm:text-base mb-1.5 sm:mb-2">{phase.title}</h3>
         <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{phase.description}</p>
       </div>
@@ -164,18 +164,17 @@ const ProcessSection = () => {
         <ScrollReveal className="text-center max-w-2xl mx-auto mb-6 sm:mb-16">
           <ScrollRevealItem>
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
-              Aanpak
+              Approach
             </p>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">Van analyse tot livegang</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">From analysis to go-live</h2>
             <p className="text-sm sm:text-base text-muted-foreground">
-              Gestructureerd. Voorspelbaar. Schaalbaar.
+              Structured. Predictable. Scalable.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>
 
         {/* Timeline layout */}
         <div className="relative max-w-3xl mx-auto" ref={timelineRef}>
-          {/* Vertical line (left) */}
           <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-border hidden sm:block">
             <div
               className="w-full bg-primary rounded-full"
@@ -186,7 +185,6 @@ const ProcessSection = () => {
             />
           </div>
 
-          {/* Cards */}
           <div className="space-y-4 sm:space-y-8">
             {phases.map((phase, i) => (
               <div
@@ -195,7 +193,6 @@ const ProcessSection = () => {
                 className="flex items-start gap-3 sm:gap-6"
                 style={{ scrollMarginTop: "100px" }}
               >
-                {/* Node */}
                 <div className="hidden sm:flex flex-col items-center shrink-0 relative z-10">
                   <div
                     className="w-10 h-10 rounded-full border-2 flex items-center justify-center text-xs font-bold"
@@ -211,7 +208,6 @@ const ProcessSection = () => {
                   </div>
                 </div>
 
-                {/* Card */}
                 <div className="flex-1">
                   <TimelineCard
                     phase={phase}
@@ -235,12 +231,12 @@ const ProcessSection = () => {
               <div className="flex items-center gap-2">
                 <ShieldCheck size={14} className="text-primary" />
                 <span>
-                  Beveiliging en datakwaliteit zijn geïntegreerd in elke fase — met minimale
-                  toegangsrechten, logging en volledige documentatie.
+                  Security and data quality are integrated into every phase — with minimal
+                  access permissions, logging, and complete documentation.
                 </span>
               </div>
               <a href="#beveiliging" className="group flex items-center gap-1 text-muted-foreground/70 hover:text-primary/80 transition-colors whitespace-nowrap shrink-0">
-                Bekijk beveiligingsaanpak
+                View security approach
                 <ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1" />
               </a>
             </div>
@@ -251,12 +247,12 @@ const ProcessSection = () => {
           <ScrollRevealItem>
             <Button asChild size="lg" className="w-full sm:w-auto">
               <Link to="/process">
-                Bekijk ons volledige proces
+                View our full process
                 <ArrowRight size={18} />
               </Link>
             </Button>
             <p className="text-xs text-muted-foreground mt-3">
-              Onze bewezen aanpak: van strategische analyse tot duurzame, datagedreven optimalisatie.
+              Our proven approach: from strategic analysis to sustainable, data-driven optimization.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>

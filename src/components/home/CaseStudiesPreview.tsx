@@ -19,14 +19,14 @@ interface CaseStudy {
 
 const cases: CaseStudy[] = [
   {
-    slug: "leadwerving-outreach-automatisering",
-    title: "Leadgeneratie en outreach automatisering",
-    description: "Automatisch leads verzamelen, contactinformatie verrijken en gepersonaliseerde e-mail outreach genereren met AI.",
+    slug: "lead-generation-outreach-automation",
+    title: "Lead generation and outreach automation",
+    description: "Automatically collect leads, enrich contact information, and generate personalized email outreach with AI.",
     caseIndex: 0,
     results: [
-      "Leadverwerking van 25 → 5 min per lead",
-      "3–5× hogere outreach efficiëntie",
-      "50+ gepersonaliseerde e-mails per dag",
+      "Lead processing from 25 → 5 min per lead",
+      "3–5× higher outreach efficiency",
+      "50+ personalized emails per day",
     ],
     trust: {
       logoSrc: "/assets/jobby-logo.png",
@@ -34,25 +34,25 @@ const cases: CaseStudy[] = [
     },
   },
   {
-    slug: "ai-klantenservice-automatisering",
-    title: "AI klantenservice automatisering",
-    description: "AI-gedreven systeem dat veelgestelde klantvragen automatisch beantwoordt en complexe cases doorstuurt naar medewerkers.",
+    slug: "ai-customer-service-automation",
+    title: "AI customer service automation",
+    description: "AI-driven system that automatically answers common customer questions and routes complex cases to team members.",
     caseIndex: 1,
     results: [
-      "70%+ vragen automatisch afgehandeld",
-      "Reactietijd van uren naar direct",
-      "24/7 beschikbaarheid",
+      "70%+ questions handled automatically",
+      "Response time from hours to instant",
+      "24/7 availability",
     ],
   },
   {
-    slug: "marketing-rapportage-automatisering",
-    title: "Marketing en rapportage automatisering",
-    description: "Automatisch marketingdata verzamelen, combineren en visualiseren in realtime dashboards met automatische rapportverzending.",
+    slug: "marketing-reporting-automation",
+    title: "Marketing and reporting automation",
+    description: "Automatically collect, combine, and visualize marketing data in real-time dashboards with automatic report delivery.",
     caseIndex: 2,
     results: [
-      "Rapportagetijd van 6 uur naar 10 min",
-      "100% automatische dataverzameling",
-      "Realtime dashboards voor klanten",
+      "Reporting time from 6 hrs to 10 min",
+      "100% automatic data collection",
+      "Real-time client dashboards",
     ],
   },
 ];
@@ -89,7 +89,6 @@ const CaseCard = ({
       }}
     >
       <div className="relative z-10 flex flex-col h-full">
-        {/* Header with Autronis logo + title */}
         <div className="flex items-center gap-2.5 mb-3">
           <img src="/logo.png" alt="Autronis" className="h-[18px] w-[18px] object-contain opacity-90 shrink-0" />
           <h3 className="text-sm sm:text-base font-bold leading-snug">{cs.title}</h3>
@@ -97,9 +96,8 @@ const CaseCard = ({
 
         <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-3">{cs.description}</p>
 
-        {/* Results */}
         <div className="border-t border-border pt-3 flex-1">
-          <p className="text-[10px] font-semibold text-primary mb-1.5 tracking-wide uppercase">Resultaat</p>
+          <p className="text-[10px] font-semibold text-primary mb-1.5 tracking-wide uppercase">Result</p>
           <ul className="space-y-1">
             {cs.results.map((r, i) => (
               <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground leading-relaxed">
@@ -110,7 +108,6 @@ const CaseCard = ({
           </ul>
         </div>
 
-        {/* Trust indicator (only Jobby) */}
         {cs.trust && (
           <div className="border-t border-border pt-3 mt-3">
             <div className="flex items-center gap-2.5">
@@ -136,7 +133,7 @@ const CaseCard = ({
         )}
 
         <span className="mt-3 text-sm text-primary inline-flex items-center gap-1 group-hover:underline">
-          Lees volledige case <ArrowRight size={14} />
+          Read full case <ArrowRight size={14} />
         </span>
       </div>
     </Link>
@@ -153,9 +150,9 @@ const CaseStudiesPreview = () => {
         <ScrollReveal className="text-center mb-8 sm:mb-12">
           <ScrollRevealItem>
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">Case Studies</p>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">Voorbeelden van automatiseringsimplementaties</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">Examples of automation implementations</h2>
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Concrete voorbeelden van hoe automatisering processen versnelt, fouten vermindert en schaalbaarheid mogelijk maakt.
+              Concrete examples of how automation accelerates processes, reduces errors, and enables scalability.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>
@@ -179,7 +176,7 @@ const CaseStudiesPreview = () => {
           <ScrollRevealItem>
             <Button asChild size="lg" className="w-full sm:w-auto">
               <Link to="/case-studies">
-                Bekijk meer implementaties
+                View more implementations
                 <ArrowRight size={18} />
               </Link>
             </Button>

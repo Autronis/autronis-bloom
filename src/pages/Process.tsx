@@ -28,94 +28,94 @@ const phases = [
   {
     step: "01",
     icon: Brain,
-    title: "Analyse & Architectuur",
+    title: "Analysis & Architecture",
     timing: "Week 1",
     description:
-      "We analyseren processen, systemen en datastromen en definiëren een onderbouwde strategie. Besluiten worden gebaseerd op impact-, risico- en ROI-berekeningen.",
+      "We analyze processes, systems, and data flows, then define an evidence-based strategy. Decisions are grounded in impact, risk, and ROI calculations.",
     deliverables: [
-      "Procesmapping",
-      "Systeemanalyse",
-      "Impact- en ROI-analyse",
-      "Businesscase per kans",
-      "Scope-definitie",
-      "Risicoanalyse",
+      "Process mapping",
+      "System analysis",
+      "Impact & ROI analysis",
+      "Business case per opportunity",
+      "Scope definition",
+      "Risk analysis",
     ],
   },
   {
     step: "02",
     icon: Layers,
-    title: "Ontwerp & Structuur",
+    title: "Design & Structure",
     timing: "Week 1–2",
     description:
-      "We ontwerpen een schaalbare en veilige architectuur waarin systemen logisch samenwerken en data gecontroleerd stroomt.",
+      "We design a scalable and secure architecture where systems work together logically and data flows in a controlled manner.",
     deliverables: [
-      "Technisch architectuurdocument",
-      "Integratieschema",
-      "Datastroomontwerp",
-      "Security- en toegangsmodel",
-      "Datagovernance-richtlijnen",
-      "Technische randvoorwaarden",
+      "Technical architecture document",
+      "Integration schema",
+      "Data flow design",
+      "Security & access model",
+      "Data governance guidelines",
+      "Technical prerequisites",
     ],
   },
   {
     step: "03",
     icon: Cog,
-    title: "Bouw & Implementatie",
+    title: "Build & Implementation",
     timing: "Week 2–4",
     description:
-      "We realiseren de oplossingen modulair, gecontroleerd en volgens vastgestelde architectuurprincipes.",
+      "We build solutions in a modular, controlled fashion according to established architecture principles.",
     deliverables: [
-      "Werkende flows",
-      "Testomgeving",
-      "Logging en foutafhandeling",
-      "Versiebeheer en configuratiebeheer",
-      "Teststrategie en validatieverslagen",
+      "Working flows",
+      "Test environment",
+      "Logging and error handling",
+      "Version control and configuration management",
+      "Test strategy and validation reports",
     ],
   },
   {
     step: "04",
     icon: ScanSearch,
-    title: "Validatie & Optimalisatie",
+    title: "Validation & Optimization",
     timing: "Week 3–5",
     description:
-      "We testen stabiliteit, performance en uitzonderingssituaties voordat livegang plaatsvindt.",
+      "We test stability, performance, and edge cases before going live.",
     deliverables: [
-      "End-to-end testdekking",
-      "Monitoringconfiguratie",
-      "Performancevalidatie",
-      "Gebruikersacceptatietest",
-      "Failover- en fallbackstrategie",
-      "SLA-afstemming",
+      "End-to-end test coverage",
+      "Monitoring configuration",
+      "Performance validation",
+      "User acceptance testing",
+      "Failover & fallback strategy",
+      "SLA alignment",
     ],
   },
   {
     step: "05",
     icon: Rocket,
-    title: "Livegang & Overdracht",
+    title: "Go-Live & Handover",
     timing: "Week 4–6",
     description:
-      "We realiseren een gecontroleerde livegang en dragen het systeem volledig overdraagbaar over.",
+      "We execute a controlled go-live and hand over the system in a fully transferable state.",
     deliverables: [
-      "Productie-implementatie",
-      "Volledige technische documentatie",
-      "Operationeel overdrachtsmodel",
-      "Training & kennisoverdracht",
-      "Nazorgperiode",
-      "Governance- en eigenaarschapsoverdracht",
+      "Production deployment",
+      "Complete technical documentation",
+      "Operational handover model",
+      "Training & knowledge transfer",
+      "Post-launch support period",
+      "Governance & ownership transfer",
     ],
   },
   {
     step: "06",
     icon: RefreshCw,
-    title: "Doorontwikkeling & ondersteuning",
-    timing: "Doorlopend",
+    title: "Continuous Development & Support",
+    timing: "Ongoing",
     description:
-      "Na livegang blijven systemen zich ontwikkelen. Naarmate processen veranderen of nieuwe systemen worden toegevoegd, passen wij de architectuur waar nodig aan.",
+      "After go-live, systems continue to evolve. As processes change or new systems are added, we adapt the architecture as needed.",
     deliverables: [
-      "Monitoring van integraties",
-      "Optimalisatie van bestaande workflows",
-      "Uitbreiding met nieuwe oplossingen",
-      "Ondersteuning bij systeemwijzigingen",
+      "Integration monitoring",
+      "Optimization of existing workflows",
+      "Expansion with new solutions",
+      "Support for system changes",
     ],
   },
 ];
@@ -123,71 +123,71 @@ const phases = [
 const securityClaims = [
   {
     icon: ShieldCheck,
-    title: "Minimale rechten",
-    description: "Toegang strikt beperkt op basis van rollen.",
+    title: "Minimal permissions",
+    description: "Access strictly limited based on roles.",
   },
   {
     icon: FileText,
-    title: "Documentatie",
-    description: "Alles vastgelegd en overdraagbaar opgeleverd.",
+    title: "Documentation",
+    description: "Everything documented and delivered in a transferable format.",
   },
   {
     icon: BarChart3,
     title: "Logging",
-    description: "Standaard foutdetectie en monitoring ingebouwd.",
+    description: "Error detection and monitoring built in by default.",
   },
   {
     icon: Shield,
-    title: "AVG-conform",
-    description: "Ingericht conform privacywetgeving.",
+    title: "GDPR compliant",
+    description: "Set up in accordance with privacy legislation.",
   },
 ];
 
 const introPoints = [
-  { icon: Search, text: "Doordachte analyse", sub: "Elke implementatie start met een analyse van processen en systemen, inclusief impact- en ROI-berekening." },
-  { icon: Brain, text: "Architectuur vóór automatisering", sub: "Structuur, datastromen en schaalbaarheid worden vastgesteld voordat er gebouwd wordt." },
-  { icon: Target, text: "Meetbare besluitvorming", sub: "Automatisering wordt alleen geïmplementeerd wanneer de zakelijke impact aantoonbaar is." },
-  { icon: TrendingUp, text: "Schaalbaar vanaf dag één", sub: "Systemen worden ontworpen om mee te groeien zonder lineaire stijging van personeelskosten." },
+  { icon: Search, text: "Thorough analysis", sub: "Every implementation starts with a process and system analysis, including impact and ROI calculations." },
+  { icon: Brain, text: "Architecture before automation", sub: "Structure, data flows, and scalability are defined before anything is built." },
+  { icon: Target, text: "Measurable decision-making", sub: "Automation is only implemented when the business impact is demonstrable." },
+  { icon: TrendingUp, text: "Scalable from day one", sub: "Systems are designed to grow without a linear increase in staffing costs." },
 ];
 
 const impactCards = [
   {
     icon: Clock,
-    title: "Tot 30–70% minder handmatig werk",
-    description: "Repetitieve taken worden structureel geëlimineerd. Vrijgekomen uren worden direct vertaald naar herinzetbare capaciteit binnen bestaande teams.",
-    sub: "Gebaseerd op procesanalyse en gemiddelde loonkosten inclusief overhead.",
+    title: "Up to 30–70% less manual work",
+    description: "Repetitive tasks are structurally eliminated. Freed-up hours translate directly into redeployable capacity within existing teams.",
+    sub: "Based on process analysis and average labor costs including overhead.",
     primary: true,
     customIcon: null,
   },
   {
     icon: null,
-    title: "Structurele kostenreductie",
-    description: "Correctiewerk, dubbele invoer en inefficiënte overdracht verdwijnen uit het proces. Besparingen werken cumulatief door naarmate processen verder worden geoptimaliseerd.",
-    sub: "Direct vertaald naar operationele kostenbesparing in de businesscase.",
+    title: "Structural cost reduction",
+    description: "Correction work, duplicate entry, and inefficient handovers disappear from the process. Savings compound as processes are further optimized.",
+    sub: "Directly translated into operational cost savings in the business case.",
     primary: true,
     customIcon: "€",
   },
   {
     icon: Shield,
-    title: "Lager operationeel risico",
-    description: "Gestandaardiseerde processen met logging, toegangsbeheer en documentatie verminderen foutkans en escalaties.",
+    title: "Lower operational risk",
+    description: "Standardized processes with logging, access control, and documentation reduce error rates and escalations.",
     primary: false,
     customIcon: null,
   },
   {
     icon: TrendingUp,
-    title: "Schaalbaarheid zonder lineaire personeelsgroei",
-    description: "Meer output met hetzelfde team. Groei wordt mogelijk zonder proportionele stijging in personeelskosten.",
+    title: "Scalability without linear headcount growth",
+    description: "More output with the same team. Growth becomes possible without proportional increases in staffing costs.",
     primary: false,
     customIcon: null,
   },
 ];
 
 const proofStrip = [
-  "Gebaseerd op procesanalyse",
-  "Financieel doorgerekend",
-  "Inclusief risico- en overheadfactoren",
-  "Transparante ROI-indicatie",
+  "Based on process analysis",
+  "Financially validated",
+  "Including risk and overhead factors",
+  "Transparent ROI indication",
 ];
 
 /* ── Phase card ── */
@@ -209,7 +209,7 @@ const PhaseCard = ({
       className="relative grid grid-cols-[40px_1fr] sm:grid-cols-[48px_1fr] lg:grid-cols-[140px_48px_1fr] items-start"
       data-phase={index}
     >
-      {/* Left: Fase label (desktop only) */}
+      {/* Left: Phase label (desktop only) */}
       <div className="hidden lg:flex flex-col justify-center items-end pr-5 mt-4">
         <p
           className="uppercase tracking-[0.14em] transition-all duration-300 text-right"
@@ -220,7 +220,7 @@ const PhaseCard = ({
             opacity: isCurrent ? 1 : isActive ? 0.7 : 0.4,
           }}
         >
-          Fase {phase.step}
+          Phase {phase.step}
         </p>
         <p
           className="leading-tight transition-all duration-300 mt-0.5 text-right"
@@ -328,7 +328,7 @@ const PhaseCard = ({
                 transition: "color 300ms ease-out",
               }}
             >
-              Fase {phase.step}
+              Phase {phase.step}
             </p>
 
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
@@ -347,7 +347,7 @@ const PhaseCard = ({
 
             <div>
               <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-2 font-semibold">
-                Resultaten
+                Deliverables
               </p>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
                 {phase.deliverables.map((d, dIdx) => (
@@ -402,12 +402,10 @@ const Process = () => {
     if (newActive < 0 || !timeline) {
       setFillHeight(0);
     } else {
-      // Calculate fill height based on actual node position
       const activeEl = document.querySelector(`[data-phase="${newActive}"]`);
       if (activeEl) {
         const timelineRect = timeline.getBoundingClientRect();
         const activeRect = activeEl.getBoundingClientRect();
-        // The node dot is at mt-5 (20px) from the top of the phase element + half the dot height (10px)
         const nodeCenter = activeRect.top + 30 - timelineRect.top;
         setFillHeight(Math.max(0, nodeCenter));
       }
@@ -423,8 +421,8 @@ const Process = () => {
   return (
     <>
     <SEOHead
-      title="Autronis | Proces — Van Analyse tot Livegang"
-      description="Ontdek ons bewezen proces: van strategische analyse en architectuur tot implementatie, validatie en doorontwikkeling van automatiseringen."
+      title="Autronis | Process — From Analysis to Go-Live"
+      description="Discover our proven process: from strategic analysis and architecture to implementation, validation, and continuous development of automations."
       path="/process"
     />
     <section className="pt-16 pb-24 relative overflow-hidden">
@@ -434,22 +432,22 @@ const Process = () => {
         <ScrollReveal className="max-w-3xl mx-auto text-center mb-16">
           <ScrollRevealItem>
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
-              Aanpak
+              Approach
             </p>
           </ScrollRevealItem>
           <ScrollRevealItem>
             <h1 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">
-              Van analyse naar schaalbare automatisering
+              From analysis to scalable automation
             </h1>
           </ScrollRevealItem>
           <ScrollRevealItem>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Wij combineren procesautomatisering, systeemintegraties en data-architectuur tot één schaalbaar fundament. Geen losse oplossingen, maar een robuuste structuur die met uw organisatie meegroeit.
+              We combine process automation, system integrations, and data architecture into one scalable foundation. Not standalone solutions, but a robust structure that grows with your organization.
             </p>
           </ScrollRevealItem>
         </ScrollReveal>
 
-        {/* ── Intro block: Onze werkwijze ── */}
+        {/* ── Intro block: Our approach ── */}
         <ScrollReveal className="max-w-3xl mx-auto mb-20">
           <ScrollRevealItem>
             <motion.div
@@ -462,12 +460,12 @@ const Process = () => {
               }}
             >
               <h2 className="text-xl sm:text-2xl font-bold mb-3">
-                Onze werkwijze
+                Our approach
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                Wij combineren procesautomatisering, systeemintegraties en
-                data-architectuur tot één schaalbaar fundament. Geen losse
-                oplossingen, maar een robuuste structuur die met uw organisatie meegroeit.
+                We combine process automation, system integrations, and
+                data architecture into one scalable foundation. Not standalone
+                solutions, but a robust structure that grows with your organization.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {introPoints.map((point, idx) => (
@@ -558,7 +556,6 @@ const Process = () => {
 
         {/* ── Impact section ── */}
         <div className="max-w-4xl mx-auto mb-20 relative">
-          {/* Subtle background glow */}
           <div
             className="absolute inset-0 pointer-events-none rounded-3xl"
             style={{
@@ -575,17 +572,17 @@ const Process = () => {
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             >
               <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
-                Resultaat
+                Results
               </p>
               <h2 className="text-2xl sm:text-3xl font-bold mb-3">
-                Structurele impact op tijd, kosten en continuïteit
+                Structural impact on time, cost, and continuity
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                Onze automatiseringen leveren geen cosmetische winst, maar structurele verbetering in capaciteit, foutreductie en schaalbaarheid — meetbaar vertaald naar financiële impact.
+                Our automations deliver not cosmetic gains, but structural improvements in capacity, error reduction, and scalability — measurably translated into financial impact.
               </p>
             </motion.div>
 
-            {/* Primary cards – row 1 */}
+            {/* Primary cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
               {impactCards.filter(c => c.primary).map((card, idx) => (
                 <motion.div
@@ -622,7 +619,7 @@ const Process = () => {
               ))}
             </div>
 
-            {/* Secondary cards – row 2 */}
+            {/* Secondary cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-10">
               {impactCards.filter(c => !c.primary).map((card, idx) => (
                 <motion.div
@@ -681,15 +678,15 @@ const Process = () => {
         <ScrollReveal className="text-center">
           <ScrollRevealItem>
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">
-              Klaar om uw processen structureel te verbeteren?
+              Ready to structurally improve your processes?
             </h2>
             <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
-              Plan een Automation Scan en ontvang een concreet overzicht van
-              optimalisatiekansen.
+              Schedule an Automation Scan and receive a concrete overview of
+              optimization opportunities.
             </p>
             <Button asChild size="lg">
               <Link to="/book">
-                Plan een Automation Scan <ArrowRight size={18} />
+                Schedule an Automation Scan <ArrowRight size={18} />
               </Link>
             </Button>
           </ScrollRevealItem>

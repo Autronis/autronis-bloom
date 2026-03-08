@@ -12,33 +12,33 @@ import {
 
 const questions = [
   {
-    question: "Hoeveel tijd besteden medewerkers per week aan handmatige processen?",
-    options: ["Minder dan 10 uur", "10–30 uur", "30–60 uur", "Meer dan 60 uur"],
+    question: "How many hours per week do employees spend on manual processes?",
+    options: ["Less than 10 hours", "10–30 hours", "30–60 hours", "More than 60 hours"],
   },
   {
-    question: "Hoeveel verschillende systemen gebruikt uw organisatie dagelijks?",
-    options: ["1–2 systemen", "3–5 systemen", "6–10 systemen", "Meer dan 10 systemen"],
+    question: "How many different systems does your organization use daily?",
+    options: ["1–2 systems", "3–5 systems", "6–10 systems", "More than 10 systems"],
   },
   {
-    question: "Hoe wordt data tussen systemen verwerkt?",
-    options: ["Volledig automatisch", "Gedeeltelijk handmatig", "Meestal handmatig", "Volledig handmatig"],
+    question: "How is data processed between systems?",
+    options: ["Fully automatic", "Partially manual", "Mostly manual", "Fully manual"],
   },
   {
-    question: "Hoe vaak moeten gegevens worden gecorrigeerd of opnieuw ingevoerd?",
-    options: ["Zelden", "Af en toe", "Regelmatig", "Dagelijks"],
+    question: "How often do records need to be corrected or re-entered?",
+    options: ["Rarely", "Occasionally", "Regularly", "Daily"],
   },
   {
-    question: "Hoe worden rapportages opgesteld?",
-    options: ["Volledig automatisch", "Gedeeltelijk automatisch", "Handmatig in dashboards", "Handmatig in spreadsheets"],
+    question: "How are reports compiled?",
+    options: ["Fully automatic", "Partially automatic", "Manually in dashboards", "Manually in spreadsheets"],
   },
 ];
 
 const benefits = [
-  "Minder handmatige verwerking",
-  "Minder fouten",
-  "Snellere doorlooptijden",
-  "Betere rapportage",
-  "Schaalbare processen",
+  "Less manual processing",
+  "Fewer errors",
+  "Faster turnaround times",
+  "Better reporting",
+  "Scalable processes",
 ];
 
 interface AutomationImpactScanProps {
@@ -75,7 +75,7 @@ const AutomationImpactScan = ({ open, onOpenChange }: AutomationImpactScanProps)
             <DialogHeader>
               <DialogTitle>Automation Impact Scan</DialogTitle>
               <DialogDescription>
-                Beantwoord een paar korte vragen en ontvang een eerste indicatie van automatiseringskansen binnen uw organisatie.
+                Answer a few short questions and receive an initial indication of automation opportunities within your organization.
               </DialogDescription>
             </DialogHeader>
 
@@ -92,7 +92,7 @@ const AutomationImpactScan = ({ open, onOpenChange }: AutomationImpactScanProps)
             </div>
 
             <p className="text-xs text-muted-foreground mb-1">
-              Vraag {step + 1} van {questions.length}
+              Question {step + 1} of {questions.length}
             </p>
             <h3 className="text-base font-semibold mb-4">{questions[step].question}</h3>
 
@@ -119,28 +119,28 @@ const AutomationImpactScan = ({ open, onOpenChange }: AutomationImpactScanProps)
                 onClick={() => setStep(Math.max(0, step - 1))}
                 disabled={step === 0}
               >
-                <ArrowLeft size={14} /> Vorige
+                <ArrowLeft size={14} /> Previous
               </Button>
               <Button
                 size="sm"
                 onClick={() => setStep(step + 1)}
                 disabled={answers[step] === null}
               >
-                {step === questions.length - 1 ? "Bekijk resultaat" : "Volgende"} <ArrowRight size={14} />
+                {step === questions.length - 1 ? "View result" : "Next"} <ArrowRight size={14} />
               </Button>
             </div>
           </>
         ) : (
           <>
             <DialogHeader>
-              <DialogTitle>Indicatieve automatiseringsimpact</DialogTitle>
+              <DialogTitle>Indicative automation impact</DialogTitle>
               <DialogDescription>
-                Op basis van uw antwoorden zijn er waarschijnlijk kansen voor automatisering binnen uw processen.
+                Based on your answers, there are likely automation opportunities within your processes.
               </DialogDescription>
             </DialogHeader>
 
             <div className="space-y-1 mb-2">
-              <p className="text-sm font-medium text-foreground">Automatisering kan bijdragen aan:</p>
+              <p className="text-sm font-medium text-foreground">Automation can contribute to:</p>
             </div>
             <ul className="space-y-2 mb-6">
               {benefits.map((b) => (
@@ -154,11 +154,11 @@ const AutomationImpactScan = ({ open, onOpenChange }: AutomationImpactScanProps)
             <div className="text-center">
               <Button asChild size="lg" className="w-full sm:w-auto">
                 <Link to="/book">
-                  Plan Automation Scan <ArrowRight size={16} />
+                  Schedule Automation Scan <ArrowRight size={16} />
                 </Link>
               </Button>
               <p className="text-xs text-muted-foreground mt-3">
-                Ontvang een concrete analyse van automatiseringskansen binnen uw organisatie.
+                Receive a concrete analysis of automation opportunities within your organization.
               </p>
             </div>
           </>

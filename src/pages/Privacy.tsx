@@ -3,19 +3,19 @@
 const Privacy = () => (
   <section className="pt-16 pb-24 relative overflow-hidden">
     <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
-      <h1 className="text-3xl font-bold mb-8">Privacybeleid</h1>
+      <h1 className="text-3xl font-bold mb-8">Privacy Policy</h1>
       <div className="space-y-6 text-sm text-muted-foreground leading-relaxed">
-        <p>Autronis respecteert uw privacy en verwerkt persoonsgegevens in overeenstemming met de Algemene Verordening Gegevensbescherming (AVG).</p>
-        <h2 className="text-lg font-semibold text-foreground">Welke gegevens verzamelen wij?</h2>
-        <p>Wij verzamelen alleen de gegevens die u zelf aan ons verstrekt via onze contactformulieren: naam, emailadres, bedrijfsnaam, en eventuele aanvullende informatie die u deelt.</p>
-        <h2 className="text-lg font-semibold text-foreground">Waarvoor gebruiken wij uw gegevens?</h2>
-        <p>Uw gegevens worden uitsluitend gebruikt om contact met u op te nemen over uw aanvraag, en om onze dienstverlening te verbeteren.</p>
-        <h2 className="text-lg font-semibold text-foreground">Bewaring</h2>
-        <p>Wij bewaren uw gegevens niet langer dan noodzakelijk voor het doel waarvoor ze zijn verzameld, met een maximum van 24 maanden.</p>
-        <h2 className="text-lg font-semibold text-foreground">Uw rechten</h2>
-        <p>U heeft recht op inzage, correctie en verwijdering van uw persoonsgegevens. Neem contact op via zakelijk@autronis.com.</p>
+        <p>Autronis respects your privacy and processes personal data in accordance with the General Data Protection Regulation (GDPR).</p>
+        <h2 className="text-lg font-semibold text-foreground">What data do we collect?</h2>
+        <p>We only collect the data you provide to us through our contact forms: name, email address, company name, and any additional information you share.</p>
+        <h2 className="text-lg font-semibold text-foreground">What do we use your data for?</h2>
+        <p>Your data is used exclusively to contact you about your inquiry and to improve our services.</p>
+        <h2 className="text-lg font-semibold text-foreground">Retention</h2>
+        <p>We do not retain your data longer than necessary for the purpose for which it was collected, with a maximum of 24 months.</p>
+        <h2 className="text-lg font-semibold text-foreground">Your rights</h2>
+        <p>You have the right to access, correct, and delete your personal data. Contact us at info@autronis.com.</p>
         <h2 className="text-lg font-semibold text-foreground">Contact</h2>
-        <p>Voor vragen over dit privacybeleid kunt u contact opnemen via zakelijk@autronis.com.</p>
+        <p>For questions about this privacy policy, please contact info@autronis.com.</p>
       </div>
     </div>
   </section>

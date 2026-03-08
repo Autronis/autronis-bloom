@@ -8,39 +8,39 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 const factors = [
   {
     icon: Clock,
-    title: "Reductie van handmatige uren",
-    description: "Repetitieve en tijdsintensieve werkzaamheden worden geïdentificeerd en waar mogelijk geautomatiseerd.",
-    financial: "Vrijgekomen tijd wordt omgerekend naar structurele kostenbesparing op basis van volledig belaste loonkosten.",
+    title: "Reduction of manual hours",
+    description: "Repetitive and time-intensive tasks are identified and automated where possible.",
+    financial: "Freed-up time is converted into structural cost savings based on fully loaded labor costs.",
   },
   {
     icon: CheckCircle,
-    title: "Vermindering van fouten en correctiewerk",
-    description: "Foutpercentages, herstelwerk en dubbele invoer binnen processen worden geanalyseerd.",
-    financial: "De tijd en kosten van correcties worden vertaald naar directe kostenreductie.",
+    title: "Reduction of errors and rework",
+    description: "Error rates, rework, and duplicate entry within processes are analyzed.",
+    financial: "The time and cost of corrections are translated into direct cost reduction.",
   },
   {
     icon: Users,
-    title: "Vermindering van externe inzet",
-    description: "We analyseren waar externe capaciteit of tijdelijke inzet structureel kan worden teruggebracht.",
-    financial: "Besparing op externe inhuur wordt meegenomen in de totale businesscase.",
+    title: "Reduction of external staffing",
+    description: "We analyze where external capacity or temporary staffing can be structurally reduced.",
+    financial: "Savings on external hires are included in the total business case.",
   },
   {
     icon: TrendingUp,
-    title: "Capaciteitsgroei binnen bestaande teams",
-    description: "Vrijgekomen tijd wordt beschouwd als beschikbare groeicapaciteit binnen bestaande teams.",
-    financial: "We berekenen hoeveel extra output mogelijk is zonder stijging van personeelskosten.",
+    title: "Capacity growth within existing teams",
+    description: "Freed-up time is treated as available growth capacity within existing teams.",
+    financial: "We calculate how much additional output is possible without increasing staffing costs.",
   },
   {
     icon: Shield,
-    title: "Risicoreductie en continuïteit",
-    description: "Verstoringen, afhankelijkheden en operationele risico's worden meegenomen in de analyse.",
-    financial: "Potentiële kosten van uitval en verstoringen worden opgenomen in de impactberekening.",
+    title: "Risk reduction and continuity",
+    description: "Disruptions, dependencies, and operational risks are included in the analysis.",
+    financial: "Potential costs of downtime and disruptions are factored into the impact calculation.",
   },
   {
     icon: BarChart3,
-    title: "Betere besluitvorming door realtime inzicht",
-    description: "Realtime data en snellere rapportage verbeteren de sturing van processen.",
-    financial: "Efficiëntere besluitvorming vertaalt zich naar hogere operationele prestaties.",
+    title: "Better decision-making through real-time insight",
+    description: "Real-time data and faster reporting improve process management.",
+    financial: "More efficient decision-making translates into higher operational performance.",
   },
 ];
 
@@ -48,31 +48,30 @@ const ImpactROI = () => {
   return (
     <>
       <SEOHead
-        title="Autronis | Impact & ROI — Bereken Uw Automatiseringspotentieel"
-        description="Bereken de ROI van automatisering voor uw organisatie. Ontdek hoeveel tijd en kosten u kunt besparen met onze impact calculator."
+        title="Autronis | Impact & ROI — Calculate Your Automation Potential"
+        description="Calculate the ROI of automation for your organization. Discover how much time and costs you can save with our impact calculator."
         path="/impact-roi"
       />
       {/* Impact Simulator */}
       <ImpactSimulator />
 
-      {/* Methodiek */}
+      {/* Methodology */}
       <section className="py-16 sm:py-24 border-t border-border relative overflow-hidden">
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <ScrollReveal className="max-w-3xl mx-auto text-center mb-12">
             <ScrollRevealItem>
               <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
-                Methodiek
+                Methodology
               </p>
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-                Waarop onze impact- en ROI-berekening is gebaseerd
+                What our impact & ROI calculation is based on
               </h2>
               <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                De factoren die bepalen hoe automatisering wordt vertaald naar financiële impact.
+                The factors that determine how automation is translated into financial impact.
               </p>
             </ScrollRevealItem>
           </ScrollReveal>
 
-          {/* 3x2 grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto mb-10 auto-rows-fr">
             {factors.map((factor, idx) => (
               <ScrollReveal key={factor.title} className="h-full">
@@ -102,7 +101,7 @@ const ImpactROI = () => {
                     <div className="flex items-start gap-2 mt-auto pt-3 border-t border-border/50">
                       <Calculator size={12} className="text-primary mt-[2px] shrink-0" />
                       <p className="text-xs text-muted-foreground leading-relaxed">
-                        <span className="font-medium text-foreground">Doorrekening:</span>{" "}
+                        <span className="font-medium text-foreground">Calculation:</span>{" "}
                         {factor.financial}
                       </p>
                     </div>
@@ -112,19 +111,19 @@ const ImpactROI = () => {
             ))}
           </div>
 
-          {/* Transparantieblok */}
+          {/* Transparency block */}
           <ScrollReveal className="max-w-5xl mx-auto">
             <ScrollRevealItem>
               <div className="rounded-xl border border-border/50 bg-card/50 p-6">
                 <p className="text-sm font-medium text-foreground mb-4">
-                  Onze berekeningen zijn gebaseerd op:
+                  Our calculations are based on:
                 </p>
                 <div className="flex flex-wrap gap-x-8 gap-y-2.5">
                   {[
-                    "Geen black-box berekeningen",
-                    "Geen aannames zonder onderbouwing",
-                    "Transparante rekenregels",
-                    "Herleidbaar naar uw eigen cijfers",
+                    "No black-box calculations",
+                    "No assumptions without evidence",
+                    "Transparent calculation rules",
+                    "Traceable to your own figures",
                   ].map((item) => (
                     <span key={item} className="flex items-center gap-2 text-xs text-muted-foreground tracking-wide">
                       <span className="w-1 h-1 rounded-full bg-primary/60 shrink-0" />
@@ -134,7 +133,7 @@ const ImpactROI = () => {
                 </div>
               </div>
               <p className="text-sm text-muted-foreground text-center mt-8 leading-relaxed max-w-2xl mx-auto">
-                Tijdens de impactanalyse vertalen wij deze factoren naar een volledige businesscase met terugverdientijd, structurele besparing en ROI.
+                During the impact analysis, we translate these factors into a complete business case with payback period, structural savings, and ROI.
               </p>
             </ScrollRevealItem>
           </ScrollReveal>

@@ -2,20 +2,31 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/i18n/context";
+
+const text = {
+  en: {
+    title: "Ready to structurally improve your processes?",
+    desc: "Schedule a free Automation Scan and discover where the biggest impact lies for your organization.",
+    cta: "Schedule Automation Scan",
+  },
+  nl: {
+    title: "Klaar om je processen structureel te verbeteren?",
+    desc: "Plan een gratis Automation Scan en ontdek waar de grootste impact ligt voor jouw organisatie.",
+    cta: "Plan een Automation Scan",
+  },
+};
 
 const FinalCTA = () => {
+  const lang = useLanguage();
+  const t = text[lang];
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      { threshold: 0.15 }
-    );
+    const observer = new IntersectionObserver(([entry]) => setIsVisible(entry.isIntersecting), { threshold: 0.15 });
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
@@ -163,15 +174,14 @@ const FinalCTA = () => {
 
       <div className="container mx-auto px-4 lg:px-8 text-center relative z-10">
         <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 max-w-2xl mx-auto">
-          Ready to structurally improve your processes?
+          {t.title}
         </h2>
         <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-xl mx-auto">
-          Schedule a free Automation Scan and discover where the biggest impact lies
-          for your organization.
+          {t.desc}
         </p>
         <Button asChild size="lg" className="w-full sm:w-auto text-base px-10">
           <Link to="/book">
-            Schedule Automation Scan
+            {t.cta}
             <ArrowRight size={18} />
           </Link>
         </Button>

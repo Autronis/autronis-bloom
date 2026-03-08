@@ -177,13 +177,13 @@ const Index = () => {
                         className="w-full aspect-video block"
                         autoPlay controls playsInline preload="metadata"
                         controlsList="nodownload noplaybackrate" disablePictureInPicture
-                        onTimeUpdate={(e) => { if (e.currentTarget.currentTime >= 13) setShowSkip(false); }}
+                        onTimeUpdate={(e) => { if (e.currentTarget.currentTime >= 12) setShowSkip(false); }}
                       >
                         <source src="https://qmtnmisdmchydrriuont.supabase.co/storage/v1/object/public/Jobby%20lead%20systeem/0301%20(1)(4)%20(1).mp4" type="video/mp4" />
                       </video>
                       {showSkip && (
                         <button
-                          onClick={() => { if (videoRef.current) { videoRef.current.currentTime = 13; setShowSkip(false); } }}
+                          onClick={() => { if (videoRef.current) { videoRef.current.currentTime = 12; setShowSkip(false); } }}
                           className="absolute left-3 bottom-14 sm:bottom-20 px-5 py-2.5 rounded-xl bg-black/70 backdrop-blur-md border border-primary/40 text-sm font-semibold text-white hover:bg-primary/30 hover:border-primary transition-all duration-300 shadow-2xl"
                         >
                           {t.skipIntro}

@@ -144,9 +144,10 @@ const ImpactSimulator = () => {
                     highlight
                   />
                   <KPICard
-                    label="Terugverdientijd"
-                    value={`${results.breakEvenMonths} mnd`}
+                    label="Bespaarde uren per week"
+                    value={`${animSavedHours} uur`}
                     icon={<Calendar size={16} />}
+                    subtitle="Geschatte tijdsbesparing door automatisering."
                   />
                 </div>
               </div>
@@ -158,16 +159,13 @@ const ImpactSimulator = () => {
                   value={formatCurrency(animTotal3Year)}
                   icon={<TrendingUp size={16} />}
                 />
-                {/* ROI Multiplier as KPI card */}
-                <div className="rounded-xl border border-primary/30 bg-primary/[0.04] p-4 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Percent size={16} className="text-primary" />
-                    <p className="text-xs text-muted-foreground">ROI Multiplier</p>
-                  </div>
-                  <p className="text-2xl font-bold text-primary tabular-nums">
-                    {results.roiMultiplier.toFixed(1)}x
-                  </p>
-                </div>
+                <KPICard
+                  label="Automatiseringspotentieel"
+                  value={`${results.autoPercent}%`}
+                  icon={<Percent size={16} />}
+                  highlight
+                  subtitle="Percentage handmatig werk dat geautomatiseerd kan worden."
+                />
               </div>
 
               {/* Bar chart */}

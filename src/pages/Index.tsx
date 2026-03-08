@@ -101,12 +101,6 @@ const Index = () => {
     };
   }, []);
 
-  const bumpSkipAboveControls = () => {
-    if (!isMobileViewport) return;
-    setMobileControlsActive(true);
-    if (controlsTimerRef.current) clearTimeout(controlsTimerRef.current);
-    controlsTimerRef.current = setTimeout(() => setMobileControlsActive(false), 2200);
-  };
 
   return (
     <>

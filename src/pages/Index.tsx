@@ -74,7 +74,6 @@ const Index = () => {
   const [wordIndex, setWordIndex] = useState(0);
   const [videoOpen, setVideoOpen] = useState(false);
   const [showSkip, setShowSkip] = useState(true);
-  const [mobileControlsActive, setMobileControlsActive] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const controlsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);

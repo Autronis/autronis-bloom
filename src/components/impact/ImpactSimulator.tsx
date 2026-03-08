@@ -320,12 +320,13 @@ const ImpactSimulator = () => {
 
 /* ─── KPI Card ─── */
 const KPICard = ({
-  label, value, icon, highlight,
+  label, value, icon, highlight, subtitle,
 }: {
   label: string;
   value: string;
   icon: React.ReactNode;
   highlight?: boolean;
+  subtitle?: string;
 }) => (
   <div
     className={`rounded-xl border p-4 transition-colors duration-300 ${
@@ -339,6 +340,9 @@ const KPICard = ({
     <p className={`text-2xl font-bold tabular-nums ${highlight ? "text-primary" : "text-foreground"}`}>
       {value}
     </p>
+    {subtitle && (
+      <p className="text-[10px] text-muted-foreground mt-1.5 leading-snug">{subtitle}</p>
+    )}
   </div>
 );
 

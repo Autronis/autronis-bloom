@@ -78,8 +78,8 @@ const ImpactSimulator = () => {
 
   const animYearly = useAnimatedValue(Math.round(results.yearlySavings));
   const animMonthly = useAnimatedValue(Math.round(results.monthlySavings));
-  const animNet = useAnimatedValue(Math.round(results.netBenefitYear1));
   const animTotal3Year = useAnimatedValue(Math.round(results.totalValue3Year));
+  const animSavedHours = useAnimatedValue(results.savedHoursPerWeek);
 
   const chartData = [
     { name: "Huidige kosten", value: Math.round(hours * rate * 4.33), type: "current" },

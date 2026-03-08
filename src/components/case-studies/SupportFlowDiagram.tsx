@@ -21,25 +21,25 @@ const desktopSegments: Point[][] = [
   [{ x: 225, y: 271 }, { x: 225, y: 295 }],
 ];
 
-const MW = 205, MH = 40;
+const MW = 215, MH = 42;
 
 const mobileNodes: DiagramNode[] = [
-  { title: "Klantvragen", desc: "Chat, e-mail & formulieren", icon: "messageCircle", x: 160, y: 50, w: MW, h: MH, step: 1 },
-  { title: "Analyse", desc: "AI begrijpt de vraag", icon: "brain", x: 160, y: 112, w: MW, h: MH, step: 2 },
-  { title: "Context", desc: "Order- & klantgegevens", icon: "database", x: 160, y: 174, w: MW, h: MH, step: 3 },
-  { title: "AI antwoord", desc: "Passend antwoord", icon: "bot", x: 160, y: 236, w: MW, h: MH, step: 4 },
-  { title: "Reactie", desc: "Chat of e-mail verzending", icon: "reply", x: 160, y: 298, w: MW, h: MH, step: 5 },
-  { title: "CRM sync", desc: "Interactie opslaan", icon: "userCheck", x: 160, y: 360, w: MW, h: MH, step: 6 },
-  { title: "Escalatie", desc: "Complexe vragen → agent", icon: "alertTriangle", x: 160, y: 422, w: MW, h: MH, step: 7 },
+  { title: "Klantvragen", desc: "Chat, e-mail & formulieren", icon: "messageCircle", x: 165, y: 52, w: MW, h: MH, step: 1 },
+  { title: "Analyse", desc: "AI begrijpt de vraag", icon: "brain", x: 165, y: 118, w: MW, h: MH, step: 2 },
+  { title: "Context", desc: "Order- & klantgegevens", icon: "database", x: 165, y: 184, w: MW, h: MH, step: 3 },
+  { title: "AI antwoord", desc: "Passend antwoord", icon: "bot", x: 165, y: 250, w: MW, h: MH, step: 4 },
+  { title: "Reactie", desc: "Chat of e-mail verzending", icon: "reply", x: 165, y: 316, w: MW, h: MH, step: 5 },
+  { title: "CRM sync", desc: "Interactie opslaan", icon: "userCheck", x: 165, y: 382, w: MW, h: MH, step: 6 },
+  { title: "Escalatie", desc: "Complexe vragen → agent", icon: "alertTriangle", x: 165, y: 448, w: MW, h: MH, step: 7 },
 ];
 
 const mobileSegments: Point[][] = [
-  [{ x: 160, y: 70 }, { x: 160, y: 92 }],
-  [{ x: 160, y: 132 }, { x: 160, y: 154 }],
-  [{ x: 160, y: 194 }, { x: 160, y: 216 }],
-  [{ x: 160, y: 256 }, { x: 160, y: 278 }],
-  [{ x: 160, y: 318 }, { x: 160, y: 340 }],
-  [{ x: 160, y: 380 }, { x: 160, y: 402 }],
+  [{ x: 165, y: 73 }, { x: 165, y: 97 }],
+  [{ x: 165, y: 139 }, { x: 165, y: 163 }],
+  [{ x: 165, y: 205 }, { x: 165, y: 229 }],
+  [{ x: 165, y: 271 }, { x: 165, y: 295 }],
+  [{ x: 165, y: 337 }, { x: 165, y: 361 }],
+  [{ x: 165, y: 403 }, { x: 165, y: 427 }],
 ];
 
 const SupportFlowDiagram = () => (
@@ -48,7 +48,7 @@ const SupportFlowDiagram = () => (
       <FlowDiagramSvg viewBox="0 0 450 365" nodes={desktopNodes} segments={desktopSegments} />
     </div>
     <div className="sm:hidden">
-      <FlowDiagramSvg viewBox="0 0 320 475" nodes={mobileNodes} segments={mobileSegments} travelDuration={6000} />
+      <FlowDiagramSvg viewBox="0 0 335 500" nodes={mobileNodes} segments={mobileSegments} travelDuration={8000} />
     </div>
   </div>
 );

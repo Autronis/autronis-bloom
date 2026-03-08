@@ -1,7 +1,5 @@
 import { useEffect } from "react";
-
-const BASE_URL = "https://autronis.com";
-const OG_IMAGE = "https://autronis.com/og-image.png";
+import { useLanguage } from "@/i18n/context";
 
 interface SEOHeadProps {
   title: string;
@@ -43,7 +41,12 @@ const setHreflang = (hreflang: string, href: string) => {
   el.setAttribute("href", href);
 };
 
+const OG_IMAGE = "https://autronis.com/og-image.png";
+
 const SEOHead = ({ title, description, path, type = "website", jsonLd }: SEOHeadProps) => {
+  const lang = useLanguage();
+  const BASE_URL = lang === "nl" ? "https://autronis.nl" : "https://autronis.com";
+
   useEffect(() => {
     const fullUrl = `${BASE_URL}${path}`;
 
@@ -69,7 +72,7 @@ const SEOHead = ({ title, description, path, type = "website", jsonLd }: SEOHead
     setMeta("property", "og:type", type);
     setMeta("property", "og:image", OG_IMAGE);
     setMeta("property", "og:site_name", "Autronis");
-    setMeta("property", "og:locale", "en_US");
+    setMeta("property", "og:locale", lang === "nl" ? "nl_NL" : "en_US");
 
     // Twitter
     setMeta("name", "twitter:card", "summary_large_image");
@@ -93,11 +96,10 @@ const SEOHead = ({ title, description, path, type = "website", jsonLd }: SEOHead
     }
 
     return () => {
-      // Cleanup JSON-LD on unmount
       const s = document.getElementById(scriptId);
       if (s) s.remove();
     };
-  }, [title, description, path, type, jsonLd]);
+  }, [title, description, path, type, jsonLd, lang, BASE_URL]);
 
   return null;
 };
@@ -109,8 +111,8 @@ export const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Autronis",
-  url: BASE_URL,
-  logo: `${BASE_URL}/logo.png`,
+  url: "https://autronis.com",
+  logo: "https://autronis.com/logo.png",
   description: "Autronis automates processes, integrates systems and builds real-time data insights for growing businesses.",
   contactPoint: {
     "@type": "ContactPoint",
@@ -123,7 +125,7 @@ export const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "Autronis",
-  url: BASE_URL,
+  url: "https://autronis.com",
   description: "System architecture & automation for growing businesses.",
   publisher: { "@type": "Organization", name: "Autronis" },
 };

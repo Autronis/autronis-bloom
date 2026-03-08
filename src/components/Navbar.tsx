@@ -5,6 +5,7 @@ import { Menu, X, Sun, Moon, ChevronDown, Users, Workflow, ChevronRight } from "
 import { useTheme } from "next-themes";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useLanguage } from "@/i18n/context";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const text = {
   en: {

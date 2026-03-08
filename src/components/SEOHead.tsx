@@ -57,6 +57,11 @@ const SEOHead = ({ title, description, path, type = "website", jsonLd }: SEOHead
     // Canonical
     setLink("canonical", fullUrl);
 
+    // Hreflang
+    setHreflang("en", `https://autronis.com${path}`);
+    setHreflang("nl", `https://autronis.nl${path}`);
+    setHreflang("x-default", `https://autronis.com${path}`);
+
     // Open Graph
     setMeta("property", "og:title", title);
     setMeta("property", "og:description", description);

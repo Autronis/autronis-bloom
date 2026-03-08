@@ -76,7 +76,6 @@ const Index = () => {
   const [showSkip, setShowSkip] = useState(true);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const controlsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 767px)");

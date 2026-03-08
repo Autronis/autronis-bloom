@@ -1,15 +1,39 @@
 import { FlowDiagramSvg, type DiagramNode, type Point } from "./FlowDiagramEngine";
+import { useLanguage } from "@/i18n/context";
 
 const CW = 112, CH = 34;
 
-const desktopNodes: DiagramNode[] = [
-  { title: "Klantvragen", desc: "Chat, e-mail & formulieren", icon: "messageCircle", x: 86, y: 60, w: CW, h: CH, step: 1 },
-  { title: "Analyse", desc: "AI begrijpt de vraag", icon: "brain", x: 225, y: 60, w: CW, h: CH, step: 2 },
-  { title: "Context", desc: "Order- & klantgegevens", icon: "database", x: 364, y: 60, w: CW, h: CH, step: 3 },
-  { title: "AI antwoord", desc: "Passend antwoord", icon: "bot", x: 225, y: 138, w: CW, h: CH, step: 4 },
-  { title: "Reactie", desc: "Chat of e-mail verzending", icon: "reply", x: 225, y: 196, w: CW, h: CH, step: 5 },
-  { title: "CRM sync", desc: "Interactie opslaan", icon: "userCheck", x: 225, y: 254, w: CW, h: CH, step: 6 },
-  { title: "Escalatie", desc: "Complexe vragen → agent", icon: "alertTriangle", x: 225, y: 312, w: CW, h: CH, step: 7 },
+const nodeText = {
+  en: [
+    { title: "Customer queries", desc: "Chat, email & forms" },
+    { title: "Analysis", desc: "AI understands the query" },
+    { title: "Context", desc: "Order & customer data" },
+    { title: "AI response", desc: "Matching answer" },
+    { title: "Reply", desc: "Chat or email delivery" },
+    { title: "CRM sync", desc: "Store interaction" },
+    { title: "Escalation", desc: "Complex queries → agent" },
+  ],
+  nl: [
+    { title: "Klantvragen", desc: "Chat, e-mail & formulieren" },
+    { title: "Analyse", desc: "AI begrijpt de vraag" },
+    { title: "Context", desc: "Order- & klantgegevens" },
+    { title: "AI antwoord", desc: "Passend antwoord" },
+    { title: "Reactie", desc: "Chat of e-mail verzending" },
+    { title: "CRM sync", desc: "Interactie opslaan" },
+    { title: "Escalatie", desc: "Complexe vragen → agent" },
+  ],
+};
+
+const icons = ["messageCircle", "brain", "database", "bot", "reply", "userCheck", "alertTriangle"];
+
+const desktopPositions = [
+  { x: 86, y: 60 }, { x: 225, y: 60 }, { x: 364, y: 60 },
+  { x: 225, y: 138 }, { x: 225, y: 196 }, { x: 225, y: 254 }, { x: 225, y: 312 },
+];
+
+const mobilePositions = [
+  { x: 170, y: 55 }, { x: 170, y: 128 }, { x: 170, y: 201 },
+  { x: 170, y: 274 }, { x: 170, y: 347 }, { x: 170, y: 420 }, { x: 170, y: 493 },
 ];
 
 const desktopSegments: Point[][] = [
@@ -21,18 +45,6 @@ const desktopSegments: Point[][] = [
   [{ x: 225, y: 271 }, { x: 225, y: 295 }],
 ];
 
-const MW = 235, MH = 48;
-
-const mobileNodes: DiagramNode[] = [
-  { title: "Klantvragen", desc: "Chat, e-mail & formulieren", icon: "messageCircle", x: 170, y: 55, w: MW, h: MH, step: 1 },
-  { title: "Analyse", desc: "AI begrijpt de vraag", icon: "brain", x: 170, y: 128, w: MW, h: MH, step: 2 },
-  { title: "Context", desc: "Order- & klantgegevens", icon: "database", x: 170, y: 201, w: MW, h: MH, step: 3 },
-  { title: "AI antwoord", desc: "Passend antwoord", icon: "bot", x: 170, y: 274, w: MW, h: MH, step: 4 },
-  { title: "Reactie", desc: "Chat of e-mail verzending", icon: "reply", x: 170, y: 347, w: MW, h: MH, step: 5 },
-  { title: "CRM sync", desc: "Interactie opslaan", icon: "userCheck", x: 170, y: 420, w: MW, h: MH, step: 6 },
-  { title: "Escalatie", desc: "Complexe vragen → agent", icon: "alertTriangle", x: 170, y: 493, w: MW, h: MH, step: 7 },
-];
-
 const mobileSegments: Point[][] = [
   [{ x: 170, y: 79 }, { x: 170, y: 104 }],
   [{ x: 170, y: 152 }, { x: 170, y: 177 }],
@@ -42,15 +54,30 @@ const mobileSegments: Point[][] = [
   [{ x: 170, y: 444 }, { x: 170, y: 469 }],
 ];
 
-const SupportFlowDiagram = () => (
-  <div className="w-full">
-    <div className="hidden sm:block">
-      <FlowDiagramSvg viewBox="0 0 450 365" nodes={desktopNodes} segments={desktopSegments} />
+const MW = 235, MH = 48;
+
+const SupportFlowDiagram = () => {
+  const lang = useLanguage();
+  const t = nodeText[lang];
+
+  const desktopNodes: DiagramNode[] = t.map((n, i) => ({
+    ...n, icon: icons[i], ...desktopPositions[i], w: CW, h: CH, step: i + 1,
+  }));
+
+  const mobileNodes: DiagramNode[] = t.map((n, i) => ({
+    ...n, icon: icons[i], ...mobilePositions[i], w: MW, h: MH, step: i + 1,
+  }));
+
+  return (
+    <div className="w-full">
+      <div className="hidden sm:block">
+        <FlowDiagramSvg viewBox="0 0 450 365" nodes={desktopNodes} segments={desktopSegments} />
+      </div>
+      <div className="sm:hidden">
+        <FlowDiagramSvg viewBox="0 0 345 545" nodes={mobileNodes} segments={mobileSegments} travelDuration={8000} />
+      </div>
     </div>
-    <div className="sm:hidden">
-      <FlowDiagramSvg viewBox="0 0 345 545" nodes={mobileNodes} segments={mobileSegments} travelDuration={8000} />
-    </div>
-  </div>
-);
+  );
+};
 
 export default SupportFlowDiagram;

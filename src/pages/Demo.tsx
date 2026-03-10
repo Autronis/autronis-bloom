@@ -44,13 +44,14 @@ const Demo = () => {
           </div>
 
           <div className="max-w-4xl mx-auto mb-16">
-            <div className="relative aspect-video rounded-xl border border-border bg-card overflow-hidden group cursor-pointer">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center transition-all group-hover:bg-primary/30 group-hover:scale-110">
-                  <Play size={36} className="text-primary ml-1" />
-                </div>
-              </div>
-              <div className="absolute bottom-4 left-4 text-sm text-muted-foreground">{t.videoTime}</div>
+            <div className="relative aspect-video rounded-xl border border-border bg-card overflow-hidden">
+              <video
+                className="w-full h-full block"
+                controls playsInline preload="metadata"
+                controlsList="nodownload noplaybackrate" disablePictureInPicture
+              >
+                <source src="https://qmtnmisdmchydrriuont.supabase.co/storage/v1/object/public/Jobby%20lead%20systeem/demo.mp4" type="video/mp4" />
+              </video>
             </div>
           </div>
 

@@ -120,9 +120,9 @@ const Index = () => {
       <section className="hero-section relative min-h-[75vh] sm:min-h-screen flex flex-col items-center justify-center pt-16 sm:pt-0">
         <HeroBackground />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase">{t.tagline}</p>
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.35] tracking-tight mb-4 sm:mb-6">
+          <div className="max-w-3xl lg:max-w-4xl mx-auto text-center">
+            <p className="text-xs lg:text-sm font-semibold text-primary mb-4 lg:mb-5 tracking-widest uppercase">{t.tagline}</p>
+            <h1 className="text-2xl sm:text-4xl lg:text-6xl xl:text-7xl font-bold leading-[1.35] tracking-tight mb-4 sm:mb-6 lg:mb-8">
               {t.heroTitle1}
               <br />
               <span className="relative inline-block min-w-[14ch] align-bottom" style={{ height: "1.25em" }}>
@@ -141,7 +141,7 @@ const Index = () => {
                 <span className="invisible">{lang === "nl" ? "schaalbaarheid." : "scalability."}</span>
               </span>
             </h1>
-            <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8 leading-relaxed">{t.heroDesc}</p>
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8 lg:mb-10 leading-relaxed">{t.heroDesc}</p>
             <div className="flex flex-col items-center mb-8 sm:mb-12">
               <div className="flex flex-col sm:flex-row items-stretch sm:items-start justify-center gap-3 w-full sm:w-auto">
                 <Button asChild size="lg" className="w-full sm:w-auto mt-0">

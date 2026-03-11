@@ -80,7 +80,13 @@ const ServiceCard = ({ s, i, hoveredIndex, setHoveredIndex, canHover, whatDelive
             </div>
           </div>
           <div className="flex-1 relative overflow-hidden bg-card flex items-center justify-center min-h-[180px] md:min-h-0 aspect-[4/3] md:aspect-auto md:self-stretch">
-            <img src={serviceImages[i]} alt={s.title} width={600} height={450} className="absolute inset-0 w-full h-full object-contain z-[1] scale-[1.15] dark:mix-blend-screen dark:invert-0 dark:hue-rotate-0 dark:brightness-[0.85] dark:opacity-85 invert hue-rotate-180 mix-blend-multiply brightness-100 opacity-80 transition-transform duration-500 ease-out group-hover/card:scale-[1.22]" loading="lazy" decoding="async" />
+            {i === 0 ? (
+              <div className="absolute inset-0 z-[1] flex items-center justify-center" style={{ height: "400px" }}>
+                <ProcessAutomation />
+              </div>
+            ) : (
+              <img src={serviceImages[i]!} alt={s.title} width={600} height={450} className="absolute inset-0 w-full h-full object-contain z-[1] scale-[1.15] dark:mix-blend-screen dark:invert-0 dark:hue-rotate-0 dark:brightness-[0.85] dark:opacity-85 invert hue-rotate-180 mix-blend-multiply brightness-100 opacity-80 transition-transform duration-500 ease-out group-hover/card:scale-[1.22]" loading="lazy" decoding="async" />
+            )}
             <div className="absolute inset-0 z-[3] pointer-events-none" style={{ background: isEven ? "linear-gradient(to right, hsl(var(--card)) 0%, transparent 25%)" : "linear-gradient(to left, hsl(var(--card)) 0%, transparent 25%)" }} />
             <div className="absolute inset-0 z-[3] pointer-events-none" style={{ background: "linear-gradient(to bottom, hsl(var(--card)) 0%, transparent 8%, transparent 92%, hsl(var(--card)) 100%)" }} />
           </div>

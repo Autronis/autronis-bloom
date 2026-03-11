@@ -6,7 +6,7 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import useCanHover from "@/hooks/use-can-hover";
 import { useLanguage } from "@/i18n/context";
 
-import serviceAutomation from "@/assets/service_automation_gen.png";
+import ProcessAutomation from "@/components/ProcessAutomation";
 import serviceIntegration from "@/assets/service_integration_gen.png";
 import serviceData from "@/assets/service_data_gen.png";
 

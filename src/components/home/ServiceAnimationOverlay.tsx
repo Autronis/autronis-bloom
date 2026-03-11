@@ -4,10 +4,13 @@ const TEAL = "hsla(174, 78%, 41%,";
 const TEAL2 = "hsla(174, 64%, 56%,";
 
 /**
- * Animated SVG overlay for the 3 service pillar images.
- * variant: 0 = process automation (gears + docs on belt)
- *          1 = system integrations (dots moving along lines)
- *          2 = data & reporting (pulsing dashboard bars)
+ * Subtle animated canvas overlay that sits ON TOP of the service pillar images.
+ * Doesn't draw new shapes — adds glow dots, traveling pulses, and subtle
+ * highlights that enhance the existing blueprint illustrations.
+ *
+ * variant 0 = process automation (rotating glow on gear areas + traveling dots along belt)
+ * variant 1 = system integrations (dots traveling along connection lines in the image)
+ * variant 2 = data & reporting (pulsing glow on bar/chart areas + traveling line dot)
  */
 const ServiceAnimationOverlay = ({ variant }: { variant: number }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -18,7 +21,6 @@ const ServiceAnimationOverlay = ({ variant }: { variant: number }) => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Respect reduced motion
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (motionQuery.matches) return;
 
@@ -47,50 +49,21 @@ const ServiceAnimationOverlay = ({ variant }: { variant: number }) => {
     const resizeObs = new ResizeObserver(resize);
     if (canvas.parentElement) resizeObs.observe(canvas.parentElement);
 
-    const drawGear = (cx: number, cy: number, r: number, teeth: number, angle: number, opacity: number) => {
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(angle);
-      ctx.globalAlpha = opacity;
-      ctx.strokeStyle = `${TEAL}0.6)`;
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      for (let i = 0; i < teeth; i++) {
-        const a0 = (i / teeth) * Math.PI * 2;
-        const a1 = ((i + 0.15) / teeth) * Math.PI * 2;
-        const a2 = ((i + 0.5) / teeth) * Math.PI * 2;
-        const a3 = ((i + 0.65) / teeth) * Math.PI * 2;
-        const inner = r * 0.75;
-        ctx.lineTo(Math.cos(a0) * inner, Math.sin(a0) * inner);
-        ctx.lineTo(Math.cos(a1) * r, Math.sin(a1) * r);
-        ctx.lineTo(Math.cos(a2) * r, Math.sin(a2) * r);
-        ctx.lineTo(Math.cos(a3) * inner, Math.sin(a3) * inner);
-      }
-      ctx.closePath();
-      ctx.stroke();
-      // center circle
-      ctx.beginPath();
-      ctx.arc(0, 0, r * 0.25, 0, Math.PI * 2);
-      ctx.fillStyle = `${TEAL}0.4)`;
-      ctx.fill();
-      ctx.restore();
+    /** Draw a soft radial glow */
+    const glow = (x: number, y: number, r: number, opacity: number, color = TEAL2) => {
+      const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
+      grad.addColorStop(0, `${color}${opacity})`);
+      grad.addColorStop(1, `${color}0)`);
+      ctx.fillStyle = grad;
+      ctx.fillRect(x - r, y - r, r * 2, r * 2);
     };
 
-    const drawDoc = (x: number, y: number, w: number, h: number, opacity: number) => {
-      ctx.save();
-      ctx.globalAlpha = opacity;
-      ctx.strokeStyle = `${TEAL}0.5)`;
-      ctx.lineWidth = 1.2;
-      ctx.strokeRect(x - w / 2, y - h / 2, w, h);
-      // lines inside doc
-      for (let i = 0; i < 3; i++) {
-        ctx.beginPath();
-        ctx.moveTo(x - w / 2 + 4, y - h / 2 + 8 + i * 6);
-        ctx.lineTo(x + w / 2 - 4 - i * 3, y - h / 2 + 8 + i * 6);
-        ctx.strokeStyle = `${TEAL}${0.3 - i * 0.05})`;
-        ctx.stroke();
-      }
-      ctx.restore();
+    /** Draw a small bright dot */
+    const dot = (x: number, y: number, r: number, opacity: number, color = TEAL2) => {
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = `${color}${opacity})`;
+      ctx.fill();
     };
 
     const animate = () => {
@@ -102,131 +75,138 @@ const ServiceAnimationOverlay = ({ variant }: { variant: number }) => {
       ctx.clearRect(0, 0, w, h);
 
       if (variant === 0) {
-        // Process Automation: rotating gears + moving docs on a belt
-        const beltY = h * 0.65;
-        // Belt line
-        ctx.strokeStyle = `${TEAL}0.15)`;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(w * 0.05, beltY);
-        ctx.lineTo(w * 0.95, beltY);
-        ctx.stroke();
+        // ── PROCESS AUTOMATION ──
+        // Rotating glow orbits on the gear/cog areas of the image
+        // Gears in the image are roughly center-right area
+        const gearCenters = [
+          { x: w * 0.48, y: h * 0.35, r: w * 0.10 },
+          { x: w * 0.62, y: h * 0.28, r: w * 0.07 },
+          { x: w * 0.38, y: h * 0.50, r: w * 0.06 },
+        ];
 
-        // Gears
-        drawGear(w * 0.72, h * 0.32, Math.min(w, h) * 0.12, 8, frame * 0.015, 0.5);
-        drawGear(w * 0.85, h * 0.42, Math.min(w, h) * 0.07, 6, -frame * 0.025, 0.4);
-        drawGear(w * 0.65, h * 0.45, Math.min(w, h) * 0.05, 6, frame * 0.02, 0.3);
+        // Orbiting glow dots around gear positions
+        gearCenters.forEach((g, i) => {
+          const speed = (i % 2 === 0 ? 1 : -1) * (0.012 + i * 0.005);
+          const angle = frame * speed + i * 2.1;
+          const ox = g.x + Math.cos(angle) * g.r;
+          const oy = g.y + Math.sin(angle) * g.r;
+          glow(ox, oy, 14, 0.25);
+          dot(ox, oy, 2.5, 0.6);
 
-        // Moving docs on belt
+          // Subtle pulsing glow on gear center
+          const pulse = 0.08 + Math.sin(frame * 0.03 + i) * 0.05;
+          glow(g.x, g.y, g.r * 0.8, pulse);
+        });
+
+        // Traveling dots along the conveyor belt area (bottom half of image)
+        const beltY = h * 0.72;
         for (let i = 0; i < 3; i++) {
-          const docW = Math.min(w, h) * 0.08;
-          const docH = docW * 1.3;
-          const progress = ((frame * 0.8 + i * 120) % 360) / 360;
-          const x = w * 0.05 + progress * w * 0.9;
-          const fadeIn = Math.min(1, progress * 5);
-          const fadeOut = Math.min(1, (1 - progress) * 5);
-          drawDoc(x, beltY - docH / 2 - 4, docW, docH, 0.5 * fadeIn * fadeOut);
+          const t = ((frame * 0.7 + i * 130) % 400) / 400;
+          const x = w * 0.08 + t * w * 0.84;
+          const fadeIn = Math.min(1, t * 6);
+          const fadeOut = Math.min(1, (1 - t) * 6);
+          const alpha = fadeIn * fadeOut;
+          glow(x, beltY, 12, 0.3 * alpha);
+          dot(x, beltY, 2, 0.5 * alpha);
         }
+
       } else if (variant === 1) {
-        // System Integrations: dots moving along connection lines
+        // ── SYSTEM INTEGRATIONS ──
+        // Dots traveling along the connection lines visible in the image
+        // The image shows connected nodes/systems — we add traveling light pulses
+
+        // Approximate line paths from the blueprint image
+        const paths = [
+          // Horizontal-ish connections
+          { x1: w * 0.12, y1: h * 0.30, x2: w * 0.45, y2: h * 0.25 },
+          { x1: w * 0.45, y1: h * 0.25, x2: w * 0.80, y2: h * 0.32 },
+          { x1: w * 0.15, y1: h * 0.55, x2: w * 0.50, y2: h * 0.50 },
+          { x1: w * 0.50, y1: h * 0.50, x2: w * 0.85, y2: h * 0.55 },
+          // Vertical-ish connections
+          { x1: w * 0.30, y1: h * 0.20, x2: w * 0.28, y2: h * 0.60 },
+          { x1: w * 0.60, y1: h * 0.18, x2: w * 0.62, y2: h * 0.62 },
+          // Diagonals
+          { x1: w * 0.20, y1: h * 0.35, x2: w * 0.50, y2: h * 0.65 },
+          { x1: w * 0.75, y1: h * 0.30, x2: w * 0.55, y2: h * 0.60 },
+          { x1: w * 0.40, y1: h * 0.70, x2: w * 0.70, y2: h * 0.75 },
+        ];
+
+        paths.forEach((p, i) => {
+          const speed = 0.004 + (i % 4) * 0.001;
+          const dir = i % 2 === 0 ? 1 : -1;
+          const rawT = (frame * speed * dir + i * 0.12);
+          const t = ((rawT % 1) + 1) % 1;
+          const x = p.x1 + (p.x2 - p.x1) * t;
+          const y = p.y1 + (p.y2 - p.y1) * t;
+
+          glow(x, y, 10, 0.35);
+          dot(x, y, 2.5, 0.65);
+
+          // Trail
+          for (let tr = 1; tr <= 3; tr++) {
+            const tt = ((rawT - tr * 0.025) % 1 + 1) % 1;
+            const tx = p.x1 + (p.x2 - p.x1) * tt;
+            const ty = p.y1 + (p.y2 - p.y1) * tt;
+            dot(tx, ty, 1.5, 0.15 / tr);
+          }
+        });
+
+        // Subtle pulsing on node positions
         const nodes = [
-          { x: w * 0.2, y: h * 0.3 },
-          { x: w * 0.5, y: h * 0.2 },
-          { x: w * 0.8, y: h * 0.3 },
-          { x: w * 0.35, y: h * 0.6 },
-          { x: w * 0.65, y: h * 0.6 },
-          { x: w * 0.5, y: h * 0.8 },
+          { x: w * 0.15, y: h * 0.30 }, { x: w * 0.45, y: h * 0.25 },
+          { x: w * 0.80, y: h * 0.32 }, { x: w * 0.30, y: h * 0.60 },
+          { x: w * 0.60, y: h * 0.60 }, { x: w * 0.50, y: h * 0.50 },
         ];
-        const connections = [
-          [0, 1], [1, 2], [0, 3], [2, 4], [3, 4], [3, 5], [4, 5], [1, 3], [1, 4],
-        ];
-
-        // Draw lines
-        ctx.strokeStyle = `${TEAL}0.1)`;
-        ctx.lineWidth = 1;
-        connections.forEach(([a, b]) => {
-          ctx.beginPath();
-          ctx.moveTo(nodes[a].x, nodes[a].y);
-          ctx.lineTo(nodes[b].x, nodes[b].y);
-          ctx.stroke();
+        nodes.forEach((n, i) => {
+          const pulse = 0.06 + Math.sin(frame * 0.025 + i * 1.2) * 0.04;
+          glow(n.x, n.y, 18, pulse);
         });
 
-        // Draw nodes
-        nodes.forEach((n) => {
-          ctx.beginPath();
-          ctx.arc(n.x, n.y, 3, 0, Math.PI * 2);
-          ctx.fillStyle = `${TEAL}0.3)`;
-          ctx.fill();
-        });
-
-        // Moving dots along connections
-        connections.forEach(([a, b], i) => {
-          const speed = 0.003 + (i % 3) * 0.001;
-          const t = ((frame * speed + i * 0.15) % 1);
-          const x = nodes[a].x + (nodes[b].x - nodes[a].x) * t;
-          const y = nodes[a].y + (nodes[b].y - nodes[a].y) * t;
-
-          // Glow
-          const grad = ctx.createRadialGradient(x, y, 0, x, y, 8);
-          grad.addColorStop(0, `${TEAL2}0.5)`);
-          grad.addColorStop(1, `${TEAL2}0)`);
-          ctx.fillStyle = grad;
-          ctx.fillRect(x - 8, y - 8, 16, 16);
-
-          // Dot
-          ctx.beginPath();
-          ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-          ctx.fillStyle = `${TEAL2}0.7)`;
-          ctx.fill();
-        });
       } else {
-        // Data & Reporting: pulsing/animated dashboard bars and chart elements
-        const barCount = 6;
-        const barW = w * 0.06;
-        const barGap = w * 0.04;
-        const totalBarW = barCount * barW + (barCount - 1) * barGap;
-        const startX = (w - totalBarW) / 2;
-        const baseY = h * 0.75;
-        const maxH = h * 0.4;
+        // ── DATA & REPORTING ──
+        // Pulsing glow on dashboard bar areas + traveling dot on chart line
+
+        // Pulsing bars (matching approximate bar positions in the image)
+        const barCount = 5;
+        const barStartX = w * 0.15;
+        const barEndX = w * 0.65;
+        const barBaseY = h * 0.70;
 
         for (let i = 0; i < barCount; i++) {
-          const barHeight = maxH * (0.3 + 0.7 * Math.abs(Math.sin(frame * 0.02 + i * 0.8)));
-          const x = startX + i * (barW + barGap);
-          const y = baseY - barHeight;
+          const x = barStartX + (barEndX - barStartX) * (i / (barCount - 1));
+          const barH = h * (0.15 + 0.2 * Math.abs(Math.sin(i * 1.3 + 0.5)));
+          const topY = barBaseY - barH;
 
-          ctx.fillStyle = `${TEAL}${0.15 + 0.1 * Math.sin(frame * 0.03 + i)})`;
-          ctx.fillRect(x, y, barW, barHeight);
+          // Pulsing highlight at the top of each bar
+          const pulse = 0.15 + Math.sin(frame * 0.035 + i * 0.9) * 0.1;
+          glow(x, topY, 14, pulse);
 
-          // Top glow
-          const grad = ctx.createLinearGradient(x, y, x, y + 8);
-          grad.addColorStop(0, `${TEAL2}0.4)`);
-          grad.addColorStop(1, `${TEAL2}0)`);
-          ctx.fillStyle = grad;
-          ctx.fillRect(x, y, barW, 8);
+          // Subtle full-bar glow
+          const barPulse = 0.03 + Math.sin(frame * 0.025 + i * 1.1) * 0.02;
+          glow(x, topY + barH * 0.3, barH * 0.4, barPulse, TEAL);
         }
 
-        // Sine wave line across
+        // Traveling dot along a chart/line area (upper part of image)
+        const lineY = h * 0.32;
+        const dotProgress = ((frame * 1.2) % w);
+        const lineYOffset = Math.sin(dotProgress * 0.025 + frame * 0.01) * h * 0.06;
+        glow(dotProgress, lineY + lineYOffset, 10, 0.3);
+        dot(dotProgress, lineY + lineYOffset, 2.5, 0.6);
+
+        // Subtle scanning line effect
+        const scanX = ((frame * 0.8) % (w * 1.3)) - w * 0.15;
+        ctx.globalAlpha = 0.06;
+        ctx.strokeStyle = `${TEAL2}0.3)`;
+        ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.strokeStyle = `${TEAL2}0.25)`;
-        ctx.lineWidth = 1.5;
-        for (let x = 0; x <= w; x += 3) {
-          const y = h * 0.35 + Math.sin(x * 0.02 + frame * 0.03) * h * 0.08 + Math.sin(x * 0.008 + frame * 0.015) * h * 0.05;
-          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-        }
+        ctx.moveTo(scanX, 0);
+        ctx.lineTo(scanX, h);
         ctx.stroke();
+        ctx.globalAlpha = 1;
 
-        // Dot on sine wave
-        const dotX = ((frame * 1.5) % w);
-        const dotY = h * 0.35 + Math.sin(dotX * 0.02 + frame * 0.03) * h * 0.08 + Math.sin(dotX * 0.008 + frame * 0.015) * h * 0.05;
-        const dGrad = ctx.createRadialGradient(dotX, dotY, 0, dotX, dotY, 6);
-        dGrad.addColorStop(0, `${TEAL2}0.6)`);
-        dGrad.addColorStop(1, `${TEAL2}0)`);
-        ctx.fillStyle = dGrad;
-        ctx.fillRect(dotX - 6, dotY - 6, 12, 12);
-        ctx.beginPath();
-        ctx.arc(dotX, dotY, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = `${TEAL2}0.8)`;
-        ctx.fill();
+        // Corner data-refresh pulse
+        const cornerPulse = 0.08 + Math.sin(frame * 0.04) * 0.06;
+        glow(w * 0.82, h * 0.22, 22, cornerPulse);
       }
 
       frame++;

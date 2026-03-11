@@ -46,7 +46,7 @@ const txt = {
 };
 
 const serviceIcons = [Cog, Link2, PieChart];
-const serviceImages = [serviceAutomation, serviceIntegration, serviceData];
+const serviceImages = [null, serviceIntegration, serviceData];
 
 const ServiceCard = ({ s, i, hoveredIndex, setHoveredIndex, canHover, whatDeliver, learnMore, securityNote, securityLink }: {
   s: typeof txt.en.services[0]; i: number; hoveredIndex: number | null; setHoveredIndex: (i: number | null) => void; canHover: boolean; whatDeliver: string; learnMore: string; securityNote: string; securityLink: string;

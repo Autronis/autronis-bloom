@@ -5,6 +5,7 @@ import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import useCanHover from "@/hooks/use-can-hover";
 import { useLanguage } from "@/i18n/context";
+import ServiceAnimationOverlay from "@/components/home/ServiceAnimationOverlay";
 
 import serviceAutomation from "@/assets/service_automation_gen.png";
 import serviceIntegration from "@/assets/service_integration_gen.png";

@@ -141,7 +141,7 @@ const Index = () => {
                 <span className="invisible">{lang === "nl" ? "schaalbaarheid." : "scalability."}</span>
               </span>
             </h1>
-            <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8 leading-relaxed">{t.heroDesc}</p>
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8 lg:mb-10 leading-relaxed">{t.heroDesc}</p>
             <div className="flex flex-col items-center mb-8 sm:mb-12">
               <div className="flex flex-col sm:flex-row items-stretch sm:items-start justify-center gap-3 w-full sm:w-auto">
                 <Button asChild size="lg" className="w-full sm:w-auto mt-0">

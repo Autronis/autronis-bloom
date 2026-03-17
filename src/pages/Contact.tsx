@@ -3,11 +3,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
-import { ArrowRight, Mail, Linkedin, Clock } from "lucide-react";
-import { useState } from "react";
+import { ArrowRight, Mail, Linkedin, Clock, Loader2 } from "lucide-react";
+import { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 import SEOHead from "@/components/SEOHead";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import { useLanguage } from "@/i18n/context";
+
+const EMAILJS_SERVICE_ID = "service_y8qqnmf";
+const EMAILJS_TEMPLATE_ID = "template_3nnkzkm";
+const EMAILJS_PUBLIC_KEY = "yFF158M4LzK7ScugyAzgF";
 
 const text = {
   en: {
@@ -23,6 +28,7 @@ const text = {
     subtext: "We primarily work with growing SMB companies that want to automate processes and make systems work together at scale.",
     sent: "Message sent!",
     sentSub: "We'll respond within 24 hours.",
+    error: "Something went wrong. Please try again or email us directly.",
     nameLabel: "Name *",
     namePlaceholder: "Your name",
     emailLabel: "Email *",
@@ -36,6 +42,7 @@ const text = {
     afterStep2: "You'll receive a response within one business day",
     afterStep3: "If relevant, we'll schedule a short Automation Scan",
     submitBtn: "Start conversation",
+    sendingBtn: "Sending...",
     noSales: "No sales pressure. We first check whether automation actually adds value.",
     directTitle: "Prefer to schedule directly?",
     directDesc: "An Automation Scan is the fastest way to gain insight into automation opportunities within your organization.",
@@ -60,6 +67,7 @@ const text = {
     subtext: "Wij werken vooral met groeiende mkb-bedrijven die processen willen automatiseren en systemen op schaal willen laten samenwerken.",
     sent: "Bericht verzonden!",
     sentSub: "We reageren binnen 24 uur.",
+    error: "Er ging iets mis. Probeer het opnieuw of mail ons direct.",
     nameLabel: "Naam *",
     namePlaceholder: "Je naam",
     emailLabel: "E-mail *",
@@ -73,6 +81,7 @@ const text = {
     afterStep2: "Je ontvangt binnen één werkdag een reactie",
     afterStep3: "Indien relevant plannen we een korte Automation Scan",
     submitBtn: "Start gesprek",
+    sendingBtn: "Versturen...",
     noSales: "Geen verkoopdruk. We checken eerst of automatisering daadwerkelijk waarde toevoegt.",
     directTitle: "Liever direct inplannen?",
     directDesc: "Een Automation Scan is de snelste manier om inzicht te krijgen in automatiseringsmogelijkheden binnen je organisatie.",
@@ -89,7 +98,27 @@ const text = {
 const Contact = () => {
   const lang = useLanguage();
   const t = text[lang];
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formRef.current) return;
+
+    setStatus("sending");
+
+    try {
+      await emailjs.sendForm(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        formRef.current,
+        EMAILJS_PUBLIC_KEY,
+      );
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
+  };
 
   return (
     <>
@@ -113,21 +142,21 @@ const Contact = () => {
           </ScrollReveal>
           <ScrollReveal className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <ScrollRevealItem>
-              {sent ? (
+              {status === "sent" ? (
                 <div className="rounded-xl border border-primary/30 bg-primary/5 p-8 text-center">
                   <p className="text-lg font-semibold mb-2">{t.sent}</p>
                   <p className="text-sm text-muted-foreground">{t.sentSub}</p>
                 </div>
               ) : (
-                <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="space-y-5">
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-2"><Label htmlFor="name">{t.nameLabel}</Label><Input id="name" placeholder={t.namePlaceholder} required /></div>
-                    <div className="space-y-2"><Label htmlFor="email">{t.emailLabel}</Label><Input id="email" type="email" placeholder={t.emailPlaceholder} required /></div>
+                    <div className="space-y-2"><Label htmlFor="name">{t.nameLabel}</Label><Input id="name" name="name" placeholder={t.namePlaceholder} required /></div>
+                    <div className="space-y-2"><Label htmlFor="email">{t.emailLabel}</Label><Input id="email" name="email" type="email" placeholder={t.emailPlaceholder} required /></div>
                   </div>
-                  <div className="space-y-2"><Label htmlFor="company">{t.companyLabel}</Label><Input id="company" placeholder={t.companyPlaceholder} /></div>
+                  <div className="space-y-2"><Label htmlFor="company">{t.companyLabel}</Label><Input id="company" name="company" placeholder={t.companyPlaceholder} /></div>
                   <div className="space-y-2">
                     <Label htmlFor="message">{t.messageLabel}</Label>
-                    <textarea id="message" required placeholder={t.messagePlaceholder} className="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none" />
+                    <textarea id="message" name="message" required placeholder={t.messagePlaceholder} className="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none" />
                   </div>
                   <div className="space-y-2">
                     <p className="text-xs font-medium text-muted-foreground">{t.afterSubmit}</p>
@@ -137,7 +166,16 @@ const Contact = () => {
                       <li>• {t.afterStep3}</li>
                     </ul>
                   </div>
-                  <Button type="submit" size="lg">{t.submitBtn} <ArrowRight size={18} /></Button>
+                  {status === "error" && (
+                    <p className="text-sm text-red-500">{t.error}</p>
+                  )}
+                  <Button type="submit" size="lg" disabled={status === "sending"}>
+                    {status === "sending" ? (
+                      <><Loader2 size={18} className="animate-spin" /> {t.sendingBtn}</>
+                    ) : (
+                      <>{t.submitBtn} <ArrowRight size={18} /></>
+                    )}
+                  </Button>
                   <p className="text-xs text-muted-foreground/60">{t.noSales}</p>
                 </form>
               )}

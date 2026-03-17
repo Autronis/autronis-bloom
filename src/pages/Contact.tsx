@@ -12,7 +12,7 @@ import { useLanguage } from "@/i18n/context";
 
 const EMAILJS_SERVICE_ID = "service_y8qqnmf";
 const EMAILJS_TEMPLATE_ID = "template_3nnkzkm";
-const EMAILJS_PUBLIC_KEY = "yFF158M4LzK7ScugyAzgF";
+const EMAILJS_PUBLIC_KEY = "QBcMhf6-Wwekr2wkO";
 
 const text = {
   en: {
@@ -108,12 +108,27 @@ const Contact = () => {
     setStatus("sending");
 
     try {
-      await emailjs.sendForm(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        formRef.current,
-        EMAILJS_PUBLIC_KEY,
-      );
+      const formData = new FormData(formRef.current);
+      const payload = {
+        name: formData.get("name") as string,
+        email: formData.get("email") as string,
+        company: formData.get("company") as string,
+        message: formData.get("message") as string,
+      };
+
+      await Promise.all([
+        emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          payload,
+          EMAILJS_PUBLIC_KEY,
+        ),
+        fetch("https://autronis.app.n8n.cloud/webhook/contact-form", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }),
+      ]);
       setStatus("sent");
     } catch {
       setStatus("error");

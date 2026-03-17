@@ -10,9 +10,9 @@ import SEOHead from "@/components/SEOHead";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import { useLanguage } from "@/i18n/context";
 
-const EMAILJS_SERVICE_ID = "service_y8qqnmf";
-const EMAILJS_TEMPLATE_ID = "template_3nnkzkm";
-const EMAILJS_PUBLIC_KEY = "QBcMhf6-Wwekr2wkO";
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 const text = {
   en: {
@@ -211,7 +211,7 @@ const Contact = () => {
                   <p className="text-xs font-medium text-muted-foreground mb-2">{t.directContact}</p>
                   <div className="space-y-3 text-sm text-muted-foreground">
                     <div className="flex items-center gap-2"><Linkedin size={16} className="text-primary" /><a href="https://www.linkedin.com/company/autronis" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">linkedin.com/company/autronis</a></div>
-                    <div className="flex items-center gap-2"><Mail size={16} className="text-primary" /> info@autronis.com</div>
+                    <div className="flex items-center gap-2"><Mail size={16} className="text-primary" /> zakelijk@autronis.com</div>
                   </div>
                 </div>
               </div>

@@ -327,7 +327,7 @@ const PillarCard = ({
 
         <div className="mt-4 pt-3 border-t border-border/30">
           <p className="text-[11px] text-muted-foreground/80 leading-relaxed">{tx.securityLine}</p>
-          <Link to="/#beveiliging" className="group inline-flex items-center gap-1 text-[11px] text-foreground/70 hover:text-primary/70 transition-colors mt-1">
+          <Link to="/services#quality-standard" className="group inline-flex items-center gap-1 text-[11px] text-foreground/70 hover:text-primary/70 transition-colors mt-1">
             {tx.securityLink}
             <ArrowRight size={10} className="transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
@@ -422,7 +422,7 @@ const Services = () => {
             </div>
           </div>
 
-          <div className="mt-16 pt-12 max-w-5xl mx-auto">
+          <div id="quality-standard" className="mt-16 pt-12 max-w-5xl mx-auto scroll-mt-28">
             <ScrollReveal className="text-center mb-10">
               <ScrollRevealItem>
                 <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">{tx.qualLabel}</p>

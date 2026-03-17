@@ -1,7 +1,8 @@
 // Layout is provided by App.tsx
 import Cal, { getCalApi } from "@calcom/embed-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import SEOHead from "@/components/SEOHead";
+import { Loader2 } from "lucide-react";
 import { useLanguage } from "@/i18n/context";
 
 const text = {
@@ -11,6 +12,8 @@ const text = {
     label: "Schedule your scan",
     title: "Schedule your Automation Scan",
     desc: "Pick a time slot that works for you. We'll discuss your biggest automation opportunities in a 30-minute call.",
+    loading: "Loading calendar...",
+    fallback: "The calendar could not be loaded. Please try again later or contact us at zakelijk@autronis.com.",
   },
   nl: {
     seoTitle: "Autronis | Plan je Automation Scan",
@@ -18,27 +21,41 @@ const text = {
     label: "Plan je scan",
     title: "Plan je Automation Scan",
     desc: "Kies een tijdslot dat jou uitkomt. In een gesprek van 30 minuten bespreken we de grootste automatiseringskansen.",
+    loading: "Kalender laden...",
+    fallback: "De kalender kon niet worden geladen. Probeer het later opnieuw of neem contact op via zakelijk@autronis.com.",
   },
 };
 
 const Book = () => {
   const lang = useLanguage();
   const t = text[lang];
+  const [calState, setCalState] = useState<"loading" | "ready" | "error">("loading");
 
   useEffect(() => {
+    const timeout = setTimeout(() => {
+      setCalState((prev) => (prev === "loading" ? "error" : prev));
+    }, 15000);
+
     (async () => {
-      const cal = await getCalApi();
-      cal("ui", {
-        theme: "dark",
-        cssVarsPerTheme: {
-          dark: {
-            "cal-brand": "#0f9d8a",
-            "cal-brand-emphasis": "#0d8676",
+      try {
+        const cal = await getCalApi();
+        cal("ui", {
+          theme: "dark",
+          cssVarsPerTheme: {
+            dark: {
+              "cal-brand": "#0f9d8a",
+              "cal-brand-emphasis": "#0d8676",
+            },
           },
-        },
-        hideEventTypeDetails: false,
-      });
+          hideEventTypeDetails: false,
+        });
+        setCalState("ready");
+      } catch {
+        setCalState("error");
+      }
     })();
+
+    return () => clearTimeout(timeout);
   }, []);
 
   return (
@@ -51,15 +68,28 @@ const Book = () => {
             <h1 className="text-3xl sm:text-4xl font-bold mb-4">{t.title}</h1>
             <p className="text-muted-foreground">{t.desc}</p>
           </div>
-          <div className="max-w-4xl mx-auto">
-            <Cal
-              calLink="autronis/30min"
-              style={{ width: "100%", height: "100%", overflow: "scroll" }}
-              config={{
-                layout: "month_view",
-                theme: "dark",
-              }}
-            />
+          <div className="max-w-4xl mx-auto relative">
+            {calState === "loading" && (
+              <div className="flex flex-col items-center justify-center py-20 text-muted-foreground gap-3">
+                <Loader2 size={24} className="animate-spin text-primary" />
+                <p className="text-sm">{t.loading}</p>
+              </div>
+            )}
+            {calState === "error" && (
+              <div className="rounded-xl border border-border bg-card p-8 text-center">
+                <p className="text-sm text-muted-foreground">{t.fallback}</p>
+              </div>
+            )}
+            <div className={calState === "loading" ? "opacity-0 h-0 overflow-hidden" : ""}>
+              <Cal
+                calLink="autronis/30min"
+                style={{ width: "100%", height: "100%", overflow: "scroll" }}
+                config={{
+                  layout: "month_view",
+                  theme: "dark",
+                }}
+              />
+            </div>
           </div>
         </div>
       </section>

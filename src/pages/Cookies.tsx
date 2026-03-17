@@ -15,7 +15,7 @@ const text = {
     manageTitle: "Managing cookies",
     manageText: "You can manage or disable cookies through your browser settings. Please note: disabling cookies may limit website functionality.",
     contactTitle: "Contact",
-    contactText: "Questions about our cookie policy? Contact us at info@autronis.com.",
+    contactText: "Questions about our cookie policy? Contact us at zakelijk@autronis.com.",
   },
   nl: {
     title: "Cookiebeleid",
@@ -30,7 +30,7 @@ const text = {
     manageTitle: "Cookies beheren",
     manageText: "Je kunt cookies beheren of uitschakelen via je browserinstellingen. Let op: het uitschakelen van cookies kan de werking van de website beperken.",
     contactTitle: "Contact",
-    contactText: "Vragen over ons cookiebeleid? Neem contact op via info@autronis.com.",
+    contactText: "Vragen over ons cookiebeleid? Neem contact op via zakelijk@autronis.com.",
   },
 };
 

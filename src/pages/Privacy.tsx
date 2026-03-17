@@ -12,9 +12,9 @@ const text = {
     retentionTitle: "Retention",
     retentionText: "We do not retain your data longer than necessary for the purpose for which it was collected, with a maximum of 24 months.",
     rightsTitle: "Your rights",
-    rightsText: "You have the right to access, correct, and delete your personal data. Contact us at info@autronis.com.",
+    rightsText: "You have the right to access, correct, and delete your personal data. Contact us at zakelijk@autronis.com.",
     contactTitle: "Contact",
-    contactText: "For questions about this privacy policy, please contact info@autronis.com.",
+    contactText: "For questions about this privacy policy, please contact zakelijk@autronis.com.",
   },
   nl: {
     title: "Privacybeleid",
@@ -26,9 +26,9 @@ const text = {
     retentionTitle: "Bewaartermijn",
     retentionText: "Wij bewaren je gegevens niet langer dan noodzakelijk voor het doel waarvoor ze zijn verzameld, met een maximum van 24 maanden.",
     rightsTitle: "Jouw rechten",
-    rightsText: "Je hebt het recht om je persoonsgegevens in te zien, te corrigeren en te verwijderen. Neem contact op via info@autronis.com.",
+    rightsText: "Je hebt het recht om je persoonsgegevens in te zien, te corrigeren en te verwijderen. Neem contact op via zakelijk@autronis.com.",
     contactTitle: "Contact",
-    contactText: "Voor vragen over dit privacybeleid kun je contact opnemen via info@autronis.com.",
+    contactText: "Voor vragen over dit privacybeleid kun je contact opnemen via zakelijk@autronis.com.",
   },
 };
 

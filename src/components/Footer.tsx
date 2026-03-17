@@ -75,9 +75,9 @@ const Footer = () => {
           <div>
             <h4 className="text-sm font-semibold mb-4">{t.services}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link to="/services" className="hover:text-foreground transition-colors">{t.processAutomation}</Link></li>
-              <li><Link to="/services" className="hover:text-foreground transition-colors">{t.systemIntegrations}</Link></li>
-              <li><Link to="/services" className="hover:text-foreground transition-colors">{t.dataReporting}</Link></li>
+              <li><Link to="/services#process-automation" className="hover:text-foreground transition-colors">{t.processAutomation}</Link></li>
+              <li><Link to="/services#system-integrations" className="hover:text-foreground transition-colors">{t.systemIntegrations}</Link></li>
+              <li><Link to="/services#data-reporting" className="hover:text-foreground transition-colors">{t.dataReporting}</Link></li>
             </ul>
           </div>
 

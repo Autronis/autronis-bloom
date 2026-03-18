@@ -47,7 +47,7 @@ export const ProcessAutomationVisual = () => {
   const dAB = innerA + innerB + toothH;
   const dAC = innerA + innerC + toothH;
 
-  const cxA = 108, cyA = 58;
+  const cxA = 108, cyA = 68;
   const angAB = 215 * (Math.PI / 180);
   const cxB = cxA + Math.cos(angAB) * dAB;
   const cyB = cyA + Math.sin(angAB) * dAB;
@@ -129,6 +129,37 @@ export const ProcessAutomationVisual = () => {
           <circle r={innerC * 0.45} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.6" strokeOpacity="0.2" />
           <circle r={innerC * 0.18} fill="hsl(174, 78%, 41%)" fillOpacity="0.15" />
         </g>
+
+        {/* Energy sparks flying from gears */}
+        {[0, 1, 2, 3, 4, 5].map((i) => (
+          <motion.circle
+            key={`spark-${i}`}
+            r="1"
+            fill="hsl(174, 78%, 41%)"
+            animate={{
+              cx: [cxA + (i % 2 === 0 ? -10 : 10), 30 + i * 30],
+              cy: [cyA, beltY - 25],
+              opacity: [0, 0.7, 0],
+              r: [1, 0.5],
+            }}
+            transition={{
+              duration: 1.5,
+              delay: i * 0.8,
+              repeat: Infinity,
+              repeatDelay: 3,
+              ease: "easeOut",
+            }}
+          />
+        ))}
+
+        {/* Connection line from gears to belt */}
+        <motion.line
+          x1={cxA} y1={cyA + outerA + 5} x2={cxA} y2={beltY - 2}
+          stroke="hsl(174, 78%, 41%)" strokeWidth="0.3"
+          strokeDasharray="2 2"
+          animate={{ strokeOpacity: [0.05, 0.2, 0.05] }}
+          transition={{ duration: 3, repeat: Infinity }}
+        />
 
         {/* ═══ Conveyor belt ═══ */}
         {/* Belt line */}

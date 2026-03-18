@@ -47,7 +47,7 @@ export const ProcessAutomationVisual = () => {
   const dAB = innerA + innerB + toothH;
   const dAC = innerA + innerC + toothH;
 
-  const cxA = 108, cyA = 42;
+  const cxA = 108, cyA = 58;
   const angAB = 215 * (Math.PI / 180);
   const cxB = cxA + Math.cos(angAB) * dAB;
   const cyB = cyA + Math.sin(angAB) * dAB;

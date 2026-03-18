@@ -109,7 +109,7 @@ const Navbar = () => {
             "children" in link && link.children ? (
               <div key={link.label} className="relative" onMouseEnter={() => setDropdownOpen(true)} onMouseLeave={() => setDropdownOpen(false)}>
                 <button
-                  className={`px-3 py-2 font-medium rounded-md transition-all duration-300 flex items-center gap-1 ${link.children.some((c) => location.pathname === c.href) ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}
+                  className={`group/nav relative px-3 py-2 font-medium rounded-md transition-all duration-300 flex items-center gap-1 ${link.children.some((c) => location.pathname === c.href) ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}
                   style={{ fontSize: compactNavbar ? "0.82rem" : "0.875rem" }}
                   onFocus={() => setDropdownOpen(true)}
                   onKeyDown={(e) => { if (e.key === "Escape") setDropdownOpen(false); }}
@@ -117,6 +117,7 @@ const Navbar = () => {
                   aria-haspopup="true"
                 >
                   {link.label}
+                  <span className={`absolute bottom-0.5 left-3 right-3 h-px transition-all duration-300 ${link.children.some((c) => location.pathname === c.href) ? "bg-primary w-[calc(100%-24px)]" : "bg-primary w-0 group-hover/nav:w-[calc(100%-24px)]"}`} />
                   <ChevronDown size={14} className={`transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
                 </button>
                 <div className="absolute top-full left-0 right-0 h-3" />
@@ -150,10 +151,11 @@ const Navbar = () => {
               <Link
                 key={"href" in link ? link.href : link.label}
                 to={"href" in link ? link.href! : "/"}
-                className={`px-3 py-2 font-medium rounded-md transition-all duration-300 ${"href" in link && location.pathname === link.href ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}
+                className={`group/nav relative px-3 py-2 font-medium rounded-md transition-all duration-300 ${"href" in link && location.pathname === link.href ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}
                 style={{ fontSize: compactNavbar ? "0.82rem" : "0.875rem" }}
               >
                 {link.label}
+                <span className={`absolute bottom-0.5 left-3 right-3 h-px transition-all duration-300 ${"href" in link && location.pathname === link.href ? "bg-primary w-[calc(100%-24px)]" : "bg-primary w-0 group-hover/nav:w-[calc(100%-24px)]"}`} />
               </Link>
             )
           )}

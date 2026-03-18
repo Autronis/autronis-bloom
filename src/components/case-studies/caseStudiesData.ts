@@ -11,6 +11,7 @@ export interface CaseStudy {
   technology: string[]; technologyTags: TechTagData[]; visual: React.ElementType; videoUrl?: string;
   testimonial?: { quote: string; name: string; role: string; company: string; logo?: string; website?: string };
   implementationResult?: string; logoSrc?: string;
+  workflowImage?: { src: string; caption: string };
 }
 
 type LangCases = Record<"en" | "nl", CaseStudy[]>;
@@ -43,6 +44,7 @@ export const casesByLang: LangCases = {
         { label: "Prospect intelligence", category: "ai", tooltip: "Extracts signals from website/sector for better targeting." },
       ],
       visual: LeadFlowDiagram,
+      workflowImage: { src: "/assets/jobby-workflow.png", caption: "The complete n8n workflow built for Jobby — lead scraping, AI enrichment, email generation and CRM sync." },
       testimonial: { quote: "Thanks to Autronis, we work much more efficiently with our outreach. Where it used to take about 25 minutes to find and contact a lead, we now do it in about 5 to 10 minutes. On top of that, we now send dozens of personalized emails daily — something we barely did before. The system has truly helped us reach far more businesses with a small team.", name: "Rick Ruiterkamp", role: "Owner", company: "Jobby", logo: "/assets/jobby-logo.png", website: "https://teamjobby.nl/" },
     },
   ],
@@ -73,6 +75,7 @@ export const casesByLang: LangCases = {
         { label: "Prospect intelligence", category: "ai", tooltip: "Haalt signalen uit website/sector voor betere targeting." },
       ],
       visual: LeadFlowDiagram,
+      workflowImage: { src: "/assets/jobby-workflow.png", caption: "De volledige n8n workflow gebouwd voor Jobby — lead scraping, AI-verrijking, e-mailgeneratie en CRM-sync." },
       testimonial: { quote: "Dankzij Autronis werken we veel efficiënter met onze outreach. Waar het voorheen ongeveer 25 minuten kostte om een lead te vinden en te contacteren, doen we dat nu in ongeveer 5 tot 10 minuten. Daarnaast versturen we nu dagelijks tientallen gepersonaliseerde e-mails — iets wat we daarvoor nauwelijks deden. Het systeem heeft ons echt geholpen om met een klein team veel meer bedrijven te bereiken.", name: "Rick Ruiterkamp", role: "Eigenaar", company: "Jobby", logo: "/assets/jobby-logo.png", website: "https://teamjobby.nl/" },
     },
   ],

@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import { useLanguage } from "@/i18n/context";
+import WorkflowBuilder from "@/components/WorkflowBuilder";
 
 const t = {
   en: {
@@ -420,6 +421,26 @@ const Services = () => {
                 <PillarCard key={pillar.id} pillar={pillar} pillarIndex={i} sectionRef={(el) => (sectionRefs.current[pillar.id] = el)} lang={lang} />
               ))}
             </div>
+          </div>
+
+          {/* Workflow Builder */}
+          <div id="workflow-builder" className="mt-20 pt-12 scroll-mt-28">
+            <ScrollReveal className="text-center mb-12">
+              <ScrollRevealItem>
+                <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
+                  {lang === "nl" ? "Interactieve tool" : "Interactive tool"}
+                </p>
+                <h2 className="text-2xl sm:text-3xl font-bold mb-4">
+                  {lang === "nl" ? "Ontdek wat wij voor jou kunnen automatiseren" : "Discover what we can automate for you"}
+                </h2>
+                <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl mx-auto">
+                  {lang === "nl"
+                    ? "Selecteer de tools die je gebruikt en ontdek direct welke automatiseringen mogelijk zijn."
+                    : "Select the tools you use and instantly discover which automations are possible."}
+                </p>
+              </ScrollRevealItem>
+            </ScrollReveal>
+            <WorkflowBuilder />
           </div>
 
           <div id="quality-standard" className="mt-16 pt-12 max-w-5xl mx-auto scroll-mt-28">

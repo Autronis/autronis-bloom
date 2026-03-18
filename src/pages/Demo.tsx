@@ -1,7 +1,6 @@
 // Layout is provided by App.tsx
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ArrowRight, Zap, GitBranch, Bell, CheckCircle2 } from "lucide-react";
+import { Zap, GitBranch, Bell, CheckCircle2, ArrowRight } from "lucide-react";
+import GlowCTA from "@/components/GlowCTA";
 import { useLanguage } from "@/i18n/context";
 import { motion } from "framer-motion";
 
@@ -125,9 +124,7 @@ const Demo = () => {
 
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-muted-foreground mb-4">{t.convinced}</p>
-            <Button asChild size="lg">
-              <Link to="/book">{t.cta} <ArrowRight size={18} /></Link>
-            </Button>
+            <GlowCTA to="/book">{t.cta}</GlowCTA>
           </div>
         </div>
       </section>

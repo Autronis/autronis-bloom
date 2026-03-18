@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import SEOHead from "@/components/SEOHead";
 import { Link } from "react-router-dom";
+import GlowCTA from "@/components/GlowCTA";
 import {
   ArrowRight,
   ShieldCheck,
@@ -684,11 +685,7 @@ const Process = () => {
               Schedule an Automation Scan and receive a concrete overview of
               optimization opportunities.
             </p>
-            <Button asChild size="lg">
-              <Link to="/book">
-                Schedule an Automation Scan <ArrowRight size={18} />
-              </Link>
-            </Button>
+            <GlowCTA to="/book">Schedule an Automation Scan</GlowCTA>
           </ScrollRevealItem>
         </ScrollReveal>
       </div>

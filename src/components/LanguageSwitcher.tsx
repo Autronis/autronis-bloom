@@ -21,7 +21,7 @@ const LanguageSwitcher = ({ size = "sm" }: Props) => {
         }`}
         style={{
           border: "1.5px solid transparent",
-          borderImage: "linear-gradient(135deg, #012169, #C8102E, #FFFFFF, #C8102E, #012169) 1",
+          borderImage: "linear-gradient(135deg, #3C3B6E, #B22234, #FFFFFF, #B22234, #3C3B6E) 1",
         }}
         aria-label="English"
       >

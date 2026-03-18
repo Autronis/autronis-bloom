@@ -213,17 +213,17 @@ export const ProcessAutomationVisual = () => {
 
 // System Integrations — Large hub with active connections
 export const SystemIntegrationVisual = () => {
-  // Clean grid layout — systems as rounded rectangles connected by lines
+  // Clean grid layout — systems as rounded rectangles with logos
   const systems = [
-    { x: 30, y: 25, label: "CRM" },
-    { x: 100, y: 25, label: "ERP" },
-    { x: 170, y: 25, label: "API" },
-    { x: 30, y: 75, label: "MAIL" },
+    { x: 30, y: 25, label: "HubSpot", logo: "/logos/hubspot.svg" },
+    { x: 100, y: 25, label: "Exact", logo: "/logos/exact.svg" },
+    { x: 170, y: 25, label: "Shopify", logo: "/logos/shopify.svg" },
+    { x: 30, y: 75, label: "Slack", logo: "/logos/slack.svg" },
     { x: 100, y: 75, label: "HUB", isCenter: true },
-    { x: 170, y: 75, label: "DB" },
-    { x: 30, y: 125, label: "SHOP" },
-    { x: 100, y: 125, label: "BI" },
-    { x: 170, y: 125, label: "CLOUD" },
+    { x: 170, y: 75, label: "Stripe", logo: "/logos/stripe.svg" },
+    { x: 30, y: 125, label: "n8n", logo: "/logos/n8n.svg" },
+    { x: 100, y: 125, label: "Supabase", logo: "/logos/supabase.svg" },
+    { x: 170, y: 125, label: "OpenAI", logo: "/logos/openai.svg", dark: true },
   ];
 
   // Connections: all go through center (index 4)
@@ -233,7 +233,7 @@ export const SystemIntegrationVisual = () => {
     [0, 1], [1, 2], [3, 6], [5, 8],
   ];
 
-  const nodeW = 36, nodeH = 16;
+  const nodeW = 38, nodeH = 20;
 
   return (
     <div className="relative w-full h-full min-h-[260px] flex items-center justify-center p-2">
@@ -285,18 +285,39 @@ export const SystemIntegrationVisual = () => {
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: i * 0.06 + 0.2, type: "spring", stiffness: 200 }}
             />
-            <text
-              x={sys.x} y={sys.y + 1.5}
-              textAnchor="middle"
-              fontSize={sys.isCenter ? "5.5" : "4.5"}
-              fontWeight={sys.isCenter ? "700" : "600"}
-              fill="hsl(174, 78%, 41%)"
-              fillOpacity={sys.isCenter ? "0.7" : "0.5"}
-              fontFamily="system-ui, sans-serif"
-            >
-              {sys.label}
-            </text>
-            {/* Subtle pulse on center */}
+            {/* Logo or center text */}
+            {"logo" in sys && sys.logo ? (
+              <image
+                href={sys.logo}
+                x={sys.x - 5} y={sys.y - 8}
+                width="10" height="10"
+                opacity="0.6"
+                style={("dark" in sys && sys.dark) ? { filter: "invert(1)" } : undefined}
+              />
+            ) : (
+              <text
+                x={sys.x} y={sys.y + 2}
+                textAnchor="middle"
+                fontSize="6" fontWeight="700"
+                fill="hsl(174, 78%, 41%)" fillOpacity="0.7"
+                fontFamily="system-ui, sans-serif"
+              >
+                {sys.label}
+              </text>
+            )}
+            {/* Label below logo */}
+            {"logo" in sys && sys.logo && (
+              <text
+                x={sys.x} y={sys.y + 7}
+                textAnchor="middle"
+                fontSize="3" fontWeight="500"
+                fill="hsl(174, 78%, 41%)" fillOpacity="0.4"
+                fontFamily="system-ui, sans-serif"
+              >
+                {sys.label}
+              </text>
+            )}
+            {/* Pulse on center */}
             {sys.isCenter && (
               <motion.rect
                 x={sys.x - nodeW / 2} y={sys.y - nodeH / 2}

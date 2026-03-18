@@ -101,12 +101,12 @@ const LiveAutomationPreview = () => {
         setActiveStep(step);
         step++;
         if (step <= steps.length) {
-          timeout = setTimeout(advance, 600);
+          timeout = setTimeout(advance, 400);
         } else {
-          timeout = setTimeout(runCycle, 3000);
+          timeout = setTimeout(runCycle, 2000);
         }
       };
-      timeout = setTimeout(advance, 500);
+      timeout = setTimeout(advance, 300);
     };
     runCycle();
     return () => clearTimeout(timeout);
@@ -124,7 +124,7 @@ const LiveAutomationPreview = () => {
         </ScrollReveal>
 
         <motion.div
-          className="max-w-2xl mx-auto"
+          className="max-w-xl mx-auto"
           onViewportEnter={() => setIsVisible(true)}
           onViewportLeave={() => setIsVisible(false)}
           viewport={{ margin: "-100px" }}
@@ -141,7 +141,7 @@ const LiveAutomationPreview = () => {
             </div>
 
             {/* Steps list */}
-            <div className="p-5 space-y-0">
+            <div className="p-4 space-y-0">
               {steps.map((step, idx) => {
                 const Icon = step.icon;
                 const isActive = idx <= activeStep;
@@ -151,7 +151,7 @@ const LiveAutomationPreview = () => {
                 return (
                   <div key={step.en}>
                     <motion.div
-                      className="flex items-center gap-3 py-2.5"
+                      className="flex items-center gap-3 py-1.5"
                       animate={{
                         opacity: isActive ? 1 : 0.25,
                       }}
@@ -183,22 +183,12 @@ const LiveAutomationPreview = () => {
 
                       {/* Step content */}
                       <div className="flex-1 min-w-0">
-                        <p className={`text-sm font-medium transition-colors duration-300 ${isActive ? "text-foreground" : "text-muted-foreground/30"}`}>
+                        <p className={`text-[13px] font-medium transition-colors duration-200 ${isActive ? "text-foreground" : "text-muted-foreground/30"}`}>
                           {step[lang]}
                         </p>
-                        <AnimatePresence>
-                          {isActive && (
-                            <motion.p
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: "auto" }}
-                              exit={{ opacity: 0, height: 0 }}
-                              transition={{ duration: 0.3 }}
-                              className="text-[11px] text-muted-foreground font-mono"
-                            >
-                              {lang === "nl" ? step.detailNl : step.detailEn}
-                            </motion.p>
-                          )}
-                        </AnimatePresence>
+                        <p className={`text-[10px] font-mono transition-opacity duration-200 ${isActive ? "text-muted-foreground opacity-100" : "text-muted-foreground/20 opacity-40"}`}>
+                          {lang === "nl" ? step.detailNl : step.detailEn}
+                        </p>
                       </div>
 
                       {/* Status */}
@@ -224,7 +214,7 @@ const LiveAutomationPreview = () => {
 
                     {/* Connector line */}
                     {idx < steps.length - 1 && (
-                      <div className="ml-4 h-2 flex items-center">
+                      <div className="ml-4 h-1 flex items-center">
                         <div className={`w-px h-full transition-colors duration-500 ${isPast ? "bg-primary/30" : "bg-border/30"}`} />
                       </div>
                     )}

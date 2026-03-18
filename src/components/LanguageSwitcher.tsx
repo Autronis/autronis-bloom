@@ -11,32 +11,18 @@ const LanguageSwitcher = ({ size = "sm" }: Props) => {
 
   return (
     <div className={`flex items-center ${h} gap-1.5`}>
-      {/* EN button — UK flag colors as border */}
+      {/* EN button — always UK flag border */}
       <a
         href={isEN ? undefined : "https://autronis.com"}
         className={`relative px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide transition-all duration-200 ${
           isEN
-            ? "text-primary-foreground shadow-sm"
-            : "text-muted-foreground hover:text-foreground cursor-pointer"
+            ? "bg-primary text-primary-foreground shadow-sm"
+            : "bg-background text-muted-foreground hover:text-foreground cursor-pointer"
         }`}
-        style={{
-          background: isEN
-            ? "hsl(var(--primary))"
-            : "transparent",
-          border: "2px solid transparent",
-          backgroundClip: "padding-box",
-          outline: "2px solid transparent",
-          outlineOffset: "-2px",
-          ...(isEN ? {} : {
-            border: "none",
-            padding: "5px 13px",
-          }),
-        }}
         aria-label="English"
       >
-        {/* UK flag gradient border */}
         <span
-          className="absolute inset-0 rounded-full -z-10"
+          className="absolute inset-0 rounded-full"
           style={{
             background: "linear-gradient(135deg, #012169, #C8102E, #FFFFFF, #C8102E, #012169)",
             padding: "2px",
@@ -45,32 +31,20 @@ const LanguageSwitcher = ({ size = "sm" }: Props) => {
             maskComposite: "exclude",
           }}
         />
-        EN
+        <span className="relative z-10">EN</span>
       </a>
-      {/* NL button — Dutch flag colors as border */}
+      {/* NL button — always Dutch flag border */}
       <a
         href={isEN ? "https://autronis.nl" : undefined}
         className={`relative px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide transition-all duration-200 ${
           !isEN
-            ? "text-primary-foreground shadow-sm"
-            : "text-muted-foreground hover:text-foreground cursor-pointer"
+            ? "bg-primary text-primary-foreground shadow-sm"
+            : "bg-background text-muted-foreground hover:text-foreground cursor-pointer"
         }`}
-        style={{
-          background: !isEN
-            ? "hsl(var(--primary))"
-            : "transparent",
-          border: "2px solid transparent",
-          backgroundClip: "padding-box",
-          ...(!isEN ? {} : {
-            border: "none",
-            padding: "5px 13px",
-          }),
-        }}
         aria-label="Nederlands"
       >
-        {/* Dutch flag gradient border */}
         <span
-          className="absolute inset-0 rounded-full -z-10"
+          className="absolute inset-0 rounded-full"
           style={{
             background: "linear-gradient(180deg, #AE1C28 33%, #FFFFFF 33%, #FFFFFF 66%, #21468B 66%)",
             padding: "2px",
@@ -79,7 +53,7 @@ const LanguageSwitcher = ({ size = "sm" }: Props) => {
             maskComposite: "exclude",
           }}
         />
-        NL
+        <span className="relative z-10">NL</span>
       </a>
     </div>
   );

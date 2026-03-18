@@ -107,7 +107,7 @@ const ImpactSimulator = () => {
   const [autoPercent, setAutoPercent] = useState(65);
   const [errorPercent, setErrorPercent] = useState(5);
   const [activeSlider, setActiveSlider] = useState<string | null>(null);
-  const [showTransparency, setShowTransparency] = useState(false);
+  const [showTransparency, setShowTransparency] = useState(true);
 
   const results = useMemo(() => {
     const autoFraction = autoPercent / 100;

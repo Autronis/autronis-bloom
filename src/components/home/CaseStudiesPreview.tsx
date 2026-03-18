@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle2, Star, Sparkles } from "lucide-react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import AnimatedCounter from "@/components/home/AnimatedCounter";
 import { useLanguage } from "@/i18n/context";
 
 interface CaseStudy {
@@ -56,16 +57,26 @@ const CaseStudiesPreview = () => {
           <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">{t.desc}</p>
         </ScrollRevealItem></ScrollReveal>
 
-        {/* Stats bar */}
+        {/* Animated stats bar */}
         <ScrollReveal className="grid grid-cols-3 gap-4 max-w-lg mx-auto mb-10">
-          {t.stats.map((stat, idx) => (
-            <ScrollRevealItem key={idx}>
-              <div className="text-center">
-                <p className="text-2xl sm:text-3xl font-bold text-primary">{stat.value}</p>
-                <p className="text-[11px] text-muted-foreground mt-0.5">{stat.label}</p>
-              </div>
-            </ScrollRevealItem>
-          ))}
+          <ScrollRevealItem>
+            <div className="text-center">
+              <p className="text-2xl sm:text-3xl font-bold text-primary"><AnimatedCounter target={73} suffix="%" /></p>
+              <p className="text-[11px] text-muted-foreground mt-0.5">{t.stats[0].label}</p>
+            </div>
+          </ScrollRevealItem>
+          <ScrollRevealItem>
+            <div className="text-center">
+              <p className="text-2xl sm:text-3xl font-bold text-primary"><AnimatedCounter target={40} suffix="h" /></p>
+              <p className="text-[11px] text-muted-foreground mt-0.5">{t.stats[1].label}</p>
+            </div>
+          </ScrollRevealItem>
+          <ScrollRevealItem>
+            <div className="text-center">
+              <p className="text-2xl sm:text-3xl font-bold text-primary">2.<AnimatedCounter target={4} suffix="×" /></p>
+              <p className="text-[11px] text-muted-foreground mt-0.5">{t.stats[2].label}</p>
+            </div>
+          </ScrollRevealItem>
         </ScrollReveal>
 
         {/* Featured case study */}

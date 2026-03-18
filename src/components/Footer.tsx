@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Linkedin, Mail } from "lucide-react";
+import { Linkedin, Mail, ShieldCheck, Unlock, Eye } from "lucide-react";
 import { copyTextToClipboard, showClipboardFeedback } from "@/lib/copyToClipboard";
 import { useLanguage } from "@/i18n/context";
 
@@ -119,7 +119,21 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-8 sm:mt-12 pt-6 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 text-xs text-muted-foreground">
+        {/* Trust badges */}
+        <div className="mt-8 sm:mt-12 pt-6 border-t border-border grid grid-cols-3 gap-4 max-w-lg mx-auto mb-8">
+          {[
+            { icon: ShieldCheck, en: "GDPR compliant", nl: "AVG-proof" },
+            { icon: Unlock, en: "No vendor lock-in", nl: "Geen vendor lock-in" },
+            { icon: Eye, en: "Full transparency", nl: "Volledige transparantie" },
+          ].map((badge) => (
+            <div key={badge.en} className="flex flex-col items-center gap-1.5 text-center">
+              <badge.icon size={16} className="text-primary" />
+              <span className="text-[10px] text-muted-foreground font-medium">{lang === "nl" ? badge.nl : badge.en}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="pt-6 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 text-xs text-muted-foreground">
           <div className="flex flex-col gap-1">
             <p>© {new Date().getFullYear()} Autronis. {t.rights}</p>
             <p className="text-muted-foreground/60">{t.subline}</p>

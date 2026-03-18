@@ -18,6 +18,7 @@ const CaseStudiesPreview = lazy(() => import("@/components/home/CaseStudiesPrevi
 const SecurityBlock = lazy(() => import("@/components/home/SecurityBlock"));
 const FAQSection = lazy(() => import("@/components/home/FAQSection"));
 const FinalCTA = lazy(() => import("@/components/home/FinalCTA"));
+const LiveAutomationPreview = lazy(() => import("@/components/home/LiveAutomationPreview"));
 
 const preloadSections = () => {
   import("@/components/home/ProblemSolutionSection");
@@ -210,6 +211,7 @@ const Index = () => {
       </section>
 
       <Suspense fallback={<SectionFallback />}><ProblemSolutionSection /></Suspense>
+      <Suspense fallback={<SectionFallback />}><LiveAutomationPreview /></Suspense>
       <Suspense fallback={<SectionFallback />}><ServicePillars /></Suspense>
       <Suspense fallback={<SectionFallback />}><ProcessSection /></Suspense>
       <Suspense fallback={<SectionFallback />}><WhyAutronisSection /></Suspense>

@@ -35,8 +35,8 @@ const text = {
       { title: "Long-term partnership", description: "We're not a vendor but your automation partner. Your growth is our growth — we think along, even after delivery." },
     ],
     team: [
-      { name: "Syb Sprenkeler", role: "Co-founder", description: "Syb has a keen eye for technical detail and is the driving force behind the build. He always thinks one step ahead and ensures every system not only works but is also scalable and future-proof." },
-      { name: "Sem Gijsberts", role: "Co-founder", description: "Sem builds alongside, thinks ahead, and maintains oversight. From the first client conversation to the delivered system — he's involved in every step and makes sure nothing falls through the cracks." },
+      { name: "Syb Sprenkeler", role: "Co-founder", description: "Syb has a keen eye for technical detail and is the driving force behind the build. He always thinks one step ahead and ensures every system not only works but is also scalable and future-proof.", tags: ["API Design", "System Architecture", "Database Optimization", "Performance"] },
+      { name: "Sem Gijsberts", role: "Co-founder", description: "Sem builds alongside, thinks ahead, and maintains oversight. From the first client conversation to the delivered system — he's involved in every step and makes sure nothing falls through the cracks.", tags: ["Client Strategy", "Integration Planning", "Automation Flows", "Project Management"] },
     ],
   },
   nl: {
@@ -60,8 +60,8 @@ const text = {
       { title: "Langetermijnpartnerschap", description: "We zijn geen leverancier maar je automatiseringspartner. Jouw groei is onze groei — we denken mee, ook na oplevering." },
     ],
     team: [
-      { name: "Syb Sprenkeler", role: "Co-founder", description: "Syb heeft een scherp oog voor technisch detail en is de drijvende kracht achter de bouw. Hij denkt altijd een stap vooruit en zorgt ervoor dat elk systeem niet alleen werkt maar ook schaalbaar en toekomstbestendig is." },
-      { name: "Sem Gijsberts", role: "Co-founder", description: "Sem bouwt mee, denkt vooruit en houdt overzicht. Van het eerste klantgesprek tot het opgeleverde systeem — hij is bij elke stap betrokken en zorgt dat er niets tussen wal en schip valt." },
+      { name: "Syb Sprenkeler", role: "Co-founder", description: "Syb heeft een scherp oog voor technisch detail en is de drijvende kracht achter de bouw. Hij denkt altijd een stap vooruit en zorgt ervoor dat elk systeem niet alleen werkt maar ook schaalbaar en toekomstbestendig is.", tags: ["API Design", "Systeemarchitectuur", "Database Optimalisatie", "Performance"] },
+      { name: "Sem Gijsberts", role: "Co-founder", description: "Sem bouwt mee, denkt vooruit en houdt overzicht. Van het eerste klantgesprek tot het opgeleverde systeem — hij is bij elke stap betrokken en zorgt dat er niets tussen wal en schip valt.", tags: ["Klantstrategie", "Integratieplanning", "Automatiseringsflows", "Projectmanagement"] },
     ],
   },
 };
@@ -69,7 +69,7 @@ const text = {
 const valueIcons = [Target, Shield, Users, Handshake];
 const photos = [fotoSyb, fotoSem];
 
-const TeamCard = ({ member, photo }: { member: { name: string; role: string; description: string; priority?: boolean }; photo: string }) => {
+const TeamCard = ({ member, photo }: { member: { name: string; role: string; description: string; tags?: string[]; priority?: boolean }; photo: string }) => {
   const [hovered, setHovered] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -93,7 +93,16 @@ const TeamCard = ({ member, photo }: { member: { name: string; role: string; des
       </div>
       <div className="p-4 text-center">
         <p className="font-semibold">{member.name}</p>
-        <p className="text-sm text-muted-foreground">{member.role}</p>
+        <p className="text-sm text-muted-foreground mb-2">{member.role}</p>
+        {member.tags && (
+          <div className="flex flex-wrap justify-center gap-1">
+            {member.tags.map((tag) => (
+              <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

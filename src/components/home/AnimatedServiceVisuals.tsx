@@ -35,55 +35,98 @@ const gearPath = (cx: number, cy: number, outerR: number, innerR: number, teeth:
 
 // Process Automation — Meshing settings gears + conveyor belt with documents
 export const ProcessAutomationVisual = () => {
-  // Pitch radius = midpoint between inner and outer (where teeth mesh)
-  // For gears to mesh: distance between centers = pitchA + pitchB
-  const gA = { outer: 30, inner: 22, teeth: 12 };
-  const gB = { outer: 22, inner: 16, teeth: 9 };
-  const gC = { outer: 16, inner: 12, teeth: 7 };
+  // All gears use same module (tooth size) so they mesh perfectly
+  // Module = pitch_diameter / teeth. Keep module constant = 4
+  const mod = 4;
 
-  const pitchA = (gA.outer + gA.inner) / 2; // 26
-  const pitchB = (gB.outer + gB.inner) / 2; // 19
-  const pitchC = (gC.outer + gC.inner) / 2; // 14
+  // Gear A: 12 teeth
+  const teethA = 12;
+  const pitchA = (mod * teethA) / 2; // 24
+  const outerA = pitchA + mod * 0.6; // 26.4 → tooth tip
+  const innerA = pitchA - mod * 0.7; // 21.2 → tooth root
 
-  // Gear A center
-  const axA = 115, ayA = 50;
-  // Gear B meshes with A — to the left
-  const distAB = pitchA + pitchB; // 45
-  const axB = axA - distAB * 0.87, ayB = ayA + distAB * 0.5;
-  // Gear C meshes with A — to the bottom-right
-  const distAC = pitchA + pitchC; // 40
-  const axC = axA + distAC * 0.5, ayC = ayA + distAC * 0.87;
+  // Gear B: 8 teeth
+  const teethB = 8;
+  const pitchB = (mod * teethB) / 2; // 16
+  const outerB = pitchB + mod * 0.6;
+  const innerB = pitchB - mod * 0.7;
 
-  // Speed ratios: inversely proportional to teeth count
-  const baseDur = 20;
-  const gears = [
-    { cx: axA, cy: ayA, ...gA, dur: baseDur, dir: 1 },
-    { cx: axB, cy: ayB, ...gB, dur: baseDur * (gB.teeth / gA.teeth), dir: -1 },
-    { cx: axC, cy: ayC, ...gC, dur: baseDur * (gC.teeth / gA.teeth), dir: -1 },
-  ];
+  // Gear C: 6 teeth
+  const teethC = 6;
+  const pitchC = (mod * teethC) / 2; // 12
+  const outerC = pitchC + mod * 0.6;
+  const innerC = pitchC - mod * 0.7;
+
+  // Centers: distance = pitchA + pitchB for meshing
+  const cxA = 115, cyA = 48;
+
+  // B is to the lower-left of A
+  const angleAB = (210 * Math.PI) / 180; // 210 degrees
+  const distAB = pitchA + pitchB; // 40
+  const cxB = cxA + Math.cos(angleAB) * distAB;
+  const cyB = cyA - Math.sin(angleAB) * distAB;
+
+  // C is to the lower-right of A
+  const angleAC = (330 * Math.PI) / 180; // 330 degrees
+  const distAC = pitchA + pitchC; // 36
+  const cxC = cxA + Math.cos(angleAC) * distAC;
+  const cyC = cyA - Math.sin(angleAC) * distAC;
+
+  // Rotation offsets so teeth interlock into gaps
+  // Half a tooth step offset for meshing gear
+  const halfToothA = 360 / teethA / 2; // 15 degrees
+  const halfToothB = 360 / teethB / 2; // 22.5 degrees
+  const halfToothC = 360 / teethC / 2; // 30 degrees
+
+  // Speed: same linear tooth speed. Duration inversely proportional to teeth
+  const baseDur = 24; // seconds for gear A full rotation
+  const durA = baseDur;
+  const durB = baseDur * (teethB / teethA); // faster (fewer teeth)
+  const durC = baseDur * (teethC / teethA);
 
   const beltY = 130;
 
   return (
     <div className="relative w-full h-full min-h-[320px] flex items-center justify-center p-2">
       <svg viewBox="0 0 200 160" className="w-full h-full">
-        {/* Settings gears */}
-        {gears.map((g, i) => (
-          <motion.g
-            key={i}
-            animate={{ rotate: g.dir * 360 }}
-            transition={{ duration: g.dur, repeat: Infinity, ease: "linear" }}
-            style={{ transformOrigin: `${g.cx}px ${g.cy}px` }}
-          >
-            <path
-              d={gearPath(g.cx, g.cy, g.outer, g.inner, g.teeth)}
-              fill="hsl(174, 78%, 41%)" fillOpacity="0.06"
-              stroke="hsl(174, 78%, 41%)" strokeWidth="1" strokeOpacity="0.45"
-            />
-            <circle cx={g.cx} cy={g.cy} r={g.inner * 0.45} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeOpacity="0.25" />
-            <circle cx={g.cx} cy={g.cy} r={g.inner * 0.18} fill="hsl(174, 78%, 41%)" fillOpacity="0.2" />
-          </motion.g>
-        ))}
+        {/* Gear A — clockwise */}
+        <motion.g
+          animate={{ rotate: [0, 360] }}
+          transition={{ duration: durA, repeat: Infinity, ease: "linear" }}
+          style={{ transformOrigin: `${cxA}px ${cyA}px` }}
+        >
+          <path d={gearPath(cxA, cyA, outerA, innerA, teethA)}
+            fill="hsl(174, 78%, 41%)" fillOpacity="0.07"
+            stroke="hsl(174, 78%, 41%)" strokeWidth="1" strokeOpacity="0.5" />
+          <circle cx={cxA} cy={cyA} r={innerA * 0.45} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeOpacity="0.3" />
+          <circle cx={cxA} cy={cyA} r={innerA * 0.18} fill="hsl(174, 78%, 41%)" fillOpacity="0.25" />
+        </motion.g>
+
+        {/* Gear B — counter-clockwise, offset so tooth fits in A's gap */}
+        <motion.g
+          animate={{ rotate: [halfToothB, halfToothB - 360] }}
+          transition={{ duration: durB, repeat: Infinity, ease: "linear" }}
+          style={{ transformOrigin: `${cxB}px ${cyB}px` }}
+        >
+          <path d={gearPath(cxB, cyB, outerB, innerB, teethB)}
+            fill="hsl(174, 78%, 41%)" fillOpacity="0.06"
+            stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeOpacity="0.45" />
+          <circle cx={cxB} cy={cyB} r={innerB * 0.45} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.7" strokeOpacity="0.25" />
+          <circle cx={cxB} cy={cyB} r={innerB * 0.18} fill="hsl(174, 78%, 41%)" fillOpacity="0.2" />
+        </motion.g>
+
+        {/* Gear C — counter-clockwise, offset */}
+        <motion.g
+          animate={{ rotate: [halfToothC, halfToothC - 360] }}
+          transition={{ duration: durC, repeat: Infinity, ease: "linear" }}
+          style={{ transformOrigin: `${cxC}px ${cyC}px` }}
+        >
+          <path d={gearPath(cxC, cyC, outerC, innerC, teethC)}
+            fill="hsl(174, 78%, 41%)" fillOpacity="0.05"
+            stroke="hsl(174, 78%, 41%)" strokeWidth="0.7" strokeOpacity="0.4" />
+          <circle cx={cxC} cy={cyC} r={innerC * 0.45} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.6" strokeOpacity="0.2" />
+          <circle cx={cxC} cy={cyC} r={innerC * 0.18} fill="hsl(174, 78%, 41%)" fillOpacity="0.15" />
+        </motion.g>
 
         {/* ═══ Conveyor belt ═══ */}
         {/* Belt line */}

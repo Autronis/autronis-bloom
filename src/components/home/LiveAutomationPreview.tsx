@@ -101,12 +101,12 @@ const LiveAutomationPreview = () => {
         setActiveStep(step);
         step++;
         if (step <= steps.length) {
-          timeout = setTimeout(advance, 1400);
+          timeout = setTimeout(advance, 600);
         } else {
-          timeout = setTimeout(runCycle, 4000);
+          timeout = setTimeout(runCycle, 3000);
         }
       };
-      timeout = setTimeout(advance, 1000);
+      timeout = setTimeout(advance, 500);
     };
     runCycle();
     return () => clearTimeout(timeout);

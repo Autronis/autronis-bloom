@@ -215,22 +215,20 @@ export const ProcessAutomationVisual = () => {
 export const SystemIntegrationVisual = () => {
   // Clean grid layout — systems as rounded rectangles with logos
   const systems = [
-    { x: 30, y: 25, label: "HubSpot", logo: "/logos/hubspot.svg" },
-    { x: 100, y: 25, label: "Exact", logo: "/logos/exact.svg" },
-    { x: 170, y: 25, label: "Shopify", logo: "/logos/shopify.svg" },
+    { x: 30, y: 25, label: "Salesforce", logo: "/logos/salesforce.svg" },
+    { x: 100, y: 25, label: "Shopify", logo: "/logos/shopify.svg" },
+    { x: 170, y: 25, label: "HubSpot", logo: "/logos/hubspot.svg" },
     { x: 30, y: 75, label: "Slack", logo: "/logos/slack.svg" },
-    { x: 100, y: 75, label: "HUB", isCenter: true },
+    { x: 100, y: 75, label: "AUTRONIS", isCenter: true },
     { x: 170, y: 75, label: "Stripe", logo: "/logos/stripe.svg" },
-    { x: 30, y: 125, label: "n8n", logo: "/logos/n8n.svg" },
-    { x: 100, y: 125, label: "Supabase", logo: "/logos/supabase.svg" },
+    { x: 30, y: 125, label: "Google", logo: "/logos/google-workspace.svg" },
+    { x: 100, y: 125, label: "PostgreSQL", logo: "/logos/postgresql.svg" },
     { x: 170, y: 125, label: "OpenAI", logo: "/logos/openai.svg", dark: true },
   ];
 
-  // Connections: all go through center (index 4)
+  // Only connections to center hub
   const connections = [
     [0, 4], [1, 4], [2, 4], [3, 4], [5, 4], [6, 4], [7, 4], [8, 4],
-    // Some direct cross-connections
-    [0, 1], [1, 2], [3, 6], [5, 8],
   ];
 
   const nodeW = 38, nodeH = 20;
@@ -238,37 +236,34 @@ export const SystemIntegrationVisual = () => {
   return (
     <div className="relative w-full h-full min-h-[260px] flex items-center justify-center p-2">
       <svg viewBox="0 0 200 150" className="w-full h-full">
-        {/* Connection lines */}
-        {connections.map(([from, to], i) => {
-          const isToCenter = from === 4 || to === 4;
-          return (
-            <g key={`conn-${i}`}>
-              <line
-                x1={systems[from].x} y1={systems[from].y}
-                x2={systems[to].x} y2={systems[to].y}
-                stroke="hsl(174, 78%, 41%)"
-                strokeWidth={isToCenter ? "0.4" : "0.2"}
-                strokeOpacity={isToCenter ? "0.15" : "0.08"}
-              />
-              {/* Data pulse */}
-              <motion.circle
-                r={isToCenter ? "1.5" : "1"}
-                fill="hsl(174, 78%, 41%)"
-                animate={{
-                  cx: [systems[from].x, systems[to].x],
-                  cy: [systems[from].y, systems[to].y],
-                  fillOpacity: [0, 0.7, 0],
-                }}
-                transition={{
-                  duration: 2,
-                  delay: i * 0.4,
-                  repeat: Infinity,
-                  repeatDelay: 4,
-                }}
-              />
-            </g>
-          );
-        })}
+        {/* Connection lines — only to hub */}
+        {connections.map(([from, to], i) => (
+          <g key={`conn-${i}`}>
+            <line
+              x1={systems[from].x} y1={systems[from].y}
+              x2={systems[to].x} y2={systems[to].y}
+              stroke="hsl(174, 78%, 41%)"
+              strokeWidth="0.3"
+              strokeOpacity="0.12"
+            />
+            {/* Data pulse: node → hub */}
+            <motion.circle
+              r="1.2"
+              fill="hsl(174, 78%, 41%)"
+              animate={{
+                cx: [systems[from].x, systems[to].x],
+                cy: [systems[from].y, systems[to].y],
+                fillOpacity: [0, 0.6, 0],
+              }}
+              transition={{
+                duration: 1.8,
+                delay: i * 0.6,
+                repeat: Infinity,
+                repeatDelay: 5,
+              }}
+            />
+          </g>
+        ))}
 
         {/* System nodes */}
         {systems.map((sys, i) => (
@@ -289,51 +284,21 @@ export const SystemIntegrationVisual = () => {
             {"logo" in sys && sys.logo ? (
               <image
                 href={sys.logo}
-                x={sys.x - 5} y={sys.y - 8}
-                width="10" height="10"
-                opacity="0.6"
+                x={sys.x - 6} y={sys.y - 6}
+                width="12" height="12"
+                opacity="0.8"
                 style={("dark" in sys && sys.dark) ? { filter: "invert(1)" } : undefined}
               />
             ) : (
-              <text
-                x={sys.x} y={sys.y + 2}
-                textAnchor="middle"
-                fontSize="6" fontWeight="700"
-                fill="hsl(174, 78%, 41%)" fillOpacity="0.7"
-                fontFamily="system-ui, sans-serif"
-              >
-                {sys.label}
-              </text>
-            )}
-            {/* Label below logo */}
-            {"logo" in sys && sys.logo && (
-              <text
-                x={sys.x} y={sys.y + 7}
-                textAnchor="middle"
-                fontSize="3" fontWeight="500"
-                fill="hsl(174, 78%, 41%)" fillOpacity="0.4"
-                fontFamily="system-ui, sans-serif"
-              >
-                {sys.label}
-              </text>
-            )}
-            {/* Pulse on center */}
-            {sys.isCenter && (
-              <motion.rect
-                x={sys.x - nodeW / 2} y={sys.y - nodeH / 2}
-                width={nodeW} height={nodeH} rx="3"
-                fill="none"
-                stroke="hsl(174, 78%, 41%)"
-                strokeWidth="0.3"
-                animate={{
-                  x: [sys.x - nodeW / 2 - 3, sys.x - nodeW / 2 - 6],
-                  y: [sys.y - nodeH / 2 - 3, sys.y - nodeH / 2 - 6],
-                  width: [nodeW + 6, nodeW + 12],
-                  height: [nodeH + 6, nodeH + 12],
-                  opacity: [0.2, 0],
-                }}
-                transition={{ duration: 2.5, repeat: Infinity }}
-              />
+              <>
+                {/* Center node: Autronis logo + text */}
+                <image
+                  href="/logo.png"
+                  x={sys.x - 6} y={sys.y - 6}
+                  width="12" height="12"
+                  opacity="0.7"
+                />
+              </>
             )}
           </g>
         ))}

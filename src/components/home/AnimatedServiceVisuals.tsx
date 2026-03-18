@@ -213,75 +213,109 @@ export const ProcessAutomationVisual = () => {
 
 // System Integrations — Large hub with active connections
 export const SystemIntegrationVisual = () => {
-  const nodes = [
-    { angle: -90, label: "API" },
-    { angle: -30, label: "CRM" },
-    { angle: 30, label: "ERP" },
-    { angle: 90, label: "DB" },
-    { angle: 150, label: "MAIL" },
-    { angle: 210, label: "SHOP" },
+  // Clean grid layout — systems as rounded rectangles connected by lines
+  const systems = [
+    { x: 30, y: 25, label: "CRM" },
+    { x: 100, y: 25, label: "ERP" },
+    { x: 170, y: 25, label: "API" },
+    { x: 30, y: 75, label: "MAIL" },
+    { x: 100, y: 75, label: "HUB", isCenter: true },
+    { x: 170, y: 75, label: "DB" },
+    { x: 30, y: 125, label: "SHOP" },
+    { x: 100, y: 125, label: "BI" },
+    { x: 170, y: 125, label: "CLOUD" },
   ];
-  const cx = 100, cy = 80, R = 55;
+
+  // Connections: all go through center (index 4)
+  const connections = [
+    [0, 4], [1, 4], [2, 4], [3, 4], [5, 4], [6, 4], [7, 4], [8, 4],
+    // Some direct cross-connections
+    [0, 1], [1, 2], [3, 6], [5, 8],
+  ];
+
+  const nodeW = 36, nodeH = 16;
 
   return (
-    <div className="relative w-full h-full min-h-[320px] flex items-center justify-center p-2">
-      <svg viewBox="0 0 200 160" className="w-full h-full">
-        {/* Orbit ring */}
-        <circle cx={cx} cy={cy} r={R} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.4" strokeOpacity="0.12" />
-        <circle cx={cx} cy={cy} r={R * 0.6} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.2" strokeOpacity="0.08" strokeDasharray="3 3" />
-
-        {/* Cross connections */}
-        {nodes.map((_, i) => {
-          const next = (i + 1) % nodes.length;
-          const r1 = (nodes[i].angle * Math.PI) / 180;
-          const r2 = (nodes[next].angle * Math.PI) / 180;
+    <div className="relative w-full h-full min-h-[260px] flex items-center justify-center p-2">
+      <svg viewBox="0 0 200 150" className="w-full h-full">
+        {/* Connection lines */}
+        {connections.map(([from, to], i) => {
+          const isToCenter = from === 4 || to === 4;
           return (
-            <line key={`x-${i}`}
-              x1={cx + Math.cos(r1) * R} y1={cy + Math.sin(r1) * R}
-              x2={cx + Math.cos(r2) * R} y2={cy + Math.sin(r2) * R}
-              stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.08"
-            />
-          );
-        })}
-
-        {/* Lines + pulses + nodes */}
-        {nodes.map((node, i) => {
-          const rad = (node.angle * Math.PI) / 180;
-          const nx = cx + Math.cos(rad) * R;
-          const ny = cy + Math.sin(rad) * R;
-          return (
-            <g key={i}>
-              <line x1={cx} y1={cy} x2={nx} y2={ny} stroke="hsl(174, 78%, 41%)" strokeWidth="0.5" strokeOpacity="0.2" />
-              <motion.circle r="2" fill="hsl(174, 78%, 41%)"
-                animate={{ cx: [cx, nx], cy: [cy, ny], fillOpacity: [0, 0.8, 0] }}
-                transition={{ duration: 2.5, delay: i * 0.7, repeat: Infinity, repeatDelay: 3 }}
+            <g key={`conn-${i}`}>
+              <line
+                x1={systems[from].x} y1={systems[from].y}
+                x2={systems[to].x} y2={systems[to].y}
+                stroke="hsl(174, 78%, 41%)"
+                strokeWidth={isToCenter ? "0.4" : "0.2"}
+                strokeOpacity={isToCenter ? "0.15" : "0.08"}
               />
-              <motion.circle r="1.5" fill="hsl(174, 78%, 41%)"
-                animate={{ cx: [nx, cx], cy: [ny, cy], fillOpacity: [0, 0.5, 0] }}
-                transition={{ duration: 2.5, delay: i * 0.7 + 1.5, repeat: Infinity, repeatDelay: 3 }}
+              {/* Data pulse */}
+              <motion.circle
+                r={isToCenter ? "1.5" : "1"}
+                fill="hsl(174, 78%, 41%)"
+                animate={{
+                  cx: [systems[from].x, systems[to].x],
+                  cy: [systems[from].y, systems[to].y],
+                  fillOpacity: [0, 0.7, 0],
+                }}
+                transition={{
+                  duration: 2,
+                  delay: i * 0.4,
+                  repeat: Infinity,
+                  repeatDelay: 4,
+                }}
               />
-              <motion.circle cx={nx} cy={ny} r="10"
-                fill="hsl(174, 78%, 41%)" fillOpacity="0.05"
-                stroke="hsl(174, 78%, 41%)" strokeWidth="0.6" strokeOpacity="0.4"
-                initial={{ scale: 0 }} animate={{ scale: 1 }}
-                transition={{ delay: i * 0.1 + 0.3, type: "spring", stiffness: 150 }}
-              />
-              <text x={nx} y={ny + 1.5} textAnchor="middle" fontSize="5" fontWeight="600"
-                fill="hsl(174, 78%, 41%)" fillOpacity="0.6" fontFamily="system-ui">
-                {node.label}
-              </text>
             </g>
           );
         })}
 
-        {/* Center hub */}
-        <circle cx={cx} cy={cy} r="14" fill="hsl(174, 78%, 41%)" fillOpacity="0.06" stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeOpacity="0.4" />
-        <circle cx={cx} cy={cy} r="5" fill="hsl(174, 78%, 41%)" fillOpacity="0.15" />
-        <motion.circle cx={cx} cy={cy} r="14" fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.4"
-          animate={{ r: [14, 24], opacity: [0.25, 0] }}
-          transition={{ duration: 3, repeat: Infinity }}
-        />
-        <text x={cx} y={cy + 2} textAnchor="middle" fontSize="5" fontWeight="700" fill="hsl(174, 78%, 41%)" fillOpacity="0.6" fontFamily="system-ui">HUB</text>
+        {/* System nodes */}
+        {systems.map((sys, i) => (
+          <g key={i}>
+            <motion.rect
+              x={sys.x - nodeW / 2} y={sys.y - nodeH / 2}
+              width={nodeW} height={nodeH} rx="3"
+              fill="hsl(174, 78%, 41%)"
+              fillOpacity={sys.isCenter ? "0.08" : "0.03"}
+              stroke="hsl(174, 78%, 41%)"
+              strokeWidth={sys.isCenter ? "0.8" : "0.5"}
+              strokeOpacity={sys.isCenter ? "0.5" : "0.3"}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: i * 0.06 + 0.2, type: "spring", stiffness: 200 }}
+            />
+            <text
+              x={sys.x} y={sys.y + 1.5}
+              textAnchor="middle"
+              fontSize={sys.isCenter ? "5.5" : "4.5"}
+              fontWeight={sys.isCenter ? "700" : "600"}
+              fill="hsl(174, 78%, 41%)"
+              fillOpacity={sys.isCenter ? "0.7" : "0.5"}
+              fontFamily="system-ui, sans-serif"
+            >
+              {sys.label}
+            </text>
+            {/* Subtle pulse on center */}
+            {sys.isCenter && (
+              <motion.rect
+                x={sys.x - nodeW / 2} y={sys.y - nodeH / 2}
+                width={nodeW} height={nodeH} rx="3"
+                fill="none"
+                stroke="hsl(174, 78%, 41%)"
+                strokeWidth="0.3"
+                animate={{
+                  x: [sys.x - nodeW / 2 - 3, sys.x - nodeW / 2 - 6],
+                  y: [sys.y - nodeH / 2 - 3, sys.y - nodeH / 2 - 6],
+                  width: [nodeW + 6, nodeW + 12],
+                  height: [nodeH + 6, nodeH + 12],
+                  opacity: [0.2, 0],
+                }}
+                transition={{ duration: 2.5, repeat: Infinity }}
+              />
+            )}
+          </g>
+        ))}
       </svg>
     </div>
   );

@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button";
 import SEOHead from "@/components/SEOHead";
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronDown, CheckCircle2, Cog, Link2, PieChart, FolderOpen, Briefcase, Rocket, ShoppingCart, LinkIcon, CreditCard, Puzzle, BarChart3, LayoutDashboard, FileText, Database, AlertTriangle, ShieldCheck, Shield, Layers } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import { useLanguage } from "@/i18n/context";
-import WorkflowBuilder from "@/components/WorkflowBuilder";
+import WorkflowBuilder, { workflowSystems } from "@/components/WorkflowBuilder";
 
 const t = {
   en: {
@@ -338,12 +338,49 @@ const PillarCard = ({
   );
 };
 
+// Map ticker tool names to workflow builder IDs
+const tickerToWorkflowId: Record<string, string> = {
+  "OpenAI": "openai", "Anthropic": "anthropic", "Make": "make", "Supabase": "supabase",
+  "Notion": "notion", "Stripe": "stripe", "HubSpot": "hubspot", "Slack": "slack",
+  "Airtable": "airtable", "Salesforce": "salesforce", "PostgreSQL": "postgresql",
+  "Shopify": "shopify", "AWS": "aws", "Cloudflare": "cloudflare", "Firebase": "firebase",
+  "Instagram": "instagram", "WhatsApp": "whatsapp", "GitHub": "github",
+  "n8n": "n8n", "Zapier": "zapier", "MongoDB": "mongodb",
+  "Pipedrive": "pipedrive", "Google Workspace": "google-workspace",
+  "Microsoft 365": "microsoft-365", "WooCommerce": "woocommerce", "Magento": "magento",
+  "Mollie": "mollie", "PayPal": "paypal", "Power BI": "power-bi",
+  "Google Analytics": "google-analytics",
+};
+
 const Services = () => {
   const lang = useLanguage();
   const tx = t[lang];
   const pillars = tx.pillars;
   const [activeSection, setActiveSection] = useState(pillars[0].id);
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const workflowRef = useRef<HTMLDivElement>(null);
+  const [selectedTools, setSelectedTools] = useState<string[]>([]);
+
+  const handleToggleTool = useCallback((id: string) => {
+    setSelectedTools((prev) =>
+      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
+    );
+  }, []);
+
+  const handleTickerClick = useCallback((toolName: string) => {
+    const workflowId = tickerToWorkflowId[toolName];
+    if (!workflowId) return;
+    // Only add if it exists in the workflow builder systems
+    const exists = workflowSystems.some((s) => s.id === workflowId);
+    if (!exists) return;
+    if (!selectedTools.includes(workflowId)) {
+      handleToggleTool(workflowId);
+    }
+    // Scroll to workflow builder
+    setTimeout(() => {
+      workflowRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
+  }, [selectedTools, handleToggleTool]);
 
   useEffect(() => {
     const hash = window.location.hash.slice(1);
@@ -383,28 +420,41 @@ const Services = () => {
               <h2 className="text-2xl sm:text-3xl font-bold mb-3">{tx.intTitle}</h2>
               <p className="text-muted-foreground">{tx.intDesc}</p>
             </div>
+            <p className="text-xs text-center text-muted-foreground/60 mb-4">
+              {lang === "nl" ? "Klik op een tool om automatiseringsmogelijkheden te ontdekken" : "Click a tool to discover automation opportunities"}
+            </p>
             <div className="relative mb-4 overflow-hidden py-10">
               <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-background to-transparent pointer-events-none" />
               <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-background to-transparent pointer-events-none" />
               <div className="flex animate-marquee-right gap-6 sm:gap-8 w-max items-center justify-center">
-                {[...toolIconsRow1, ...toolIconsRow1, ...toolIconsRow1].map((tool, i) => (
-                  <div key={i} className="relative group hover:scale-110 transition-transform duration-200">
-                    <img src={tool.logo} alt={tool.name} className={`w-7 h-7 sm:w-12 sm:h-12 object-contain opacity-70 group-hover:opacity-100 transition-all duration-200 ${tool.dark ? 'dark:invert' : ''}`} loading="lazy" />
-                    <span className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-muted-foreground bg-card border border-border rounded px-2 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-sm">{tool.name}</span>
-                  </div>
-                ))}
+                {[...toolIconsRow1, ...toolIconsRow1, ...toolIconsRow1].map((tool, i) => {
+                  const wfId = tickerToWorkflowId[tool.name];
+                  const isSelected = wfId ? selectedTools.includes(wfId) : false;
+                  return (
+                    <button key={i} onClick={() => handleTickerClick(tool.name)} className={`relative group hover:scale-110 transition-all duration-200 cursor-pointer ${isSelected ? 'scale-110' : ''}`}>
+                      <img src={tool.logo} alt={tool.name} className={`w-7 h-7 sm:w-12 sm:h-12 object-contain transition-all duration-200 ${isSelected ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${tool.dark ? 'dark:invert' : ''}`} loading="lazy" />
+                      {isSelected && <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary flex items-center justify-center"><CheckCircle2 size={10} className="text-primary-foreground" /></span>}
+                      <span className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-muted-foreground bg-card border border-border rounded px-2 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-sm">{tool.name}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
             <div className="relative overflow-hidden py-10">
               <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-background to-transparent pointer-events-none" />
               <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-background to-transparent pointer-events-none" />
               <div className="flex animate-marquee-left gap-6 sm:gap-8 w-max items-center justify-center">
-                {[...toolIconsRow2, ...toolIconsRow2, ...toolIconsRow2].map((tool, i) => (
-                  <div key={i} className="relative group hover:scale-110 transition-transform duration-200">
-                    <img src={tool.logo} alt={tool.name} className={`w-7 h-7 sm:w-12 sm:h-12 object-contain opacity-70 group-hover:opacity-100 transition-all duration-200 ${tool.dark ? 'dark:invert' : ''}`} loading="lazy" />
-                    <span className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-muted-foreground bg-card border border-border rounded px-2 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-sm">{tool.name}</span>
-                  </div>
-                ))}
+                {[...toolIconsRow2, ...toolIconsRow2, ...toolIconsRow2].map((tool, i) => {
+                  const wfId = tickerToWorkflowId[tool.name];
+                  const isSelected = wfId ? selectedTools.includes(wfId) : false;
+                  return (
+                    <button key={i} onClick={() => handleTickerClick(tool.name)} className={`relative group hover:scale-110 transition-all duration-200 cursor-pointer ${isSelected ? 'scale-110' : ''}`}>
+                      <img src={tool.logo} alt={tool.name} className={`w-7 h-7 sm:w-12 sm:h-12 object-contain transition-all duration-200 ${isSelected ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${tool.dark ? 'dark:invert' : ''}`} loading="lazy" />
+                      {isSelected && <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary flex items-center justify-center"><CheckCircle2 size={10} className="text-primary-foreground" /></span>}
+                      <span className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-muted-foreground bg-card border border-border rounded px-2 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-sm">{tool.name}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -424,7 +474,7 @@ const Services = () => {
           </div>
 
           {/* Workflow Builder */}
-          <div id="workflow-builder" className="mt-20 pt-12 scroll-mt-28">
+          <div id="workflow-builder" ref={workflowRef} className="mt-20 pt-12 scroll-mt-28">
             <ScrollReveal className="text-center mb-12">
               <ScrollRevealItem>
                 <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">
@@ -440,7 +490,7 @@ const Services = () => {
                 </p>
               </ScrollRevealItem>
             </ScrollReveal>
-            <WorkflowBuilder />
+            <WorkflowBuilder externalSelected={selectedTools} onExternalToggle={handleToggleTool} />
           </div>
 
           <div id="quality-standard" className="mt-16 pt-12 max-w-5xl mx-auto scroll-mt-28">

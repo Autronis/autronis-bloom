@@ -268,37 +268,54 @@ export const SystemIntegrationVisual = () => {
         {/* System nodes */}
         {systems.map((sys, i) => (
           <g key={i}>
+            {/* Center card: solid background so lines don't show through */}
+            {sys.isCenter && (
+              <rect
+                x={sys.x - nodeW / 2} y={sys.y - nodeH / 2}
+                width={nodeW} height={nodeH} rx="3"
+                fill="hsl(200, 20%, 10%)"
+              />
+            )}
             <motion.rect
               x={sys.x - nodeW / 2} y={sys.y - nodeH / 2}
               width={nodeW} height={nodeH} rx="3"
               fill="hsl(174, 78%, 41%)"
-              fillOpacity={sys.isCenter ? "0.08" : "0.03"}
+              fillOpacity={sys.isCenter ? "0.12" : "0.03"}
               stroke="hsl(174, 78%, 41%)"
               strokeWidth={sys.isCenter ? "0.8" : "0.5"}
-              strokeOpacity={sys.isCenter ? "0.5" : "0.3"}
+              strokeOpacity={sys.isCenter ? "0.6" : "0.3"}
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: i * 0.06 + 0.2, type: "spring", stiffness: 200 }}
             />
-            {/* Logo or center text */}
+            {/* Glow behind center card */}
+            {sys.isCenter && (
+              <motion.rect
+                x={sys.x - nodeW / 2 - 2} y={sys.y - nodeH / 2 - 2}
+                width={nodeW + 4} height={nodeH + 4} rx="5"
+                fill="none"
+                stroke="hsl(174, 78%, 41%)"
+                strokeWidth="0.4"
+                animate={{ opacity: [0.15, 0.35, 0.15] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+            )}
+            {/* Logo or center logo */}
             {"logo" in sys && sys.logo ? (
               <image
                 href={sys.logo}
                 x={sys.x - 6} y={sys.y - 6}
                 width="12" height="12"
-                opacity="0.8"
+                opacity="0.85"
                 style={("dark" in sys && sys.dark) ? { filter: "invert(1)" } : undefined}
               />
             ) : (
-              <>
-                {/* Center node: Autronis logo + text */}
-                <image
-                  href="/logo.png"
-                  x={sys.x - 6} y={sys.y - 6}
-                  width="12" height="12"
-                  opacity="0.7"
-                />
-              </>
+              <image
+                href="/logo.png"
+                x={sys.x - 7} y={sys.y - 7}
+                width="14" height="14"
+                opacity="0.8"
+              />
             )}
           </g>
         ))}

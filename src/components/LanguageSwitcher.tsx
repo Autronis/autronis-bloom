@@ -1,6 +1,4 @@
 import { useLanguage } from "@/i18n/context";
-import flagEN from "@/assets/flag-en.png";
-import flagNL from "@/assets/flag-nl.png";
 
 interface Props {
   size?: "sm" | "md";
@@ -9,27 +7,33 @@ interface Props {
 const LanguageSwitcher = ({ size = "sm" }: Props) => {
   const lang = useLanguage();
   const isEN = lang === "en";
-  const dim = size === "md" ? "w-8 h-6" : "w-7 h-5";
+  const h = size === "md" ? "h-8" : "h-7";
 
   return (
-    <div className="flex items-center gap-1.5">
+    <div className={`flex items-center ${h} rounded-full bg-muted/50 border border-border p-0.5`}>
       {isEN ? (
         <>
-          <button className={`${dim} rounded-[4px] overflow-hidden ring-2 ring-primary/50 shadow-sm`} aria-label="English (active)">
-            <img src={flagEN} alt="EN" className="w-full h-full object-cover" />
-          </button>
-          <a href="https://autronis.nl" className={`${dim} rounded-[4px] overflow-hidden opacity-50 hover:opacity-80 transition-opacity ring-1 ring-border`} aria-label="Nederlands">
-            <img src={flagNL} alt="NL" className="w-full h-full object-cover" />
+          <span className="px-2.5 py-1 rounded-full bg-primary/10 text-primary text-[11px] font-semibold tracking-wide">
+            EN
+          </span>
+          <a
+            href="https://autronis.nl"
+            className="px-2.5 py-1 rounded-full text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            NL
           </a>
         </>
       ) : (
         <>
-          <a href="https://autronis.com" className={`${dim} rounded-[4px] overflow-hidden opacity-50 hover:opacity-80 transition-opacity ring-1 ring-border`} aria-label="English">
-            <img src={flagEN} alt="EN" className="w-full h-full object-cover" />
+          <a
+            href="https://autronis.com"
+            className="px-2.5 py-1 rounded-full text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            EN
           </a>
-          <button className={`${dim} rounded-[4px] overflow-hidden ring-2 ring-primary/50 shadow-sm`} aria-label="Nederlands (actief)">
-            <img src={flagNL} alt="NL" className="w-full h-full object-cover" />
-          </button>
+          <span className="px-2.5 py-1 rounded-full bg-primary/10 text-primary text-[11px] font-semibold tracking-wide">
+            NL
+          </span>
         </>
       )}
     </div>

@@ -61,8 +61,17 @@ const text = {
 };
 
 const SectionFallback = () => (
-  <div className="py-24 flex items-center justify-center">
-    <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+  <div className="py-20 px-4">
+    <div className="max-w-3xl mx-auto animate-pulse space-y-4">
+      <div className="h-3 w-24 bg-muted rounded-full mx-auto" />
+      <div className="h-6 w-72 bg-muted rounded-full mx-auto" />
+      <div className="h-3 w-96 max-w-full bg-muted/60 rounded-full mx-auto" />
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+        <div className="h-32 bg-muted/40 rounded-xl" />
+        <div className="h-32 bg-muted/40 rounded-xl" />
+        <div className="h-32 bg-muted/40 rounded-xl" />
+      </div>
+    </div>
   </div>
 );
 

@@ -32,8 +32,15 @@ const ImpactROI = lazy(() => import("./pages/ImpactROI"));
 const queryClient = new QueryClient();
 
 const PageFallback = () => (
-  <div className="min-h-screen flex items-center justify-center">
-    <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+  <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4">
+    <div className="relative">
+      <div className="w-10 h-10 border-2 border-primary/20 rounded-full" />
+      <div className="absolute inset-0 w-10 h-10 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+    </div>
+    <div className="flex flex-col items-center gap-2 animate-pulse">
+      <div className="h-3 w-48 bg-muted rounded-full" />
+      <div className="h-2 w-32 bg-muted/60 rounded-full" />
+    </div>
   </div>
 );
 

@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 const gearPath = (cx: number, cy: number, outerR: number, innerR: number, teeth: number) => {
   const parts: string[] = [];
   const step = (Math.PI * 2) / teeth;
-  const toothHalf = step * 0.22; // width of tooth
-  const gapHalf = step * 0.28; // width of gap
+  const toothHalf = step * 0.18; // narrower tooth
+  const gapHalf = step * 0.32; // wider gap so neighbor tooth fits
 
   for (let i = 0; i < teeth; i++) {
     const a = i * step;
@@ -35,54 +35,36 @@ const gearPath = (cx: number, cy: number, outerR: number, innerR: number, teeth:
 
 // Process Automation — Meshing settings gears + conveyor belt with documents
 export const ProcessAutomationVisual = () => {
-  // All gears use same module (tooth size) so they mesh perfectly
-  // Module = pitch_diameter / teeth. Keep module constant = 4
-  const mod = 4;
+  // Gear dimensions — tooth tip (outer) must fit into gap (inner) of neighbor
+  // Distance between centers = outerA + innerB (tooth tip reaches into gap)
+  const teethA = 10, outerA = 28, innerA = 20;
+  const teethB = 8, outerB = 22, innerB = 16;
+  const teethC = 6, outerC = 17, innerC = 12;
 
-  // Gear A: 12 teeth
-  const teethA = 12;
-  const pitchA = (mod * teethA) / 2; // 24
-  const outerA = pitchA + mod * 0.6; // 26.4 → tooth tip
-  const innerA = pitchA - mod * 0.7; // 21.2 → tooth root
+  const cxA = 110, cyA = 45;
 
-  // Gear B: 8 teeth
-  const teethB = 8;
-  const pitchB = (mod * teethB) / 2; // 16
-  const outerB = pitchB + mod * 0.6;
-  const innerB = pitchB - mod * 0.7;
+  // B meshes with A: distance so A's teeth reach B's gaps and vice versa
+  // dist = (outerA + innerB) / 2 + (outerB + innerA) / 2 = average mesh distance
+  const distAB = (outerA + innerB) / 2 + (outerB + innerA) / 2;
+  const angAB = 215 * (Math.PI / 180);
+  const cxB = cxA + Math.cos(angAB) * distAB;
+  const cyB = cyA + Math.sin(angAB) * distAB;
 
-  // Gear C: 6 teeth
-  const teethC = 6;
-  const pitchC = (mod * teethC) / 2; // 12
-  const outerC = pitchC + mod * 0.6;
-  const innerC = pitchC - mod * 0.7;
+  // C meshes with A
+  const distAC = (outerA + innerC) / 2 + (outerC + innerA) / 2;
+  const angAC = 325 * (Math.PI / 180);
+  const cxC = cxA + Math.cos(angAC) * distAC;
+  const cyC = cyA + Math.sin(angAC) * distAC;
 
-  // Centers: distance = pitchA + pitchB for meshing
-  const cxA = 115, cyA = 48;
-
-  // B is to the lower-left of A
-  const angleAB = (210 * Math.PI) / 180; // 210 degrees
-  const distAB = pitchA + pitchB; // 40
-  const cxB = cxA + Math.cos(angleAB) * distAB;
-  const cyB = cyA - Math.sin(angleAB) * distAB;
-
-  // C is to the lower-right of A
-  const angleAC = (330 * Math.PI) / 180; // 330 degrees
-  const distAC = pitchA + pitchC; // 36
-  const cxC = cxA + Math.cos(angleAC) * distAC;
-  const cyC = cyA - Math.sin(angleAC) * distAC;
-
-  // Rotation offsets so teeth interlock into gaps
-  // Half a tooth step offset for meshing gear
-  const halfToothA = 360 / teethA / 2; // 15 degrees
-  const halfToothB = 360 / teethB / 2; // 22.5 degrees
-  const halfToothC = 360 / teethC / 2; // 30 degrees
-
-  // Speed: same linear tooth speed. Duration inversely proportional to teeth
-  const baseDur = 24; // seconds for gear A full rotation
+  // Speed: gear with fewer teeth rotates faster
+  const baseDur = 20;
   const durA = baseDur;
-  const durB = baseDur * (teethB / teethA); // faster (fewer teeth)
+  const durB = baseDur * (teethB / teethA);
   const durC = baseDur * (teethC / teethA);
+
+  // Rotation offset: half tooth angular width so teeth slot into gaps
+  const offsetB = (360 / teethB) / 2;
+  const offsetC = (360 / teethC) / 2;
 
   const beltY = 130;
 
@@ -104,7 +86,7 @@ export const ProcessAutomationVisual = () => {
 
         {/* Gear B — counter-clockwise, offset so tooth fits in A's gap */}
         <motion.g
-          animate={{ rotate: [halfToothB, halfToothB - 360] }}
+          animate={{ rotate: [offsetB, offsetB - 360] }}
           transition={{ duration: durB, repeat: Infinity, ease: "linear" }}
           style={{ transformOrigin: `${cxB}px ${cyB}px` }}
         >
@@ -117,7 +99,7 @@ export const ProcessAutomationVisual = () => {
 
         {/* Gear C — counter-clockwise, offset */}
         <motion.g
-          animate={{ rotate: [halfToothC, halfToothC - 360] }}
+          animate={{ rotate: [offsetC, offsetC - 360] }}
           transition={{ duration: durC, repeat: Infinity, ease: "linear" }}
           style={{ transformOrigin: `${cxC}px ${cyC}px` }}
         >

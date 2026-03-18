@@ -20,99 +20,137 @@ const gearPath = (cx: number, cy: number, outerR: number, innerR: number, teeth:
   return `M ${points.join(" L ")} Z`;
 };
 
-// Process Automation — Meshing gears + documents
-export const ProcessAutomationVisual = () => {
-  // Two gears that mesh: teeth must interlock
-  // Large gear: 10 teeth, centered at (120, 60)
-  // Medium gear: 8 teeth, positioned so teeth mesh
-  const largeR = 35;
-  const largeInner = 27;
-  const medR = 24;
-  const medInner = 18;
-  // Distance = sum of pitch radii for meshing
-  const meshDist = largeInner + medInner + 2;
-  const medCx = 120 - meshDist * 0.85;
-  const medCy = 60 + meshDist * 0.52;
+// Settings gear icon (⚙️ style)
+const settingsIcon = (cx: number, cy: number, r: number) => {
+  const inner = r * 0.55;
+  return `M ${cx} ${cy - r} l ${r * 0.2} 0 l ${r * 0.08} ${r * 0.3} a ${inner} ${inner} 0 0 1 ${r * 0.22} ${r * 0.13} l ${r * 0.28} -${r * 0.15} l ${r * 0.14} ${r * 0.14} l -${r * 0.15} ${r * 0.28} a ${inner} ${inner} 0 0 1 ${r * 0.13} ${r * 0.22} l ${r * 0.3} ${r * 0.08} l 0 ${r * 0.2} l -${r * 0.3} ${r * 0.08} a ${inner} ${inner} 0 0 1 -${r * 0.13} ${r * 0.22} l ${r * 0.15} ${r * 0.28} l -${r * 0.14} ${r * 0.14} l -${r * 0.28} -${r * 0.15} a ${inner} ${inner} 0 0 1 -${r * 0.22} ${r * 0.13} l -${r * 0.08} ${r * 0.3} l -${r * 0.2} 0 l -${r * 0.08} -${r * 0.3} a ${inner} ${inner} 0 0 1 -${r * 0.22} -${r * 0.13} l -${r * 0.28} ${r * 0.15} l -${r * 0.14} -${r * 0.14} l ${r * 0.15} -${r * 0.28} a ${inner} ${inner} 0 0 1 -${r * 0.13} -${r * 0.22} l -${r * 0.3} -${r * 0.08} l 0 -${r * 0.2} l ${r * 0.3} -${r * 0.08} a ${inner} ${inner} 0 0 1 ${r * 0.13} -${r * 0.22} l -${r * 0.15} -${r * 0.28} l ${r * 0.14} -${r * 0.14} l ${r * 0.28} ${r * 0.15} a ${inner} ${inner} 0 0 1 ${r * 0.22} -${r * 0.13} Z`;
+};
 
-  const smallR = 16;
-  const smallInner = 12;
-  const smallDist = medInner + smallInner + 2;
-  const smallCx = medCx - smallDist * 0.7;
-  const smallCy = medCy - smallDist * 0.7;
+// Process Automation — Meshing settings gears + conveyor belt with documents
+export const ProcessAutomationVisual = () => {
+  // Gear positions — carefully placed so pitch circles touch
+  // Gear A (12 teeth): center, large
+  const gA = { cx: 110, cy: 45, outer: 30, inner: 23, teeth: 12, dur: 18 };
+  // Gear B (9 teeth): meshes with A — distance = (23 + 17) = 40
+  const gB = { cx: 110 - 40, cy: 45, outer: 22, inner: 17, teeth: 9, dur: 18 * (9 / 12) };
+  // Gear C (9 teeth): meshes with A on other side
+  const gC = { cx: 110 + 28, cy: 45 + 30, outer: 22, inner: 17, teeth: 9, dur: 18 * (9 / 12) };
+  // Gear D (6 teeth): small, meshes with B — distance = (17 + 11) = 28
+  const gD = { cx: gB.cx - 20, cy: gB.cy - 20, outer: 15, inner: 11, teeth: 6, dur: 18 * (6 / 12) };
+
+  const gears = [
+    { ...gA, dir: 1 },
+    { ...gB, dir: -1 },
+    { ...gC, dir: -1 },
+    { ...gD, dir: 1 },
+  ];
+
+  const beltY = 130;
 
   return (
     <div className="relative w-full h-full min-h-[320px] flex items-center justify-center p-2">
       <svg viewBox="0 0 200 160" className="w-full h-full">
-        {/* Large gear — clockwise */}
-        <motion.g
-          animate={{ rotate: 360 }}
-          transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
-          style={{ transformOrigin: "120px 60px" }}
-        >
-          <path d={gearPath(120, 60, largeR, largeInner, 10)} fill="hsl(174, 78%, 41%)" fillOpacity="0.08" stroke="hsl(174, 78%, 41%)" strokeWidth="1.2" strokeOpacity="0.5" />
-          <circle cx="120" cy="60" r="10" fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="1" strokeOpacity="0.3" />
-          <circle cx="120" cy="60" r="4" fill="hsl(174, 78%, 41%)" fillOpacity="0.2" />
-        </motion.g>
-
-        {/* Medium gear — counter-clockwise, meshed */}
-        <motion.g
-          animate={{ rotate: -360 }}
-          transition={{ duration: 16 * (8 / 10), repeat: Infinity, ease: "linear" }}
-          style={{ transformOrigin: `${medCx}px ${medCy}px` }}
-        >
-          <path d={gearPath(medCx, medCy, medR, medInner, 8)} fill="hsl(174, 78%, 41%)" fillOpacity="0.06" stroke="hsl(174, 78%, 41%)" strokeWidth="1" strokeOpacity="0.4" />
-          <circle cx={medCx} cy={medCy} r="7" fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeOpacity="0.25" />
-          <circle cx={medCx} cy={medCy} r="3" fill="hsl(174, 78%, 41%)" fillOpacity="0.15" />
-        </motion.g>
-
-        {/* Small gear — clockwise, meshed with medium */}
-        <motion.g
-          animate={{ rotate: 360 }}
-          transition={{ duration: 16 * (6 / 10), repeat: Infinity, ease: "linear" }}
-          style={{ transformOrigin: `${smallCx}px ${smallCy}px` }}
-        >
-          <path d={gearPath(smallCx, smallCy, smallR, smallInner, 6)} fill="hsl(174, 78%, 41%)" fillOpacity="0.05" stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeOpacity="0.35" />
-          <circle cx={smallCx} cy={smallCy} r="5" fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.6" strokeOpacity="0.2" />
-          <circle cx={smallCx} cy={smallCy} r="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.12" />
-        </motion.g>
-
-        {/* Documents flowing from left to right */}
-        {[0, 1, 2].map((i) => (
+        {/* Settings gears */}
+        {gears.map((g, i) => (
           <motion.g
             key={i}
-            animate={{
-              x: [-20, 180],
-              opacity: [0, 1, 1, 0],
-            }}
-            transition={{
-              duration: 7,
-              delay: i * 2.3,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            animate={{ rotate: g.dir * 360 }}
+            transition={{ duration: g.dur, repeat: Infinity, ease: "linear" }}
+            style={{ transformOrigin: `${g.cx}px ${g.cy}px` }}
           >
-            {/* Document body */}
-            <rect
-              x="10" y={115 + i * 2}
-              width="22" height="28" rx="2"
+            <path
+              d={gearPath(g.cx, g.cy, g.outer, g.inner, g.teeth)}
               fill="hsl(174, 78%, 41%)" fillOpacity="0.06"
-              stroke="hsl(174, 78%, 41%)" strokeWidth="0.7" strokeOpacity="0.45"
+              stroke="hsl(174, 78%, 41%)" strokeWidth="1" strokeOpacity="0.45"
+            />
+            <circle cx={g.cx} cy={g.cy} r={g.inner * 0.45} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeOpacity="0.25" />
+            <circle cx={g.cx} cy={g.cy} r={g.inner * 0.18} fill="hsl(174, 78%, 41%)" fillOpacity="0.2" />
+          </motion.g>
+        ))}
+
+        {/* Floating mini settings icons */}
+        {[
+          { x: 25, y: 20, s: 8, delay: 0 },
+          { x: 170, y: 30, s: 6, delay: 1 },
+          { x: 160, y: 80, s: 7, delay: 2 },
+        ].map((icon, i) => (
+          <motion.g key={`icon-${i}`}
+            animate={{ rotate: 360 }}
+            transition={{ duration: 12 + i * 4, repeat: Infinity, ease: "linear" }}
+            style={{ transformOrigin: `${icon.x}px ${icon.y}px` }}
+          >
+            <circle cx={icon.x} cy={icon.y} r={icon.s} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.4" strokeOpacity="0.15" />
+            <motion.circle cx={icon.x} cy={icon.y} r={icon.s * 0.4} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.2"
+              animate={{ opacity: [0.1, 0.3, 0.1] }}
+              transition={{ duration: 3, delay: icon.delay, repeat: Infinity }}
+            />
+            {/* Gear notches */}
+            {[0, 60, 120, 180, 240, 300].map((angle) => {
+              const rad = (angle * Math.PI) / 180;
+              return (
+                <line key={angle}
+                  x1={icon.x + Math.cos(rad) * icon.s * 0.6}
+                  y1={icon.y + Math.sin(rad) * icon.s * 0.6}
+                  x2={icon.x + Math.cos(rad) * icon.s}
+                  y2={icon.y + Math.sin(rad) * icon.s}
+                  stroke="hsl(174, 78%, 41%)" strokeWidth="0.4" strokeOpacity="0.15"
+                />
+              );
+            })}
+          </motion.g>
+        ))}
+
+        {/* ═══ Conveyor belt ═══ */}
+        {/* Belt line */}
+        <line x1="5" y1={beltY} x2="195" y2={beltY} stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeOpacity="0.3" />
+        <line x1="5" y1={beltY + 4} x2="195" y2={beltY + 4} stroke="hsl(174, 78%, 41%)" strokeWidth="0.5" strokeOpacity="0.15" />
+
+        {/* Belt rollers */}
+        {[15, 60, 105, 150, 190].map((x) => (
+          <g key={`roller-${x}`}>
+            <circle cx={x} cy={beltY + 2} r="3" fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.4" strokeOpacity="0.2" />
+            <motion.circle cx={x} cy={beltY + 2} r="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.15"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              style={{ transformOrigin: `${x}px ${beltY + 2}px` }}
+            />
+          </g>
+        ))}
+
+        {/* Belt movement dashes */}
+        <motion.line x1="5" y1={beltY + 2} x2="195" y2={beltY + 2}
+          stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.1"
+          strokeDasharray="4 4"
+          animate={{ strokeDashoffset: [0, -8] }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        />
+
+        {/* Documents on belt */}
+        {[0, 1, 2].map((i) => (
+          <motion.g key={`doc-${i}`}
+            animate={{ x: [-30, 200] }}
+            transition={{ duration: 8, delay: i * 2.7, repeat: Infinity, ease: "linear" }}
+          >
+            {/* Document */}
+            <rect x="5" y={beltY - 22} width="20" height="21" rx="1.5"
+              fill="hsl(174, 78%, 41%)" fillOpacity="0.07"
+              stroke="hsl(174, 78%, 41%)" strokeWidth="0.6" strokeOpacity="0.5"
             />
             {/* Folded corner */}
-            <path d={`M 26 ${115 + i * 2} l 6 0 l 0 6`} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.5" strokeOpacity="0.3" />
-            {/* Text lines */}
-            <rect x="14" y={121 + i * 2} width="14" height="1" rx="0.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.3" />
-            <rect x="14" y={124 + i * 2} width="11" height="1" rx="0.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.2" />
-            <rect x="14" y={127 + i * 2} width="13" height="1" rx="0.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.2" />
-            <rect x="14" y={130 + i * 2} width="9" height="1" rx="0.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.15" />
+            <path d={`M 20 ${beltY - 22} l 5 0 l 0 5`} fill="hsl(174, 78%, 41%)" fillOpacity="0.04" stroke="hsl(174, 78%, 41%)" strokeWidth="0.4" strokeOpacity="0.3" />
+            {/* Lines */}
+            <rect x="8" y={beltY - 17} width="13" height="0.8" rx="0.4" fill="hsl(174, 78%, 41%)" fillOpacity="0.35" />
+            <rect x="8" y={beltY - 14.5} width="10" height="0.8" rx="0.4" fill="hsl(174, 78%, 41%)" fillOpacity="0.25" />
+            <rect x="8" y={beltY - 12} width="12" height="0.8" rx="0.4" fill="hsl(174, 78%, 41%)" fillOpacity="0.25" />
+            <rect x="8" y={beltY - 9.5} width="8" height="0.8" rx="0.4" fill="hsl(174, 78%, 41%)" fillOpacity="0.2" />
             {/* Checkmark */}
             <motion.path
-              d={`M 16 ${134 + i * 2} l 3 3 l 6 -7`}
-              fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="1" strokeOpacity="0.6"
+              d={`M 10 ${beltY - 6} l 2.5 2.5 l 5 -5.5`}
+              fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeOpacity="0.6"
               strokeLinecap="round" strokeLinejoin="round"
               initial={{ pathLength: 0 }}
-              animate={{ pathLength: [0, 0, 1, 1] }}
-              transition={{ duration: 7, delay: i * 2.3, repeat: Infinity }}
+              animate={{ pathLength: [0, 0, 0, 1, 1] }}
+              transition={{ duration: 8, delay: i * 2.7, repeat: Infinity }}
             />
           </motion.g>
         ))}

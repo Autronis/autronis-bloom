@@ -13,6 +13,7 @@ interface SystemOption {
   logo: string;
   dark?: boolean;
   category: SystemCategory;
+  desc: { en: string; nl: string };
 }
 
 interface AutomationResult {
@@ -27,46 +28,46 @@ interface AutomationResult {
 
 export const workflowSystems: SystemOption[] = [
   // CRM
-  { id: "hubspot", name: "HubSpot", logo: "/logos/hubspot.svg", category: "crm" },
-  { id: "salesforce", name: "Salesforce", logo: "/logos/salesforce.svg", category: "crm" },
-  { id: "pipedrive", name: "Pipedrive", logo: "/logos/pipedrive.svg", category: "crm" },
-  { id: "mailchimp", name: "Mailchimp", logo: "/logos/mailchimp.svg", category: "crm" },
+  { id: "hubspot", name: "HubSpot", logo: "/logos/hubspot.svg", category: "crm", desc: { en: "Marketing, sales & CRM platform", nl: "Marketing, sales & CRM platform" } },
+  { id: "salesforce", name: "Salesforce", logo: "/logos/salesforce.svg", category: "crm", desc: { en: "Enterprise CRM & cloud platform", nl: "Enterprise CRM & cloudplatform" } },
+  { id: "pipedrive", name: "Pipedrive", logo: "/logos/pipedrive.svg", category: "crm", desc: { en: "Sales pipeline management", nl: "Sales pipeline management" } },
+  { id: "mailchimp", name: "Mailchimp", logo: "/logos/mailchimp.svg", category: "crm", desc: { en: "Email marketing & automation", nl: "E-mailmarketing & automatisering" } },
   // Finance
-  { id: "exact", name: "Exact", logo: "/logos/exact.svg", category: "finance" },
-  { id: "xero", name: "Xero", logo: "/logos/xero.svg", category: "finance" },
-  { id: "quickbooks", name: "QuickBooks", logo: "/logos/quickbooks.svg", category: "finance" },
-  { id: "stripe", name: "Stripe", logo: "/logos/stripe.svg", category: "finance" },
-  { id: "mollie", name: "Mollie", logo: "/logos/mollie.svg", dark: true, category: "finance" },
-  { id: "paypal", name: "PayPal", logo: "/logos/paypal.svg", category: "finance" },
+  { id: "exact", name: "Exact", logo: "/logos/exact.svg", category: "finance", desc: { en: "Dutch accounting & ERP software", nl: "Nederlandse boekhouding & ERP" } },
+  { id: "xero", name: "Xero", logo: "/logos/xero.svg", category: "finance", desc: { en: "Cloud accounting software", nl: "Cloud boekhoudsoftware" } },
+  { id: "quickbooks", name: "QuickBooks", logo: "/logos/quickbooks.svg", category: "finance", desc: { en: "Accounting & invoicing", nl: "Boekhouding & facturatie" } },
+  { id: "stripe", name: "Stripe", logo: "/logos/stripe.svg", category: "finance", desc: { en: "Online payment processing", nl: "Online betalingsverwerking" } },
+  { id: "mollie", name: "Mollie", logo: "/logos/mollie.svg", dark: true, category: "finance", desc: { en: "European payment provider", nl: "Europese betaalprovider" } },
+  { id: "paypal", name: "PayPal", logo: "/logos/paypal.svg", category: "finance", desc: { en: "Global payment platform", nl: "Wereldwijd betaalplatform" } },
   // E-commerce
-  { id: "shopify", name: "Shopify", logo: "/logos/shopify.svg", category: "ecommerce" },
-  { id: "woocommerce", name: "WooCommerce", logo: "/logos/woocommerce.svg", category: "ecommerce" },
-  { id: "magento", name: "Magento", logo: "/logos/magento.svg", category: "ecommerce" },
+  { id: "shopify", name: "Shopify", logo: "/logos/shopify.svg", category: "ecommerce", desc: { en: "E-commerce platform", nl: "E-commerce platform" } },
+  { id: "woocommerce", name: "WooCommerce", logo: "/logos/woocommerce.svg", category: "ecommerce", desc: { en: "WordPress webshop plugin", nl: "WordPress webshop plugin" } },
+  { id: "magento", name: "Magento", logo: "/logos/magento.svg", category: "ecommerce", desc: { en: "Enterprise e-commerce", nl: "Enterprise e-commerce" } },
   // Communication
-  { id: "slack", name: "Slack", logo: "/logos/slack.svg", category: "communication" },
-  { id: "whatsapp", name: "WhatsApp", logo: "/logos/whatsapp.svg", category: "communication" },
-  { id: "twilio", name: "Twilio", logo: "/logos/twilio.svg", category: "communication" },
-  { id: "google-workspace", name: "Google Workspace", logo: "/logos/google-workspace.svg", category: "communication" },
-  { id: "microsoft-365", name: "Microsoft 365", logo: "/logos/microsoft-365.svg", category: "communication" },
-  { id: "instagram", name: "Instagram", logo: "/logos/instagram.svg", category: "communication" },
+  { id: "slack", name: "Slack", logo: "/logos/slack.svg", category: "communication", desc: { en: "Team messaging & collaboration", nl: "Team messaging & samenwerking" } },
+  { id: "whatsapp", name: "WhatsApp", logo: "/logos/whatsapp.svg", category: "communication", desc: { en: "Business messaging", nl: "Zakelijke messaging" } },
+  { id: "twilio", name: "Twilio", logo: "/logos/twilio.svg", category: "communication", desc: { en: "SMS, voice & video API's", nl: "SMS, voice & video API's" } },
+  { id: "google-workspace", name: "Google Workspace", logo: "/logos/google-workspace.svg", category: "communication", desc: { en: "Gmail, Drive, Calendar & Docs", nl: "Gmail, Drive, Calendar & Docs" } },
+  { id: "microsoft-365", name: "Microsoft 365", logo: "/logos/microsoft-365.svg", category: "communication", desc: { en: "Outlook, Teams, OneDrive & Office", nl: "Outlook, Teams, OneDrive & Office" } },
+  { id: "instagram", name: "Instagram", logo: "/logos/instagram.svg", category: "communication", desc: { en: "Social media & marketing", nl: "Social media & marketing" } },
   // Data
-  { id: "supabase", name: "Supabase", logo: "/logos/supabase.svg", category: "data" },
-  { id: "postgresql", name: "PostgreSQL", logo: "/logos/postgresql.svg", category: "data" },
-  { id: "mongodb", name: "MongoDB", logo: "/logos/mongodb.svg", category: "data" },
-  { id: "mysql", name: "MySQL", logo: "/logos/mysql.svg", category: "data" },
-  { id: "power-bi", name: "Power BI", logo: "/logos/power-bi.svg", category: "data" },
-  { id: "google-analytics", name: "Google Analytics", logo: "/logos/google-analytics.svg", category: "data" },
-  { id: "google-sheets", name: "Google Sheets", logo: "/logos/google-sheets.svg", category: "data" },
-  { id: "looker-studio", name: "Looker Studio", logo: "/logos/looker-studio.svg", category: "data" },
+  { id: "supabase", name: "Supabase", logo: "/logos/supabase.svg", category: "data", desc: { en: "Open-source backend & database", nl: "Open-source backend & database" } },
+  { id: "postgresql", name: "PostgreSQL", logo: "/logos/postgresql.svg", category: "data", desc: { en: "Relational database", nl: "Relationele database" } },
+  { id: "mongodb", name: "MongoDB", logo: "/logos/mongodb.svg", category: "data", desc: { en: "NoSQL document database", nl: "NoSQL document database" } },
+  { id: "mysql", name: "MySQL", logo: "/logos/mysql.svg", category: "data", desc: { en: "Relational database", nl: "Relationele database" } },
+  { id: "power-bi", name: "Power BI", logo: "/logos/power-bi.svg", category: "data", desc: { en: "Microsoft BI & dashboards", nl: "Microsoft BI & dashboards" } },
+  { id: "google-analytics", name: "Google Analytics", logo: "/logos/google-analytics.svg", category: "data", desc: { en: "Website & app analytics", nl: "Website & app analytics" } },
+  { id: "google-sheets", name: "Google Sheets", logo: "/logos/google-sheets.svg", category: "data", desc: { en: "Cloud spreadsheets", nl: "Cloud spreadsheets" } },
+  { id: "looker-studio", name: "Looker Studio", logo: "/logos/looker-studio.svg", category: "data", desc: { en: "Google data visualization", nl: "Google datavisualisatie" } },
   // Productivity
-  { id: "airtable", name: "Airtable", logo: "/logos/airtable.svg", category: "productivity" },
-  { id: "notion", name: "Notion", logo: "/logos/notion.svg", dark: true, category: "productivity" },
-  { id: "retool", name: "Retool", logo: "/logos/retool.svg", category: "productivity" },
-  { id: "github", name: "GitHub", logo: "/logos/github.svg", dark: true, category: "productivity" },
+  { id: "airtable", name: "Airtable", logo: "/logos/airtable.svg", category: "productivity", desc: { en: "Spreadsheet-database hybrid", nl: "Spreadsheet-database hybride" } },
+  { id: "notion", name: "Notion", logo: "/logos/notion.svg", dark: true, category: "productivity", desc: { en: "Docs, wikis & project management", nl: "Docs, wiki's & projectmanagement" } },
+  { id: "retool", name: "Retool", logo: "/logos/retool.svg", category: "productivity", desc: { en: "Internal tool builder", nl: "Interne tool builder" } },
+  { id: "github", name: "GitHub", logo: "/logos/github.svg", dark: true, category: "productivity", desc: { en: "Code hosting & version control", nl: "Code hosting & versiebeheer" } },
   // AI
-  { id: "openai", name: "OpenAI", logo: "/logos/openai.svg", dark: true, category: "ai" },
-  { id: "anthropic", name: "Anthropic", logo: "/logos/anthropic.svg", dark: true, category: "ai" },
-  { id: "langchain", name: "LangChain", logo: "/logos/langchain.svg", dark: true, category: "ai" },
+  { id: "openai", name: "OpenAI", logo: "/logos/openai.svg", dark: true, category: "ai", desc: { en: "GPT models & AI API", nl: "GPT modellen & AI API" } },
+  { id: "anthropic", name: "Anthropic", logo: "/logos/anthropic.svg", dark: true, category: "ai", desc: { en: "Claude AI models", nl: "Claude AI modellen" } },
+  { id: "langchain", name: "LangChain", logo: "/logos/langchain.svg", dark: true, category: "ai", desc: { en: "LLM application framework", nl: "LLM applicatie framework" } },
 ];
 
 const categoryLabels: Record<SystemCategory, { en: string; nl: string }> = {
@@ -441,7 +442,7 @@ const WorkflowBuilder = ({ externalSelected, onExternalToggle }: WorkflowBuilder
                       <motion.button
                         key={system.id}
                         onClick={() => toggleSystem(system.id)}
-                        className={`relative flex items-center gap-2.5 px-4 py-2.5 rounded-xl border text-sm font-medium transition-all duration-200 ${
+                        className={`group/tool relative flex items-center gap-2.5 px-4 py-2.5 rounded-xl border text-sm font-medium transition-all duration-200 ${
                           isSelected
                             ? "border-primary bg-primary/10 text-foreground shadow-[0_0_12px_hsl(var(--primary)/0.15)]"
                             : "border-border bg-card hover:border-primary/30 text-muted-foreground hover:text-foreground"
@@ -464,6 +465,10 @@ const WorkflowBuilder = ({ externalSelected, onExternalToggle }: WorkflowBuilder
                             <Check size={10} className="text-primary-foreground" />
                           </motion.div>
                         )}
+                        {/* Hover tooltip */}
+                        <span className="absolute -bottom-9 left-1/2 -translate-x-1/2 whitespace-nowrap text-[11px] text-muted-foreground bg-card border border-border rounded-lg px-2.5 py-1 opacity-0 group-hover/tool:opacity-100 transition-opacity duration-200 pointer-events-none shadow-md z-10">
+                          {system.desc[lang]}
+                        </span>
                       </motion.button>
                     );
                   })}

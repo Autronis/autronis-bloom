@@ -517,11 +517,11 @@ const ChatWidget = () => {
             exit={{ scale: 0, opacity: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 20 }}
             onClick={handleOpen}
-            className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/25 flex items-center justify-center hover:scale-110 transition-transform duration-200"
+            className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-card border border-primary/30 shadow-lg shadow-black/10 flex items-center justify-center hover:scale-110 hover:border-primary/50 transition-all duration-200"
             aria-label="Open chat"
           >
             {showPulse && (
-              <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-30" />
+              <span className="absolute inset-0 rounded-full bg-primary/50 animate-ping opacity-20" />
             )}
             <img src="/logo.png" alt="Autronis" className="w-8 h-8 object-contain relative z-10" />
           </motion.button>

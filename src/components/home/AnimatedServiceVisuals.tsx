@@ -1,23 +1,36 @@
 import { motion } from "framer-motion";
 
-// Gear SVG path — proper tooth profile
+// Settings gear path — wide flat teeth like ⚙️ icon
 const gearPath = (cx: number, cy: number, outerR: number, innerR: number, teeth: number) => {
-  const points: string[] = [];
+  const parts: string[] = [];
+  const step = (Math.PI * 2) / teeth;
+  const toothHalf = step * 0.22; // width of tooth
+  const gapHalf = step * 0.28; // width of gap
+
   for (let i = 0; i < teeth; i++) {
-    const a = (i / teeth) * Math.PI * 2;
-    const toothWidth = (Math.PI * 2) / teeth;
-    const a1 = a - toothWidth * 0.2;
-    const a2 = a - toothWidth * 0.05;
-    const a3 = a + toothWidth * 0.05;
-    const a4 = a + toothWidth * 0.2;
-    points.push(
-      `${cx + Math.cos(a1) * innerR},${cy + Math.sin(a1) * innerR}`,
-      `${cx + Math.cos(a2) * outerR},${cy + Math.sin(a2) * outerR}`,
-      `${cx + Math.cos(a3) * outerR},${cy + Math.sin(a3) * outerR}`,
-      `${cx + Math.cos(a4) * innerR},${cy + Math.sin(a4) * innerR}`,
-    );
+    const a = i * step;
+    // Tooth: flat top at outerR
+    const t1 = a - toothHalf;
+    const t2 = a + toothHalf;
+    // Gap: flat bottom at innerR
+    const g1 = a + gapHalf;
+    const g2 = a + step - gapHalf;
+
+    if (i === 0) {
+      parts.push(`M ${cx + Math.cos(t1) * outerR} ${cy + Math.sin(t1) * outerR}`);
+    }
+    // Outer arc (tooth top)
+    parts.push(`A ${outerR} ${outerR} 0 0 1 ${cx + Math.cos(t2) * outerR} ${cy + Math.sin(t2) * outerR}`);
+    // Down to inner
+    parts.push(`L ${cx + Math.cos(g1) * innerR} ${cy + Math.sin(g1) * innerR}`);
+    // Inner arc (gap bottom)
+    parts.push(`A ${innerR} ${innerR} 0 0 1 ${cx + Math.cos(g2) * innerR} ${cy + Math.sin(g2) * innerR}`);
+    // Up to next tooth
+    const nextT1 = (i + 1) * step - toothHalf;
+    parts.push(`L ${cx + Math.cos(nextT1) * outerR} ${cy + Math.sin(nextT1) * outerR}`);
   }
-  return `M ${points.join(" L ")} Z`;
+  parts.push("Z");
+  return parts.join(" ");
 };
 
 // Settings gear icon (⚙️ style)

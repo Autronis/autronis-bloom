@@ -16,11 +16,13 @@ interface SystemOption {
   desc: { en: string; nl: string };
 }
 
+type StepDef = { text: { en: string; nl: string }; tools?: string[] };
+
 interface AutomationResult {
   icon: typeof Zap;
   title: { en: string; nl: string };
   description: { en: string; nl: string };
-  steps: { en: string[]; nl: string[] };
+  steps: StepDef[];
   timeSaved: string;
   impact: { en: string; nl: string };
   systems: string[];
@@ -84,233 +86,121 @@ const automationTemplates: AutomationResult[] = [
   {
     icon: Users,
     title: { en: "Lead-to-Deal Pipeline", nl: "Lead-naar-Deal Pipeline" },
-    description: {
-      en: "Automatically capture, enrich, score, and route leads through your entire sales pipeline — from first touch to closed deal.",
-      nl: "Vang automatisch leads op, verrijk ze, scoor ze en routeer ze door je hele sales pipeline — van eerste contact tot gesloten deal.",
-    },
-    steps: {
-      en: [
-        "New lead captured via form, ad, or import into CRM",
-        "AI enriches contact with company size, industry, and revenue data",
-        "Lead score calculated based on behavior, fit, and engagement",
-        "High-scoring leads auto-assigned to the right sales rep via Slack notification",
-        "Personalized follow-up email sequence triggered based on lead segment",
-        "Deal stage updates automatically as prospect engages — no manual CRM updates",
-      ],
-      nl: [
-        "Nieuwe lead binnengehaald via formulier, advertentie of import in CRM",
-        "AI verrijkt contact met bedrijfsgrootte, branche en omzetgegevens",
-        "Leadscore berekend op basis van gedrag, fit en engagement",
-        "Hoog scorende leads automatisch toegewezen aan juiste sales rep via Slack",
-        "Gepersonaliseerde follow-up e-mailreeks getriggerd op basis van segment",
-        "Deal-fase updatet automatisch naarmate prospect interacteert — geen handmatige CRM-updates",
-      ],
-    },
-    timeSaved: "15-20",
-    impact: { en: "2x faster lead response time", nl: "2x snellere lead responstijd" },
+    description: { en: "Automatically capture, enrich, score, and route leads through your entire sales pipeline — from first touch to closed deal.", nl: "Vang automatisch leads op, verrijk ze, scoor ze en routeer ze door je hele sales pipeline — van eerste contact tot gesloten deal." },
+    steps: [
+      { text: { en: "New lead captured via form, ad, or import into CRM", nl: "Nieuwe lead binnengehaald via formulier, advertentie of import in CRM" }, tools: ["hubspot", "salesforce", "pipedrive"] },
+      { text: { en: "AI enriches contact with company size, industry, and revenue data", nl: "AI verrijkt contact met bedrijfsgrootte, branche en omzetgegevens" }, tools: ["openai"] },
+      { text: { en: "Lead score calculated based on behavior, fit, and engagement", nl: "Leadscore berekend op basis van gedrag, fit en engagement" }, tools: ["hubspot", "salesforce"] },
+      { text: { en: "High-scoring leads auto-assigned to the right sales rep via Slack", nl: "Hoog scorende leads automatisch toegewezen aan juiste sales rep via Slack" }, tools: ["slack"] },
+      { text: { en: "Personalized follow-up email sequence triggered based on lead segment", nl: "Gepersonaliseerde follow-up e-mailreeks getriggerd op basis van segment" }, tools: ["mailchimp", "hubspot"] },
+      { text: { en: "Deal stage updates automatically as prospect engages — no manual CRM updates", nl: "Deal-fase updatet automatisch naarmate prospect interacteert — geen handmatige CRM-updates" }, tools: ["hubspot", "salesforce", "pipedrive"] },
+    ],
+    timeSaved: "15-20", impact: { en: "2x faster lead response time", nl: "2x snellere lead responstijd" },
     systems: ["hubspot", "salesforce", "pipedrive", "mailchimp", "slack", "google-workspace", "microsoft-365", "openai"],
   },
   {
     icon: ShoppingCart,
     title: { en: "Order & Invoice Automation", nl: "Order- & Facturatieflow" },
-    description: {
-      en: "End-to-end order processing — from webshop order to invoice, inventory update, and customer notification, fully automated.",
-      nl: "End-to-end orderverwerking — van webshop bestelling tot factuur, voorraadupdate en klantnotificatie, volledig geautomatiseerd.",
-    },
-    steps: {
-      en: [
-        "Customer places order in webshop — webhook triggers automation",
-        "Payment status verified via Stripe/Mollie — fraud check completed",
-        "Invoice automatically created in Exact/Xero with correct VAT and line items",
-        "Inventory levels updated across all sales channels in real-time",
-        "Shipping label generated and tracking number sent to customer",
-        "Post-delivery: review request email sent after 7 days, return window tracked",
-      ],
-      nl: [
-        "Klant plaatst bestelling in webshop — webhook triggert automatisering",
-        "Betaalstatus geverifieerd via Stripe/Mollie — fraudecheck uitgevoerd",
-        "Factuur automatisch aangemaakt in Exact/Xero met juiste BTW en regelitems",
-        "Voorraadniveaus bijgewerkt over alle verkoopkanalen in realtime",
-        "Verzendlabel gegenereerd en trackingnummer verstuurd naar klant",
-        "Na levering: review-verzoek e-mail na 7 dagen, retourvenster bijgehouden",
-      ],
-    },
-    timeSaved: "10-15",
-    impact: { en: "73% faster order processing", nl: "73% snellere orderverwerking" },
+    description: { en: "End-to-end order processing — from webshop order to invoice, inventory update, and customer notification, fully automated.", nl: "End-to-end orderverwerking — van webshop bestelling tot factuur, voorraadupdate en klantnotificatie, volledig geautomatiseerd." },
+    steps: [
+      { text: { en: "Customer places order in webshop — webhook triggers automation", nl: "Klant plaatst bestelling in webshop — webhook triggert automatisering" }, tools: ["shopify", "woocommerce", "magento"] },
+      { text: { en: "Payment status verified — fraud check completed", nl: "Betaalstatus geverifieerd — fraudecheck uitgevoerd" }, tools: ["stripe", "mollie", "paypal"] },
+      { text: { en: "Invoice automatically created with correct VAT and line items", nl: "Factuur automatisch aangemaakt met juiste BTW en regelitems" }, tools: ["exact", "xero", "quickbooks"] },
+      { text: { en: "Inventory levels updated across all sales channels in real-time", nl: "Voorraadniveaus bijgewerkt over alle verkoopkanalen in realtime" }, tools: ["shopify", "airtable"] },
+      { text: { en: "Shipping label generated and tracking number sent to customer", nl: "Verzendlabel gegenereerd en trackingnummer verstuurd naar klant" }, tools: ["google-workspace"] },
+      { text: { en: "Post-delivery: review request email sent after 7 days", nl: "Na levering: review-verzoek e-mail na 7 dagen" }, tools: ["mailchimp", "hubspot"] },
+    ],
+    timeSaved: "10-15", impact: { en: "73% faster order processing", nl: "73% snellere orderverwerking" },
     systems: ["shopify", "woocommerce", "magento", "exact", "xero", "quickbooks", "stripe", "mollie", "paypal", "slack"],
   },
   {
     icon: BarChart3,
     title: { en: "Real-time KPI Dashboard", nl: "Realtime KPI Dashboard" },
-    description: {
-      en: "Consolidate data from all your tools into one live dashboard with automated alerts, weekly reports, and AI-powered trend analysis.",
-      nl: "Consolideer data uit al je tools in één live dashboard met automatische alerts, wekelijkse rapporten en AI-gestuurde trendanalyse.",
-    },
-    steps: {
-      en: [
-        "Data sources connected: CRM, accounting, webshop, marketing, and custom databases",
-        "ETL pipeline transforms raw data into clean, normalized metrics every 15 minutes",
-        "Interactive dashboard built with drill-down per team, region, and time period",
-        "Anomaly detection alerts team via Slack when KPIs deviate from expected ranges",
-        "Automated PDF/email report generated and distributed every Monday morning",
-        "AI analyzes trends weekly and surfaces actionable insights for management",
-      ],
-      nl: [
-        "Databronnen verbonden: CRM, boekhouding, webshop, marketing en custom databases",
-        "ETL-pipeline transformeert ruwe data naar schone, genormaliseerde metrics elke 15 min",
-        "Interactief dashboard gebouwd met drill-down per team, regio en tijdsperiode",
-        "Anomaliedetectie alert team via Slack bij KPI-afwijkingen van verwachte ranges",
-        "Geautomatiseerd PDF/e-mail rapport gegenereerd en verstuurd elke maandagochtend",
-        "AI analyseert trends wekelijks en brengt actionable inzichten voor management",
-      ],
-    },
-    timeSaved: "8-12",
-    impact: { en: "Single source of truth for all KPIs", nl: "Eén waarheid voor alle KPI's" },
+    description: { en: "Consolidate data from all your tools into one live dashboard with automated alerts, weekly reports, and AI-powered trend analysis.", nl: "Consolideer data uit al je tools in één live dashboard met automatische alerts, wekelijkse rapporten en AI-gestuurde trendanalyse." },
+    steps: [
+      { text: { en: "Data sources connected: CRM, accounting, webshop, marketing, and databases", nl: "Databronnen verbonden: CRM, boekhouding, webshop, marketing en databases" }, tools: ["postgresql", "supabase", "mongodb", "mysql"] },
+      { text: { en: "ETL pipeline transforms raw data into clean, normalized metrics every 15 min", nl: "ETL-pipeline transformeert ruwe data naar genormaliseerde metrics elke 15 min" }, tools: ["supabase", "google-sheets"] },
+      { text: { en: "Interactive dashboard built with drill-down per team, region, and time period", nl: "Interactief dashboard gebouwd met drill-down per team, regio en tijdsperiode" }, tools: ["power-bi", "looker-studio"] },
+      { text: { en: "Anomaly detection alerts team when KPIs deviate from expected ranges", nl: "Anomaliedetectie alert team bij KPI-afwijkingen van verwachte ranges" }, tools: ["slack"] },
+      { text: { en: "Automated PDF/email report generated and distributed every Monday morning", nl: "Geautomatiseerd PDF/e-mail rapport verstuurd elke maandagochtend" }, tools: ["google-workspace"] },
+      { text: { en: "AI analyzes trends weekly and surfaces actionable insights for management", nl: "AI analyseert trends wekelijks en brengt actionable inzichten voor management" }, tools: ["openai"] },
+    ],
+    timeSaved: "8-12", impact: { en: "Single source of truth for all KPIs", nl: "Eén waarheid voor alle KPI's" },
     systems: ["supabase", "postgresql", "mongodb", "mysql", "power-bi", "looker-studio", "google-sheets", "airtable", "google-analytics", "openai"],
   },
   {
     icon: MessageSquare,
     title: { en: "Customer Communication Hub", nl: "Klantcommunicatie Hub" },
-    description: {
-      en: "Centralize all customer touchpoints — route messages from every channel to one inbox with AI categorization and smart auto-replies.",
-      nl: "Centraliseer alle klantcontactpunten — routeer berichten van elk kanaal naar één inbox met AI-categorisatie en slimme auto-replies.",
-    },
-    steps: {
-      en: [
-        "Message arrives via WhatsApp, email, Instagram DM, or Slack — unified in one queue",
-        "AI reads the message, classifies intent (support, sales, billing, urgent) and sentiment",
-        "Routed to the right team member based on topic, language, and availability",
-        "For FAQ-type questions: AI drafts a response for human approval or auto-sends",
-        "Conversation logged as activity in CRM with full context and tags",
-        "Response time and resolution metrics tracked per channel, agent, and category",
-      ],
-      nl: [
-        "Bericht komt binnen via WhatsApp, email, Instagram DM of Slack — samengevoegd in één wachtrij",
-        "AI leest het bericht, classificeert intentie (support, sales, facturatie, urgent) en sentiment",
-        "Gerouteerd naar juiste teamlid op basis van onderwerp, taal en beschikbaarheid",
-        "Voor FAQ-vragen: AI stelt antwoord op ter goedkeuring of stuurt automatisch",
-        "Conversatie gelogd als activiteit in CRM met volledige context en tags",
-        "Responstijd en resolutie-metrics bijgehouden per kanaal, agent en categorie",
-      ],
-    },
-    timeSaved: "12-18",
-    impact: { en: "60% faster response times", nl: "60% snellere responstijden" },
+    description: { en: "Centralize all customer touchpoints — route messages from every channel to one inbox with AI categorization and smart auto-replies.", nl: "Centraliseer alle klantcontactpunten — routeer berichten van elk kanaal naar één inbox met AI-categorisatie en slimme auto-replies." },
+    steps: [
+      { text: { en: "Message arrives via WhatsApp, email, Instagram DM, or Slack — unified queue", nl: "Bericht komt binnen via WhatsApp, email, Instagram DM of Slack — één wachtrij" }, tools: ["whatsapp", "instagram", "slack"] },
+      { text: { en: "AI classifies intent (support, sales, billing, urgent) and sentiment", nl: "AI classificeert intentie (support, sales, facturatie, urgent) en sentiment" }, tools: ["openai", "anthropic"] },
+      { text: { en: "Routed to the right team member based on topic and availability", nl: "Gerouteerd naar juiste teamlid op basis van onderwerp en beschikbaarheid" }, tools: ["slack", "microsoft-365"] },
+      { text: { en: "For FAQ-type questions: AI drafts a response or auto-sends", nl: "Voor FAQ-vragen: AI stelt antwoord op of stuurt automatisch" }, tools: ["openai", "anthropic"] },
+      { text: { en: "Conversation logged as activity in CRM with full context and tags", nl: "Conversatie gelogd als activiteit in CRM met volledige context en tags" }, tools: ["hubspot", "salesforce"] },
+      { text: { en: "Response time and resolution metrics tracked per channel and agent", nl: "Responstijd en resolutie-metrics bijgehouden per kanaal en agent" }, tools: ["power-bi", "google-sheets"] },
+    ],
+    timeSaved: "12-18", impact: { en: "60% faster response times", nl: "60% snellere responstijden" },
     systems: ["slack", "whatsapp", "twilio", "google-workspace", "microsoft-365", "instagram", "hubspot", "anthropic", "openai"],
   },
   {
     icon: Globe,
     title: { en: "E-commerce Growth Engine", nl: "E-commerce Groei Engine" },
-    description: {
-      en: "Automate your entire e-commerce operations — product syncing, dynamic pricing, inventory, abandoned carts, and personalized retargeting.",
-      nl: "Automatiseer je hele e-commerce operatie — productsync, dynamische prijzen, voorraad, verlaten wagens en gepersonaliseerde retargeting.",
-    },
-    steps: {
-      en: [
-        "Products synced across Shopify, marketplaces, and POS — single source of truth",
-        "Dynamic pricing engine adjusts based on demand, margins, and competitor data",
-        "Inventory alerts trigger when stock falls below threshold — auto-reorder to supplier",
-        "Abandoned cart detected → personalized recovery email sent within 1 hour",
-        "Post-purchase: segmented email flows for upsell, cross-sell, and loyalty programs",
-        "Weekly performance report: revenue, conversion rate, CAC, and LTV per channel",
-      ],
-      nl: [
-        "Producten gesynchroniseerd over Shopify, marketplaces en POS — één bron van waarheid",
-        "Dynamische pricing-engine past aan op basis van vraag, marge en concurrent-data",
-        "Voorraadalerts bij dalende stock onder drempel — automatische herbestelling naar leverancier",
-        "Verlaten winkelwagen gedetecteerd → gepersonaliseerde herstel-e-mail binnen 1 uur",
-        "Na aankoop: gesegmenteerde e-mailflows voor upsell, cross-sell en loyaliteitsprogramma's",
-        "Wekelijks prestatierapport: omzet, conversieratio, CAC en LTV per kanaal",
-      ],
-    },
-    timeSaved: "20-25",
-    impact: { en: "2.4x more conversions", nl: "2,4x meer conversies" },
+    description: { en: "Automate your entire e-commerce operations — product syncing, dynamic pricing, inventory, abandoned carts, and personalized retargeting.", nl: "Automatiseer je hele e-commerce operatie — productsync, dynamische prijzen, voorraad, verlaten wagens en gepersonaliseerde retargeting." },
+    steps: [
+      { text: { en: "Products synced across webshop, marketplaces, and POS", nl: "Producten gesynchroniseerd over webshop, marketplaces en POS" }, tools: ["shopify", "woocommerce", "magento"] },
+      { text: { en: "Dynamic pricing engine adjusts based on demand and margins", nl: "Dynamische pricing-engine past aan op basis van vraag en marge" }, tools: ["shopify", "airtable"] },
+      { text: { en: "Inventory alerts trigger at low stock — auto-reorder to supplier", nl: "Voorraadalerts bij lage stock — automatische herbestelling naar leverancier" }, tools: ["shopify", "slack"] },
+      { text: { en: "Abandoned cart detected → personalized recovery email within 1 hour", nl: "Verlaten winkelwagen → gepersonaliseerde herstel-e-mail binnen 1 uur" }, tools: ["mailchimp", "hubspot"] },
+      { text: { en: "Post-purchase: segmented email flows for upsell and loyalty", nl: "Na aankoop: gesegmenteerde e-mailflows voor upsell en loyaliteit" }, tools: ["mailchimp", "hubspot", "stripe"] },
+      { text: { en: "Weekly performance report: revenue, conversion rate, CAC, LTV per channel", nl: "Wekelijks rapport: omzet, conversieratio, CAC, LTV per kanaal" }, tools: ["google-analytics", "google-sheets"] },
+    ],
+    timeSaved: "20-25", impact: { en: "2.4x more conversions", nl: "2,4x meer conversies" },
     systems: ["shopify", "woocommerce", "magento", "hubspot", "mailchimp", "stripe", "google-workspace", "google-analytics", "instagram"],
   },
   {
     icon: FileText,
     title: { en: "Smart Document Processing", nl: "Slimme Documentverwerking" },
-    description: {
-      en: "AI reads invoices, contracts, and forms — extracts data, validates it, and routes it to the right system without human intervention.",
-      nl: "AI leest facturen, contracten en formulieren — extraheert data, valideert het en routeert het naar het juiste systeem zonder menselijke tussenkomst.",
-    },
-    steps: {
-      en: [
-        "Document arrives via email attachment, upload portal, or scanned file",
-        "AI (Claude/GPT) extracts structured data: amounts, dates, names, line items",
-        "Extracted data validated against business rules and existing records",
-        "Matched to correct vendor/customer in CRM and accounting system",
-        "Entry created in database with full audit trail and confidence score",
-        "Exceptions flagged for human review — team notified via Slack with context",
-      ],
-      nl: [
-        "Document komt binnen via e-mailbijlage, upload-portaal of gescand bestand",
-        "AI (Claude/GPT) extraheert gestructureerde data: bedragen, datums, namen, regelitems",
-        "Geëxtraheerde data gevalideerd tegen bedrijfsregels en bestaande records",
-        "Gematcht aan juiste leverancier/klant in CRM en boekhoudsysteem",
-        "Entry aangemaakt in database met volledige audit trail en betrouwbaarheidsscore",
-        "Uitzonderingen gemarkeerd voor menselijke review — team genotificeerd via Slack met context",
-      ],
-    },
-    timeSaved: "15-20",
-    impact: { en: "95% less manual data entry", nl: "95% minder handmatige invoer" },
+    description: { en: "AI reads invoices, contracts, and forms — extracts data, validates it, and routes it to the right system without human intervention.", nl: "AI leest facturen, contracten en formulieren — extraheert data, valideert het en routeert het naar het juiste systeem zonder menselijke tussenkomst." },
+    steps: [
+      { text: { en: "Document arrives via email attachment, upload portal, or scan", nl: "Document komt binnen via e-mailbijlage, upload-portaal of scan" }, tools: ["google-workspace", "microsoft-365"] },
+      { text: { en: "AI extracts structured data: amounts, dates, names, line items", nl: "AI extraheert gestructureerde data: bedragen, datums, namen, regelitems" }, tools: ["openai", "anthropic", "langchain"] },
+      { text: { en: "Extracted data validated against business rules and existing records", nl: "Geëxtraheerde data gevalideerd tegen bedrijfsregels en bestaande records" } },
+      { text: { en: "Matched to correct vendor/customer in CRM and accounting", nl: "Gematcht aan juiste leverancier/klant in CRM en boekhouding" }, tools: ["hubspot", "exact", "xero"] },
+      { text: { en: "Entry created in database with full audit trail and confidence score", nl: "Entry aangemaakt in database met audit trail en betrouwbaarheidsscore" }, tools: ["supabase", "airtable"] },
+      { text: { en: "Exceptions flagged for human review — team notified with context", nl: "Uitzonderingen gemarkeerd voor review — team genotificeerd met context" }, tools: ["slack", "notion"] },
+    ],
+    timeSaved: "15-20", impact: { en: "95% less manual data entry", nl: "95% minder handmatige invoer" },
     systems: ["openai", "anthropic", "langchain", "google-workspace", "microsoft-365", "exact", "xero", "supabase", "airtable", "notion"],
   },
   {
     icon: Share2,
     title: { en: "Social Media & Marketing Automation", nl: "Social Media & Marketing Automatisering" },
-    description: {
-      en: "Automate your entire marketing pipeline — content creation, scheduling, lead capture, CRM enrichment, and performance analytics.",
-      nl: "Automatiseer je hele marketingpipeline — contentcreatie, scheduling, lead capture, CRM-verrijking en prestatieanalytics.",
-    },
-    steps: {
-      en: [
-        "AI generates content ideas based on trending topics and past performance data",
-        "Content scheduled and published across Instagram, LinkedIn, and email simultaneously",
-        "Lead magnet downloads and form fills auto-create enriched CRM contacts",
-        "Leads segmented by interest and behavior — tagged for personalized nurturing",
-        "Campaign performance tracked: engagement, CTR, conversions, and cost per lead",
-        "Weekly AI-generated marketing report with recommendations sent to team",
-      ],
-      nl: [
-        "AI genereert content-ideeën op basis van trending topics en eerdere prestatiedata",
-        "Content gepland en gepubliceerd over Instagram, LinkedIn en e-mail tegelijkertijd",
-        "Lead magnet downloads en formulieren maken automatisch verrijkte CRM-contacten",
-        "Leads gesegmenteerd op interesse en gedrag — getagd voor gepersonaliseerde nurturing",
-        "Campagneprestaties bijgehouden: engagement, CTR, conversies en kosten per lead",
-        "Wekelijks AI-gegenereerd marketingrapport met aanbevelingen naar team gestuurd",
-      ],
-    },
-    timeSaved: "10-15",
-    impact: { en: "3x more consistent posting", nl: "3x consistentere posting" },
+    description: { en: "Automate your entire marketing pipeline — content creation, scheduling, lead capture, CRM enrichment, and performance analytics.", nl: "Automatiseer je hele marketingpipeline — contentcreatie, scheduling, lead capture, CRM-verrijking en prestatieanalytics." },
+    steps: [
+      { text: { en: "AI generates content ideas based on trending topics and performance data", nl: "AI genereert content-ideeën op basis van trending topics en prestatiedata" }, tools: ["openai"] },
+      { text: { en: "Content scheduled and published across Instagram, LinkedIn, and email", nl: "Content gepland en gepubliceerd over Instagram, LinkedIn en e-mail" }, tools: ["instagram", "mailchimp"] },
+      { text: { en: "Lead magnet downloads and form fills auto-create enriched CRM contacts", nl: "Lead magnet downloads maken automatisch verrijkte CRM-contacten" }, tools: ["hubspot", "mailchimp"] },
+      { text: { en: "Leads segmented by interest and behavior — tagged for nurturing", nl: "Leads gesegmenteerd op interesse en gedrag — getagd voor nurturing" }, tools: ["hubspot"] },
+      { text: { en: "Campaign performance tracked: engagement, CTR, conversions, cost per lead", nl: "Campagneprestaties: engagement, CTR, conversies, kosten per lead" }, tools: ["google-analytics"] },
+      { text: { en: "Weekly AI-generated marketing report with recommendations sent to team", nl: "Wekelijks AI-rapport met aanbevelingen naar team gestuurd" }, tools: ["openai", "slack", "notion"] },
+    ],
+    timeSaved: "10-15", impact: { en: "3x more consistent posting", nl: "3x consistentere posting" },
     systems: ["instagram", "hubspot", "mailchimp", "google-analytics", "openai", "slack", "notion", "google-workspace"],
   },
   {
     icon: Database,
     title: { en: "Data Sync & Backup", nl: "Data Sync & Backup" },
-    description: {
-      en: "Keep all databases and tools in perfect sync with bi-directional data flows, intelligent conflict resolution, and automated backups.",
-      nl: "Houd alle databases en tools perfect gesynchroniseerd met tweerichtings-dataflows, intelligente conflictresolutie en automatische backups.",
-    },
-    steps: {
-      en: [
-        "Change detection via webhooks monitors all connected systems in real-time",
-        "Bi-directional sync ensures updates in one system reflect everywhere within seconds",
-        "Conflict resolution rules handle simultaneous edits based on timestamp and priority",
-        "Data transformation layer normalizes formats across systems (dates, currencies, IDs)",
-        "Scheduled full backups to secure cloud storage with versioning and encryption",
-        "Health dashboard monitors sync status — alerts on failures with auto-retry logic",
-      ],
-      nl: [
-        "Wijzigingsdetectie via webhooks monitort alle verbonden systemen in realtime",
-        "Tweerichtings-sync zorgt dat updates in één systeem overal binnen seconden reflecteren",
-        "Conflictresolutieregels handelen gelijktijdige bewerkingen af op basis van timestamp en prioriteit",
-        "Datatransformatielaag normaliseert formaten over systemen (datums, valuta's, ID's)",
-        "Geplande volledige backups naar beveiligde cloudopslag met versiebeheer en encryptie",
-        "Health dashboard monitort sync-status — alerts bij fouten met auto-retry logica",
-      ],
-    },
-    timeSaved: "5-8",
-    impact: { en: "Zero data inconsistencies", nl: "Nul data-inconsistenties" },
+    description: { en: "Keep all databases and tools in perfect sync with bi-directional data flows, intelligent conflict resolution, and automated backups.", nl: "Houd alle databases en tools perfect gesynchroniseerd met tweerichtings-dataflows, intelligente conflictresolutie en automatische backups." },
+    steps: [
+      { text: { en: "Change detection via webhooks monitors all connected systems in real-time", nl: "Wijzigingsdetectie via webhooks monitort alle verbonden systemen in realtime" }, tools: ["supabase", "postgresql"] },
+      { text: { en: "Bi-directional sync ensures updates reflect everywhere within seconds", nl: "Tweerichtings-sync zorgt dat updates overal binnen seconden reflecteren" }, tools: ["airtable", "google-sheets"] },
+      { text: { en: "Conflict resolution rules handle simultaneous edits by priority", nl: "Conflictresolutieregels handelen gelijktijdige bewerkingen af op prioriteit" } },
+      { text: { en: "Data transformation layer normalizes formats across systems", nl: "Datatransformatielaag normaliseert formaten over systemen" }, tools: ["retool"] },
+      { text: { en: "Scheduled full backups to secure cloud storage with encryption", nl: "Geplande volledige backups naar beveiligde cloudopslag met encryptie" }, tools: ["supabase", "github"] },
+      { text: { en: "Health dashboard monitors sync status — alerts on failures with auto-retry", nl: "Health dashboard monitort sync-status — alerts bij fouten met auto-retry" }, tools: ["slack", "notion"] },
+    ],
+    timeSaved: "5-8", impact: { en: "Zero data inconsistencies", nl: "Nul data-inconsistenties" },
     systems: ["supabase", "postgresql", "mongodb", "mysql", "airtable", "google-sheets", "retool", "notion", "github", "google-workspace"],
   },
 ];
@@ -669,9 +559,13 @@ const WorkflowBuilder = ({ externalSelected, onExternalToggle }: WorkflowBuilder
                               {tx.automatedFlow}
                             </p>
                             <div className="space-y-0">
-                              {result.steps[lang].map((step, stepIdx) => (
+                              {result.steps.map((step, stepIdx) => {
+                                const stepTools = (step.tools ?? [])
+                                  .map((tid) => workflowSystems.find((s) => s.id === tid))
+                                  .filter(Boolean);
+                                return (
                                 <motion.div
-                                  key={step}
+                                  key={step.text[lang]}
                                   initial={{ opacity: 0, x: -10 }}
                                   animate={{ opacity: 1, x: 0 }}
                                   transition={{ delay: stepIdx * 0.06 }}
@@ -681,13 +575,24 @@ const WorkflowBuilder = ({ externalSelected, onExternalToggle }: WorkflowBuilder
                                     <div className="w-6 h-6 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center shrink-0">
                                       <span className="text-[10px] font-bold text-primary">{stepIdx + 1}</span>
                                     </div>
-                                    {stepIdx < result.steps[lang].length - 1 && (
+                                    {stepIdx < result.steps.length - 1 && (
                                       <div className="w-px h-5 bg-primary/20" />
                                     )}
                                   </div>
-                                  <p className="text-sm text-foreground/80 pt-0.5">{step}</p>
-                                </motion.div>
-                              ))}
+                                  <div className="pt-0.5 flex-1 min-w-0">
+                                    <p className="text-sm text-foreground/80">{step.text[lang]}</p>
+                                    {stepTools.length > 0 && (
+                                      <div className="flex items-center gap-1.5 mt-1.5">
+                                        {stepTools.map((sys) => sys && (
+                                          <div key={sys.id} className="w-5 h-5 rounded bg-muted/60 flex items-center justify-center" title={sys.name}>
+                                            <img src={sys.logo} alt={sys.name} className={`w-3 h-3 object-contain ${sys.dark ? "dark:invert" : ""}`} />
+                                          </div>
+                                        ))}
+                                      </div>
+                                    )}
+                                  </div>
+                                </motion.div>);
+                              })}
                             </div>
                           </div>
                         </motion.div>

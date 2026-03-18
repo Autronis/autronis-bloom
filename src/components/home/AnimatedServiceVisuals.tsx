@@ -130,31 +130,6 @@ export const ProcessAutomationVisual = () => {
           <circle r={innerC * 0.18} fill="hsl(174, 78%, 41%)" fillOpacity="0.15" />
         </g>
 
-        {/* Shooting stars / sparks flying left to right */}
-        {[0, 1, 2, 3, 4].map((i) => (
-          <motion.g
-            key={`star-${i}`}
-            animate={{
-              x: [-20, 210],
-              y: [20 + i * 12, 25 + i * 10],
-              opacity: [0, 0.8, 0],
-            }}
-            transition={{
-              duration: 1.2 + i * 0.2,
-              delay: i * 1.5,
-              repeat: Infinity,
-              repeatDelay: 5,
-              ease: "easeIn",
-            }}
-          >
-            {/* Star head */}
-            <circle r="1.2" fill="hsl(174, 78%, 41%)" fillOpacity="0.8" />
-            {/* Trail */}
-            <line x1="0" y1="0" x2="-8" y2="1" stroke="hsl(174, 78%, 41%)" strokeWidth="0.6" strokeOpacity="0.4" strokeLinecap="round" />
-            <line x1="-8" y1="1" x2="-14" y2="1.5" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.15" strokeLinecap="round" />
-          </motion.g>
-        ))}
-
         {/* ═══ Conveyor belt ═══ */}
         {/* Belt line */}
         <line x1="5" y1={beltY} x2="195" y2={beltY} stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeOpacity="0.3" />
@@ -179,6 +154,28 @@ export const ProcessAutomationVisual = () => {
           animate={{ strokeDashoffset: [0, -8] }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
         />
+
+        {/* Shooting stars along the belt */}
+        {[0, 1, 2].map((i) => (
+          <motion.g
+            key={`star-${i}`}
+            animate={{
+              x: [-20, 210],
+              opacity: [0, 0.8, 0],
+            }}
+            transition={{
+              duration: 1.5,
+              delay: i * 2.5 + 1,
+              repeat: Infinity,
+              repeatDelay: 5,
+              ease: "easeIn",
+            }}
+          >
+            <circle cx="0" cy={beltY - 15} r="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.9" />
+            <line x1="0" y1={beltY - 15} x2="-10" y2={beltY - 14} stroke="hsl(174, 78%, 41%)" strokeWidth="0.6" strokeOpacity="0.4" strokeLinecap="round" />
+            <line x1="-10" y1={beltY - 14} x2="-18" y2={beltY - 13.5} stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.15" strokeLinecap="round" />
+          </motion.g>
+        ))}
 
         {/* Documents on belt */}
         {[0, 1, 2].map((i) => (

@@ -177,27 +177,37 @@ export const ProcessAutomationVisual = () => {
           </motion.g>
         ))}
 
-        {/* Documents on belt */}
-        {[0, 1, 2].map((i) => (
+        {/* Documents on belt — each a different automation type */}
+        {[
+          { label: "INVOICE", icon: "€" },
+          { label: "ORDER", icon: "#" },
+          { label: "REPORT", icon: "%" },
+        ].map((doc, i) => (
           <motion.g key={`doc-${i}`}
             animate={{ x: [-30, 200] }}
             transition={{ duration: 8, delay: i * 2.7, repeat: Infinity, ease: "linear" }}
           >
-            {/* Document */}
-            <rect x="5" y={beltY - 22} width="20" height="21" rx="1.5"
+            {/* Document bg */}
+            <rect x="5" y={beltY - 24} width="22" height="23" rx="1.5"
+              fill="hsl(200, 20%, 10%)"
+            />
+            <rect x="5" y={beltY - 24} width="22" height="23" rx="1.5"
               fill="hsl(174, 78%, 41%)" fillOpacity="0.07"
               stroke="hsl(174, 78%, 41%)" strokeWidth="0.6" strokeOpacity="0.5"
             />
             {/* Folded corner */}
-            <path d={`M 20 ${beltY - 22} l 5 0 l 0 5`} fill="hsl(174, 78%, 41%)" fillOpacity="0.04" stroke="hsl(174, 78%, 41%)" strokeWidth="0.4" strokeOpacity="0.3" />
-            {/* Lines */}
-            <rect x="8" y={beltY - 17} width="13" height="0.8" rx="0.4" fill="hsl(174, 78%, 41%)" fillOpacity="0.35" />
-            <rect x="8" y={beltY - 14.5} width="10" height="0.8" rx="0.4" fill="hsl(174, 78%, 41%)" fillOpacity="0.25" />
-            <rect x="8" y={beltY - 12} width="12" height="0.8" rx="0.4" fill="hsl(174, 78%, 41%)" fillOpacity="0.25" />
-            <rect x="8" y={beltY - 9.5} width="8" height="0.8" rx="0.4" fill="hsl(174, 78%, 41%)" fillOpacity="0.2" />
+            <path d={`M 21 ${beltY - 24} l 6 0 l 0 6`} fill="hsl(174, 78%, 41%)" fillOpacity="0.04" stroke="hsl(174, 78%, 41%)" strokeWidth="0.4" strokeOpacity="0.3" />
+            {/* Type label */}
+            <text x="16" y={beltY - 18} textAnchor="middle" fontSize="3" fontWeight="700" fill="hsl(174, 78%, 41%)" fillOpacity="0.6" fontFamily="monospace" letterSpacing="0.3">
+              {doc.label}
+            </text>
+            {/* Icon */}
+            <text x="16" y={beltY - 10} textAnchor="middle" fontSize="7" fontWeight="700" fill="hsl(174, 78%, 41%)" fillOpacity="0.25">
+              {doc.icon}
+            </text>
             {/* Checkmark */}
             <motion.path
-              d={`M 10 ${beltY - 6} l 2.5 2.5 l 5 -5.5`}
+              d={`M 11 ${beltY - 4} l 2.5 2.5 l 5 -5.5`}
               fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeOpacity="0.6"
               strokeLinecap="round" strokeLinejoin="round"
               initial={{ pathLength: 0 }}

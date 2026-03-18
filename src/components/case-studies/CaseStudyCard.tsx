@@ -130,6 +130,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
             <SectionHeader>{t.systemOverview}</SectionHeader>
             {cs.videoUrl ? <p className="text-[12px] text-muted-foreground leading-relaxed mb-3">{t.videoDesc}</p> : <div className="mb-3 flex items-center gap-1.5 text-[12px] text-muted-foreground leading-relaxed italic"><AlertTriangle size={12} className="text-primary shrink-0" /><span>{t.simplified}</span></div>}
             {cs.videoUrl ? <video src={cs.videoUrl} className="w-full aspect-video rounded-lg" controls controlsList="nodownload noplaybackrate" disablePictureInPicture /> : <Visual />}
+            <div className="mt-5 pt-4 border-t border-border/50"><SectionHeader>{t.technology}</SectionHeader><TechTagList tags={cs.technologyTags} /></div>
           </div>
           <div className="border-t lg:border-t-0 border-border p-5 sm:p-6 space-y-5">
             <div>
@@ -137,7 +138,6 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
               {cs.beforeAfter && <div className="mb-4"><BeforeAfterChart data={cs.beforeAfter} lang={lang} /></div>}
               <div className="space-y-1.5">{cs.results.map((r, j) => <div key={j} className="flex items-start gap-2 text-[13px] text-muted-foreground leading-relaxed"><CheckCircle2 size={13} className="text-primary mt-0.5 shrink-0" />{r}</div>)}</div>
             </div>
-            <div><SectionHeader>{t.technology}</SectionHeader><TechTagList tags={cs.technologyTags} /></div>
             {cs.testimonial && (
               <div className="rounded-lg border border-primary/15 bg-primary/[0.03] p-5 space-y-3.5 transition-all duration-200 ease-out hover:scale-[1.015] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_0_16px_hsl(174_78%_41%/0.1)]">
                 <div className="flex items-center gap-0.5">{Array.from({ length: 5 }).map((_, s) => <Star key={s} size={14} className="text-primary fill-primary" />)}</div>

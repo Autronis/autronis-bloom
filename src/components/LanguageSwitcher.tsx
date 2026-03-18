@@ -1,68 +1,46 @@
 import { useLanguage } from "@/i18n/context";
+import flagUS from "@/assets/flag-us.png";
+import flagNL from "@/assets/flag-nl.png";
 
 interface Props {
   size?: "sm" | "md";
 }
 
-const FlagBorderButton = ({
-  href,
-  active,
-  gradient,
-  label,
-  py,
-}: {
-  href: string | undefined;
-  active: boolean;
-  gradient: string;
-  label: string;
-  py: string;
-}) => (
-  <a
-    href={href}
-    className={`relative px-2.5 ${py} rounded-md text-[11px] font-semibold tracking-wide transition-all duration-200 ${
-      active
-        ? "bg-white/10 text-foreground shadow-sm"
-        : "text-muted-foreground/50 hover:text-muted-foreground cursor-pointer bg-transparent opacity-60 hover:opacity-80"
-    }`}
-    aria-label={label}
-  >
-    {/* Flag gradient border overlay */}
-    <span
-      className="absolute inset-0 rounded-md pointer-events-none"
-      style={{
-        padding: "1px",
-        background: gradient,
-        WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-        WebkitMaskComposite: "xor",
-        maskComposite: "exclude",
-      }}
-    />
-    <span className="relative z-10">{label === "English" ? "EN" : "NL"}</span>
-  </a>
-);
-
 const LanguageSwitcher = ({ size = "sm" }: Props) => {
   const lang = useLanguage();
   const isEN = lang === "en";
   const h = size === "md" ? "h-8" : "h-7";
-  const py = size === "md" ? "py-1" : "py-0.5";
+  const flagH = size === "md" ? "h-8" : "h-7";
+  const flagW = size === "md" ? "w-10" : "w-9";
 
   return (
-    <div className={`flex items-center ${h} gap-1`}>
-      <FlagBorderButton
+    <div className={`flex items-center ${h} gap-1.5`}>
+      {/* EN — US flag as border via background image */}
+      <a
         href={isEN ? undefined : "https://autronis.com"}
-        active={isEN}
-        gradient="linear-gradient(180deg, #B22234 8%, #FFF 8%, #FFF 15%, #B22234 15%, #B22234 23%, #FFF 23%, #FFF 31%, #B22234 31%, #B22234 38%, #FFF 38%, #FFF 46%, #3C3B6E 46%, #3C3B6E 100%)"
-        label="English"
-        py={py}
-      />
-      <FlagBorderButton
+        className={`relative ${flagW} ${flagH} rounded-md overflow-hidden flex items-center justify-center transition-all duration-200 ${
+          isEN
+            ? "opacity-100 shadow-sm"
+            : "opacity-40 hover:opacity-70 cursor-pointer"
+        }`}
+        aria-label="English"
+      >
+        <img src={flagUS} alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <span className="relative z-10 text-[11px] font-bold tracking-wide text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">EN</span>
+      </a>
+      {/* NL — Dutch flag as border via background image */}
+      <a
         href={isEN ? "https://autronis.nl" : undefined}
-        active={!isEN}
-        gradient="linear-gradient(180deg, #AE1C28 33%, #FFFFFF 33%, #FFFFFF 66%, #21468B 66%)"
-        label="Nederlands"
-        py={py}
-      />
+        className={`relative ${flagW} ${flagH} rounded-md overflow-hidden flex items-center justify-center transition-all duration-200 ${
+          !isEN
+            ? "opacity-100 shadow-sm"
+            : "opacity-40 hover:opacity-70 cursor-pointer"
+        }`}
+        aria-label="Nederlands"
+      >
+        <img src={flagNL} alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <span className="relative z-10 text-[11px] font-bold tracking-wide text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">NL</span>
+      </a>
     </div>
   );
 };

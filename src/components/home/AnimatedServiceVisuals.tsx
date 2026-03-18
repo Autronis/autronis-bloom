@@ -207,14 +207,14 @@ export const ProcessAutomationVisual = () => {
             <text x="16" y={beltY - 10} textAnchor="middle" fontSize="7" fontWeight="700" fill={doc.color} fillOpacity="0.3">
               {doc.icon}
             </text>
-            {/* Checkmark */}
+            {/* Checkmark — appears at 50% of travel */}
             <motion.path
               d={`M 11 ${beltY - 4} l 2.5 2.5 l 5 -5.5`}
               fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeOpacity="0.6"
               strokeLinecap="round" strokeLinejoin="round"
               initial={{ pathLength: 0 }}
-              animate={{ pathLength: [0, 0, 0, 1, 1] }}
-              transition={{ duration: 8, delay: i * 2.7, repeat: Infinity }}
+              animate={{ pathLength: [0, 0, 0, 0, 0, 1, 1, 1] }}
+              transition={{ duration: 8, delay: i * 1.6, repeat: Infinity }}
             />
           </motion.g>
         ))}

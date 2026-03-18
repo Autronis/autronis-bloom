@@ -48,7 +48,7 @@ const LanguageSwitcher = ({ size = "sm" }: Props) => {
   const py = size === "md" ? "py-1" : "py-0.5";
 
   return (
-    <div className={`flex items-center ${h} rounded-lg bg-muted/50 border border-transparent p-0.5 gap-1`}>
+    <div className={`flex items-center ${h} gap-1`}>
       <FlagBorderButton
         href={isEN ? undefined : "https://autronis.com"}
         active={isEN}

@@ -52,7 +52,7 @@ const LanguageSwitcher = ({ size = "sm" }: Props) => {
       <FlagBorderButton
         href={isEN ? undefined : "https://autronis.com"}
         active={isEN}
-        gradient="linear-gradient(180deg, #B22234 33%, #FFFFFF 33%, #FFFFFF 66%, #3C3B6E 66%)"
+        gradient="linear-gradient(180deg, #B22234 8%, #FFF 8%, #FFF 15%, #B22234 15%, #B22234 23%, #FFF 23%, #FFF 31%, #B22234 31%, #B22234 38%, #FFF 38%, #FFF 46%, #3C3B6E 46%, #3C3B6E 100%)"
         label="English"
         py={py}
       />

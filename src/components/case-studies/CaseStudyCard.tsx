@@ -60,19 +60,6 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
           <SectionHeader>{t.solution}</SectionHeader>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">{cs.solution.map((item, i) => <div key={i} className="flex items-start gap-2 text-[13px] text-muted-foreground leading-relaxed"><span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-[7px] shrink-0" />{item}</div>)}</div>
         </div>
-        {/* Workflow screenshot */}
-        {cs.workflowImage && (
-          <div className="border-t border-border p-5 sm:p-6">
-            <SectionHeader>{lang === "nl" ? "Gebouwde workflow" : "Built workflow"}</SectionHeader>
-            <p className="text-[11px] text-muted-foreground mb-3">{cs.workflowImage.caption}</p>
-            <div className="rounded-lg border border-border overflow-hidden group cursor-zoom-in relative" onClick={() => window.open(cs.workflowImage!.src, '_blank')}>
-              <img src={cs.workflowImage.src} alt={cs.workflowImage.caption} className="w-full object-cover" loading="lazy" />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                <span className="text-white text-xs bg-black/50 px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">{lang === "nl" ? "Klik om te vergroten" : "Click to enlarge"}</span>
-              </div>
-            </div>
-          </div>
-        )}
         <div className="grid grid-cols-1 lg:grid-cols-5 border-t border-border">
           <div className="lg:col-span-3 p-5 sm:p-6 lg:border-r border-border">
             <SectionHeader>{t.systemOverview}</SectionHeader>
@@ -96,6 +83,16 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
             {cs.implementationResult && <div className="rounded-lg border border-primary/15 bg-primary/[0.03] p-5 space-y-3 transition-all duration-200 ease-out hover:scale-[1.015] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_0_16px_hsl(174_78%_41%/0.1)]"><SectionHeader>{t.anonCase}</SectionHeader><p className="text-[13px] text-foreground/80 leading-[1.7] italic">"{cs.implementationResult}"</p></div>}
           </div>
         </div>
+        {/* Workflow screenshot — bottom of card */}
+        {cs.workflowImage && (
+          <div className="border-t border-border p-5 sm:p-6">
+            <SectionHeader>{lang === "nl" ? "Gebouwde workflow" : "Built workflow"}</SectionHeader>
+            <p className="text-[11px] text-muted-foreground mb-3">{cs.workflowImage.caption}</p>
+            <div className="rounded-lg border border-border overflow-hidden">
+              <img src={cs.workflowImage.src} alt={cs.workflowImage.caption} className="w-full object-cover" loading="lazy" />
+            </div>
+          </div>
+        )}
       </div>
     </ScrollRevealItem></ScrollReveal>
   );

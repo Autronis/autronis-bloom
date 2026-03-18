@@ -176,6 +176,16 @@ const ImpactSimulator = () => {
                 <div className="w-full h-2 rounded-full bg-muted overflow-hidden"><motion.div className="h-full rounded-full bg-primary" animate={{ width: `${results.confidence}%` }} transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }} /></div>
                 <p className="text-xs text-muted-foreground mt-2.5">{t.confidenceSub}</p>
               </div>
+              {/* Results CTA */}
+              <div className="rounded-xl border border-primary/20 bg-primary/5 p-5 text-center">
+                <p className="text-sm font-semibold text-foreground mb-1">
+                  {lang === "nl" ? "Wil je deze besparing realiseren?" : "Want to achieve these savings?"}
+                </p>
+                <p className="text-xs text-muted-foreground mb-3">
+                  {lang === "nl" ? "Plan een gratis Automation Scan en we maken een concreet plan." : "Schedule a free Automation Scan and we'll create a concrete plan."}
+                </p>
+                <Button asChild size="sm"><Link to="/book">{lang === "nl" ? "Plan Automation Scan" : "Schedule Automation Scan"}<ArrowRight size={14} /></Link></Button>
+              </div>
             </motion.div>
 
             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}>

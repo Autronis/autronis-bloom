@@ -113,6 +113,28 @@ const FAQSection = () => {
               ))}
             </Accordion>
           </ScrollReveal>
+
+          {/* Still have questions CTA */}
+          <ScrollReveal className="mt-12">
+            <ScrollRevealItem>
+              <div className="rounded-xl border border-border bg-card/50 p-6 text-center">
+                <p className="text-sm font-medium text-foreground mb-1">
+                  {lang === "nl" ? "Staat je vraag er niet bij?" : "Can't find your answer?"}
+                </p>
+                <p className="text-xs text-muted-foreground mb-4">
+                  {lang === "nl" ? "Neem direct contact op of plan een gratis Automation Scan." : "Get in touch directly or schedule a free Automation Scan."}
+                </p>
+                <div className="flex flex-col sm:flex-row gap-2 justify-center">
+                  <Link to="/contact" className="inline-flex items-center justify-center gap-1.5 text-sm px-4 py-2 rounded-lg border border-border hover:border-primary/30 text-foreground hover:text-primary transition-colors">
+                    {lang === "nl" ? "Stel je vraag" : "Ask your question"} <ArrowRight size={14} />
+                  </Link>
+                  <Link to="/book" className="inline-flex items-center justify-center gap-1.5 text-sm px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
+                    {lang === "nl" ? "Plan een Automation Scan" : "Schedule Automation Scan"} <ArrowRight size={14} />
+                  </Link>
+                </div>
+              </div>
+            </ScrollRevealItem>
+          </ScrollReveal>
         </div>
       </div>
     </section>

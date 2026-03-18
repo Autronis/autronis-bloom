@@ -73,19 +73,6 @@ const LiveAutomationPreview = () => {
           <div className="rounded-xl border border-border bg-card p-6 sm:p-8">
             {/* Flow visualization */}
             <div className="flex items-center justify-between relative">
-              {/* Connection line */}
-              <div className="absolute top-5 left-8 right-8 h-px bg-border" />
-              <motion.div
-                className="absolute top-5 left-8 h-px bg-primary"
-                animate={{
-                  width: activeStep >= 0
-                    ? `${Math.min((activeStep / (steps.length - 1)) * 100, 100)}%`
-                    : "0%",
-                }}
-                style={{ maxWidth: "calc(100% - 64px)" }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-              />
-
               {steps.map((step, idx) => {
                 const Icon = step.icon;
                 const isActive = idx <= activeStep;
@@ -93,11 +80,21 @@ const LiveAutomationPreview = () => {
 
                 return (
                   <div key={step.en} className="relative z-10 flex flex-col items-center gap-2">
+                    {/* Connector line to next step */}
+                    {idx < steps.length - 1 && (
+                      <div className="absolute top-5 left-[calc(50%+20px)] h-px bg-border" style={{ width: "calc(100% - 8px)" }}>
+                        <motion.div
+                          className="h-full bg-primary"
+                          animate={{ width: isActive && idx < activeStep ? "100%" : "0%" }}
+                          transition={{ duration: 0.6, ease: "easeOut" }}
+                        />
+                      </div>
+                    )}
                     <motion.div
-                      className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-colors duration-300 ${
+                      className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-colors duration-300 bg-background ${
                         isActive
-                          ? "border-primary bg-primary/10"
-                          : "border-border bg-card"
+                          ? "border-primary"
+                          : "border-border"
                       }`}
                       animate={{
                         scale: isCurrent ? [1, 1.15, 1] : 1,

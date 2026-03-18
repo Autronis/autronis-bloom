@@ -1,4 +1,6 @@
 import { useLanguage } from "@/i18n/context";
+import flagEN from "@/assets/flag-en.png";
+import flagNL from "@/assets/flag-nl.png";
 
 interface Props {
   size?: "sm" | "md";
@@ -7,42 +9,31 @@ interface Props {
 const LanguageSwitcher = ({ size = "sm" }: Props) => {
   const lang = useLanguage();
   const isEN = lang === "en";
-  const h = size === "md" ? "h-8" : "h-7";
-  const px = size === "md" ? "px-3" : "px-2.5";
+  const h = size === "md" ? "h-7" : "h-6";
 
   return (
-    <div className={`flex items-center ${h} gap-1`}>
-      {/* EN — Union Jack border */}
+    <div className={`flex items-center ${h} gap-1.5`}>
       <a
         href={isEN ? undefined : "https://autronis.com"}
-        className={`relative ${px} py-1 rounded-md text-[11px] font-semibold tracking-wide transition-all duration-200 ${
+        className={`block rounded-sm overflow-hidden transition-all duration-200 ${
           isEN
-            ? "bg-primary text-primary-foreground"
-            : "bg-transparent text-muted-foreground hover:text-foreground cursor-pointer"
+            ? "ring-1 ring-primary/50 opacity-100"
+            : "opacity-50 hover:opacity-80"
         }`}
-        style={{
-          border: "2px solid transparent",
-          borderImage: "linear-gradient(135deg, #012169, #C8102E, #FFFFFF, #C8102E, #012169) 1",
-        }}
         aria-label="English"
       >
-        EN
+        <img src={flagEN} alt="EN" className="w-7 h-5 object-cover" />
       </a>
-      {/* NL — Dutch flag border */}
       <a
         href={isEN ? "https://autronis.nl" : undefined}
-        className={`relative ${px} py-1 rounded-md text-[11px] font-semibold tracking-wide transition-all duration-200 ${
+        className={`block rounded-sm overflow-hidden transition-all duration-200 ${
           !isEN
-            ? "bg-primary text-primary-foreground"
-            : "bg-transparent text-muted-foreground hover:text-foreground cursor-pointer"
+            ? "ring-1 ring-primary/50 opacity-100"
+            : "opacity-50 hover:opacity-80"
         }`}
-        style={{
-          border: "2px solid transparent",
-          borderImage: "linear-gradient(180deg, #AE1C28 33%, #FFFFFF 33%, #FFFFFF 66%, #21468B 66%) 1",
-        }}
         aria-label="Nederlands"
       >
-        NL
+        <img src={flagNL} alt="NL" className="w-7 h-5 object-cover" />
       </a>
     </div>
   );

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import useCanHover from "@/hooks/use-can-hover";
+import GlowCTA from "@/components/GlowCTA";
 import teamFoto from "@/assets/team_wall_cropped.png";
 import { useLanguage } from "@/i18n/context";
 
@@ -84,7 +85,7 @@ const WhyAutronisSection = () => {
                     ))}
                   </div>
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <Button asChild size="lg" className="w-full sm:w-auto"><Link to="/book">{tx.ctaBook}<ArrowRight size={18} /></Link></Button>
+                    <GlowCTA to="/book">{tx.ctaBook}</GlowCTA>
                     <Button asChild size="lg" variant="outline" className="w-full sm:w-auto border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors duration-300"><Link to="/team">{tx.ctaTeam}<ArrowRight size={18} /></Link></Button>
                   </div>
                 </div>

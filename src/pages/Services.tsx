@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, ChevronDown, CheckCircle2, Cog, Link2, PieChart, FolderOpen, Briefcase, Rocket, ShoppingCart, LinkIcon, CreditCard, Puzzle, BarChart3, LayoutDashboard, FileText, Database, AlertTriangle, ShieldCheck, Shield, Layers } from "lucide-react";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import GlowCTA from "@/components/GlowCTA";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import { useLanguage } from "@/i18n/context";
 import WorkflowBuilder, { workflowSystems } from "@/components/WorkflowBuilder";
@@ -527,7 +528,7 @@ const Services = () => {
           <div className="text-center mt-16">
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">{tx.bottomTitle}</h2>
             <p className="text-muted-foreground mb-6 max-w-xl mx-auto">{tx.bottomDesc}</p>
-            <Button asChild size="lg"><Link to="/book">{tx.bottomCta} <ArrowRight size={18} /></Link></Button>
+            <GlowCTA to="/book">{tx.bottomCta}</GlowCTA>
           </div>
         </div>
       </section>

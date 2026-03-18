@@ -1,7 +1,6 @@
 // Layout is provided by App.tsx
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ArrowRight, Target, Shield, Users, Handshake } from "lucide-react";
+import { Target, Shield, Users, Handshake } from "lucide-react";
+import GlowCTA from "@/components/GlowCTA";
 import SEOHead from "@/components/SEOHead";
 import { useState, useEffect } from "react";
 import fotoSyb from "@/assets/foto_syb.jpg";
@@ -145,7 +144,7 @@ const About = () => {
           <div className="text-center">
             <h2 className="text-2xl font-bold mb-3">{t.ctaTitle}</h2>
             <p className="text-muted-foreground mb-6">{t.ctaDesc}</p>
-            <Button asChild size="lg"><Link to="/book">{t.ctaBtn} <ArrowRight size={18} /></Link></Button>
+            <GlowCTA to="/book">{t.ctaBtn}</GlowCTA>
           </div>
         </div>
       </section>

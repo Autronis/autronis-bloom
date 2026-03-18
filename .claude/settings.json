@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l src/pages/*.tsx)",
+      "WebFetch(domain:cal.com)",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run:*)",
+      "Read(//c/Users/semmi/AppData/Local/Temp/claude/c--Users-semmi-OneDrive-Claude-AI-Projects-autronis-website/f3a2d4e3-4c95-4e24-a396-fe8d3985c2b5/tasks/**)",
+      "Bash(npx sharp-cli:*)",
+      "Bash(node -e \":*)",
+      "Bash(ls \"C:\\\\Users\\\\semmi\\\\Downloads\"/n8njobby*)",
+      "Bash(ls \"C:\\\\Users\\\\semmi\\\\Downloads\"/N8njobby*)",
+      "Read(//c/Users/semmi/**)",
+      "Bash(npx playwright:*)",
+      "Bash(find /c/Users/semmi -iname n8nflowgoed* -not -path */node_modules/* -not -path */.git/*)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\semmi\\Pictures\\Screenshots"
+    ]
+  }
+}

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import GlowCTA from "@/components/GlowCTA";
 import teamFoto from "@/assets/autronis_team_foto.png";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import { useLanguage } from "@/i18n/context";
@@ -37,7 +38,7 @@ const TeamBlock = () => {
                 <h2 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">{t.title}</h2>
                 <p className="text-muted-foreground leading-relaxed mb-8">{t.desc}</p>
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <Button asChild size="lg"><Link to="/book">{t.ctaBook}<ArrowRight size={18} /></Link></Button>
+                  <GlowCTA to="/book">{t.ctaBook}</GlowCTA>
                   <Button asChild size="lg" variant="outline" className="border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors duration-300"><Link to="/team">{t.ctaTeam}<ArrowRight size={18} /></Link></Button>
                 </div>
               </div>

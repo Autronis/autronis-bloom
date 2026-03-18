@@ -1,7 +1,6 @@
-import { Link, useLocation } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useLocation } from "react-router-dom";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import GlowCTA from "@/components/GlowCTA";
 import CaseStudyCard from "@/components/case-studies/CaseStudyCard";
 import { casesByLang } from "@/components/case-studies/caseStudiesData";
 import { useEffect } from "react";
@@ -60,7 +59,7 @@ const CaseStudies = () => {
           </div>
           <ScrollReveal className="text-center mt-12">
             <ScrollRevealItem>
-              <Button asChild size="lg"><Link to="/book">{t.cta}<ArrowRight size={18} /></Link></Button>
+              <GlowCTA to="/book">{t.cta}</GlowCTA>
               <p className="text-xs text-muted-foreground mt-3">{t.ctaSub}</p>
             </ScrollRevealItem>
           </ScrollReveal>

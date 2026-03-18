@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, BookOpen, Calculator, BarChart3, Workflow, Euro, Settings, UserPlus, Layers, Link2, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
+import GlowCTA from "@/components/GlowCTA";
 import AutomationImpactScan from "@/components/resources/AutomationImpactScan";
 import { useLanguage } from "@/i18n/context";
 
@@ -178,7 +179,7 @@ const Resources = () => {
             <div className="rounded-xl border border-border bg-card p-8 sm:p-10 text-center max-w-2xl mx-auto">
               <h2 className="text-xl sm:text-2xl font-bold mb-3">{c.ctaTitle}</h2>
               <p className="text-sm text-muted-foreground leading-relaxed mb-6">{c.ctaDesc}</p>
-              <Button asChild size="lg"><Link to="/book">{c.ctaBtn} <ArrowRight size={16} /></Link></Button>
+              <GlowCTA to="/book">{c.ctaBtn}</GlowCTA>
             </div>
           </ScrollRevealItem></ScrollReveal>
         </div>

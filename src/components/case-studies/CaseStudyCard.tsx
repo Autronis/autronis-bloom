@@ -125,13 +125,14 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
           <SectionHeader>{t.solution}</SectionHeader>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">{cs.solution.map((item, i) => <div key={i} className="flex items-start gap-2 text-[13px] text-muted-foreground leading-relaxed"><span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-[7px] shrink-0" />{item}</div>)}</div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 border-t border-border">
-          <div className="p-5 sm:p-6 lg:border-r border-border">
-            <SectionHeader>{t.systemOverview}</SectionHeader>
-            {cs.videoUrl ? <p className="text-[12px] text-muted-foreground leading-relaxed mb-3">{t.videoDesc}</p> : <div className="mb-3 flex items-center gap-1.5 text-[12px] text-muted-foreground leading-relaxed italic"><AlertTriangle size={12} className="text-primary shrink-0" /><span>{t.simplified}</span></div>}
+        <div className="border-t border-border p-5 sm:p-6">
+          <SectionHeader>{t.systemOverview}</SectionHeader>
+          {cs.videoUrl ? <p className="text-[12px] text-muted-foreground leading-relaxed mb-3">{t.videoDesc}</p> : <div className="mb-3 flex items-center gap-1.5 text-[12px] text-muted-foreground leading-relaxed italic"><AlertTriangle size={12} className="text-primary shrink-0" /><span>{t.simplified}</span></div>}
+          <div className="max-w-2xl mx-auto">
             {cs.videoUrl ? <video src={cs.videoUrl} className="w-full aspect-video rounded-lg" controls controlsList="nodownload noplaybackrate" disablePictureInPicture /> : <Visual />}
           </div>
-          <div className="border-t lg:border-t-0 border-border p-5 sm:p-6 space-y-5">
+        </div>
+        <div className="border-t border-border p-5 sm:p-6 space-y-5">
             <div>
               <SectionHeader>{t.resultsImpact}</SectionHeader>
               {cs.beforeAfter && <div className="mb-4"><BeforeAfterChart data={cs.beforeAfter} lang={lang} /></div>}

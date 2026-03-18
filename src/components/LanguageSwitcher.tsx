@@ -10,7 +10,7 @@ const LanguageSwitcher = ({ size = "sm" }: Props) => {
   const lang = useLanguage();
   const isEN = lang === "en";
   const h = size === "md" ? "h-8" : "h-7";
-  const w = size === "md" ? "w-10" : "w-9";
+  const w = size === "md" ? "w-14" : "w-12";
   const border = "2px";
 
   return (

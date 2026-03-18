@@ -10,6 +10,8 @@ interface GlowCardProps {
   onLeave: () => void;
   /** Disable scale/translateY on hover */
   noScale?: boolean;
+  /** Custom glow color (default: turquoise) */
+  glowColor?: string;
 }
 
 const GlowCard = ({
@@ -20,6 +22,7 @@ const GlowCard = ({
   onHover,
   onLeave,
   noScale = false,
+  glowColor,
 }: GlowCardProps) => {
   const [glowPos, setGlowPos] = useState({ x: 0, y: 0 });
   const canHover = useCanHover();
@@ -41,8 +44,8 @@ const GlowCard = ({
       style={{
         transform: showHover && !noScale ? "scale(1.015) translateY(-2px)" : "scale(1) translateY(0)",
         opacity: showDim ? 0.88 : 1,
-        borderColor: showHover ? "hsl(var(--primary) / 0.5)" : undefined,
-        boxShadow: showHover ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none",
+        borderColor: showHover ? (glowColor ? undefined : "hsl(var(--primary) / 0.5)") : undefined,
+        boxShadow: showHover ? `0 0 20px ${glowColor ?? "hsl(174 78% 41% / 0.12)"}` : "none",
       }}
     >
       <div className="relative z-10">{children}</div>

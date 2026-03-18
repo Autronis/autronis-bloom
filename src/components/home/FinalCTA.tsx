@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/i18n/context";
+import GlowCTA from "@/components/GlowCTA";
 
 const text = {
   en: {
@@ -179,12 +180,7 @@ const FinalCTA = () => {
         <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-xl mx-auto">
           {t.desc}
         </p>
-        <Button asChild size="lg" className="w-full sm:w-auto text-base px-10">
-          <Link to="/book">
-            {t.cta}
-            <ArrowRight size={18} />
-          </Link>
-        </Button>
+        <GlowCTA to="/book">{t.cta}</GlowCTA>
       </div>
     </section>
   );

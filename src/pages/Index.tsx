@@ -8,6 +8,7 @@ import StatisticsBlock from "@/components/home/StatisticsBlock";
 import { AnimatePresence, motion } from "framer-motion";
 import SEOHead, { organizationSchema, websiteSchema } from "@/components/SEOHead";
 import { useLanguage } from "@/i18n/context";
+import GlowCTA from "@/components/GlowCTA";
 
 const ProblemSolutionSection = lazy(() => import("@/components/home/ProblemSolutionSection"));
 const ServicePillars = lazy(() => import("@/components/home/ServicePillars"));
@@ -154,9 +155,7 @@ const Index = () => {
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8 leading-relaxed">{t.heroDesc}</p>
             <div className="flex flex-col items-center mb-8 sm:mb-12">
               <div className="flex flex-col sm:flex-row items-stretch sm:items-start justify-center gap-3 w-full sm:w-auto">
-                <Button asChild size="lg" className="w-full sm:w-auto mt-0">
-                  <Link to="/book">{t.cta}<ArrowRight size={18} /></Link>
-                </Button>
+                <GlowCTA to="/book">{t.cta}</GlowCTA>
                 <div className="flex flex-col items-center">
                   <Button size="lg" variant="outline" className="w-full sm:w-auto" onClick={() => setVideoOpen(true)}>
                     <Play size={16} />{t.watchDemo}

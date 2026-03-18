@@ -340,16 +340,16 @@ const PillarCard = ({
 
 // Map ticker tool names to workflow builder IDs
 const tickerToWorkflowId: Record<string, string> = {
-  "OpenAI": "openai", "Anthropic": "anthropic", "Make": "make", "Supabase": "supabase",
+  "OpenAI": "openai", "Anthropic": "anthropic", "Supabase": "supabase",
   "Notion": "notion", "Stripe": "stripe", "HubSpot": "hubspot", "Slack": "slack",
   "Airtable": "airtable", "Salesforce": "salesforce", "PostgreSQL": "postgresql",
-  "Shopify": "shopify", "AWS": "aws", "Cloudflare": "cloudflare", "Firebase": "firebase",
-  "Instagram": "instagram", "WhatsApp": "whatsapp", "GitHub": "github",
-  "n8n": "n8n", "Zapier": "zapier", "MongoDB": "mongodb",
-  "Pipedrive": "pipedrive", "Google Workspace": "google-workspace",
-  "Microsoft 365": "microsoft-365", "WooCommerce": "woocommerce", "Magento": "magento",
-  "Mollie": "mollie", "PayPal": "paypal", "Power BI": "power-bi",
-  "Google Analytics": "google-analytics",
+  "Shopify": "shopify", "Instagram": "instagram", "WhatsApp": "whatsapp", "GitHub": "github",
+  "MongoDB": "mongodb", "MySQL": "mysql", "Pipedrive": "pipedrive",
+  "Google Workspace": "google-workspace", "Microsoft 365": "microsoft-365",
+  "WooCommerce": "woocommerce", "Magento": "magento", "Mollie": "mollie",
+  "PayPal": "paypal", "Power BI": "power-bi", "Google Analytics": "google-analytics",
+  "LangChain": "langchain", "Retool": "retool", "Looker Studio": "looker-studio",
+  "Sentry": "sentry", "Datadog": "datadog",
 };
 
 const Services = () => {

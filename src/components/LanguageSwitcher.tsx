@@ -16,8 +16,8 @@ const LanguageSwitcher = ({ size = "sm" }: Props) => {
         href={isEN ? undefined : "https://autronis.com"}
         className={`px-2.5 ${py} text-[11px] font-semibold tracking-wide transition-all duration-200 ${
           isEN
-            ? "text-foreground"
-            : "text-muted-foreground hover:text-foreground cursor-pointer"
+            ? "text-foreground bg-white/5"
+            : "text-muted-foreground hover:text-foreground cursor-pointer bg-white/[0.02]"
         }`}
         style={{
           border: "1.5px solid transparent",
@@ -32,8 +32,8 @@ const LanguageSwitcher = ({ size = "sm" }: Props) => {
         href={isEN ? "https://autronis.nl" : undefined}
         className={`px-2.5 ${py} text-[11px] font-semibold tracking-wide transition-all duration-200 ${
           !isEN
-            ? "text-foreground"
-            : "text-muted-foreground hover:text-foreground cursor-pointer"
+            ? "text-foreground bg-white/5"
+            : "text-muted-foreground hover:text-foreground cursor-pointer bg-white/[0.02]"
         }`}
         style={{
           border: "1.5px solid transparent",

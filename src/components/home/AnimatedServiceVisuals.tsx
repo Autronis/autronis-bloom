@@ -86,8 +86,8 @@ export const ProcessAutomationVisual = () => {
   const beltY = 128;
 
   return (
-    <div className="relative w-full h-full min-h-[320px] flex items-center justify-center p-2">
-      <svg viewBox="0 0 200 160" className="w-full h-full">
+    <div className="relative w-full h-full min-h-[260px] flex items-center justify-center p-2">
+      <svg viewBox="0 0 200 150" className="w-full h-full">
         {/* Gear A — clockwise */}
         <g transform={`translate(${cxA},${cyA})`}>
           <motion.g
@@ -130,36 +130,30 @@ export const ProcessAutomationVisual = () => {
           <circle r={innerC * 0.18} fill="hsl(174, 78%, 41%)" fillOpacity="0.15" />
         </g>
 
-        {/* Energy sparks flying from gears */}
-        {[0, 1, 2, 3, 4, 5].map((i) => (
-          <motion.circle
-            key={`spark-${i}`}
-            r="1"
-            fill="hsl(174, 78%, 41%)"
+        {/* Shooting stars / sparks flying left to right */}
+        {[0, 1, 2, 3, 4].map((i) => (
+          <motion.g
+            key={`star-${i}`}
             animate={{
-              cx: [cxA + (i % 2 === 0 ? -10 : 10), 30 + i * 30],
-              cy: [cyA, beltY - 25],
-              opacity: [0, 0.7, 0],
-              r: [1, 0.5],
+              x: [-20, 210],
+              y: [20 + i * 12, 25 + i * 10],
+              opacity: [0, 0.8, 0],
             }}
             transition={{
-              duration: 1.5,
-              delay: i * 0.8,
+              duration: 1.2 + i * 0.2,
+              delay: i * 1.5,
               repeat: Infinity,
-              repeatDelay: 3,
-              ease: "easeOut",
+              repeatDelay: 5,
+              ease: "easeIn",
             }}
-          />
+          >
+            {/* Star head */}
+            <circle r="1.2" fill="hsl(174, 78%, 41%)" fillOpacity="0.8" />
+            {/* Trail */}
+            <line x1="0" y1="0" x2="-8" y2="1" stroke="hsl(174, 78%, 41%)" strokeWidth="0.6" strokeOpacity="0.4" strokeLinecap="round" />
+            <line x1="-8" y1="1" x2="-14" y2="1.5" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.15" strokeLinecap="round" />
+          </motion.g>
         ))}
-
-        {/* Connection line from gears to belt */}
-        <motion.line
-          x1={cxA} y1={cyA + outerA + 5} x2={cxA} y2={beltY - 2}
-          stroke="hsl(174, 78%, 41%)" strokeWidth="0.3"
-          strokeDasharray="2 2"
-          animate={{ strokeOpacity: [0.05, 0.2, 0.05] }}
-          transition={{ duration: 3, repeat: Infinity }}
-        />
 
         {/* ═══ Conveyor belt ═══ */}
         {/* Belt line */}

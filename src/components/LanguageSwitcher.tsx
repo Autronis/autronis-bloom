@@ -1,6 +1,4 @@
 import { useLanguage } from "@/i18n/context";
-import flagEN from "@/assets/flag-en.png";
-import flagNL from "@/assets/flag-nl.png";
 
 interface Props {
   size?: "sm" | "md";
@@ -9,31 +7,41 @@ interface Props {
 const LanguageSwitcher = ({ size = "sm" }: Props) => {
   const lang = useLanguage();
   const isEN = lang === "en";
-  const h = size === "md" ? "h-7" : "h-6";
+  const py = size === "md" ? "py-1" : "py-0.5";
 
   return (
-    <div className={`flex items-center ${h} gap-1.5`}>
+    <div className={`flex items-center gap-1`}>
+      {/* EN — Union Jack border */}
       <a
         href={isEN ? undefined : "https://autronis.com"}
-        className={`block rounded-sm overflow-hidden transition-all duration-200 ${
+        className={`px-2.5 ${py} text-[11px] font-semibold tracking-wide transition-all duration-200 ${
           isEN
-            ? "ring-1 ring-primary/50 opacity-100"
-            : "opacity-50 hover:opacity-80"
+            ? "text-foreground"
+            : "text-muted-foreground hover:text-foreground cursor-pointer"
         }`}
+        style={{
+          border: "1.5px solid transparent",
+          borderImage: "linear-gradient(135deg, #012169, #C8102E, #FFFFFF, #C8102E, #012169) 1",
+        }}
         aria-label="English"
       >
-        <img src={flagEN} alt="EN" className="w-7 h-5 object-cover" />
+        EN
       </a>
+      {/* NL — Dutch flag border */}
       <a
         href={isEN ? "https://autronis.nl" : undefined}
-        className={`block rounded-sm overflow-hidden transition-all duration-200 ${
+        className={`px-2.5 ${py} text-[11px] font-semibold tracking-wide transition-all duration-200 ${
           !isEN
-            ? "ring-1 ring-primary/50 opacity-100"
-            : "opacity-50 hover:opacity-80"
+            ? "text-foreground"
+            : "text-muted-foreground hover:text-foreground cursor-pointer"
         }`}
+        style={{
+          border: "1.5px solid transparent",
+          borderImage: "linear-gradient(180deg, #AE1C28 33%, #FFFFFF 33%, #FFFFFF 66%, #21468B 66%) 1",
+        }}
         aria-label="Nederlands"
       >
-        <img src={flagNL} alt="NL" className="w-7 h-5 object-cover" />
+        NL
       </a>
     </div>
   );

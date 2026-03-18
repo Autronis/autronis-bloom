@@ -1,6 +1,4 @@
 import { useLanguage } from "@/i18n/context";
-import flagEN from "@/assets/flag-en.png";
-import flagNL from "@/assets/flag-nl.png";
 
 interface Props {
   size?: "sm" | "md";
@@ -10,32 +8,77 @@ const LanguageSwitcher = ({ size = "sm" }: Props) => {
   const lang = useLanguage();
   const isEN = lang === "en";
   const h = size === "md" ? "h-9" : "h-8";
-  const flagSize = size === "md" ? "w-4 h-3" : "w-3.5 h-2.5";
 
   return (
-    <div className={`flex items-center ${h} rounded-full bg-muted/80 border border-border p-0.5 gap-0.5`}>
+    <div className={`flex items-center ${h} gap-1.5`}>
+      {/* EN button — UK flag colors as border */}
       <a
         href={isEN ? undefined : "https://autronis.com"}
-        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide transition-all duration-200 ${
+        className={`relative px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide transition-all duration-200 ${
           isEN
-            ? "bg-primary text-primary-foreground shadow-sm"
+            ? "text-primary-foreground shadow-sm"
             : "text-muted-foreground hover:text-foreground cursor-pointer"
         }`}
+        style={{
+          background: isEN
+            ? "hsl(var(--primary))"
+            : "transparent",
+          border: "2px solid transparent",
+          backgroundClip: "padding-box",
+          outline: "2px solid transparent",
+          outlineOffset: "-2px",
+          ...(isEN ? {} : {
+            border: "none",
+            padding: "5px 13px",
+          }),
+        }}
         aria-label="English"
       >
-        <img src={flagEN} alt="" className={`${flagSize} rounded-[2px] object-cover ${isEN ? "opacity-90" : "opacity-50"}`} />
+        {/* UK flag gradient border */}
+        <span
+          className="absolute inset-0 rounded-full -z-10"
+          style={{
+            background: "linear-gradient(135deg, #012169, #C8102E, #FFFFFF, #C8102E, #012169)",
+            padding: "2px",
+            WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+            WebkitMaskComposite: "xor",
+            maskComposite: "exclude",
+          }}
+        />
         EN
       </a>
+      {/* NL button — Dutch flag colors as border */}
       <a
         href={isEN ? "https://autronis.nl" : undefined}
-        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide transition-all duration-200 ${
+        className={`relative px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide transition-all duration-200 ${
           !isEN
-            ? "bg-primary text-primary-foreground shadow-sm"
+            ? "text-primary-foreground shadow-sm"
             : "text-muted-foreground hover:text-foreground cursor-pointer"
         }`}
+        style={{
+          background: !isEN
+            ? "hsl(var(--primary))"
+            : "transparent",
+          border: "2px solid transparent",
+          backgroundClip: "padding-box",
+          ...(!isEN ? {} : {
+            border: "none",
+            padding: "5px 13px",
+          }),
+        }}
         aria-label="Nederlands"
       >
-        <img src={flagNL} alt="" className={`${flagSize} rounded-[2px] object-cover ${!isEN ? "opacity-90" : "opacity-50"}`} />
+        {/* Dutch flag gradient border */}
+        <span
+          className="absolute inset-0 rounded-full -z-10"
+          style={{
+            background: "linear-gradient(180deg, #AE1C28 33%, #FFFFFF 33%, #FFFFFF 66%, #21468B 66%)",
+            padding: "2px",
+            WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+            WebkitMaskComposite: "xor",
+            maskComposite: "exclude",
+          }}
+        />
         NL
       </a>
     </div>

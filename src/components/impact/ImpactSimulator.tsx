@@ -200,11 +200,9 @@ const ImpactSimulator = () => {
                   </motion.div>
                 ))}
               </div>
-              <div className="mt-7" />
               <div className="mt-8 pt-6 border-t border-border">
                 <p className="text-sm text-muted-foreground leading-relaxed mb-5 italic flex items-start gap-1.5"><AlertTriangle size={14} className="text-primary shrink-0 mt-0.5 not-italic" />{t.disclaimer}</p>
-                <Button asChild size="lg"><Link to="/book">{t.ctaBtn}<ArrowRight size={18} /></Link></Button>
-                <div className="mt-5 rounded-xl border border-border overflow-hidden">
+                <div className="rounded-xl border border-border overflow-hidden">
                   <button onClick={() => setShowTransparency((p) => !p)} className="w-full flex items-center justify-between p-4 text-left hover:bg-muted/30 transition-colors">
                     <div className="flex items-center gap-2"><Info size={14} className="text-primary" /><p className="text-sm font-medium text-foreground">{t.transparencyTitle}</p></div>
                     <motion.div animate={{ rotate: showTransparency ? 180 : 0 }} transition={{ duration: 0.25 }}><ChevronDown size={16} className="text-muted-foreground" /></motion.div>

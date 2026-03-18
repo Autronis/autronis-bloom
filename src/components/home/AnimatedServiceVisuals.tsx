@@ -268,14 +268,12 @@ export const SystemIntegrationVisual = () => {
         {/* System nodes */}
         {systems.map((sys, i) => (
           <g key={i}>
-            {/* Center card: solid background so lines don't show through */}
-            {sys.isCenter && (
-              <rect
-                x={sys.x - nodeW / 2} y={sys.y - nodeH / 2}
-                width={nodeW} height={nodeH} rx="3"
-                fill="hsl(200, 20%, 10%)"
-              />
-            )}
+            {/* Solid background so lines don't show through */}
+            <rect
+              x={sys.x - nodeW / 2} y={sys.y - nodeH / 2}
+              width={nodeW} height={nodeH} rx="3"
+              fill="hsl(200, 20%, 10%)"
+            />
             <motion.rect
               x={sys.x - nodeW / 2} y={sys.y - nodeH / 2}
               width={nodeW} height={nodeH} rx="3"

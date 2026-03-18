@@ -1,7 +1,7 @@
 import { FlowDiagramSvg, type DiagramNode, type Point } from "./FlowDiagramEngine";
 import { useLanguage } from "@/i18n/context";
 
-const CW = 112, CH = 34;
+const CW = 150, CH = 46;
 
 const nodeText = {
   en: [
@@ -27,34 +27,34 @@ const nodeText = {
 const icons = ["globe", "search", "database", "bot", "mail", "dashboard", "phone"];
 
 const desktopPositions = [
-  { x: 86, y: 60 }, { x: 225, y: 60 }, { x: 364, y: 60 },
-  { x: 225, y: 138 }, { x: 225, y: 196 }, { x: 225, y: 254 }, { x: 225, y: 312 },
+  { x: 100, y: 70 }, { x: 290, y: 70 }, { x: 480, y: 70 },
+  { x: 290, y: 175 }, { x: 290, y: 255 }, { x: 290, y: 335 }, { x: 290, y: 415 },
 ];
 
 const mobilePositions = [
-  { x: 170, y: 55 }, { x: 170, y: 128 }, { x: 170, y: 201 },
-  { x: 170, y: 274 }, { x: 170, y: 347 }, { x: 170, y: 420 }, { x: 170, y: 493 },
+  { x: 170, y: 55 }, { x: 170, y: 138 }, { x: 170, y: 221 },
+  { x: 170, y: 304 }, { x: 170, y: 387 }, { x: 170, y: 470 }, { x: 170, y: 553 },
 ];
 
 const desktopSegments: Point[][] = [
-  [{ x: 114, y: 60 }, { x: 189, y: 60 }],
-  [{ x: 261, y: 60 }, { x: 308, y: 60 }],
-  [{ x: 364, y: 77 }, { x: 364, y: 103 }, { x: 225, y: 103 }, { x: 225, y: 121 }],
-  [{ x: 225, y: 155 }, { x: 225, y: 179 }],
-  [{ x: 225, y: 213 }, { x: 225, y: 237 }],
-  [{ x: 225, y: 271 }, { x: 225, y: 295 }],
+  [{ x: 148, y: 70 }, { x: 242, y: 70 }],
+  [{ x: 338, y: 70 }, { x: 408, y: 70 }],
+  [{ x: 480, y: 93 }, { x: 480, y: 130 }, { x: 290, y: 130 }, { x: 290, y: 152 }],
+  [{ x: 290, y: 198 }, { x: 290, y: 232 }],
+  [{ x: 290, y: 278 }, { x: 290, y: 312 }],
+  [{ x: 290, y: 358 }, { x: 290, y: 392 }],
 ];
 
 const mobileSegments: Point[][] = [
-  [{ x: 170, y: 79 }, { x: 170, y: 104 }],
-  [{ x: 170, y: 152 }, { x: 170, y: 177 }],
-  [{ x: 170, y: 225 }, { x: 170, y: 250 }],
-  [{ x: 170, y: 298 }, { x: 170, y: 323 }],
-  [{ x: 170, y: 371 }, { x: 170, y: 396 }],
-  [{ x: 170, y: 444 }, { x: 170, y: 469 }],
+  [{ x: 170, y: 83 }, { x: 170, y: 112 }],
+  [{ x: 170, y: 166 }, { x: 170, y: 195 }],
+  [{ x: 170, y: 249 }, { x: 170, y: 278 }],
+  [{ x: 170, y: 332 }, { x: 170, y: 361 }],
+  [{ x: 170, y: 415 }, { x: 170, y: 444 }],
+  [{ x: 170, y: 498 }, { x: 170, y: 527 }],
 ];
 
-const MW = 235, MH = 48;
+const MW = 250, MH = 56;
 
 const LeadFlowDiagram = () => {
   const lang = useLanguage();
@@ -71,10 +71,10 @@ const LeadFlowDiagram = () => {
   return (
     <div className="w-full">
       <div className="hidden sm:block">
-        <FlowDiagramSvg viewBox="0 0 450 365" nodes={desktopNodes} segments={desktopSegments} />
+        <FlowDiagramSvg viewBox="0 0 600 470" nodes={desktopNodes} segments={desktopSegments} />
       </div>
       <div className="sm:hidden">
-        <FlowDiagramSvg viewBox="0 0 345 545" nodes={mobileNodes} segments={mobileSegments} travelDuration={8000} />
+        <FlowDiagramSvg viewBox="0 0 345 610" nodes={mobileNodes} segments={mobileSegments} travelDuration={8000} />
       </div>
     </div>
   );

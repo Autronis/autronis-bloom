@@ -1,261 +1,265 @@
 import { motion } from "framer-motion";
 
-// Process Automation — Clean flow pipeline with data moving through stages
+// Process Automation — Flowing pipeline with processing stages
 export const ProcessAutomationVisual = () => {
-  const stages = [
-    { x: 15, label: "IN" },
-    { x: 38, label: "01" },
-    { x: 62, label: "02" },
-    { x: 85, label: "OUT" },
+  const steps = [
+    { x: 50, y: 15, w: 56, label: "TRIGGER" },
+    { x: 50, y: 38, w: 56, label: "VALIDATE" },
+    { x: 50, y: 61, w: 56, label: "EXECUTE" },
+    { x: 50, y: 84, w: 56, label: "COMPLETE" },
   ];
 
   return (
-    <div className="relative w-full h-full min-h-[280px] flex items-center justify-center">
-      <svg viewBox="0 0 100 60" className="w-full h-full max-h-[280px]">
-        {/* Horizontal pipeline line */}
-        <line x1="10" y1="30" x2="90" y2="30" stroke="hsl(174, 78%, 41%)" strokeWidth="0.15" strokeOpacity="0.3" />
-
-        {/* Stage nodes */}
-        {stages.map((stage, i) => (
-          <g key={i}>
-            {/* Node circle */}
+    <div className="relative w-full h-full min-h-[320px] flex items-center justify-center p-4">
+      <svg viewBox="0 0 100 100" className="w-full h-full">
+        {/* Vertical flow connections */}
+        {[0, 1, 2].map((i) => (
+          <g key={`conn-${i}`}>
+            <line
+              x1="50" y1={steps[i].y + 5}
+              x2="50" y2={steps[i + 1].y - 5}
+              stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.2"
+            />
             <motion.circle
-              cx={stage.x} cy="30" r="4"
-              fill="none"
+              r="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.7"
+              animate={{
+                cy: [steps[i].y + 5, steps[i + 1].y - 5],
+                cx: [50, 50],
+              }}
+              transition={{ duration: 1.2, delay: i * 1.2 + 0.5, repeat: Infinity, repeatDelay: 2.4, ease: "easeInOut" }}
+            />
+          </g>
+        ))}
+
+        {/* Stage boxes */}
+        {steps.map((step, i) => (
+          <g key={i}>
+            <motion.rect
+              x={step.x - step.w / 2} y={step.y - 4.5}
+              width={step.w} height="9" rx="1.5"
+              fill="hsl(174, 78%, 41%)"
+              fillOpacity="0.04"
               stroke="hsl(174, 78%, 41%)"
               strokeWidth="0.3"
-              strokeOpacity="0.4"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: i * 0.15, type: "spring", stiffness: 200 }}
+              strokeOpacity="0.3"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: i * 0.15, duration: 0.5 }}
             />
-            {/* Inner dot */}
+            {/* Status indicator */}
             <motion.circle
-              cx={stage.x} cy="30" r="1.2"
+              cx={step.x - step.w / 2 + 5} cy={step.y}
+              r="1.2"
               fill="hsl(174, 78%, 41%)"
-              fillOpacity="0.3"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: i * 0.15 + 0.1 }}
+              animate={{ fillOpacity: [0.2, 0.7, 0.2] }}
+              transition={{ duration: 2, delay: i * 1.2, repeat: Infinity }}
             />
             {/* Label */}
-            <text x={stage.x} y="40" textAnchor="middle" fontSize="2.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.4" fontFamily="monospace">
-              {stage.label}
+            <text
+              x={step.x + 2} y={step.y + 1}
+              textAnchor="middle"
+              fontSize="3.2" fontWeight="600" letterSpacing="0.15"
+              fill="hsl(174, 78%, 41%)" fillOpacity="0.6"
+              fontFamily="system-ui, sans-serif"
+            >
+              {step.label}
+            </text>
+            {/* Step number */}
+            <text
+              x={step.x + step.w / 2 - 4} y={step.y + 1}
+              textAnchor="middle"
+              fontSize="2.5" fontFamily="monospace"
+              fill="hsl(174, 78%, 41%)" fillOpacity="0.3"
+            >
+              {String(i + 1).padStart(2, "0")}
             </text>
           </g>
         ))}
 
-        {/* Traveling data packets — 3 staggered */}
-        {[0, 1, 2].map((i) => (
-          <motion.rect
-            key={i}
-            width="3" height="1.5" rx="0.5"
-            fill="hsl(174, 78%, 41%)"
-            fillOpacity="0.5"
-            y="29.25"
-            animate={{ x: [8, 88], opacity: [0, 0.6, 0.6, 0] }}
-            transition={{
-              duration: 4,
-              delay: i * 1.3,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-        ))}
-
-        {/* Subtle vertical process lines at each stage */}
-        {stages.slice(1, -1).map((stage, i) => (
-          <motion.line
-            key={`vline-${i}`}
-            x1={stage.x} y1="24" x2={stage.x} y2="36"
-            stroke="hsl(174, 78%, 41%)"
-            strokeWidth="0.15"
-            strokeOpacity="0.2"
-            strokeDasharray="0.5 0.5"
-            animate={{ opacity: [0.1, 0.3, 0.1] }}
-            transition={{ duration: 2, delay: i * 0.5, repeat: Infinity }}
-          />
-        ))}
+        {/* Side decorative lines */}
+        <line x1="18" y1="12" x2="18" y2="88" stroke="hsl(174, 78%, 41%)" strokeWidth="0.1" strokeOpacity="0.1" />
+        <line x1="82" y1="12" x2="82" y2="88" stroke="hsl(174, 78%, 41%)" strokeWidth="0.1" strokeOpacity="0.1" />
       </svg>
     </div>
   );
 };
 
-// System Integrations — Elegant hub with orbiting connections
+// System Integrations — Large hub with clean radiating connections
 export const SystemIntegrationVisual = () => {
-  const orbitNodes = [
-    { angle: 0, r: 18 },
-    { angle: 72, r: 18 },
-    { angle: 144, r: 18 },
-    { angle: 216, r: 18 },
-    { angle: 288, r: 18 },
+  const nodes = [
+    { angle: -90, label: "API" },
+    { angle: -30, label: "CRM" },
+    { angle: 30, label: "ERP" },
+    { angle: 90, label: "DB" },
+    { angle: 150, label: "BI" },
+    { angle: 210, label: "WEB" },
   ];
+  const R = 32;
 
   return (
-    <div className="relative w-full h-full min-h-[280px] flex items-center justify-center">
-      <svg viewBox="0 0 80 80" className="w-full h-full max-h-[280px]">
-        {/* Orbit ring */}
-        <circle cx="40" cy="40" r="18" fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.15" strokeOpacity="0.2" />
-        <circle cx="40" cy="40" r="12" fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.1" strokeOpacity="0.1" strokeDasharray="1 1" />
+    <div className="relative w-full h-full min-h-[320px] flex items-center justify-center p-4">
+      <svg viewBox="0 0 100 100" className="w-full h-full">
+        {/* Outer orbit */}
+        <circle cx="50" cy="50" r={R} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.15" strokeOpacity="0.15" strokeDasharray="1.5 1.5" />
 
-        {/* Connection lines from center to nodes */}
-        {orbitNodes.map((node, i) => {
+        {/* Connections + nodes */}
+        {nodes.map((node, i) => {
           const rad = (node.angle * Math.PI) / 180;
-          const nx = 40 + Math.cos(rad) * node.r;
-          const ny = 40 + Math.sin(rad) * node.r;
+          const nx = 50 + Math.cos(rad) * R;
+          const ny = 50 + Math.sin(rad) * R;
           return (
-            <motion.line
-              key={`line-${i}`}
-              x1="40" y1="40" x2={nx} y2={ny}
-              stroke="hsl(174, 78%, 41%)"
-              strokeWidth="0.2"
-              strokeOpacity="0.25"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 1, delay: i * 0.2 }}
-            />
-          );
-        })}
-
-        {/* Data pulses along connections */}
-        {orbitNodes.map((node, i) => {
-          const rad = (node.angle * Math.PI) / 180;
-          const nx = 40 + Math.cos(rad) * node.r;
-          const ny = 40 + Math.sin(rad) * node.r;
-          return (
-            <motion.circle
-              key={`pulse-${i}`}
-              r="0.6"
-              fill="hsl(174, 78%, 41%)"
-              fillOpacity="0.7"
-              animate={{
-                cx: [40, nx, 40],
-                cy: [40, ny, 40],
-              }}
-              transition={{
-                duration: 3,
-                delay: i * 0.6,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          );
-        })}
-
-        {/* Outer nodes */}
-        {orbitNodes.map((node, i) => {
-          const rad = (node.angle * Math.PI) / 180;
-          const nx = 40 + Math.cos(rad) * node.r;
-          const ny = 40 + Math.sin(rad) * node.r;
-          return (
-            <g key={`node-${i}`}>
+            <g key={i}>
+              {/* Connection line */}
+              <motion.line
+                x1="50" y1="50" x2={nx} y2={ny}
+                stroke="hsl(174, 78%, 41%)" strokeWidth="0.25" strokeOpacity="0.2"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.8, delay: i * 0.12 }}
+              />
+              {/* Data pulse */}
               <motion.circle
-                cx={nx} cy={ny} r="2.5"
-                fill="hsl(174, 78%, 41%)"
-                fillOpacity="0.08"
-                stroke="hsl(174, 78%, 41%)"
-                strokeWidth="0.25"
-                strokeOpacity="0.35"
+                r="0.8" fill="hsl(174, 78%, 41%)" fillOpacity="0.8"
+                animate={{
+                  cx: [50, nx], cy: [50, ny],
+                  opacity: [0, 1, 0],
+                }}
+                transition={{ duration: 2, delay: i * 0.5 + 1, repeat: Infinity, repeatDelay: 2.5 }}
+              />
+              {/* Node */}
+              <motion.circle
+                cx={nx} cy={ny} r="5"
+                fill="hsl(174, 78%, 41%)" fillOpacity="0.05"
+                stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.35"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={{ delay: i * 0.15 + 0.5, type: "spring" }}
+                transition={{ delay: i * 0.12 + 0.3, type: "spring", stiffness: 200 }}
               />
+              {/* Node label */}
+              <motion.text
+                x={nx} y={ny + 1}
+                textAnchor="middle" fontSize="2.8" fontWeight="600"
+                fill="hsl(174, 78%, 41%)" fillOpacity="0.5"
+                fontFamily="system-ui, sans-serif"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: i * 0.12 + 0.5 }}
+              >
+                {node.label}
+              </motion.text>
             </g>
           );
         })}
 
         {/* Center hub */}
         <motion.circle
-          cx="40" cy="40" r="4"
-          fill="hsl(174, 78%, 41%)"
-          fillOpacity="0.1"
-          stroke="hsl(174, 78%, 41%)"
-          strokeWidth="0.3"
-          strokeOpacity="0.5"
+          cx="50" cy="50" r="8"
+          fill="hsl(174, 78%, 41%)" fillOpacity="0.06"
+          stroke="hsl(174, 78%, 41%)" strokeWidth="0.4" strokeOpacity="0.4"
         />
+        <motion.circle cx="50" cy="50" r="3" fill="hsl(174, 78%, 41%)" fillOpacity="0.15" />
         <motion.circle
-          cx="40" cy="40" r="1.5"
-          fill="hsl(174, 78%, 41%)"
-          fillOpacity="0.4"
+          cx="50" cy="50" r="8" fill="none"
+          stroke="hsl(174, 78%, 41%)" strokeWidth="0.2"
+          animate={{ r: [8, 14], opacity: [0.25, 0] }}
+          transition={{ duration: 3, repeat: Infinity }}
         />
-        {/* Center pulse */}
-        <motion.circle
-          cx="40" cy="40" r="4"
-          fill="none"
-          stroke="hsl(174, 78%, 41%)"
-          strokeWidth="0.2"
-          animate={{ r: [4, 8], opacity: [0.3, 0] }}
-          transition={{ duration: 2.5, repeat: Infinity }}
-        />
+        {/* Center label */}
+        <text x="50" y="51" textAnchor="middle" fontSize="2.5" fontWeight="700" fill="hsl(174, 78%, 41%)" fillOpacity="0.6" fontFamily="system-ui, sans-serif">
+          HUB
+        </text>
       </svg>
     </div>
   );
 };
 
-// Data & Reporting — Clean minimal dashboard with live data
+// Data & Reporting — Premium dashboard with animated charts
 export const DataReportingVisual = () => {
-  const bars = [40, 65, 45, 80, 55, 70, 90, 60];
+  const barData = [35, 55, 40, 70, 50, 85, 60, 75, 45, 90];
 
   return (
-    <div className="relative w-full h-full min-h-[280px] flex items-center justify-center">
-      <svg viewBox="0 0 100 70" className="w-full h-full max-h-[280px]">
-        {/* Dashboard frame */}
-        <rect x="8" y="8" width="84" height="54" rx="2" fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.2" strokeOpacity="0.2" />
+    <div className="relative w-full h-full min-h-[320px] flex items-center justify-center p-4">
+      <svg viewBox="0 0 100 80" className="w-full h-full">
+        {/* Window frame */}
+        <rect x="5" y="5" width="90" height="70" rx="2.5" fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.25" strokeOpacity="0.25" />
 
-        {/* Top bar */}
-        <line x1="8" y1="15" x2="92" y2="15" stroke="hsl(174, 78%, 41%)" strokeWidth="0.15" strokeOpacity="0.15" />
-        <circle cx="13" cy="11.5" r="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.15" />
-        <circle cx="17" cy="11.5" r="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.1" />
-        <circle cx="21" cy="11.5" r="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.1" />
+        {/* Title bar */}
+        <rect x="5" y="5" width="90" height="8" rx="2.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.03" />
+        <line x1="5" y1="13" x2="95" y2="13" stroke="hsl(174, 78%, 41%)" strokeWidth="0.15" strokeOpacity="0.15" />
+        <circle cx="10" cy="9" r="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.2" />
+        <circle cx="14" cy="9" r="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.12" />
+        <circle cx="18" cy="9" r="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.12" />
 
-        {/* Bar chart */}
-        {bars.map((h, i) => (
-          <motion.rect
-            key={i}
-            x={14 + i * 9.5}
-            width="6"
-            rx="0.5"
-            fill="hsl(174, 78%, 41%)"
-            fillOpacity={0.15 + (h / 90) * 0.2}
-            initial={{ y: 55, height: 0 }}
-            animate={{ y: 55 - (h * 0.35), height: h * 0.35 }}
-            transition={{ duration: 0.8, delay: i * 0.08, ease: "easeOut" }}
-          />
+        {/* KPI cards row */}
+        {[0, 1, 2].map((i) => (
+          <g key={`kpi-${i}`}>
+            <rect x={10 + i * 28} y="16" width="24" height="10" rx="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.03" stroke="hsl(174, 78%, 41%)" strokeWidth="0.15" strokeOpacity="0.15" />
+            <motion.text
+              x={22 + i * 28} y="22.5"
+              textAnchor="middle" fontSize="3.5" fontWeight="700"
+              fill="hsl(174, 78%, 41%)" fontFamily="monospace"
+              animate={{ fillOpacity: [0.3, 0.7, 0.3] }}
+              transition={{ duration: 2.5, delay: i * 0.6, repeat: Infinity }}
+            >
+              {["€12.4K", "89.2%", "2,847"][i]}
+            </motion.text>
+          </g>
         ))}
 
-        {/* Baseline */}
-        <line x1="12" y1="55" x2="90" y2="55" stroke="hsl(174, 78%, 41%)" strokeWidth="0.1" strokeOpacity="0.15" />
+        {/* Grid lines */}
+        {[0, 1, 2, 3].map((i) => (
+          <line key={`grid-${i}`} x1="10" y1={32 + i * 8} x2="90" y2={32 + i * 8} stroke="hsl(174, 78%, 41%)" strokeWidth="0.08" strokeOpacity="0.1" />
+        ))}
 
-        {/* Trend line overlay */}
+        {/* Axis */}
+        <line x1="10" y1="64" x2="90" y2="64" stroke="hsl(174, 78%, 41%)" strokeWidth="0.15" strokeOpacity="0.2" />
+
+        {/* Bar chart */}
+        {barData.map((h, i) => {
+          const barH = h * 0.3;
+          return (
+            <motion.rect
+              key={i}
+              x={12 + i * 8} width="5" rx="0.5"
+              fill="hsl(174, 78%, 41%)"
+              initial={{ y: 64, height: 0, fillOpacity: 0 }}
+              animate={{ y: 64 - barH, height: barH, fillOpacity: 0.12 + (h / 90) * 0.18 }}
+              transition={{ duration: 0.6, delay: i * 0.06 + 0.3, ease: "easeOut" }}
+            />
+          );
+        })}
+
+        {/* Trend line */}
         <motion.path
-          d="M 17 42 Q 26 30, 36 35 T 55 28 T 74 22 T 87 18"
-          fill="none"
-          stroke="hsl(174, 78%, 41%)"
-          strokeWidth="0.4"
-          strokeOpacity="0.5"
+          d="M 14 55 Q 22 45, 30 48 T 50 38 T 66 42 T 80 32 L 88 28"
+          fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.5" strokeOpacity="0.6"
+          strokeLinecap="round"
           initial={{ pathLength: 0 }}
           animate={{ pathLength: 1 }}
-          transition={{ duration: 2, delay: 1 }}
+          transition={{ duration: 2.5, delay: 1.2 }}
         />
 
-        {/* Trend dot at end */}
+        {/* End point glow */}
         <motion.circle
-          cx="87" cy="18" r="1"
-          fill="hsl(174, 78%, 41%)"
-          fillOpacity="0.6"
+          cx="88" cy="28" r="1.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.5"
           initial={{ scale: 0 }}
-          animate={{ scale: [0, 1.2, 1] }}
-          transition={{ delay: 3, duration: 0.4 }}
+          animate={{ scale: [0, 1.3, 1] }}
+          transition={{ delay: 3.7, duration: 0.5 }}
+        />
+        <motion.circle
+          cx="88" cy="28" r="1.5" fill="none"
+          stroke="hsl(174, 78%, 41%)" strokeWidth="0.2"
+          animate={{ r: [1.5, 4], opacity: [0.4, 0] }}
+          transition={{ delay: 4, duration: 2, repeat: Infinity }}
         />
 
-        {/* Scanning line */}
-        <motion.line
-          x1="12" x2="12" y1="16" y2="55"
-          stroke="hsl(174, 78%, 41%)"
-          strokeWidth="0.3"
-          strokeOpacity="0.1"
-          animate={{ x1: [12, 90], x2: [12, 90] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "linear", repeatDelay: 2 }}
+        {/* Scanning highlight line */}
+        <motion.rect
+          x="10" width="0.5" rx="0.25"
+          y="30" height="34"
+          fill="hsl(174, 78%, 41%)" fillOpacity="0.08"
+          animate={{ x: [10, 90] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "linear", repeatDelay: 3 }}
         />
       </svg>
     </div>

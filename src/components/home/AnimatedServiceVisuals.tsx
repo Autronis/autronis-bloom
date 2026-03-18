@@ -1,33 +1,32 @@
 import { motion } from "framer-motion";
 
-// Settings gear path — wide flat teeth like ⚙️ icon
-const gearPath = (cx: number, cy: number, outerR: number, innerR: number, teeth: number) => {
-  const parts: string[] = [];
+// Gear path at origin (0,0) — tooth and gap are exactly 50/50 of each step
+const gearPathAt0 = (outerR: number, innerR: number, teeth: number) => {
   const step = (Math.PI * 2) / teeth;
-  const toothHalf = step * 0.18; // narrower tooth
-  const gapHalf = step * 0.32; // wider gap so neighbor tooth fits
-
+  const half = step / 2;
+  // Each step: first half = tooth (at outerR), second half = gap (at innerR)
+  const parts: string[] = [];
   for (let i = 0; i < teeth; i++) {
     const a = i * step;
-    // Tooth: flat top at outerR
-    const t1 = a - toothHalf;
-    const t2 = a + toothHalf;
-    // Gap: flat bottom at innerR
-    const g1 = a + gapHalf;
-    const g2 = a + step - gapHalf;
+    // Tooth start (outer)
+    const ts = a;
+    // Tooth end (outer)
+    const te = a + half * 0.85;
+    // Gap start (inner)
+    const gs = a + half * 0.95;
+    // Gap end (inner)
+    const ge = a + step - half * 0.05;
 
-    if (i === 0) {
-      parts.push(`M ${cx + Math.cos(t1) * outerR} ${cy + Math.sin(t1) * outerR}`);
-    }
-    // Outer arc (tooth top)
-    parts.push(`A ${outerR} ${outerR} 0 0 1 ${cx + Math.cos(t2) * outerR} ${cy + Math.sin(t2) * outerR}`);
-    // Down to inner
-    parts.push(`L ${cx + Math.cos(g1) * innerR} ${cy + Math.sin(g1) * innerR}`);
-    // Inner arc (gap bottom)
-    parts.push(`A ${innerR} ${innerR} 0 0 1 ${cx + Math.cos(g2) * innerR} ${cy + Math.sin(g2) * innerR}`);
-    // Up to next tooth
-    const nextT1 = (i + 1) * step - toothHalf;
-    parts.push(`L ${cx + Math.cos(nextT1) * outerR} ${cy + Math.sin(nextT1) * outerR}`);
+    const x1 = Math.cos(ts) * outerR, y1 = Math.sin(ts) * outerR;
+    const x2 = Math.cos(te) * outerR, y2 = Math.sin(te) * outerR;
+    const x3 = Math.cos(gs) * innerR, y3 = Math.sin(gs) * innerR;
+    const x4 = Math.cos(ge) * innerR, y4 = Math.sin(ge) * innerR;
+
+    if (i === 0) parts.push(`M ${x1} ${y1}`);
+    else parts.push(`L ${x1} ${y1}`);
+    parts.push(`A ${outerR} ${outerR} 0 0 1 ${x2} ${y2}`);
+    parts.push(`L ${x3} ${y3}`);
+    parts.push(`A ${innerR} ${innerR} 0 0 1 ${x4} ${y4}`);
   }
   parts.push("Z");
   return parts.join(" ");
@@ -35,80 +34,96 @@ const gearPath = (cx: number, cy: number, outerR: number, innerR: number, teeth:
 
 // Process Automation — Meshing settings gears + conveyor belt with documents
 export const ProcessAutomationVisual = () => {
-  // Gear dimensions — tooth tip (outer) must fit into gap (inner) of neighbor
-  // Distance between centers = outerA + innerB (tooth tip reaches into gap)
-  const teethA = 10, outerA = 28, innerA = 20;
-  const teethB = 8, outerB = 22, innerB = 16;
-  const teethC = 6, outerC = 17, innerC = 12;
+  // Same "module" for all gears: tooth height = outer - inner
+  // Teeth are 50% of each step, gaps are 50% — so a tooth fits exactly in a gap
+  const teethA = 10, outerA = 28, innerA = 21;
+  const teethB = 8,  outerB = 23, innerB = 17;
+  const teethC = 6,  outerC = 18, innerC = 13;
 
-  const cxA = 110, cyA = 45;
+  // Mesh distance: inner of one + outer of other (tooth tip sits at inner of neighbor)
+  // midpoint between outerA and innerB = where they meet
+  const meshAB = (outerA + outerB) / 2 + (innerA - outerA + innerB - outerB) / 4 + 1;
+  const meshAC = (outerA + outerC) / 2 + (innerA - outerA + innerC - outerC) / 4 + 1;
 
-  // B meshes with A: distance so A's teeth reach B's gaps and vice versa
-  // dist = (outerA + innerB) / 2 + (outerB + innerA) / 2 = average mesh distance
-  const distAB = (outerA + innerB) / 2 + (outerB + innerA) / 2;
-  const angAB = 215 * (Math.PI / 180);
-  const cxB = cxA + Math.cos(angAB) * distAB;
-  const cyB = cyA + Math.sin(angAB) * distAB;
+  // Actually simpler: the pitch radius is midway: (outer+inner)/2
+  // For meshing: distance = pitchA + pitchB
+  const pA = (outerA + innerA) / 2; // 24.5
+  const pB = (outerB + innerB) / 2; // 20
+  const pC = (outerC + innerC) / 2; // 15.5
 
-  // C meshes with A
-  const distAC = (outerA + innerC) / 2 + (outerC + innerA) / 2;
-  const angAC = 325 * (Math.PI / 180);
-  const cxC = cxA + Math.cos(angAC) * distAC;
-  const cyC = cyA + Math.sin(angAC) * distAC;
+  const dAB = pA + pB + 2; // +2 for tiny clearance
+  const dAC = pA + pC + 2;
 
-  // Speed: gear with fewer teeth rotates faster
+  const cxA = 108, cyA = 42;
+  const angAB = 220 * (Math.PI / 180);
+  const cxB = cxA + Math.cos(angAB) * dAB;
+  const cyB = cyA + Math.sin(angAB) * dAB;
+  const angAC = 330 * (Math.PI / 180);
+  const cxC = cxA + Math.cos(angAC) * dAC;
+  const cyC = cyA + Math.sin(angAC) * dAC;
+
+  // Speed: inversely proportional to teeth (same tooth velocity)
   const baseDur = 20;
   const durA = baseDur;
   const durB = baseDur * (teethB / teethA);
   const durC = baseDur * (teethC / teethA);
 
-  // Rotation offset: half tooth angular width so teeth slot into gaps
-  const offsetB = (360 / teethB) / 2;
-  const offsetC = (360 / teethC) / 2;
+  // Phase offset: half-step so B's tooth aligns with A's gap at the contact point
+  const stepDegA = 360 / teethA; // 36°
+  const stepDegB = 360 / teethB; // 45°
+  const stepDegC = 360 / teethC; // 60°
 
-  const beltY = 130;
+  // Pre-compute gear paths at origin
+  const pathA = gearPathAt0(outerA, innerA, teethA);
+  const pathB = gearPathAt0(outerB, innerB, teethB);
+  const pathC = gearPathAt0(outerC, innerC, teethC);
+
+  const beltY = 128;
 
   return (
     <div className="relative w-full h-full min-h-[320px] flex items-center justify-center p-2">
       <svg viewBox="0 0 200 160" className="w-full h-full">
         {/* Gear A — clockwise */}
-        <motion.g
-          animate={{ rotate: [0, 360] }}
-          transition={{ duration: durA, repeat: Infinity, ease: "linear" }}
-          style={{ transformOrigin: `${cxA}px ${cyA}px` }}
-        >
-          <path d={gearPath(cxA, cyA, outerA, innerA, teethA)}
-            fill="hsl(174, 78%, 41%)" fillOpacity="0.07"
-            stroke="hsl(174, 78%, 41%)" strokeWidth="1" strokeOpacity="0.5" />
-          <circle cx={cxA} cy={cyA} r={innerA * 0.45} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeOpacity="0.3" />
-          <circle cx={cxA} cy={cyA} r={innerA * 0.18} fill="hsl(174, 78%, 41%)" fillOpacity="0.25" />
-        </motion.g>
+        <g transform={`translate(${cxA},${cyA})`}>
+          <motion.g
+            animate={{ rotate: [0, 360] }}
+            transition={{ duration: durA, repeat: Infinity, ease: "linear" }}
+          >
+            <path d={pathA}
+              fill="hsl(174, 78%, 41%)" fillOpacity="0.07"
+              stroke="hsl(174, 78%, 41%)" strokeWidth="1" strokeOpacity="0.5" />
+          </motion.g>
+          <circle r={innerA * 0.45} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeOpacity="0.3" />
+          <circle r={innerA * 0.18} fill="hsl(174, 78%, 41%)" fillOpacity="0.25" />
+        </g>
 
-        {/* Gear B — counter-clockwise, offset so tooth fits in A's gap */}
-        <motion.g
-          animate={{ rotate: [offsetB, offsetB - 360] }}
-          transition={{ duration: durB, repeat: Infinity, ease: "linear" }}
-          style={{ transformOrigin: `${cxB}px ${cyB}px` }}
-        >
-          <path d={gearPath(cxB, cyB, outerB, innerB, teethB)}
-            fill="hsl(174, 78%, 41%)" fillOpacity="0.06"
-            stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeOpacity="0.45" />
-          <circle cx={cxB} cy={cyB} r={innerB * 0.45} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.7" strokeOpacity="0.25" />
-          <circle cx={cxB} cy={cyB} r={innerB * 0.18} fill="hsl(174, 78%, 41%)" fillOpacity="0.2" />
-        </motion.g>
+        {/* Gear B — counter-clockwise */}
+        <g transform={`translate(${cxB},${cyB})`}>
+          <motion.g
+            animate={{ rotate: [stepDegB / 2, stepDegB / 2 - 360] }}
+            transition={{ duration: durB, repeat: Infinity, ease: "linear" }}
+          >
+            <path d={pathB}
+              fill="hsl(174, 78%, 41%)" fillOpacity="0.06"
+              stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeOpacity="0.45" />
+          </motion.g>
+          <circle r={innerB * 0.45} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.7" strokeOpacity="0.25" />
+          <circle r={innerB * 0.18} fill="hsl(174, 78%, 41%)" fillOpacity="0.2" />
+        </g>
 
-        {/* Gear C — counter-clockwise, offset */}
-        <motion.g
-          animate={{ rotate: [offsetC, offsetC - 360] }}
-          transition={{ duration: durC, repeat: Infinity, ease: "linear" }}
-          style={{ transformOrigin: `${cxC}px ${cyC}px` }}
-        >
-          <path d={gearPath(cxC, cyC, outerC, innerC, teethC)}
-            fill="hsl(174, 78%, 41%)" fillOpacity="0.05"
-            stroke="hsl(174, 78%, 41%)" strokeWidth="0.7" strokeOpacity="0.4" />
-          <circle cx={cxC} cy={cyC} r={innerC * 0.45} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.6" strokeOpacity="0.2" />
-          <circle cx={cxC} cy={cyC} r={innerC * 0.18} fill="hsl(174, 78%, 41%)" fillOpacity="0.15" />
-        </motion.g>
+        {/* Gear C — counter-clockwise */}
+        <g transform={`translate(${cxC},${cyC})`}>
+          <motion.g
+            animate={{ rotate: [stepDegC / 2, stepDegC / 2 - 360] }}
+            transition={{ duration: durC, repeat: Infinity, ease: "linear" }}
+          >
+            <path d={pathC}
+              fill="hsl(174, 78%, 41%)" fillOpacity="0.05"
+              stroke="hsl(174, 78%, 41%)" strokeWidth="0.7" strokeOpacity="0.4" />
+          </motion.g>
+          <circle r={innerC * 0.45} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.6" strokeOpacity="0.2" />
+          <circle r={innerC * 0.18} fill="hsl(174, 78%, 41%)" fillOpacity="0.15" />
+        </g>
 
         {/* ═══ Conveyor belt ═══ */}
         {/* Belt line */}

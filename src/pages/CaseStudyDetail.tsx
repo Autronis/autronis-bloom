@@ -25,6 +25,16 @@ const caseData: Record<string, Record<"en" | "nl", CaseContent>> = {
   },
 };
 
+const workflowImages: Record<string, { src: string; caption: { en: string; nl: string } }> = {
+  "logistics-company": {
+    src: "/assets/jobby-workflow.png",
+    caption: {
+      en: "The complete n8n automation workflow built for Jobby — including lead scraping, AI enrichment, email generation and CRM sync.",
+      nl: "De volledige n8n automatiseringsworkflow gebouwd voor Jobby — inclusief lead scraping, AI-verrijking, e-mailgeneratie en CRM-sync.",
+    },
+  },
+};
+
 const slugs = Object.keys(caseData);
 
 const CaseStudyDetail = () => {
@@ -69,6 +79,21 @@ const CaseStudyDetail = () => {
               <div><h2 className="text-lg font-semibold mb-2">{contextLabel}</h2><p className="text-muted-foreground leading-relaxed">{cs.context}</p></div>
               <div><h2 className="text-lg font-semibold mb-2">{challengeLabel}</h2><p className="text-muted-foreground leading-relaxed">{cs.challenge}</p></div>
               <div><h2 className="text-lg font-semibold mb-2">{solutionLabel}</h2><p className="text-muted-foreground leading-relaxed">{cs.solution}</p></div>
+              {/* Workflow screenshot if available */}
+              {slug && workflowImages[slug] && (
+                <div className="rounded-xl border border-border overflow-hidden">
+                  <div className="px-4 py-3 border-b border-border bg-card">
+                    <p className="text-xs font-semibold text-primary uppercase tracking-wider">{lang === "nl" ? "Gebouwde workflow" : "Built workflow"}</p>
+                    <p className="text-[11px] text-muted-foreground mt-0.5">{workflowImages[slug].caption[lang]}</p>
+                  </div>
+                  <div className="relative group cursor-zoom-in" onClick={() => window.open(workflowImages[slug].src, '_blank')}>
+                    <img src={workflowImages[slug].src} alt={workflowImages[slug].caption[lang]} className="w-full object-cover" loading="lazy" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                      <span className="text-white text-xs bg-black/50 px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">{lang === "nl" ? "Klik om te vergroten" : "Click to enlarge"}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
               <div><h2 className="text-lg font-semibold mb-2">{resultLabel}</h2><p className="text-muted-foreground leading-relaxed">{cs.result}</p></div>
               <Link to={`/case-studies/${nextSlug}`} className="inline-flex items-center gap-1 text-sm text-primary hover:underline">{nextCase} <ArrowRight size={14} /></Link>
             </div>

@@ -21,8 +21,8 @@ const FlagBorderButton = ({
     href={href}
     className={`relative px-2.5 ${py} rounded-md text-[11px] font-semibold tracking-wide transition-all duration-200 ${
       active
-        ? "bg-primary text-primary-foreground shadow-sm"
-        : "text-muted-foreground hover:text-foreground cursor-pointer bg-transparent"
+        ? "bg-white/10 text-foreground shadow-sm"
+        : "text-muted-foreground/50 hover:text-muted-foreground cursor-pointer bg-transparent opacity-60 hover:opacity-80"
     }`}
     aria-label={label}
   >

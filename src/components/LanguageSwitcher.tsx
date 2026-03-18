@@ -30,7 +30,7 @@ const FlagBorderButton = ({
     <span
       className="absolute inset-0 rounded-md pointer-events-none"
       style={{
-        padding: "1.5px",
+        padding: "1px",
         background: gradient,
         WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
         WebkitMaskComposite: "xor",

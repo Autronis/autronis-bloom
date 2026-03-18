@@ -14,10 +14,10 @@ const LanguageSwitcher = ({ size = "sm" }: Props) => {
       {/* EN — Union Jack border */}
       <a
         href={isEN ? undefined : "https://autronis.com"}
-        className={`px-2.5 ${py} text-[11px] font-semibold tracking-wide transition-all duration-200 ${
+        className={`px-2.5 ${py} transition-all duration-200 ${
           isEN
-            ? "text-foreground bg-white/5"
-            : "text-muted-foreground hover:text-foreground cursor-pointer bg-white/[0.02]"
+            ? "bg-white/5"
+            : "cursor-pointer bg-white/[0.02] hover:bg-white/5"
         }`}
         style={{
           border: "1.5px solid transparent",
@@ -25,15 +25,25 @@ const LanguageSwitcher = ({ size = "sm" }: Props) => {
         }}
         aria-label="English"
       >
-        EN
+        <span
+          className="text-[11px] font-bold tracking-wide"
+          style={{
+            background: "linear-gradient(180deg, #B22234 40%, #FFFFFF 40%, #FFFFFF 60%, #3C3B6E 60%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
+        >
+          EN
+        </span>
       </a>
       {/* NL — Dutch flag border */}
       <a
         href={isEN ? "https://autronis.nl" : undefined}
-        className={`px-2.5 ${py} text-[11px] font-semibold tracking-wide transition-all duration-200 ${
+        className={`px-2.5 ${py} transition-all duration-200 ${
           !isEN
-            ? "text-foreground bg-white/5"
-            : "text-muted-foreground hover:text-foreground cursor-pointer bg-white/[0.02]"
+            ? "bg-white/5"
+            : "cursor-pointer bg-white/[0.02] hover:bg-white/5"
         }`}
         style={{
           border: "1.5px solid transparent",
@@ -41,7 +51,17 @@ const LanguageSwitcher = ({ size = "sm" }: Props) => {
         }}
         aria-label="Nederlands"
       >
-        NL
+        <span
+          className="text-[11px] font-bold tracking-wide"
+          style={{
+            background: "linear-gradient(180deg, #AE1C28 33%, #FFFFFF 33%, #FFFFFF 66%, #21468B 66%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
+        >
+          NL
+        </span>
       </a>
     </div>
   );

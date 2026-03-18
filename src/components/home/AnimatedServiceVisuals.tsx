@@ -179,13 +179,15 @@ export const ProcessAutomationVisual = () => {
 
         {/* Documents on belt — each a different automation type */}
         {[
-          { label: "INVOICE", icon: "€" },
-          { label: "ORDER", icon: "#" },
-          { label: "REPORT", icon: "%" },
+          { label: "INVOICE", icon: "€", color: "#4ADE80" },
+          { label: "ORDER", icon: "#", color: "#60A5FA" },
+          { label: "EMAIL", icon: "@", color: "#F59E0B" },
+          { label: "REPORT", icon: "%", color: "#A78BFA" },
+          { label: "CONTRACT", icon: "§", color: "#F472B6" },
         ].map((doc, i) => (
           <motion.g key={`doc-${i}`}
             animate={{ x: [-30, 200] }}
-            transition={{ duration: 8, delay: i * 2.7, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 8, delay: i * 1.6, repeat: Infinity, ease: "linear" }}
           >
             {/* Document bg */}
             <rect x="5" y={beltY - 24} width="22" height="23" rx="1.5"
@@ -198,11 +200,11 @@ export const ProcessAutomationVisual = () => {
             {/* Folded corner */}
             <path d={`M 21 ${beltY - 24} l 6 0 l 0 6`} fill="hsl(174, 78%, 41%)" fillOpacity="0.04" stroke="hsl(174, 78%, 41%)" strokeWidth="0.4" strokeOpacity="0.3" />
             {/* Type label */}
-            <text x="16" y={beltY - 18} textAnchor="middle" fontSize="3" fontWeight="700" fill="hsl(174, 78%, 41%)" fillOpacity="0.6" fontFamily="monospace" letterSpacing="0.3">
+            <text x="16" y={beltY - 18} textAnchor="middle" fontSize="3" fontWeight="700" fill={doc.color} fillOpacity="0.7" fontFamily="monospace" letterSpacing="0.3">
               {doc.label}
             </text>
             {/* Icon */}
-            <text x="16" y={beltY - 10} textAnchor="middle" fontSize="7" fontWeight="700" fill="hsl(174, 78%, 41%)" fillOpacity="0.25">
+            <text x="16" y={beltY - 10} textAnchor="middle" fontSize="7" fontWeight="700" fill={doc.color} fillOpacity="0.3">
               {doc.icon}
             </text>
             {/* Checkmark */}

@@ -38,7 +38,7 @@ const TeamBlock = () => {
                 <h2 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">{t.title}</h2>
                 <p className="text-muted-foreground leading-relaxed mb-8">{t.desc}</p>
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <GlowCTA to="/book">{t.ctaBook}</GlowCTA>
+                  <Button asChild size="lg" className="w-full sm:w-auto"><Link to="/book">{t.ctaBook}<ArrowRight size={18} /></Link></Button>
                   <Button asChild size="lg" variant="outline" className="border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors duration-300"><Link to="/team">{t.ctaTeam}<ArrowRight size={18} /></Link></Button>
                 </div>
               </div>

@@ -85,7 +85,7 @@ const WhyAutronisSection = () => {
                     ))}
                   </div>
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <GlowCTA to="/book">{tx.ctaBook}</GlowCTA>
+                    <Button asChild size="lg" className="w-full sm:w-auto"><Link to="/book">{tx.ctaBook}<ArrowRight size={18} /></Link></Button>
                     <Button asChild size="lg" variant="outline" className="w-full sm:w-auto border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors duration-300"><Link to="/team">{tx.ctaTeam}<ArrowRight size={18} /></Link></Button>
                   </div>
                 </div>

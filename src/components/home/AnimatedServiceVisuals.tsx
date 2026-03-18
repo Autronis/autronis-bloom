@@ -33,29 +33,33 @@ const gearPath = (cx: number, cy: number, outerR: number, innerR: number, teeth:
   return parts.join(" ");
 };
 
-// Settings gear icon (⚙️ style)
-const settingsIcon = (cx: number, cy: number, r: number) => {
-  const inner = r * 0.55;
-  return `M ${cx} ${cy - r} l ${r * 0.2} 0 l ${r * 0.08} ${r * 0.3} a ${inner} ${inner} 0 0 1 ${r * 0.22} ${r * 0.13} l ${r * 0.28} -${r * 0.15} l ${r * 0.14} ${r * 0.14} l -${r * 0.15} ${r * 0.28} a ${inner} ${inner} 0 0 1 ${r * 0.13} ${r * 0.22} l ${r * 0.3} ${r * 0.08} l 0 ${r * 0.2} l -${r * 0.3} ${r * 0.08} a ${inner} ${inner} 0 0 1 -${r * 0.13} ${r * 0.22} l ${r * 0.15} ${r * 0.28} l -${r * 0.14} ${r * 0.14} l -${r * 0.28} -${r * 0.15} a ${inner} ${inner} 0 0 1 -${r * 0.22} ${r * 0.13} l -${r * 0.08} ${r * 0.3} l -${r * 0.2} 0 l -${r * 0.08} -${r * 0.3} a ${inner} ${inner} 0 0 1 -${r * 0.22} -${r * 0.13} l -${r * 0.28} ${r * 0.15} l -${r * 0.14} -${r * 0.14} l ${r * 0.15} -${r * 0.28} a ${inner} ${inner} 0 0 1 -${r * 0.13} -${r * 0.22} l -${r * 0.3} -${r * 0.08} l 0 -${r * 0.2} l ${r * 0.3} -${r * 0.08} a ${inner} ${inner} 0 0 1 ${r * 0.13} -${r * 0.22} l -${r * 0.15} -${r * 0.28} l ${r * 0.14} -${r * 0.14} l ${r * 0.28} ${r * 0.15} a ${inner} ${inner} 0 0 1 ${r * 0.22} -${r * 0.13} Z`;
-};
-
 // Process Automation — Meshing settings gears + conveyor belt with documents
 export const ProcessAutomationVisual = () => {
-  // Gear positions — carefully placed so pitch circles touch
-  // Gear A (12 teeth): center, large
-  const gA = { cx: 110, cy: 45, outer: 30, inner: 23, teeth: 12, dur: 18 };
-  // Gear B (9 teeth): meshes with A — distance = (23 + 17) = 40
-  const gB = { cx: 110 - 40, cy: 45, outer: 22, inner: 17, teeth: 9, dur: 18 * (9 / 12) };
-  // Gear C (9 teeth): meshes with A on other side
-  const gC = { cx: 110 + 28, cy: 45 + 30, outer: 22, inner: 17, teeth: 9, dur: 18 * (9 / 12) };
-  // Gear D (6 teeth): small, meshes with B — distance = (17 + 11) = 28
-  const gD = { cx: gB.cx - 20, cy: gB.cy - 20, outer: 15, inner: 11, teeth: 6, dur: 18 * (6 / 12) };
+  // Pitch radius = midpoint between inner and outer (where teeth mesh)
+  // For gears to mesh: distance between centers = pitchA + pitchB
+  const gA = { outer: 30, inner: 22, teeth: 12 };
+  const gB = { outer: 22, inner: 16, teeth: 9 };
+  const gC = { outer: 16, inner: 12, teeth: 7 };
 
+  const pitchA = (gA.outer + gA.inner) / 2; // 26
+  const pitchB = (gB.outer + gB.inner) / 2; // 19
+  const pitchC = (gC.outer + gC.inner) / 2; // 14
+
+  // Gear A center
+  const axA = 115, ayA = 50;
+  // Gear B meshes with A — to the left
+  const distAB = pitchA + pitchB; // 45
+  const axB = axA - distAB * 0.87, ayB = ayA + distAB * 0.5;
+  // Gear C meshes with A — to the bottom-right
+  const distAC = pitchA + pitchC; // 40
+  const axC = axA + distAC * 0.5, ayC = ayA + distAC * 0.87;
+
+  // Speed ratios: inversely proportional to teeth count
+  const baseDur = 20;
   const gears = [
-    { ...gA, dir: 1 },
-    { ...gB, dir: -1 },
-    { ...gC, dir: -1 },
-    { ...gD, dir: 1 },
+    { cx: axA, cy: ayA, ...gA, dur: baseDur, dir: 1 },
+    { cx: axB, cy: ayB, ...gB, dur: baseDur * (gB.teeth / gA.teeth), dir: -1 },
+    { cx: axC, cy: ayC, ...gC, dur: baseDur * (gC.teeth / gA.teeth), dir: -1 },
   ];
 
   const beltY = 130;
@@ -78,38 +82,6 @@ export const ProcessAutomationVisual = () => {
             />
             <circle cx={g.cx} cy={g.cy} r={g.inner * 0.45} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeOpacity="0.25" />
             <circle cx={g.cx} cy={g.cy} r={g.inner * 0.18} fill="hsl(174, 78%, 41%)" fillOpacity="0.2" />
-          </motion.g>
-        ))}
-
-        {/* Floating mini settings icons */}
-        {[
-          { x: 25, y: 20, s: 8, delay: 0 },
-          { x: 170, y: 30, s: 6, delay: 1 },
-          { x: 160, y: 80, s: 7, delay: 2 },
-        ].map((icon, i) => (
-          <motion.g key={`icon-${i}`}
-            animate={{ rotate: 360 }}
-            transition={{ duration: 12 + i * 4, repeat: Infinity, ease: "linear" }}
-            style={{ transformOrigin: `${icon.x}px ${icon.y}px` }}
-          >
-            <circle cx={icon.x} cy={icon.y} r={icon.s} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.4" strokeOpacity="0.15" />
-            <motion.circle cx={icon.x} cy={icon.y} r={icon.s * 0.4} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.2"
-              animate={{ opacity: [0.1, 0.3, 0.1] }}
-              transition={{ duration: 3, delay: icon.delay, repeat: Infinity }}
-            />
-            {/* Gear notches */}
-            {[0, 60, 120, 180, 240, 300].map((angle) => {
-              const rad = (angle * Math.PI) / 180;
-              return (
-                <line key={angle}
-                  x1={icon.x + Math.cos(rad) * icon.s * 0.6}
-                  y1={icon.y + Math.sin(rad) * icon.s * 0.6}
-                  x2={icon.x + Math.cos(rad) * icon.s}
-                  y2={icon.y + Math.sin(rad) * icon.s}
-                  stroke="hsl(174, 78%, 41%)" strokeWidth="0.4" strokeOpacity="0.15"
-                />
-              );
-            })}
           </motion.g>
         ))}
 

@@ -113,15 +113,9 @@ const CaseStudiesPreview = () => {
                     </div>
                   </div>
                   {cs.trust.website && (
-                    <a
-                      href={cs.trust.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[11px] text-primary/60 hover:text-primary transition-colors duration-200 mt-1.5 inline-block"
-                      onClick={(e) => e.stopPropagation()}
-                    >
+                    <span className="text-[11px] text-primary/60 mt-1.5 inline-block">
                       {cs.trust.website.replace(/^https?:\/\//, '').replace(/\/$/, '')}
-                    </a>
+                    </span>
                   )}
                 </div>
               )}

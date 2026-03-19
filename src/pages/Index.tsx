@@ -209,9 +209,11 @@ const Index = () => {
             </div>
 
             {/* Right: Live Preview */}
-            <div className="hidden lg:flex flex-col items-center">
-              <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase self-start">Live Preview</p>
-              <Suspense fallback={<SectionFallback />}><LiveAutomationPreview embedded /></Suspense>
+            <div className="hidden lg:block">
+              <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase text-center">Live Preview</p>
+              <div className="flex justify-center">
+                <Suspense fallback={<SectionFallback />}><LiveAutomationPreview embedded /></Suspense>
+              </div>
             </div>
           </div>
 
@@ -221,7 +223,7 @@ const Index = () => {
           </div>
 
           {/* Service cards — directly under CTAs */}
-          <div className="mt-4 sm:mt-6 lg:w-1/2">
+          <div className="lg:w-1/2">
             <StatisticsBlock />
           </div>
         </div>

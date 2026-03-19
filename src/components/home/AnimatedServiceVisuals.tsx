@@ -285,6 +285,18 @@ export const SystemIntegrationVisual = () => {
         {/* System nodes */}
         {systems.map((sys, i) => (
           <g key={i}>
+            {/* Pulse glow on data arrival */}
+            {!sys.isCenter && (
+              <motion.rect
+                x={sys.x - nodeW / 2 - 2} y={sys.y - nodeH / 2 - 2}
+                width={nodeW + 4} height={nodeH + 4} rx="5"
+                fill="none"
+                stroke="hsl(174, 78%, 41%)"
+                strokeWidth="0.6"
+                animate={{ strokeOpacity: [0, 0.4, 0] }}
+                transition={{ duration: 1.5, delay: i * 0.6 + 0.8, repeat: Infinity, repeatDelay: 5.5 }}
+              />
+            )}
             {/* Solid background so lines don't show through */}
             <rect
               x={sys.x - nodeW / 2} y={sys.y - nodeH / 2}

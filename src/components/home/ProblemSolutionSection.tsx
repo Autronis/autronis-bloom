@@ -88,13 +88,11 @@ const ProblemSolutionSection = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.12, ease: [0.23, 1, 0.32, 1] }}
               >
-                {/* Light beam that shoots across the row */}
+                {/* Light beam that shoots across the row — repeating */}
                 <motion.div
-                  className="absolute inset-y-0 w-[60px] bg-gradient-to-r from-transparent via-primary/20 to-transparent z-20 pointer-events-none"
-                  initial={{ left: "-60px" }}
-                  whileInView={{ left: "calc(100% + 60px)" }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: i * 0.15 + 0.4, ease: [0.23, 1, 0.32, 1] }}
+                  className="absolute inset-y-0 w-[80px] bg-gradient-to-r from-transparent via-primary/30 to-transparent z-20 pointer-events-none"
+                  animate={{ left: ["-80px", "calc(100% + 80px)"] }}
+                  transition={{ duration: 1.5, delay: i * 0.8, repeat: Infinity, repeatDelay: 6, ease: "easeInOut" }}
                 />
 
                 {/* Problem */}
@@ -112,13 +110,13 @@ const ProblemSolutionSection = () => {
                 <div className="flex items-center justify-center h-full bg-muted/15 relative">
                   {/* Pulse ring */}
                   <motion.div
-                    className="absolute w-7 h-7 rounded-full border border-primary/20"
-                    animate={{ scale: [1, 1.6, 1], opacity: [0.4, 0, 0.4] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeOut", delay: i * 0.5 }}
+                    className="absolute w-8 h-8 rounded-full border border-primary/30"
+                    animate={{ scale: [1, 2, 1], opacity: [0.5, 0, 0.5] }}
+                    transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut", delay: i * 0.6 }}
                   />
                   <motion.div
-                    className="relative z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-primary/15 flex items-center justify-center"
-                    animate={{ scale: [1, 1.1, 1] }}
+                    className="relative z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary/20 flex items-center justify-center shadow-[0_0_10px_hsl(174_78%_41%/0.2)]"
+                    animate={{ scale: [1, 1.15, 1] }}
                     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: i * 0.5 }}
                   >
                     <ArrowRight size={12} className="text-primary" />
@@ -129,7 +127,7 @@ const ProblemSolutionSection = () => {
                 <div className="flex items-center gap-2.5 sm:gap-3 p-3 sm:p-4 rounded-r-xl bg-primary/[0.05] border-l border-primary/10">
                   <motion.div
                     className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/12 flex items-center justify-center text-primary shrink-0"
-                    animate={{ boxShadow: ["0 0 0px hsl(174,78%,41%,0)", "0 0 14px hsl(174,78%,41%,0.2)", "0 0 0px hsl(174,78%,41%,0)"] }}
+                    animate={{ boxShadow: ["0 0 4px hsl(174,78%,41%,0.1)", "0 0 20px hsl(174,78%,41%,0.35)", "0 0 4px hsl(174,78%,41%,0.1)"] }}
                     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: i * 0.6 }}
                   >
                     <SIcon size={15} strokeWidth={2.5} />

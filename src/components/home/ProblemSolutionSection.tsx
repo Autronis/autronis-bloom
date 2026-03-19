@@ -82,14 +82,23 @@ const ProblemSolutionSection = () => {
             return (
               <motion.div
                 key={p.title}
-                className="grid grid-cols-[1fr_32px_1fr] sm:grid-cols-[1fr_48px_1fr] items-center gap-0"
+                className="relative grid grid-cols-[1fr_32px_1fr] sm:grid-cols-[1fr_48px_1fr] items-center gap-0 overflow-hidden rounded-xl"
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1, ease: [0.23, 1, 0.32, 1] }}
+                transition={{ duration: 0.5, delay: i * 0.12, ease: [0.23, 1, 0.32, 1] }}
               >
+                {/* Light beam that shoots across the row */}
+                <motion.div
+                  className="absolute inset-y-0 w-[60px] bg-gradient-to-r from-transparent via-primary/20 to-transparent z-20 pointer-events-none"
+                  initial={{ left: "-60px" }}
+                  whileInView={{ left: "calc(100% + 60px)" }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: i * 0.15 + 0.4, ease: [0.23, 1, 0.32, 1] }}
+                />
+
                 {/* Problem */}
-                <div className="flex items-center gap-2.5 sm:gap-3 p-3 sm:p-4 rounded-l-xl bg-muted/30">
+                <div className="flex items-center gap-2.5 sm:gap-3 p-3 sm:p-4 bg-muted/30 rounded-l-xl">
                   <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-rose-500/8 flex items-center justify-center text-rose-400/60 shrink-0">
                     <PIcon size={15} />
                   </div>
@@ -99,21 +108,32 @@ const ProblemSolutionSection = () => {
                   </div>
                 </div>
 
-                {/* Arrow */}
-                <div className="flex items-center justify-center h-full bg-muted/15">
+                {/* Animated center */}
+                <div className="flex items-center justify-center h-full bg-muted/15 relative">
+                  {/* Pulse ring */}
                   <motion.div
-                    animate={{ x: [0, 2, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
+                    className="absolute w-7 h-7 rounded-full border border-primary/20"
+                    animate={{ scale: [1, 1.6, 1], opacity: [0.4, 0, 0.4] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeOut", delay: i * 0.5 }}
+                  />
+                  <motion.div
+                    className="relative z-10 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-primary/15 flex items-center justify-center"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: i * 0.5 }}
                   >
-                    <ArrowRight size={14} className="text-primary/50" />
+                    <ArrowRight size={12} className="text-primary" />
                   </motion.div>
                 </div>
 
                 {/* Solution */}
-                <div className="flex items-center gap-2.5 sm:gap-3 p-3 sm:p-4 rounded-r-xl bg-primary/[0.04] border-l border-primary/10">
-                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/12 flex items-center justify-center text-primary shrink-0 shadow-[0_0_8px_hsl(174_78%_41%/0.12)]">
+                <div className="flex items-center gap-2.5 sm:gap-3 p-3 sm:p-4 rounded-r-xl bg-primary/[0.05] border-l border-primary/10">
+                  <motion.div
+                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/12 flex items-center justify-center text-primary shrink-0"
+                    animate={{ boxShadow: ["0 0 0px hsl(174,78%,41%,0)", "0 0 14px hsl(174,78%,41%,0.2)", "0 0 0px hsl(174,78%,41%,0)"] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: i * 0.6 }}
+                  >
                     <SIcon size={15} strokeWidth={2.5} />
-                  </div>
+                  </motion.div>
                   <div className="min-w-0">
                     <p className="text-xs sm:text-sm font-bold text-foreground leading-tight truncate">{s.title}</p>
                     <p className="text-[10px] sm:text-xs text-muted-foreground/70 leading-snug truncate hidden sm:block">{s.sub}</p>

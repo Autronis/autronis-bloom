@@ -128,7 +128,7 @@ const Index = () => {
           publisher: { "@type": "Organization", name: "Autronis" },
         }]}
       />
-      <section className="hero-section relative min-h-[75vh] sm:min-h-[85vh] flex flex-col items-center justify-center pt-16 sm:pt-0">
+      <section className="hero-section relative min-h-[75vh] sm:min-h-[85vh] flex flex-col items-center justify-center pt-20 sm:pt-28">
         <HeroBackground />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center">

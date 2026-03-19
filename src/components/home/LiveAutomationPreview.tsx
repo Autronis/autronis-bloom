@@ -101,9 +101,9 @@ const LiveAutomationPreview = ({ embedded = false }: { embedded?: boolean }) => 
         setActiveStep(step);
         step++;
         if (step <= steps.length) {
-          timeout = setTimeout(advance, 400);
+          timeout = setTimeout(advance, 500);
         } else {
-          timeout = setTimeout(runCycle, 2000);
+          timeout = setTimeout(runCycle, 6000);
         }
       };
       timeout = setTimeout(advance, 300);

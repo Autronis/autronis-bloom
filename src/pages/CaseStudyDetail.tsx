@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { ArrowRight, ArrowLeft } from "lucide-react";
+import { motion } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
 import { useLanguage } from "@/i18n/context";
 
@@ -71,15 +72,22 @@ const CaseStudyDetail = () => {
           <Link to="/case-studies" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-8"><ArrowLeft size={14} /> {allCases}</Link>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <div className="lg:col-span-2 space-y-8">
-              <div>
+              <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
                 <span className="text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full">{cs.industry}</span>
                 <h1 className="text-3xl sm:text-4xl font-bold mt-4 mb-2">{cs.client}</h1>
-                <p className="text-2xl font-bold text-primary">{cs.metric}</p>
-              </div>
-              <div><h2 className="text-lg font-semibold mb-2">{contextLabel}</h2><p className="text-muted-foreground leading-relaxed">{cs.context}</p></div>
-              <div><h2 className="text-lg font-semibold mb-2">{challengeLabel}</h2><p className="text-muted-foreground leading-relaxed">{cs.challenge}</p></div>
-              <div><h2 className="text-lg font-semibold mb-2">{solutionLabel}</h2><p className="text-muted-foreground leading-relaxed">{cs.solution}</p></div>
-              <div><h2 className="text-lg font-semibold mb-2">{resultLabel}</h2><p className="text-muted-foreground leading-relaxed">{cs.result}</p></div>
+                <motion.p className="text-2xl font-bold text-primary" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2, duration: 0.4 }}>{cs.metric}</motion.p>
+              </motion.div>
+              {[
+                { label: contextLabel, text: cs.context },
+                { label: challengeLabel, text: cs.challenge },
+                { label: solutionLabel, text: cs.solution },
+                { label: resultLabel, text: cs.result },
+              ].map((section, i) => (
+                <motion.div key={section.label} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.4, delay: i * 0.05 }}>
+                  <h2 className="text-lg font-semibold mb-2">{section.label}</h2>
+                  <p className="text-muted-foreground leading-relaxed">{section.text}</p>
+                </motion.div>
+              ))}
               {/* Workflow screenshot at bottom */}
               {slug && workflowImages[slug] && (
                 <div className="rounded-xl border border-border overflow-hidden">

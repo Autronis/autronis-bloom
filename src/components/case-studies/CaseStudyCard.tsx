@@ -1,6 +1,7 @@
 import { CheckCircle2, AlertTriangle, Star, UserCircle, ArrowRight, Play, TrendingDown, TrendingUp as TrendUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState, useCallback } from "react";
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import { TechTagList } from "@/components/case-studies/TechTag";
@@ -32,7 +33,15 @@ const MetricCard = ({ metric }: { metric: CaseMetric }) => {
   );
 };
 
-const SectionHeader = ({ children }: { children: string }) => <p className="text-[11px] font-semibold text-primary mb-1.5 tracking-wide uppercase">{children}</p>;
+const SectionHeader = ({ children }: { children: string }) => (
+  <motion.p
+    className="text-[11px] font-semibold text-primary mb-1.5 tracking-wide uppercase"
+    initial={{ opacity: 0, x: -8 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.3 }}
+  >{children}</motion.p>
+);
 
 const BeforeAfterChart = ({ data, lang }: { data: { label: string; before: number; after: number; unit: string }[]; lang: string }) => {
   const [inView, setInView] = useState(false);
@@ -115,7 +124,16 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
       <div id={`case-${index}`} className="rounded-xl border border-border bg-card overflow-hidden scroll-mt-24">
         <div className="p-5 sm:p-6 pb-0 sm:pb-0">
           <div className="flex items-center gap-3 mb-4"><img src="/logo.png" alt="Autronis" className="w-11 h-11 object-contain shrink-0" /><h2 className="text-lg sm:text-xl font-bold text-foreground flex items-center gap-2">{cs.title}<Icon size={16} className="text-primary/60" /></h2></div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 mb-5">{cs.metrics.map((m, j) => <MetricCard key={j} metric={m} />)}</div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 mb-5">{cs.metrics.map((m, j) => (
+            <motion.div key={j}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.4, delay: j * 0.08, ease: "easeOut" }}
+            >
+              <MetricCard metric={m} />
+            </motion.div>
+          ))}</div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 border-t border-border">
           <div className="p-5 sm:p-6 lg:border-r border-border"><SectionHeader>{t.context}</SectionHeader><p className="text-[13px] text-muted-foreground leading-relaxed">{cs.context}</p></div>
@@ -136,7 +154,17 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
             <div>
               <SectionHeader>{t.resultsImpact}</SectionHeader>
               {cs.beforeAfter && <div className="mb-4"><BeforeAfterChart data={cs.beforeAfter} lang={lang} /></div>}
-              <div className="space-y-1.5">{cs.results.map((r, j) => <div key={j} className="flex items-start gap-2 text-[13px] text-muted-foreground leading-relaxed"><CheckCircle2 size={13} className="text-primary mt-0.5 shrink-0" />{r}</div>)}</div>
+              <div className="space-y-1.5">{cs.results.map((r, j) => (
+                <motion.div key={j}
+                  className="flex items-start gap-2 text-[13px] text-muted-foreground leading-relaxed"
+                  initial={{ opacity: 0, x: -6 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: j * 0.06 }}
+                >
+                  <CheckCircle2 size={13} className="text-primary mt-0.5 shrink-0" />{r}
+                </motion.div>
+              ))}</div>
             </div>
             {cs.testimonial && (
               <div className="rounded-lg border border-primary/15 bg-primary/[0.03] p-5 space-y-3.5 transition-all duration-200 ease-out hover:scale-[1.015] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_0_16px_hsl(174_78%_41%/0.1)]">

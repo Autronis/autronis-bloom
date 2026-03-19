@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import SEOHead from "@/components/SEOHead";
 import { Loader2 } from "lucide-react";
 import { useLanguage } from "@/i18n/context";
+import { useTheme } from "next-themes";
 
 const text = {
   en: {
@@ -29,6 +30,8 @@ const text = {
 const Book = () => {
   const lang = useLanguage();
   const t = text[lang];
+  const { resolvedTheme } = useTheme();
+  const calTheme = resolvedTheme === "light" ? "light" : "dark";
   const [calState, setCalState] = useState<"loading" | "ready" | "error">("loading");
 
   useEffect(() => {
@@ -40,9 +43,13 @@ const Book = () => {
       try {
         const cal = await getCalApi();
         cal("ui", {
-          theme: "dark",
+          theme: calTheme,
           cssVarsPerTheme: {
             dark: {
+              "cal-brand": "#0f9d8a",
+              "cal-brand-emphasis": "#0d8676",
+            },
+            light: {
               "cal-brand": "#0f9d8a",
               "cal-brand-emphasis": "#0d8676",
             },
@@ -56,7 +63,7 @@ const Book = () => {
     })();
 
     return () => clearTimeout(timeout);
-  }, []);
+  }, [calTheme]);
 
   return (
     <>
@@ -86,7 +93,7 @@ const Book = () => {
                 style={{ width: "100%", height: "100%", overflow: "scroll" }}
                 config={{
                   layout: "month_view",
-                  theme: "dark",
+                  theme: calTheme,
                 }}
               />
             </div>

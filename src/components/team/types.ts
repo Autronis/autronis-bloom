@@ -82,13 +82,23 @@ export const categoryMeta: Record<SkillCategory, {
   },
 };
 
-export const categoryLabels: Record<SkillCategory, string> = {
-  automation: "Automation & Systems",
-  ai: "AI & Intelligence",
-  data: "Data & Scraping",
-  operations: "Operations",
-  infrastructure: "Data Infrastructure",
-  integrations: "Integrations",
+export const categoryLabels: Record<"en" | "nl", Record<SkillCategory, string>> = {
+  en: {
+    automation: "Automation & Systems",
+    ai: "AI & Intelligence",
+    data: "Data & Scraping",
+    operations: "Operations",
+    infrastructure: "Data Infrastructure",
+    integrations: "Integrations",
+  },
+  nl: {
+    automation: "Automatisering & Systemen",
+    ai: "AI & Intelligentie",
+    data: "Data & Scraping",
+    operations: "Operaties",
+    infrastructure: "Data-infrastructuur",
+    integrations: "Integraties",
+  },
 };
 
 // Icon mapping for skills

@@ -138,7 +138,17 @@ const Team = () => {
       priority: true,
       focusLabel: t.sybFocus,
       description: t.sybDesc,
-      skills: [
+      skills: lang === "nl" ? [
+        { label: "Workflow-automatisering", icon: Cog, category: "automation" },
+        { label: "Procesautomatisering", icon: Wrench, category: "automation" },
+        { label: "AI-automatisering", icon: Bot, category: "ai" },
+        { label: "LLM-integraties", icon: Brain, category: "ai" },
+        { label: "Web scraping", icon: Globe, category: "data" },
+        { label: "Datapipelines", icon: BarChart3, category: "data" },
+        { label: "Dataverwerking", icon: Radio, category: "data" },
+        { label: "Systeemintegraties", icon: Link2, category: "integrations" },
+        { label: "API-integraties", icon: Radio, category: "integrations" },
+      ] : [
         { label: "Workflow automation", icon: Cog, category: "automation" },
         { label: "Process automation", icon: Wrench, category: "automation" },
         { label: "AI automation", icon: Bot, category: "ai" },
@@ -159,7 +169,17 @@ const Team = () => {
       photo: fotoSem,
       focusLabel: t.semFocus,
       description: t.semDesc,
-      skills: [
+      skills: lang === "nl" ? [
+        { label: "Workflow-automatisering", icon: Cog, category: "automation" },
+        { label: "Systeemarchitectuur", icon: Puzzle, category: "automation" },
+        { label: "AI-automatisering", icon: Bot, category: "ai" },
+        { label: "AI-chatbots", icon: MessageCircle, category: "ai" },
+        { label: "Lead scraping", icon: Search, category: "data" },
+        { label: "Dashboards", icon: BarChart3, category: "data" },
+        { label: "Web scraping", icon: Globe, category: "data" },
+        { label: "API-integraties", icon: Radio, category: "integrations" },
+        { label: "Systeemintegraties", icon: Link2, category: "integrations" },
+      ] : [
         { label: "Workflow automation", icon: Cog, category: "automation" },
         { label: "System architecture", icon: Puzzle, category: "automation" },
         { label: "AI automation", icon: Bot, category: "ai" },

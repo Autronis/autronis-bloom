@@ -5,6 +5,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { copyTextToClipboard, showClipboardFeedback } from "@/lib/copyToClipboard";
 import type { TeamMember, Skill, SkillCategory } from "./types";
 import { categoryMeta, categoryLabels } from "./types";
+import { useLanguage } from "@/i18n/context";
 
 /* ── Skill tag (TechTag style) for card footer ── */
 const SkillTag = ({ skill, index }: { skill: Skill; index: number }) => {
@@ -58,7 +59,14 @@ const PreviewBadge = ({ skill }: { skill: Skill }) => {
   );
 };
 
+const cardText = {
+  en: { specializations: "Specializations", hoverMore: "Hover for more →", tapMore: "Tap for more →", coreFocus: "Core Focus", emailCopied: "Email address copied to clipboard", copyFailed: "Copy failed" },
+  nl: { specializations: "Specialisaties", hoverMore: "Hover voor meer →", tapMore: "Tik voor meer →", coreFocus: "Kernfocus", emailCopied: "E-mailadres gekopieerd naar klembord", copyFailed: "Kopiëren mislukt" },
+};
+
 const TeamCard = ({ member }: { member: TeamMember }) => {
+  const lang = useLanguage();
+  const ct = cardText[lang];
   const [expanded, setExpanded] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const isMobile = useIsMobile();
@@ -96,7 +104,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
     return acc;
   }, {} as Record<SkillCategory, Skill[]>);
 
-  const memberLabels = { ...categoryLabels, ...member.customCategoryLabels };
+  const memberLabels = { ...categoryLabels[lang], ...member.customCategoryLabels };
   const categoryOrder: SkillCategory[] = ["automation", "ai", "data", "infrastructure", "integrations", "operations"];
   let tagIndex = 0;
 
@@ -188,14 +196,14 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
               }`}
           >
             <span className="text-[8px] font-bold tracking-[0.14em] uppercase text-white/85 mr-1 block w-full mb-1">
-              Specializations
+              {ct.specializations}
             </span>
             {categoryOrder.map((cat) => {
               const first = member.skills.find((s) => s.category === cat);
               return first ? <PreviewBadge key={first.label} skill={first} /> : null;
             })}
             <span className="text-[10px] text-white/50 mt-1.5 block w-full italic">
-              {isMobile ? "Tap for more →" : "Hover for more →"}
+              {isMobile ? ct.tapMore : ct.hoverMore}
             </span>
           </div>
         </div>
@@ -206,7 +214,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
         <div className="flex items-start justify-between gap-3 mb-4">
           <div className="min-w-0">
             <p className="font-semibold text-foreground">{member.name}</p>
-            <p className="text-[8px] font-semibold tracking-[0.14em] uppercase text-primary/70 mt-1">Core Focus</p>
+            <p className="text-[8px] font-semibold tracking-[0.14em] uppercase text-primary/70 mt-1">{ct.coreFocus}</p>
             <p className="text-sm text-muted-foreground">{member.focusLabel}</p>
             <p className="text-xs text-muted-foreground/55 mt-0.5">{member.subtitle}</p>
           </div>
@@ -222,9 +230,9 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
                 const copied = await copyTextToClipboard(email);
 
                 if (copied) {
-                  showClipboardFeedback("Email address copied to clipboard", "success");
+                  showClipboardFeedback(ct.emailCopied, "success");
                 } else {
-                  showClipboardFeedback("Copy failed", "error");
+                  showClipboardFeedback(ct.copyFailed, "error");
                 }
               }}
             >

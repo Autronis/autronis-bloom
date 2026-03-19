@@ -265,15 +265,45 @@ export const SystemIntegrationVisual = () => {
             />
             {/* Data pulse: node → hub */}
             <motion.circle
-              r="1.2"
+              r="1.5"
               fill="hsl(174, 78%, 41%)"
               animate={{
                 cx: [systems[from].x, systems[to].x],
                 cy: [systems[from].y, systems[to].y],
-                fillOpacity: [0, 0.6, 0],
+                fillOpacity: [0, 0.7, 0],
               }}
               transition={{
-                duration: 1.8,
+                duration: 1.5,
+                delay: i * 0.6,
+                repeat: Infinity,
+                repeatDelay: 5,
+              }}
+            />
+            {/* Return pulse: hub → node (delayed) */}
+            <motion.circle
+              r="1"
+              fill="#4ADE80"
+              animate={{
+                cx: [systems[to].x, systems[from].x],
+                cy: [systems[to].y, systems[from].y],
+                fillOpacity: [0, 0.5, 0],
+              }}
+              transition={{
+                duration: 1.2,
+                delay: i * 0.6 + 2,
+                repeat: Infinity,
+                repeatDelay: 5.3,
+              }}
+            />
+            {/* Line glow on data transfer */}
+            <motion.line
+              x1={systems[from].x} y1={systems[from].y}
+              x2={systems[to].x} y2={systems[to].y}
+              stroke="hsl(174, 78%, 41%)"
+              strokeWidth="0.8"
+              animate={{ strokeOpacity: [0, 0.25, 0] }}
+              transition={{
+                duration: 1.5,
                 delay: i * 0.6,
                 repeat: Infinity,
                 repeatDelay: 5,
@@ -315,17 +345,30 @@ export const SystemIntegrationVisual = () => {
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: i * 0.06 + 0.2, type: "spring", stiffness: 200 }}
             />
-            {/* Glow behind center card */}
+            {/* Glow behind center card — breathing + data arrival pulse */}
             {sys.isCenter && (
+              <>
               <motion.rect
                 x={sys.x - nodeW / 2 - 2} y={sys.y - nodeH / 2 - 2}
                 width={nodeW + 4} height={nodeH + 4} rx="5"
                 fill="none"
                 stroke="hsl(174, 78%, 41%)"
                 strokeWidth="0.4"
-                animate={{ opacity: [0.15, 0.35, 0.15] }}
+                animate={{ opacity: [0.15, 0.4, 0.15] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
+              {/* Expanding ring on data arrival */}
+              <motion.rect
+                x={sys.x - nodeW / 2 - 5} y={sys.y - nodeH / 2 - 5}
+                width={nodeW + 10} height={nodeH + 10} rx="7"
+                fill="none"
+                stroke="hsl(174, 78%, 41%)"
+                strokeWidth="0.3"
+                animate={{ opacity: [0, 0.3, 0], scale: [0.9, 1.05, 1.1] }}
+                transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                style={{ transformOrigin: `${sys.x}px ${sys.y}px` }}
+              />
+              </>
             )}
             {/* Logo or center logo */}
             {"logo" in sys && sys.logo ? (

@@ -1,5 +1,6 @@
-import { useRef, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { Workflow, Cable, BarChart3 } from "lucide-react";
+import { motion } from "framer-motion";
 import useCanHover from "@/hooks/use-can-hover";
 import { useLanguage } from "@/i18n/context";
 
@@ -18,8 +19,8 @@ const text = {
 
 const icons = [Workflow, Cable, BarChart3];
 
-const CapabilityCard = ({ cap, icon: Icon, isAnyHovered, isHovered, onHover, onLeave, canHover }: {
-  cap: { title: string; description: string }; icon: React.ElementType;
+const CapabilityCard = ({ cap, icon: Icon, index, isAnyHovered, isHovered, onHover, onLeave, canHover }: {
+  cap: { title: string; description: string }; icon: React.ElementType; index: number;
   isAnyHovered: boolean; isHovered: boolean; onHover: () => void; onLeave: () => void; canHover: boolean;
 }) => {
   const [glowPos, setGlowPos] = useState({ x: 0, y: 0 });
@@ -32,15 +33,50 @@ const CapabilityCard = ({ cap, icon: Icon, isAnyHovered, isHovered, onHover, onL
   const showDim = canHover && isAnyHovered && !isHovered;
 
   return (
-    <div onMouseEnter={canHover ? onHover : undefined} onMouseLeave={canHover ? onLeave : undefined} onMouseMove={canHover ? handleMouseMove : undefined}
-      className="relative rounded-lg border border-border bg-card p-2.5 sm:p-3 text-center overflow-hidden transition-all duration-200 ease-out"
-      style={{ transform: showHover ? "scale(1.05) translateY(-4px)" : "none", opacity: showDim ? 0.88 : 1, borderColor: showHover ? "hsl(var(--primary) / 0.6)" : undefined, boxShadow: showHover ? "0 0 15px hsl(var(--primary) / 0.25), 0 0 30px hsl(var(--primary) / 0.1), inset 0 0 15px hsl(var(--primary) / 0.05)" : "none" }}>
-      {showHover && <div className="absolute pointer-events-none inset-0 transition-opacity duration-300" style={{ background: `radial-gradient(250px circle at ${glowPos.x}px ${glowPos.y}px, hsl(174 78% 41% / 0.12), transparent 70%)` }} />}
+    <motion.div
+      onMouseEnter={canHover ? onHover : undefined}
+      onMouseLeave={canHover ? onLeave : undefined}
+      onMouseMove={canHover ? handleMouseMove : undefined}
+      className="relative rounded-xl border bg-gradient-to-br from-primary/[0.06] to-card p-3 sm:p-4 text-center overflow-hidden cursor-default"
+      initial={{ opacity: 0, y: 20, scale: 0.92 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.6, delay: index * 0.12 + 0.3, ease: [0.23, 1, 0.32, 1] }}
+      style={{
+        transform: showHover ? "scale(1.06) translateY(-6px)" : showDim ? "scale(0.97)" : "none",
+        opacity: showDim ? 0.7 : 1,
+        borderColor: showHover ? "hsl(174, 78%, 41%)" : "hsl(var(--border))",
+        boxShadow: showHover
+          ? "0 0 20px hsl(174 78% 41% / 0.3), 0 0 40px hsl(174 78% 41% / 0.12), 0 8px 32px hsl(174 78% 41% / 0.08)"
+          : "none",
+        transition: "all 0.3s cubic-bezier(0.23, 1, 0.32, 1)",
+      }}
+    >
+      {/* Cursor-follow glow */}
+      {showHover && (
+        <div className="absolute pointer-events-none inset-0 transition-opacity duration-300 z-0"
+          style={{ background: `radial-gradient(200px circle at ${glowPos.x}px ${glowPos.y}px, hsl(174 78% 41% / 0.18), transparent 70%)` }}
+        />
+      )}
+      {/* Shimmer line */}
+      <motion.div
+        className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent z-10"
+        initial={{ x: "-100%" }}
+        animate={{ x: "100%" }}
+        transition={{ duration: 1.2, delay: index * 0.2 + 0.8, ease: "easeInOut" }}
+      />
+      {/* Bottom glow line */}
+      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent z-10" />
       <div className="relative z-10">
-        <div className="w-7 h-7 rounded-md bg-primary/10 flex items-center justify-center text-primary mx-auto mb-2"><Icon size={14} /></div>
-        <p className="text-[10px] sm:text-xs font-semibold mb-1 leading-tight text-center">{cap.title}</p>
+        <motion.div
+          className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-primary/15 flex items-center justify-center text-primary mx-auto mb-2.5 shadow-[0_0_12px_hsl(174_78%_41%/0.15)]"
+          animate={showHover ? { boxShadow: "0 0 24px hsl(174, 78%, 41%, 0.4)" } : { boxShadow: "0 0 12px hsl(174, 78%, 41%, 0.15)" }}
+          transition={{ duration: 0.3 }}
+        >
+          <Icon size={18} strokeWidth={2.5} />
+        </motion.div>
+        <p className="text-xs sm:text-sm font-bold leading-tight text-center tracking-tight">{cap.title}</p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -51,9 +87,9 @@ const StatisticsBlock = () => {
   const canHover = useCanHover();
 
   return (
-    <div className="grid grid-cols-3 gap-2 sm:gap-2.5 max-w-xl mx-auto">
+    <div className="grid grid-cols-3 gap-2.5 sm:gap-3 max-w-xl mx-auto">
       {caps.map((cap, i) => (
-        <CapabilityCard key={cap.title} cap={cap} icon={icons[i]} isAnyHovered={hoveredIndex !== null} isHovered={hoveredIndex === i} onHover={() => setHoveredIndex(i)} onLeave={() => setHoveredIndex(null)} canHover={canHover} />
+        <CapabilityCard key={cap.title} cap={cap} icon={icons[i]} index={i} isAnyHovered={hoveredIndex !== null} isHovered={hoveredIndex === i} onHover={() => setHoveredIndex(i)} onLeave={() => setHoveredIndex(null)} canHover={canHover} />
       ))}
     </div>
   );

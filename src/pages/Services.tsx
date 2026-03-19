@@ -424,7 +424,7 @@ const Services = () => {
             <p className="text-xs text-center text-muted-foreground/60 mb-4">
               {lang === "nl" ? "Klik op een tool om automatiseringsmogelijkheden te ontdekken" : "Click a tool to discover automation opportunities"}
             </p>
-            <div className="relative mb-4 overflow-hidden py-10">
+            <div className="relative mb-4 overflow-x-hidden overflow-y-visible py-10">
               <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-background to-transparent pointer-events-none" />
               <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-background to-transparent pointer-events-none" />
               <div className="flex animate-marquee-right gap-6 sm:gap-8 w-max items-center justify-center">
@@ -441,7 +441,7 @@ const Services = () => {
                 })}
               </div>
             </div>
-            <div className="relative overflow-hidden py-10">
+            <div className="relative overflow-x-hidden overflow-y-visible py-10">
               <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-background to-transparent pointer-events-none" />
               <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-background to-transparent pointer-events-none" />
               <div className="flex animate-marquee-left gap-6 sm:gap-8 w-max items-center justify-center">

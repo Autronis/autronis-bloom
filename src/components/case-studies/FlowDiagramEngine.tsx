@@ -191,7 +191,6 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments, travelDuration: trave
 }) => {
   const pathRef = useRef<SVGPathElement>(null);
   const dotRef = useRef<SVGCircleElement>(null);
-  const dot2Ref = useRef<SVGCircleElement>(null);
   const trailRefs = useRef<(SVGCircleElement | null)[]>([]);
   
   const [nodeIntensities, setNodeIntensities] = useState<number[]>(() => nodes.map(() => 0));
@@ -390,10 +389,8 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments, travelDuration: trave
     const linearProgress = Math.min(elapsedInCycle / TRAVEL_DURATION, 1);
     const progress = remapProgress(linearProgress);
 
-    const len = pathLengthRef.current;
-    const dot2 = dot2Ref.current;
-
     if (progress < 1) {
+      const len = pathLengthRef.current;
       const pt = path.getPointAtLength(progress * len);
       dot.setAttribute("cx", String(pt.x));
       dot.setAttribute("cy", String(pt.y));
@@ -409,22 +406,8 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments, travelDuration: trave
         trailEl.setAttribute("cy", String(tpt.y));
         trailEl.setAttribute("opacity", String(0.3 - t * 0.045));
       }
-
-      // Second dot — delayed follower
-      if (dot2) {
-        const followProgress = Math.max(0, progress - 0.12);
-        if (followProgress > 0) {
-          const pt2 = path.getPointAtLength(followProgress * len);
-          dot2.setAttribute("cx", String(pt2.x));
-          dot2.setAttribute("cy", String(pt2.y));
-          dot2.setAttribute("opacity", "0.6");
-        } else {
-          dot2.setAttribute("opacity", "0");
-        }
-      }
     } else {
       dot.setAttribute("opacity", "0");
-      if (dot2) dot2.setAttribute("opacity", "0");
       for (let t = 0; t < TRAIL_COUNT; t++) {
         trailRefs.current[t]?.setAttribute("opacity", "0");
       }
@@ -557,7 +540,6 @@ export const FlowDiagramSvg = ({ viewBox, nodes, segments, travelDuration: trave
             cx="0" cy="0" r={2.5 - i * 0.3} fill="hsl(var(--primary))" opacity="0" />
         ))}
         <circle ref={dotRef} cx="0" cy="0" r="3" fill="hsl(var(--primary))" opacity="0" />
-        <circle ref={dot2Ref} cx="0" cy="0" r="2" fill="#4ADE80" opacity="0" />
       </g>
 
       {nodes.map((n, i) => (

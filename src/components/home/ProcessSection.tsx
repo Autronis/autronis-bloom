@@ -56,7 +56,7 @@ const TimelineCard = ({ phase, index, isActive, hoveredIndex, onHover, onLeave, 
   const Icon = phaseIcons[index];
 
   return (
-    <div onMouseEnter={canHover ? onHover : undefined} onMouseLeave={canHover ? onLeave : undefined} className="relative rounded-xl border border-border bg-card p-4 sm:p-6 cursor-pointer overflow-hidden" style={{ transform: (canHover && (isActive || isHovered)) ? "scale(1.015) translateY(-2px)" : "none", opacity: isAnyHovered && !isHovered ? 0.88 : 1, borderColor: isActive || isHovered ? "hsl(var(--primary) / 0.5)" : undefined, boxShadow: isActive || isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none", transition: "transform 200ms ease-out, opacity 200ms ease-out, border-color 200ms ease-out, box-shadow 200ms ease-out" }}>
+    <div onMouseEnter={canHover ? onHover : undefined} onMouseLeave={canHover ? onLeave : undefined} className="relative rounded-xl border border-border bg-card p-4 sm:p-6 cursor-pointer overflow-hidden" style={{ opacity: isAnyHovered && !isHovered ? 0.88 : 1, borderColor: isActive || isHovered ? "hsl(var(--primary) / 0.5)" : undefined, boxShadow: isActive || isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none", transition: "opacity 200ms ease-out, border-color 200ms ease-out, box-shadow 200ms ease-out" }}>
       <div className="relative z-10">
         <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center mb-2 sm:mb-3 transition-all duration-500" style={{ backgroundColor: isActive ? "hsl(var(--primary) / 0.15)" : "hsl(var(--primary) / 0.1)" }}><Icon size={16} className="text-primary sm:w-[18px] sm:h-[18px]" /></div>
         <p className="text-xs font-bold text-primary mb-1">{stepLabel} {phase.step}</p>

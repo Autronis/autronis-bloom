@@ -191,7 +191,7 @@ export const ProcessAutomationVisual = () => {
           >
             {/* Document bg */}
             <rect x="5" y={beltY - 24} width="22" height="23" rx="1.5"
-              fill="hsl(200, 20%, 10%)"
+              fill="hsl(var(--card))"
             />
             <rect x="5" y={beltY - 24} width="22" height="23" rx="1.5"
               fill="hsl(174, 78%, 41%)" fillOpacity="0.07"
@@ -331,7 +331,7 @@ export const SystemIntegrationVisual = () => {
             <rect
               x={sys.x - nodeW / 2} y={sys.y - nodeH / 2}
               width={nodeW} height={nodeH} rx="3"
-              fill="hsl(200, 20%, 10%)"
+              fill="hsl(var(--card))"
             />
             <motion.rect
               x={sys.x - nodeW / 2} y={sys.y - nodeH / 2}

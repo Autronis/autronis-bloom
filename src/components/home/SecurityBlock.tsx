@@ -64,9 +64,6 @@ const SecurityBlock = () => {
         </ScrollReveal>
 
         <div className="max-w-4xl mx-auto relative">
-          {/* Vertical connector line between layers */}
-          <div className="absolute left-8 sm:left-10 top-0 bottom-0 w-[1px] bg-gradient-to-b from-primary/20 via-primary/10 to-transparent hidden sm:block" />
-
           <div className="space-y-4 sm:space-y-6">
           {t.layers.map((layer, i) => {
             const Icon = layerIcons[i];
@@ -80,10 +77,10 @@ const SecurityBlock = () => {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: i * 0.12, ease: "easeOut" }}
               >
-                <div className="rounded-xl sm:rounded-2xl border bg-gradient-to-br from-primary/[0.06] to-transparent overflow-hidden transition-all duration-200 ease-out relative" style={{ transform: isHovered ? "scale(1.01) translateY(-2px)" : "none", borderColor: isHovered ? `${layerColors[i]}50` : "hsl(var(--border))", boxShadow: isHovered ? `0 0 24px ${layerColors[i]}18` : "0 0 0 transparent" }} onMouseEnter={canHover ? () => setHoveredIndex(i) : undefined} onMouseLeave={canHover ? () => setHoveredIndex(null) : undefined}>
+                <div className="rounded-xl sm:rounded-2xl border bg-gradient-to-br from-primary/[0.06] to-card overflow-hidden transition-all duration-200 ease-out relative" style={{ transform: isHovered ? "scale(1.01) translateY(-2px)" : "none", borderColor: isHovered ? `${layerColors[i]}50` : "hsl(var(--border))", boxShadow: isHovered ? `0 0 24px ${layerColors[i]}18` : "0 0 0 transparent" }} onMouseEnter={canHover ? () => setHoveredIndex(i) : undefined} onMouseLeave={canHover ? () => setHoveredIndex(null) : undefined}>
                   {/* Shimmer line */}
                   <motion.div
-                    className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent"
+                    className="absolute top-[2px] left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent"
                     initial={{ x: "-100%" }}
                     whileInView={{ x: "100%" }}
                     viewport={{ once: true }}

@@ -59,7 +59,8 @@ const CaseStudiesPreview = () => {
         </ScrollRevealItem></ScrollReveal>
 
         {/* Animated stats bar */}
-        <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto mb-10">
+        <div className="relative grid grid-cols-3 gap-4 max-w-lg mx-auto mb-10">
+          <div className="absolute -inset-10 rounded-full bg-[radial-gradient(ellipse_at_center,hsl(174_78%_41%/0.06),transparent_70%)] pointer-events-none" />
           {[
             <><AnimatedCounter target={73} suffix="%" /></>,
             <><AnimatedCounter target={40} suffix="h" /></>,
@@ -112,7 +113,15 @@ const CaseStudiesPreview = () => {
                       transition={{ duration: 0.4, delay: i * 0.08, ease: "easeOut" }}
                       viewport={{ once: true, amount: 0.5 }}
                     >
-                      <CheckCircle2 size={15} className="text-primary mt-0.5 shrink-0" />
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        whileInView={{ scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.3, delay: i * 0.1 + 0.15, type: "spring", stiffness: 400 }}
+                        className="shrink-0 mt-0.5"
+                      >
+                        <CheckCircle2 size={15} className="text-primary" />
+                      </motion.div>
                       {r}
                     </motion.li>
                   ))}
@@ -124,7 +133,17 @@ const CaseStudiesPreview = () => {
                   <div className="flex items-center gap-2.5">
                     <img src={cs.trust.logoSrc} alt="" className="h-5 object-contain opacity-70 shrink-0" />
                     <div className="flex gap-0.5">
-                      {[...Array(5)].map((_, i) => <Star key={i} size={13} className="fill-primary text-primary" />)}
+                      {[...Array(5)].map((_, si) => (
+                        <motion.div
+                          key={si}
+                          initial={{ opacity: 0, scale: 0 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.3, delay: si * 0.1 + 0.3, type: "spring", stiffness: 400 }}
+                        >
+                          <Star size={13} className="fill-primary text-primary" />
+                        </motion.div>
+                      ))}
                     </div>
                   </div>
                   {cs.trust.website && (

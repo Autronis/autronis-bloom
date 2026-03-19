@@ -23,13 +23,50 @@ const AnimatedValue = ({ animation, fallback }: { animation: MetricAnimation; fa
   return <span ref={ref}>{animation.prefix || ""}{current}{animation.suffix || ""}</span>;
 };
 
-const MetricCard = ({ metric }: { metric: CaseMetric }) => {
+const MetricCard = ({ metric, index }: { metric: CaseMetric; index: number }) => {
   const Icon = metric.icon;
+  const [hovered, setHovered] = useState(false);
   return (
-    <div className="flex items-center gap-3 rounded-lg border border-primary/20 bg-primary/5 px-3.5 py-2.5 transition-all duration-200 ease-out hover:scale-[1.015] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_0_16px_hsl(174_78%_41%/0.1)]">
-      <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center text-primary shrink-0"><Icon size={16} /></div>
-      <div className="min-w-0"><p className="text-base font-bold text-foreground leading-tight">{metric.animation ? <AnimatedValue animation={metric.animation} fallback={metric.value} /> : metric.value}</p><p className="text-[11px] text-muted-foreground leading-snug">{metric.label}</p></div>
-    </div>
+    <motion.div
+      className="relative overflow-hidden rounded-xl border border-primary/25 bg-gradient-to-br from-primary/[0.08] to-primary/[0.02] px-4 py-4 cursor-default group"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.23, 1, 0.32, 1] }}
+      whileHover={{ y: -4, borderColor: "hsl(174, 78%, 41%)" }}
+    >
+      {/* Glow pulse background */}
+      <motion.div
+        className="absolute inset-0 rounded-xl bg-primary/10 blur-xl"
+        animate={{ opacity: hovered ? 0.4 : 0, scale: hovered ? 1.1 : 0.8 }}
+        transition={{ duration: 0.4 }}
+      />
+      {/* Shimmer line */}
+      <motion.div
+        className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent"
+        initial={{ x: "-100%" }}
+        whileInView={{ x: "100%" }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.2, delay: index * 0.15 + 0.3, ease: "easeInOut" }}
+      />
+      <div className="relative z-10 flex items-center gap-3.5">
+        <motion.div
+          className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center text-primary shrink-0 shadow-[0_0_12px_hsl(174_78%_41%/0.15)]"
+          animate={{ boxShadow: hovered ? "0 0 20px hsl(174, 78%, 41%, 0.3)" : "0 0 12px hsl(174, 78%, 41%, 0.15)" }}
+          transition={{ duration: 0.3 }}
+        >
+          <Icon size={18} strokeWidth={2.5} />
+        </motion.div>
+        <div className="min-w-0">
+          <p className="text-lg font-extrabold text-foreground leading-tight tracking-tight">
+            {metric.animation ? <AnimatedValue animation={metric.animation} fallback={metric.value} /> : metric.value}
+          </p>
+          <p className="text-[11px] text-muted-foreground/80 leading-snug mt-0.5 font-medium">{metric.label}</p>
+        </div>
+      </div>
+    </motion.div>
   );
 };
 
@@ -124,15 +161,8 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
       <div id={`case-${index}`} className="rounded-xl border border-border bg-card overflow-hidden scroll-mt-24">
         <div className="p-5 sm:p-6 pb-0 sm:pb-0">
           <div className="flex items-center gap-3 mb-4"><img src="/logo.png" alt="Autronis" className="w-11 h-11 object-contain shrink-0" /><h2 className="text-lg sm:text-xl font-bold text-foreground flex items-center gap-2">{cs.title}<Icon size={16} className="text-primary/60" /></h2></div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 mb-5">{cs.metrics.map((m, j) => (
-            <motion.div key={j}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.4, delay: j * 0.08, ease: "easeOut" }}
-            >
-              <MetricCard metric={m} />
-            </motion.div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">{cs.metrics.map((m, j) => (
+              <MetricCard key={j} metric={m} index={j} />
           ))}</div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 border-t border-border">

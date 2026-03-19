@@ -39,7 +39,7 @@ const text = {
       { value: "40u", label: "Bespaard per week" },
       { value: "2,4×", label: "Meer conversies" },
     ],
-    case: { slug: "lead-generation-outreach-automation", title: "Leadgeneratie en outreach-automatisering", description: "Automatisch leads verzamelen, contactgegevens verrijken en gepersonaliseerde e-mail outreach genereren met AI.", caseIndex: 0, results: ["Leadverwerking van 25 → 5 min per lead", "3–5× hogere outreach-efficiëntie", "50+ gepersonaliseerde e-mails per dag"], trust: { logoSrc: "/assets/jobby-logo.png", website: "https://teamjobby.nl/" } } as CaseStudy,
+    case: { slug: "lead-generation-outreach-automation", title: "Leadgeneratie en outreach-automatisering", description: "Automatisch leads verzamelen, contactgegevens verrijken en gepersonaliseerde e-mail outreach genereren met AI.", caseIndex: 0, results: ["Leadverwerking van 25 → 5 min per lead", "3–5× hogere outreach-efficiëntie", "3 → 50+ gepersonaliseerde e-mails per dag"], trust: { logoSrc: "/assets/jobby-logo.png", website: "https://teamjobby.nl/" } } as CaseStudy,
   },
 };
 

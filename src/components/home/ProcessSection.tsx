@@ -48,17 +48,79 @@ const text = {
 
 const phaseIcons = [Brain, Layers, Cog, ScanSearch, Rocket, RefreshCw];
 
+// Per-phase icon animations that trigger when card becomes active
+const iconAnimations: Record<number, { animate: Record<string, number[]>; transition: Record<string, unknown> }> = {
+  0: { // Brain — pulse scale
+    animate: { scale: [1, 1.2, 1], opacity: [0.8, 1, 0.8] },
+    transition: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+  },
+  1: { // Layers — bounce stack
+    animate: { y: [0, -4, 0, -2, 0] },
+    transition: { duration: 1.8, repeat: Infinity, repeatDelay: 2 },
+  },
+  2: { // Cog — spin
+    animate: { rotate: [0, 360] },
+    transition: { duration: 4, repeat: Infinity, ease: "linear" },
+  },
+  3: { // ScanSearch — scan pulse
+    animate: { scale: [1, 1.15, 1], opacity: [0.7, 1, 0.7] },
+    transition: { duration: 1.5, repeat: Infinity, ease: "easeInOut" },
+  },
+  4: { // Rocket — shake then launch
+    animate: { y: [0, -2, 2, -2, 0, -6, -12, -6, 0], rotate: [0, -3, 3, -2, 0, 0, 0, 0, 0], scale: [1, 1, 1, 1, 1, 1.15, 1.25, 1.15, 1] },
+    transition: { duration: 2.5, repeat: Infinity, repeatDelay: 3, ease: "easeInOut" },
+  },
+  5: { // RefreshCw — continuous rotate
+    animate: { rotate: [0, 360] },
+    transition: { duration: 3, repeat: Infinity, ease: "linear" },
+  },
+};
+
 const TimelineCard = ({ phase, index, isActive, hoveredIndex, onHover, onLeave, canHover, stepLabel }: {
   phase: { step: string; title: string; description: string }; index: number; isActive: boolean; hoveredIndex: number | null; onHover: () => void; onLeave: () => void; canHover: boolean; stepLabel: string;
 }) => {
   const isHovered = canHover && hoveredIndex === index;
   const isAnyHovered = canHover && hoveredIndex !== null;
   const Icon = phaseIcons[index];
+  const iconAnim = iconAnimations[index];
 
   return (
     <div onMouseEnter={canHover ? onHover : undefined} onMouseLeave={canHover ? onLeave : undefined} className="relative rounded-xl border border-border bg-card p-4 sm:p-6 cursor-pointer overflow-hidden" style={{ opacity: isAnyHovered && !isHovered ? 0.88 : 1, borderColor: isActive || isHovered ? "hsl(var(--primary) / 0.5)" : undefined, boxShadow: isActive || isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none", transition: "opacity 200ms ease-out, border-color 200ms ease-out, box-shadow 200ms ease-out" }}>
+      {/* Shimmer on activation */}
+      {isActive && (
+        <motion.div
+          className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent"
+          initial={{ x: "-100%" }}
+          animate={{ x: "100%" }}
+          transition={{ duration: 1, ease: "easeInOut" }}
+        />
+      )}
+      {/* Rocket particles for step 05 */}
+      {index === 4 && isActive && (
+        <>
+          {[0, 1, 2].map((p) => (
+            <motion.div
+              key={p}
+              className="absolute w-1 h-1 rounded-full bg-primary/50"
+              style={{ left: 20 + p * 6, top: 36 }}
+              animate={{ y: [0, 20, 40], opacity: [0.8, 0.4, 0], scale: [1, 0.6, 0.2] }}
+              transition={{ duration: 1.2, delay: p * 0.2, repeat: Infinity, repeatDelay: 4, ease: "easeOut" }}
+            />
+          ))}
+        </>
+      )}
       <div className="relative z-10">
-        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center mb-2 sm:mb-3 transition-all duration-500" style={{ backgroundColor: isActive ? "hsl(var(--primary) / 0.15)" : "hsl(var(--primary) / 0.1)" }}><Icon size={16} className="text-primary sm:w-[18px] sm:h-[18px]" /></div>
+        <motion.div
+          className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center mb-2 sm:mb-3 transition-colors duration-500"
+          style={{
+            backgroundColor: isActive ? "hsl(var(--primary) / 0.2)" : "hsl(var(--primary) / 0.1)",
+            boxShadow: isActive ? "0 0 16px hsl(174, 78%, 41%, 0.25)" : "none",
+          }}
+          animate={isActive ? iconAnim.animate : {}}
+          transition={isActive ? iconAnim.transition : {}}
+        >
+          <Icon size={18} strokeWidth={2.5} className="text-primary" />
+        </motion.div>
         <p className="text-xs font-bold text-primary mb-1">{stepLabel} {phase.step}</p>
         <h3 className="font-semibold text-sm sm:text-base mb-1.5 sm:mb-2">{phase.title}</h3>
         <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{phase.description}</p>

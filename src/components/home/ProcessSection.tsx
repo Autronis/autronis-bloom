@@ -85,7 +85,7 @@ const TimelineCard = ({ phase, index, isActive, hoveredIndex, onHover, onLeave, 
   const iconAnim = iconAnimations[index];
 
   return (
-    <div onMouseEnter={canHover ? onHover : undefined} onMouseLeave={canHover ? onLeave : undefined} className="relative rounded-xl border border-border bg-card p-4 sm:p-6 cursor-pointer overflow-hidden" style={{ opacity: isAnyHovered && !isHovered ? 0.88 : 1, borderColor: isActive || isHovered ? "hsl(var(--primary) / 0.5)" : undefined, boxShadow: isActive || isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none", transition: "opacity 200ms ease-out, border-color 200ms ease-out, box-shadow 200ms ease-out" }}>
+    <div onMouseEnter={canHover ? onHover : undefined} onMouseLeave={canHover ? onLeave : undefined} className="relative rounded-xl border border-border bg-card p-4 sm:p-6 cursor-pointer overflow-hidden" style={{ opacity: isAnyHovered && !isHovered ? 0.88 : 1, borderColor: isActive || isHovered ? "hsl(var(--primary) / 0.5)" : undefined, boxShadow: isActive || isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none", transition: "opacity 500ms ease-out, border-color 500ms ease-out, box-shadow 500ms ease-out" }}>
       {/* Shimmer on activation */}
       {isActive && (
         <motion.div
@@ -151,7 +151,7 @@ const ProcessSection = () => {
         const viewportH = window.innerHeight;
         let newActive = -1;
         let targetFillHeight = 0;
-        cardRefs.current.forEach((ref, i) => { if (!ref) return; const cardRect = ref.getBoundingClientRect(); if (cardRect.top + cardRect.height / 2 < viewportH * 0.55) newActive = i; });
+        cardRefs.current.forEach((ref, i) => { if (!ref) return; const cardRect = ref.getBoundingClientRect(); if (cardRect.top + cardRect.height * 0.3 < viewportH * 0.45) newActive = i; });
         if (newActive >= 0 && timelineRef.current) { const timelineRect = timelineRef.current.getBoundingClientRect(); const activeCard = cardRefs.current[newActive]; if (activeCard) { targetFillHeight = activeCard.getBoundingClientRect().top + 20 - timelineRect.top; } }
         setActiveIndex(newActive);
         setFillHeight(Math.max(0, targetFillHeight));
@@ -175,7 +175,7 @@ const ProcessSection = () => {
 
         <div className="relative max-w-3xl mx-auto" ref={timelineRef}>
           <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-border hidden sm:block">
-            <div className="w-full bg-primary rounded-full" style={{ height: `${fillHeight}px`, transition: "height 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94)" }} />
+            <div className="w-full bg-primary rounded-full" style={{ height: `${fillHeight}px`, transition: "height 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94)" }} />
           </div>
           <div className="space-y-4 sm:space-y-8">
             {t.phases.map((phase, i) => (

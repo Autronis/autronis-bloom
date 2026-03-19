@@ -5,7 +5,7 @@ import LeadFlowDiagram from "./LeadFlowDiagram";
 import type { TagCategory, TechTagData } from "./TechTag";
 
 export interface MetricAnimation { from: number; to: number; suffix?: string; prefix?: string; separator?: string; fromSuffix?: string; toSuffix?: string; }
-export interface CaseMetric { icon: React.ElementType; value: string; label: string; animation?: MetricAnimation; }
+export interface CaseMetric { icon: React.ElementType; value: string; label: string; animation?: MetricAnimation; change?: string; }
 export interface CaseStudy {
   title: string; icon: React.ElementType; metrics: CaseMetric[]; context: string; problem: string[]; solution: string[]; results: string[];
   technology: string[]; technologyTags: TechTagData[]; visual: React.ElementType; videoUrl?: string;
@@ -22,10 +22,10 @@ export const casesByLang: LangCases = {
     {
       title: "Lead generation and outreach automation", icon: Users, logoSrc: "/logo.png",
       metrics: [
-        { icon: Clock, value: "25 → 5 min", label: "Lead processing per lead", animation: { from: 25, to: 5, suffix: " min", separator: " → " } },
-        { icon: TrendingUp, value: "3–5×", label: "Higher outreach efficiency" },
-        { icon: Mail, value: "3 → 50+", label: "Personalized emails/day", animation: { from: 3, to: 50, suffix: "+", separator: " → " } },
-        { icon: Zap, value: "100%", label: "Automatic enrichment", animation: { from: 0, to: 100, suffix: "%" } },
+        { icon: Clock, value: "25 → 5 min", label: "Lead processing per lead", animation: { from: 25, to: 5, suffix: " min", separator: " → " }, change: "-80%" },
+        { icon: TrendingUp, value: "3–5×", label: "Higher outreach efficiency", change: "+400%" },
+        { icon: Mail, value: "3 → 50+", label: "Personalized emails/day", animation: { from: 3, to: 50, suffix: "+", separator: " → " }, change: "+1567%" },
+        { icon: Zap, value: "100%", label: "Automatic enrichment", animation: { from: 0, to: 100, suffix: "%" }, change: "100%" },
       ],
       context: "Jobby wanted to reach more businesses with a small team. Finding leads and collecting contact information took a lot of time. The team primarily relied on manual searching and phone outreach.",
       problem: ["Manually searching for leads across platforms and databases", "Looking up contact info and company data separately (~25 min/lead)", "No insight into prospects' pain points", "Email outreach too time-consuming to deploy"],
@@ -58,10 +58,10 @@ export const casesByLang: LangCases = {
     {
       title: "Leadgeneratie en outreach-automatisering", icon: Users, logoSrc: "/logo.png",
       metrics: [
-        { icon: Clock, value: "25 → 5 min", label: "Leadverwerking per lead", animation: { from: 25, to: 5, suffix: " min", separator: " → " } },
-        { icon: TrendingUp, value: "3–5×", label: "Hogere outreach-efficiëntie" },
-        { icon: Mail, value: "3 → 50+", label: "Gepersonaliseerde e-mails/dag", animation: { from: 3, to: 50, suffix: "+", separator: " → " } },
-        { icon: Zap, value: "100%", label: "Automatische verrijking", animation: { from: 0, to: 100, suffix: "%" } },
+        { icon: Clock, value: "25 → 5 min", label: "Leadverwerking per lead", animation: { from: 25, to: 5, suffix: " min", separator: " → " }, change: "-80%" },
+        { icon: TrendingUp, value: "3–5×", label: "Hogere outreach-efficiëntie", change: "+400%" },
+        { icon: Mail, value: "3 → 50+", label: "Gepersonaliseerde e-mails/dag", animation: { from: 3, to: 50, suffix: "+", separator: " → " }, change: "+1567%" },
+        { icon: Zap, value: "100%", label: "Automatische verrijking", animation: { from: 0, to: 100, suffix: "%" }, change: "100%" },
       ],
       context: "Jobby wilde met een klein team meer bedrijven bereiken. Het vinden van leads en het verzamelen van contactgegevens kostte veel tijd. Het team vertrouwde voornamelijk op handmatig zoeken en telefonische outreach.",
       problem: ["Handmatig zoeken naar leads op platforms en in databases", "Contactgegevens en bedrijfsdata apart opzoeken (~25 min/lead)", "Geen inzicht in pijnpunten van prospects", "E-mail outreach te tijdrovend om in te zetten"],

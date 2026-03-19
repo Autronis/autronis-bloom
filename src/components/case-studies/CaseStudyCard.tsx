@@ -26,35 +26,51 @@ const AnimatedValue = ({ animation, fallback }: { animation: MetricAnimation; fa
 const MetricCard = ({ metric, index }: { metric: CaseMetric; index: number }) => {
   const Icon = metric.icon;
   const [hovered, setHovered] = useState(false);
+  const isPositive = metric.change && !metric.change.startsWith("-");
   return (
     <motion.div
       className="relative overflow-hidden rounded-xl border border-primary/25 bg-gradient-to-br from-primary/[0.08] to-primary/[0.02] px-4 py-4 cursor-default group"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      initial={{ opacity: 0, y: 24, scale: 0.92 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.23, 1, 0.32, 1] }}
-      whileHover={{ y: -4, borderColor: "hsl(174, 78%, 41%)" }}
+      transition={{ duration: 0.6, delay: index * 0.12, ease: [0.23, 1, 0.32, 1] }}
+      whileHover={{ y: -5, borderColor: "hsl(174, 78%, 41%)" }}
     >
       {/* Glow pulse background */}
       <motion.div
         className="absolute inset-0 rounded-xl bg-primary/10 blur-xl"
-        animate={{ opacity: hovered ? 0.4 : 0, scale: hovered ? 1.1 : 0.8 }}
+        animate={{ opacity: hovered ? 0.5 : 0, scale: hovered ? 1.15 : 0.8 }}
         transition={{ duration: 0.4 }}
       />
       {/* Shimmer line */}
       <motion.div
-        className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent"
+        className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/70 to-transparent"
         initial={{ x: "-100%" }}
         whileInView={{ x: "100%" }}
         viewport={{ once: true }}
-        transition={{ duration: 1.2, delay: index * 0.15 + 0.3, ease: "easeInOut" }}
+        transition={{ duration: 1, delay: index * 0.15 + 0.3, ease: "easeInOut" }}
       />
+      {/* Change badge */}
+      {metric.change && (
+        <motion.div
+          className="absolute top-2.5 right-2.5 z-20"
+          initial={{ opacity: 0, scale: 0.5, rotate: -12 }}
+          whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: index * 0.12 + 0.4, type: "spring", stiffness: 300 }}
+        >
+          <span className={`inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-bold tracking-tight ${isPositive ? "bg-emerald-500/15 text-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.2)]" : "bg-primary/15 text-primary shadow-[0_0_8px_hsl(174_78%_41%/0.2)]"}`}>
+            {isPositive && <TrendUp size={10} />}
+            {metric.change}
+          </span>
+        </motion.div>
+      )}
       <div className="relative z-10 flex items-center gap-3.5">
         <motion.div
           className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center text-primary shrink-0 shadow-[0_0_12px_hsl(174_78%_41%/0.15)]"
-          animate={{ boxShadow: hovered ? "0 0 20px hsl(174, 78%, 41%, 0.3)" : "0 0 12px hsl(174, 78%, 41%, 0.15)" }}
+          animate={{ boxShadow: hovered ? "0 0 24px hsl(174, 78%, 41%, 0.35)" : "0 0 12px hsl(174, 78%, 41%, 0.15)" }}
           transition={{ duration: 0.3 }}
         >
           <Icon size={18} strokeWidth={2.5} />

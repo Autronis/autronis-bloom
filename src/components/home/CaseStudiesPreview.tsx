@@ -25,7 +25,7 @@ const text = {
       { value: "40h", label: "Saved per week" },
       { value: "2.4×", label: "More conversions" },
     ],
-    case: { slug: "lead-generation-outreach-automation", title: "Lead generation and outreach automation", description: "Automatically collect leads, enrich contact information, and generate personalized email outreach with AI.", caseIndex: 0, results: ["Lead processing from 25 → 5 min per lead", "3–5× higher outreach efficiency", "50+ personalized emails per day"], trust: { logoSrc: "/assets/jobby-logo.png", website: "https://teamjobby.nl/" } } as CaseStudy,
+    case: { slug: "lead-generation-outreach-automation", title: "Lead generation and outreach automation", description: "Automatically collect leads, enrich contact information, and generate personalized email outreach with AI.", caseIndex: 0, results: ["Lead processing from 25 → 5 min per lead", "3–5× higher outreach efficiency", "0 → 50+ personalized emails per day"], trust: { logoSrc: "/assets/jobby-logo.png", website: "https://teamjobby.nl/" } } as CaseStudy,
   },
   nl: {
     label: "Case Studies",
@@ -40,7 +40,7 @@ const text = {
       { value: "40u", label: "Bespaard per week" },
       { value: "2,4×", label: "Meer conversies" },
     ],
-    case: { slug: "lead-generation-outreach-automation", title: "Leadgeneratie en outreach-automatisering", description: "Automatisch leads verzamelen, contactgegevens verrijken en gepersonaliseerde e-mail outreach genereren met AI.", caseIndex: 0, results: ["Leadverwerking van 25 → 5 min per lead", "3–5× hogere outreach-efficiëntie", "3 → 50+ gepersonaliseerde e-mails per dag"], trust: { logoSrc: "/assets/jobby-logo.png", website: "https://teamjobby.nl/" } } as CaseStudy,
+    case: { slug: "lead-generation-outreach-automation", title: "Leadgeneratie en outreach-automatisering", description: "Automatisch leads verzamelen, contactgegevens verrijken en gepersonaliseerde e-mail outreach genereren met AI.", caseIndex: 0, results: ["Leadverwerking van 25 → 5 min per lead", "3–5× hogere outreach-efficiëntie", "0 → 50+ gepersonaliseerde e-mails per dag"], trust: { logoSrc: "/assets/jobby-logo.png", website: "https://teamjobby.nl/" } } as CaseStudy,
   },
 };
 

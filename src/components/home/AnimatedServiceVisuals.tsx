@@ -376,15 +376,24 @@ export const DataReportingVisual = () => {
           <line key={`g-${i}`} x1="18" y1={55 + i * 16} x2="185" y2={55 + i * 16} stroke="hsl(174, 78%, 41%)" strokeWidth="0.1" strokeOpacity="0.08" />
         ))}
 
-        {/* Bars */}
+        {/* Bars — animate up then pulse */}
         {bars.map((h, i) => {
           const barH = h * 0.85;
+          const baseOpacity = 0.1 + (h / 85) * 0.2;
           return (
             <motion.rect key={i} x={20 + i * 13.8} width="9" rx="1"
               fill="hsl(174, 78%, 41%)"
               initial={{ y: 119, height: 0, fillOpacity: 0 }}
-              animate={{ y: 119 - barH, height: barH, fillOpacity: 0.1 + (h / 85) * 0.2 }}
-              transition={{ duration: 0.7, delay: i * 0.06 + 0.3, ease: "easeOut" }}
+              animate={{
+                y: 119 - barH,
+                height: barH,
+                fillOpacity: [0, baseOpacity, baseOpacity + 0.05, baseOpacity],
+              }}
+              transition={{
+                y: { duration: 0.7, delay: i * 0.06 + 0.3, ease: "easeOut" },
+                height: { duration: 0.7, delay: i * 0.06 + 0.3, ease: "easeOut" },
+                fillOpacity: { duration: 4, delay: i * 0.06 + 0.3, repeat: Infinity, repeatDelay: 2 },
+              }}
             />
           );
         })}
@@ -448,6 +457,25 @@ export const DataReportingVisual = () => {
           transition={{ duration: 6, repeat: Infinity, ease: "linear", repeatDelay: 4 }}
         />
 
+        {/* Animated cursor hovering over bars */}
+        <motion.g
+          animate={{ x: [60, 100, 140, 160, 120, 80, 60] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        >
+          {/* Cursor */}
+          <motion.path d="M 0 70 l 0 8 l 3 -2 l 2 4 l 1.5 -0.8 l -2 -4 l 3.5 -0.5 Z"
+            fill="white" fillOpacity="0.4" stroke="white" strokeWidth="0.3" strokeOpacity="0.5"
+          />
+          {/* Tooltip that follows cursor */}
+          <motion.g
+            animate={{ opacity: [0, 0, 1, 1, 1, 0, 0] }}
+            transition={{ duration: 12, repeat: Infinity }}
+          >
+            <rect x="-12" y="58" width="30" height="10" rx="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.15" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.3" />
+            <text x="3" y="65" textAnchor="middle" fontSize="3.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.7" fontFamily="monospace">€4,827</text>
+          </motion.g>
+        </motion.g>
+
         {/* Mini notification popup */}
         <motion.g
           initial={{ opacity: 0, y: 5 }}
@@ -457,6 +485,17 @@ export const DataReportingVisual = () => {
           <rect x="130" y="55" width="52" height="12" rx="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.12" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.3" />
           <circle cx="136" cy="61" r="2" fill="#4ADE80" fillOpacity="0.5" />
           <text x="142" y="63" fontSize="3" fill="hsl(174, 78%, 41%)" fillOpacity="0.6" fontFamily="monospace">+12% vs last week</text>
+        </motion.g>
+
+        {/* Second notification — different timing */}
+        <motion.g
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: [0, 1, 1, 0], y: [5, 0, 0, -3] }}
+          transition={{ duration: 3.5, delay: 14, repeat: Infinity, repeatDelay: 10 }}
+        >
+          <rect x="20" y="55" width="48" height="12" rx="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.12" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.3" />
+          <circle cx="26" cy="61" r="2" fill="#60A5FA" fillOpacity="0.5" />
+          <text x="32" y="63" fontSize="3" fill="hsl(174, 78%, 41%)" fillOpacity="0.6" fontFamily="monospace">New record high</text>
         </motion.g>
 
         {/* Status bar */}

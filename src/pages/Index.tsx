@@ -155,7 +155,7 @@ const Index = () => {
               </span>
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mb-6 sm:mb-8 leading-relaxed">{t.heroDesc}</p>
-            <div className="flex flex-col items-center lg:items-start mb-8 sm:mb-12">
+            <div className="flex flex-col items-center lg:items-start mb-6 sm:mb-8">
               <div className="flex flex-col sm:flex-row items-stretch sm:items-start justify-center lg:justify-start gap-3 w-full sm:w-auto">
                 <GlowCTA to="/book">{t.cta}</GlowCTA>
                 <div className="flex flex-col items-center">
@@ -220,8 +220,8 @@ const Index = () => {
             <Suspense fallback={<SectionFallback />}><LiveAutomationPreview embedded /></Suspense>
           </div>
 
-          {/* Service cards — aligned under hero text/CTAs */}
-          <div className="mt-8 sm:mt-12 lg:w-1/2">
+          {/* Service cards — directly under CTAs */}
+          <div className="mt-4 sm:mt-6 lg:w-1/2">
             <StatisticsBlock />
           </div>
         </div>

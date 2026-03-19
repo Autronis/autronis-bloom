@@ -73,10 +73,10 @@ const ProblemSolutionSection = () => {
   const [solutionHovered, setSolutionHovered] = useState<number | null>(null);
 
   return (
-    <section className="py-10 sm:py-24 border-t border-border relative overflow-hidden">
+    <section className="py-8 sm:py-16 border-t border-border relative overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <div className="mb-12 sm:mb-24">
-          <ScrollReveal className="text-center max-w-2xl mx-auto mb-6 sm:mb-10">
+        <div className="mb-4 sm:mb-8">
+          <ScrollReveal className="text-center max-w-2xl mx-auto mb-4 sm:mb-6">
             <ScrollRevealItem>
               <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">{tx.problemLabel}</p>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">{tx.problemTitle1}<StrikeThroughText text={tx.strikeText} />.</h2>
@@ -100,34 +100,33 @@ const ProblemSolutionSection = () => {
           </ScrollReveal>
         </div>
 
-        {/* Animated transformation arrow */}
-        <div className="flex justify-center my-8 sm:my-12">
+        {/* Compact transformation — arrow + solution in one tight block */}
+        <div className="flex justify-center my-4 sm:my-6">
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="flex flex-col items-center gap-2"
+            className="w-8 h-8 rounded-full border border-primary/30 flex items-center justify-center bg-primary/5"
           >
-            <motion.div
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="w-10 h-10 rounded-full border border-primary/30 flex items-center justify-center bg-primary/5"
-            >
-              <ArrowDown size={18} className="text-primary" />
+            <motion.div animate={{ y: [0, 3, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
+              <ArrowDown size={14} className="text-primary" />
             </motion.div>
-            <div className="w-[1px] h-6 bg-gradient-to-b from-primary/30 to-transparent" />
           </motion.div>
         </div>
 
         <div>
-          <ScrollReveal className="text-center max-w-2xl mx-auto mb-6 sm:mb-10">
-            <ScrollRevealItem>
-              <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">{tx.solutionLabel}</p>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">{tx.solutionTitle}</h2>
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{tx.solutionDesc}</p>
-            </ScrollRevealItem>
-          </ScrollReveal>
-          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-8 sm:mb-12 auto-rows-fr">
+          <motion.div
+            className="text-center max-w-2xl mx-auto mb-4 sm:mb-8"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <p className="text-xs font-semibold text-primary mb-2 tracking-widest uppercase">{tx.solutionLabel}</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-3">{tx.solutionTitle}</h2>
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{tx.solutionDesc}</p>
+          </motion.div>
+          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 auto-rows-fr">
             {tx.solutions.map((s, i) => { const SIcon = solutionIcons[i]; return (
               <ScrollRevealItem key={s.title} className="h-full">
                 <GlowCard className="rounded-xl border border-border bg-card p-4 sm:p-6 h-full relative overflow-hidden" isAnyHovered={solutionHovered !== null} isHovered={solutionHovered === i} onHover={() => setSolutionHovered(i)} onLeave={() => setSolutionHovered(null)}>

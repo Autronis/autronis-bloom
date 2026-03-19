@@ -87,7 +87,7 @@ export const ProcessAutomationVisual = () => {
 
   return (
     <div className="relative w-full h-full min-h-[260px] flex items-center justify-center p-2">
-      <svg viewBox="0 0 200 150" className="w-full h-full">
+      <svg viewBox="0 0 200 150" className="w-full h-full" style={{ overflow: "hidden" }}>
         {/* Gear A — clockwise */}
         <g transform={`translate(${cxA},${cyA})`}>
           <motion.g
@@ -159,6 +159,7 @@ export const ProcessAutomationVisual = () => {
         {[0, 1, 2].map((i) => (
           <motion.g
             key={`star-${i}`}
+            initial={{ x: -20, opacity: 0 }}
             animate={{
               x: [-20, 210],
               opacity: [0, 0.8, 0],
@@ -186,6 +187,7 @@ export const ProcessAutomationVisual = () => {
           { label: "CONTRACT", icon: "§", color: "#F472B6" },
         ].map((doc, i) => (
           <motion.g key={`doc-${i}`}
+            initial={{ x: -30 }}
             animate={{ x: [-30, 200] }}
             transition={{ duration: 8, delay: i * 1.6, repeat: Infinity, ease: "linear" }}
           >

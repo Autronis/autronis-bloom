@@ -145,12 +145,12 @@ const BeforeAfterChart = ({ data, lang }: { data: { label: string; before: numbe
             <div className="space-y-1.5">
               <div className="flex items-center gap-2.5">
                 <span className="text-[10px] font-semibold text-muted-foreground/70 w-10 shrink-0 uppercase tracking-wide">{lang === "nl" ? "Voor" : "Before"}</span>
-                <div className="flex-1 h-7 bg-red-500/[0.06] rounded-md overflow-hidden border border-red-500/10">
+                <div className="flex-1 h-7 bg-rose-500/[0.04] rounded-md overflow-hidden border border-rose-400/8">
                   <div
-                    className="h-full bg-gradient-to-r from-red-500/30 to-red-500/15 rounded-md flex items-center px-2.5 transition-all duration-1000 ease-out"
+                    className="h-full bg-gradient-to-r from-rose-400/20 to-rose-400/8 rounded-md flex items-center px-2.5 transition-all duration-1000 ease-out"
                     style={{ width: inView ? `${Math.max(beforePct, 12)}%` : "0%" }}
                   >
-                    <span className="text-[11px] font-bold font-mono text-red-400/90">{item.before}{item.unit}</span>
+                    <span className="text-[11px] font-bold font-mono text-rose-300/80">{item.before}{item.unit}</span>
                   </div>
                 </div>
               </div>

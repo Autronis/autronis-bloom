@@ -18,6 +18,7 @@ import {
   ScanSearch,
   Rocket,
   RefreshCw,
+  Check,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";

@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ShieldCheck, Brain, Layers, Cog, ScanSearch, Rocket, RefreshCw } from "lucide-react";
+import { ArrowRight, ShieldCheck, Brain, Layers, Cog, ScanSearch, Rocket, RefreshCw, Check } from "lucide-react";
 import { useState, useRef, useCallback, useEffect } from "react";
+import { motion } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import useCanHover from "@/hooks/use-can-hover";
 import { useLanguage } from "@/i18n/context";
@@ -112,18 +113,36 @@ const ProcessSection = () => {
 
         <div className="relative max-w-3xl mx-auto" ref={timelineRef}>
           <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-border hidden sm:block">
-            <div className="w-full bg-primary rounded-full" style={{ height: `${fillHeight}px`, transition: "height 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94)" }} />
+            <div className="w-full bg-primary rounded-full relative" style={{ height: `${fillHeight}px`, transition: "height 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94)", boxShadow: "0 0 8px hsl(174 78% 41% / 0.4)" }}>
+              {/* Glowing dot at the end of the fill */}
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-primary" style={{ boxShadow: "0 0 12px hsl(174 78% 41% / 0.6)", transition: "all 400ms" }} />
+            </div>
           </div>
           <div className="space-y-4 sm:space-y-8">
             {t.phases.map((phase, i) => (
-              <div key={phase.step} ref={(el) => (cardRefs.current[i] = el)} className="flex items-start gap-3 sm:gap-6" style={{ scrollMarginTop: "100px" }}>
+              <motion.div
+                key={phase.step}
+                ref={(el) => (cardRefs.current[i] = el)}
+                className="flex items-start gap-3 sm:gap-6"
+                style={{ scrollMarginTop: "100px" }}
+                initial={{ opacity: 0, x: 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: i * 0.08, ease: "easeOut" }}
+              >
                 <div className="hidden sm:flex flex-col items-center shrink-0 relative z-10">
-                  <div className="w-10 h-10 rounded-full border-2 flex items-center justify-center text-xs font-bold" style={{ borderColor: activeIndex >= i ? "hsl(var(--primary))" : "hsl(var(--border))", backgroundColor: activeIndex >= i ? "hsl(var(--primary))" : "hsl(var(--card))", color: activeIndex >= i ? "hsl(var(--primary-foreground))" : "hsl(var(--muted-foreground))", boxShadow: activeIndex >= i ? "0 0 16px hsl(174 78% 41% / 0.45)" : "none", transition: "all 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)" }}>{phase.step}</div>
+                  {/* Pulse ring on active step */}
+                  {activeIndex === i && (
+                    <div className="absolute w-10 h-10 rounded-full animate-ping" style={{ backgroundColor: "hsl(174 78% 41% / 0.15)" }} />
+                  )}
+                  <div className="w-10 h-10 rounded-full border-2 flex items-center justify-center text-xs font-bold relative" style={{ borderColor: activeIndex >= i ? "hsl(var(--primary))" : "hsl(var(--border))", backgroundColor: activeIndex >= i ? "hsl(var(--primary))" : "hsl(var(--card))", color: activeIndex >= i ? "hsl(var(--primary-foreground))" : "hsl(var(--muted-foreground))", boxShadow: activeIndex >= i ? "0 0 16px hsl(174 78% 41% / 0.45)" : "none", transition: "all 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)" }}>
+                    {activeIndex > i ? <Check size={14} strokeWidth={3} /> : phase.step}
+                  </div>
                 </div>
                 <div className="flex-1">
                   <TimelineCard phase={phase} index={i} isActive={activeIndex === i} hoveredIndex={hoveredIndex} onHover={() => setHoveredIndex(i)} onLeave={() => setHoveredIndex(null)} canHover={canHover} stepLabel={t.stepLabel} />
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

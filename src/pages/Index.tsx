@@ -131,9 +131,7 @@ const Index = () => {
       <section className="hero-section relative min-h-[75vh] sm:min-h-screen flex flex-col items-center justify-center pt-16 sm:pt-0">
         <HeroBackground />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 lg:gap-10 items-center">
-            {/* Left: Hero text — centered */}
-            <div className="text-center lg:text-center max-w-2xl mx-auto lg:mx-0 lg:max-w-none">
+          <div className="max-w-3xl mx-auto text-center">
             <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase">{t.tagline}</p>
             <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.35] tracking-tight mb-4 sm:mb-6">
               {t.heroTitle1}
@@ -207,17 +205,11 @@ const Index = () => {
             </Dialog>
 
             <StatisticsBlock />
-            </div>
-
-            {/* Right: Live Preview */}
-            <div className="hidden lg:block w-[340px] shrink-0">
-              <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase text-center">Live Preview</p>
-              <Suspense fallback={<SectionFallback />}><LiveAutomationPreview embedded /></Suspense>
-            </div>
           </div>
 
-          {/* Mobile: Live Preview below */}
-          <div className="lg:hidden mt-8">
+          {/* Live Preview — below hero, centered */}
+          <div className="max-w-md mx-auto mt-8 sm:mt-10">
+            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase text-center">Live Preview</p>
             <Suspense fallback={<SectionFallback />}><LiveAutomationPreview embedded /></Suspense>
           </div>
 

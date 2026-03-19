@@ -131,7 +131,9 @@ const Index = () => {
       <section className="hero-section relative min-h-[75vh] sm:min-h-screen flex flex-col items-center justify-center pt-16 sm:pt-0">
         <HeroBackground />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Left: Hero text */}
+            <div className="text-center lg:text-left">
             <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase">{t.tagline}</p>
             <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.35] tracking-tight mb-4 sm:mb-6">
               {t.heroTitle1}
@@ -140,7 +142,7 @@ const Index = () => {
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={rotatingWords[wordIndex]}
-                    className="absolute left-0 right-0 bottom-0 text-center text-primary"
+                    className="absolute left-0 right-0 bottom-0 lg:text-left text-center text-primary"
                     initial={{ opacity: 0, y: 14 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -14 }}
@@ -152,9 +154,9 @@ const Index = () => {
                 <span className="invisible">{lang === "nl" ? "schaalbaarheid." : "scalability."}</span>
               </span>
             </h1>
-            <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8 leading-relaxed">{t.heroDesc}</p>
-            <div className="flex flex-col items-center mb-8 sm:mb-12">
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-start justify-center gap-3 w-full sm:w-auto">
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mb-6 sm:mb-8 leading-relaxed">{t.heroDesc}</p>
+            <div className="flex flex-col items-center lg:items-start mb-8 sm:mb-12">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-start justify-center lg:justify-start gap-3 w-full sm:w-auto">
                 <GlowCTA to="/book">{t.cta}</GlowCTA>
                 <div className="flex flex-col items-center">
                   <Button size="lg" variant="outline" className="w-full sm:w-auto" onClick={() => setVideoOpen(true)}>
@@ -205,12 +207,18 @@ const Index = () => {
             </Dialog>
 
             <StatisticsBlock />
-          </div>
-        </div>
+            </div>
 
-        {/* Live Preview integrated into hero */}
-        <div className="container mx-auto px-4 lg:px-8 relative z-10 mt-8 sm:mt-12 pb-8 sm:pb-12">
-          <Suspense fallback={<SectionFallback />}><LiveAutomationPreview embedded /></Suspense>
+            {/* Right: Live Preview */}
+            <div className="hidden lg:block">
+              <Suspense fallback={<SectionFallback />}><LiveAutomationPreview embedded /></Suspense>
+            </div>
+          </div>
+
+          {/* Mobile: Live Preview below */}
+          <div className="lg:hidden mt-8">
+            <Suspense fallback={<SectionFallback />}><LiveAutomationPreview embedded /></Suspense>
+          </div>
         </div>
       </section>
 

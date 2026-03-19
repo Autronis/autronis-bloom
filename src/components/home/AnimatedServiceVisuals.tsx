@@ -391,20 +391,39 @@ export const DataReportingVisual = () => {
 
         <line x1="18" y1="119" x2="185" y2="119" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.2" />
 
+        {/* Area fill under trend */}
+        <motion.path d="M 24 105 Q 45 85, 65 90 T 105 70 T 140 75 T 165 55 L 180 48 L 180 119 L 24 119 Z"
+          fill="url(#areaGrad)"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          transition={{ duration: 2, delay: 2 }}
+        />
+        <defs>
+          <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="hsl(174, 78%, 41%)" stopOpacity="0.12" />
+            <stop offset="100%" stopColor="hsl(174, 78%, 41%)" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+
         {/* Trend line */}
         <motion.path d="M 24 105 Q 45 85, 65 90 T 105 70 T 140 75 T 165 55 L 180 48"
-          fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="1" strokeOpacity="0.6"
+          fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="1.2" strokeOpacity="0.7"
           strokeLinecap="round"
           initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
           transition={{ duration: 3, delay: 1.5 }}
         />
-        <motion.circle cx="180" cy="48" r="2.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.5"
+
+        {/* End point with pulse */}
+        <motion.circle cx="180" cy="48" r="2.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.6"
           initial={{ scale: 0 }} animate={{ scale: [0, 1.3, 1] }}
           transition={{ delay: 4.5, duration: 0.5 }}
         />
-        <motion.circle cx="180" cy="48" r="2.5" fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.4"
-          animate={{ r: [2.5, 7], opacity: [0.4, 0] }}
-          transition={{ delay: 5, duration: 2.5, repeat: Infinity }}
+        <motion.circle cx="180" cy="48" r="2.5" fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.5"
+          animate={{ r: [2.5, 8], opacity: [0.5, 0] }}
+          transition={{ delay: 5, duration: 2, repeat: Infinity }}
+        />
+        <motion.circle cx="180" cy="48" r="2.5" fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3"
+          animate={{ r: [2.5, 12], opacity: [0.3, 0] }}
+          transition={{ delay: 5.3, duration: 2.5, repeat: Infinity }}
         />
 
         {/* Data point highlights on trend */}

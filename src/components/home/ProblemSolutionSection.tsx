@@ -87,7 +87,6 @@ const ProblemSolutionSection = () => {
             {tx.problems.map((p, i) => { const PIcon = problemIcons[i]; return (
               <ScrollRevealItem key={p.title} className="h-full">
                 <GlowCard className="rounded-xl border border-border bg-card p-4 sm:p-6 h-full relative overflow-hidden hover:border-red-500/40 hover:shadow-[0_0_20px_rgba(239,68,68,0.1)]" isAnyHovered={problemHovered !== null} isHovered={problemHovered === i} onHover={() => setProblemHovered(i)} onLeave={() => setProblemHovered(null)} glowColor="rgba(239, 68, 68, 0.12)">
-                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-red-500/60 via-orange-500/40 to-transparent" />
                   <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
                     <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-destructive/10 flex items-center justify-center text-destructive shrink-0"><PIcon size={16} /></div>
                     <h3 className="font-semibold text-sm sm:text-base">{p.title}</h3>
@@ -132,7 +131,6 @@ const ProblemSolutionSection = () => {
             {tx.solutions.map((s, i) => { const SIcon = solutionIcons[i]; return (
               <ScrollRevealItem key={s.title} className="h-full">
                 <GlowCard className="rounded-xl border border-border bg-card p-4 sm:p-6 h-full relative overflow-hidden" isAnyHovered={solutionHovered !== null} isHovered={solutionHovered === i} onHover={() => setSolutionHovered(i)} onLeave={() => setSolutionHovered(null)}>
-                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary/60 via-emerald-500/40 to-transparent" />
                   <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
                     <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0"><SIcon size={16} /></div>
                     <h3 className="font-semibold text-sm sm:text-base">{s.title}</h3>

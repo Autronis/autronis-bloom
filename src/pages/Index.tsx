@@ -207,10 +207,14 @@ const Index = () => {
             <StatisticsBlock />
           </div>
         </div>
+
+        {/* Live Preview integrated into hero */}
+        <div className="container mx-auto px-4 lg:px-8 relative z-10 mt-8 sm:mt-12 pb-8 sm:pb-12">
+          <Suspense fallback={<SectionFallback />}><LiveAutomationPreview embedded /></Suspense>
+        </div>
       </section>
 
       <Suspense fallback={<SectionFallback />}><ProblemSolutionSection /></Suspense>
-      <Suspense fallback={<SectionFallback />}><LiveAutomationPreview /></Suspense>
       <Suspense fallback={<SectionFallback />}><ServicePillars /></Suspense>
       <Suspense fallback={<SectionFallback />}><ProcessSection /></Suspense>
       <Suspense fallback={<SectionFallback />}><WhyAutronisSection /></Suspense>

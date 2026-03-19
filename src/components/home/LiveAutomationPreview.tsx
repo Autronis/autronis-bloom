@@ -84,7 +84,7 @@ const steps = [
   },
 ];
 
-const LiveAutomationPreview = () => {
+const LiveAutomationPreview = ({ embedded = false }: { embedded?: boolean }) => {
   const lang = useLanguage();
   const t = text[lang];
   const [activeStep, setActiveStep] = useState(-1);
@@ -112,9 +112,9 @@ const LiveAutomationPreview = () => {
     return () => clearTimeout(timeout);
   }, [isVisible]);
 
-  return (
-    <section className="py-12 sm:py-20 border-t border-border">
-      <div className="container mx-auto px-4 lg:px-8">
+  const content = (
+    <>
+      {!embedded && (
         <ScrollReveal className="text-center mb-10">
           <ScrollRevealItem>
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">{t.label}</p>
@@ -122,6 +122,7 @@ const LiveAutomationPreview = () => {
             <p className="text-sm text-muted-foreground max-w-xl mx-auto">{t.desc}</p>
           </ScrollRevealItem>
         </ScrollReveal>
+      )}
 
         <motion.div
           className="max-w-xl mx-auto"
@@ -250,6 +251,15 @@ const LiveAutomationPreview = () => {
             </div>
           </div>
         </motion.div>
+    </>
+  );
+
+  if (embedded) return content;
+
+  return (
+    <section className="py-12 sm:py-20 border-t border-border">
+      <div className="container mx-auto px-4 lg:px-8">
+        {content}
       </div>
     </section>
   );

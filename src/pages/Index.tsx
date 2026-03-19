@@ -206,6 +206,7 @@ const Index = () => {
               </DialogContent>
             </Dialog>
 
+            <StatisticsBlock />
             </div>
 
             {/* Right: Live Preview */}
@@ -222,10 +223,6 @@ const Index = () => {
             <Suspense fallback={<SectionFallback />}><LiveAutomationPreview embedded /></Suspense>
           </div>
 
-          {/* Service cards — directly under CTAs */}
-          <div className="lg:w-1/2">
-            <StatisticsBlock />
-          </div>
         </div>
       </section>
 

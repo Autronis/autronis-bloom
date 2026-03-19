@@ -146,7 +146,7 @@ const GlowCTA = ({ to, children, size = "lg" }: GlowCTAProps) => {
           transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2 }}
         />
 
-        <span className="relative z-10">{children}</span>
+        <span className="relative z-10 whitespace-nowrap">{children}</span>
         <motion.span
           className="relative z-10"
           animate={isHovered ? { x: [0, 4, 0] } : { x: 0 }}

@@ -211,7 +211,10 @@ const Index = () => {
 
             {/* Right: Live Preview */}
             <div className="hidden lg:block">
-              <Suspense fallback={<SectionFallback />}><LiveAutomationPreview embedded /></Suspense>
+              <p className="text-[10px] font-semibold text-primary mb-3 tracking-widest uppercase text-center">{lang === "nl" ? "Live Preview" : "Live Preview"}</p>
+              <div className="scale-[0.85] origin-top">
+                <Suspense fallback={<SectionFallback />}><LiveAutomationPreview embedded /></Suspense>
+              </div>
             </div>
           </div>
 

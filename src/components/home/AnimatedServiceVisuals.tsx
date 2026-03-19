@@ -204,8 +204,12 @@ export const ProcessAutomationVisual = () => {
             <line x1="9" y1={beltY - 17.5} x2="23" y2={beltY - 17.5} stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.15" />
             <line x1="9" y1={beltY - 15.5} x2="20" y2={beltY - 15.5} stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.1" />
             <line x1="9" y1={beltY - 13.5} x2="22" y2={beltY - 13.5} stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.1" />
+            {/* Icon centered */}
+            <text x="16" y={beltY - 10} textAnchor="middle" fontSize="5.5" fontWeight="700" fill={doc.color} fillOpacity="0.25">
+              {doc.icon}
+            </text>
             {/* Type label at bottom */}
-            <text x="16" y={beltY - 6} textAnchor="middle" fontSize="2.8" fontWeight="700" fill={doc.color} fillOpacity="0.6" fontFamily="monospace" letterSpacing="0.3">
+            <text x="16" y={beltY - 4} textAnchor="middle" fontSize="2.8" fontWeight="700" fill={doc.color} fillOpacity="0.6" fontFamily="monospace" letterSpacing="0.3">
               {doc.label}
             </text>
             {/* Checkmark — appears at right side of document at 50% of travel */}

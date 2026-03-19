@@ -117,18 +117,23 @@ const ProblemSolutionSection = () => {
         <div>
           <motion.div
             className="text-center max-w-2xl mx-auto mb-4 sm:mb-8"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            initial={{ opacity: 0, y: 40, scale: 0.95, filter: "blur(8px)" }}
+            whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             <p className="text-xs font-semibold text-primary mb-2 tracking-widest uppercase">{tx.solutionLabel}</p>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-3">{tx.solutionTitle}</h2>
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{tx.solutionDesc}</p>
           </motion.div>
-          <ScrollReveal className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 auto-rows-fr">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 auto-rows-fr">
             {tx.solutions.map((s, i) => { const SIcon = solutionIcons[i]; return (
-              <ScrollRevealItem key={s.title} className="h-full">
+              <motion.div key={s.title} className="h-full"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: i * 0.15, ease: "easeOut" }}
+              >
                 <GlowCard className="rounded-xl border border-border bg-card p-4 sm:p-6 h-full relative overflow-hidden" isAnyHovered={solutionHovered !== null} isHovered={solutionHovered === i} onHover={() => setSolutionHovered(i)} onLeave={() => setSolutionHovered(null)}>
                   <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
                     <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0"><SIcon size={16} /></div>
@@ -138,9 +143,9 @@ const ProblemSolutionSection = () => {
                   <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{s.description}</p>
                   <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
                 </GlowCard>
-              </ScrollRevealItem>
+              </motion.div>
             ); })}
-          </ScrollReveal>
+          </div>
         </div>
       </div>
     </section>

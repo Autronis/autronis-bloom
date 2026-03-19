@@ -191,6 +191,16 @@ const proofStrip = [
   "Transparent ROI indication",
 ];
 
+// Per-phase icon animations
+const phaseIconAnims: Record<number, { animate: Record<string, number[]>; transition: Record<string, unknown> }> = {
+  0: { animate: { scale: [1, 1.2, 1], opacity: [0.8, 1, 0.8] }, transition: { duration: 2, repeat: Infinity, ease: "easeInOut" } },
+  1: { animate: { y: [0, -3, 0, -1.5, 0] }, transition: { duration: 1.8, repeat: Infinity, repeatDelay: 2 } },
+  2: { animate: { rotate: [0, 360] }, transition: { duration: 4, repeat: Infinity, ease: "linear" } },
+  3: { animate: { scale: [1, 1.15, 1], opacity: [0.7, 1, 0.7] }, transition: { duration: 1.5, repeat: Infinity, ease: "easeInOut" } },
+  4: { animate: { y: [0, -2, 2, -2, 0, -6, -12, -6, 0], rotate: [0, -3, 3, -2, 0, 0, 0, 0, 0], scale: [1, 1, 1, 1, 1, 1.15, 1.25, 1.15, 1] }, transition: { duration: 2.5, repeat: Infinity, repeatDelay: 3, ease: "easeInOut" } },
+  5: { animate: { rotate: [0, 360] }, transition: { duration: 3, repeat: Infinity, ease: "linear" } },
+};
+
 /* ── Phase card ── */
 const PhaseCard = ({
   phase,
@@ -204,6 +214,7 @@ const PhaseCard = ({
   const isActive = index <= activeIndex;
   const isCurrent = index === activeIndex;
   const isPast = index < activeIndex;
+  const iconAnim = phaseIconAnims[index];
 
   return (
     <div
@@ -285,7 +296,7 @@ const PhaseCard = ({
           className="absolute inset-0 rounded-xl pointer-events-none transform-gpu"
           style={{
             background: isCurrent
-              ? "radial-gradient(ellipse at center, hsl(174 78% 41% / 0.06), transparent 70%)"
+              ? "radial-gradient(ellipse at center, hsl(174 78% 41% / 0.08), transparent 70%)"
               : "none",
             opacity: isCurrent ? 1 : 0,
             transform: "scale(1.15)",
@@ -294,7 +305,7 @@ const PhaseCard = ({
         />
 
         <motion.div
-          className="relative rounded-xl border p-5 sm:p-6 cursor-default transform-gpu"
+          className="relative rounded-xl border overflow-hidden p-5 sm:p-6 cursor-default transform-gpu"
           initial={{ opacity: 0, x: 32, scale: 1 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.3 }}
@@ -304,21 +315,45 @@ const PhaseCard = ({
           }}
           transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
           style={{
-            backgroundColor: isCurrent ? "hsl(var(--card))" : "hsl(var(--card) / 0.7)",
+            background: isCurrent
+              ? "linear-gradient(135deg, hsl(174, 78%, 41%, 0.06) 0%, hsl(var(--card)) 60%)"
+              : isPast ? "hsl(var(--card) / 0.7)" : "hsl(var(--card))",
             borderColor: isCurrent
-              ? "hsl(174, 78%, 41%, 0.3)"
+              ? "hsl(174, 78%, 41%, 0.4)"
               : isPast
               ? "hsl(174, 78%, 41%, 0.1)"
               : "hsl(174, 78%, 41%, 0.15)",
             boxShadow: isCurrent
-              ? "0 4px 20px hsl(174 78% 41% / 0.06), 0 1px 6px hsl(0 0% 0% / 0.04)"
+              ? "0 4px 24px hsl(174 78% 41% / 0.1), 0 0 40px hsl(174 78% 41% / 0.04)"
               : "none",
-            transition: "background-color 500ms, border-color 500ms, box-shadow 500ms",
+            transition: "background 500ms, border-color 500ms, box-shadow 500ms",
           }}
           whileHover={{
-            boxShadow: "0 6px 24px hsl(174 78% 41% / 0.08), 0 2px 8px hsl(0 0% 0% / 0.05)",
+            boxShadow: "0 6px 28px hsl(174 78% 41% / 0.1), 0 2px 8px hsl(0 0% 0% / 0.05)",
           }}
         >
+          {/* Shimmer on current */}
+          {isCurrent && (
+            <motion.div
+              className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent z-20"
+              animate={{ x: ["-100%", "100%"] }}
+              transition={{ duration: 2, repeat: Infinity, repeatDelay: 3, ease: "easeInOut" }}
+            />
+          )}
+          {/* Rocket particles for step 05 */}
+          {index === 4 && isCurrent && (
+            <>
+              {[0, 1, 2, 3, 4].map((p) => (
+                <motion.div
+                  key={p}
+                  className="absolute rounded-full bg-primary/40 z-0"
+                  style={{ left: 24 + p * 5, top: 32, width: p % 2 === 0 ? 3 : 2, height: p % 2 === 0 ? 3 : 2 }}
+                  animate={{ y: [0, 16, 32], x: [(p - 2) * 2, (p - 2) * 4, (p - 2) * 6], opacity: [0.7, 0.3, 0], scale: [1, 0.5, 0] }}
+                  transition={{ duration: 1, delay: p * 0.15, repeat: Infinity, repeatDelay: 4, ease: "easeOut" }}
+                />
+              ))}
+            </>
+          )}
           <div className="relative z-10">
             {/* Mobile phase label */}
             <p
@@ -332,11 +367,29 @@ const PhaseCard = ({
             </p>
 
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
-              <h3 className="text-base sm:text-lg font-bold flex items-center gap-2">
-                <phase.icon size={18} className="text-primary shrink-0" />
+              <h3 className="text-base sm:text-lg font-bold flex items-center gap-2.5">
+                <motion.div
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center text-primary shrink-0"
+                  style={{
+                    backgroundColor: isCurrent ? "hsl(174, 78%, 41%, 0.2)" : "hsl(174, 78%, 41%, 0.1)",
+                    boxShadow: isCurrent ? "0 0 16px hsl(174, 78%, 41%, 0.25)" : "none",
+                    transition: "background-color 400ms, box-shadow 400ms",
+                  }}
+                  animate={isCurrent ? iconAnim.animate : {}}
+                  transition={isCurrent ? iconAnim.transition : {}}
+                >
+                  <phase.icon size={18} strokeWidth={2.5} />
+                </motion.div>
                 {phase.title}
               </h3>
-              <span className="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full shrink-0 self-start">
+              <span
+                className="text-xs font-bold px-3.5 py-1.5 rounded-full shrink-0 self-start transition-all duration-300"
+                style={{
+                  color: isCurrent ? "hsl(var(--primary-foreground))" : "hsl(174, 78%, 41%)",
+                  backgroundColor: isCurrent ? "hsl(174, 78%, 41%)" : "hsl(174, 78%, 41%, 0.1)",
+                  boxShadow: isCurrent ? "0 0 12px hsl(174, 78%, 41%, 0.3)" : "none",
+                }}
+              >
                 {phase.timing}
               </span>
             </div>
@@ -346,14 +399,14 @@ const PhaseCard = ({
             </p>
 
             <div>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-2 font-semibold">
+              <p className="text-[10px] text-primary/60 uppercase tracking-wider mb-2.5 font-bold">
                 Deliverables
               </p>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                 {phase.deliverables.map((d, dIdx) => (
                   <motion.li
                     key={d}
-                    className="text-sm text-foreground/80 flex items-start gap-2"
+                    className="text-sm text-foreground/80 flex items-start gap-2.5"
                     initial={{ opacity: 0, x: 12 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -363,8 +416,8 @@ const PhaseCard = ({
                       ease: [0.23, 1, 0.32, 1],
                     }}
                   >
-                    <span className="text-primary mt-0.5 shrink-0">▸</span>
-                    {d}
+                    <span className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5"><Check size={10} className="text-primary" /></span>
+                    <span className="font-medium">{d}</span>
                   </motion.li>
                 ))}
               </ul>

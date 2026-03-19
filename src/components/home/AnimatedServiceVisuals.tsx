@@ -362,22 +362,22 @@ export const DataReportingVisual = () => {
         <rect x="10" y="8" width="180" height="144" rx="4" fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.5" strokeOpacity="0.25" />
         <rect x="10" y="8" width="180" height="14" rx="4" fill="hsl(174, 78%, 41%)" fillOpacity="0.04" />
         <line x1="10" y1="22" x2="190" y2="22" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.2" />
-        <circle cx="19" cy="15" r="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.2" />
-        <circle cx="26" cy="15" r="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.13" />
-        <circle cx="33" cy="15" r="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.13" />
+        <circle cx="19" cy="15" r="2" fill="#FF5F57" fillOpacity="0.7" />
+        <circle cx="26" cy="15" r="2" fill="#FEBC2E" fillOpacity="0.7" />
+        <circle cx="33" cy="15" r="2" fill="#28C840" fillOpacity="0.7" />
 
         {/* KPI row */}
         {[0, 1, 2, 3].map((i) => (
           <g key={`kpi-${i}`}>
             <rect x={18 + i * 44} y="27" width="38" height="18" rx="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.04" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.15" />
             <motion.text x={37 + i * 44} y="38" textAnchor="middle" fontSize="6" fontWeight="700"
-              fill="hsl(174, 78%, 41%)" fontFamily="monospace"
-              animate={{ fillOpacity: [0.3, 0.7, 0.3] }}
+              fill={["hsl(174, 78%, 41%)", "#60A5FA", "hsl(174, 78%, 41%)", "#4ADE80"][i]} fontFamily="monospace"
+              animate={{ fillOpacity: [0.4, 0.8, 0.4] }}
               transition={{ duration: 3, delay: i * 0.5, repeat: Infinity }}
             >
               {["€24.8K", "94.1%", "1,247", "+18%"][i]}
             </motion.text>
-            <text x={37 + i * 44} y="43" textAnchor="middle" fontSize="2.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.3" fontFamily="system-ui">
+            <text x={37 + i * 44} y="43" textAnchor="middle" fontSize="2.5" fill={["hsl(174, 78%, 41%)", "#60A5FA", "hsl(174, 78%, 41%)", "#4ADE80"][i]} fillOpacity="0.35" fontFamily="system-ui">
               {["Revenue", "Uptime", "Users", "Growth"][i]}
             </text>
           </g>

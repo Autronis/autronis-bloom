@@ -155,7 +155,7 @@ const Index = () => {
               </span>
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mb-6 sm:mb-8 leading-relaxed">{t.heroDesc}</p>
-            <div className="flex flex-col items-center lg:items-start mb-6 sm:mb-8">
+            <div className="flex flex-col items-center lg:items-start mb-3">
               <div className="flex flex-col sm:flex-row items-stretch sm:items-start justify-center lg:justify-start gap-3 w-full sm:w-auto">
                 <GlowCTA to="/book">{t.cta}</GlowCTA>
                 <div className="flex flex-col items-center">

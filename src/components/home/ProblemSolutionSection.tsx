@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Layers, Users, BarChart3, Cog, Link2, PieChart } from "lucide-react";
+import { ArrowRight, ArrowDown, Layers, Users, BarChart3, Cog, Link2, PieChart } from "lucide-react";
 import { useRef, useState } from "react";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import GlowCard from "@/components/GlowCard";
 import { useLanguage } from "@/i18n/context";
@@ -93,12 +93,33 @@ const ProblemSolutionSection = () => {
                     <h3 className="font-semibold text-sm sm:text-base">{p.title}</h3>
                   </div>
                   <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{p.description}</p>
-                  <span className="absolute top-3 right-3 text-[10px] font-mono text-destructive/20">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="absolute top-3 right-3 text-[10px] font-mono text-destructive/30">{String(i + 1).padStart(2, "0")}</span>
+                  <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
                 </GlowCard>
               </ScrollRevealItem>
             ); })}
           </ScrollReveal>
         </div>
+
+        {/* Animated transformation arrow */}
+        <div className="flex justify-center my-8 sm:my-12">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex flex-col items-center gap-2"
+          >
+            <motion.div
+              animate={{ y: [0, 6, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="w-10 h-10 rounded-full border border-primary/30 flex items-center justify-center bg-primary/5"
+            >
+              <ArrowDown size={18} className="text-primary" />
+            </motion.div>
+            <div className="w-[1px] h-6 bg-gradient-to-b from-primary/30 to-transparent" />
+          </motion.div>
+        </div>
+
         <div>
           <ScrollReveal className="text-center max-w-2xl mx-auto mb-6 sm:mb-10">
             <ScrollRevealItem>
@@ -116,8 +137,9 @@ const ProblemSolutionSection = () => {
                     <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0"><SIcon size={16} /></div>
                     <h3 className="font-semibold text-sm sm:text-base">{s.title}</h3>
                   </div>
-                  <span className="absolute top-3 right-3 text-[10px] font-mono text-primary/20">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="absolute top-3 right-3 text-[10px] font-mono text-primary/30">{String(i + 1).padStart(2, "0")}</span>
                   <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{s.description}</p>
+                  <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
                 </GlowCard>
               </ScrollRevealItem>
             ); })}

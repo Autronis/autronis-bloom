@@ -131,7 +131,7 @@ const Index = () => {
       <section className="hero-section relative min-h-[75vh] sm:min-h-screen flex flex-col items-center justify-center pt-16 sm:pt-0">
         <HeroBackground />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
             {/* Left: Hero text */}
             <div className="text-center lg:text-left">
             <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase">{t.tagline}</p>
@@ -206,21 +206,23 @@ const Index = () => {
               </DialogContent>
             </Dialog>
 
-            <StatisticsBlock />
             </div>
 
             {/* Right: Live Preview */}
             <div className="hidden lg:block">
-              <p className="text-[10px] font-semibold text-primary mb-3 tracking-widest uppercase text-center">{lang === "nl" ? "Live Preview" : "Live Preview"}</p>
-              <div className="scale-[0.85] origin-top">
-                <Suspense fallback={<SectionFallback />}><LiveAutomationPreview embedded /></Suspense>
-              </div>
+              <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase">Live Preview</p>
+              <Suspense fallback={<SectionFallback />}><LiveAutomationPreview embedded /></Suspense>
             </div>
           </div>
 
           {/* Mobile: Live Preview below */}
           <div className="lg:hidden mt-8">
             <Suspense fallback={<SectionFallback />}><LiveAutomationPreview embedded /></Suspense>
+          </div>
+
+          {/* Service cards — full width below grid */}
+          <div className="mt-8 sm:mt-12">
+            <StatisticsBlock />
           </div>
         </div>
       </section>

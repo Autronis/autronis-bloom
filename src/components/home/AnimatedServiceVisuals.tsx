@@ -407,6 +407,21 @@ export const DataReportingVisual = () => {
           transition={{ delay: 5, duration: 2.5, repeat: Infinity }}
         />
 
+        {/* Data point highlights on trend */}
+        {[
+          { cx: 65, cy: 90 },
+          { cx: 105, cy: 70 },
+          { cx: 140, cy: 75 },
+          { cx: 165, cy: 55 },
+        ].map((pt, i) => (
+          <motion.circle key={`pt-${i}`} cx={pt.cx} cy={pt.cy} r="1.5"
+            fill="hsl(174, 78%, 41%)" fillOpacity="0.6"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 2 + i * 0.4, duration: 0.3 }}
+          />
+        ))}
+
         {/* Scanner */}
         <motion.rect width="1.5" rx="0.75" y="50" height="70"
           fill="hsl(174, 78%, 41%)" fillOpacity="0.08"
@@ -414,9 +429,20 @@ export const DataReportingVisual = () => {
           transition={{ duration: 6, repeat: Infinity, ease: "linear", repeatDelay: 4 }}
         />
 
+        {/* Mini notification popup */}
+        <motion.g
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: [0, 1, 1, 0], y: [5, 0, 0, -3] }}
+          transition={{ duration: 4, delay: 6, repeat: Infinity, repeatDelay: 8 }}
+        >
+          <rect x="130" y="55" width="52" height="12" rx="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.12" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.3" />
+          <circle cx="136" cy="61" r="2" fill="#4ADE80" fillOpacity="0.5" />
+          <text x="142" y="63" fontSize="3" fill="hsl(174, 78%, 41%)" fillOpacity="0.6" fontFamily="monospace">+12% vs last week</text>
+        </motion.g>
+
         {/* Status bar */}
         <line x1="10" y1="125" x2="190" y2="125" stroke="hsl(174, 78%, 41%)" strokeWidth="0.2" strokeOpacity="0.12" />
-        <motion.circle cx="20" cy="138" r="1.5" fill="hsl(174, 78%, 41%)" animate={{ fillOpacity: [0.2, 0.6, 0.2] }} transition={{ duration: 2, repeat: Infinity }} />
+        <motion.circle cx="20" cy="138" r="1.5" fill="#4ADE80" animate={{ fillOpacity: [0.3, 0.7, 0.3] }} transition={{ duration: 2, repeat: Infinity }} />
         <text x="27" y="139.5" fontSize="3.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.3" fontFamily="monospace">Live · Updated 2s ago</text>
       </svg>
     </div>

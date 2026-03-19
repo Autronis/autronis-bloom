@@ -63,33 +63,88 @@ const SecurityBlock = () => {
           </ScrollRevealItem>
         </ScrollReveal>
 
-        <div className="max-w-4xl mx-auto space-y-3 sm:space-y-4 relative">
+        <div className="max-w-4xl mx-auto relative">
+          {/* Vertical connector line between layers */}
+          <div className="absolute left-8 sm:left-10 top-0 bottom-0 w-[1px] bg-gradient-to-b from-primary/20 via-primary/10 to-transparent hidden sm:block" />
+
+          <div className="space-y-4 sm:space-y-6">
           {t.layers.map((layer, i) => {
             const Icon = layerIcons[i];
             const isHovered = canHover && hoveredIndex === i;
+            const layerColors = ["hsl(174, 78%, 41%)", "#60A5FA", "#A78BFA"];
             return (
-              <ScrollReveal key={layer.title}><ScrollRevealItem>
-                <div className="rounded-xl sm:rounded-2xl border bg-card overflow-hidden transition-all duration-200 ease-out" style={{ transform: isHovered ? "scale(1.015) translateY(-2px)" : "none", borderColor: isHovered ? "hsl(var(--primary) / 0.35)" : "hsl(var(--border))", boxShadow: isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "0 0 0 transparent" }} onMouseEnter={canHover ? () => setHoveredIndex(i) : undefined} onMouseLeave={canHover ? () => setHoveredIndex(null) : undefined}>
+              <motion.div
+                key={layer.title}
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.6, delay: i * 0.15, ease: "easeOut" }}
+              >
+                <div className="rounded-xl sm:rounded-2xl border bg-card overflow-hidden transition-all duration-200 ease-out relative" style={{ transform: isHovered ? "scale(1.01) translateY(-2px)" : "none", borderColor: isHovered ? `${layerColors[i]}50` : "hsl(var(--border))", boxShadow: isHovered ? `0 0 24px ${layerColors[i]}18` : "0 0 0 transparent" }} onMouseEnter={canHover ? () => setHoveredIndex(i) : undefined} onMouseLeave={canHover ? () => setHoveredIndex(null) : undefined}>
+                  {/* Colored top accent */}
+                  <div className="h-[2px]" style={{ background: `linear-gradient(to right, ${layerColors[i]}60, transparent)` }} />
                   <div className="p-4 sm:p-6 md:p-8">
                     <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
-                      <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center bg-primary/10 shrink-0"><Icon size={16} className="text-primary sm:w-[18px] sm:h-[18px]" /></div>
-                      <div className="flex items-baseline gap-2 sm:gap-2.5"><span className="text-sm sm:text-base font-bold tracking-widest uppercase text-primary">{layer.label}</span><h3 className="text-base sm:text-lg font-semibold text-foreground">{layer.title}</h3></div>
+                      <motion.div
+                        className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center shrink-0 relative"
+                        style={{ backgroundColor: `${layerColors[i]}15` }}
+                        whileInView={{ scale: [0.8, 1.1, 1] }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.15 + 0.3, duration: 0.4 }}
+                      >
+                        <Icon size={18} style={{ color: layerColors[i] }} />
+                        {/* Pulse ring */}
+                        {isHovered && (
+                          <motion.div
+                            className="absolute inset-0 rounded-lg"
+                            style={{ border: `1px solid ${layerColors[i]}` }}
+                            animate={{ scale: [1, 1.3], opacity: [0.4, 0] }}
+                            transition={{ duration: 1, repeat: Infinity }}
+                          />
+                        )}
+                      </motion.div>
+                      <div className="flex items-baseline gap-2 sm:gap-2.5">
+                        <span className="text-sm sm:text-base font-bold tracking-widest uppercase" style={{ color: layerColors[i] }}>{layer.label}</span>
+                        <h3 className="text-base sm:text-lg font-semibold text-foreground">{layer.title}</h3>
+                      </div>
                     </div>
-                    <p className="text-xs sm:text-sm text-muted-foreground pl-10 sm:pl-12 mb-3 sm:mb-5">{layer.intro}</p>
-                    <ul className="space-y-2 sm:space-y-2.5 pl-10 sm:pl-12 mb-3 sm:mb-5">
-                      {layer.points.map((point, j) => { const PointIcon = pointIcons[i][j]; return <li key={point} className="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm leading-relaxed"><PointIcon size={14} className="text-primary mt-[2px] shrink-0 sm:w-[15px] sm:h-[15px]" /><span className="text-foreground/85">{point}</span></li>; })}
+                    <p className="text-xs sm:text-sm text-muted-foreground pl-11 sm:pl-[52px] mb-3 sm:mb-5">{layer.intro}</p>
+                    <ul className="space-y-2 sm:space-y-2.5 pl-11 sm:pl-[52px] mb-3 sm:mb-5">
+                      {layer.points.map((point, j) => {
+                        const PointIcon = pointIcons[i][j];
+                        return (
+                          <motion.li
+                            key={point}
+                            className="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm leading-relaxed"
+                            initial={{ opacity: 0, x: -10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.15 + j * 0.05 + 0.3, duration: 0.3 }}
+                          >
+                            <PointIcon size={14} className="mt-[2px] shrink-0 sm:w-[15px] sm:h-[15px]" style={{ color: layerColors[i] }} />
+                            <span className="text-foreground/85">{point}</span>
+                          </motion.li>
+                        );
+                      })}
                     </ul>
-                    <p className="text-xs sm:text-sm font-medium text-muted-foreground/80 italic pl-10 sm:pl-12">{layer.closing}</p>
+                    <p className="text-xs sm:text-sm font-medium text-muted-foreground/80 italic pl-11 sm:pl-[52px]">{layer.closing}</p>
                   </div>
                 </div>
-              </ScrollRevealItem></ScrollReveal>
+              </motion.div>
             );
           })}
+          </div>
         </div>
 
-        <ScrollReveal className="mt-10 sm:mt-14 md:mt-20"><ScrollRevealItem>
-          <p className="text-center text-xs font-medium text-muted-foreground max-w-3xl mx-auto leading-relaxed italic">{t.closing}</p>
-        </ScrollRevealItem></ScrollReveal>
+        <motion.div
+          className="mt-10 sm:mt-14 md:mt-16 text-center"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+        >
+          <p className="text-xs font-medium text-muted-foreground max-w-3xl mx-auto leading-relaxed italic">{t.closing}</p>
+        </motion.div>
       </div>
     </section>
   );

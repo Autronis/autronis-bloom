@@ -435,7 +435,7 @@ const Services = () => {
                     <button key={i} onClick={() => handleTickerClick(tool.name)} className={`relative group hover:scale-125 hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer ${isSelected ? 'scale-110' : ''}`}>
                       <img src={tool.logo} alt={tool.name} className={`w-7 h-7 sm:w-12 sm:h-12 object-contain transition-all duration-200 ${isSelected ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${tool.dark ? 'dark:invert' : ''}`} loading="lazy" />
                       {isSelected && <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary flex items-center justify-center"><CheckCircle2 size={10} className="text-primary-foreground" /></span>}
-                      <span className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-muted-foreground bg-card border border-border rounded px-2 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-sm">{tool.name}</span>
+                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-muted-foreground bg-card border border-border rounded px-2 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-sm z-20">{tool.name}</span>
                     </button>
                   );
                 })}
@@ -452,7 +452,7 @@ const Services = () => {
                     <button key={i} onClick={() => handleTickerClick(tool.name)} className={`relative group hover:scale-125 hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer ${isSelected ? 'scale-110' : ''}`}>
                       <img src={tool.logo} alt={tool.name} className={`w-7 h-7 sm:w-12 sm:h-12 object-contain transition-all duration-200 ${isSelected ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${tool.dark ? 'dark:invert' : ''}`} loading="lazy" />
                       {isSelected && <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary flex items-center justify-center"><CheckCircle2 size={10} className="text-primary-foreground" /></span>}
-                      <span className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-muted-foreground bg-card border border-border rounded px-2 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-sm">{tool.name}</span>
+                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-muted-foreground bg-card border border-border rounded px-2 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-sm z-20">{tool.name}</span>
                     </button>
                   );
                 })}

@@ -1,4 +1,4 @@
-import { Layers, Users, BarChart3, Cog, Link2, PieChart, Zap, X, Check } from "lucide-react";
+import { Layers, Users, BarChart3, Cog, Link2, PieChart, ArrowRight, X, Check } from "lucide-react";
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
@@ -61,6 +61,64 @@ const StrikeThroughText = ({ text: strikeText }: { text: string }) => {
   );
 };
 
+const TransformRow = ({ problem, solution, pIcon: PIcon, sIcon: SIcon, index }: {
+  problem: { title: string; sub: string };
+  solution: { title: string; sub: string };
+  pIcon: React.ElementType;
+  sIcon: React.ElementType;
+  index: number;
+}) => (
+  <motion.div
+    className="grid grid-cols-1 md:grid-cols-[1fr_40px_1fr] items-center gap-3 md:gap-0"
+    initial={{ opacity: 0, y: 16 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay: index * 0.12, ease: [0.23, 1, 0.32, 1] }}
+  >
+    {/* Problem */}
+    <div className="flex items-start gap-3 p-3 sm:p-4 rounded-xl bg-rose-500/[0.04] border border-rose-500/10 group hover:border-rose-500/25 transition-all duration-200">
+      <div className="w-9 h-9 rounded-lg bg-rose-500/10 flex items-center justify-center text-rose-400/80 shrink-0">
+        <PIcon size={16} strokeWidth={2} />
+      </div>
+      <div className="min-w-0">
+        <p className="text-sm font-bold text-foreground/80 leading-tight">{problem.title}</p>
+        <p className="text-xs text-muted-foreground/60 mt-0.5 leading-relaxed">{problem.sub}</p>
+      </div>
+    </div>
+
+    {/* Arrow */}
+    <div className="hidden md:flex items-center justify-center">
+      <motion.div
+        className="w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center"
+        animate={{ x: [0, 3, 0] }}
+        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }}
+      >
+        <ArrowRight size={14} className="text-primary" />
+      </motion.div>
+    </div>
+    <div className="md:hidden flex justify-center -my-1">
+      <motion.div
+        className="w-6 h-6 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center rotate-90"
+        animate={{ y: [0, 2, 0] }}
+        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }}
+      >
+        <ArrowRight size={11} className="text-primary" />
+      </motion.div>
+    </div>
+
+    {/* Solution */}
+    <div className="flex items-start gap-3 p-3 sm:p-4 rounded-xl bg-primary/[0.04] border border-primary/10 group hover:border-primary/30 hover:shadow-[0_0_16px_hsl(174_78%_41%/0.08)] transition-all duration-200">
+      <div className="w-9 h-9 rounded-lg bg-primary/15 flex items-center justify-center text-primary shrink-0 shadow-[0_0_10px_hsl(174_78%_41%/0.15)]">
+        <SIcon size={16} strokeWidth={2.5} />
+      </div>
+      <div className="min-w-0">
+        <p className="text-sm font-bold text-foreground leading-tight">{solution.title}</p>
+        <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{solution.sub}</p>
+      </div>
+    </div>
+  </motion.div>
+);
+
 const ProblemSolutionSection = () => {
   const lang = useLanguage();
   const tx = text[lang];
@@ -68,7 +126,7 @@ const ProblemSolutionSection = () => {
   return (
     <section className="py-8 sm:py-16 border-t border-border relative overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        {/* Header with strikethrough */}
+        {/* Header */}
         <ScrollReveal className="text-center max-w-2xl mx-auto mb-6 sm:mb-10">
           <ScrollRevealItem>
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">{tx.problemLabel}</p>
@@ -77,117 +135,39 @@ const ProblemSolutionSection = () => {
           </ScrollRevealItem>
         </ScrollReveal>
 
-        {/* Compact Before / After block */}
-        <motion.div
-          className="max-w-4xl mx-auto rounded-2xl border border-border bg-card overflow-hidden relative"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-        >
-          {/* Shimmer */}
-          <motion.div
-            className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent z-10"
-            initial={{ x: "-100%" }}
-            whileInView={{ x: "100%" }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, delay: 0.3, ease: "easeInOut" }}
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr]">
-            {/* Before column */}
-            <div className="p-5 sm:p-7">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-6 h-6 rounded-full bg-rose-500/15 flex items-center justify-center">
-                  <X size={12} className="text-rose-400" />
-                </div>
-                <span className="text-[10px] font-bold tracking-[0.14em] uppercase text-rose-400/80">{tx.before}</span>
+        {/* Before/After comparison */}
+        <div className="max-w-4xl mx-auto">
+          {/* Column headers */}
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_40px_1fr] mb-4">
+            <div className="flex items-center gap-2 mb-2 md:mb-0">
+              <div className="w-6 h-6 rounded-full bg-rose-500/15 flex items-center justify-center">
+                <X size={11} className="text-rose-400" />
               </div>
-              <div className="space-y-4">
-                {tx.problems.map((p, i) => {
-                  const PIcon = problemIcons[i];
-                  return (
-                    <motion.div
-                      key={p.title}
-                      className="flex items-start gap-3"
-                      initial={{ opacity: 0, x: -12 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: i * 0.1 }}
-                    >
-                      <div className="w-8 h-8 rounded-lg bg-rose-500/10 flex items-center justify-center text-rose-400/70 shrink-0 mt-0.5">
-                        <PIcon size={15} />
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold text-foreground/80 leading-tight">{p.title}</p>
-                        <p className="text-xs text-muted-foreground/70 mt-0.5 leading-relaxed">{p.sub}</p>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
+              <span className="text-[10px] font-bold tracking-[0.14em] uppercase text-rose-400/70">{tx.before}</span>
             </div>
-
-            {/* Center divider */}
-            <div className="hidden md:flex flex-col items-center justify-center px-2">
-              <div className="w-[1px] flex-1 bg-gradient-to-b from-transparent via-border to-transparent" />
-              <motion.div
-                className="w-10 h-10 rounded-full border border-primary/30 bg-primary/10 flex items-center justify-center my-3"
-                animate={{ boxShadow: ["0 0 0px hsl(174, 78%, 41%, 0)", "0 0 16px hsl(174, 78%, 41%, 0.3)", "0 0 0px hsl(174, 78%, 41%, 0)"] }}
-                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <Zap size={16} className="text-primary" />
-              </motion.div>
-              <div className="w-[1px] flex-1 bg-gradient-to-b from-transparent via-border to-transparent" />
-            </div>
-
-            {/* Mobile divider */}
-            <div className="md:hidden flex items-center gap-3 px-5">
-              <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-border to-transparent" />
-              <motion.div
-                className="w-8 h-8 rounded-full border border-primary/30 bg-primary/10 flex items-center justify-center"
-                animate={{ boxShadow: ["0 0 0px hsl(174, 78%, 41%, 0)", "0 0 12px hsl(174, 78%, 41%, 0.3)", "0 0 0px hsl(174, 78%, 41%, 0)"] }}
-                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <Zap size={14} className="text-primary" />
-              </motion.div>
-              <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-border to-transparent" />
-            </div>
-
-            {/* After column */}
-            <div className="p-5 sm:p-7">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-6 h-6 rounded-full bg-emerald-500/15 flex items-center justify-center">
-                  <Check size={12} className="text-emerald-400" />
-                </div>
-                <span className="text-[10px] font-bold tracking-[0.14em] uppercase text-emerald-400/80">{tx.after}</span>
+            <div className="hidden md:block" />
+            <div className="hidden md:flex items-center gap-2">
+              <div className="w-6 h-6 rounded-full bg-emerald-500/15 flex items-center justify-center">
+                <Check size={11} className="text-emerald-400" />
               </div>
-              <div className="space-y-4">
-                {tx.solutions.map((s, i) => {
-                  const SIcon = solutionIcons[i];
-                  return (
-                    <motion.div
-                      key={s.title}
-                      className="flex items-start gap-3"
-                      initial={{ opacity: 0, x: 12 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: i * 0.1 + 0.2 }}
-                    >
-                      <div className="w-8 h-8 rounded-lg bg-primary/15 flex items-center justify-center text-primary shrink-0 mt-0.5 shadow-[0_0_10px_hsl(174_78%_41%/0.15)]">
-                        <SIcon size={15} />
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold text-foreground leading-tight">{s.title}</p>
-                        <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{s.sub}</p>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
+              <span className="text-[10px] font-bold tracking-[0.14em] uppercase text-emerald-400/70">{tx.after}</span>
             </div>
           </div>
-        </motion.div>
+
+          {/* Transform rows */}
+          <div className="space-y-3">
+            {tx.problems.map((p, i) => (
+              <TransformRow
+                key={p.title}
+                problem={p}
+                solution={tx.solutions[i]}
+                pIcon={problemIcons[i]}
+                sIcon={solutionIcons[i]}
+                index={i}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

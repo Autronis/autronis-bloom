@@ -71,7 +71,7 @@ const SecurityBlock = () => {
           {t.layers.map((layer, i) => {
             const Icon = layerIcons[i];
             const isHovered = canHover && hoveredIndex === i;
-            const layerColors = ["hsl(174, 78%, 41%)", "#60A5FA", "#A78BFA"];
+            const layerColors = ["#34D399", "#60A5FA", "#A78BFA"];
             return (
               <motion.div
                 key={layer.title}
@@ -82,12 +82,12 @@ const SecurityBlock = () => {
               >
                 <div className="rounded-xl sm:rounded-2xl border bg-card overflow-hidden transition-all duration-200 ease-out relative" style={{ transform: isHovered ? "scale(1.01) translateY(-2px)" : "none", borderColor: isHovered ? `${layerColors[i]}50` : "hsl(var(--border))", boxShadow: isHovered ? `0 0 24px ${layerColors[i]}18` : "0 0 0 transparent" }} onMouseEnter={canHover ? () => setHoveredIndex(i) : undefined} onMouseLeave={canHover ? () => setHoveredIndex(null) : undefined}>
                   {/* Colored top accent */}
-                  <div className="h-[2px]" style={{ background: `linear-gradient(to right, ${layerColors[i]}60, transparent)` }} />
+                  <div className="h-[2px]" style={{ background: `linear-gradient(to right, ${layerColors[i]}80, ${layerColors[i]}20, transparent)` }} />
                   <div className="p-4 sm:p-6 md:p-8">
                     <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
                       <motion.div
                         className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center shrink-0 relative"
-                        style={{ backgroundColor: `${layerColors[i]}15` }}
+                        style={{ backgroundColor: `${layerColors[i]}20` }}
                         whileInView={{ scale: [0.8, 1.1, 1] }}
                         viewport={{ once: true }}
                         transition={{ delay: i * 0.15 + 0.3, duration: 0.4 }}

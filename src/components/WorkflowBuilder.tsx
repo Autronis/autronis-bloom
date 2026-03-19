@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, RotateCcw, Zap, ArrowDown, Clock, TrendingUp, ChevronRight, Users, FileText, ShoppingCart, MessageSquare, BarChart3, Share2, Database, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/i18n/context";
 
@@ -326,42 +327,46 @@ const WorkflowBuilder = ({ externalSelected, onExternalToggle }: WorkflowBuilder
                   {categoryLabels[category][lang]}
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {categorySystems.map((system) => {
-                    const isSelected = selected.includes(system.id);
-                    return (
-                      <motion.button
-                        key={system.id}
-                        onClick={() => toggleSystem(system.id)}
-                        className={`group/tool relative flex items-center gap-2.5 px-4 py-2.5 rounded-xl border text-sm font-medium transition-all duration-200 ${
-                          isSelected
-                            ? "border-primary bg-primary/10 text-foreground shadow-[0_0_12px_hsl(var(--primary)/0.15)]"
-                            : "border-border bg-card hover:border-primary/30 text-muted-foreground hover:text-foreground"
-                        }`}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        <img
-                          src={system.logo}
-                          alt={system.name}
-                          className={`w-5 h-5 object-contain ${system.dark ? "dark:invert" : ""}`}
-                        />
-                        {system.name}
-                        {isSelected && (
-                          <motion.div
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            className="w-4 h-4 rounded-full bg-primary flex items-center justify-center"
-                          >
-                            <Check size={10} className="text-primary-foreground" />
-                          </motion.div>
-                        )}
-                        {/* Hover tooltip */}
-                        <span className="absolute -bottom-9 left-1/2 -translate-x-1/2 whitespace-nowrap text-[11px] text-muted-foreground bg-card border border-border rounded-lg px-2.5 py-1 opacity-0 group-hover/tool:opacity-100 transition-opacity duration-200 pointer-events-none shadow-md z-10">
-                          {system.desc[lang]}
-                        </span>
-                      </motion.button>
-                    );
-                  })}
+                  <TooltipProvider delayDuration={200}>
+                    {categorySystems.map((system) => {
+                      const isSelected = selected.includes(system.id);
+                      return (
+                        <Tooltip key={system.id}>
+                          <TooltipTrigger asChild>
+                            <motion.button
+                              onClick={() => toggleSystem(system.id)}
+                              className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl border text-sm font-medium transition-all duration-200 ${
+                                isSelected
+                                  ? "border-primary bg-primary/10 text-foreground shadow-[0_0_12px_hsl(var(--primary)/0.15)]"
+                                  : "border-border bg-card hover:border-primary/30 text-muted-foreground hover:text-foreground"
+                              }`}
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                            >
+                              <img
+                                src={system.logo}
+                                alt={system.name}
+                                className={`w-5 h-5 object-contain ${system.dark ? "dark:invert" : ""}`}
+                              />
+                              {system.name}
+                              {isSelected && (
+                                <motion.div
+                                  initial={{ scale: 0 }}
+                                  animate={{ scale: 1 }}
+                                  className="w-4 h-4 rounded-full bg-primary flex items-center justify-center"
+                                >
+                                  <Check size={10} className="text-primary-foreground" />
+                                </motion.div>
+                              )}
+                            </motion.button>
+                          </TooltipTrigger>
+                          <TooltipContent side="top" className="text-[11px]">
+                            {system.desc[lang]}
+                          </TooltipContent>
+                        </Tooltip>
+                      );
+                    })}
+                  </TooltipProvider>
                 </div>
               </div>
             );

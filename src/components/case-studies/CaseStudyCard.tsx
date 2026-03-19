@@ -109,52 +109,64 @@ const BeforeAfterChart = ({ data, lang }: { data: { label: string; before: numbe
   }, []);
 
   return (
-    <div ref={ref} className="space-y-4">
-      {data.map((item) => {
+    <div ref={ref} className="space-y-5">
+      {data.map((item, i) => {
         const maxVal = Math.max(item.before, item.after);
         const beforePct = (item.before / maxVal) * 100;
         const afterPct = (item.after / maxVal) * 100;
         const improved = item.after < item.before;
+        const changePct = improved
+          ? Math.round(((item.before - item.after) / item.before) * 100)
+          : Math.round(((item.after - item.before) / item.before) * 100);
 
         return (
-          <div key={item.label}>
-            <div className="flex items-center justify-between mb-1.5">
-              <p className="text-[12px] font-medium text-foreground">{item.label}</p>
-              <div className="flex items-center gap-1">
-                {improved ? <TrendingDown size={11} className="text-primary" /> : <TrendUp size={11} className="text-primary" />}
-                <span className="text-[11px] font-semibold text-primary">
-                  {improved
-                    ? `-${Math.round(((item.before - item.after) / item.before) * 100)}%`
-                    : `+${Math.round(((item.after - item.before) / item.before) * 100)}%`
-                  }
+          <motion.div
+            key={item.label}
+            initial={{ opacity: 0, x: -12 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: i * 0.1 }}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-[13px] font-bold text-foreground">{item.label}</p>
+              <motion.div
+                className="flex items-center gap-1.5"
+                initial={{ opacity: 0, scale: 0.7 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 + 0.5, type: "spring", stiffness: 300 }}
+              >
+                {improved ? <TrendingDown size={13} className="text-emerald-400" /> : <TrendUp size={13} className="text-emerald-400" />}
+                <span className="text-[12px] font-extrabold text-emerald-400">
+                  {improved ? `-${changePct}%` : `+${changePct}%`}
                 </span>
-              </div>
+              </motion.div>
             </div>
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] text-muted-foreground w-10 shrink-0">{lang === "nl" ? "Voor" : "Before"}</span>
-                <div className="flex-1 h-5 bg-muted/30 rounded overflow-hidden">
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2.5">
+                <span className="text-[10px] font-semibold text-muted-foreground/70 w-10 shrink-0 uppercase tracking-wide">{lang === "nl" ? "Voor" : "Before"}</span>
+                <div className="flex-1 h-7 bg-red-500/[0.06] rounded-md overflow-hidden border border-red-500/10">
                   <div
-                    className="h-full bg-muted-foreground/20 rounded transition-all duration-1000 ease-out flex items-center px-2"
-                    style={{ width: inView ? `${beforePct}%` : "0%" }}
+                    className="h-full bg-gradient-to-r from-red-500/30 to-red-500/15 rounded-md flex items-center px-2.5 transition-all duration-1000 ease-out"
+                    style={{ width: inView ? `${Math.max(beforePct, 12)}%` : "0%" }}
                   >
-                    <span className="text-[10px] font-mono text-muted-foreground">{item.before}{item.unit}</span>
+                    <span className="text-[11px] font-bold font-mono text-red-400/90">{item.before}{item.unit}</span>
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] text-muted-foreground w-10 shrink-0">{lang === "nl" ? "Na" : "After"}</span>
-                <div className="flex-1 h-5 bg-primary/5 rounded overflow-hidden">
+              <div className="flex items-center gap-2.5">
+                <span className="text-[10px] font-semibold text-muted-foreground/70 w-10 shrink-0 uppercase tracking-wide">{lang === "nl" ? "Na" : "After"}</span>
+                <div className="flex-1 h-7 bg-emerald-500/[0.06] rounded-md overflow-hidden border border-emerald-500/10">
                   <div
-                    className="h-full bg-primary/30 rounded transition-all duration-1000 ease-out delay-300 flex items-center px-2"
-                    style={{ width: inView ? `${afterPct}%` : "0%" }}
+                    className="h-full bg-gradient-to-r from-emerald-500/40 to-emerald-400/20 rounded-md flex items-center px-2.5 transition-all duration-1000 ease-out delay-300 relative"
+                    style={{ width: inView ? `${Math.max(afterPct, 12)}%` : "0%", boxShadow: inView ? "0 0 12px rgba(16, 185, 129, 0.15)" : "none" }}
                   >
-                    <span className="text-[10px] font-mono text-primary">{item.after}{item.unit}</span>
+                    <span className="text-[11px] font-bold font-mono text-emerald-400">{item.after}{item.unit}</span>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         );
       })}
     </div>

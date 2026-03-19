@@ -75,18 +75,28 @@ const SecurityBlock = () => {
             return (
               <motion.div
                 key={layer.title}
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 24, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, delay: i * 0.15, ease: "easeOut" }}
+                transition={{ duration: 0.6, delay: i * 0.12, ease: "easeOut" }}
               >
-                <div className="rounded-xl sm:rounded-2xl border bg-card overflow-hidden transition-all duration-200 ease-out relative" style={{ transform: isHovered ? "scale(1.01) translateY(-2px)" : "none", borderColor: isHovered ? `${layerColors[i]}50` : "hsl(var(--border))", boxShadow: isHovered ? `0 0 24px ${layerColors[i]}18` : "0 0 0 transparent" }} onMouseEnter={canHover ? () => setHoveredIndex(i) : undefined} onMouseLeave={canHover ? () => setHoveredIndex(null) : undefined}>
+                <div className="rounded-xl sm:rounded-2xl border bg-gradient-to-br from-primary/[0.06] to-transparent overflow-hidden transition-all duration-200 ease-out relative" style={{ transform: isHovered ? "scale(1.01) translateY(-2px)" : "none", borderColor: isHovered ? `${layerColors[i]}50` : "hsl(var(--border))", boxShadow: isHovered ? `0 0 24px ${layerColors[i]}18` : "0 0 0 transparent" }} onMouseEnter={canHover ? () => setHoveredIndex(i) : undefined} onMouseLeave={canHover ? () => setHoveredIndex(null) : undefined}>
+                  {/* Shimmer line */}
+                  <motion.div
+                    className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent"
+                    initial={{ x: "-100%" }}
+                    whileInView={{ x: "100%" }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.2, delay: i * 0.12 + 0.3, ease: "easeInOut" }}
+                  />
                   {/* Colored top accent */}
                   <div className="h-[2px]" style={{ background: `linear-gradient(to right, ${layerColors[i]}80, ${layerColors[i]}20, transparent)` }} />
+                  {/* Bottom accent line */}
+                  <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
                   <div className="p-4 sm:p-6 md:p-8">
                     <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
                       <motion.div
-                        className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center shrink-0 relative"
+                        className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center shrink-0 relative shadow-[0_0_12px_hsl(174_78%_41%/0.15)]"
                         style={{ backgroundColor: `${layerColors[i]}20` }}
                         whileInView={{ scale: [0.8, 1.1, 1] }}
                         viewport={{ once: true }}

@@ -1,5 +1,6 @@
 import { ArrowRight, Building2, ShoppingCart, FileText, TrendingUp, Clock, Timer } from "lucide-react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import { useLanguage } from "@/i18n/context";
@@ -72,12 +73,26 @@ const ROIPreview = () => {
             {t.blocks.map((block, i) => {
               const Icon = blockIcons[i];
               return (
-                <div key={block.title} className="rounded-xl border border-border bg-card p-4 sm:p-6 md:p-7 transition-all duration-200 ease-out md:hover:scale-[1.015] md:hover:-translate-y-[2px] md:hover:border-primary/50 md:hover:shadow-[0_0_20px_hsl(174_78%_41%_/_0.12)]">
-                  <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3"><div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0"><Icon size={16} /></div><h3 className="text-base sm:text-lg font-bold text-foreground">{block.title}</h3></div>
-                  <p className="text-xs sm:text-sm font-semibold text-primary mb-1 leading-snug">{block.highlight}</p>
+                <motion.div
+                  key={block.title}
+                  initial={{ opacity: 0, y: 24, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.12, ease: "easeOut" }}
+                  className="relative rounded-xl overflow-hidden border border-border bg-gradient-to-br from-primary/[0.06] to-card p-4 sm:p-6 md:p-7 transition-all duration-200 ease-out md:hover:scale-[1.015] md:hover:-translate-y-[2px] md:hover:border-primary/50 md:hover:shadow-[0_0_20px_hsl(174_78%_41%_/_0.12)]"
+                >
+                  <motion.div
+                    className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent"
+                    initial={{ x: "-100%" }}
+                    whileInView={{ x: "100%" }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.2, delay: i * 0.12 + 0.3, ease: "easeInOut" }}
+                  />
+                  <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3"><div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 shadow-[0_0_12px_hsl(174_78%_41%/0.15)]"><Icon size={18} strokeWidth={2.5} /></div><h3 className="text-base sm:text-lg font-bold text-foreground">{block.title}</h3></div>
+                  <p className="text-base font-extrabold text-primary mb-1 leading-snug">{block.highlight}</p>
                   <p className="text-xs text-muted-foreground mb-3 sm:mb-4">{block.sub}</p>
-                  <ul className="space-y-1.5 sm:space-y-2">{block.bullets.map((item) => <li key={item} className="flex items-start gap-2 sm:gap-2.5 text-xs sm:text-sm text-muted-foreground"><span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />{item}</li>)}</ul>
-                </div>
+                  <ul className="space-y-1.5 sm:space-y-2">{block.bullets.map((item) => <li key={item} className="flex items-start gap-2 sm:gap-2.5 text-xs sm:text-sm text-muted-foreground"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0" />{item}</li>)}</ul>
+                </motion.div>
               );
             })}
           </div>
@@ -85,14 +100,27 @@ const ROIPreview = () => {
         </ScrollRevealItem></ScrollReveal>
 
         <ScrollReveal className="max-w-4xl mx-auto"><ScrollRevealItem>
-          <div className="rounded-xl border border-border bg-card p-4 sm:p-6 md:p-8 mb-8 sm:mb-10 transition-all duration-200 ease-out md:hover:scale-[1.015] md:hover:-translate-y-[2px] md:hover:border-primary/50 md:hover:shadow-[0_0_20px_hsl(174_78%_41%_/_0.12)]">
+          <motion.div
+            initial={{ opacity: 0, y: 24, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="relative rounded-xl overflow-hidden border border-border bg-gradient-to-br from-primary/[0.06] to-card p-4 sm:p-6 md:p-8 mb-8 sm:mb-10 transition-all duration-200 ease-out md:hover:scale-[1.015] md:hover:-translate-y-[2px] md:hover:border-primary/50 md:hover:shadow-[0_0_20px_hsl(174_78%_41%_/_0.12)]"
+          >
+            <motion.div
+              className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent"
+              initial={{ x: "-100%" }}
+              whileInView={{ x: "100%" }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, delay: 0.3, ease: "easeInOut" }}
+            />
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-4 sm:gap-6 lg:gap-10 items-start">
               <div><h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 sm:mb-3">{t.stratTitle}</h3><p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{t.stratDesc}</p></div>
               <div className="flex flex-col gap-2.5 sm:gap-3 lg:min-w-[240px]">
-                {t.kernpunten.map((item, i) => { const KIcon = kernIcons[i]; return <div key={item.text} className="flex items-center gap-2.5"><div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0"><KIcon size={16} /></div><span className="text-xs sm:text-sm font-medium text-foreground">{item.text}</span></div>; })}
+                {t.kernpunten.map((item, i) => { const KIcon = kernIcons[i]; return <div key={item.text} className="flex items-center gap-2.5"><div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 shadow-[0_0_12px_hsl(174_78%_41%/0.15)]"><KIcon size={18} strokeWidth={2.5} /></div><span className="text-xs sm:text-sm font-medium text-foreground">{item.text}</span></div>; })}
               </div>
             </div>
-          </div>
+          </motion.div>
           <p className="text-xs text-muted-foreground text-center max-w-2xl mx-auto mb-8 sm:mb-10">{t.footnote}</p>
         </ScrollRevealItem></ScrollReveal>
 

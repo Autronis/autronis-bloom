@@ -388,10 +388,16 @@ function findAnswer(question: string, lang: "en" | "nl"): KBEntry {
     return kb.about;
   }
 
+  const isGreeting = /^(hoi|hey|hallo|hello|hi|yo|goeiemorgen|goedemiddag|goedenavond|good morning|good afternoon|good evening|dag|hey daar|sup)\b/i.test(q.trim());
+
   return {
     text: lang === "nl"
-      ? `Goede vraag! Ik kan je helpen met vragen over:\n\n• **Onze diensten** — automatisering, integraties, data\n• **Werkwijze** — hoe we projecten aanpakken\n• **Prijzen** — wat het kost\n• **Tools** — welke systemen we koppelen\n• **Case studies** — resultaten bij andere klanten\n• **ROI** — bereken je besparing\n\nOf plan direct een gratis Automation Scan in!`
-      : `Great question! I can help you with:\n\n• **Our services** — automation, integrations, data\n• **Process** — how we approach projects\n• **Pricing** — what it costs\n• **Tools** — which systems we connect\n• **Case studies** — results for other clients\n• **ROI** — calculate your savings\n\nOr schedule a free Automation Scan directly!`,
+      ? isGreeting
+        ? `Hoi! 👋 Welkom bij Autronis. Waar kan ik je mee helpen?\n\n• **Onze diensten** — automatisering, integraties, data\n• **Werkwijze** — hoe we projecten aanpakken\n• **Prijzen** — wat het kost\n• **Tools** — welke systemen we koppelen\n• **Case studies** — resultaten bij andere klanten\n• **ROI** — bereken je besparing\n\nOf plan direct een gratis Automation Scan in!`
+        : `Ik kan je helpen met vragen over:\n\n• **Onze diensten** — automatisering, integraties, data\n• **Werkwijze** — hoe we projecten aanpakken\n• **Prijzen** — wat het kost\n• **Tools** — welke systemen we koppelen\n• **Case studies** — resultaten bij andere klanten\n• **ROI** — bereken je besparing\n\nOf plan direct een gratis Automation Scan in!`
+      : isGreeting
+        ? `Hi! 👋 Welcome to Autronis. How can I help you?\n\n• **Our services** — automation, integrations, data\n• **Process** — how we approach projects\n• **Pricing** — what it costs\n• **Tools** — which systems we connect\n• **Case studies** — results for other clients\n• **ROI** — calculate your savings\n\nOr schedule a free Automation Scan directly!`
+        : `I can help you with:\n\n• **Our services** — automation, integrations, data\n• **Process** — how we approach projects\n• **Pricing** — what it costs\n• **Tools** — which systems we connect\n• **Case studies** — results for other clients\n• **ROI** — calculate your savings\n\nOr schedule a free Automation Scan directly!`,
     actions: [
       { label: lang === "nl" ? "Plan een Automation Scan" : "Schedule Automation Scan", to: "/book", icon: "calendar" as const },
     ],

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import GlowButton from "@/components/GlowButton";
 import { Menu, X, Sun, Moon, ChevronDown, Users, Workflow, ChevronRight } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -168,9 +169,9 @@ const Navbar = () => {
             {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
-          <Button asChild size="sm" className="hidden sm:inline-flex">
+          <GlowButton asChild size="sm" className="hidden sm:inline-flex">
             <Link to="/book">{t.cta}</Link>
-          </Button>
+          </GlowButton>
 
           <button className="lg:hidden p-2 text-foreground" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Menu">
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}

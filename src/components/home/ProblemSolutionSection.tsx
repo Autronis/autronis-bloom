@@ -165,7 +165,7 @@ const ProblemSolutionSection = () => {
     const timers = tx.items.map((_, i) =>
       setTimeout(() => {
         setTransformedIndices(prev => new Set([...prev, i]));
-      }, 1200 + i * 600)
+      }, 2500 + i * 800)
     );
     return () => timers.forEach(clearTimeout);
   }, [isInView, tx.items]);

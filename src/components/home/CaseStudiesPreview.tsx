@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle2, Star, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import AnimatedCounter from "@/components/home/AnimatedCounter";
 import { useLanguage } from "@/i18n/context";
@@ -58,34 +59,41 @@ const CaseStudiesPreview = () => {
         </ScrollRevealItem></ScrollReveal>
 
         {/* Animated stats bar */}
-        <ScrollReveal className="grid grid-cols-3 gap-4 max-w-lg mx-auto mb-10">
-          <ScrollRevealItem>
-            <div className="text-center">
-              <p className="text-2xl sm:text-3xl font-bold text-primary"><AnimatedCounter target={73} suffix="%" /></p>
-              <p className="text-[11px] text-muted-foreground mt-0.5">{t.stats[0].label}</p>
-            </div>
-          </ScrollRevealItem>
-          <ScrollRevealItem>
-            <div className="text-center">
-              <p className="text-2xl sm:text-3xl font-bold text-primary"><AnimatedCounter target={40} suffix="h" /></p>
-              <p className="text-[11px] text-muted-foreground mt-0.5">{t.stats[1].label}</p>
-            </div>
-          </ScrollRevealItem>
-          <ScrollRevealItem>
-            <div className="text-center">
-              <p className="text-2xl sm:text-3xl font-bold text-primary">2.<AnimatedCounter target={4} suffix="×" /></p>
-              <p className="text-[11px] text-muted-foreground mt-0.5">{t.stats[2].label}</p>
-            </div>
-          </ScrollRevealItem>
-        </ScrollReveal>
+        <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto mb-10">
+          {[
+            <><AnimatedCounter target={73} suffix="%" /></>,
+            <><AnimatedCounter target={40} suffix="h" /></>,
+            <>2.<AnimatedCounter target={4} suffix="×" /></>,
+          ].map((counter, i) => (
+            <motion.div
+              key={i}
+              className="text-center rounded-lg border border-border bg-gradient-to-br from-primary/[0.06] to-card p-3"
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
+              viewport={{ once: true, amount: 0.5 }}
+            >
+              <p className="text-2xl sm:text-3xl font-extrabold text-lg text-primary">{counter}</p>
+              <p className="text-[11px] text-muted-foreground mt-0.5">{t.stats[i].label}</p>
+            </motion.div>
+          ))}
+        </div>
 
         {/* Featured case study */}
         <ScrollReveal className="max-w-2xl mx-auto mb-8">
           <ScrollRevealItem>
             <Link
               to={`/case-studies#case-${cs.caseIndex}`}
-              className="group block rounded-xl border border-border bg-card p-6 sm:p-8 transition-all duration-300 hover:border-primary/40 hover:shadow-[0_0_24px_hsl(174_78%_41%/0.1)]"
+              className="group relative block rounded-xl border border-border bg-card p-6 sm:p-8 transition-all duration-300 hover:border-primary/40 hover:shadow-[0_0_24px_hsl(174_78%_41%/0.1)] overflow-hidden"
             >
+              {/* Shimmer line */}
+              <motion.div
+                className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent"
+                initial={{ x: "-100%" }}
+                whileInView={{ x: "100%" }}
+                transition={{ duration: 1.5, ease: "easeInOut" }}
+                viewport={{ once: true, amount: 0.5 }}
+              />
               <div className="flex items-center gap-2.5 mb-4">
                 <img src="/logo.png" alt="Autronis" className="h-5 w-5 object-contain opacity-90 shrink-0" />
                 <h3 className="text-lg sm:text-xl font-bold leading-snug">{cs.title}</h3>
@@ -96,10 +104,17 @@ const CaseStudiesPreview = () => {
                 <p className="text-[10px] font-semibold text-primary mb-2 tracking-wide uppercase">{t.resultLabel}</p>
                 <ul className="space-y-2">
                   {cs.results.map((r, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-sm text-muted-foreground leading-relaxed">
+                    <motion.li
+                      key={i}
+                      className="flex items-start gap-2.5 text-sm text-muted-foreground leading-relaxed"
+                      initial={{ opacity: 0, x: -8 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.4, delay: i * 0.08, ease: "easeOut" }}
+                      viewport={{ once: true, amount: 0.5 }}
+                    >
                       <CheckCircle2 size={15} className="text-primary mt-0.5 shrink-0" />
                       {r}
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
               </div>

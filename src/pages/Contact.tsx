@@ -9,6 +9,7 @@ import emailjs from "@emailjs/browser";
 import SEOHead from "@/components/SEOHead";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import { useLanguage } from "@/i18n/context";
+import { motion } from "framer-motion";
 
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -157,63 +158,112 @@ const Contact = () => {
           </ScrollReveal>
           <ScrollReveal className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <ScrollRevealItem>
-              {status === "sent" ? (
-                <div className="rounded-xl border border-primary/30 bg-primary/5 p-8 text-center">
-                  <p className="text-lg font-semibold mb-2">{t.sent}</p>
-                  <p className="text-sm text-muted-foreground">{t.sentSub}</p>
-                </div>
-              ) : (
-                <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-2"><Label htmlFor="name">{t.nameLabel}</Label><Input id="name" name="name" placeholder={t.namePlaceholder} required /></div>
-                    <div className="space-y-2"><Label htmlFor="email">{t.emailLabel}</Label><Input id="email" name="email" type="email" placeholder={t.emailPlaceholder} required /></div>
+              <motion.div
+                className="relative rounded-xl border border-border bg-card p-6 overflow-hidden"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                {/* Shimmer line */}
+                <motion.div
+                  className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent"
+                  initial={{ x: "-100%" }}
+                  whileInView={{ x: "100%" }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.2, ease: "easeInOut" }}
+                />
+                {status === "sent" ? (
+                  <div className="rounded-xl border border-primary/30 bg-primary/5 p-8 text-center">
+                    <p className="text-lg font-semibold mb-2">{t.sent}</p>
+                    <p className="text-sm text-muted-foreground">{t.sentSub}</p>
                   </div>
-                  <div className="space-y-2"><Label htmlFor="company">{t.companyLabel}</Label><Input id="company" name="company" placeholder={t.companyPlaceholder} /></div>
-                  <div className="space-y-2">
-                    <Label htmlFor="message">{t.messageLabel}</Label>
-                    <textarea id="message" name="message" required placeholder={t.messagePlaceholder} className="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none" />
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-xs font-medium text-muted-foreground">{t.afterSubmit}</p>
-                    <ul className="text-xs text-muted-foreground/70 space-y-1">
-                      <li>• {t.afterStep1}</li>
-                      <li>• {t.afterStep2}</li>
-                      <li>• {t.afterStep3}</li>
-                    </ul>
-                  </div>
-                  {status === "error" && (
-                    <p className="text-sm text-red-500">{t.error}</p>
-                  )}
-                  <Button type="submit" size="lg" disabled={status === "sending"}>
-                    {status === "sending" ? (
-                      <><Loader2 size={18} className="animate-spin" /> {t.sendingBtn}</>
-                    ) : (
-                      <>{t.submitBtn} <ArrowRight size={18} /></>
+                ) : (
+                  <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-2"><Label htmlFor="name">{t.nameLabel}</Label><Input id="name" name="name" placeholder={t.namePlaceholder} required /></div>
+                      <div className="space-y-2"><Label htmlFor="email">{t.emailLabel}</Label><Input id="email" name="email" type="email" placeholder={t.emailPlaceholder} required /></div>
+                    </div>
+                    <div className="space-y-2"><Label htmlFor="company">{t.companyLabel}</Label><Input id="company" name="company" placeholder={t.companyPlaceholder} /></div>
+                    <div className="space-y-2">
+                      <Label htmlFor="message">{t.messageLabel}</Label>
+                      <textarea id="message" name="message" required placeholder={t.messagePlaceholder} className="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none" />
+                    </div>
+                    <div className="space-y-2">
+                      <p className="text-xs font-medium text-muted-foreground">{t.afterSubmit}</p>
+                      <ul className="text-xs text-muted-foreground/70 space-y-1">
+                        <li>• {t.afterStep1}</li>
+                        <li>• {t.afterStep2}</li>
+                        <li>• {t.afterStep3}</li>
+                      </ul>
+                    </div>
+                    {status === "error" && (
+                      <p className="text-sm text-red-500">{t.error}</p>
                     )}
-                  </Button>
-                  <p className="text-xs text-muted-foreground/60">{t.noSales}</p>
-                </form>
-              )}
+                    <Button type="submit" size="lg" disabled={status === "sending"}>
+                      {status === "sending" ? (
+                        <><Loader2 size={18} className="animate-spin" /> {t.sendingBtn}</>
+                      ) : (
+                        <>{t.submitBtn} <ArrowRight size={18} /></>
+                      )}
+                    </Button>
+                    <p className="text-xs text-muted-foreground/60">{t.noSales}</p>
+                  </form>
+                )}
+              </motion.div>
             </ScrollRevealItem>
             <ScrollRevealItem>
               <div className="flex flex-col justify-center space-y-6">
-                <div className="rounded-xl border border-border bg-card p-6">
+                <motion.div
+                  className="rounded-xl border border-border bg-gradient-to-br from-primary/[0.06] to-card p-6"
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0 }}
+                >
                   <h3 className="font-semibold mb-3">{t.directTitle}</h3>
                   <p className="text-sm text-muted-foreground mb-4">{t.directDesc}<br />{t.directDescSub}</p>
                   <Button asChild className="w-full"><Link to="/book">{t.directCta} <ArrowRight size={14} /></Link></Button>
                   <p className="text-xs text-muted-foreground/60 text-center mt-3">{t.directFooter}</p>
-                </div>
-                <div className="rounded-xl border border-border bg-card p-6">
-                  <div className="flex items-center gap-2 mb-3"><Clock size={16} className="text-primary" /><h3 className="font-semibold">{t.responseTitle}</h3></div>
+                </motion.div>
+                <motion.div
+                  className="rounded-xl border border-border bg-gradient-to-br from-primary/[0.06] to-card p-6"
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                >
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="shadow-[0_0_12px_hsl(174_78%_41%/0.15)] rounded-full p-0.5">
+                      <Clock size={16} className="text-primary" />
+                    </div>
+                    <h3 className="font-semibold">{t.responseTitle}</h3>
+                  </div>
                   <p className="text-sm text-muted-foreground">{t.responseDesc}<br />{t.responseDescSub}</p>
-                </div>
-                <div className="space-y-1">
+                </motion.div>
+                <motion.div
+                  className="space-y-1"
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
                   <p className="text-xs font-medium text-muted-foreground mb-2">{t.directContact}</p>
                   <div className="space-y-3 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2"><Linkedin size={16} className="text-primary" /><a href="https://www.linkedin.com/company/autronis" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">linkedin.com/company/autronis</a></div>
-                    <div className="flex items-center gap-2"><Mail size={16} className="text-primary" /> zakelijk@autronis.com</div>
+                    <div className="flex items-center gap-2">
+                      <div className="shadow-[0_0_12px_hsl(174_78%_41%/0.15)] rounded-full p-0.5">
+                        <Linkedin size={16} className="text-primary" />
+                      </div>
+                      <a href="https://www.linkedin.com/company/autronis" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">linkedin.com/company/autronis</a>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="shadow-[0_0_12px_hsl(174_78%_41%/0.15)] rounded-full p-0.5">
+                        <Mail size={16} className="text-primary" />
+                      </div>
+                      zakelijk@autronis.com
+                    </div>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </ScrollRevealItem>
           </ScrollReveal>

@@ -377,7 +377,7 @@ export const SystemIntegrationVisual = () => {
                 x={sys.x - 6} y={sys.y - 6}
                 width="12" height="12"
                 opacity="0.85"
-                style={("dark" in sys && sys.dark) ? { filter: "invert(1)" } : undefined}
+                className={("dark" in sys && sys.dark) ? "dark:invert" : undefined}
               />
             ) : (
               <image

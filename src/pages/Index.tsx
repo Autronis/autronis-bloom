@@ -208,7 +208,7 @@ const Index = () => {
           </div>
 
           {/* Live Preview — below hero, centered */}
-          <div className="max-w-md mx-auto mt-8 sm:mt-10">
+          <div className="max-w-md mx-auto mt-8 sm:mt-10 mb-8 sm:mb-12">
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase text-center">Live Preview</p>
             <Suspense fallback={<SectionFallback />}><LiveAutomationPreview embedded /></Suspense>
           </div>

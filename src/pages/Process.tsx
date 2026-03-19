@@ -316,7 +316,6 @@ const PhaseCard = ({
             transition: "background-color 500ms, border-color 500ms, box-shadow 500ms",
           }}
           whileHover={{
-            scale: isCurrent ? 1.06 : 1.02,
             boxShadow: "0 6px 24px hsl(174 78% 41% / 0.08), 0 2px 8px hsl(0 0% 0% / 0.05)",
           }}
         >

@@ -156,7 +156,7 @@ const ImpactSimulator = () => {
           <p className="text-sm text-foreground/80 mt-6 font-medium">{t.enterSituation}</p>
         </ScrollRevealItem></ScrollReveal>
 
-        <div className="max-w-6xl mx-auto rounded-2xl border border-border bg-card p-6 sm:p-8 lg:p-10">
+        <div className="max-w-6xl mx-auto rounded-2xl border border-border bg-gradient-to-br from-primary/[0.06] to-card p-6 sm:p-8 lg:p-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
             <motion.div className="space-y-5" initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}>
               <div>
@@ -171,7 +171,7 @@ const ImpactSimulator = () => {
                 <KPICard label={t.autoPotential} value={`${results.autoPercent}%`} icon={<Percent size={16} />} highlight subtitle={t.autoPotentialSub} />
               </div>
               <BarChart data={chartData} title={t.monthlyOverview} />
-              <div className="rounded-xl border border-border p-4">
+              <div className="rounded-xl border border-border bg-gradient-to-br from-primary/[0.06] to-card p-4">
                 <div className="flex items-center justify-between mb-3"><p className="text-sm font-medium text-foreground">{t.confidenceTitle}</p><span className="text-sm font-semibold text-primary tabular-nums">{results.confidence}%</span></div>
                 <div className="w-full h-2 rounded-full bg-muted overflow-hidden"><motion.div className="h-full rounded-full bg-primary" animate={{ width: `${results.confidence}%` }} transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }} /></div>
                 <p className="text-xs text-muted-foreground mt-2.5">{t.confidenceSub}</p>
@@ -230,17 +230,29 @@ const ImpactSimulator = () => {
 };
 
 const KPICard = ({ label, value, icon, highlight, subtitle }: { label: string; value: string; icon: React.ReactNode; highlight?: boolean; subtitle?: string }) => (
-  <div className={`rounded-xl border p-4 transition-colors duration-300 ${highlight ? "border-primary/30 bg-primary/[0.04]" : "border-border bg-card"}`}>
+  <motion.div
+    className={`rounded-xl border p-4 transition-colors duration-300 ${highlight ? "border-primary/30 bg-gradient-to-br from-primary/[0.08] to-primary/[0.02]" : "border-border bg-gradient-to-br from-primary/[0.06] to-card"}`}
+    initial={{ opacity: 0, y: 16 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.4 }}
+  >
     <div className="flex items-center gap-1.5 sm:gap-2 mb-2"><div className="text-primary shrink-0">{icon}</div><p className="text-[10px] sm:text-xs text-muted-foreground leading-tight">{label}</p></div>
-    <p className={`text-2xl font-bold tabular-nums ${highlight ? "text-primary" : "text-foreground"}`}>{value}</p>
+    <motion.p
+      className={`text-2xl font-bold tabular-nums ${highlight ? "text-primary" : "text-foreground"}`}
+      key={value}
+      initial={{ scale: 1.05, opacity: 0.7 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.3 }}
+    >{value}</motion.p>
     {subtitle && <p className="text-[10px] text-muted-foreground mt-1.5 leading-snug">{subtitle}</p>}
-  </div>
+  </motion.div>
 );
 
 const BarChart = ({ data, title }: { data: { name: string; value: number; type: string }[]; title: string }) => {
   const maxVal = Math.max(...data.map((d) => d.value));
   return (
-    <div className="rounded-xl border border-border p-4">
+    <div className="rounded-xl border border-border bg-gradient-to-br from-primary/[0.06] to-card p-4">
       <p className="text-sm font-medium text-foreground mb-5">{title}</p>
       <div className="space-y-4">
         {data.map((item) => {

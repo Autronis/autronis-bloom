@@ -41,8 +41,7 @@ const CapabilityCard = ({ cap, icon: Icon, index, isAnyHovered, isHovered, onHov
       onMouseMove={canHover ? handleMouseMove : undefined}
       className="relative rounded-xl border bg-gradient-to-br from-primary/[0.06] to-card p-3 sm:p-4 text-center overflow-hidden cursor-default"
       initial={isMobile ? false : { opacity: 0, y: 20, scale: 0.92 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.6, delay: index * 0.12 + 0.3, ease: [0.23, 1, 0.32, 1] }}
+      {...(!isMobile && { animate: { opacity: 1, y: 0, scale: 1 }, transition: { duration: 0.6, delay: index * 0.12 + 0.3, ease: [0.23, 1, 0.32, 1] } })}
       style={{
         transform: showHover ? "scale(1.06) translateY(-6px)" : showDim ? "scale(0.97)" : "none",
         opacity: showDim ? 0.7 : 1,
@@ -71,13 +70,12 @@ const CapabilityCard = ({ cap, icon: Icon, index, isAnyHovered, isHovered, onHov
       {/* Bottom glow line */}
       <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent z-10" />
       <div className="relative z-10">
-        <motion.div
-          className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-primary/15 flex items-center justify-center text-primary mx-auto mb-2.5 shadow-[0_0_12px_hsl(174_78%_41%/0.15)]"
-          animate={showHover ? { boxShadow: "0 0 24px hsl(174, 78%, 41%, 0.4)" } : { boxShadow: "0 0 12px hsl(174, 78%, 41%, 0.15)" }}
-          transition={{ duration: 0.3 }}
+        <div
+          className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-primary/15 flex items-center justify-center text-primary mx-auto mb-2.5"
+          style={{ boxShadow: showHover ? "0 0 24px hsl(174, 78%, 41%, 0.4)" : "none", transition: "box-shadow 0.3s" }}
         >
           <Icon size={18} strokeWidth={2.5} />
-        </motion.div>
+        </div>
         <p className="text-xs sm:text-sm font-bold leading-tight text-center tracking-tight">{cap.title}</p>
       </div>
     </motion.div>

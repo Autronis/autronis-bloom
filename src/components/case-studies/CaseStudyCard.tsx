@@ -135,6 +135,35 @@ const BeforeAfterChart = ({ data, lang }: { data: { label: string; before: numbe
   );
 };
 
+const AnimatedStars = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } }, { threshold: 0.5 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className="flex items-center gap-0.5">
+      {Array.from({ length: 5 }).map((_, s) => (
+        <span
+          key={s}
+          className="inline-block transition-all duration-300"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? "scale(1)" : "scale(0)",
+            transitionDelay: visible ? `${s * 100 + 300}ms` : "0ms",
+          }}
+        >
+          <Star size={14} className="text-primary fill-primary" />
+        </span>
+      ))}
+    </div>
+  );
+};
+
 const BulletList = ({ items, icon }: { items: string[]; icon?: "check" | "dot" }) => (
   <ul className="space-y-1">{items.map((item, i) => <li key={i} className="flex items-start gap-2 text-[13px] text-muted-foreground leading-relaxed">{icon === "check" ? <CheckCircle2 size={13} className="text-primary mt-0.5 shrink-0" /> : <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-[7px] shrink-0" />}{item}</li>)}</ul>
 );
@@ -182,7 +211,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
             </div>
             {cs.testimonial && (
               <div className="rounded-lg border border-primary/15 bg-primary/[0.03] p-4 sm:p-5 space-y-3.5">
-                <div className="flex items-center gap-0.5">{Array.from({ length: 5 }).map((_, s) => <motion.div key={s} initial={{ opacity: 0, scale: 0 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.3, delay: s * 0.1 + 0.3, type: "spring", stiffness: 400 }}><Star size={14} className="text-primary fill-primary" /></motion.div>)}</div>
+                <AnimatedStars />
                 <p className="text-[13px] text-foreground/80 leading-[1.7] italic">"{cs.testimonial.quote}"</p>
                 <div className="flex items-center gap-3 pt-0.5">
                   {cs.testimonial.logo ? <img src={cs.testimonial.logo} alt={cs.testimonial.company} className="h-8 object-contain shrink-0" /> : <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><UserCircle size={20} className="text-primary/70" /></div>}

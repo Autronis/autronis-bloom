@@ -27,59 +27,35 @@ const MetricCard = ({ metric, index }: { metric: CaseMetric; index: number }) =>
   const Icon = metric.icon;
   const isPositive = metric.change && !metric.change.startsWith("-");
   return (
-    <motion.div
-      className="relative overflow-hidden rounded-xl border border-primary/25 bg-gradient-to-br from-primary/[0.08] to-primary/[0.02] px-4 py-4 cursor-default group"
-      initial={{ opacity: 0, y: 24, scale: 0.92 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.6, delay: index * 0.12, ease: [0.23, 1, 0.32, 1] }}
+    <div
+      className="relative overflow-hidden rounded-xl border border-primary/25 bg-gradient-to-br from-primary/[0.08] to-primary/[0.02] px-3 py-3 sm:px-4 sm:py-4"
+      style={{ animationDelay: `${index * 100}ms` }}
     >
-      {/* Shimmer line */}
-      <motion.div
-        className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/70 to-transparent"
-        initial={{ x: "-100%" }}
-        whileInView={{ x: "100%" }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: index * 0.15 + 0.3, ease: "easeInOut" }}
-      />
-      {/* Change badge */}
-      {metric.change && (
-        <motion.div
-          className="absolute top-2.5 right-2.5 z-20"
-          initial={{ opacity: 0, scale: 0.5, rotate: -12 }}
-          whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: index * 0.12 + 0.4, type: "spring", stiffness: 300 }}
-        >
-          <span className={`inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-bold tracking-tight ${isPositive ? "bg-emerald-500/15 text-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.2)]" : "bg-primary/15 text-primary shadow-[0_0_8px_hsl(174_78%_41%/0.2)]"}`}>
-            {isPositive && <TrendUp size={10} />}
-            {metric.change}
-          </span>
-        </motion.div>
-      )}
-      <div className="relative z-10 flex items-center gap-3.5">
-        <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center text-primary shrink-0 shadow-[0_0_12px_hsl(174_78%_41%/0.15)]">
-          <Icon size={18} strokeWidth={2.5} />
+      <div className="flex items-start gap-3">
+        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-primary/15 flex items-center justify-center text-primary shrink-0">
+          <Icon size={16} strokeWidth={2.5} />
         </div>
-        <div className="min-w-0">
-          <p className="text-lg font-extrabold text-foreground leading-tight tracking-tight">
-            {metric.animation ? <AnimatedValue animation={metric.animation} fallback={metric.value} /> : metric.value}
-          </p>
-          <p className="text-[11px] text-muted-foreground/80 leading-snug mt-0.5 font-medium">{metric.label}</p>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-baseline gap-2 flex-wrap">
+            <p className="text-base sm:text-lg font-extrabold text-foreground leading-tight tracking-tight">
+              {metric.animation ? <AnimatedValue animation={metric.animation} fallback={metric.value} /> : metric.value}
+            </p>
+            {metric.change && (
+              <span className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold tracking-tight ${isPositive ? "bg-emerald-500/15 text-emerald-400" : "bg-primary/15 text-primary"}`}>
+                {isPositive && <TrendUp size={9} />}
+                {metric.change}
+              </span>
+            )}
+          </div>
+          <p className="text-[10px] sm:text-[11px] text-muted-foreground/80 leading-snug mt-0.5 font-medium">{metric.label}</p>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
 const SectionHeader = ({ children }: { children: string }) => (
-  <motion.p
-    className="text-[11px] font-semibold text-primary mb-1.5 tracking-wide uppercase"
-    initial={{ opacity: 0, x: -8 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.3 }}
-  >{children}</motion.p>
+  <p className="text-[11px] font-semibold text-primary mb-1.5 tracking-wide uppercase">{children}</p>
 );
 
 const BeforeAfterChart = ({ data, lang }: { data: { label: string; before: number; after: number; unit: string }[]; lang: string }) => {
@@ -199,19 +175,13 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
               <SectionHeader>{t.resultsImpact}</SectionHeader>
               {cs.beforeAfter && <div className="mb-4"><BeforeAfterChart data={cs.beforeAfter} lang={lang} /></div>}
               <div className="space-y-1.5">{cs.results.map((r, j) => (
-                <motion.div key={j}
-                  className="flex items-start gap-2 text-[13px] text-muted-foreground leading-relaxed"
-                  initial={{ opacity: 0, x: -6 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: j * 0.06 }}
-                >
+                <div key={j} className="flex items-start gap-2 text-[13px] text-muted-foreground leading-relaxed">
                   <CheckCircle2 size={13} className="text-primary mt-0.5 shrink-0" />{r}
-                </motion.div>
+                </div>
               ))}</div>
             </div>
             {cs.testimonial && (
-              <div className="rounded-lg border border-primary/15 bg-primary/[0.03] p-5 space-y-3.5 transition-all duration-200 ease-out hover:scale-[1.015] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_0_16px_hsl(174_78%_41%/0.1)]">
+              <div className="rounded-lg border border-primary/15 bg-primary/[0.03] p-4 sm:p-5 space-y-3.5">
                 <div className="flex items-center gap-0.5">{Array.from({ length: 5 }).map((_, s) => <motion.div key={s} initial={{ opacity: 0, scale: 0 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.3, delay: s * 0.1 + 0.3, type: "spring", stiffness: 400 }}><Star size={14} className="text-primary fill-primary" /></motion.div>)}</div>
                 <p className="text-[13px] text-foreground/80 leading-[1.7] italic">"{cs.testimonial.quote}"</p>
                 <div className="flex items-center gap-3 pt-0.5">
@@ -221,7 +191,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
                 <div className="mt-4"><Button size="sm" variant="outline" className="w-full border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors duration-300" onClick={() => { navigate('/'); setTimeout(() => { const heroSection = document.querySelector('.hero-section'); if (heroSection) { heroSection.scrollIntoView({ behavior: 'smooth' }); setTimeout(() => { const demoBtn = heroSection.querySelector('button[class*="outline"]') as HTMLButtonElement; if (demoBtn) demoBtn.click(); }, 600); } }, 300); }}><Play size={14} />{t.watchDemo}</Button></div>
               </div>
             )}
-            {cs.implementationResult && <div className="rounded-lg border border-primary/15 bg-primary/[0.03] p-5 space-y-3 transition-all duration-200 ease-out hover:scale-[1.015] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_0_16px_hsl(174_78%_41%/0.1)]"><SectionHeader>{t.anonCase}</SectionHeader><p className="text-[13px] text-foreground/80 leading-[1.7] italic">"{cs.implementationResult}"</p></div>}
+            {cs.implementationResult && <div className="rounded-lg border border-primary/15 bg-primary/[0.03] p-4 sm:p-5 space-y-3"><SectionHeader>{t.anonCase}</SectionHeader><p className="text-[13px] text-foreground/80 leading-[1.7] italic">"{cs.implementationResult}"</p></div>}
           </div>
         </div>
         {/* Workflow screenshot — bottom of card */}

@@ -1,4 +1,18 @@
 import { motion } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+
+const useIsVisible = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), { rootMargin: "200px" });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return { ref, visible };
+};
 
 // Gear path centered at (0,0). Tooth and gap each take exactly half a step.
 // toothRatio controls what fraction of each half-step is the flat part vs transition
@@ -34,6 +48,7 @@ const gearPathAt0 = (outer: number, inner: number, teeth: number) => {
 
 // Process Automation — Meshing settings gears + conveyor belt with documents
 export const ProcessAutomationVisual = () => {
+  const { ref, visible } = useIsVisible();
   // All gears share the same tooth height (outer - inner) = "module"
   // This ensures teeth from one gear fit into gaps of the other
   const toothH = 7; // tooth height for all gears
@@ -86,6 +101,7 @@ export const ProcessAutomationVisual = () => {
   const beltY = 128;
 
   return (
+    <div ref={ref}>{visible ? (
     <div className="relative w-full h-full min-h-[260px] flex items-center justify-center p-2">
       <svg viewBox="0 0 200 150" className="w-full h-full" style={{ overflow: "hidden" }}>
         {/* Gear A — clockwise */}
@@ -227,11 +243,13 @@ export const ProcessAutomationVisual = () => {
         ))}
       </svg>
     </div>
+    ) : <div style={{ aspectRatio: "4/3" }} />}</div>
   );
 };
 
 // System Integrations — Large hub with active connections
 export const SystemIntegrationVisual = () => {
+  const { ref, visible } = useIsVisible();
   // Clean grid layout — systems as rounded rectangles with logos
   const systems = [
     { x: 30, y: 25, label: "Salesforce", logo: "/logos/salesforce.svg" },
@@ -253,6 +271,7 @@ export const SystemIntegrationVisual = () => {
   const nodeW = 38, nodeH = 20;
 
   return (
+    <div ref={ref}>{visible ? (
     <div className="relative w-full h-full min-h-[260px] flex items-center justify-center p-2">
       <svg viewBox="0 0 200 150" className="w-full h-full">
         {/* Connection lines — only to hub */}
@@ -393,14 +412,17 @@ export const SystemIntegrationVisual = () => {
         ))}
       </svg>
     </div>
+    ) : <div style={{ aspectRatio: "4/3" }} />}</div>
   );
 };
 
 // Data & Reporting — Rich dashboard
 export const DataReportingVisual = () => {
+  const { ref, visible } = useIsVisible();
   const bars = [30, 50, 38, 65, 48, 78, 55, 72, 42, 85, 60, 70];
 
   return (
+    <div ref={ref}>{visible ? (
     <div className="relative w-full h-full min-h-[320px] flex items-center justify-center p-2">
       <svg viewBox="0 0 200 160" className="w-full h-full">
         {/* Window */}
@@ -561,5 +583,6 @@ export const DataReportingVisual = () => {
         <text x="27" y="139.5" fontSize="3.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.3" fontFamily="monospace">Live · Updated 2s ago</text>
       </svg>
     </div>
+    ) : <div style={{ aspectRatio: "4/3" }} />}</div>
   );
 };

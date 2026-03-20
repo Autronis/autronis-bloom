@@ -460,7 +460,7 @@ const Services = () => {
             </div>
           </div>
 
-          <nav className="lg:hidden sticky top-16 z-20 -mx-4 px-4 py-3 flex gap-2 overflow-x-auto no-scrollbar bg-background/80 backdrop-blur-xl border-b border-border/50 mb-8">
+          <nav className="lg:hidden sticky top-16 z-20 -mx-4 px-4 py-3 flex gap-2 overflow-x-auto no-scrollbar bg-background/80 backdrop-blur-sm border-b border-border/50 mb-8">
             {pillars.map((p) => (
               <button key={p.id} onClick={() => scrollTo(p.id)} className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ease-out shrink-0 ${activeSection === p.id ? "bg-primary text-primary-foreground shadow-[0_0_16px_hsl(var(--primary)/0.25)]" : "text-muted-foreground hover:text-foreground opacity-60"}`}>{p.title}</button>
             ))}

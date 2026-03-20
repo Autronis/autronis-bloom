@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface BubbleConfig {
   x: string;
@@ -26,37 +27,43 @@ const defaultBubbles: BubbleConfig[] = [
   { x: "5%", y: "70%", size: 340, opacity: 0.06, delay: 3.5, skewY: 9, borderRadius: "46% 54% 40% 60% / 58% 42% 54% 46%" },
 ];
 
-const AnimatedBubbles = ({ bubbles = defaultBubbles }: { bubbles?: BubbleConfig[] }) => (
-  <div className="absolute inset-0 pointer-events-none overflow-hidden">
-    {bubbles.map((b, i) => (
-      <motion.div
-        key={i}
-        className="absolute"
-        animate={{
-          scale: [1, 1.25, 1],
-          opacity: [b.opacity, b.opacity * 1.5, b.opacity],
-          rotate: [0, (i % 2 === 0 ? 6 : -6), 0],
-        }}
-        transition={{
-          duration: 7 + i * 0.6,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: b.delay,
-        }}
-        style={{
-          left: b.x,
-          top: b.y,
-          width: b.size,
-          height: b.size,
-          borderRadius: b.borderRadius || "50%",
-          background: `radial-gradient(ellipse at 40% 40%, hsl(174 78% 35% / calc(${b.opacity} * var(--bubble-boost, 1))), transparent 65%)`,
-          filter: "blur(60px)",
-          transform: `translate(-50%, -50%) skewX(${b.skewX || 0}deg) skewY(${b.skewY || 0}deg)`,
-        }}
-      />
-    ))}
-  </div>
-);
+const AnimatedBubbles = ({ bubbles = defaultBubbles }: { bubbles?: BubbleConfig[] }) => {
+  const isMobile = useIsMobile();
+
+  if (isMobile) return null;
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {bubbles.map((b, i) => (
+        <motion.div
+          key={i}
+          className="absolute"
+          animate={{
+            scale: [1, 1.25, 1],
+            opacity: [b.opacity, b.opacity * 1.5, b.opacity],
+            rotate: [0, (i % 2 === 0 ? 6 : -6), 0],
+          }}
+          transition={{
+            duration: 7 + i * 0.6,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: b.delay,
+          }}
+          style={{
+            left: b.x,
+            top: b.y,
+            width: b.size,
+            height: b.size,
+            borderRadius: b.borderRadius || "50%",
+            background: `radial-gradient(ellipse at 40% 40%, hsl(174 78% 35% / calc(${b.opacity} * var(--bubble-boost, 1))), transparent 65%)`,
+            filter: "blur(60px)",
+            transform: `translate(-50%, -50%) skewX(${b.skewX || 0}deg) skewY(${b.skewY || 0}deg)`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
 export default AnimatedBubbles;
 export type { BubbleConfig };

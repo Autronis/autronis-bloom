@@ -22,7 +22,7 @@ const ToolStackBlock = () => {
   return (
     <section className="py-6 sm:py-10 border-t border-border relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-primary/[0.03] blur-[100px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-primary/[0.03] blur-3xl" />
       </div>
       <div className="container mx-auto px-4 lg:px-8 text-center max-w-md relative z-10">
         <p className="text-[10px] font-semibold text-primary mb-1.5 tracking-widest uppercase">{t.label}</p>

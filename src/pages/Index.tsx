@@ -8,11 +8,10 @@ const Dialog = lazy(() => import("@/components/ui/dialog").then(m => ({ default:
 const DialogContent = lazy(() => import("@/components/ui/dialog").then(m => ({ default: m.DialogContent })));
 const DialogTitle = lazy(() => import("@/components/ui/dialog").then(m => ({ default: m.DialogTitle })));
 const HeroBackground = lazy(() => import("@/components/home/HeroBackground"));
-import StatisticsBlock from "@/components/home/StatisticsBlock";
-import { AnimatePresence, motion } from "framer-motion";
+const StatisticsBlock = lazy(() => import("@/components/home/StatisticsBlock"));
 import SEOHead, { organizationSchema, websiteSchema } from "@/components/SEOHead";
 import { useLanguage } from "@/i18n/context";
-import GlowCTA from "@/components/GlowCTA";
+const GlowCTA = lazy(() => import("@/components/GlowCTA"));
 
 const ProblemSolutionSection = lazy(() => import("@/components/home/ProblemSolutionSection"));
 const ServicePillars = lazy(() => import("@/components/home/ServicePillars"));
@@ -141,25 +140,25 @@ const Index = () => {
               {t.heroTitle1}
               <br />
               <span className="relative inline-block min-w-[14ch] align-bottom" style={{ height: "1.25em" }}>
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={rotatingWords[wordIndex]}
-                    className="absolute left-0 right-0 bottom-0 text-center text-primary"
-                    initial={{ opacity: 0, y: 14 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -14 }}
-                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                {rotatingWords.map((word, i) => (
+                  <span
+                    key={word}
+                    className="absolute left-0 right-0 bottom-0 text-center text-primary transition-all duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+                    style={{
+                      opacity: i === wordIndex ? 1 : 0,
+                      transform: i === wordIndex ? "translateY(0)" : i === ((wordIndex - 1 + rotatingWords.length) % rotatingWords.length) ? "translateY(-14px)" : "translateY(14px)",
+                    }}
                   >
-                    {rotatingWords[wordIndex]}.
-                  </motion.span>
-                </AnimatePresence>
+                    {word}.
+                  </span>
+                ))}
                 <span className="invisible">{lang === "nl" ? "schaalbaarheid." : "scalability."}</span>
               </span>
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 sm:mb-8 leading-relaxed">{t.heroDesc}</p>
             <div className="flex flex-col items-center mb-3">
               <div className="flex flex-col sm:flex-row items-stretch sm:items-start justify-center gap-3 w-full sm:w-auto">
-                <GlowCTA to="/book">{t.cta}</GlowCTA>
+                <Suspense fallback={<Link to="/book" className="h-14 px-10 text-base font-semibold rounded-xl bg-primary text-primary-foreground inline-flex items-center justify-center gap-2.5"><span>{t.cta}</span><ArrowRight size={20} /></Link>}><GlowCTA to="/book">{t.cta}</GlowCTA></Suspense>
                 <div className="flex flex-col items-center">
                   <Button size="lg" variant="outline" className="w-full sm:w-auto" onClick={() => setVideoOpen(true)}>
                     <Play size={16} />{t.watchDemo}
@@ -208,7 +207,7 @@ const Index = () => {
               </DialogContent>
             </Dialog></Suspense>
 
-            <StatisticsBlock />
+            <Suspense fallback={null}><StatisticsBlock /></Suspense>
           </div>
 
           {/* Live Preview — below hero, centered */}

@@ -1,7 +1,7 @@
-import { createContext, ReactNode, useContext } from "react";
+import { createContext, lazy, ReactNode, Suspense, useContext } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import ChatWidget from "./ChatWidget";
+const ChatWidget = lazy(() => import("./ChatWidget"));
 
 const LayoutContext = createContext(false);
 
@@ -18,7 +18,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
         <Navbar />
         <main className="flex-1 pt-16">{children}</main>
         <Footer />
-        <ChatWidget />
+        <Suspense fallback={null}><ChatWidget /></Suspense>
       </div>
     </LayoutContext.Provider>
   );

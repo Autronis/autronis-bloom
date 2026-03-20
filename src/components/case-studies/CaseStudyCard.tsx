@@ -25,25 +25,15 @@ const AnimatedValue = ({ animation, fallback }: { animation: MetricAnimation; fa
 
 const MetricCard = ({ metric, index }: { metric: CaseMetric; index: number }) => {
   const Icon = metric.icon;
-  const [hovered, setHovered] = useState(false);
   const isPositive = metric.change && !metric.change.startsWith("-");
   return (
     <motion.div
       className="relative overflow-hidden rounded-xl border border-primary/25 bg-gradient-to-br from-primary/[0.08] to-primary/[0.02] px-4 py-4 cursor-default group"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
       initial={{ opacity: 0, y: 24, scale: 0.92 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.6, delay: index * 0.12, ease: [0.23, 1, 0.32, 1] }}
-      whileHover={{ y: -5, borderColor: "hsl(174, 78%, 41%)" }}
     >
-      {/* Glow pulse background */}
-      <motion.div
-        className="absolute inset-0 rounded-xl bg-primary/10 blur-xl"
-        animate={{ opacity: hovered ? 0.5 : 0, scale: hovered ? 1.15 : 0.8 }}
-        transition={{ duration: 0.4 }}
-      />
       {/* Shimmer line */}
       <motion.div
         className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/70 to-transparent"
@@ -68,13 +58,9 @@ const MetricCard = ({ metric, index }: { metric: CaseMetric; index: number }) =>
         </motion.div>
       )}
       <div className="relative z-10 flex items-center gap-3.5">
-        <motion.div
-          className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center text-primary shrink-0 shadow-[0_0_12px_hsl(174_78%_41%/0.15)]"
-          animate={{ boxShadow: hovered ? "0 0 24px hsl(174, 78%, 41%, 0.35)" : "0 0 12px hsl(174, 78%, 41%, 0.15)" }}
-          transition={{ duration: 0.3 }}
-        >
+        <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center text-primary shrink-0 shadow-[0_0_12px_hsl(174_78%_41%/0.15)]">
           <Icon size={18} strokeWidth={2.5} />
-        </motion.div>
+        </div>
         <div className="min-w-0">
           <p className="text-lg font-extrabold text-foreground leading-tight tracking-tight">
             {metric.animation ? <AnimatedValue animation={metric.animation} fallback={metric.value} /> : metric.value}
@@ -226,7 +212,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
             </div>
             {cs.testimonial && (
               <div className="rounded-lg border border-primary/15 bg-primary/[0.03] p-5 space-y-3.5 transition-all duration-200 ease-out hover:scale-[1.015] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_0_16px_hsl(174_78%_41%/0.1)]">
-                <div className="flex items-center gap-0.5">{Array.from({ length: 5 }).map((_, s) => <Star key={s} size={14} className="text-primary fill-primary" />)}</div>
+                <div className="flex items-center gap-0.5">{Array.from({ length: 5 }).map((_, s) => <motion.div key={s} initial={{ opacity: 0, scale: 0 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.3, delay: s * 0.1 + 0.3, type: "spring", stiffness: 400 }}><Star size={14} className="text-primary fill-primary" /></motion.div>)}</div>
                 <p className="text-[13px] text-foreground/80 leading-[1.7] italic">"{cs.testimonial.quote}"</p>
                 <div className="flex items-center gap-3 pt-0.5">
                   {cs.testimonial.logo ? <img src={cs.testimonial.logo} alt={cs.testimonial.company} className="h-8 object-contain shrink-0" /> : <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><UserCircle size={20} className="text-primary/70" /></div>}

@@ -101,7 +101,7 @@ export const ProcessAutomationVisual = () => {
   const beltY = 128;
 
   return (
-    <div ref={ref}>{visible ? (
+    <div ref={ref} className="w-full h-full">{visible ? (
     <div className="relative w-full h-full min-h-[260px] flex items-center justify-center p-2">
       <svg viewBox="0 0 200 150" className="w-full h-full" style={{ overflow: "hidden" }}>
         {/* Gear A — clockwise */}
@@ -271,7 +271,7 @@ export const SystemIntegrationVisual = () => {
   const nodeW = 38, nodeH = 20;
 
   return (
-    <div ref={ref}>{visible ? (
+    <div ref={ref} className="w-full h-full">{visible ? (
     <div className="relative w-full h-full min-h-[260px] flex items-center justify-center p-2">
       <svg viewBox="0 0 200 150" className="w-full h-full">
         {/* Connection lines — only to hub */}
@@ -422,7 +422,7 @@ export const DataReportingVisual = () => {
   const bars = [30, 50, 38, 65, 48, 78, 55, 72, 42, 85, 60, 70];
 
   return (
-    <div ref={ref}>{visible ? (
+    <div ref={ref} className="w-full h-full">{visible ? (
     <div className="relative w-full h-full min-h-[320px] flex items-center justify-center p-2">
       <svg viewBox="0 0 200 160" className="w-full h-full">
         {/* Window */}

@@ -64,7 +64,7 @@ const GlowCTA = ({ to, children, size = "lg" }: GlowCTAProps) => {
     return (
       <Link
         to={to}
-        className={`relative ${h} ${px} ${textSize} font-semibold rounded-xl bg-primary text-primary-foreground inline-flex items-center gap-2.5 active:scale-[0.97] transition-transform duration-150`}
+        className={`relative ${h} ${px} ${textSize} font-semibold rounded-xl bg-primary text-primary-foreground inline-flex items-center justify-center gap-2.5 active:scale-[0.97] transition-transform duration-150`}
       >
         <span className="whitespace-nowrap">{children}</span>
         <ArrowRight size={size === "lg" ? 20 : 16} />

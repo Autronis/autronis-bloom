@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
 
-    <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ2XQK5SGF"></script>
+    <!-- Google Analytics 4 — deferred to not block rendering -->
+    <script defer src="https://www.googletagmanager.com/gtag/js?id=G-FZ2XQK5SGF"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-FZ2XQK5SGF');
+      gtag('config', 'G-FZ2XQK5SGF', { send_page_view: true });
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI Automation &amp; Workflow Automation | Autronis</title>
@@ -26,6 +26,7 @@
     
     <meta name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/jGuCioz4RiZhsbrp48Y8V64pkfh2/social-images/social-1772908597877-fce44f6f-95d8-436d-a7ab-6c5683d22897.webp">
 
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" href="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2" as="font" type="font/woff2" crossorigin />

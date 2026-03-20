@@ -86,15 +86,6 @@ const TimelineCard = ({ phase, index, isActive, hoveredIndex, onHover, onLeave, 
 
   return (
     <div onMouseEnter={canHover ? onHover : undefined} onMouseLeave={canHover ? onLeave : undefined} className="relative rounded-xl border border-border bg-card p-4 sm:p-6 cursor-pointer overflow-hidden" style={{ opacity: isAnyHovered && !isHovered ? 0.88 : 1, borderColor: isActive || isHovered ? "hsl(var(--primary) / 0.5)" : undefined, boxShadow: isActive || isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none", transition: "opacity 500ms ease-out, border-color 500ms ease-out, box-shadow 500ms ease-out" }}>
-      {/* Shimmer on activation */}
-      {isActive && (
-        <motion.div
-          className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent"
-          initial={{ x: "-100%" }}
-          animate={{ x: "100%" }}
-          transition={{ duration: 1, ease: "easeInOut" }}
-        />
-      )}
       {/* Rocket particles for step 05 */}
       {index === 4 && isActive && (
         <>

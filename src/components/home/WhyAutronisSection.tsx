@@ -56,20 +56,9 @@ const ReasonCard = ({ reason, index, hoveredIndex, onHover, onLeave, canHover, i
       onMouseEnter={canHover ? onHover : undefined} onMouseLeave={canHover ? onLeave : undefined}
       className="relative rounded-xl border border-border p-4 sm:p-6 overflow-hidden transition-all duration-200 ease-out bg-gradient-to-br from-primary/[0.06] to-card"
       style={{ transform: isHovered ? "scale(1.015) translateY(-2px)" : "none", opacity: isAnyHovered && !isHovered ? 0.88 : 1, borderColor: isHovered ? "hsl(var(--primary) / 0.5)" : undefined, boxShadow: isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none" }}>
-      {/* Shimmer line */}
-      {!isMobile && (
-      <motion.div
-        className="absolute top-0 left-0 right-0 h-[1px]"
-        style={{ background: "linear-gradient(90deg, transparent, hsl(174 78% 41% / 0.5), transparent)" }}
-        initial={{ x: "-100%" }}
-        whileInView={{ x: "100%" }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.2, delay: index * 0.1 + 0.3, ease: "easeInOut" }}
-      />
-      )}
       <div className="relative z-10">
         <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 shadow-[0_0_12px_hsl(174_78%_41%/0.15)]"><Icon size={18} strokeWidth={2.5} /></div>
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0"><Icon size={18} strokeWidth={2.5} /></div>
           <h3 className="font-semibold text-sm sm:text-base text-foreground">{reason.title}</h3>
         </div>
         <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{reason.description}</p>

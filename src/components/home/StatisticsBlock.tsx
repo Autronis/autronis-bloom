@@ -72,8 +72,8 @@ const CapabilityCard = ({ cap, icon: Icon, index, isAnyHovered, isHovered, onHov
       onMouseLeave={canHover ? onLeave : undefined}
       onMouseMove={canHover ? handleMouseMove : undefined}
       className={cardClass}
-      initial={{ opacity: 0, y: 20, scale: 0.92 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: index * 0.12 + 0.3, ease: [0.23, 1, 0.32, 1] }}
       style={{
         transform: showHover ? "scale(1.06) translateY(-6px)" : showDim ? "scale(0.97)" : "none",
@@ -85,13 +85,6 @@ const CapabilityCard = ({ cap, icon: Icon, index, isAnyHovered, isHovered, onHov
         transition: "all 0.3s cubic-bezier(0.23, 1, 0.32, 1)",
       }}
     >
-      {/* Shimmer line */}
-      <motion.div
-        className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent z-10"
-        initial={{ x: "-100%" }}
-        animate={{ x: "100%" }}
-        transition={{ duration: 1.2, delay: index * 0.2 + 0.8, ease: "easeInOut" }}
-      />
       {content}
     </motion.div>
   );

@@ -93,8 +93,8 @@ const CaseStudiesPreview = () => {
             <motion.div
               key={i}
               className="text-center rounded-lg border border-border bg-gradient-to-br from-primary/[0.06] to-card p-3"
-              initial={isMobile ? false : { opacity: 0, y: 20, scale: 0.95 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              initial={isMobile ? false : { opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
               viewport={{ once: true, amount: 0.5 }}
             >
@@ -111,16 +111,6 @@ const CaseStudiesPreview = () => {
               to={`/case-studies#case-${cs.caseIndex}`}
               className="group relative block rounded-xl border border-border bg-card p-6 sm:p-8 transition-all duration-300 hover:border-primary/40 hover:shadow-[0_0_24px_hsl(174_78%_41%/0.1)] overflow-hidden"
             >
-              {/* Shimmer line */}
-              {!isMobile && (
-              <motion.div
-                className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent"
-                initial={{ x: "-100%" }}
-                whileInView={{ x: "100%" }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
-                viewport={{ once: true, amount: 0.5 }}
-              />
-              )}
               <div className="flex items-center gap-2.5 mb-4">
                 <img src="/logo.png" alt="Autronis" className="h-5 w-5 object-contain opacity-90 shrink-0" />
                 <h3 className="text-lg sm:text-xl font-bold leading-snug">{cs.title}</h3>

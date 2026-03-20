@@ -2,6 +2,7 @@ import { useRef, useState, useCallback, useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface GlowCTAProps {
   to: string;
@@ -19,6 +20,7 @@ interface Particle {
 }
 
 const GlowCTA = ({ to, children, size = "lg" }: GlowCTAProps) => {
+  const isMobile = useIsMobile();
   const ref = useRef<HTMLAnchorElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [particles, setParticles] = useState<Particle[]>([]);
@@ -57,6 +59,18 @@ const GlowCTA = ({ to, children, size = "lg" }: GlowCTAProps) => {
   const h = size === "lg" ? "h-14" : "h-11";
   const px = size === "lg" ? "px-10" : "px-6";
   const textSize = size === "lg" ? "text-base" : "text-sm";
+
+  if (isMobile) {
+    return (
+      <Link
+        to={to}
+        className={`relative ${h} ${px} ${textSize} font-semibold rounded-xl bg-primary text-primary-foreground inline-flex items-center gap-2.5 active:scale-[0.97] transition-transform duration-150`}
+      >
+        <span className="whitespace-nowrap">{children}</span>
+        <ArrowRight size={size === "lg" ? 20 : 16} />
+      </Link>
+    );
+  }
 
   return (
     <motion.div

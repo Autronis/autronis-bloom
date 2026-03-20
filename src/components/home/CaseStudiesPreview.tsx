@@ -6,6 +6,28 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import AnimatedCounter from "@/components/home/AnimatedCounter";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useLanguage } from "@/i18n/context";
+import { useEffect, useRef, useState } from "react";
+
+const StarRating = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } }, { threshold: 0.5 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className="flex gap-0.5">
+      {Array.from({ length: 5 }).map((_, s) => (
+        <span key={s} className="inline-block transition-all duration-300" style={{ opacity: visible ? 1 : 0, transform: visible ? "scale(1)" : "scale(0)", transitionDelay: visible ? `${s * 100 + 300}ms` : "0ms" }}>
+          <Star size={13} className="fill-primary text-primary" />
+        </span>
+      ))}
+    </div>
+  );
+};
 
 interface CaseStudy {
   slug: string; title: string; description: string; results: string[]; caseIndex: number;
@@ -136,19 +158,7 @@ const CaseStudiesPreview = () => {
                 <div className="border-t border-border pt-4 mb-4">
                   <div className="flex items-center gap-2.5">
                     <img src={cs.trust.logoSrc} alt="" className="h-5 object-contain opacity-70 shrink-0" />
-                    <div className="flex gap-0.5">
-                      {[...Array(5)].map((_, si) => (
-                        <motion.div
-                          key={si}
-                          initial={isMobile ? false : { opacity: 0, scale: 0 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.3, delay: si * 0.1 + 0.3, type: "spring", stiffness: 400 }}
-                        >
-                          <Star size={13} className="fill-primary text-primary" />
-                        </motion.div>
-                      ))}
-                    </div>
+                    <StarRating />
                   </div>
                   {cs.trust.website && (
                     <span className="text-[11px] text-primary/60 mt-1.5 inline-block">

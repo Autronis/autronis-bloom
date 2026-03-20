@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { Workflow, Cable, BarChart3 } from "lucide-react";
 import { motion } from "framer-motion";
 import useCanHover from "@/hooks/use-can-hover";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { useLanguage } from "@/i18n/context";
 
 const text = {
@@ -23,6 +24,7 @@ const CapabilityCard = ({ cap, icon: Icon, index, isAnyHovered, isHovered, onHov
   cap: { title: string; description: string }; icon: React.ElementType; index: number;
   isAnyHovered: boolean; isHovered: boolean; onHover: () => void; onLeave: () => void; canHover: boolean;
 }) => {
+  const isMobile = useIsMobile();
   const [glowPos, setGlowPos] = useState({ x: 0, y: 0 });
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -38,7 +40,7 @@ const CapabilityCard = ({ cap, icon: Icon, index, isAnyHovered, isHovered, onHov
       onMouseLeave={canHover ? onLeave : undefined}
       onMouseMove={canHover ? handleMouseMove : undefined}
       className="relative rounded-xl border bg-gradient-to-br from-primary/[0.06] to-card p-3 sm:p-4 text-center overflow-hidden cursor-default"
-      initial={{ opacity: 0, y: 20, scale: 0.92 }}
+      initial={isMobile ? false : { opacity: 0, y: 20, scale: 0.92 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.6, delay: index * 0.12 + 0.3, ease: [0.23, 1, 0.32, 1] }}
       style={{
@@ -58,12 +60,14 @@ const CapabilityCard = ({ cap, icon: Icon, index, isAnyHovered, isHovered, onHov
         />
       )}
       {/* Shimmer line */}
+      {!isMobile && (
       <motion.div
         className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent z-10"
         initial={{ x: "-100%" }}
         animate={{ x: "100%" }}
         transition={{ duration: 1.2, delay: index * 0.2 + 0.8, ease: "easeInOut" }}
       />
+      )}
       {/* Bottom glow line */}
       <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent z-10" />
       <div className="relative z-10">

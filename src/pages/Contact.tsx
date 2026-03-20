@@ -10,6 +10,7 @@ import SEOHead from "@/components/SEOHead";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import { useLanguage } from "@/i18n/context";
 import { motion } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -99,6 +100,7 @@ const text = {
 const Contact = () => {
   const lang = useLanguage();
   const t = text[lang];
+  const isMobile = useIsMobile();
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -160,12 +162,13 @@ const Contact = () => {
             <ScrollRevealItem>
               <motion.div
                 className="relative rounded-xl border border-border bg-card p-6 overflow-hidden"
-                initial={{ opacity: 0, y: 24 }}
+                initial={isMobile ? false : { opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
                 {/* Shimmer line */}
+                {!isMobile && (
                 <motion.div
                   className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent"
                   initial={{ x: "-100%" }}
@@ -173,6 +176,7 @@ const Contact = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 1.2, ease: "easeInOut" }}
                 />
+                )}
                 {status === "sent" ? (
                   <div className="rounded-xl border border-primary/30 bg-primary/5 p-8 text-center">
                     <p className="text-lg font-semibold mb-2">{t.sent}</p>
@@ -216,7 +220,7 @@ const Contact = () => {
               <div className="flex flex-col justify-center space-y-6">
                 <motion.div
                   className="rounded-xl border border-border bg-gradient-to-br from-primary/[0.06] to-card p-6"
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={isMobile ? false : { opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0 }}
@@ -228,7 +232,7 @@ const Contact = () => {
                 </motion.div>
                 <motion.div
                   className="rounded-xl border border-border bg-gradient-to-br from-primary/[0.06] to-card p-6"
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={isMobile ? false : { opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.1 }}
@@ -243,7 +247,7 @@ const Contact = () => {
                 </motion.div>
                 <motion.div
                   className="space-y-1"
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={isMobile ? false : { opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.2 }}

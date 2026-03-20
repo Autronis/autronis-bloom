@@ -237,7 +237,7 @@ section {
   }
 }
 
-/* ── Mobile: disable hover glow/scale on phone (hero keeps only tap-active feedback) ── */
+/* ── Mobile: disable hover glow/scale and heavy paint on phone ── */
 @media (max-width: 767px) {
   main :where(a, button, [role="button"], [class*="card"], [class*="Card"], .werkstandaard-card):hover {
     transform: none !important;

@@ -2,6 +2,7 @@ import { Shield, Database, FileCheck, ShieldCheck, Lock, Globe, BrainCog, Eye, F
 import { useState } from "react";
 import { motion } from "framer-motion";
 import useCanHover from "@/hooks/use-can-hover";
+import { useIsMobile } from "@/hooks/use-mobile";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import { useLanguage } from "@/i18n/context";
 
@@ -42,10 +43,12 @@ const SecurityBlock = () => {
   const t = text[lang];
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const canHover = useCanHover();
+  const isMobile = useIsMobile();
 
   return (
     <section id="beveiliging" className="relative overflow-hidden border-t border-primary/10">
       {/* Animated shield background */}
+      {!isMobile && (
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
         <motion.div
           animate={{ scale: [1, 1.05, 1], rotate: [0, 1, -1, 0] }}
@@ -54,10 +57,11 @@ const SecurityBlock = () => {
           <Shield size={400} strokeWidth={0.5} />
         </motion.div>
       </div>
+      )}
       <div className="container mx-auto px-4 lg:px-8 py-10 sm:py-16 md:py-24 relative z-10">
         <ScrollReveal className="max-w-3xl mx-auto text-center mb-8 sm:mb-14 md:mb-20">
           <ScrollRevealItem>
-            <motion.div className="inline-flex items-center gap-2 mb-3 sm:mb-4" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}><motion.div animate={{ scale: [1, 1.15, 1] }} transition={{ duration: 3, repeat: Infinity }}><ShieldCheck size={16} className="text-primary" /></motion.div><p className="text-xs font-semibold tracking-widest uppercase text-primary">{t.label}</p></motion.div>
+            <motion.div className="inline-flex items-center gap-2 mb-3 sm:mb-4" initial={isMobile ? false : { opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>{!isMobile ? <motion.div animate={{ scale: [1, 1.15, 1] }} transition={{ duration: 3, repeat: Infinity }}><ShieldCheck size={16} className="text-primary" /></motion.div> : <ShieldCheck size={16} className="text-primary" />}<p className="text-xs font-semibold tracking-widest uppercase text-primary">{t.label}</p></motion.div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">{t.title}</h2>
             <p className="text-sm sm:text-base leading-relaxed text-muted-foreground max-w-2xl mx-auto">{t.desc}</p>
           </ScrollRevealItem>
@@ -72,13 +76,14 @@ const SecurityBlock = () => {
             return (
               <motion.div
                 key={layer.title}
-                initial={{ opacity: 0, y: 24, scale: 0.95 }}
+                initial={isMobile ? false : { opacity: 0, y: 24, scale: 0.95 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: i * 0.12, ease: "easeOut" }}
               >
                 <div className="rounded-xl sm:rounded-2xl border bg-gradient-to-br from-primary/[0.06] to-card overflow-hidden transition-all duration-200 ease-out relative" style={{ transform: isHovered ? "scale(1.01) translateY(-2px)" : "none", borderColor: isHovered ? `${layerColors[i]}50` : "hsl(var(--border))", boxShadow: isHovered ? `0 0 24px ${layerColors[i]}18` : "0 0 0 transparent" }} onMouseEnter={canHover ? () => setHoveredIndex(i) : undefined} onMouseLeave={canHover ? () => setHoveredIndex(null) : undefined}>
                   {/* Shimmer line */}
+                  {!isMobile && (
                   <motion.div
                     className="absolute top-[2px] left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent"
                     initial={{ x: "-100%" }}
@@ -86,6 +91,7 @@ const SecurityBlock = () => {
                     viewport={{ once: true }}
                     transition={{ duration: 1.2, delay: i * 0.12 + 0.3, ease: "easeInOut" }}
                   />
+                  )}
                   {/* Colored top accent */}
                   <div className="h-[2px]" style={{ background: `linear-gradient(to right, ${layerColors[i]}80, ${layerColors[i]}20, transparent)` }} />
                   {/* Bottom accent line */}
@@ -95,7 +101,7 @@ const SecurityBlock = () => {
                       <motion.div
                         className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center shrink-0 relative shadow-[0_0_12px_hsl(174_78%_41%/0.15)]"
                         style={{ backgroundColor: `${layerColors[i]}20` }}
-                        whileInView={{ scale: [0.8, 1.1, 1] }}
+                        whileInView={isMobile ? undefined : { scale: [0.8, 1.1, 1] }}
                         viewport={{ once: true }}
                         transition={{ delay: i * 0.15 + 0.3, duration: 0.4 }}
                       >
@@ -123,7 +129,7 @@ const SecurityBlock = () => {
                           <motion.li
                             key={point}
                             className="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm leading-relaxed"
-                            initial={{ opacity: 0, x: -10 }}
+                            initial={isMobile ? false : { opacity: 0, x: -10 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.15 + j * 0.05 + 0.3, duration: 0.3 }}
@@ -145,7 +151,7 @@ const SecurityBlock = () => {
 
         <motion.div
           className="mt-10 sm:mt-14 md:mt-16 text-center"
-          initial={{ opacity: 0 }}
+          initial={isMobile ? false : { opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}

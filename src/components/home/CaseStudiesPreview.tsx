@@ -4,6 +4,7 @@ import { ArrowRight, CheckCircle2, Star, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import AnimatedCounter from "@/components/home/AnimatedCounter";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { useLanguage } from "@/i18n/context";
 
 interface CaseStudy {
@@ -48,6 +49,7 @@ const CaseStudiesPreview = () => {
   const lang = useLanguage();
   const t = text[lang];
   const cs = t.case;
+  const isMobile = useIsMobile();
 
   return (
     <section className="py-10 sm:py-24 border-t border-border relative overflow-hidden">
@@ -69,7 +71,7 @@ const CaseStudiesPreview = () => {
             <motion.div
               key={i}
               className="text-center rounded-lg border border-border bg-gradient-to-br from-primary/[0.06] to-card p-3"
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              initial={isMobile ? false : { opacity: 0, y: 20, scale: 0.95 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
               viewport={{ once: true, amount: 0.5 }}
@@ -88,6 +90,7 @@ const CaseStudiesPreview = () => {
               className="group relative block rounded-xl border border-border bg-card p-6 sm:p-8 transition-all duration-300 hover:border-primary/40 hover:shadow-[0_0_24px_hsl(174_78%_41%/0.1)] overflow-hidden"
             >
               {/* Shimmer line */}
+              {!isMobile && (
               <motion.div
                 className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent"
                 initial={{ x: "-100%" }}
@@ -95,6 +98,7 @@ const CaseStudiesPreview = () => {
                 transition={{ duration: 1.5, ease: "easeInOut" }}
                 viewport={{ once: true, amount: 0.5 }}
               />
+              )}
               <div className="flex items-center gap-2.5 mb-4">
                 <img src="/logo.png" alt="Autronis" className="h-5 w-5 object-contain opacity-90 shrink-0" />
                 <h3 className="text-lg sm:text-xl font-bold leading-snug">{cs.title}</h3>
@@ -108,13 +112,13 @@ const CaseStudiesPreview = () => {
                     <motion.li
                       key={i}
                       className="flex items-start gap-2.5 text-sm text-muted-foreground leading-relaxed"
-                      initial={{ opacity: 0, x: -8 }}
+                      initial={isMobile ? false : { opacity: 0, x: -8 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.4, delay: i * 0.08, ease: "easeOut" }}
                       viewport={{ once: true, amount: 0.5 }}
                     >
                       <motion.div
-                        initial={{ scale: 0 }}
+                        initial={isMobile ? false : { scale: 0 }}
                         whileInView={{ scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.3, delay: i * 0.1 + 0.15, type: "spring", stiffness: 400 }}
@@ -136,7 +140,7 @@ const CaseStudiesPreview = () => {
                       {[...Array(5)].map((_, si) => (
                         <motion.div
                           key={si}
-                          initial={{ opacity: 0, scale: 0 }}
+                          initial={isMobile ? false : { opacity: 0, scale: 0 }}
                           whileInView={{ opacity: 1, scale: 1 }}
                           viewport={{ once: true }}
                           transition={{ duration: 0.3, delay: si * 0.1 + 0.3, type: "spring", stiffness: 400 }}

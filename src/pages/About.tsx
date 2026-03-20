@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import fotoSyb from "@/assets/foto_syb.jpg";
 import fotoSem from "@/assets/foto_sem.jpg";
 import { useLanguage } from "@/i18n/context";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 if (typeof window !== "undefined") {
   const sybPreload = new Image();
@@ -111,6 +112,7 @@ const TeamCard = ({ member, photo }: { member: { name: string; role: string; des
 const About = () => {
   const lang = useLanguage();
   const t = text[lang];
+  const isMobile = useIsMobile();
 
   return (
     <>
@@ -120,16 +122,16 @@ const About = () => {
           <div className="max-w-3xl mx-auto text-center mb-20">
             <p className="text-sm font-semibold text-primary mb-3 tracking-wide uppercase">{t.label}</p>
             <h1 className="text-3xl sm:text-4xl font-bold mb-6 leading-tight">{t.title} <span className="text-gradient">{t.titleHighlight}</span></h1>
-            <motion.p initial={{ opacity: 0, filter: "blur(6px)" }} whileInView={{ opacity: 1, filter: "blur(0px)" }} transition={{ duration: 0.6, delay: 0 }} viewport={{ once: true }} className="text-sm text-muted-foreground leading-relaxed mb-4">{t.intro1}</motion.p>
-            <motion.p initial={{ opacity: 0, filter: "blur(6px)" }} whileInView={{ opacity: 1, filter: "blur(0px)" }} transition={{ duration: 0.6, delay: 0.15 }} viewport={{ once: true }} className="text-sm text-muted-foreground leading-relaxed mb-4">{t.intro2}</motion.p>
-            <motion.p initial={{ opacity: 0, filter: "blur(6px)" }} whileInView={{ opacity: 1, filter: "blur(0px)" }} transition={{ duration: 0.6, delay: 0.3 }} viewport={{ once: true }} className="text-sm text-muted-foreground leading-relaxed">{t.intro3}</motion.p>
+            <motion.p initial={isMobile ? false : { opacity: 0, filter: "blur(6px)" }} whileInView={{ opacity: 1, filter: "blur(0px)" }} transition={{ duration: 0.6, delay: 0 }} viewport={{ once: true }} className="text-sm text-muted-foreground leading-relaxed mb-4">{t.intro1}</motion.p>
+            <motion.p initial={isMobile ? false : { opacity: 0, filter: "blur(6px)" }} whileInView={{ opacity: 1, filter: "blur(0px)" }} transition={{ duration: 0.6, delay: 0.15 }} viewport={{ once: true }} className="text-sm text-muted-foreground leading-relaxed mb-4">{t.intro2}</motion.p>
+            <motion.p initial={isMobile ? false : { opacity: 0, filter: "blur(6px)" }} whileInView={{ opacity: 1, filter: "blur(0px)" }} transition={{ duration: 0.6, delay: 0.3 }} viewport={{ once: true }} className="text-sm text-muted-foreground leading-relaxed">{t.intro3}</motion.p>
           </div>
           <div className="mb-20">
             <h2 className="text-2xl font-bold mb-8">{t.valuesTitle}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {t.values.map((v, i) => { const VIcon = valueIcons[i]; return (
-                <motion.div key={v.title} initial={{ opacity: 0, y: 24, scale: 0.95 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }} viewport={{ once: true }} className="relative rounded-xl border border-border bg-gradient-to-br from-primary/[0.06] to-card p-6 overflow-hidden">
-                  <motion.div initial={{ x: "-100%" }} whileInView={{ x: "100%" }} transition={{ duration: 1.2, delay: i * 0.1 + 0.3, ease: "easeInOut" }} viewport={{ once: true }} className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
+                <motion.div key={v.title} initial={isMobile ? false : { opacity: 0, y: 24, scale: 0.95 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }} viewport={{ once: true }} className="relative rounded-xl border border-border bg-gradient-to-br from-primary/[0.06] to-card p-6 overflow-hidden">
+                  {!isMobile && (<motion.div initial={{ x: "-100%" }} whileInView={{ x: "100%" }} transition={{ duration: 1.2, delay: i * 0.1 + 0.3, ease: "easeInOut" }} viewport={{ once: true }} className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent" />)}
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 shadow-[0_0_12px_hsl(174_78%_41%/0.15)]"><VIcon size={20} /></div>
                   <h3 className="font-semibold mb-2">{v.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{v.description}</p>

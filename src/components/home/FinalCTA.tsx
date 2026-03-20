@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { useLanguage } from "@/i18n/context";
 import GlowCTA from "@/components/GlowCTA";
 
@@ -24,6 +25,7 @@ const FinalCTA = () => {
   const t = text[lang];
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -177,7 +179,7 @@ const FinalCTA = () => {
       {/* Radial gradient glow behind text */}
       <motion.div
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/[0.04] blur-[120px] pointer-events-none"
-        initial={{ opacity: 0 }}
+        initial={isMobile ? false : { opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1.2 }}
@@ -186,7 +188,7 @@ const FinalCTA = () => {
       <div className="container mx-auto px-4 lg:px-8 text-center relative z-10">
         <motion.h2
           className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 max-w-2xl mx-auto"
-          initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+          initial={isMobile ? false : { opacity: 0, y: 30, filter: "blur(8px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
@@ -195,7 +197,7 @@ const FinalCTA = () => {
         </motion.h2>
         <motion.p
           className="text-sm sm:text-base md:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-xl mx-auto"
-          initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+          initial={isMobile ? false : { opacity: 0, y: 30, filter: "blur(8px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.15, ease: [0.23, 1, 0.32, 1] }}
@@ -203,7 +205,7 @@ const FinalCTA = () => {
           {t.desc}
         </motion.p>
         <motion.div
-          initial={{ opacity: 0, y: 20, scale: 0.95 }}
+          initial={isMobile ? false : { opacity: 0, y: 20, scale: 0.95 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3, type: "spring", stiffness: 200 }}

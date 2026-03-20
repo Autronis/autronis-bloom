@@ -3,13 +3,18 @@
   <head>
     <meta charset="UTF-8" />
 
-    <!-- Google Analytics 4 — deferred to not block rendering -->
-    <script defer src="https://www.googletagmanager.com/gtag/js?id=G-FZ2XQK5SGF"></script>
+    <!-- Google Analytics 4 — loaded after page interactive -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-FZ2XQK5SGF', { send_page_view: true });
+      gtag('config', 'G-FZ2XQK5SGF');
+      // Load GA after page is interactive
+      window.addEventListener('load', function() {
+        var s = document.createElement('script');
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-FZ2XQK5SGF';
+        document.head.appendChild(s);
+      });
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI Automation &amp; Workflow Automation | Autronis</title>

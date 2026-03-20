@@ -2,8 +2,12 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Play } from "lucide-react";
 import { useState, useEffect, useRef, lazy, Suspense } from "react";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import HeroBackground from "@/components/home/HeroBackground";
+import { useIsMobile } from "@/hooks/use-mobile";
+
+const Dialog = lazy(() => import("@/components/ui/dialog").then(m => ({ default: m.Dialog })));
+const DialogContent = lazy(() => import("@/components/ui/dialog").then(m => ({ default: m.DialogContent })));
+const DialogTitle = lazy(() => import("@/components/ui/dialog").then(m => ({ default: m.DialogTitle })));
+const HeroBackground = lazy(() => import("@/components/home/HeroBackground"));
 import StatisticsBlock from "@/components/home/StatisticsBlock";
 import { AnimatePresence, motion } from "framer-motion";
 import SEOHead, { organizationSchema, websiteSchema } from "@/components/SEOHead";
@@ -95,7 +99,7 @@ const Index = () => {
     mediaQuery.addEventListener("change", handleViewportChange);
 
     const isDesktop = window.innerWidth >= 768;
-    const preloadTimer = setTimeout(preloadSections, isDesktop ? 500 : 1000);
+    const preloadTimer = setTimeout(preloadSections, isDesktop ? 500 : 3000);
 
     let interval: ReturnType<typeof setInterval> | undefined;
     const startDelay = setTimeout(() => {
@@ -129,7 +133,7 @@ const Index = () => {
         }]}
       />
       <section className="hero-section relative min-h-[75vh] sm:min-h-[85vh] flex flex-col items-center justify-center pt-20 sm:pt-28">
-        <HeroBackground />
+        <Suspense fallback={null}><HeroBackground /></Suspense>
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase">{t.tagline}</p>
@@ -165,7 +169,7 @@ const Index = () => {
               </div>
             </div>
 
-            <Dialog
+            <Suspense fallback={null}><Dialog
               open={videoOpen}
               onOpenChange={(open) => {
                 if (!open && videoRef.current) { videoRef.current.pause(); videoRef.current.currentTime = 0; }
@@ -202,7 +206,7 @@ const Index = () => {
                   )}
                 </div>
               </DialogContent>
-            </Dialog>
+            </Dialog></Suspense>
 
             <StatisticsBlock />
           </div>

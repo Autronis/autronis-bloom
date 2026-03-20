@@ -189,7 +189,7 @@ const CaseStudyCard = ({ cs, index }: { cs: CaseStudy; index: number }) => {
       <div id={`case-${index}`} className="rounded-xl border border-border bg-card overflow-hidden scroll-mt-24">
         <div className="p-5 sm:p-6 pb-0 sm:pb-0">
           <div className="flex items-center gap-3 mb-4"><img src="/logo.png" alt="Autronis" className="w-11 h-11 object-contain shrink-0" /><h2 className="text-lg sm:text-xl font-bold text-foreground flex items-center gap-2">{cs.title}<Icon size={16} className="text-primary/60" /></h2></div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">{cs.metrics.map((m, j) => (
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 mb-5">{cs.metrics.map((m, j) => (
               <MetricCard key={j} metric={m} index={j} />
           ))}</div>
         </div>

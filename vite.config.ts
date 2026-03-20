@@ -30,5 +30,6 @@ export default defineConfig(({ mode }) => ({
     },
     cssCodeSplit: true,
     target: "es2020",
+    cssMinify: true,
   },
 }));

@@ -179,7 +179,7 @@ const ProcessSection = () => {
           </div>
           <div className="space-y-4 sm:space-y-8">
             {t.phases.map((phase, i) => (
-              <div key={phase.step} ref={(el) => (cardRefs.current[i] = el)} className="flex items-start gap-3 sm:gap-6" style={{ scrollMarginTop: "100px" }}>
+              <div key={phase.step} ref={(el) => (cardRefs.current[i] = el)} className="flex items-start gap-2 sm:gap-6" style={{ scrollMarginTop: "100px" }}>
                 <div className="hidden sm:flex flex-col items-center shrink-0 relative z-10">
                   <div className="w-10 h-10 rounded-full border-2 flex items-center justify-center text-xs font-bold" style={{ borderColor: activeIndex >= i ? "hsl(var(--primary))" : "hsl(var(--border))", backgroundColor: activeIndex >= i ? "hsl(var(--primary))" : "hsl(var(--card))", color: activeIndex >= i ? "hsl(var(--primary-foreground))" : "hsl(var(--muted-foreground))", boxShadow: activeIndex >= i ? "0 0 16px hsl(174 78% 41% / 0.45)" : "none", transition: "all 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)" }}>{phase.step}</div>
                 </div>

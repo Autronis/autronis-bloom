@@ -69,7 +69,7 @@ const ROIPreview = () => {
         </ScrollReveal>
 
         <ScrollReveal><ScrollRevealItem>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 max-w-5xl mx-auto mb-4 sm:mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 max-w-5xl mx-auto mb-4 sm:mb-6">
             {t.blocks.map((block, i) => {
               const Icon = blockIcons[i];
               return (

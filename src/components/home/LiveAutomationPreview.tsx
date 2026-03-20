@@ -237,7 +237,7 @@ const LiveAutomationPreview = ({ embedded = false }: { embedded?: boolean }) => 
                 </span>
               </div>
               {/* Progress bar */}
-              <div className="w-24 h-1 rounded-full bg-border overflow-hidden">
+              <div className="w-16 sm:w-24 h-1 rounded-full bg-border overflow-hidden">
                 <motion.div
                   className="h-full bg-primary rounded-full"
                   animate={{

@@ -74,7 +74,7 @@ const TransformCard = ({ item, index, pIcon: PIcon, sIcon: SIcon, isTransformed 
       transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
     />
 
-    <div className="relative z-0 p-4 sm:p-5 flex items-center gap-4">
+    <div className="relative z-0 p-3 sm:p-4 md:p-5 flex items-center gap-4">
       {/* Icon morphs */}
       <div className="relative w-10 h-10 sm:w-11 sm:h-11 shrink-0">
         <AnimatePresence mode="wait">
@@ -113,7 +113,7 @@ const TransformCard = ({ item, index, pIcon: PIcon, sIcon: SIcon, isTransformed 
             >
               <div className="flex items-center gap-2">
                 <X size={12} className="text-rose-400/50 shrink-0" />
-                <p className="text-sm sm:text-base font-semibold text-foreground/60 truncate">{item.problem}</p>
+                <p className="text-sm sm:text-base font-semibold text-foreground/60 break-words">{item.problem}</p>
               </div>
             </motion.div>
           ) : (
@@ -125,7 +125,7 @@ const TransformCard = ({ item, index, pIcon: PIcon, sIcon: SIcon, isTransformed 
             >
               <div className="flex items-center gap-2">
                 <Check size={12} className="text-emerald-400 shrink-0" />
-                <p className="text-sm sm:text-base font-bold text-foreground truncate">{item.solution}</p>
+                <p className="text-sm sm:text-base font-bold text-foreground break-words">{item.solution}</p>
               </div>
             </motion.div>
           )}

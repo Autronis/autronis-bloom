@@ -100,7 +100,7 @@ const Navbar = () => {
         className="container mx-auto flex items-center justify-between transition-all duration-300 ease-out"
         style={{ height: compactNavbar ? "52px" : "64px", padding: "0 1rem" }}
       >
-        <Link to="/" className="flex items-center gap-2 shrink-0 min-w-[130px]">
+        <Link to="/" className="flex items-center gap-2 shrink-0 min-w-[110px] sm:min-w-[130px]">
           <img src="/logo.png" alt="Autronis" width={130} height={32} className="w-auto transform-gpu transition-all duration-300 ease-out" style={{ height: compactNavbar ? "26px" : "32px" }} loading="eager" decoding="async" />
           <span className="font-bold tracking-tight transition-all duration-300 ease-out" style={{ fontSize: compactNavbar ? "0.92rem" : "1.05rem" }}>Autronis</span>
         </Link>

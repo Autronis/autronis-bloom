@@ -102,8 +102,8 @@ export const ProcessAutomationVisual = () => {
 
   return (
     <div ref={ref}>{visible ? (
-    <div className="relative w-full h-full">
-      <svg viewBox="0 0 200 150" className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid meet" style={{ overflow: "hidden" }}>
+    <div className="w-full h-full min-h-[400px]">
+      <svg viewBox="0 0 200 150" className="w-full h-full" style={{ overflow: "hidden" }}>
         {/* Gear A — clockwise */}
         <g transform={`translate(${cxA},${cyA})`}>
           <motion.g
@@ -243,7 +243,7 @@ export const ProcessAutomationVisual = () => {
         ))}
       </svg>
     </div>
-    ) : <div style={{ aspectRatio: "4/3" }} />}</div>
+    ) : <div className="min-h-[400px]" />}</div>
   );
 };
 
@@ -272,8 +272,8 @@ export const SystemIntegrationVisual = () => {
 
   return (
     <div ref={ref}>{visible ? (
-    <div className="relative w-full h-full">
-      <svg viewBox="0 0 200 150" className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid meet">
+    <div className="w-full h-full min-h-[400px]">
+      <svg viewBox="0 0 200 150" className="w-full h-full">
         {/* Connection lines — only to hub */}
         {connections.map(([from, to], i) => (
           <g key={`conn-${i}`}>
@@ -412,7 +412,7 @@ export const SystemIntegrationVisual = () => {
         ))}
       </svg>
     </div>
-    ) : <div style={{ aspectRatio: "4/3" }} />}</div>
+    ) : <div className="min-h-[400px]" />}</div>
   );
 };
 
@@ -423,8 +423,8 @@ export const DataReportingVisual = () => {
 
   return (
     <div ref={ref}>{visible ? (
-    <div className="relative w-full h-full">
-      <svg viewBox="0 0 200 160" className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid meet">
+    <div className="w-full h-full min-h-[400px]">
+      <svg viewBox="0 0 200 160" className="w-full h-full">
         {/* Window */}
         <rect x="10" y="8" width="180" height="144" rx="4" fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.5" strokeOpacity="0.25" />
         <rect x="10" y="8" width="180" height="14" rx="4" fill="hsl(174, 78%, 41%)" fillOpacity="0.04" />
@@ -583,6 +583,6 @@ export const DataReportingVisual = () => {
         <text x="27" y="139.5" fontSize="3.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.3" fontFamily="monospace">Live · Updated 2s ago</text>
       </svg>
     </div>
-    ) : <div style={{ aspectRatio: "4/3" }} />}</div>
+    ) : <div className="min-h-[400px]" />}</div>
   );
 };

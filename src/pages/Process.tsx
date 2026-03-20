@@ -302,14 +302,14 @@ const Process = () => {
         {/* Intro block */}
         <ScrollReveal className="max-w-3xl mx-auto mb-20">
           <ScrollRevealItem>
-            <motion.div className="rounded-xl border border-border bg-card p-8 sm:p-10 relative overflow-hidden" whileHover={{ scale: 1.015, borderColor: "hsl(174, 78%, 41%, 0.5)", boxShadow: "0 4px 24px hsl(174, 78%, 41%, 0.08)", transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] } }}>
+            <motion.div className="rounded-xl border border-border bg-gradient-to-br from-primary/[0.06] to-card p-8 sm:p-10 relative overflow-hidden" whileHover={{ scale: 1.015, borderColor: "hsl(174, 78%, 41%, 0.5)", boxShadow: "0 4px 24px hsl(174, 78%, 41%, 0.08)", transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] } }}>
               <h2 className="text-xl sm:text-2xl font-bold mb-3">{t.approachTitle}</h2>
               <p className="text-sm text-muted-foreground leading-relaxed mb-6">{t.approachDesc}</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {t.introPoints.map((point, idx) => {
                   const PIco = introIcons[idx];
                   return (
-                    <motion.div key={point.text} className="flex items-start gap-3 p-4 rounded-lg bg-card border border-border" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1, duration: 0.4 }} whileHover={{ borderColor: "hsl(174, 78%, 41%, 0.5)", boxShadow: "0 0 14px hsl(174, 78%, 41%, 0.1)" }}>
+                    <motion.div key={point.text} className="flex items-start gap-3 p-4 rounded-lg bg-gradient-to-br from-primary/[0.06] to-card border border-border" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1, duration: 0.4 }} whileHover={{ borderColor: "hsl(174, 78%, 41%, 0.5)", boxShadow: "0 0 14px hsl(174, 78%, 41%, 0.1)" }}>
                       <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 mt-0.5"><PIco size={16} /></div>
                       <div><p className="text-sm font-bold mb-0.5">{point.text}</p><p className="text-xs text-muted-foreground leading-relaxed">{point.sub}</p></div>
                     </motion.div>
@@ -327,7 +327,7 @@ const Process = () => {
               {t.securityClaims.map((claim, idx) => {
                 const SIco = securityIcons[idx];
                 return (
-                  <motion.div key={claim.title} className="rounded-xl border border-border bg-card p-5 group cursor-default" initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.08, duration: 0.4 }} whileHover={{ scale: 1.04, borderColor: "hsl(174, 78%, 41%, 0.5)", boxShadow: "0 0 16px hsl(174, 78%, 41%, 0.1), 0 0 8px hsl(174, 78%, 41%, 0.06)" }} style={{ transition: "all 300ms ease-out" }}>
+                  <motion.div key={claim.title} className="rounded-xl border border-border bg-gradient-to-br from-primary/[0.06] to-card p-5 group cursor-default" initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.08, duration: 0.4 }} whileHover={{ scale: 1.04, borderColor: "hsl(174, 78%, 41%, 0.5)", boxShadow: "0 0 16px hsl(174, 78%, 41%, 0.1), 0 0 8px hsl(174, 78%, 41%, 0.06)" }} style={{ transition: "all 300ms ease-out" }}>
                     <div className="flex items-center gap-2.5 sm:block mb-2 sm:mb-0">
                       <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:bg-primary/15 transition-colors sm:mb-3"><SIco size={16} className="sm:w-[18px] sm:h-[18px]" /></div>
                       <h4 className="text-sm font-bold sm:hidden">{claim.title}</h4>

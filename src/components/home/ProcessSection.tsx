@@ -85,7 +85,7 @@ const TimelineCard = ({ phase, index, isActive, hoveredIndex, onHover, onLeave, 
   const iconAnim = iconAnimations[index];
 
   return (
-    <div onMouseEnter={canHover ? onHover : undefined} onMouseLeave={canHover ? onLeave : undefined} className="relative rounded-xl border border-border bg-card p-4 sm:p-6 cursor-pointer overflow-hidden" style={{ opacity: isAnyHovered && !isHovered ? 0.88 : 1, borderColor: isActive || isHovered ? "hsl(var(--primary) / 0.5)" : undefined, boxShadow: isActive || isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none", transition: "opacity 500ms ease-out, border-color 500ms ease-out, box-shadow 500ms ease-out" }}>
+    <div onMouseEnter={canHover ? onHover : undefined} onMouseLeave={canHover ? onLeave : undefined} className="relative rounded-xl border border-border bg-gradient-to-br from-primary/[0.06] to-card p-4 sm:p-6 cursor-pointer overflow-hidden" style={{ opacity: isAnyHovered && !isHovered ? 0.88 : 1, borderColor: isActive || isHovered ? "hsl(var(--primary) / 0.5)" : undefined, boxShadow: isActive || isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none", transition: "opacity 500ms ease-out, border-color 500ms ease-out, box-shadow 500ms ease-out" }}>
       {/* Rocket particles for step 05 */}
       {index === 4 && isActive && (
         <>

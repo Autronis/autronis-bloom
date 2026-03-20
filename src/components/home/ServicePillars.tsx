@@ -55,7 +55,7 @@ const ServiceCard = ({ s, i, hoveredIndex, setHoveredIndex, canHover, whatDelive
 
   return (
     <ScrollReveal key={s.title}><ScrollRevealItem>
-      <div className="group/card rounded-xl border border-border bg-card transition-all duration-200 ease-out overflow-hidden" style={{ borderColor: isHovered ? "hsl(var(--primary) / 0.5)" : undefined, boxShadow: isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none" }} onMouseEnter={canHover ? () => setHoveredIndex(i) : undefined} onMouseLeave={canHover ? () => setHoveredIndex(null) : undefined}>
+      <div className="group/card rounded-xl border border-border bg-gradient-to-br from-primary/[0.06] to-card transition-all duration-200 ease-out overflow-hidden" style={{ borderColor: isHovered ? "hsl(var(--primary) / 0.5)" : undefined, boxShadow: isHovered ? "0 0 20px hsl(174 78% 41% / 0.12)" : "none" }} onMouseEnter={canHover ? () => setHoveredIndex(i) : undefined} onMouseLeave={canHover ? () => setHoveredIndex(null) : undefined}>
         <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} items-start md:items-center gap-0`}>
           <div className="flex-1 px-4 py-5 sm:px-5 sm:py-10 flex flex-col justify-start">
             <div className="flex items-center gap-3 mb-1"><div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0"><Icon size={18} /></div><h3 className="text-lg sm:text-2xl font-bold">{s.title}</h3></div>
@@ -64,7 +64,7 @@ const ServiceCard = ({ s, i, hoveredIndex, setHoveredIndex, canHover, whatDelive
               <p className="text-xs font-semibold text-primary mb-1.5 tracking-widest uppercase">{whatDeliver}</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                 {s.impact.map((item) => (
-                  <div key={item.title} className="flex items-start gap-2 p-2 sm:p-2.5 rounded-lg bg-card border border-border transition-all duration-200 ease-out group cursor-default md:hover:scale-[1.03] md:hover:border-primary/50">
+                  <div key={item.title} className="flex items-start gap-2 p-2 sm:p-2.5 rounded-lg bg-gradient-to-br from-primary/[0.06] to-card border border-border transition-all duration-200 ease-out group cursor-default md:hover:scale-[1.03] md:hover:border-primary/50">
                     <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors"><CheckCircle2 size={12} className="text-primary" /></div>
                     <div><p className="text-sm font-semibold text-foreground leading-tight">{item.title}</p><p className="text-xs text-muted-foreground mt-0.5">{item.sub}</p></div>
                   </div>

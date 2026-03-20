@@ -79,7 +79,7 @@ const FAQSection = () => {
             <Accordion type="single" collapsible className="space-y-2">
               {tx.faqs.map((faq, i) => (
                 <ScrollRevealItem key={i}>
-                  <AccordionItem value={`faq-${i}`} className="border border-border bg-card rounded-lg px-3 sm:px-5 data-[state=open]:border-primary/40 data-[state=open]:shadow-[0_0_20px_hsl(174_78%_41%/0.1)] data-[state=open]:bg-primary/[0.02] hover:border-primary/20 transition-all duration-300 hover:shadow-[0_0_12px_hsl(174_78%_41%/0.06)]">
+                  <AccordionItem value={`faq-${i}`} className="border border-border bg-gradient-to-br from-primary/[0.06] to-card rounded-lg px-3 sm:px-5 data-[state=open]:border-primary/40 data-[state=open]:shadow-[0_0_20px_hsl(174_78%_41%/0.1)] data-[state=open]:bg-primary/[0.02] hover:border-primary/20 transition-all duration-300 hover:shadow-[0_0_12px_hsl(174_78%_41%/0.06)]">
                     <AccordionTrigger className="text-left text-sm font-medium text-foreground hover:no-underline hover:text-primary transition-colors duration-200">{faq.q}</AccordionTrigger>
                     <AccordionContent className="text-sm text-foreground/80 leading-relaxed">
                       {faq.a}
@@ -105,7 +105,7 @@ const FAQSection = () => {
             <Accordion type="single" collapsible className="space-y-2">
               {tx.extraFaqs.map((faq, i) => (
                 <ScrollRevealItem key={`extra-${i}`}>
-                  <AccordionItem value={`extra-faq-${i}`} className="border border-border bg-card rounded-lg px-3 sm:px-5 data-[state=open]:border-primary/40 data-[state=open]:shadow-[0_0_20px_hsl(174_78%_41%/0.1)] data-[state=open]:bg-primary/[0.02] hover:border-primary/20 transition-all duration-300 hover:shadow-[0_0_12px_hsl(174_78%_41%/0.06)]">
+                  <AccordionItem value={`extra-faq-${i}`} className="border border-border bg-gradient-to-br from-primary/[0.06] to-card rounded-lg px-3 sm:px-5 data-[state=open]:border-primary/40 data-[state=open]:shadow-[0_0_20px_hsl(174_78%_41%/0.1)] data-[state=open]:bg-primary/[0.02] hover:border-primary/20 transition-all duration-300 hover:shadow-[0_0_12px_hsl(174_78%_41%/0.06)]">
                     <AccordionTrigger className="text-left text-sm font-medium text-foreground hover:no-underline hover:text-primary transition-colors duration-200">{faq.q}</AccordionTrigger>
                     <AccordionContent className="text-sm text-foreground/80 leading-relaxed">{faq.a}</AccordionContent>
                   </AccordionItem>
@@ -117,7 +117,7 @@ const FAQSection = () => {
           {/* Still have questions CTA */}
           <ScrollReveal className="mt-12">
             <ScrollRevealItem>
-              <div className="rounded-xl border border-border bg-card/50 p-6 text-center">
+              <div className="rounded-xl border border-border bg-gradient-to-br from-primary/[0.06] to-card/50 p-6 text-center">
                 <p className="text-sm font-medium text-foreground mb-1">
                   {lang === "nl" ? "Staat je vraag er niet bij?" : "Can't find your answer?"}
                 </p>

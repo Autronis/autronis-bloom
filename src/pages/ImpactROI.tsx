@@ -69,7 +69,7 @@ const ImpactROI = () => {
             {t.factors.map((factor, idx) => (
               <ScrollReveal key={factor.title} className="h-full">
                 <ScrollRevealItem className="h-full">
-                  <motion.div className="rounded-xl border border-border bg-card p-5 flex flex-col h-full" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.06, duration: 0.4 }} whileHover={{ scale: 1.015, y: -2, borderColor: "hsl(174, 78%, 41%, 0.5)", transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] } }}>
+                  <motion.div className="rounded-xl border border-border bg-gradient-to-br from-primary/[0.06] to-card p-5 flex flex-col h-full" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.06, duration: 0.4 }} whileHover={{ scale: 1.015, y: -2, borderColor: "hsl(174, 78%, 41%, 0.5)", transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] } }}>
                     <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
                       <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0"><factor.icon size={18} /></div>
                       <h3 className="text-sm font-semibold text-foreground">{factor.title}</h3>
@@ -87,7 +87,7 @@ const ImpactROI = () => {
 
           <ScrollReveal className="max-w-5xl mx-auto">
             <ScrollRevealItem>
-              <div className="rounded-xl border border-border/50 bg-card/50 p-6">
+              <div className="rounded-xl border border-border/50 bg-gradient-to-br from-primary/[0.06] to-card/50 p-6">
                 <p className="text-sm font-medium text-foreground mb-4">{t.basedOn}</p>
                 <div className="flex flex-wrap gap-x-8 gap-y-2.5">
                   {t.basedItems.map((item) => (

@@ -267,7 +267,7 @@ const PillarCard = ({
 
   return (
     <div ref={sectionRef} className="scroll-mt-28">
-      <div className="rounded-xl border border-border bg-card/80 backdrop-blur-sm p-6 sm:p-8 transition-all duration-300 ease-out hover:scale-[1.01] hover:border-primary/40">
+      <div className="rounded-xl border border-border bg-gradient-to-br from-primary/[0.06] to-card/80 backdrop-blur-sm p-6 sm:p-8 transition-all duration-300 ease-out hover:scale-[1.01] hover:border-primary/40">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
             <Icon size={18} />
@@ -280,7 +280,7 @@ const PillarCard = ({
           <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">{tx.whatDeliver}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             {pillar.impact.map((item, idx) => (
-              <motion.div key={item.title} className="flex items-start gap-2.5 p-2.5 rounded-lg bg-card border border-primary/15 hover:border-primary/30 transition-colors duration-200 group" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.08, duration: 0.4 }}>
+              <motion.div key={item.title} className="flex items-start gap-2.5 p-2.5 rounded-lg bg-gradient-to-br from-primary/[0.06] to-card border border-primary/15 hover:border-primary/30 transition-colors duration-200 group" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.08, duration: 0.4 }}>
                 <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
                   <CheckCircle2 size={12} className="text-primary" />
                 </div>
@@ -506,7 +506,7 @@ const Services = () => {
               {tx.qualItems.map((item, idx) => {
                 const QIcon = qualIcons[idx];
                 return (
-                  <motion.div key={item.title} className="p-5 rounded-2xl border border-border bg-card cursor-default flex flex-col" initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.07, duration: 0.45 }} whileHover={{ scale: 1.015, y: -2, borderColor: "hsl(174, 78%, 41%, 0.5)", boxShadow: "0 4px 24px hsl(174, 78%, 33%, 0.08)" }}>
+                  <motion.div key={item.title} className="p-5 rounded-2xl border border-border bg-gradient-to-br from-primary/[0.06] to-card cursor-default flex flex-col" initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.07, duration: 0.45 }} whileHover={{ scale: 1.015, y: -2, borderColor: "hsl(174, 78%, 41%, 0.5)", boxShadow: "0 4px 24px hsl(174, 78%, 33%, 0.08)" }}>
                     <div className="flex items-center gap-2.5 sm:block mb-2 sm:mb-0">
                       <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4"><QIcon size={18} className="sm:w-5 sm:h-5" /></div>
                       <p className="text-sm font-semibold text-foreground sm:hidden">{item.title}</p>

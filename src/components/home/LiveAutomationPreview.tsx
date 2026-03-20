@@ -130,7 +130,7 @@ const LiveAutomationPreview = ({ embedded = false }: { embedded?: boolean }) => 
           onViewportLeave={() => setIsVisible(false)}
           viewport={{ margin: "-100px" }}
         >
-          <div className="rounded-xl border border-border bg-card overflow-hidden">
+          <div className="rounded-xl border border-border bg-gradient-to-br from-primary/[0.06] to-card overflow-hidden">
             {/* Terminal-style header */}
             <div className="px-4 py-2.5 border-b border-border flex items-center gap-2">
               <div className="flex gap-1.5">

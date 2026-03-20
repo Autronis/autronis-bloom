@@ -101,7 +101,7 @@ const CaseStudyDetail = () => {
               <Link to={`/case-studies/${nextSlug}`} className="inline-flex items-center gap-1 text-sm text-primary hover:underline">{nextCase} <ArrowRight size={14} /></Link>
             </div>
             <div className="lg:sticky lg:top-24 self-start">
-              <div className="rounded-xl border border-border bg-card p-6 space-y-4">
+              <div className="rounded-xl border border-border bg-gradient-to-br from-primary/[0.06] to-card p-6 space-y-4">
                 <h3 className="font-semibold">{sidebarTitle}</h3>
                 <p className="text-sm text-muted-foreground">{sidebarDesc}</p>
                 <Button asChild className="w-full"><Link to="/book">{sidebarBtn} <ArrowRight size={14} /></Link></Button>

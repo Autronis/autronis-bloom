@@ -55,7 +55,7 @@ const TransformCard = ({ item, index, pIcon: PIcon, sIcon: SIcon, isTransformed 
   isTransformed: boolean;
 }) => (
   <motion.div
-    className="relative overflow-hidden rounded-xl border border-border bg-card"
+    className="relative overflow-hidden rounded-xl border border-border bg-gradient-to-br from-primary/[0.06] to-card"
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}

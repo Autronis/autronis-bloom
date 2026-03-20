@@ -109,7 +109,7 @@ const WerkstandaardSection = ({ reasons, labels }: { reasons: typeof text.en.rea
         {reasons.map((reason, i) => {
           const Icon = reasonIcons[i];
           return (
-            <div key={reason.title} className="werkstandaard-card rounded-lg border border-border bg-card p-4 flex gap-3 items-start">
+            <div key={reason.title} className="werkstandaard-card rounded-lg border border-border bg-gradient-to-br from-primary/[0.06] to-card p-4 flex gap-3 items-start">
               <div className="werkstandaard-icon-wrap shrink-0 mt-0.5">
                 <Icon size={20} className="text-primary shrink-0 relative z-10" />
               </div>
@@ -212,7 +212,7 @@ const Team = () => {
               {t.pillars.map((block, i) => {
                 const Icon = pillarIcons[i];
                 return (
-                  <div key={block.title} className="rounded-lg border border-border bg-card p-3 text-center flex flex-col h-full transition-all duration-[280ms] ease-out cursor-default hover:scale-[1.05] hover:-translate-y-1 hover:border-primary/60 hover:shadow-[0_0_15px_hsl(174_78%_41%/0.25),0_0_30px_hsl(174_78%_41%/0.1),inset_0_0_15px_hsl(174_78%_41%/0.05)]">
+                  <div key={block.title} className="rounded-lg border border-border bg-gradient-to-br from-primary/[0.06] to-card p-3 text-center flex flex-col h-full transition-all duration-[280ms] ease-out cursor-default hover:scale-[1.05] hover:-translate-y-1 hover:border-primary/60 hover:shadow-[0_0_15px_hsl(174_78%_41%/0.25),0_0_30px_hsl(174_78%_41%/0.1),inset_0_0_15px_hsl(174_78%_41%/0.05)]">
                     <div className="w-7 h-7 rounded-md bg-primary/10 flex items-center justify-center text-primary mb-2 mx-auto"><Icon size={14} /></div>
                     <p className="font-semibold text-xs mb-0.5">{block.title}</p>
                     <p className="text-[11px] text-muted-foreground leading-relaxed flex-1">{block.text}</p>

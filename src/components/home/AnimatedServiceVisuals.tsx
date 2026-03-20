@@ -102,7 +102,7 @@ export const ProcessAutomationVisual = () => {
 
   return (
     <div ref={ref}>{visible ? (
-    <div className="relative w-full h-full min-h-[260px] flex items-center justify-center p-2">
+    <div className="relative w-full h-full min-h-[380px] flex items-center justify-center">
       <svg viewBox="0 0 200 150" className="w-full h-full" style={{ overflow: "hidden" }}>
         {/* Gear A — clockwise */}
         <g transform={`translate(${cxA},${cyA})`}>
@@ -272,7 +272,7 @@ export const SystemIntegrationVisual = () => {
 
   return (
     <div ref={ref}>{visible ? (
-    <div className="relative w-full h-full min-h-[260px] flex items-center justify-center p-2">
+    <div className="relative w-full h-full min-h-[380px] flex items-center justify-center">
       <svg viewBox="0 0 200 150" className="w-full h-full">
         {/* Connection lines — only to hub */}
         {connections.map(([from, to], i) => (
@@ -423,7 +423,7 @@ export const DataReportingVisual = () => {
 
   return (
     <div ref={ref}>{visible ? (
-    <div className="relative w-full h-full min-h-[320px] flex items-center justify-center p-2">
+    <div className="relative w-full h-full min-h-[380px] flex items-center justify-center">
       <svg viewBox="0 0 200 160" className="w-full h-full">
         {/* Window */}
         <rect x="10" y="8" width="180" height="144" rx="4" fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.5" strokeOpacity="0.25" />

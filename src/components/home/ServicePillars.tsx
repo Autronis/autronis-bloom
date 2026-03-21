@@ -77,7 +77,7 @@ const ServiceCard = ({ s, i, hoveredIndex, setHoveredIndex, canHover, whatDelive
               <a href="#security" className="group inline-flex items-center gap-1 text-[11px] text-foreground/70 hover:text-primary/70 transition-colors mt-1">{securityLink}<ArrowRight size={10} className="transition-transform duration-200 group-hover:translate-x-1" /></a>
             </div>
           </div>
-          <div className="flex-1 relative overflow-hidden bg-transparent flex items-center justify-center min-h-[180px] md:min-h-0 aspect-[4/3] md:aspect-auto md:self-stretch">
+          <div className="w-full md:flex-1 relative overflow-hidden bg-transparent flex items-center justify-center min-h-[180px] md:min-h-0 aspect-[4/3] md:aspect-auto md:self-stretch">
             {(() => { const Visual = serviceVisuals[i]; return <Visual />; })()}
           </div>
         </div>

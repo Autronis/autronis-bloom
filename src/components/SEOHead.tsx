@@ -45,10 +45,12 @@ const OG_IMAGE = "https://autronis.com/og-image.png";
 
 const SEOHead = ({ title, description, path, type = "website", jsonLd }: SEOHeadProps) => {
   const lang = useLanguage();
-  const BASE_URL = lang === "nl" ? "https://autronis.nl" : "https://autronis.com";
+  const CANONICAL_BASE = "https://autronis.com";
+  const DISPLAY_URL = lang === "nl" ? "https://autronis.nl" : "https://autronis.com";
 
   useEffect(() => {
-    const fullUrl = `${BASE_URL}${path}`;
+    const canonicalUrl = `${CANONICAL_BASE}${path}`;
+    const displayUrl = `${DISPLAY_URL}${path}`;
 
     // Title
     document.title = title;
@@ -57,8 +59,8 @@ const SEOHead = ({ title, description, path, type = "website", jsonLd }: SEOHead
     setMeta("name", "description", description);
     setMeta("name", "robots", "index, follow");
 
-    // Canonical
-    setLink("canonical", fullUrl);
+    // Canonical — always points to .com
+    setLink("canonical", canonicalUrl);
 
     // Hreflang
     setHreflang("en", `https://autronis.com${path}`);
@@ -68,7 +70,7 @@ const SEOHead = ({ title, description, path, type = "website", jsonLd }: SEOHead
     // Open Graph
     setMeta("property", "og:title", title);
     setMeta("property", "og:description", description);
-    setMeta("property", "og:url", fullUrl);
+    setMeta("property", "og:url", canonicalUrl);
     setMeta("property", "og:type", type);
     setMeta("property", "og:image", OG_IMAGE);
     setMeta("property", "og:site_name", "Autronis");

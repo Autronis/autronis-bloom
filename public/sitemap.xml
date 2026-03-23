@@ -3,9 +3,6 @@
   <url><loc>https://autronis.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://autronis.com/services</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://autronis.com/case-studies</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://autronis.com/case-studies/logistiek-bedrijf</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://autronis.com/case-studies/saas-scale-up</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://autronis.com/case-studies/e-commerce-groei</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://autronis.com/demo</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://autronis.com/book</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://autronis.com/about</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>

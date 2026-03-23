@@ -101,7 +101,7 @@ const SEOHead = ({ title, description, path, type = "website", jsonLd }: SEOHead
       const s = document.getElementById(scriptId);
       if (s) s.remove();
     };
-  }, [title, description, path, type, jsonLd, lang, BASE_URL]);
+  }, [title, description, path, type, jsonLd, lang, CANONICAL_BASE, DISPLAY_URL]);
 
   return null;
 };

@@ -131,34 +131,46 @@ const Index = () => {
           publisher: { "@type": "Organization", name: "Autronis" },
         }]}
       />
-      <section className="hero-section relative min-h-[70vh] sm:min-h-[85vh] flex flex-col justify-center pt-20 sm:pt-24">
+      <section className="hero-section relative min-h-[70vh] sm:min-h-[90vh] flex flex-col justify-center pt-16 sm:pt-20">
         <Suspense fallback={null}><HeroBackground /></Suspense>
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left — Text */}
-            <div className="text-center lg:text-left">
-              <p className="text-xs font-semibold text-primary mb-4 tracking-widest uppercase">{t.tagline}</p>
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.1] tracking-tight mb-4 sm:mb-6">
-                {t.heroTitle1}
-                <br />
-                <span className="relative inline-block min-w-[10ch] lg:min-w-[12ch] align-bottom" style={{ height: "1.15em" }}>
-                  {rotatingWords.map((word, i) => (
-                    <span
-                      key={word}
-                      className="absolute left-0 right-0 bottom-0 text-center lg:text-left text-primary transition-all duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
-                      style={{
-                        opacity: i === wordIndex ? 1 : 0,
-                        transform: i === wordIndex ? "translateY(0)" : i === ((wordIndex - 1 + rotatingWords.length) % rotatingWords.length) ? "translateY(-14px)" : "translateY(14px)",
-                      }}
-                    >
-                      {word}.
-                    </span>
-                  ))}
-                  <span className="invisible">{lang === "nl" ? "schaalbaarheid." : "scalability."}</span>
+          {/* Top row: Title full width */}
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[1.05] tracking-tight mb-8 sm:mb-12 text-center lg:text-left">
+            {t.heroTitle1}
+            <br />
+            <span className="relative inline-block min-w-[10ch] lg:min-w-[12ch] align-bottom" style={{ height: "1.15em" }}>
+              {rotatingWords.map((word, i) => (
+                <span
+                  key={word}
+                  className="absolute left-0 right-0 bottom-0 text-center lg:text-left text-primary transition-all duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+                  style={{
+                    opacity: i === wordIndex ? 1 : 0,
+                    transform: i === wordIndex ? "translateY(0)" : i === ((wordIndex - 1 + rotatingWords.length) % rotatingWords.length) ? "translateY(-14px)" : "translateY(14px)",
+                  }}
+                >
+                  {word}.
                 </span>
-              </h1>
-              <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-lg mx-auto lg:mx-0 mb-6 sm:mb-8 leading-relaxed">{t.heroDesc}</p>
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-start justify-center lg:justify-start gap-3 w-full sm:w-auto mb-6">
+              ))}
+              <span className="invisible">{lang === "nl" ? "schaalbaarheid." : "scalability."}</span>
+            </span>
+          </h1>
+
+          {/* Bottom row: Visual left, description + CTAs right */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            {/* Left — 3D Visual */}
+            <div className="hidden lg:flex items-center justify-center">
+              <img
+                src="/logo-square-dark.png"
+                alt="Autronis"
+                className="w-full max-w-sm xl:max-w-md drop-shadow-2xl"
+                fetchPriority="high"
+              />
+            </div>
+
+            {/* Right — Description + CTAs */}
+            <div className="text-center lg:text-left">
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-lg mx-auto lg:mx-0 mb-6 sm:mb-8 leading-relaxed">{t.heroDesc}</p>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-start justify-center lg:justify-start gap-3 w-full sm:w-auto">
                 <GlowCTA to="/book">{t.cta}</GlowCTA>
                 <div className="flex flex-col items-center sm:items-start">
                   <Button size="lg" variant="outline" className="w-full sm:w-auto" onClick={() => setVideoOpen(true)}>
@@ -167,17 +179,6 @@ const Index = () => {
                   <p className="text-[11px] italic text-muted-foreground mt-1.5">{t.watchDemoSub}</p>
                 </div>
               </div>
-              <StatisticsBlock />
-            </div>
-
-            {/* Right — 3D Visual / Logo */}
-            <div className="hidden lg:flex items-center justify-center">
-              <img
-                src="/logo-square-dark.png"
-                alt="Autronis"
-                className="w-full max-w-md xl:max-w-lg drop-shadow-2xl"
-                fetchPriority="high"
-              />
             </div>
           </div>
 
@@ -220,12 +221,6 @@ const Index = () => {
               </div>
             </DialogContent>
           </Dialog></Suspense>
-
-          {/* Live Preview — below hero */}
-          <div className="max-w-md mx-auto lg:mx-0 mt-8 sm:mt-10 mb-8 sm:mb-12">
-            <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase text-center lg:text-left">Live Preview</p>
-            <Suspense fallback={<SectionFallback />}><LiveAutomationPreview embedded /></Suspense>
-          </div>
 
         </div>
       </section>

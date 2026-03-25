@@ -125,11 +125,9 @@ const FAQSection = () => {
                 <p className="text-xs text-muted-foreground mb-4">
                   {lang === "nl" ? "Neem direct contact op of plan een gratis Automation Scan." : "Get in touch directly or schedule a free Automation Scan."}
                 </p>
-                <div className="flex flex-col sm:flex-row gap-2 justify-center">
-                  <GlowCTA variant="dark" size="default" to="/contact">{lang === "nl" ? "Stel je vraag" : "Ask your question"}</GlowCTA>
-                  <Link to="/book" className="inline-flex items-center justify-center gap-1.5 text-sm px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
-                    {lang === "nl" ? "Plan een Automation Scan" : "Schedule Automation Scan"} <ArrowRight size={14} />
-                  </Link>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <GlowCTA variant="dark" to="/contact">{lang === "nl" ? "Stel je vraag" : "Ask your question"}</GlowCTA>
+                  <GlowCTA to="/book">{lang === "nl" ? "Plan een Automation Scan" : "Schedule Automation Scan"}</GlowCTA>
                 </div>
               </div>
             </ScrollRevealItem>

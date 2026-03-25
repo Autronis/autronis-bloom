@@ -175,7 +175,7 @@ const Index = () => {
               <p className="text-base sm:text-lg md:text-xl text-foreground/70 max-w-lg mx-auto lg:mx-0 mb-6 sm:mb-8 leading-relaxed">{t.heroDesc}</p>
               <div className="flex flex-col sm:flex-row items-stretch sm:items-start justify-center lg:justify-start gap-3 w-full sm:w-auto">
                 <GlowCTA to="/book">{t.cta}</GlowCTA>
-                <GlowCTA onClick={() => setVideoOpen(true)}><Play size={16} className="inline mr-1" />{t.watchDemo}</GlowCTA>
+                <GlowCTA variant="dark" onClick={() => setVideoOpen(true)}><Play size={16} className="inline mr-1" />{t.watchDemo}</GlowCTA>
               </div>
             </div>
           </div>

@@ -9,6 +9,7 @@ interface GlowCTAProps {
   onClick?: () => void;
   children: React.ReactNode;
   size?: "default" | "lg";
+  variant?: "primary" | "dark";
 }
 
 interface Particle {
@@ -20,7 +21,7 @@ interface Particle {
   delay: number;
 }
 
-const GlowCTA = ({ to, onClick, children, size = "lg" }: GlowCTAProps) => {
+const GlowCTA = ({ to, onClick, children, size = "lg", variant = "primary" }: GlowCTAProps) => {
   const isMobile = useIsMobile();
   const ref = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -60,8 +61,13 @@ const GlowCTA = ({ to, onClick, children, size = "lg" }: GlowCTAProps) => {
   const h = size === "lg" ? "h-14" : "h-11";
   const px = size === "lg" ? "px-10" : "px-6";
   const textSize = size === "lg" ? "text-base" : "text-sm";
+  const isDark = variant === "dark";
+  const bg = isDark ? "bg-gray-900" : "bg-primary";
+  const text = isDark ? "text-white" : "text-primary-foreground";
+  const glowHsl = isDark ? "0 0% 40%" : "174 78% 41%";
+  const shadowHsl = isDark ? "0_0%_40%" : "174_78%_41%";
 
-  const btnClass = `relative ${h} ${px} ${textSize} font-semibold rounded-xl bg-primary text-primary-foreground inline-flex items-center justify-center gap-2.5 active:scale-[0.97] transition-transform duration-150`;
+  const btnClass = `relative ${h} ${px} ${textSize} font-semibold rounded-xl ${bg} ${text} inline-flex items-center justify-center gap-2.5 active:scale-[0.97] transition-transform duration-150`;
 
   if (isMobile) {
     if (to) {
@@ -90,7 +96,7 @@ const GlowCTA = ({ to, onClick, children, size = "lg" }: GlowCTAProps) => {
       <motion.div
         className="absolute -inset-1 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
         style={{
-          background: "radial-gradient(circle, hsl(174 78% 41% / 0.4), transparent 70%)",
+          background: `radial-gradient(circle, hsl(${glowHsl} / 0.4), transparent 70%)`,
         }}
         animate={{
           scale: isHovered ? [1, 1.1, 1] : 1,
@@ -102,7 +108,7 @@ const GlowCTA = ({ to, onClick, children, size = "lg" }: GlowCTAProps) => {
       <motion.div
         className="absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{
-          background: "linear-gradient(135deg, hsl(174 78% 41% / 0.6), hsl(174 78% 41% / 0.1), hsl(174 78% 41% / 0.6))",
+          background: `linear-gradient(135deg, hsl(${glowHsl} / 0.6), hsl(${glowHsl} / 0.1), hsl(${glowHsl} / 0.6))`,
           backgroundSize: "200% 200%",
         }}
         animate={isHovered ? {
@@ -117,7 +123,7 @@ const GlowCTA = ({ to, onClick, children, size = "lg" }: GlowCTAProps) => {
         ref={ref as React.Ref<HTMLAnchorElement>}
         to={to}
         onMouseMove={handleMouseMove}
-        className={`relative ${h} ${px} ${textSize} font-semibold rounded-xl bg-primary text-primary-foreground inline-flex items-center gap-2.5 overflow-hidden transition-all duration-300 group-hover:shadow-[0_0_30px_hsl(174_78%_41%/0.35)] active:scale-[0.97]`}
+        className={`relative ${h} ${px} ${textSize} font-semibold rounded-xl ${bg} ${text} inline-flex items-center gap-2.5 overflow-hidden transition-all duration-300 group-hover:shadow-[0_0_30px_hsl(${shadowHsl}/0.35)] active:scale-[0.97]`}
       >
         {/* Mouse-following spotlight */}
         {isHovered && (
@@ -183,7 +189,7 @@ const GlowCTA = ({ to, onClick, children, size = "lg" }: GlowCTAProps) => {
         ref={ref as React.Ref<HTMLButtonElement>}
         onClick={onClick}
         onMouseMove={handleMouseMove}
-        className={`relative ${h} ${px} ${textSize} font-semibold rounded-xl bg-primary text-primary-foreground inline-flex items-center gap-2.5 overflow-hidden transition-all duration-300 group-hover:shadow-[0_0_30px_hsl(174_78%_41%/0.35)] active:scale-[0.97]`}
+        className={`relative ${h} ${px} ${textSize} font-semibold rounded-xl ${bg} ${text} inline-flex items-center gap-2.5 overflow-hidden transition-all duration-300 group-hover:shadow-[0_0_30px_hsl(${shadowHsl}/0.35)] active:scale-[0.97]`}
       >
         {isHovered && (
           <motion.div

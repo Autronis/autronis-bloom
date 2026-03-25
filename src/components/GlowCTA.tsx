@@ -5,8 +5,9 @@ import { ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface GlowCTAProps {
-  to: string;
-  children: string;
+  to?: string;
+  onClick?: () => void;
+  children: React.ReactNode;
   size?: "default" | "lg";
 }
 
@@ -19,9 +20,9 @@ interface Particle {
   delay: number;
 }
 
-const GlowCTA = ({ to, children, size = "lg" }: GlowCTAProps) => {
+const GlowCTA = ({ to, onClick, children, size = "lg" }: GlowCTAProps) => {
   const isMobile = useIsMobile();
-  const ref = useRef<HTMLAnchorElement>(null);
+  const ref = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [particles, setParticles] = useState<Particle[]>([]);
   const mouseX = useMotionValue(0);
@@ -60,15 +61,22 @@ const GlowCTA = ({ to, children, size = "lg" }: GlowCTAProps) => {
   const px = size === "lg" ? "px-10" : "px-6";
   const textSize = size === "lg" ? "text-base" : "text-sm";
 
+  const btnClass = `relative ${h} ${px} ${textSize} font-semibold rounded-xl bg-primary text-primary-foreground inline-flex items-center justify-center gap-2.5 active:scale-[0.97] transition-transform duration-150`;
+
   if (isMobile) {
+    if (to) {
+      return (
+        <Link to={to} className={btnClass}>
+          <span className="whitespace-nowrap">{children}</span>
+          <ArrowRight size={size === "lg" ? 20 : 16} />
+        </Link>
+      );
+    }
     return (
-      <Link
-        to={to}
-        className={`relative ${h} ${px} ${textSize} font-semibold rounded-xl bg-primary text-primary-foreground inline-flex items-center justify-center gap-2.5 active:scale-[0.97] transition-transform duration-150`}
-      >
+      <button onClick={onClick} className={btnClass}>
         <span className="whitespace-nowrap">{children}</span>
         <ArrowRight size={size === "lg" ? 20 : 16} />
-      </Link>
+      </button>
     );
   }
 
@@ -104,8 +112,9 @@ const GlowCTA = ({ to, children, size = "lg" }: GlowCTAProps) => {
       />
 
       {/* Main button */}
+      {to ? (
       <Link
-        ref={ref}
+        ref={ref as React.Ref<HTMLAnchorElement>}
         to={to}
         onMouseMove={handleMouseMove}
         className={`relative ${h} ${px} ${textSize} font-semibold rounded-xl bg-primary text-primary-foreground inline-flex items-center gap-2.5 overflow-hidden transition-all duration-300 group-hover:shadow-[0_0_30px_hsl(174_78%_41%/0.35)] active:scale-[0.97]`}
@@ -169,6 +178,49 @@ const GlowCTA = ({ to, children, size = "lg" }: GlowCTAProps) => {
           <ArrowRight size={size === "lg" ? 20 : 16} />
         </motion.span>
       </Link>
+      ) : (
+      <button
+        ref={ref as React.Ref<HTMLButtonElement>}
+        onClick={onClick}
+        onMouseMove={handleMouseMove}
+        className={`relative ${h} ${px} ${textSize} font-semibold rounded-xl bg-primary text-primary-foreground inline-flex items-center gap-2.5 overflow-hidden transition-all duration-300 group-hover:shadow-[0_0_30px_hsl(174_78%_41%/0.35)] active:scale-[0.97]`}
+      >
+        {isHovered && (
+          <motion.div
+            className="absolute pointer-events-none w-32 h-32 -translate-x-1/2 -translate-y-1/2"
+            style={{
+              x: glowX,
+              y: glowY,
+              background: "radial-gradient(circle, rgba(255,255,255,0.15), transparent 60%)",
+            }}
+          />
+        )}
+        {particles.map((p) => (
+          <motion.span
+            key={p.id}
+            className="absolute rounded-full bg-white/60 pointer-events-none"
+            style={{ width: p.size, height: p.size, left: p.x, top: p.y }}
+            initial={{ opacity: 0, y: 0 }}
+            animate={{ opacity: [0, 1, 0], y: [0, -20 - Math.random() * 20], x: [0, (Math.random() - 0.5) * 15] }}
+            transition={{ duration: p.duration, delay: p.delay, repeat: Infinity }}
+          />
+        ))}
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.12) 45%, rgba(255,255,255,0.12) 55%, transparent 60%)", backgroundSize: "200% 100%" }}
+          animate={isHovered ? { backgroundPosition: ["-100% 0%", "200% 0%"] } : { backgroundPosition: "-100% 0%" }}
+          transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2 }}
+        />
+        <span className="relative z-10 whitespace-nowrap">{children}</span>
+        <motion.span
+          className="relative z-10"
+          animate={isHovered ? { x: [0, 4, 0] } : { x: 0 }}
+          transition={{ duration: 1, repeat: Infinity }}
+        >
+          <ArrowRight size={size === "lg" ? 20 : 16} />
+        </motion.span>
+      </button>
+      )}
     </motion.div>
   );
 };

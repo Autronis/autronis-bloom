@@ -62,8 +62,8 @@ const GlowCTA = ({ to, onClick, children, size = "lg", variant = "primary" }: Gl
   const px = size === "lg" ? "px-10" : "px-6";
   const textSize = size === "lg" ? "text-base" : "text-sm";
   const isDark = variant === "dark";
-  const bg = isDark ? "bg-gray-900 border border-primary/40" : "bg-primary";
-  const text = isDark ? "text-white" : "text-primary-foreground";
+  const bg = isDark ? "bg-card border border-primary/40" : "bg-primary";
+  const text = isDark ? "text-foreground" : "text-primary-foreground";
   const glowHsl = "174 78% 41%";
   const shadowHsl = "174_78%_41%";
 

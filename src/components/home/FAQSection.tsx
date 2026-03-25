@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import GlowCTA from "@/components/GlowCTA";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import { useLanguage } from "@/i18n/context";
@@ -125,9 +126,7 @@ const FAQSection = () => {
                   {lang === "nl" ? "Neem direct contact op of plan een gratis Automation Scan." : "Get in touch directly or schedule a free Automation Scan."}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-2 justify-center">
-                  <Link to="/contact" className="inline-flex items-center justify-center gap-1.5 text-sm px-4 py-2 rounded-lg border border-border hover:border-primary/30 text-foreground hover:text-primary transition-colors">
-                    {lang === "nl" ? "Stel je vraag" : "Ask your question"} <ArrowRight size={14} />
-                  </Link>
+                  <GlowCTA variant="dark" size="default" to="/contact">{lang === "nl" ? "Stel je vraag" : "Ask your question"}</GlowCTA>
                   <Link to="/book" className="inline-flex items-center justify-center gap-1.5 text-sm px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
                     {lang === "nl" ? "Plan een Automation Scan" : "Schedule Automation Scan"} <ArrowRight size={14} />
                   </Link>

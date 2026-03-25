@@ -522,7 +522,7 @@ const Services = () => {
 
           <div className="mt-16 text-center pt-12">
             <p className="text-sm text-muted-foreground mb-4">{tx.roiRef}</p>
-            <Button asChild variant="outline" size="lg"><Link to="/impact-roi#roi-scan">{tx.roiCta} <ArrowRight size={18} /></Link></Button>
+            <GlowCTA variant="dark" to="/impact-roi#roi-scan">{tx.roiCta}</GlowCTA>
           </div>
 
           <div className="text-center mt-16">

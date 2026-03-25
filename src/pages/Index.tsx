@@ -133,11 +133,11 @@ const Index = () => {
           publisher: { "@type": "Organization", name: "Autronis" },
         }]}
       />
-      <section className="hero-section relative min-h-screen flex flex-col justify-start pt-24 sm:pt-28">
+      <section className="hero-section relative min-h-[85vh] flex flex-col justify-start pt-20 sm:pt-24">
         <Suspense fallback={null}><HeroBackground /></Suspense>
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           {/* Top row: Title full width */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[1.05] tracking-tight mb-8 sm:mb-12 text-center lg:text-left">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.05] tracking-tight mb-6 sm:mb-10 text-center lg:text-left">
             {t.heroTitle1}
             <br />
             <span className="relative inline-block min-w-[10ch] lg:min-w-[12ch] align-bottom" style={{ height: "1.15em" }}>

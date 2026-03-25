@@ -41,6 +41,7 @@ const text = {
     rotatingWords: ["growth", "processes", "systems", "data flows", "scalability"],
     tagline: "System Architecture & Automation",
     heroTitle1: "Bring structure to your",
+    heroPunch: "Less manual work. More impact.",
     heroDesc: "We transform processes into smart systems that remain scalable and manageable.",
     cta: "Schedule an Automation Scan",
     watchDemo: "Watch 2 min demo",
@@ -54,6 +55,7 @@ const text = {
     rotatingWords: ["groei", "processen", "systemen", "datastromen", "schaalbaarheid"],
     tagline: "Systeemarchitectuur & Automatisering",
     heroTitle1: "Breng structuur in je",
+    heroPunch: "Minder handwerk. Meer impact.",
     heroDesc: "Wij transformeren processen naar slimme systemen die schaalbaar en beheersbaar blijven.",
     cta: "Plan een Automation Scan",
     watchDemo: "Bekijk 2 min demo",
@@ -131,11 +133,11 @@ const Index = () => {
           publisher: { "@type": "Organization", name: "Autronis" },
         }]}
       />
-      <section className="hero-section relative min-h-[70vh] sm:min-h-[90vh] flex flex-col justify-center pt-16 sm:pt-20">
+      <section className="hero-section relative min-h-screen flex flex-col justify-center pt-16 sm:pt-20">
         <Suspense fallback={null}><HeroBackground /></Suspense>
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           {/* Top row: Title full width */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[1.05] tracking-tight mb-8 sm:mb-12 text-center lg:text-left">
+          <h1 className="text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-black leading-[1.05] tracking-tight mb-8 sm:mb-14 text-center lg:text-left">
             {t.heroTitle1}
             <br />
             <span className="relative inline-block min-w-[10ch] lg:min-w-[12ch] align-bottom" style={{ height: "1.15em" }}>
@@ -169,7 +171,8 @@ const Index = () => {
 
             {/* Right — Description + CTAs */}
             <div className="text-center lg:text-left">
-              <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-lg mx-auto lg:mx-0 mb-6 sm:mb-8 leading-relaxed">{t.heroDesc}</p>
+              <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground max-w-lg mx-auto lg:mx-0 mb-3">{t.heroPunch}</p>
+              <p className="text-base sm:text-lg md:text-xl text-foreground/70 max-w-lg mx-auto lg:mx-0 mb-6 sm:mb-8 leading-relaxed">{t.heroDesc}</p>
               <div className="flex flex-col sm:flex-row items-stretch sm:items-start justify-center lg:justify-start gap-3 w-full sm:w-auto">
                 <GlowCTA to="/book">{t.cta}</GlowCTA>
                 <div className="flex flex-col items-center sm:items-start">

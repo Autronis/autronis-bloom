@@ -52,8 +52,19 @@ const CTAAnimation = () => {
     if (!loaded || !visible) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
+
+    // Parse site background color to RGB once
+    const bgHsl = getComputedStyle(document.documentElement).getPropertyValue("--background").trim();
+    const bgColor = `hsl(${bgHsl})`;
+    const tmp = document.createElement("canvas");
+    tmp.width = 1; tmp.height = 1;
+    const tmpCtx = tmp.getContext("2d")!;
+    tmpCtx.fillStyle = bgColor;
+    tmpCtx.fillRect(0, 0, 1, 1);
+    const bgPx = tmpCtx.getImageData(0, 0, 1, 1).data;
+    const bgR = bgPx[0], bgG = bgPx[1], bgB = bgPx[2];
 
     const frames = framesRef.current;
     frameIndexRef.current = 0;
@@ -74,7 +85,9 @@ const CTAAnimation = () => {
       const img = frames[frameIndexRef.current];
       if (!img) return;
 
-      ctx.clearRect(0, 0, w, h);
+      // Fill with site background color first so edges blend perfectly
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, w, h);
 
       const imgAspect = img.width / img.height;
       const canvasAspect = w / h;
@@ -94,6 +107,22 @@ const CTAAnimation = () => {
       }
 
       ctx.drawImage(img, drawX, drawY, drawW, drawH);
+
+      // Replace near-white/light-gray pixels with site background color
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i], g = data[i + 1], b = data[i + 2];
+        const brightness = (r + g + b) / 3;
+        const saturation = Math.max(r, g, b) - Math.min(r, g, b);
+        if (brightness > 170 && saturation < 50) {
+          const t = Math.min(1, (brightness - 170) / 85);
+          data[i]     = Math.round(r + (bgR - r) * t);
+          data[i + 1] = Math.round(g + (bgG - g) * t);
+          data[i + 2] = Math.round(b + (bgB - b) * t);
+        }
+      }
+      ctx.putImageData(imageData, 0, 0);
     };
 
     resize();
@@ -138,7 +167,7 @@ const CTAAnimation = () => {
     <canvas
       ref={canvasRef}
       className="w-full aspect-[16/9]"
-      style={{ contain: "layout", mixBlendMode: "multiply" }}
+      style={{ contain: "layout" }}
     />
   );
 };

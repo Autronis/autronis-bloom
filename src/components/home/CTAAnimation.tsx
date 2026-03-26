@@ -98,27 +98,48 @@ const CTAAnimation = () => {
       }
       ctx.drawImage(img, dx, dy, dw, dh);
 
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const cw = canvas.width, ch = canvas.height;
+      const imageData = ctx.getImageData(0, 0, cw, ch);
       const data = imageData.data;
+      const stride = cw * 4;
 
-      for (let i = 0; i < data.length; i += 4) {
-        const r = data[i], g = data[i + 1], b = data[i + 2];
-        const brightness = (r + g + b) / 3;
-        const sat = Math.max(r, g, b) - Math.min(r, g, b);
+      // Bottom fade: below 60% of canvas height, fade everything to bg.
+      // This removes the floor, shadow, and any artifacts at the bottom.
+      const fadeStart = ch * 0.58;
+      const fadeEnd = ch * 0.72;
 
-        // Is this pixel clearly part of the butterfly?
-        const isButterfly = brightness < 100 || sat > 55 || (brightness < 140 && sat > 25);
+      for (let y = 0; y < ch; y++) {
+        // How much to force toward bg based on vertical position
+        let vFade = 0; // 0 = no forced fade, 1 = fully bg
+        if (y > fadeEnd) {
+          vFade = 1;
+        } else if (y > fadeStart) {
+          vFade = (y - fadeStart) / (fadeEnd - fadeStart);
+        }
 
-        if (isButterfly) {
-          // Blend butterfly pixels toward bg for subtlety
-          data[i]     = Math.round(bgR + (r - bgR) * BUTTERFLY_OPACITY);
-          data[i + 1] = Math.round(bgG + (g - bgG) * BUTTERFLY_OPACITY);
-          data[i + 2] = Math.round(bgB + (b - bgB) * BUTTERFLY_OPACITY);
-        } else {
-          // Everything else → exact bg, pixel-perfect match
-          data[i] = bgR;
-          data[i + 1] = bgG;
-          data[i + 2] = bgB;
+        for (let x = 0; x < cw; x++) {
+          const i = y * stride + x * 4;
+          const r = data[i], g = data[i + 1], b = data[i + 2];
+
+          if (vFade >= 1) {
+            // Below fade zone → always bg
+            data[i] = bgR; data[i + 1] = bgG; data[i + 2] = bgB;
+            continue;
+          }
+
+          const brightness = (r + g + b) / 3;
+          const sat = Math.max(r, g, b) - Math.min(r, g, b);
+          const isButterfly = brightness < 100 || sat > 55 || (brightness < 140 && sat > 25);
+
+          if (isButterfly && vFade < 1) {
+            // Blend butterfly toward bg (subtlety + vertical fade)
+            const opacity = BUTTERFLY_OPACITY * (1 - vFade);
+            data[i]     = Math.round(bgR + (r - bgR) * opacity);
+            data[i + 1] = Math.round(bgG + (g - bgG) * opacity);
+            data[i + 2] = Math.round(bgB + (b - bgB) * opacity);
+          } else {
+            data[i] = bgR; data[i + 1] = bgG; data[i + 2] = bgB;
+          }
         }
       }
       ctx.putImageData(imageData, 0, 0);

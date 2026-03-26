@@ -2,8 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import GlowButton from "@/components/GlowButton";
-import { Menu, X, Sun, Moon, ChevronDown, Users, Workflow, ChevronRight } from "lucide-react";
-import { useTheme } from "next-themes";
+import { Menu, X, ChevronDown, Users, Workflow, ChevronRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useLanguage } from "@/i18n/context";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -67,7 +66,6 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
   const location = useLocation();
-  const { theme, setTheme } = useTheme();
   const isMobile = useIsMobile();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const compactNavbar = scrolled;
@@ -164,10 +162,6 @@ const Navbar = () => {
 
         <div className="flex items-center gap-2">
           <LanguageSwitcher />
-
-          <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors" aria-label="Toggle theme">
-            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
 
           <GlowButton asChild size="sm" className="hidden sm:inline-flex">
             <Link to="/book">{t.cta}</Link>

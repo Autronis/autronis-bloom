@@ -242,7 +242,7 @@ export const SystemIntegrationVisual = () => {
     { x: 170, y: 75, label: "Stripe", logo: "/logos/stripe.svg" },
     { x: 30, y: 125, label: "Google", logo: "/logos/google-workspace.svg" },
     { x: 100, y: 125, label: "PostgreSQL", logo: "/logos/postgresql.svg" },
-    { x: 170, y: 125, label: "OpenAI", logo: "/logos/openai.svg", dark: true },
+    { x: 170, y: 125, label: "OpenAI", logo: "/logos/openai.svg" },
   ];
 
   // Only connections to center hub
@@ -379,7 +379,7 @@ export const SystemIntegrationVisual = () => {
                 x={sys.x - 6} y={sys.y - 6}
                 width="12" height="12"
                 opacity="0.85"
-                className={("dark" in sys && sys.dark) ? "dark:invert" : undefined}
+                className={undefined}
               />
             ) : (
               <image

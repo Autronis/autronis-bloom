@@ -34,7 +34,7 @@ export const categoryMeta: Record<SkillCategory, {
 }> = {
   automation: {
     border: "border-[hsl(260_45%_55%/0.35)]",
-    bg: "bg-[hsl(260_45%_55%/0.12)] dark:bg-[hsl(260_45%_55%/0.08)]",
+    bg: "bg-[hsl(260_45%_55%/0.12)]",
     text: "text-[hsl(260_45%_72%)]",
     glow: "hover:border-[hsl(260_45%_55%/0.55)] hover:shadow-[0_0_10px_hsl(260_45%_55%/0.12)]",
     overlayBorder: "border-[hsla(260,35%,55%,0.55)]",
@@ -42,7 +42,7 @@ export const categoryMeta: Record<SkillCategory, {
   },
   ai: {
     border: "border-[hsl(150_45%_45%/0.35)]",
-    bg: "bg-[hsl(150_45%_45%/0.12)] dark:bg-[hsl(150_45%_45%/0.08)]",
+    bg: "bg-[hsl(150_45%_45%/0.12)]",
     text: "text-[hsl(150_45%_65%)]",
     glow: "hover:border-[hsl(150_45%_45%/0.55)] hover:shadow-[0_0_10px_hsl(150_45%_45%/0.12)]",
     overlayBorder: "border-[hsla(150,40%,45%,0.55)]",
@@ -50,7 +50,7 @@ export const categoryMeta: Record<SkillCategory, {
   },
   data: {
     border: "border-[hsl(174_60%_45%/0.35)]",
-    bg: "bg-[hsl(174_60%_45%/0.12)] dark:bg-[hsl(174_60%_45%/0.08)]",
+    bg: "bg-[hsl(174_60%_45%/0.12)]",
     text: "text-[hsl(174_60%_65%)]",
     glow: "hover:border-[hsl(174_60%_45%/0.55)] hover:shadow-[0_0_10px_hsl(174_60%_45%/0.12)]",
     overlayBorder: "border-[hsla(174,45%,45%,0.55)]",
@@ -58,7 +58,7 @@ export const categoryMeta: Record<SkillCategory, {
   },
   operations: {
     border: "border-[hsl(188_50%_48%/0.35)]",
-    bg: "bg-[hsl(188_50%_48%/0.12)] dark:bg-[hsl(188_50%_48%/0.08)]",
+    bg: "bg-[hsl(188_50%_48%/0.12)]",
     text: "text-[hsl(188_50%_68%)]",
     glow: "hover:border-[hsl(188_50%_48%/0.55)] hover:shadow-[0_0_10px_hsl(188_50%_48%/0.12)]",
     overlayBorder: "border-[hsla(188,40%,48%,0.55)]",
@@ -66,7 +66,7 @@ export const categoryMeta: Record<SkillCategory, {
   },
   infrastructure: {
     border: "border-[hsl(174_60%_45%/0.35)]",
-    bg: "bg-[hsl(174_60%_45%/0.12)] dark:bg-[hsl(174_60%_45%/0.08)]",
+    bg: "bg-[hsl(174_60%_45%/0.12)]",
     text: "text-[hsl(174_60%_65%)]",
     glow: "hover:border-[hsl(174_60%_45%/0.55)] hover:shadow-[0_0_10px_hsl(174_60%_45%/0.12)]",
     overlayBorder: "border-[hsla(174,45%,45%,0.55)]",
@@ -74,7 +74,7 @@ export const categoryMeta: Record<SkillCategory, {
   },
   integrations: {
     border: "border-[hsl(210_55%_50%/0.35)]",
-    bg: "bg-[hsl(210_55%_50%/0.12)] dark:bg-[hsl(210_55%_50%/0.08)]",
+    bg: "bg-[hsl(210_55%_50%/0.12)]",
     text: "text-[hsl(210_55%_70%)]",
     glow: "hover:border-[hsl(210_55%_50%/0.55)] hover:shadow-[0_0_10px_hsl(210_55%_50%/0.12)]",
     overlayBorder: "border-[hsla(210,45%,50%,0.55)]",

@@ -8,6 +8,7 @@ const Dialog = lazy(() => import("@/components/ui/dialog").then(m => ({ default:
 const DialogContent = lazy(() => import("@/components/ui/dialog").then(m => ({ default: m.DialogContent })));
 const DialogTitle = lazy(() => import("@/components/ui/dialog").then(m => ({ default: m.DialogTitle })));
 const HeroBackground = lazy(() => import("@/components/home/HeroBackground"));
+const HeroAnimation = lazy(() => import("@/components/home/HeroAnimation"));
 import StatisticsBlock from "@/components/home/StatisticsBlock";
 import SEOHead, { organizationSchema, websiteSchema } from "@/components/SEOHead";
 import { useLanguage } from "@/i18n/context";
@@ -23,6 +24,7 @@ const SecurityBlock = lazy(() => import("@/components/home/SecurityBlock"));
 const FAQSection = lazy(() => import("@/components/home/FAQSection"));
 const FinalCTA = lazy(() => import("@/components/home/FinalCTA"));
 const LiveAutomationPreview = lazy(() => import("@/components/home/LiveAutomationPreview"));
+const ProjectShowcase = lazy(() => import("@/components/home/ProjectShowcase"));
 
 const preloadSections = () => {
   import("@/components/home/ProblemSolutionSection");
@@ -40,7 +42,8 @@ const text = {
   en: {
     rotatingWords: ["growth", "processes", "systems", "data flows", "scalability"],
     tagline: "System Architecture & Automation",
-    heroTitle1: "Bring structure to your",
+    heroTitle1: "Bring structure",
+    heroTitle2: "to your",
     heroPunch: "Less manual work. More impact.",
     heroDesc: "We transform processes into smart systems that remain scalable and manageable.",
     cta: "Schedule an Automation Scan",
@@ -54,7 +57,8 @@ const text = {
   nl: {
     rotatingWords: ["groei", "processen", "systemen", "datastromen", "schaalbaarheid"],
     tagline: "Systeemarchitectuur & Automatisering",
-    heroTitle1: "Breng structuur in je",
+    heroTitle1: "Breng structuur",
+    heroTitle2: "in je",
     heroPunch: "Minder handwerk. Meer impact.",
     heroDesc: "Wij transformeren processen naar slimme systemen die schaalbaar en beheersbaar blijven.",
     cta: "Plan een Automation Scan",
@@ -133,13 +137,14 @@ const Index = () => {
           publisher: { "@type": "Organization", name: "Autronis" },
         }]}
       />
-      <section className="hero-section relative min-h-[85vh] flex flex-col justify-start pt-20 sm:pt-24">
+      <section className="hero-section relative min-h-[60vh] flex flex-col justify-start pt-16 sm:pt-20">
         <Suspense fallback={null}><HeroBackground /></Suspense>
-        <div className="container mx-auto px-4 lg:px-12 xl:px-20 relative z-10">
+        <div className="container mx-auto px-4 lg:px-32 xl:px-48 relative z-10">
           {/* Top row: Title full width */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.05] tracking-tight mb-6 sm:mb-10 text-center lg:text-left">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.05] tracking-tight mb-3 sm:mb-4 text-center lg:text-left">
             {t.heroTitle1}
             <br />
+            {t.heroTitle2}{" "}
             <span className="relative inline-block min-w-[10ch] lg:min-w-[12ch] align-bottom" style={{ height: "1.15em" }}>
               {rotatingWords.map((word, i) => (
                 <span
@@ -161,12 +166,9 @@ const Index = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Left — 3D Visual */}
             <div className="hidden lg:flex items-center justify-center">
-              <img
-                src="/logo-square-dark.png"
-                alt="Autronis"
-                className="w-full max-w-sm xl:max-w-md drop-shadow-2xl"
-                fetchPriority="high"
-              />
+              <Suspense fallback={<img src="/logo-square-dark.png" alt="Autronis" className="w-full max-w-sm xl:max-w-md drop-shadow-2xl" />}>
+                <HeroAnimation />
+              </Suspense>
             </div>
 
             {/* Right — Description + CTAs */}

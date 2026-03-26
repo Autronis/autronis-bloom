@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Cog, Link2, PieChart, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Cog, Link2, PieChart, Globe, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import useCanHover from "@/hooks/use-can-hover";
@@ -11,8 +11,8 @@ import { ProcessAutomationVisual, SystemIntegrationVisual, DataReportingVisual }
 const txt = {
   en: {
     label: "Services",
-    title: "Three pillars. One integrated system.",
-    desc: "We combine process automation, system integrations and data insights into a scalable architecture.",
+    title: "Four pillars. One integrated system.",
+    desc: "We combine process automation, system integrations, data insights and web design into a scalable architecture.",
     ctaBtn: "View our services",
     ctaSub: "Discover how we structurally improve your processes, systems and data insights.",
     whatDeliver: "What does this deliver?",
@@ -23,12 +23,13 @@ const txt = {
       { title: "Process Automation", slug: "procesautomatisering", intro: "We automate recurring processes so work can continue without manual steps.", impact: [{ title: "Less manual processing", sub: "Up to 70% less time spent on repetitive tasks." }, { title: "Fewer errors", sub: "Standardized workflows ensure consistent execution." }, { title: "Faster turnaround times", sub: "Approvals and escalations run automatically." }, { title: "Scalability", sub: "Processes can grow without staffing costs increasing proportionally." }] },
       { title: "System Integrations", slug: "systeemintegraties", intro: "We connect systems via APIs so data is exchanged automatically and consistently.", impact: [{ title: "Consistent data flows", sub: "Core systems work with the same up-to-date information." }, { title: "No double entry", sub: "Data is entered once and automatically synchronized." }, { title: "Real-time synchronization", sub: "Data is updated instantly without exports or manual files." }, { title: "Reliable monitoring", sub: "Errors are detected early and logged." }] },
       { title: "Data & Reporting", slug: "data-rapportage", intro: "Real-time dashboards and automated reports provide continuous insight into performance and processes.", impact: [{ title: "Instant performance insight", sub: "Dashboards show current KPIs and trends." }, { title: "Automated reports", sub: "Reports are automatically generated and distributed." }, { title: "Single source of truth", sub: "All teams work with the same consistent data." }, { title: "Quick anomaly detection", sub: "Issues and anomalies become visible early." }] },
+      { title: "Webdesign & Development", slug: "webdesign", intro: "We design and build modern, fast websites that convert visitors into customers.", impact: [{ title: "Custom design", sub: "Unique design tailored to your brand — no templates." }, { title: "Lightning fast", sub: "Optimized performance for the best user experience and SEO." }, { title: "Conversion-focused", sub: "Strategic layout and CTAs that drive results." }, { title: "Fully responsive", sub: "Perfect on every device — mobile, tablet and desktop." }] },
     ],
   },
   nl: {
     label: "Diensten",
-    title: "Drie pijlers. Eén geïntegreerd systeem.",
-    desc: "We combineren procesautomatisering, systeemintegraties en data-inzichten in een schaalbare architectuur.",
+    title: "Vier pijlers. Eén geïntegreerd systeem.",
+    desc: "We combineren procesautomatisering, systeemintegraties, data-inzichten en webdesign in een schaalbare architectuur.",
     ctaBtn: "Bekijk onze diensten",
     ctaSub: "Ontdek hoe we jouw processen, systemen en data-inzichten structureel verbeteren.",
     whatDeliver: "Wat levert dit op?",
@@ -39,12 +40,13 @@ const txt = {
       { title: "Procesautomatisering", slug: "procesautomatisering", intro: "We automatiseren terugkerende processen zodat werk doorgaat zonder handmatige stappen.", impact: [{ title: "Minder handmatige verwerking", sub: "Tot 70% minder tijd aan repetitieve taken." }, { title: "Minder fouten", sub: "Gestandaardiseerde workflows zorgen voor consistente uitvoering." }, { title: "Snellere doorlooptijden", sub: "Goedkeuringen en escalaties lopen automatisch." }, { title: "Schaalbaarheid", sub: "Processen kunnen groeien zonder dat personeelskosten evenredig stijgen." }] },
       { title: "Systeemintegraties", slug: "systeemintegraties", intro: "We koppelen systemen via API's zodat data automatisch en consistent wordt uitgewisseld.", impact: [{ title: "Consistente datastromen", sub: "Kernsystemen werken met dezelfde actuele informatie." }, { title: "Geen dubbele invoer", sub: "Data wordt eenmaal ingevoerd en automatisch gesynchroniseerd." }, { title: "Realtime synchronisatie", sub: "Data wordt direct bijgewerkt zonder exports of handmatige bestanden." }, { title: "Betrouwbare monitoring", sub: "Fouten worden vroeg gedetecteerd en gelogd." }] },
       { title: "Data & Rapportage", slug: "data-rapportage", intro: "Realtime dashboards en geautomatiseerde rapporten bieden continu inzicht in prestaties en processen.", impact: [{ title: "Direct prestatie-inzicht", sub: "Dashboards tonen actuele KPI's en trends." }, { title: "Geautomatiseerde rapporten", sub: "Rapporten worden automatisch gegenereerd en verspreid." }, { title: "Single source of truth", sub: "Alle teams werken met dezelfde consistente data." }, { title: "Snelle anomaliedetectie", sub: "Problemen en afwijkingen worden vroeg zichtbaar." }] },
+      { title: "Webdesign & Development", slug: "webdesign", intro: "Wij ontwerpen en bouwen moderne, snelle websites die bezoekers omzetten in klanten.", impact: [{ title: "Custom design", sub: "Uniek ontwerp op maat van jouw merk — geen templates." }, { title: "Razendsnel", sub: "Geoptimaliseerde performance voor de beste gebruikerservaring en SEO." }, { title: "Conversiegeright", sub: "Strategische layout en CTA's die resultaat opleveren." }, { title: "Volledig responsive", sub: "Perfect op elk apparaat — mobiel, tablet en desktop." }] },
     ],
   },
 };
 
-const serviceIcons = [Cog, Link2, PieChart];
-const serviceVisuals = [ProcessAutomationVisual, SystemIntegrationVisual, DataReportingVisual];
+const serviceIcons = [Cog, Link2, PieChart, Globe];
+const serviceVisuals = [ProcessAutomationVisual, SystemIntegrationVisual, DataReportingVisual, DataReportingVisual];
 
 const ServiceCard = ({ s, i, hoveredIndex, setHoveredIndex, canHover, whatDeliver, learnMore, securityNote, securityLink }: {
   s: typeof txt.en.services[0]; i: number; hoveredIndex: number | null; setHoveredIndex: (i: number | null) => void; canHover: boolean; whatDeliver: string; learnMore: string; securityNote: string; securityLink: string;

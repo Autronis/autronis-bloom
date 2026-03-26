@@ -62,8 +62,8 @@ const GlowCTA = ({ to, onClick, children, size = "lg", variant = "primary" }: Gl
   const px = size === "lg" ? "px-10" : "px-6";
   const textSize = size === "lg" ? "text-base" : "text-sm";
   const isDark = variant === "dark";
-  const bg = isDark ? "bg-card border border-primary" : "bg-primary";
-  const text = isDark ? "text-foreground" : "text-primary-foreground";
+  const bg = isDark ? "bg-gradient-to-br from-primary/10 to-primary/[0.03] border border-primary/20" : "bg-primary";
+  const text = isDark ? "text-foreground" : "text-gray-900";
   const glowHsl = "174 78% 41%";
   const shadowHsl = "174_78%_41%";
 
@@ -106,7 +106,7 @@ const GlowCTA = ({ to, onClick, children, size = "lg", variant = "primary" }: Gl
 
       {/* Border glow ring */}
       <motion.div
-        className="absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        className={`absolute -inset-px rounded-xl transition-opacity duration-300 ${isDark ? "opacity-30 group-hover:opacity-100" : "opacity-0 group-hover:opacity-100"}`}
         style={{
           background: `linear-gradient(135deg, hsl(${glowHsl} / 0.6), hsl(${glowHsl} / 0.1), hsl(${glowHsl} / 0.6))`,
           backgroundSize: "200% 200%",

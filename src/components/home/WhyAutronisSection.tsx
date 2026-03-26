@@ -84,7 +84,7 @@ const WhyAutronisSection = () => {
         </ScrollReveal>
         <ScrollReveal>
           <ScrollRevealItem>
-            <div className="rounded-2xl border border-primary/20 bg-card overflow-hidden max-w-6xl mx-auto shadow-sm dark:shadow-none">
+            <div className="rounded-2xl border border-primary/20 bg-card overflow-hidden max-w-6xl mx-auto shadow-sm">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 <div className="p-4 sm:p-6 md:p-8 flex flex-col">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4">
@@ -93,15 +93,14 @@ const WhyAutronisSection = () => {
                     ))}
                   </div>
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <Button asChild size="lg" className="w-full sm:w-auto"><Link to="/book">{tx.ctaBook}<ArrowRight size={18} /></Link></Button>
-                    <GlowCTA variant="dark" to="/team">{tx.ctaTeam}</GlowCTA>
+                    <GlowCTA size="default" to="/book">{tx.ctaBook}</GlowCTA>
+                    <GlowCTA size="default" variant="dark" to="/team">{tx.ctaTeam}</GlowCTA>
                   </div>
                 </div>
                 <div className="relative min-h-[250px] sm:min-h-[400px] lg:min-h-0 overflow-hidden">
-                  <img src={teamFoto} alt="Autronis team - Sem and Syb" width={800} height={600} className="w-full h-full object-cover object-center scale-110" loading="lazy" decoding="async" />
+                  <img src={teamFoto} alt="Autronis team - Sem and Syb" width={800} height={600} className="w-full h-full object-cover object-[70%_center] scale-110" loading="lazy" decoding="async" />
                   <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 55% 65% at 50% 40%, transparent 0%, hsl(0 0% 0% / 0.55) 100%)" }} />
-                  <div className="absolute inset-0 pointer-events-none dark:hidden lg:dark:block hidden" style={{ background: "linear-gradient(to right, hsl(var(--card)) 0%, hsl(var(--card) / 0.3) 8%, transparent 25%)" }} />
-                  <div className="absolute inset-0 pointer-events-none dark:hidden hidden lg:block" style={{ background: "linear-gradient(to right, hsl(var(--card)) 0%, hsl(var(--card) / 0.15) 6%, transparent 18%)" }} />
+                  <div className="absolute inset-0 pointer-events-none hidden lg:block" style={{ background: "linear-gradient(to right, hsl(var(--card)) 0%, hsl(var(--card) / 0.15) 6%, transparent 18%)" }} />
                   <div className="absolute inset-0 pointer-events-none lg:hidden" style={{ background: "linear-gradient(to bottom, hsl(var(--card)) 0%, hsl(var(--card) / 0.3) 8%, transparent 25%)" }} />
                 </div>
               </div>

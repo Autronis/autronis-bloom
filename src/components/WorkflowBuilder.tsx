@@ -12,7 +12,6 @@ interface SystemOption {
   id: string;
   name: string;
   logo: string;
-  dark?: boolean;
   category: SystemCategory;
   desc: { en: string; nl: string };
 }
@@ -40,7 +39,7 @@ export const workflowSystems: SystemOption[] = [
   { id: "xero", name: "Xero", logo: "/logos/xero.svg", category: "finance", desc: { en: "Cloud accounting software", nl: "Cloud boekhoudsoftware" } },
   { id: "quickbooks", name: "QuickBooks", logo: "/logos/quickbooks.svg", category: "finance", desc: { en: "Accounting & invoicing", nl: "Boekhouding & facturatie" } },
   { id: "stripe", name: "Stripe", logo: "/logos/stripe.svg", category: "finance", desc: { en: "Online payment processing", nl: "Online betalingsverwerking" } },
-  { id: "mollie", name: "Mollie", logo: "/logos/mollie.svg", dark: true, category: "finance", desc: { en: "European payment provider", nl: "Europese betaalprovider" } },
+  { id: "mollie", name: "Mollie", logo: "/logos/mollie.svg", category: "finance", desc: { en: "European payment provider", nl: "Europese betaalprovider" } },
   { id: "paypal", name: "PayPal", logo: "/logos/paypal.svg", category: "finance", desc: { en: "Global payment platform", nl: "Wereldwijd betaalplatform" } },
   // E-commerce
   { id: "shopify", name: "Shopify", logo: "/logos/shopify.svg", category: "ecommerce", desc: { en: "E-commerce platform", nl: "E-commerce platform" } },
@@ -64,13 +63,13 @@ export const workflowSystems: SystemOption[] = [
   { id: "looker-studio", name: "Looker Studio", logo: "/logos/looker-studio.svg", category: "data", desc: { en: "Google data visualization", nl: "Google datavisualisatie" } },
   // Productivity
   { id: "airtable", name: "Airtable", logo: "/logos/airtable.svg", category: "productivity", desc: { en: "Spreadsheet-database hybrid", nl: "Spreadsheet-database hybride" } },
-  { id: "notion", name: "Notion", logo: "/logos/notion.svg", dark: true, category: "productivity", desc: { en: "Docs, wikis & project management", nl: "Docs, wiki's & projectmanagement" } },
+  { id: "notion", name: "Notion", logo: "/logos/notion.svg", category: "productivity", desc: { en: "Docs, wikis & project management", nl: "Docs, wiki's & projectmanagement" } },
   { id: "retool", name: "Retool", logo: "/logos/retool.svg", category: "productivity", desc: { en: "Internal tool builder", nl: "Interne tool builder" } },
-  { id: "github", name: "GitHub", logo: "/logos/github.svg", dark: true, category: "productivity", desc: { en: "Code hosting & version control", nl: "Code hosting & versiebeheer" } },
+  { id: "github", name: "GitHub", logo: "/logos/github.svg", category: "productivity", desc: { en: "Code hosting & version control", nl: "Code hosting & versiebeheer" } },
   // AI
-  { id: "openai", name: "OpenAI", logo: "/logos/openai.svg", dark: true, category: "ai", desc: { en: "GPT models & AI API", nl: "GPT modellen & AI API" } },
-  { id: "anthropic", name: "Anthropic", logo: "/logos/anthropic.svg", dark: true, category: "ai", desc: { en: "Claude AI models", nl: "Claude AI modellen" } },
-  { id: "langchain", name: "LangChain", logo: "/logos/langchain.svg", dark: true, category: "ai", desc: { en: "LLM application framework", nl: "LLM applicatie framework" } },
+  { id: "openai", name: "OpenAI", logo: "/logos/openai.svg", category: "ai", desc: { en: "GPT models & AI API", nl: "GPT modellen & AI API" } },
+  { id: "anthropic", name: "Anthropic", logo: "/logos/anthropic.svg", category: "ai", desc: { en: "Claude AI models", nl: "Claude AI modellen" } },
+  { id: "langchain", name: "LangChain", logo: "/logos/langchain.svg", category: "ai", desc: { en: "LLM application framework", nl: "LLM applicatie framework" } },
 ];
 
 const categoryLabels: Record<SystemCategory, { en: string; nl: string }> = {
@@ -346,7 +345,7 @@ const WorkflowBuilder = ({ externalSelected, onExternalToggle }: WorkflowBuilder
                               <img
                                 src={system.logo}
                                 alt={system.name}
-                                className={`w-5 h-5 object-contain ${system.dark ? "dark:invert" : ""}`}
+                                className={`w-5 h-5 object-contain `}
                               />
                               {system.name}
                               {isSelected && (
@@ -515,7 +514,7 @@ const WorkflowBuilder = ({ externalSelected, onExternalToggle }: WorkflowBuilder
                               <img
                                 src={sys.logo}
                                 alt={sys.name}
-                                className={`w-4 h-4 object-contain ${sys.dark ? "dark:invert" : ""}`}
+                                className={`w-4 h-4 object-contain `}
                               />
                             </div>
                             {sysIdx < matchedSystems.length - 1 && (
@@ -590,7 +589,7 @@ const WorkflowBuilder = ({ externalSelected, onExternalToggle }: WorkflowBuilder
                                       <div className="flex items-center gap-1.5 mt-1.5">
                                         {stepTools.map((sys) => sys && (
                                           <div key={sys.id} className="w-5 h-5 rounded bg-muted/60 flex items-center justify-center" title={sys.name}>
-                                            <img src={sys.logo} alt={sys.name} className={`w-3 h-3 object-contain ${sys.dark ? "dark:invert" : ""}`} />
+                                            <img src={sys.logo} alt={sys.name} className={`w-3 h-3 object-contain `} />
                                           </div>
                                         ))}
                                       </div>

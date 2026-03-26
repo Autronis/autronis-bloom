@@ -1,7 +1,6 @@
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ThemeProvider } from "next-themes";
 import { lazy, Suspense } from "react";
 import ScrollToTop from "./components/ScrollToTop";
 import Layout from "./components/Layout";
@@ -47,39 +46,37 @@ const PageFallback = () => (
 
 const App = () => (
   <LanguageProvider>
-    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Suspense fallback={null}><Toaster /></Suspense>
-          <Suspense fallback={null}><Sonner /></Suspense>
-          <BrowserRouter>
-            <ScrollToTop />
-            <Layout>
-              <Suspense fallback={<PageFallback />}>
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/services" element={<Services />} />
-                  <Route path="/case-studies" element={<CaseStudies />} />
-                  <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
-                  <Route path="/demo" element={<Demo />} />
-                  <Route path="/book" element={<Book />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/process" element={<Process />} />
-                  <Route path="/team" element={<Team />} />
-                  <Route path="/resources" element={<Resources />} />
-                  <Route path="/resources/:slug" element={<ResourceDetail />} />
-                  <Route path="/impact-roi" element={<ImpactROI />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/privacy" element={<Privacy />} />
-                  <Route path="/cookies" element={<Cookies />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Suspense>
-            </Layout>
-          </BrowserRouter>
-        </TooltipProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Suspense fallback={null}><Toaster /></Suspense>
+        <Suspense fallback={null}><Sonner /></Suspense>
+        <BrowserRouter>
+          <ScrollToTop />
+          <Layout>
+            <Suspense fallback={<PageFallback />}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/case-studies" element={<CaseStudies />} />
+                <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
+                <Route path="/demo" element={<Demo />} />
+                <Route path="/book" element={<Book />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/process" element={<Process />} />
+                <Route path="/team" element={<Team />} />
+                <Route path="/resources" element={<Resources />} />
+                <Route path="/resources/:slug" element={<ResourceDetail />} />
+                <Route path="/impact-roi" element={<ImpactROI />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/cookies" element={<Cookies />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </Layout>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
   </LanguageProvider>
 );
 

@@ -2,13 +2,15 @@
 import { Button } from "@/components/ui/button";
 import SEOHead from "@/components/SEOHead";
 import { Link } from "react-router-dom";
-import { ArrowRight, ChevronDown, CheckCircle2, Cog, Link2, PieChart, FolderOpen, Briefcase, Rocket, ShoppingCart, LinkIcon, CreditCard, Puzzle, BarChart3, LayoutDashboard, FileText, Database, AlertTriangle, ShieldCheck, Shield, Layers } from "lucide-react";
+import { ArrowRight, ChevronDown, CheckCircle2, Cog, Link2, PieChart, Globe, FolderOpen, Briefcase, Rocket, ShoppingCart, LinkIcon, CreditCard, Puzzle, BarChart3, LayoutDashboard, FileText, Database, AlertTriangle, ShieldCheck, Shield, Layers, Palette, Code2, Target, Wrench } from "lucide-react";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import GlowCTA from "@/components/GlowCTA";
 import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import { useLanguage } from "@/i18n/context";
 import WorkflowBuilder, { workflowSystems } from "@/components/WorkflowBuilder";
+import { lazy, Suspense } from "react";
+const ProjectShowcase = lazy(() => import("@/components/home/ProjectShowcase"));
 
 const t = {
   en: {
@@ -31,6 +33,15 @@ const t = {
     qualFooter: "These requirements form the foundation of every implementation.",
     roiRef: "Every implementation is backed by an upfront impact and ROI analysis.",
     roiCta: "See how we calculate ROI",
+    pricingLabel: "Packages",
+    pricingTitle: "Websites built for automation",
+    pricingDesc: "Every website we build is designed to connect seamlessly with automations and integrations.",
+    pricingCta: "Schedule a consultation",
+    pricingPackages: [
+      { name: "Starter", price: "€1.495", sub: "One-time", features: ["Up to 5 pages", "Custom design — no templates", "Responsive & SEO-optimized", "Contact form with auto-notification", "1 month support after delivery"] },
+      { name: "Business", price: "€3.495", sub: "One-time", popular: true, features: ["Up to 10 pages", "CMS (edit content yourself)", "1 automation included (e.g. lead → CRM)", "Analytics dashboard", "Cal.com / booking integration", "3 months support"] },
+      { name: "Custom", price: "On request", sub: "", features: ["Full custom architecture", "Multiple automations & integrations", "AI features (chatbot, personalization)", "Ongoing maintenance & growth", "Dedicated project lead"] },
+    ],
     bottomTitle: "Don't see your process listed?",
     bottomDesc: "We automate any predictable process. Schedule a free scan and discover what's possible.",
     bottomCta: "Schedule Automation Scan",
@@ -100,6 +111,23 @@ const t = {
           { title: "Alerts & monitoring", items: ["Anomaly detection", "Performance alerts", "SLA monitoring", "Data flow monitoring"] },
         ],
       },
+      {
+        id: "webdesign",
+        title: "Webdesign & Development",
+        intro: "We design and build modern, fast websites that convert visitors into customers.",
+        impact: [
+          { title: "Custom design", sub: "Unique design tailored to your brand — no templates." },
+          { title: "Lightning fast", sub: "Optimized performance for the best user experience and SEO." },
+          { title: "Conversion-focused", sub: "Strategic layout and CTAs that drive results." },
+          { title: "Fully responsive", sub: "Perfect on every device — mobile, tablet and desktop." },
+        ],
+        categories: [
+          { title: "Website design", items: ["Brand identity", "UI/UX design", "Wireframes & prototypes", "Design systems"] },
+          { title: "Web development", items: ["React / Next.js", "Tailwind CSS", "CMS integration", "Performance optimization"] },
+          { title: "Landing pages", items: ["Campaign pages", "Product launches", "A/B testing", "Conversion optimization"] },
+          { title: "Maintenance & growth", items: ["Hosting & monitoring", "SEO optimization", "Analytics setup", "Continuous improvement"] },
+        ],
+      },
     ],
   },
   nl: {
@@ -122,6 +150,15 @@ const t = {
     qualFooter: "Deze eisen vormen de basis van elke implementatie.",
     roiRef: "Elke implementatie wordt onderbouwd met een voorafgaande impact- en ROI-analyse.",
     roiCta: "Bekijk hoe we ROI berekenen",
+    pricingLabel: "Pakketten",
+    pricingTitle: "Websites gebouwd voor automatisering",
+    pricingDesc: "Elke website die wij bouwen is ontworpen om naadloos te koppelen met automatiseringen en integraties.",
+    pricingCta: "Plan een kennismaking",
+    pricingPackages: [
+      { name: "Starter", price: "€1.495", sub: "Eenmalig", features: ["Tot 5 pagina's", "Custom design — geen templates", "Responsive & SEO-geoptimaliseerd", "Contactformulier met auto-notificatie", "1 maand support na oplevering"] },
+      { name: "Business", price: "€3.495", sub: "Eenmalig", popular: true, features: ["Tot 10 pagina's", "CMS (zelf content aanpassen)", "1 automatisering inbegrepen (bijv. lead → CRM)", "Analytics dashboard", "Cal.com / boekingsintegratie", "3 maanden support"] },
+      { name: "Custom", price: "Op aanvraag", sub: "", features: ["Volledige maatwerk architectuur", "Meerdere automatiseringen & integraties", "AI-features (chatbot, personalisatie)", "Doorlopend onderhoud & groei", "Dedicated projectbegeleider"] },
+    ],
     bottomTitle: "Staat je proces er niet bij?",
     bottomDesc: "Wij automatiseren elk voorspelbaar proces. Plan een gratis scan en ontdek wat mogelijk is.",
     bottomCta: "Plan een Automation Scan",
@@ -191,24 +228,42 @@ const t = {
           { title: "Alerts & monitoring", items: ["Anomaliedetectie", "Prestatie-alerts", "SLA-monitoring", "Dataflow-monitoring"] },
         ],
       },
+      {
+        id: "webdesign",
+        title: "Webdesign & Development",
+        intro: "Wij ontwerpen en bouwen moderne, snelle websites die bezoekers omzetten in klanten.",
+        impact: [
+          { title: "Custom design", sub: "Uniek ontwerp op maat van jouw merk — geen templates." },
+          { title: "Razendsnel", sub: "Geoptimaliseerde performance voor de beste gebruikerservaring en SEO." },
+          { title: "Conversiegeright", sub: "Strategische layout en CTA's die resultaat opleveren." },
+          { title: "Volledig responsive", sub: "Perfect op elk apparaat — mobiel, tablet en desktop." },
+        ],
+        categories: [
+          { title: "Website design", items: ["Merkidentiteit", "UI/UX design", "Wireframes & prototypes", "Design systemen"] },
+          { title: "Webontwikkeling", items: ["React / Next.js", "Tailwind CSS", "CMS-integratie", "Performance-optimalisatie"] },
+          { title: "Landingspagina's", items: ["Campagnepagina's", "Productlanceringen", "A/B-testen", "Conversie-optimalisatie"] },
+          { title: "Onderhoud & groei", items: ["Hosting & monitoring", "SEO-optimalisatie", "Analytics opzet", "Doorlopende verbetering"] },
+        ],
+      },
     ],
   },
 };
 
-const pillarIcons = [Cog, Link2, PieChart];
+const pillarIcons = [Cog, Link2, PieChart, Globe];
 const categoryIcons = [
   [FolderOpen, Briefcase, Rocket, ShoppingCart],
   [LinkIcon, CreditCard, Puzzle, BarChart3],
   [LayoutDashboard, FileText, Database, AlertTriangle],
+  [Palette, Code2, Target, Wrench],
 ];
 const qualIcons = [ShieldCheck, BarChart3, Layers, Database, FileText, Cog];
 
-const toolIconsRow1: Array<{ name: string; logo: string; dark?: boolean }> = [
-  { name: "OpenAI", logo: "/logos/openai.svg", dark: true },
-  { name: "Anthropic", logo: "/logos/anthropic.svg", dark: true },
+const toolIconsRow1: Array<{ name: string; logo: string }> = [
+  { name: "OpenAI", logo: "/logos/openai.svg" },
+  { name: "Anthropic", logo: "/logos/anthropic.svg" },
   { name: "Make", logo: "/logos/make.svg" },
   { name: "Supabase", logo: "/logos/supabase.svg" },
-  { name: "Notion", logo: "/logos/notion.svg", dark: true },
+  { name: "Notion", logo: "/logos/notion.svg" },
   { name: "Stripe", logo: "/logos/stripe.svg" },
   { name: "HubSpot", logo: "/logos/hubspot.svg" },
   { name: "Slack", logo: "/logos/slack.svg" },
@@ -218,15 +273,15 @@ const toolIconsRow1: Array<{ name: string; logo: string; dark?: boolean }> = [
   { name: "Shopify", logo: "/logos/shopify.svg" },
   { name: "AWS", logo: "/logos/aws.svg" },
   { name: "Cloudflare", logo: "/logos/cloudflare.svg" },
-  { name: "LangChain", logo: "/logos/langchain.svg", dark: true },
-  { name: "Pinecone", logo: "/logos/pinecone.svg", dark: true },
+  { name: "LangChain", logo: "/logos/langchain.svg" },
+  { name: "Pinecone", logo: "/logos/pinecone.svg" },
   { name: "Firebase", logo: "/logos/firebase.svg" },
   { name: "Instagram", logo: "/logos/instagram.svg" },
   { name: "WhatsApp", logo: "/logos/whatsapp.svg" },
-  { name: "GitHub", logo: "/logos/github.svg", dark: true },
+  { name: "GitHub", logo: "/logos/github.svg" },
 ];
 
-const toolIconsRow2: Array<{ name: string; logo: string; dark?: boolean }> = [
+const toolIconsRow2: Array<{ name: string; logo: string }> = [
   { name: "n8n", logo: "/logos/n8n.svg" },
   { name: "Zapier", logo: "/logos/zapier.svg" },
   { name: "Retool", logo: "/logos/retool.svg" },
@@ -238,12 +293,12 @@ const toolIconsRow2: Array<{ name: string; logo: string; dark?: boolean }> = [
   { name: "Microsoft 365", logo: "/logos/microsoft-365.svg" },
   { name: "WooCommerce", logo: "/logos/woocommerce.svg" },
   { name: "Magento", logo: "/logos/magento.svg" },
-  { name: "Mollie", logo: "/logos/mollie.svg", dark: true },
+  { name: "Mollie", logo: "/logos/mollie.svg" },
   { name: "PayPal", logo: "/logos/paypal.svg" },
   { name: "Looker Studio", logo: "/logos/looker-studio.svg" },
   { name: "Power BI", logo: "/logos/power-bi.svg" },
   { name: "Google Analytics", logo: "/logos/google-analytics.svg" },
-  { name: "Sentry", logo: "/logos/sentry.svg", dark: true },
+  { name: "Sentry", logo: "/logos/sentry.svg" },
   { name: "Datadog", logo: "/logos/datadog.svg" },
   { name: "Facebook", logo: "/logos/facebook.svg" },
   { name: "LinkedIn", logo: "/logos/linkedin.svg" },
@@ -433,7 +488,7 @@ const Services = () => {
                   const isSelected = wfId ? selectedTools.includes(wfId) : false;
                   return (
                     <button key={i} onClick={() => handleTickerClick(tool.name)} className={`relative group hover:scale-125 hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer ${isSelected ? 'scale-110' : ''}`}>
-                      <img src={tool.logo} alt={tool.name} className={`w-7 h-7 sm:w-12 sm:h-12 object-contain transition-all duration-200 ${isSelected ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${tool.dark ? 'dark:invert' : ''}`} loading="lazy" />
+                      <img src={tool.logo} alt={tool.name} className={`w-7 h-7 sm:w-12 sm:h-12 object-contain transition-all duration-200 ${isSelected ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'}`} loading="lazy" />
                       {isSelected && <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary flex items-center justify-center"><CheckCircle2 size={10} className="text-primary-foreground" /></span>}
                       <span className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-muted-foreground bg-card border border-border rounded px-2 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-sm z-20">{tool.name}</span>
                     </button>
@@ -450,7 +505,7 @@ const Services = () => {
                   const isSelected = wfId ? selectedTools.includes(wfId) : false;
                   return (
                     <button key={i} onClick={() => handleTickerClick(tool.name)} className={`relative group hover:scale-125 hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer ${isSelected ? 'scale-110' : ''}`}>
-                      <img src={tool.logo} alt={tool.name} className={`w-7 h-7 sm:w-12 sm:h-12 object-contain transition-all duration-200 ${isSelected ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'} ${tool.dark ? 'dark:invert' : ''}`} loading="lazy" />
+                      <img src={tool.logo} alt={tool.name} className={`w-7 h-7 sm:w-12 sm:h-12 object-contain transition-all duration-200 ${isSelected ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'}`} loading="lazy" />
                       {isSelected && <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary flex items-center justify-center"><CheckCircle2 size={10} className="text-primary-foreground" /></span>}
                       <span className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-muted-foreground bg-card border border-border rounded px-2 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-sm z-20">{tool.name}</span>
                     </button>
@@ -473,6 +528,52 @@ const Services = () => {
               ))}
             </div>
           </div>
+
+          {/* Pricing Packages */}
+          <div id="webdesign-pricing" className="mt-20 pt-12 scroll-mt-28">
+            <ScrollReveal className="text-center mb-12">
+              <ScrollRevealItem>
+                <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">{tx.pricingLabel}</p>
+                <h2 className="text-2xl sm:text-3xl font-bold mb-4">{tx.pricingTitle}</h2>
+                <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl mx-auto">{tx.pricingDesc}</p>
+              </ScrollRevealItem>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {tx.pricingPackages.map((pkg, idx) => (
+                <motion.div
+                  key={pkg.name}
+                  className={`relative rounded-2xl border p-6 flex flex-col ${pkg.popular ? "border-primary shadow-[0_0_30px_hsl(174,78%,41%,0.15)] bg-gradient-to-br from-primary/[0.08] to-card" : "border-border bg-gradient-to-br from-primary/[0.03] to-card"}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1, duration: 0.5 }}
+                >
+                  {pkg.popular && (
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-bold">
+                      {lang === "nl" ? "Meest gekozen" : "Most popular"}
+                    </span>
+                  )}
+                  <h3 className="text-lg font-bold mb-1">{pkg.name}</h3>
+                  <div className="mb-4">
+                    <span className="text-3xl font-black">{pkg.price}</span>
+                    {pkg.sub && <span className="text-sm text-muted-foreground ml-2">{pkg.sub}</span>}
+                  </div>
+                  <ul className="space-y-2.5 mb-6 flex-1">
+                    {pkg.features.map((f) => (
+                      <li key={f} className="flex items-start gap-2 text-sm">
+                        <CheckCircle2 size={14} className="text-primary shrink-0 mt-0.5" />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <GlowCTA size="default" to="/book">{tx.pricingCta}</GlowCTA>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Portfolio Preview */}
+          <Suspense fallback={null}><ProjectShowcase /></Suspense>
 
           {/* Workflow Builder */}
           <div id="workflow-builder" ref={workflowRef} className="mt-20 pt-12 scroll-mt-28">

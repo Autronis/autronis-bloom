@@ -3,9 +3,11 @@ import { useEffect, useRef, useState } from "react";
 const TOTAL_FRAMES = 121;
 const FPS = 24;
 const HOLD_DURATION = 5000;
-// Max color distance from frame corner (bg color) to consider "background"
-const BG_TOLERANCE = 160;
-const BG_SOFT_EDGE = 30;
+
+// Site background: hsl(38, 38%, 88%) → RGB(236, 228, 213)
+const SITE_BG_R = 236;
+const SITE_BG_G = 228;
+const SITE_BG_B = 213;
 
 const CTAAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -15,7 +17,6 @@ const CTAAnimation = () => {
   const animationRef = useRef<number>(0);
   const frameIndexRef = useRef(0);
 
-  // Preload frames
   useEffect(() => {
     let cancelled = false;
     const images: HTMLImageElement[] = [];
@@ -37,7 +38,6 @@ const CTAAnimation = () => {
     return () => { cancelled = true; };
   }, []);
 
-  // Observe visibility
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -49,19 +49,12 @@ const CTAAnimation = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Animate
   useEffect(() => {
     if (!loaded || !visible) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
-
-    // Tiny offscreen canvas to sample each frame's background color
-    const sampleCanvas = document.createElement("canvas");
-    sampleCanvas.width = 1;
-    sampleCanvas.height = 1;
-    const sampleCtx = sampleCanvas.getContext("2d")!;
 
     const frames = framesRef.current;
     frameIndexRef.current = 0;
@@ -82,11 +75,9 @@ const CTAAnimation = () => {
       const img = frames[frameIndexRef.current];
       if (!img) return;
 
-      // Sample background color from top-left corner of this frame
-      sampleCtx.drawImage(img, 0, 0, 1, 1, 0, 0, 1, 1);
-      const [bgR, bgG, bgB] = sampleCtx.getImageData(0, 0, 1, 1).data;
-
-      ctx.clearRect(0, 0, w, h);
+      // Fill entire canvas with exact site background color
+      ctx.fillStyle = `rgb(${SITE_BG_R},${SITE_BG_G},${SITE_BG_B})`;
+      ctx.fillRect(0, 0, w, h);
 
       const imgAspect = img.width / img.height;
       const canvasAspect = w / h;
@@ -106,27 +97,40 @@ const CTAAnimation = () => {
 
       ctx.drawImage(img, drawX, drawY, drawW, drawH);
 
-      // Remove background: make any pixel close to the sampled bg color transparent
+      // Now replace every pixel that isn't clearly "butterfly" with
+      // the exact site background color. The butterfly has dark parts
+      // (brightness < 100) and turquoise parts (high saturation).
+      // Everything else → site bg color, no exceptions.
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imageData.data;
-      const tolSq = BG_TOLERANCE * BG_TOLERANCE;
-      const outerSq = (BG_TOLERANCE + BG_SOFT_EDGE) * (BG_TOLERANCE + BG_SOFT_EDGE);
 
       for (let i = 0; i < data.length; i += 4) {
-        const dr = data[i] - bgR;
-        const dg = data[i + 1] - bgG;
-        const db = data[i + 2] - bgB;
-        const distSq = dr * dr + dg * dg + db * db;
+        const r = data[i], g = data[i + 1], b = data[i + 2];
+        const brightness = (r + g + b) / 3;
+        const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+        const sat = mx - mn;
 
-        if (distSq < tolSq) {
-          // Close to bg → fully transparent
-          data[i + 3] = 0;
-        } else if (distSq < outerSq) {
-          // Soft edge zone → partial transparency
-          const t = (Math.sqrt(distSq) - BG_TOLERANCE) / BG_SOFT_EDGE;
-          data[i + 3] = Math.round(255 * t);
+        // Dark pixel → butterfly body/traces → keep
+        if (brightness < 100) continue;
+
+        // Saturated pixel → turquoise/teal → keep
+        if (sat > 55) continue;
+
+        // Medium-dark with some detail (100-140 brightness, some sat)
+        // Could be wing edge or circuit trace → blend
+        if (brightness < 140 && sat > 25) {
+          const t = (brightness - 100) / 40; // 0 at 100, 1 at 140
+          data[i]     = Math.round(r + (SITE_BG_R - r) * t);
+          data[i + 1] = Math.round(g + (SITE_BG_G - g) * t);
+          data[i + 2] = Math.round(b + (SITE_BG_B - b) * t);
+          continue;
         }
-        // else: keep pixel fully opaque (butterfly)
+
+        // Everything else: white bg, gray floor, shadow, cubes, light areas
+        // → replace with EXACT site background color
+        data[i]     = SITE_BG_R;
+        data[i + 1] = SITE_BG_G;
+        data[i + 2] = SITE_BG_B;
       }
       ctx.putImageData(imageData, 0, 0);
     };
@@ -173,11 +177,7 @@ const CTAAnimation = () => {
     <canvas
       ref={canvasRef}
       className="w-full aspect-[16/9]"
-      style={{
-        contain: "layout",
-        WebkitMaskImage: "radial-gradient(ellipse 60% 55% at 50% 38%, black 40%, transparent 90%)",
-        maskImage: "radial-gradient(ellipse 60% 55% at 50% 38%, black 40%, transparent 90%)",
-      }}
+      style={{ contain: "layout" }}
     />
   );
 };

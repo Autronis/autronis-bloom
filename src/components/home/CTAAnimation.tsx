@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 const TOTAL_FRAMES = 121;
 const FPS = 24;
 const HOLD_DURATION = 5000;
-const WHITE_THRESHOLD = 180;
+
 
 const CTAAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -52,7 +52,7 @@ const CTAAnimation = () => {
     if (!loaded || !visible) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const frames = framesRef.current;
@@ -94,21 +94,6 @@ const CTAAnimation = () => {
       }
 
       ctx.drawImage(img, drawX, drawY, drawW, drawH);
-
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data = imageData.data;
-      for (let i = 0; i < data.length; i += 4) {
-        const r = data[i];
-        const g = data[i + 1];
-        const b = data[i + 2];
-        const brightness = (r + g + b) / 3;
-        const saturation = Math.max(r, g, b) - Math.min(r, g, b);
-        if (brightness > WHITE_THRESHOLD && saturation < 60) {
-          const fade = Math.min(1, (brightness - WHITE_THRESHOLD) / (255 - WHITE_THRESHOLD));
-          data[i + 3] = Math.round(255 * (1 - fade * fade));
-        }
-      }
-      ctx.putImageData(imageData, 0, 0);
     };
 
     resize();
@@ -153,7 +138,7 @@ const CTAAnimation = () => {
     <canvas
       ref={canvasRef}
       className="w-full aspect-[16/9]"
-      style={{ contain: "layout" }}
+      style={{ contain: "layout", mixBlendMode: "multiply" }}
     />
   );
 };

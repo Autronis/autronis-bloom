@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 const TOTAL_FRAMES = 121;
 const FPS = 24;
@@ -9,7 +9,11 @@ const CTAAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const framesRef = useRef<HTMLImageElement[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const animationRef = useRef<number>(0);
+  const frameIndexRef = useRef(0);
 
+  // Preload frames
   useEffect(() => {
     let cancelled = false;
     const images: HTMLImageElement[] = [];
@@ -31,16 +35,28 @@ const CTAAnimation = () => {
     return () => { cancelled = true; };
   }, []);
 
+  // Observe visibility
   useEffect(() => {
-    if (!loaded) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { threshold: 0.15 },
+    );
+    observer.observe(canvas);
+    return () => observer.disconnect();
+  }, []);
+
+  // Reset to frame 0 and restart when scrolling into view
+  useEffect(() => {
+    if (!loaded || !visible) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
     const frames = framesRef.current;
-    let frameIndex = 0;
-    let animationId: number;
+    frameIndexRef.current = 0;
     let w = 0;
     let h = 0;
 
@@ -55,7 +71,7 @@ const CTAAnimation = () => {
     };
 
     const drawFrame = () => {
-      const img = frames[frameIndex];
+      const img = frames[frameIndexRef.current];
       if (!img) return;
 
       ctx.clearRect(0, 0, w, h);
@@ -107,31 +123,31 @@ const CTAAnimation = () => {
       if (holding) {
         if (time - holdStart >= HOLD_DURATION) {
           holding = false;
-          frameIndex = 0;
+          frameIndexRef.current = 0;
           drawFrame();
           lastTime = time;
         }
       } else if (time - lastTime >= interval) {
-        frameIndex++;
-        if (frameIndex >= TOTAL_FRAMES) {
+        frameIndexRef.current++;
+        if (frameIndexRef.current >= TOTAL_FRAMES) {
           holding = true;
           holdStart = time;
-          frameIndex = TOTAL_FRAMES - 1;
+          frameIndexRef.current = TOTAL_FRAMES - 1;
         }
         drawFrame();
         lastTime = time;
       }
-      animationId = requestAnimationFrame(animate);
+      animationRef.current = requestAnimationFrame(animate);
     };
 
     drawFrame();
-    animationId = requestAnimationFrame(animate);
+    animationRef.current = requestAnimationFrame(animate);
 
     return () => {
-      cancelAnimationFrame(animationId);
+      cancelAnimationFrame(animationRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [loaded]);
+  }, [loaded, visible]);
 
   return (
     <canvas

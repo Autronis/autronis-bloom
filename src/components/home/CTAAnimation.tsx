@@ -55,17 +55,6 @@ const CTAAnimation = () => {
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
-    // Parse site background color to RGB once
-    const bgHsl = getComputedStyle(document.documentElement).getPropertyValue("--background").trim();
-    const bgColor = `hsl(${bgHsl})`;
-    const tmp = document.createElement("canvas");
-    tmp.width = 1; tmp.height = 1;
-    const tmpCtx = tmp.getContext("2d")!;
-    tmpCtx.fillStyle = bgColor;
-    tmpCtx.fillRect(0, 0, 1, 1);
-    const bgPx = tmpCtx.getImageData(0, 0, 1, 1).data;
-    const bgR = bgPx[0], bgG = bgPx[1], bgB = bgPx[2];
-
     const frames = framesRef.current;
     frameIndexRef.current = 0;
     let w = 0;
@@ -85,9 +74,7 @@ const CTAAnimation = () => {
       const img = frames[frameIndexRef.current];
       if (!img) return;
 
-      // Fill with site background color first so edges blend perfectly
-      ctx.fillStyle = bgColor;
-      ctx.fillRect(0, 0, w, h);
+      ctx.clearRect(0, 0, w, h);
 
       const imgAspect = img.width / img.height;
       const canvasAspect = w / h;
@@ -108,27 +95,26 @@ const CTAAnimation = () => {
 
       ctx.drawImage(img, drawX, drawY, drawW, drawH);
 
-      // Replace all low-saturation pixels (white, gray, floor, shadow)
-      // with the site background color. Only keep colorful pixels (the butterfly).
+      // Make all background/floor/shadow pixels fully transparent.
+      // Keep only the colorful butterfly (high saturation or very dark).
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imageData.data;
       for (let i = 0; i < data.length; i += 4) {
         const r = data[i], g = data[i + 1], b = data[i + 2];
-        const saturation = Math.max(r, g, b) - Math.min(r, g, b);
+        const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+        const saturation = mx - mn;
         const brightness = (r + g + b) / 3;
-        // Low saturation = background/floor/shadow, not the colorful butterfly
-        if (saturation < 45) {
-          // Fully replace with bg
-          data[i] = bgR;
-          data[i + 1] = bgG;
-          data[i + 2] = bgB;
-        } else if (saturation < 70) {
-          // Soft blend zone so edges aren't harsh
-          const t = (70 - saturation) / 25;
-          data[i]     = Math.round(r + (bgR - r) * t);
-          data[i + 1] = Math.round(g + (bgG - g) * t);
-          data[i + 2] = Math.round(b + (bgB - b) * t);
+        // Very dark pixels = black parts of the gear/body → keep
+        if (brightness < 60) continue;
+        // High saturation = turquoise, colored parts → keep
+        if (saturation > 80) continue;
+        // Medium saturation: partial transparency for soft edges
+        if (saturation > 40) {
+          data[i + 3] = Math.round(255 * ((saturation - 40) / 40));
+          continue;
         }
+        // Everything else (white, gray, floor, shadow) → transparent
+        data[i + 3] = 0;
       }
       ctx.putImageData(imageData, 0, 0);
     };

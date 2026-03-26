@@ -3,44 +3,48 @@ import { useEffect, useRef, useState } from "react";
 const TOTAL_FRAMES = 145;
 const FPS = 24;
 const HOLD_DURATION = 3500;
+const EXT = "webp";
+const DIR = "/hero-frames-webp";
+// Start animating after this many frames are loaded
+const MIN_FRAMES_TO_START = 10;
 
 const HeroAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const framesRef = useRef<HTMLImageElement[]>([]);
-  const [loaded, setLoaded] = useState(false);
+  const framesRef = useRef<(HTMLImageElement | null)[]>(Array(TOTAL_FRAMES).fill(null));
+  const loadedCountRef = useRef(0);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
-    const images: HTMLImageElement[] = [];
-    let loadedCount = 0;
+
+    // Load frames progressively — start animation early
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
-      img.src = `/hero-frames/frame_${String(i).padStart(4, "0")}.jpg`;
+      img.src = `${DIR}/frame_${String(i).padStart(4, "0")}.${EXT}`;
       img.onload = () => {
-        loadedCount++;
-        if (loadedCount === TOTAL_FRAMES && !cancelled) {
-          framesRef.current = images;
-          setLoaded(true);
+        if (cancelled) return;
+        framesRef.current[i - 1] = img;
+        loadedCountRef.current++;
+        if (loadedCountRef.current >= MIN_FRAMES_TO_START && !ready) {
+          setReady(true);
         }
       };
-      images.push(img);
     }
+
     return () => { cancelled = true; };
   }, []);
 
   useEffect(() => {
-    if (!loaded) return;
+    if (!ready) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
-    // Sample the frame's background color from corner
     const sampleCanvas = document.createElement("canvas");
     sampleCanvas.width = 1; sampleCanvas.height = 1;
     const sampleCtx = sampleCanvas.getContext("2d")!;
 
-    const frames = framesRef.current;
     let frameIndex = 0;
     let animationId: number;
     let w = 0, h = 0;
@@ -56,12 +60,11 @@ const HeroAnimation = () => {
     };
 
     const drawFrame = () => {
-      const img = frames[frameIndex];
+      const img = framesRef.current[frameIndex];
       if (!img) return;
 
       ctx.clearRect(0, 0, w, h);
 
-      // Sample bg from top-left corner of this frame
       sampleCtx.drawImage(img, 0, 0, 1, 1, 0, 0, 1, 1);
       const [fBgR, fBgG, fBgB] = sampleCtx.getImageData(0, 0, 1, 1).data;
 
@@ -75,24 +78,17 @@ const HeroAnimation = () => {
       }
       ctx.drawImage(img, dx, dy, dw, dh);
 
-      // Make pixels close to frame's bg color transparent
       const cw = canvas.width, ch = canvas.height;
       const imageData = ctx.getImageData(0, 0, cw, ch);
       const data = imageData.data;
-
       for (let i = 0; i < data.length; i += 4) {
-        const r = data[i], g = data[i + 1], b = data[i + 2];
-        const dr = r - fBgR, dg = g - fBgG, db = b - fBgB;
+        const dr = data[i] - fBgR, dg = data[i + 1] - fBgG, db = data[i + 2] - fBgB;
         const dist = Math.sqrt(dr * dr + dg * dg + db * db);
-
-        // Close to frame bg → transparent
         if (dist < 40) {
           data[i + 3] = 0;
         } else if (dist < 80) {
-          // Soft edge
           data[i + 3] = Math.round(255 * ((dist - 40) / 40));
         }
-        // else: fully opaque (butterfly)
       }
       ctx.putImageData(imageData, 0, 0);
     };
@@ -114,11 +110,14 @@ const HeroAnimation = () => {
           lastTime = time;
         }
       } else if (time - lastTime >= interval) {
-        frameIndex++;
-        if (frameIndex >= TOTAL_FRAMES) {
+        const next = frameIndex + 1;
+        // Only advance if the next frame is loaded
+        if (next >= TOTAL_FRAMES) {
           holding = true;
           holdStart = time;
           frameIndex = TOTAL_FRAMES - 1;
+        } else if (framesRef.current[next]) {
+          frameIndex = next;
         }
         drawFrame();
         lastTime = time;
@@ -133,7 +132,7 @@ const HeroAnimation = () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener("resize", resize);
     };
-  }, [loaded]);
+  }, [ready]);
 
   return (
     <canvas

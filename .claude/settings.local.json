@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find 'c:/Users/semmi/OneDrive/Claude AI/Projects/autronis-website/src' -name *.tsx -type f)",
+      "Bash(grep -r \"blur-\\\\|backdrop-blur\" 'c:/Users/semmi/OneDrive/Claude AI/Projects/autronis-website/src' --include=*.tsx)",
+      "Bash(grep -r import.*motion 'c:/Users/semmi/OneDrive/Claude AI/Projects/autronis-website/src' --include=*.tsx)",
+      "Bash(npx vite:*)",
+      "Bash(sort -t'|' -k1 -rn)"
+    ]
+  }
+}

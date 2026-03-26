@@ -3,47 +3,53 @@ import { useEffect, useRef, useState } from "react";
 const TOTAL_FRAMES = 121;
 const FPS = 24;
 const HOLD_DURATION = 5000;
+const EXT = "webp";
+const DIR = "/cta-frames-webp";
+const MIN_FRAMES_TO_START = 10;
 
 const CTAAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const framesRef = useRef<HTMLImageElement[]>([]);
-  const [loaded, setLoaded] = useState(false);
+  const framesRef = useRef<(HTMLImageElement | null)[]>(Array(TOTAL_FRAMES).fill(null));
+  const loadedCountRef = useRef(0);
+  const [ready, setReady] = useState(false);
   const [visible, setVisible] = useState(false);
   const animationRef = useRef<number>(0);
   const frameIndexRef = useRef(0);
-
-  useEffect(() => {
-    let cancelled = false;
-    const images: HTMLImageElement[] = [];
-    let loadedCount = 0;
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
-      const img = new Image();
-      img.src = `/cta-frames/frame_${String(i).padStart(4, "0")}.jpg`;
-      img.onload = () => {
-        loadedCount++;
-        if (loadedCount === TOTAL_FRAMES && !cancelled) {
-          framesRef.current = images;
-          setLoaded(true);
-        }
-      };
-      images.push(img);
-    }
-    return () => { cancelled = true; };
-  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const observer = new IntersectionObserver(
       ([entry]) => setVisible(entry.isIntersecting),
-      { threshold: 0.15 },
+      { threshold: 0.1, rootMargin: "200px" },
     );
     observer.observe(canvas);
     return () => observer.disconnect();
   }, []);
 
+  // Only start loading frames when near viewport
   useEffect(() => {
-    if (!loaded || !visible) return;
+    if (!visible) return;
+    if (loadedCountRef.current > 0) return; // already loading
+
+    let cancelled = false;
+    for (let i = 1; i <= TOTAL_FRAMES; i++) {
+      const img = new Image();
+      img.src = `${DIR}/frame_${String(i).padStart(4, "0")}.${EXT}`;
+      img.onload = () => {
+        if (cancelled) return;
+        framesRef.current[i - 1] = img;
+        loadedCountRef.current++;
+        if (loadedCountRef.current >= MIN_FRAMES_TO_START && !ready) {
+          setReady(true);
+        }
+      };
+    }
+    return () => { cancelled = true; };
+  }, [visible]);
+
+  useEffect(() => {
+    if (!ready || !visible) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
@@ -53,7 +59,6 @@ const CTAAnimation = () => {
     sampleCanvas.width = 1; sampleCanvas.height = 1;
     const sampleCtx = sampleCanvas.getContext("2d")!;
 
-    const frames = framesRef.current;
     frameIndexRef.current = 0;
     let w = 0, h = 0;
 
@@ -68,8 +73,9 @@ const CTAAnimation = () => {
     };
 
     const drawFrame = () => {
-      const img = frames[frameIndexRef.current];
+      const img = framesRef.current[frameIndexRef.current];
       if (!img) return;
+
       ctx.clearRect(0, 0, w, h);
 
       sampleCtx.drawImage(img, 0, 0, 1, 1, 0, 0, 1, 1);
@@ -85,7 +91,8 @@ const CTAAnimation = () => {
       }
       ctx.drawImage(img, dx, dy, dw, dh);
 
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const cw = canvas.width, ch = canvas.height;
+      const imageData = ctx.getImageData(0, 0, cw, ch);
       const data = imageData.data;
       for (let i = 0; i < data.length; i += 4) {
         const dr = data[i] - fBgR, dg = data[i + 1] - fBgG, db = data[i + 2] - fBgB;
@@ -116,11 +123,13 @@ const CTAAnimation = () => {
           lastTime = time;
         }
       } else if (time - lastTime >= interval) {
-        frameIndexRef.current++;
-        if (frameIndexRef.current >= TOTAL_FRAMES) {
+        const next = frameIndexRef.current + 1;
+        if (next >= TOTAL_FRAMES) {
           holding = true;
           holdStart = time;
           frameIndexRef.current = TOTAL_FRAMES - 1;
+        } else if (framesRef.current[next]) {
+          frameIndexRef.current = next;
         }
         drawFrame();
         lastTime = time;
@@ -135,7 +144,7 @@ const CTAAnimation = () => {
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [loaded, visible]);
+  }, [ready, visible]);
 
   return (
     <canvas

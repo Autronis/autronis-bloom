@@ -4,8 +4,8 @@ const TOTAL_FRAMES = 121;
 const FPS = 24;
 const HOLD_DURATION = 5000;
 // Max color distance from frame corner (bg color) to consider "background"
-const BG_TOLERANCE = 55;
-const BG_SOFT_EDGE = 25; // extra range for soft alpha falloff
+const BG_TOLERANCE = 120;
+const BG_SOFT_EDGE = 20; // extra range for soft alpha falloff
 
 const CTAAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);

@@ -32,8 +32,13 @@ const HeroAnimation = () => {
     if (!loaded) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
+
+    // Sample the frame's background color from corner
+    const sampleCanvas = document.createElement("canvas");
+    sampleCanvas.width = 1; sampleCanvas.height = 1;
+    const sampleCtx = sampleCanvas.getContext("2d")!;
 
     const frames = framesRef.current;
     let frameIndex = 0;
@@ -53,10 +58,13 @@ const HeroAnimation = () => {
     const drawFrame = () => {
       const img = frames[frameIndex];
       if (!img) return;
+
       ctx.clearRect(0, 0, w, h);
-      // Fill white first so multiply has pure white to work with
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(0, 0, w, h);
+
+      // Sample bg from top-left corner of this frame
+      sampleCtx.drawImage(img, 0, 0, 1, 1, 0, 0, 1, 1);
+      const [fBgR, fBgG, fBgB] = sampleCtx.getImageData(0, 0, 1, 1).data;
+
       const imgAspect = img.width / img.height;
       const canvasAspect = w / h;
       let dw: number, dh: number, dx: number, dy: number;
@@ -66,6 +74,27 @@ const HeroAnimation = () => {
         dw = w; dh = dw / imgAspect; dx = 0; dy = (h - dh) / 2;
       }
       ctx.drawImage(img, dx, dy, dw, dh);
+
+      // Make pixels close to frame's bg color transparent
+      const cw = canvas.width, ch = canvas.height;
+      const imageData = ctx.getImageData(0, 0, cw, ch);
+      const data = imageData.data;
+
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i], g = data[i + 1], b = data[i + 2];
+        const dr = r - fBgR, dg = g - fBgG, db = b - fBgB;
+        const dist = Math.sqrt(dr * dr + dg * dg + db * db);
+
+        // Close to frame bg → transparent
+        if (dist < 40) {
+          data[i + 3] = 0;
+        } else if (dist < 80) {
+          // Soft edge
+          data[i + 3] = Math.round(255 * ((dist - 40) / 40));
+        }
+        // else: fully opaque (butterfly)
+      }
+      ctx.putImageData(imageData, 0, 0);
     };
 
     resize();
@@ -110,12 +139,7 @@ const HeroAnimation = () => {
     <canvas
       ref={canvasRef}
       className="w-full aspect-[16/9]"
-      style={{
-        contain: "layout",
-        mixBlendMode: "multiply",
-        WebkitMaskImage: "radial-gradient(ellipse 75% 65% at 50% 40%, black 50%, transparent 100%)",
-        maskImage: "radial-gradient(ellipse 75% 65% at 50% 40%, black 50%, transparent 100%)",
-      }}
+      style={{ contain: "layout" }}
     />
   );
 };

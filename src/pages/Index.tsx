@@ -162,9 +162,18 @@ const Index = () => {
             </span>
           </h1>
 
+          {/* Animation — mobile: centered below title, desktop: in grid */}
+          <div className="flex lg:hidden items-center justify-center -my-4">
+            <div className="w-[280px] sm:w-[340px]">
+              <Suspense fallback={null}>
+                <HeroAnimation />
+              </Suspense>
+            </div>
+          </div>
+
           {/* Bottom row: Visual left, description + CTAs right */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-            {/* Left — 3D Visual */}
+            {/* Left — 3D Visual (desktop only) */}
             <div className="hidden lg:flex items-center justify-center">
               <Suspense fallback={<img src="/logo-square-dark.png" alt="Autronis" className="w-full max-w-sm xl:max-w-md drop-shadow-2xl" />}>
                 <HeroAnimation />

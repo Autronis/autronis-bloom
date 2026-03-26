@@ -3,11 +3,20 @@ import { useEffect, useRef, useState } from "react";
 const TOTAL_FRAMES = 121;
 const FPS = 24;
 const HOLD_DURATION = 5000;
+const BUTTERFLY_OPACITY = 0.35;
 
-// Site background: hsl(38, 38%, 88%) → RGB(236, 228, 213)
-const SITE_BG_R = 236;
-const SITE_BG_G = 228;
-const SITE_BG_B = 213;
+/** Read the exact rendered page background color */
+function getPageBgRgb(): [number, number, number] {
+  // Create a temporary element with the bg color class, measure its actual RGB
+  const probe = document.createElement("div");
+  probe.style.cssText = "position:fixed;width:0;height:0;background:hsl(var(--background));pointer-events:none";
+  document.body.appendChild(probe);
+  const bg = getComputedStyle(probe).backgroundColor;
+  document.body.removeChild(probe);
+  const m = bg.match(/(\d+)/g);
+  if (m && m.length >= 3) return [+m[0], +m[1], +m[2]];
+  return [236, 228, 213];
+}
 
 const CTAAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -21,7 +30,6 @@ const CTAAnimation = () => {
     let cancelled = false;
     const images: HTMLImageElement[] = [];
     let loadedCount = 0;
-
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
       img.src = `/cta-frames/frame_${String(i).padStart(4, "0")}.jpg`;
@@ -34,7 +42,6 @@ const CTAAnimation = () => {
       };
       images.push(img);
     }
-
     return () => { cancelled = true; };
   }, []);
 
@@ -56,10 +63,12 @@ const CTAAnimation = () => {
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
+    // Read the EXACT background color the browser is actually rendering
+    const [bgR, bgG, bgB] = getPageBgRgb();
+
     const frames = framesRef.current;
     frameIndexRef.current = 0;
-    let w = 0;
-    let h = 0;
+    let w = 0, h = 0;
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -75,52 +84,41 @@ const CTAAnimation = () => {
       const img = frames[frameIndexRef.current];
       if (!img) return;
 
-      // Fill entire canvas with exact site background color
-      ctx.fillStyle = `rgb(${SITE_BG_R},${SITE_BG_G},${SITE_BG_B})`;
+      // Fill with exact section bg
+      ctx.fillStyle = `rgb(${bgR},${bgG},${bgB})`;
       ctx.fillRect(0, 0, w, h);
 
       const imgAspect = img.width / img.height;
       const canvasAspect = w / h;
-      let drawW: number, drawH: number, drawX: number, drawY: number;
-
+      let dw: number, dh: number, dx: number, dy: number;
       if (imgAspect > canvasAspect) {
-        drawH = h;
-        drawW = drawH * imgAspect;
-        drawX = (w - drawW) / 2;
-        drawY = 0;
+        dh = h; dw = dh * imgAspect; dx = (w - dw) / 2; dy = 0;
       } else {
-        drawW = w;
-        drawH = drawW / imgAspect;
-        drawX = 0;
-        drawY = (h - drawH) / 2;
+        dw = w; dh = dw / imgAspect; dx = 0; dy = (h - dh) / 2;
       }
+      ctx.drawImage(img, dx, dy, dw, dh);
 
-      ctx.drawImage(img, drawX, drawY, drawW, drawH);
-
-      // Replace all non-butterfly pixels with site bg, and make
-      // butterfly pixels semi-transparent (blended toward bg at 30%).
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imageData.data;
-      const BUTTERFLY_OPACITY = 0.35;
 
       for (let i = 0; i < data.length; i += 4) {
         const r = data[i], g = data[i + 1], b = data[i + 2];
         const brightness = (r + g + b) / 3;
-        const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
-        const sat = mx - mn;
+        const sat = Math.max(r, g, b) - Math.min(r, g, b);
 
+        // Is this pixel clearly part of the butterfly?
         const isButterfly = brightness < 100 || sat > 55 || (brightness < 140 && sat > 25);
 
         if (isButterfly) {
-          // Blend butterfly toward bg color for subtlety
-          data[i]     = Math.round(SITE_BG_R + (r - SITE_BG_R) * BUTTERFLY_OPACITY);
-          data[i + 1] = Math.round(SITE_BG_G + (g - SITE_BG_G) * BUTTERFLY_OPACITY);
-          data[i + 2] = Math.round(SITE_BG_B + (b - SITE_BG_B) * BUTTERFLY_OPACITY);
+          // Blend butterfly pixels toward bg for subtlety
+          data[i]     = Math.round(bgR + (r - bgR) * BUTTERFLY_OPACITY);
+          data[i + 1] = Math.round(bgG + (g - bgG) * BUTTERFLY_OPACITY);
+          data[i + 2] = Math.round(bgB + (b - bgB) * BUTTERFLY_OPACITY);
         } else {
-          // Not butterfly → exact site bg
-          data[i]     = SITE_BG_R;
-          data[i + 1] = SITE_BG_G;
-          data[i + 2] = SITE_BG_B;
+          // Everything else → exact bg, pixel-perfect match
+          data[i] = bgR;
+          data[i + 1] = bgG;
+          data[i + 2] = bgB;
         }
       }
       ctx.putImageData(imageData, 0, 0);

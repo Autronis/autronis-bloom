@@ -41,8 +41,8 @@ const FinalCTA = () => {
     <section ref={sectionRef} className="py-16 sm:py-28 border-t border-border relative overflow-hidden">
 
       {/* 3D butterfly animation */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ marginTop: "-40px" }}>
-        <div className="w-[500px] max-w-[90vw] opacity-30">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ marginTop: "-20px" }}>
+        <div className="w-[320px] sm:w-[500px] opacity-40 sm:opacity-30">
           <Suspense fallback={null}><CTAAnimation /></Suspense>
         </div>
       </div>

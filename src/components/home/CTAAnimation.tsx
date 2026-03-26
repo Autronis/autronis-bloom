@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 const TOTAL_FRAMES = 121;
 const FPS = 24;
 const HOLD_DURATION = 5000;
-const WHITE_THRESHOLD = 220;
+const WHITE_THRESHOLD = 180;
 
 const CTAAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -85,9 +85,11 @@ const CTAAnimation = () => {
         const r = data[i];
         const g = data[i + 1];
         const b = data[i + 2];
-        if (r > WHITE_THRESHOLD && g > WHITE_THRESHOLD && b > WHITE_THRESHOLD) {
-          const brightness = (r + g + b) / 3;
-          data[i + 3] = Math.max(0, 255 - Math.round((brightness - WHITE_THRESHOLD) / (255 - WHITE_THRESHOLD) * 255));
+        const brightness = (r + g + b) / 3;
+        const saturation = Math.max(r, g, b) - Math.min(r, g, b);
+        if (brightness > WHITE_THRESHOLD && saturation < 60) {
+          const fade = Math.min(1, (brightness - WHITE_THRESHOLD) / (255 - WHITE_THRESHOLD));
+          data[i + 3] = Math.round(255 * (1 - fade * fade));
         }
       }
       ctx.putImageData(imageData, 0, 0);

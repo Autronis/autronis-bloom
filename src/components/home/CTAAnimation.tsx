@@ -4,8 +4,8 @@ const TOTAL_FRAMES = 121;
 const FPS = 24;
 const HOLD_DURATION = 5000;
 // Max color distance from frame corner (bg color) to consider "background"
-const BG_TOLERANCE = 120;
-const BG_SOFT_EDGE = 20; // extra range for soft alpha falloff
+const BG_TOLERANCE = 160;
+const BG_SOFT_EDGE = 30;
 
 const CTAAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -173,7 +173,11 @@ const CTAAnimation = () => {
     <canvas
       ref={canvasRef}
       className="w-full aspect-[16/9]"
-      style={{ contain: "layout" }}
+      style={{
+        contain: "layout",
+        WebkitMaskImage: "radial-gradient(ellipse 60% 55% at 50% 38%, black 40%, transparent 90%)",
+        maskImage: "radial-gradient(ellipse 60% 55% at 50% 38%, black 40%, transparent 90%)",
+      }}
     />
   );
 };

@@ -95,26 +95,38 @@ const CTAAnimation = () => {
 
       ctx.drawImage(img, drawX, drawY, drawW, drawH);
 
-      // Make all background/floor/shadow pixels fully transparent.
-      // Keep only the colorful butterfly (high saturation or very dark).
+      // Remove background: make bright, low-contrast pixels transparent.
+      // The frames have a white/light-gray bg + floor + shadow + small cubes.
+      // The butterfly has: dark gear (brightness<80), turquoise ring (high sat),
+      // glass wings (semi-transparent, brightness 160-210 with slight green tint),
+      // black antennae, circuit traces (gray lines on wings).
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imageData.data;
       for (let i = 0; i < data.length; i += 4) {
         const r = data[i], g = data[i + 1], b = data[i + 2];
-        const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
-        const saturation = mx - mn;
         const brightness = (r + g + b) / 3;
-        // Very dark pixels = black parts of the gear/body → keep
-        if (brightness < 60) continue;
-        // High saturation = turquoise, colored parts → keep
-        if (saturation > 80) continue;
-        // Medium saturation: partial transparency for soft edges
-        if (saturation > 40) {
-          data[i + 3] = Math.round(255 * ((saturation - 40) / 40));
-          continue;
+        const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+        const sat = mx - mn;
+
+        // Dark pixels → always keep (gear body, antennae, circuit traces)
+        if (brightness < 100) continue;
+
+        // Strong color → keep (turquoise ring, cyan glow)
+        if (sat > 60) continue;
+
+        // Bright + low sat = background/floor/shadow/cubes → transparent
+        // brightness 100-160: fade out gradually (catches shadow + floor edge)
+        // brightness >160: fully transparent (white bg)
+        if (brightness > 160) {
+          data[i + 3] = 0;
+        } else {
+          // Transition zone 100-160: more transparent the brighter it gets
+          const alpha = Math.round(255 * (1 - (brightness - 100) / 60));
+          // But only if low saturation (keeps wing edge detail)
+          if (sat < 30) {
+            data[i + 3] = Math.min(data[i + 3], alpha);
+          }
         }
-        // Everything else (white, gray, floor, shadow) → transparent
-        data[i + 3] = 0;
       }
       ctx.putImageData(imageData, 0, 0);
     };

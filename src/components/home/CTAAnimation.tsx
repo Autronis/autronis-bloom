@@ -46,8 +46,12 @@ const CTAAnimation = () => {
     if (!loaded || !visible) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
+
+    const sampleCanvas = document.createElement("canvas");
+    sampleCanvas.width = 1; sampleCanvas.height = 1;
+    const sampleCtx = sampleCanvas.getContext("2d")!;
 
     const frames = framesRef.current;
     frameIndexRef.current = 0;
@@ -67,6 +71,10 @@ const CTAAnimation = () => {
       const img = frames[frameIndexRef.current];
       if (!img) return;
       ctx.clearRect(0, 0, w, h);
+
+      sampleCtx.drawImage(img, 0, 0, 1, 1, 0, 0, 1, 1);
+      const [fBgR, fBgG, fBgB] = sampleCtx.getImageData(0, 0, 1, 1).data;
+
       const imgAspect = img.width / img.height;
       const canvasAspect = w / h;
       let dw: number, dh: number, dx: number, dy: number;
@@ -76,6 +84,19 @@ const CTAAnimation = () => {
         dw = w; dh = dw / imgAspect; dx = 0; dy = (h - dh) / 2;
       }
       ctx.drawImage(img, dx, dy, dw, dh);
+
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      for (let i = 0; i < data.length; i += 4) {
+        const dr = data[i] - fBgR, dg = data[i + 1] - fBgG, db = data[i + 2] - fBgB;
+        const dist = Math.sqrt(dr * dr + dg * dg + db * db);
+        if (dist < 40) {
+          data[i + 3] = 0;
+        } else if (dist < 80) {
+          data[i + 3] = Math.round(255 * ((dist - 40) / 40));
+        }
+      }
+      ctx.putImageData(imageData, 0, 0);
     };
 
     resize();
@@ -120,7 +141,7 @@ const CTAAnimation = () => {
     <canvas
       ref={canvasRef}
       className="w-full aspect-[16/9]"
-      style={{ contain: "layout", mixBlendMode: "multiply" }}
+      style={{ contain: "layout" }}
     />
   );
 };

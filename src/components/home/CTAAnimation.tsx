@@ -97,12 +97,11 @@ const CTAAnimation = () => {
 
       ctx.drawImage(img, drawX, drawY, drawW, drawH);
 
-      // Now replace every pixel that isn't clearly "butterfly" with
-      // the exact site background color. The butterfly has dark parts
-      // (brightness < 100) and turquoise parts (high saturation).
-      // Everything else → site bg color, no exceptions.
+      // Replace all non-butterfly pixels with site bg, and make
+      // butterfly pixels semi-transparent (blended toward bg at 30%).
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imageData.data;
+      const BUTTERFLY_OPACITY = 0.35;
 
       for (let i = 0; i < data.length; i += 4) {
         const r = data[i], g = data[i + 1], b = data[i + 2];
@@ -110,27 +109,19 @@ const CTAAnimation = () => {
         const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
         const sat = mx - mn;
 
-        // Dark pixel → butterfly body/traces → keep
-        if (brightness < 100) continue;
+        const isButterfly = brightness < 100 || sat > 55 || (brightness < 140 && sat > 25);
 
-        // Saturated pixel → turquoise/teal → keep
-        if (sat > 55) continue;
-
-        // Medium-dark with some detail (100-140 brightness, some sat)
-        // Could be wing edge or circuit trace → blend
-        if (brightness < 140 && sat > 25) {
-          const t = (brightness - 100) / 40; // 0 at 100, 1 at 140
-          data[i]     = Math.round(r + (SITE_BG_R - r) * t);
-          data[i + 1] = Math.round(g + (SITE_BG_G - g) * t);
-          data[i + 2] = Math.round(b + (SITE_BG_B - b) * t);
-          continue;
+        if (isButterfly) {
+          // Blend butterfly toward bg color for subtlety
+          data[i]     = Math.round(SITE_BG_R + (r - SITE_BG_R) * BUTTERFLY_OPACITY);
+          data[i + 1] = Math.round(SITE_BG_G + (g - SITE_BG_G) * BUTTERFLY_OPACITY);
+          data[i + 2] = Math.round(SITE_BG_B + (b - SITE_BG_B) * BUTTERFLY_OPACITY);
+        } else {
+          // Not butterfly → exact site bg
+          data[i]     = SITE_BG_R;
+          data[i + 1] = SITE_BG_G;
+          data[i + 2] = SITE_BG_B;
         }
-
-        // Everything else: white bg, gray floor, shadow, cubes, light areas
-        // → replace with EXACT site background color
-        data[i]     = SITE_BG_R;
-        data[i + 1] = SITE_BG_G;
-        data[i + 2] = SITE_BG_B;
       }
       ctx.putImageData(imageData, 0, 0);
     };

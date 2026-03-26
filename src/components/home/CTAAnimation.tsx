@@ -108,15 +108,23 @@ const CTAAnimation = () => {
 
       ctx.drawImage(img, drawX, drawY, drawW, drawH);
 
-      // Replace near-white/light-gray pixels with site background color
+      // Replace all low-saturation pixels (white, gray, floor, shadow)
+      // with the site background color. Only keep colorful pixels (the butterfly).
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imageData.data;
       for (let i = 0; i < data.length; i += 4) {
         const r = data[i], g = data[i + 1], b = data[i + 2];
-        const brightness = (r + g + b) / 3;
         const saturation = Math.max(r, g, b) - Math.min(r, g, b);
-        if (brightness > 170 && saturation < 50) {
-          const t = Math.min(1, (brightness - 170) / 85);
+        const brightness = (r + g + b) / 3;
+        // Low saturation = background/floor/shadow, not the colorful butterfly
+        if (saturation < 45) {
+          // Fully replace with bg
+          data[i] = bgR;
+          data[i + 1] = bgG;
+          data[i + 2] = bgB;
+        } else if (saturation < 70) {
+          // Soft blend zone so edges aren't harsh
+          const t = (70 - saturation) / 25;
           data[i]     = Math.round(r + (bgR - r) * t);
           data[i + 1] = Math.round(g + (bgG - g) * t);
           data[i + 2] = Math.round(b + (bgB - b) * t);

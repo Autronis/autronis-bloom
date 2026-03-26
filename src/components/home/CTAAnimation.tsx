@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const TOTAL_FRAMES = 121;
 const FPS = 24;
 const HOLD_DURATION = 5000;
-
+// Max color distance from frame corner (bg color) to consider "background"
+const BG_TOLERANCE = 55;
+const BG_SOFT_EDGE = 25; // extra range for soft alpha falloff
 
 const CTAAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -47,13 +49,19 @@ const CTAAnimation = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Reset to frame 0 and restart when scrolling into view
+  // Animate
   useEffect(() => {
     if (!loaded || !visible) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
+
+    // Tiny offscreen canvas to sample each frame's background color
+    const sampleCanvas = document.createElement("canvas");
+    sampleCanvas.width = 1;
+    sampleCanvas.height = 1;
+    const sampleCtx = sampleCanvas.getContext("2d")!;
 
     const frames = framesRef.current;
     frameIndexRef.current = 0;
@@ -74,11 +82,14 @@ const CTAAnimation = () => {
       const img = frames[frameIndexRef.current];
       if (!img) return;
 
+      // Sample background color from top-left corner of this frame
+      sampleCtx.drawImage(img, 0, 0, 1, 1, 0, 0, 1, 1);
+      const [bgR, bgG, bgB] = sampleCtx.getImageData(0, 0, 1, 1).data;
+
       ctx.clearRect(0, 0, w, h);
 
       const imgAspect = img.width / img.height;
       const canvasAspect = w / h;
-
       let drawW: number, drawH: number, drawX: number, drawY: number;
 
       if (imgAspect > canvasAspect) {
@@ -94,6 +105,30 @@ const CTAAnimation = () => {
       }
 
       ctx.drawImage(img, drawX, drawY, drawW, drawH);
+
+      // Remove background: make any pixel close to the sampled bg color transparent
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      const tolSq = BG_TOLERANCE * BG_TOLERANCE;
+      const outerSq = (BG_TOLERANCE + BG_SOFT_EDGE) * (BG_TOLERANCE + BG_SOFT_EDGE);
+
+      for (let i = 0; i < data.length; i += 4) {
+        const dr = data[i] - bgR;
+        const dg = data[i + 1] - bgG;
+        const db = data[i + 2] - bgB;
+        const distSq = dr * dr + dg * dg + db * db;
+
+        if (distSq < tolSq) {
+          // Close to bg → fully transparent
+          data[i + 3] = 0;
+        } else if (distSq < outerSq) {
+          // Soft edge zone → partial transparency
+          const t = (Math.sqrt(distSq) - BG_TOLERANCE) / BG_SOFT_EDGE;
+          data[i + 3] = Math.round(255 * t);
+        }
+        // else: keep pixel fully opaque (butterfly)
+      }
+      ctx.putImageData(imageData, 0, 0);
     };
 
     resize();
@@ -138,12 +173,7 @@ const CTAAnimation = () => {
     <canvas
       ref={canvasRef}
       className="w-full aspect-[16/9]"
-      style={{
-        contain: "layout",
-        mixBlendMode: "multiply",
-        WebkitMaskImage: "radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 100%)",
-        maskImage: "radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 100%)",
-      }}
+      style={{ contain: "layout" }}
     />
   );
 };

@@ -28,6 +28,7 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const Cookies = lazy(() => import("./pages/Cookies"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ImpactROI = lazy(() => import("./pages/ImpactROI"));
+const Portfolio = lazy(() => import("./pages/Portfolio"));
 
 const queryClient = new QueryClient();
 
@@ -67,6 +68,7 @@ const App = () => (
                 <Route path="/resources" element={<Resources />} />
                 <Route path="/resources/:slug" element={<ResourceDetail />} />
                 <Route path="/impact-roi" element={<ImpactROI />} />
+                <Route path="/portfolio" element={<Portfolio />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/cookies" element={<Cookies />} />

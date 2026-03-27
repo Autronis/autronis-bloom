@@ -10,7 +10,6 @@ import ScrollReveal, { ScrollRevealItem } from "@/components/ScrollReveal";
 import { useLanguage } from "@/i18n/context";
 import WorkflowBuilder, { workflowSystems } from "@/components/WorkflowBuilder";
 import { lazy, Suspense } from "react";
-const ProjectShowcase = lazy(() => import("@/components/home/ProjectShowcase"));
 
 const t = {
   en: {
@@ -574,8 +573,6 @@ const Services = () => {
             </div>
           </div>
 
-          {/* Portfolio Preview */}
-          <Suspense fallback={null}><ProjectShowcase /></Suspense>
 
           {/* Workflow Builder */}
           <div id="workflow-builder" ref={workflowRef} className="mt-20 pt-12 scroll-mt-28">

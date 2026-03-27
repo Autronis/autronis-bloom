@@ -103,7 +103,7 @@ const ServicePillars = () => {
           <p className="text-sm sm:text-base text-muted-foreground">{t.desc}</p>
         </ScrollRevealItem></ScrollReveal>
 
-        <div className="space-y-4 sm:space-y-6 mb-8 sm:mb-12">
+        <div className="space-y-4 sm:space-y-6 mb-8 sm:mb-12 max-w-5xl mx-auto">
           {t.services.map((s, i) => <ServiceCard key={s.title} s={s} i={i} hoveredIndex={hoveredIndex} setHoveredIndex={setHoveredIndex} canHover={canHover} whatDeliver={t.whatDeliver} learnMore={t.learnMore} securityNote={t.securityNote} securityLink={t.securityLink} />)}
         </div>
 

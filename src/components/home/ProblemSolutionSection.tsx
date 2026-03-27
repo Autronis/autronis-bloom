@@ -156,25 +156,44 @@ const ProblemSolutionSection = () => {
   const lang = useLanguage();
   const tx = text[lang];
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-200px 0px" });
   const [transformedIndices, setTransformedIndices] = useState<Set<number>>(new Set());
-  const [mounted, setMounted] = useState(false);
+  const [triggered, setTriggered] = useState(false);
 
-  // Wait before observing so a refresh with section already visible doesn't trigger immediately
+  // Only trigger after user has scrolled AND the cards are visible
   useEffect(() => {
-    const t = setTimeout(() => setMounted(true), 800);
-    return () => clearTimeout(t);
+    const el = sectionRef.current;
+    if (!el) return;
+    let hasScrolled = false;
+    let cleaned = false;
+
+    const onScroll = () => { hasScrolled = true; };
+    window.addEventListener("scroll", onScroll, { once: true, passive: true });
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && hasScrolled && !cleaned) {
+        setTriggered(true);
+        observer.disconnect();
+        cleaned = true;
+      }
+    }, { rootMargin: "-150px 0px" });
+    observer.observe(el);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      observer.disconnect();
+      cleaned = true;
+    };
   }, []);
 
   useEffect(() => {
-    if (!mounted || !isInView) return;
+    if (!triggered) return;
     const timers = tx.items.map((_, i) =>
       setTimeout(() => {
         setTransformedIndices(prev => new Set([...prev, i]));
       }, 400 + i * 1000)
     );
     return () => timers.forEach(clearTimeout);
-  }, [mounted, isInView, tx.items]);
+  }, [triggered, tx.items]);
 
   return (
     <section className="py-10 sm:py-20 border-t border-border relative overflow-hidden">

@@ -173,7 +173,7 @@ const ProblemSolutionSection = () => {
         observer.disconnect();
         cleaned = true;
       }
-    }, { rootMargin: "-150px 0px" });
+    }, { threshold: 0.1 });
     observer.observe(el);
 
     return () => {

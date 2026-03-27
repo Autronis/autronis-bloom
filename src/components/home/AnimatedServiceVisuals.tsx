@@ -563,3 +563,80 @@ export const DataReportingVisual = () => {
     </div>
   );
 };
+
+// Webdesign & Development — Browser with page being built
+export const WebDesignVisual = () => (
+  <div className="relative w-full h-full min-h-[320px] flex items-center justify-center p-2">
+    <svg viewBox="0 0 200 160" className="w-full h-full">
+      {/* Browser chrome */}
+      <rect x="10" y="8" width="180" height="144" rx="4" fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.5" strokeOpacity="0.25" />
+      <rect x="10" y="8" width="180" height="14" rx="4" fill="hsl(174, 78%, 41%)" fillOpacity="0.04" />
+      <line x1="10" y1="22" x2="190" y2="22" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.2" />
+      <circle cx="19" cy="15" r="2" fill="#FF5F57" fillOpacity="0.7" />
+      <circle cx="26" cy="15" r="2" fill="#FEBC2E" fillOpacity="0.7" />
+      <circle cx="33" cy="15" r="2" fill="#28C840" fillOpacity="0.7" />
+      <rect x="50" y="11" width="90" height="8" rx="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.04" stroke="hsl(174, 78%, 41%)" strokeWidth="0.2" strokeOpacity="0.15" />
+      <text x="95" y="17" textAnchor="middle" fontSize="3" fill="hsl(174, 78%, 41%)" fillOpacity="0.3" fontFamily="monospace">yoursite.com</text>
+
+      {/* Navbar — slides in */}
+      <motion.rect x="14" y="26" width="172" height="10" rx="1.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.06" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.15"
+        initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.6, delay: 0.3 }} style={{ transformOrigin: "14px 31px" }} />
+      {[25, 55, 85, 115, 145].map((x, i) => (
+        <motion.rect key={`n${i}`} x={x} y="29" width="18" height="3" rx="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.15"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.6 + i * 0.1 }} />
+      ))}
+
+      {/* Hero block */}
+      <motion.rect x="14" y="40" width="172" height="35" rx="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.03"
+        initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 1.0 }} />
+      <motion.rect x="24" y="48" width="70" height="5" rx="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.15"
+        initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.8, delay: 1.3 }} style={{ transformOrigin: "24px 50px" }} />
+      <motion.rect x="24" y="56" width="50" height="4" rx="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.08"
+        initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.6, delay: 1.6 }} style={{ transformOrigin: "24px 58px" }} />
+      {/* CTA button */}
+      <motion.rect x="24" y="64" width="32" height="7" rx="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.25"
+        initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.4, delay: 2.0, type: "spring" }} />
+      <motion.text x="40" y="69" textAnchor="middle" fontSize="3" fill="hsl(174, 78%, 41%)" fillOpacity="0.5" fontWeight="600"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }}>CTA</motion.text>
+      {/* Hero image */}
+      <motion.rect x="110" y="44" width="68" height="28" rx="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.06" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.12"
+        initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 1.8 }} />
+      <motion.path d="M 130 62 l 12 -8 l 10 5 l 8 -3 l 10 10 l -40 0 Z" fill="hsl(174, 78%, 41%)" fillOpacity="0.08"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.4 }} />
+
+      {/* 3 cards drop in */}
+      {[0, 1, 2].map((i) => (
+        <motion.g key={`c${i}`} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 2.6 + i * 0.25 }}>
+          <rect x={16 + i * 58} y="82" width="52" height="30" rx="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.04" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.12" />
+          <rect x={22 + i * 58} y="87" width="20" height="3" rx="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.15" />
+          <rect x={22 + i * 58} y="93" width="40" height="2" rx="0.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.06" />
+          <rect x={22 + i * 58} y="97" width="35" height="2" rx="0.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.06" />
+          <rect x={22 + i * 58} y="101" width="38" height="2" rx="0.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.06" />
+          <motion.circle cx={60 + i * 58} cy="106" r="3" fill="hsl(174, 78%, 41%)" fillOpacity="0.12"
+            initial={{ scale: 0 }} animate={{ scale: [0, 1.3, 1] }} transition={{ delay: 3.2 + i * 0.3, duration: 0.4 }} />
+          <motion.path d={`M ${58 + i * 58} 106 l 1.5 1.5 l 3 -3`} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeLinecap="round"
+            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 3.3 + i * 0.3, duration: 0.3 }} />
+        </motion.g>
+      ))}
+
+      {/* Footer */}
+      <motion.rect x="14" y="118" width="172" height="12" rx="1.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.03"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3.8 }} />
+      <motion.rect x="24" y="122" width="30" height="2.5" rx="0.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.1"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 4.0 }} />
+
+      {/* Build cursor */}
+      <motion.g animate={{ x: [40, 100, 60, 140, 100, 60], y: [50, 45, 65, 90, 100, 120] }} transition={{ duration: 8, delay: 0.5, ease: "easeInOut" }}>
+        <motion.path d="M 0 0 l 0 8 l 3 -2 l 2 4 l 1.5 -0.8 l -2 -4 l 3.5 -0.5 Z" fill="white" fillOpacity="0.4" stroke="white" strokeWidth="0.3" strokeOpacity="0.5" />
+      </motion.g>
+
+      {/* Progress bar */}
+      <motion.rect x="14" y="134" width="0" height="2" rx="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.3"
+        animate={{ width: [0, 172] }} transition={{ duration: 4, delay: 0.3, ease: "easeOut" }} />
+      <motion.text x="100" y="145" textAnchor="middle" fontSize="3" fill="hsl(174, 78%, 41%)" fillOpacity="0.3" fontFamily="monospace"
+        initial={{ opacity: 0 }} animate={{ opacity: [0, 0.5, 0.5, 0] }} transition={{ duration: 5, delay: 0.3 }}>Building page...</motion.text>
+      <motion.text x="100" y="145" textAnchor="middle" fontSize="3" fill="#4ADE80" fillOpacity="0.5" fontFamily="monospace"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 4.5 }}>✓ Live</motion.text>
+    </svg>
+  </div>
+);

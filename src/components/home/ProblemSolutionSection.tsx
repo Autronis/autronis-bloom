@@ -156,7 +156,7 @@ const ProblemSolutionSection = () => {
   const lang = useLanguage();
   const tx = text[lang];
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.6 });
+  const isInView = useInView(sectionRef, { once: true, margin: "-200px 0px" });
   const [transformedIndices, setTransformedIndices] = useState<Set<number>>(new Set());
 
   useEffect(() => {

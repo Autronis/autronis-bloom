@@ -86,6 +86,8 @@ const SectionFallback = () => (
   </div>
 );
 
+const isEmbed = typeof window !== "undefined" && new URLSearchParams(window.location.search).has("embed");
+
 const Index = () => {
   const lang = useLanguage();
   const t = text[lang];
@@ -239,15 +241,17 @@ const Index = () => {
         </div>
       </section>
 
-      <Suspense fallback={<SectionFallback />}><ProblemSolutionSection /></Suspense>
-      <Suspense fallback={<SectionFallback />}><ServicePillars /></Suspense>
-      <Suspense fallback={<SectionFallback />}><ProcessSection /></Suspense>
-      <Suspense fallback={<SectionFallback />}><WhyAutronisSection /></Suspense>
-      <Suspense fallback={<SectionFallback />}><ROIPreview /></Suspense>
-      <Suspense fallback={<SectionFallback />}><CaseStudiesPreview /></Suspense>
-      <Suspense fallback={<SectionFallback />}><SecurityBlock /></Suspense>
-      <Suspense fallback={<SectionFallback />}><FAQSection /></Suspense>
-      <Suspense fallback={<SectionFallback />}><FinalCTA /></Suspense>
+      {!isEmbed && <>
+        <Suspense fallback={<SectionFallback />}><ProblemSolutionSection /></Suspense>
+        <Suspense fallback={<SectionFallback />}><ServicePillars /></Suspense>
+        <Suspense fallback={<SectionFallback />}><ProcessSection /></Suspense>
+        <Suspense fallback={<SectionFallback />}><WhyAutronisSection /></Suspense>
+        <Suspense fallback={<SectionFallback />}><ROIPreview /></Suspense>
+        <Suspense fallback={<SectionFallback />}><CaseStudiesPreview /></Suspense>
+        <Suspense fallback={<SectionFallback />}><SecurityBlock /></Suspense>
+        <Suspense fallback={<SectionFallback />}><FAQSection /></Suspense>
+        <Suspense fallback={<SectionFallback />}><FinalCTA /></Suspense>
+      </>}
     </>
   );
 };

@@ -143,6 +143,7 @@ const Index = () => {
           {/* Title — mobile: 2 lines centered, desktop: inline left */}
           <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight mb-4 sm:mb-6 text-center lg:text-left">
             <span className="block lg:inline">{t.heroTitle1} {t.heroTitle2}</span>
+            <span className="hidden lg:inline">{" "}</span>
             <span className="block lg:inline text-primary relative h-[1.2em] lg:h-auto">
               {rotatingWords.map((word, i) => (
                 <span

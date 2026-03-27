@@ -89,15 +89,14 @@ const ProcessSection = () => {
 
         {/* Horizontal step flow */}
         <div className="max-w-4xl mx-auto mb-8">
-          {/* Progress bar */}
-          <div className="relative h-1 bg-border/50 rounded-full mx-4 sm:mx-8 mb-8">
+          {/* Thin progress line */}
+          <div className="relative h-px bg-border/40 mx-6 sm:mx-12 mb-6">
             <motion.div
-              className="absolute left-0 top-0 h-full bg-primary rounded-full"
+              className="absolute left-0 top-0 h-full bg-primary/60"
               initial={{ width: "0%" }}
               animate={{ width: hasScrolled ? "100%" : "0%" }}
               transition={{ duration: 2.4, delay: 0.3, ease: "easeOut" }}
             />
-            {/* Step dots on the bar */}
             {t.phases.map((_, i) => (
               <motion.div
                 key={i}
@@ -107,14 +106,7 @@ const ProcessSection = () => {
                 animate={activeStep >= i ? { scale: 1 } : { scale: 0 }}
                 transition={{ type: "spring", stiffness: 300, damping: 15 }}
               >
-                <div
-                  className="w-3 h-3 rounded-full border-2 transition-colors duration-300"
-                  style={{
-                    borderColor: activeStep >= i ? "hsl(174, 78%, 41%)" : "hsl(var(--border))",
-                    backgroundColor: activeStep >= i ? "hsl(174, 78%, 41%)" : "hsl(var(--card))",
-                    boxShadow: activeStep >= i ? "0 0 8px hsl(174 78% 41% / 0.5)" : "none",
-                  }}
-                />
+                <div className="w-2 h-2 rounded-full bg-primary/70" />
               </motion.div>
             ))}
           </div>

@@ -564,79 +564,161 @@ export const DataReportingVisual = () => {
   );
 };
 
-// Webdesign & Development — Browser with page being built
-export const WebDesignVisual = () => (
-  <div className="relative w-full h-full min-h-[320px] flex items-center justify-center p-2">
-    <svg viewBox="0 0 200 160" className="w-full h-full">
-      {/* Browser chrome */}
-      <rect x="10" y="8" width="180" height="144" rx="4" fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.5" strokeOpacity="0.25" />
-      <rect x="10" y="8" width="180" height="14" rx="4" fill="hsl(174, 78%, 41%)" fillOpacity="0.04" />
-      <line x1="10" y1="22" x2="190" y2="22" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.2" />
-      <circle cx="19" cy="15" r="2" fill="#FF5F57" fillOpacity="0.7" />
-      <circle cx="26" cy="15" r="2" fill="#FEBC2E" fillOpacity="0.7" />
-      <circle cx="33" cy="15" r="2" fill="#28C840" fillOpacity="0.7" />
-      <rect x="50" y="11" width="90" height="8" rx="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.04" stroke="hsl(174, 78%, 41%)" strokeWidth="0.2" strokeOpacity="0.15" />
-      <text x="95" y="17" textAnchor="middle" fontSize="3" fill="hsl(174, 78%, 41%)" fillOpacity="0.3" fontFamily="monospace">yoursite.com</text>
+// Webdesign & Development — Live website builder with continuous activity
+export const WebDesignVisual = () => {
+  const c = "hsl(174, 78%, 41%)";
+  return (
+    <div className="relative w-full h-full min-h-[320px] flex items-center justify-center p-2">
+      <svg viewBox="0 0 200 160" className="w-full h-full" style={{ overflow: "hidden" }}>
+        {/* Browser chrome */}
+        <rect x="10" y="8" width="180" height="144" rx="4" fill="none" stroke={c} strokeWidth="0.5" strokeOpacity="0.25" />
+        <rect x="10" y="8" width="180" height="14" rx="4" fill={c} fillOpacity="0.04" />
+        <line x1="10" y1="22" x2="190" y2="22" stroke={c} strokeWidth="0.3" strokeOpacity="0.2" />
+        <circle cx="19" cy="15" r="2" fill="#FF5F57" fillOpacity="0.7" />
+        <circle cx="26" cy="15" r="2" fill="#FEBC2E" fillOpacity="0.7" />
+        <circle cx="33" cy="15" r="2" fill="#28C840" fillOpacity="0.7" />
+        <rect x="50" y="11" width="90" height="8" rx="2" fill={c} fillOpacity="0.04" stroke={c} strokeWidth="0.2" strokeOpacity="0.15" />
+        {/* Typing URL */}
+        <motion.text x="60" y="17" fontSize="3" fill={c} fillOpacity="0.4" fontFamily="monospace"
+          initial={{ opacity: 0 }} animate={{ opacity: [0, 1] }} transition={{ delay: 0.2, duration: 0.5 }}>
+          yoursite.com
+        </motion.text>
+        {/* Loading bar in URL */}
+        <motion.rect x="50" y="19.5" width="0" height="0.5" rx="0.25" fill={c} fillOpacity="0.4"
+          animate={{ width: [0, 90, 90, 0] }} transition={{ duration: 2, delay: 0.3, repeat: Infinity, repeatDelay: 10 }} />
 
-      {/* Navbar — slides in */}
-      <motion.rect x="14" y="26" width="172" height="10" rx="1.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.06" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.15"
-        initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.6, delay: 0.3 }} style={{ transformOrigin: "14px 31px" }} />
-      {[25, 55, 85, 115, 145].map((x, i) => (
-        <motion.rect key={`n${i}`} x={x} y="29" width="18" height="3" rx="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.15"
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.6 + i * 0.1 }} />
-      ))}
+        {/* ═══ PAGE CONTENT ═══ */}
+        {/* Navbar */}
+        <motion.rect x="14" y="26" width="172" height="10" rx="1.5" fill={c} fillOpacity="0.06" stroke={c} strokeWidth="0.3" strokeOpacity="0.15"
+          initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.5, delay: 0.3 }} style={{ transformOrigin: "14px 31px" }} />
+        {/* Logo */}
+        <motion.circle cx="22" cy="31" r="3" fill={c} fillOpacity="0.2"
+          initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.5, type: "spring" }} />
+        {/* Nav items with hover effect */}
+        {[50, 72, 94, 116, 138].map((x, i) => (
+          <motion.rect key={`n${i}`} x={x} y="29.5" width="14" height="3" rx="1" fill={c}
+            initial={{ opacity: 0, y: -3 }} animate={{ opacity: 0.15, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.6 + i * 0.08 }} />
+        ))}
+        {/* Active nav indicator — slides between items */}
+        <motion.rect y="35" width="14" height="1" rx="0.5" fill={c} fillOpacity="0.4"
+          animate={{ x: [50, 50, 72, 72, 94, 94, 50] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} />
+        {/* CTA button in nav */}
+        <motion.rect x="160" y="28" width="22" height="6" rx="2" fill={c} fillOpacity="0.2"
+          initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.9, type: "spring" }} />
 
-      {/* Hero block */}
-      <motion.rect x="14" y="40" width="172" height="35" rx="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.03"
-        initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 1.0 }} />
-      <motion.rect x="24" y="48" width="70" height="5" rx="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.15"
-        initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.8, delay: 1.3 }} style={{ transformOrigin: "24px 50px" }} />
-      <motion.rect x="24" y="56" width="50" height="4" rx="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.08"
-        initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.6, delay: 1.6 }} style={{ transformOrigin: "24px 58px" }} />
-      {/* CTA button */}
-      <motion.rect x="24" y="64" width="32" height="7" rx="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.25"
-        initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.4, delay: 2.0, type: "spring" }} />
-      <motion.text x="40" y="69" textAnchor="middle" fontSize="3" fill="hsl(174, 78%, 41%)" fillOpacity="0.5" fontWeight="600"
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }}>CTA</motion.text>
-      {/* Hero image */}
-      <motion.rect x="110" y="44" width="68" height="28" rx="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.06" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.12"
-        initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 1.8 }} />
-      <motion.path d="M 130 62 l 12 -8 l 10 5 l 8 -3 l 10 10 l -40 0 Z" fill="hsl(174, 78%, 41%)" fillOpacity="0.08"
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.4 }} />
+        {/* Hero section */}
+        <motion.rect x="14" y="40" width="172" height="38" rx="2" fill={c} fillOpacity="0.02"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} />
+        {/* Big headline — types in */}
+        <motion.rect x="22" y="46" width="0" height="6" rx="1" fill={c} fillOpacity="0.18"
+          animate={{ width: [0, 75] }} transition={{ duration: 1, delay: 1.2 }} />
+        <motion.rect x="22" y="55" width="0" height="4" rx="1" fill={c} fillOpacity="0.08"
+          animate={{ width: [0, 55] }} transition={{ duration: 0.8, delay: 1.6 }} />
+        {/* Pulsing CTA */}
+        <motion.rect x="22" y="64" width="35" height="8" rx="3" fill={c}
+          initial={{ fillOpacity: 0, scale: 0.8 }} animate={{ fillOpacity: [0, 0.3, 0.25, 0.3], scale: 1 }}
+          transition={{ fillOpacity: { duration: 3, repeat: Infinity, delay: 2.2 }, scale: { duration: 0.4, delay: 2.0, type: "spring" } }} />
+        <motion.text x="39" y="69.5" textAnchor="middle" fontSize="3.5" fill="white" fillOpacity="0.7" fontWeight="700"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }}>Start</motion.text>
 
-      {/* 3 cards drop in */}
-      {[0, 1, 2].map((i) => (
-        <motion.g key={`c${i}`} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 2.6 + i * 0.25 }}>
-          <rect x={16 + i * 58} y="82" width="52" height="30" rx="2" fill="hsl(174, 78%, 41%)" fillOpacity="0.04" stroke="hsl(174, 78%, 41%)" strokeWidth="0.3" strokeOpacity="0.12" />
-          <rect x={22 + i * 58} y="87" width="20" height="3" rx="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.15" />
-          <rect x={22 + i * 58} y="93" width="40" height="2" rx="0.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.06" />
-          <rect x={22 + i * 58} y="97" width="35" height="2" rx="0.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.06" />
-          <rect x={22 + i * 58} y="101" width="38" height="2" rx="0.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.06" />
-          <motion.circle cx={60 + i * 58} cy="106" r="3" fill="hsl(174, 78%, 41%)" fillOpacity="0.12"
-            initial={{ scale: 0 }} animate={{ scale: [0, 1.3, 1] }} transition={{ delay: 3.2 + i * 0.3, duration: 0.4 }} />
-          <motion.path d={`M ${58 + i * 58} 106 l 1.5 1.5 l 3 -3`} fill="none" stroke="hsl(174, 78%, 41%)" strokeWidth="0.8" strokeLinecap="round"
-            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 3.3 + i * 0.3, duration: 0.3 }} />
+        {/* Hero visual — animated gradient blob */}
+        <motion.ellipse cx="145" cy="58" fill={c}
+          animate={{ rx: [28, 32, 28], ry: [16, 14, 16], fillOpacity: [0.06, 0.1, 0.06] }}
+          transition={{ duration: 4, repeat: Infinity }} />
+        {/* Floating elements inside hero visual */}
+        {[0, 1, 2].map(i => (
+          <motion.circle key={`hd${i}`} r="1.5" fill={c}
+            animate={{
+              cx: [130 + i * 12, 135 + i * 10, 130 + i * 12],
+              cy: [50 + i * 5, 48 + i * 4, 50 + i * 5],
+              fillOpacity: [0.1, 0.25, 0.1],
+            }}
+            transition={{ duration: 3 + i, repeat: Infinity, delay: i * 0.5 }} />
+        ))}
+
+        {/* ═══ CARDS SECTION ═══ */}
+        {[0, 1, 2].map((i) => (
+          <motion.g key={`card${i}`} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 2.6 + i * 0.2 }}>
+            {/* Card bg with hover glow */}
+            <motion.rect x={16 + i * 58} y="84" width="52" height="32" rx="3" fill={c} stroke={c} strokeWidth="0.3"
+              animate={{ fillOpacity: [0.03, 0.06, 0.03], strokeOpacity: [0.1, 0.2, 0.1] }}
+              transition={{ duration: 3, repeat: Infinity, delay: i * 0.8 }} />
+            {/* Icon circle */}
+            <motion.circle cx={28 + i * 58} cy="93" r="4" fill={c} fillOpacity="0.1"
+              animate={{ fillOpacity: [0.1, 0.18, 0.1] }}
+              transition={{ duration: 2.5, repeat: Infinity, delay: 0.3 + i * 0.6 }} />
+            <motion.path
+              d={i === 0 ? `M ${26 + i * 58} 93 l 4 0 M ${28 + i * 58} 91 l 0 4` :
+                 i === 1 ? `M ${26 + i * 58} 91 l 4 4 M ${26 + i * 58} 95 l 4 -4` :
+                           `M ${26 + i * 58} 93 l 1.5 1.5 l 3 -3`}
+              fill="none" stroke={c} strokeWidth="0.7" strokeOpacity="0.4" strokeLinecap="round" />
+            {/* Text lines */}
+            <rect x={36 + i * 58} y="91" width="26" height="2.5" rx="0.5" fill={c} fillOpacity="0.12" />
+            <rect x={36 + i * 58} y="96" width="22" height="1.5" rx="0.5" fill={c} fillOpacity="0.05" />
+            {/* Metric counter */}
+            <motion.text x={42 + i * 58} y="108" fontSize="4" fontWeight="700" fill={c} fontFamily="monospace"
+              animate={{ fillOpacity: [0.15, 0.35, 0.15] }}
+              transition={{ duration: 3, repeat: Infinity, delay: i * 1 }}>
+              {["98%", "1.2s", "A+"][i]}
+            </motion.text>
+            <text x={42 + i * 58} y="113" fontSize="2.5" fill={c} fillOpacity="0.2" fontFamily="system-ui">
+              {["Score", "Speed", "SEO"][i]}
+            </text>
+          </motion.g>
+        ))}
+
+        {/* ═══ CONTINUOUS ACTIVITY ═══ */}
+        {/* Cursor — moves around and clicks */}
+        <motion.g
+          animate={{ x: [35, 80, 145, 40, 100, 160, 35], y: [50, 65, 55, 92, 92, 92, 50] }}
+          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}>
+          <motion.path d="M 0 0 l 0 8 l 3 -2 l 2 4 l 1.5 -0.8 l -2 -4 l 3.5 -0.5 Z"
+            fill="white" fillOpacity="0.5" stroke="white" strokeWidth="0.3" strokeOpacity="0.6" />
+          {/* Click ripple */}
+          <motion.circle cx="0" cy="0" r="0" fill="none" stroke={c} strokeWidth="0.5"
+            animate={{ r: [0, 6, 8], strokeOpacity: [0.4, 0.1, 0] }}
+            transition={{ duration: 1.2, repeat: Infinity, repeatDelay: 3 }} />
         </motion.g>
-      ))}
 
-      {/* Footer */}
-      <motion.rect x="14" y="118" width="172" height="12" rx="1.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.03"
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3.8 }} />
-      <motion.rect x="24" y="122" width="30" height="2.5" rx="0.5" fill="hsl(174, 78%, 41%)" fillOpacity="0.1"
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 4.0 }} />
+        {/* Live code typing effect — bottom left */}
+        <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 4 }}>
+          <rect x="14" y="120" width="85" height="28" rx="2" fill={c} fillOpacity="0.03" stroke={c} strokeWidth="0.2" strokeOpacity="0.1" />
+          {/* Code lines that type */}
+          {[0, 1, 2, 3, 4].map(i => (
+            <motion.rect key={`code${i}`} x="18" y={124 + i * 4.5} height="2" rx="0.5"
+              fill={i === 0 ? "#60A5FA" : i === 2 ? "#4ADE80" : c}
+              fillOpacity={i === 0 ? 0.2 : i === 2 ? 0.15 : 0.08}
+              animate={{ width: [0, [40, 55, 35, 48, 25][i]] }}
+              transition={{ duration: 0.6, delay: 4.5 + i * 0.8, repeat: Infinity, repeatDelay: 8 + i * 0.5 }} />
+          ))}
+          {/* Blinking cursor */}
+          <motion.rect x="18" y="142" width="1" height="3" fill={c}
+            animate={{ fillOpacity: [0.5, 0, 0.5] }}
+            transition={{ duration: 1, repeat: Infinity }} />
+        </motion.g>
 
-      {/* Build cursor */}
-      <motion.g animate={{ x: [40, 100, 60, 140, 100, 60], y: [50, 45, 65, 90, 100, 120] }} transition={{ duration: 8, delay: 0.5, ease: "easeInOut" }}>
-        <motion.path d="M 0 0 l 0 8 l 3 -2 l 2 4 l 1.5 -0.8 l -2 -4 l 3.5 -0.5 Z" fill="white" fillOpacity="0.4" stroke="white" strokeWidth="0.3" strokeOpacity="0.5" />
-      </motion.g>
+        {/* Live preview updates — right side notification */}
+        <motion.g
+          initial={{ opacity: 0, x: 10 }} animate={{ opacity: [0, 1, 1, 0], x: [10, 0, 0, -5] }}
+          transition={{ duration: 3, delay: 6, repeat: Infinity, repeatDelay: 7 }}>
+          <rect x="110" y="122" width="74" height="14" rx="3" fill={c} fillOpacity="0.08" stroke={c} strokeWidth="0.3" strokeOpacity="0.2" />
+          <circle cx="118" cy="129" r="3" fill="#4ADE80" fillOpacity="0.3" />
+          <text x="118" y="130.5" textAnchor="middle" fontSize="3" fill="#4ADE80" fillOpacity="0.7">✓</text>
+          <text x="126" y="128" fontSize="2.5" fill={c} fillOpacity="0.4" fontFamily="monospace">Component updated</text>
+          <text x="126" y="133" fontSize="2" fill={c} fillOpacity="0.25" fontFamily="monospace">Hot reload · 12ms</text>
+        </motion.g>
 
-      {/* Progress bar */}
-      <motion.rect x="14" y="134" width="0" height="2" rx="1" fill="hsl(174, 78%, 41%)" fillOpacity="0.3"
-        animate={{ width: [0, 172] }} transition={{ duration: 4, delay: 0.3, ease: "easeOut" }} />
-      <motion.text x="100" y="145" textAnchor="middle" fontSize="3" fill="hsl(174, 78%, 41%)" fillOpacity="0.3" fontFamily="monospace"
-        initial={{ opacity: 0 }} animate={{ opacity: [0, 0.5, 0.5, 0] }} transition={{ duration: 5, delay: 0.3 }}>Building page...</motion.text>
-      <motion.text x="100" y="145" textAnchor="middle" fontSize="3" fill="#4ADE80" fillOpacity="0.5" fontFamily="monospace"
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 4.5 }}>✓ Live</motion.text>
-    </svg>
-  </div>
-);
+        {/* Lighthouse score pulse */}
+        <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 5 }}>
+          <motion.circle cx="175" cy="145" r="5" fill="none" stroke="#4ADE80" strokeWidth="0.8"
+            animate={{ strokeOpacity: [0.2, 0.5, 0.2] }}
+            transition={{ duration: 2, repeat: Infinity }} />
+          <text x="175" y="147" textAnchor="middle" fontSize="4" fontWeight="700" fill="#4ADE80" fillOpacity="0.5" fontFamily="monospace">100</text>
+        </motion.g>
+      </svg>
+    </div>
+  );
+};

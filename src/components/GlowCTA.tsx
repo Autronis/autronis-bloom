@@ -63,11 +63,11 @@ const GlowCTA = ({ to, onClick, children, size = "lg", variant = "primary" }: Gl
   const textSize = size === "lg" ? "text-base" : "text-sm";
   const isDark = variant === "dark";
   const bg = isDark ? "bg-gradient-to-br from-primary/10 to-primary/[0.03] border border-primary/20" : "bg-primary";
-  const text = isDark ? "text-foreground" : "text-gray-900";
+  const text = isDark ? "text-foreground" : "text-white";
   const glowHsl = "174 78% 41%";
   const shadowHsl = "174_78%_41%";
 
-  const btnClass = `relative overflow-hidden ${h} ${px} ${textSize} font-semibold rounded-xl ${bg} ${text} inline-flex items-center justify-center gap-2.5 active:scale-[0.97] transition-transform duration-150`;
+  const btnClass = `relative ${h} ${px} ${textSize} font-semibold rounded-xl ${bg} ${text} inline-flex items-center justify-center gap-2.5 active:scale-[0.97] transition-transform duration-150`;
 
   if (isMobile) {
     if (to) {
@@ -88,7 +88,7 @@ const GlowCTA = ({ to, onClick, children, size = "lg", variant = "primary" }: Gl
 
   return (
     <motion.div
-      className="relative inline-block group isolate overflow-hidden rounded-xl"
+      className="relative inline-block group isolate rounded-xl"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

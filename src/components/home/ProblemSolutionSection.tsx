@@ -157,29 +157,30 @@ const ProblemSolutionSection = () => {
   const [transformedIndices, setTransformedIndices] = useState<Set<number>>(new Set());
   const [triggered, setTriggered] = useState(false);
 
-  // Only trigger after user has scrolled AND the cards are visible
+  // Only trigger after user has scrolled AND the section is visible
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
-    let hasScrolled = false;
-    let cleaned = false;
+    let done = false;
 
-    const onScroll = () => { hasScrolled = true; };
-    window.addEventListener("scroll", onScroll, { once: true, passive: true });
-
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && hasScrolled && !cleaned) {
+    const check = () => {
+      if (done) return;
+      const rect = el.getBoundingClientRect();
+      const visible = rect.top < window.innerHeight && rect.bottom > 0;
+      if (visible) {
+        done = true;
         setTriggered(true);
-        observer.disconnect();
-        cleaned = true;
+        window.removeEventListener("scroll", onScroll);
       }
-    }, { threshold: 0.1 });
-    observer.observe(el);
+    };
+
+    // Must scroll first — don't trigger on initial load
+    const onScroll = () => { check(); };
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
+      done = true;
       window.removeEventListener("scroll", onScroll);
-      observer.disconnect();
-      cleaned = true;
     };
   }, []);
 

@@ -91,11 +91,12 @@ const ProcessSection = () => {
         <div className="max-w-4xl mx-auto mb-8">
           {/* Progress line */}
           <div className="relative h-0.5 bg-border/30 rounded-full mx-6 sm:mx-12 mb-8">
-            <motion.div
+            <div
               className="absolute left-0 top-0 h-full rounded-full bg-primary/50"
-              initial={{ width: "0%" }}
-              animate={{ width: activeStep >= 0 ? `${(activeStep / (t.phases.length - 1)) * 100}%` : "0%" }}
-              transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+              style={{
+                width: activeStep >= 0 ? `${(activeStep / (t.phases.length - 1)) * 100}%` : "0%",
+                transition: "width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+              }}
             />
             {/* Step dots */}
             {t.phases.map((_, i) => (
@@ -104,23 +105,15 @@ const ProcessSection = () => {
                 className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2"
                 style={{ left: `${(i / (t.phases.length - 1)) * 100}%` }}
               >
-                <motion.div
+                <div
                   className="rounded-full"
-                  initial={{ scale: 0 }}
-                  animate={activeStep >= i
-                    ? { scale: activeStep === i ? 1.4 : 1 }
-                    : { scale: 0.5 }
-                  }
-                  transition={{ type: "spring", stiffness: 250, damping: 15 }}
                   style={{
                     width: 8,
                     height: 8,
-                    background: activeStep >= i
-                      ? "hsl(174 78% 41%)"
-                      : "hsl(var(--border))",
-                    boxShadow: activeStep === i
-                      ? "0 0 10px hsl(174 78% 41% / 0.5)"
-                      : "none",
+                    transform: `scale(${activeStep >= i ? (activeStep === i ? 1.5 : 1) : 0.4})`,
+                    background: activeStep >= i ? "hsl(174 78% 41%)" : "hsl(var(--border))",
+                    boxShadow: activeStep === i ? "0 0 10px hsl(174 78% 41% / 0.5)" : "none",
+                    transition: "all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
                   }}
                 />
               </motion.div>

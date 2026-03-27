@@ -140,19 +140,18 @@ const Index = () => {
       <section className="hero-section relative flex flex-col justify-start pt-16 sm:pt-20 pb-8 sm:pb-16">
         <Suspense fallback={null}><HeroBackground /></Suspense>
         <div className="container mx-auto px-4 lg:px-32 xl:px-48 relative z-10">
-          {/* Top row: Title full width */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.05] tracking-tight mb-3 sm:mb-4 text-center lg:text-left">
-            {t.heroTitle1}
-            <br />
-            <span className="inline">{t.heroTitle2}{" "}</span>
-            <span className="relative inline-block min-w-0 lg:min-w-[12ch] align-bottom" style={{ height: "1.15em" }}>
+          {/* Title */}
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.08] tracking-tight mb-4 sm:mb-6 text-center lg:text-left">
+            {t.heroTitle1}{" "}
+            {t.heroTitle2}{" "}
+            <span className="relative inline-block align-bottom" style={{ height: "1.15em", minWidth: "4ch" }}>
               {rotatingWords.map((word, i) => (
                 <span
                   key={word}
-                  className="absolute left-0 right-0 bottom-0 text-center lg:text-left text-primary transition-all duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)] whitespace-nowrap"
+                  className="absolute left-0 bottom-0 text-center lg:text-left text-primary transition-all duration-[450ms] whitespace-nowrap"
                   style={{
                     opacity: i === wordIndex ? 1 : 0,
-                    transform: i === wordIndex ? "translateY(0)" : i === ((wordIndex - 1 + rotatingWords.length) % rotatingWords.length) ? "translateY(-14px)" : "translateY(14px)",
+                    transform: i === wordIndex ? "translateY(0)" : "translateY(14px)",
                   }}
                 >
                   {word}.
@@ -162,26 +161,17 @@ const Index = () => {
             </span>
           </h1>
 
-          {/* Mobile: animation visible between title and text */}
-          <div className="lg:hidden">
-            <div className="flex justify-center -my-2">
-              <div className="w-[240px] sm:w-[300px]">
-                <Suspense fallback={null}>
-                  <HeroAnimation />
-                </Suspense>
-              </div>
-            </div>
-            <div className="text-center mt-2">
-              <p className="text-lg sm:text-xl font-bold text-foreground max-w-lg mx-auto mb-2">{t.heroPunch}</p>
-              <p className="text-base sm:text-lg text-foreground/70 max-w-lg mx-auto mb-6 leading-relaxed">{t.heroDesc}</p>
-              <div className="flex flex-col items-stretch gap-3 w-full sm:w-auto sm:flex-row sm:items-start sm:justify-center">
-                <GlowCTA to="/book">{t.cta}</GlowCTA>
-                <GlowCTA variant="dark" onClick={() => setVideoOpen(true)}><Play size={16} className="inline mr-1" />{t.watchDemo}</GlowCTA>
-              </div>
+          {/* Mobile hero content */}
+          <div className="lg:hidden text-center">
+            <p className="text-lg sm:text-xl font-bold text-foreground max-w-lg mx-auto mb-2">{t.heroPunch}</p>
+            <p className="text-base sm:text-lg text-foreground/70 max-w-lg mx-auto mb-6 leading-relaxed">{t.heroDesc}</p>
+            <div className="flex flex-col items-stretch gap-3 w-full sm:w-auto sm:flex-row sm:items-start sm:justify-center">
+              <GlowCTA to="/book">{t.cta}</GlowCTA>
+              <GlowCTA variant="dark" onClick={() => setVideoOpen(true)}><Play size={16} className="inline mr-1" />{t.watchDemo}</GlowCTA>
             </div>
           </div>
 
-          {/* Desktop: Visual left, description + CTAs right */}
+          {/* Desktop: animation left, text right */}
           <div className="hidden lg:grid grid-cols-2 gap-16 items-center">
             <div className="flex items-center justify-center">
               <Suspense fallback={null}>

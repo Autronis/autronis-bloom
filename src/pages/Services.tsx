@@ -566,7 +566,9 @@ const Services = () => {
                       </li>
                     ))}
                   </ul>
-                  <GlowCTA size="default" to="/book">{tx.pricingCta}</GlowCTA>
+                  <div className="mt-auto pt-2">
+                    <GlowCTA size="default" to="/book">{tx.pricingCta}</GlowCTA>
+                  </div>
                 </motion.div>
               ))}
             </div>

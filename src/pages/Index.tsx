@@ -162,29 +162,37 @@ const Index = () => {
             </span>
           </h1>
 
-          {/* Animation — mobile: centered below title, desktop: in grid */}
-          <div className="flex lg:hidden items-center justify-center -my-4">
-            <div className="w-[280px] sm:w-[340px]">
-              <Suspense fallback={null}>
-                <HeroAnimation />
-              </Suspense>
+          {/* Mobile: text centered with animation behind */}
+          <div className="lg:hidden relative">
+            {/* Animation behind text on mobile */}
+            <div className="absolute inset-0 flex items-start justify-center pointer-events-none -top-4">
+              <div className="w-[260px] opacity-25">
+                <Suspense fallback={null}>
+                  <HeroAnimation />
+                </Suspense>
+              </div>
+            </div>
+            <div className="relative z-10 text-center">
+              <p className="text-lg sm:text-xl font-bold text-foreground max-w-lg mx-auto mb-2">{t.heroPunch}</p>
+              <p className="text-base sm:text-lg text-foreground/70 max-w-lg mx-auto mb-6 leading-relaxed">{t.heroDesc}</p>
+              <div className="flex flex-col items-stretch gap-3 w-full sm:w-auto sm:flex-row sm:items-start sm:justify-center">
+                <GlowCTA to="/book">{t.cta}</GlowCTA>
+                <GlowCTA variant="dark" onClick={() => setVideoOpen(true)}><Play size={16} className="inline mr-1" />{t.watchDemo}</GlowCTA>
+              </div>
             </div>
           </div>
 
-          {/* Bottom row: Visual left, description + CTAs right */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-            {/* Left — 3D Visual (desktop only) */}
-            <div className="hidden lg:flex items-center justify-center">
+          {/* Desktop: Visual left, description + CTAs right */}
+          <div className="hidden lg:grid grid-cols-2 gap-16 items-center">
+            <div className="flex items-center justify-center">
               <Suspense fallback={null}>
                 <HeroAnimation />
               </Suspense>
             </div>
-
-            {/* Right — Description + CTAs */}
-            <div className="text-center lg:text-left">
-              <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground max-w-lg mx-auto lg:mx-0 mb-3">{t.heroPunch}</p>
-              <p className="text-base sm:text-lg md:text-xl text-foreground/70 max-w-lg mx-auto lg:mx-0 mb-6 sm:mb-8 leading-relaxed">{t.heroDesc}</p>
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-start justify-center lg:justify-start gap-3 w-full sm:w-auto">
+            <div className="text-left">
+              <p className="text-xl md:text-2xl font-bold text-foreground max-w-lg mb-3">{t.heroPunch}</p>
+              <p className="text-lg md:text-xl text-foreground/70 max-w-lg mb-8 leading-relaxed">{t.heroDesc}</p>
+              <div className="flex items-start gap-3">
                 <GlowCTA to="/book">{t.cta}</GlowCTA>
                 <GlowCTA variant="dark" onClick={() => setVideoOpen(true)}><Play size={16} className="inline mr-1" />{t.watchDemo}</GlowCTA>
               </div>

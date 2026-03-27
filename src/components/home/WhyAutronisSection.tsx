@@ -92,7 +92,7 @@ const WhyAutronisSection = () => {
                       <ReasonCard key={r.title} reason={r} index={i} hoveredIndex={hoveredIndex} onHover={() => setHoveredIndex(i)} onLeave={() => setHoveredIndex(null)} canHover={canHover} icon={reasonIcons[i]} />
                     ))}
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-3 sm:justify-between">
+                  <div className="flex flex-col sm:flex-row gap-3">
                     <GlowCTA size="default" to="/book">{tx.ctaBook}</GlowCTA>
                     <GlowCTA size="default" variant="dark" to="/team">{tx.ctaTeam}</GlowCTA>
                   </div>

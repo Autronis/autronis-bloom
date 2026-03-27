@@ -158,17 +158,23 @@ const ProblemSolutionSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-200px 0px" });
   const [transformedIndices, setTransformedIndices] = useState<Set<number>>(new Set());
+  const [mounted, setMounted] = useState(false);
+
+  // Wait before observing so a refresh with section already visible doesn't trigger immediately
+  useEffect(() => {
+    const t = setTimeout(() => setMounted(true), 800);
+    return () => clearTimeout(t);
+  }, []);
 
   useEffect(() => {
-    if (!isInView) return;
-    // Stagger the transformations
+    if (!mounted || !isInView) return;
     const timers = tx.items.map((_, i) =>
       setTimeout(() => {
         setTransformedIndices(prev => new Set([...prev, i]));
       }, 400 + i * 1000)
     );
     return () => timers.forEach(clearTimeout);
-  }, [isInView, tx.items]);
+  }, [mounted, isInView, tx.items]);
 
   return (
     <section className="py-10 sm:py-20 border-t border-border relative overflow-hidden">

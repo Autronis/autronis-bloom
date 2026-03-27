@@ -163,6 +163,13 @@ const Index = () => {
 
           {/* Mobile hero content */}
           <div className="lg:hidden text-center">
+            <div className="flex justify-center -mb-2">
+              <div className="w-[220px] sm:w-[280px]">
+                <Suspense fallback={null}>
+                  <HeroAnimation />
+                </Suspense>
+              </div>
+            </div>
             <p className="text-lg sm:text-xl font-bold text-foreground max-w-lg mx-auto mb-2">{t.heroPunch}</p>
             <p className="text-base sm:text-lg text-foreground/70 max-w-lg mx-auto mb-6 leading-relaxed">{t.heroDesc}</p>
             <div className="flex flex-col items-stretch gap-3 w-full sm:w-auto sm:flex-row sm:items-start sm:justify-center">

@@ -36,6 +36,9 @@ const HeroAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const framesRef = useRef<(HTMLCanvasElement | null)[]>([]);
   const [ready, setReady] = useState(false);
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const frameStep = isMobile ? 4 : 1;
+  const fps = isMobile ? 10 : FPS;
 
   useEffect(() => {
     let cancelled = false;
@@ -45,25 +48,27 @@ const HeroAnimation = () => {
       const frames: (HTMLCanvasElement | null)[] = Array(TOTAL_FRAMES).fill(null);
       framesRef.current = frames;
       let loaded = 0;
+      const minToStart = isMobile ? 4 : 8;
 
-      for (let i = 0; i < TOTAL_FRAMES; i++) {
+      for (let i = 0; i < TOTAL_FRAMES; i += frameStep) {
         const img = new Image();
         img.src = `/hero-frames-webp/frame_${String(i + 1).padStart(4, "0")}.webp`;
         img.onload = () => {
           if (cancelled) return;
-          // Pre-process: remove bg once, store as canvas with alpha
           frames[i] = makeTransparent(img);
           loaded++;
-          if (loaded >= 8 && !ready) setReady(true);
+          if (loaded >= minToStart && !ready) setReady(true);
         };
       }
     };
 
-    if ("requestIdleCallback" in window) {
+    // Mobile: delay more so page renders first
+    const delay = isMobile ? 2500 : 0;
+    if (!isMobile && "requestIdleCallback" in window) {
       const id = (window as unknown as { requestIdleCallback: (cb: () => void) => number }).requestIdleCallback(start);
       return () => { cancelled = true; (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(id); };
     }
-    const timer = setTimeout(start, 1500);
+    const timer = setTimeout(start, delay || 1500);
     return () => { cancelled = true; clearTimeout(timer); };
   }, []);
 
@@ -107,7 +112,7 @@ const HeroAnimation = () => {
     window.addEventListener("resize", resize);
 
     let lastTime = 0;
-    const interval = 1000 / FPS;
+    const interval = 1000 / fps;
     let holding = false;
     let holdStart = 0;
 

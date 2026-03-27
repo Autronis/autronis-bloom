@@ -67,7 +67,7 @@ const GlowCTA = ({ to, onClick, children, size = "lg", variant = "primary" }: Gl
   const glowHsl = "174 78% 41%";
   const shadowHsl = "174_78%_41%";
 
-  const btnClass = `relative ${h} ${px} ${textSize} font-semibold rounded-xl ${bg} ${text} inline-flex items-center justify-center gap-2.5 active:scale-[0.97] transition-transform duration-150`;
+  const btnClass = `relative overflow-hidden ${h} ${px} ${textSize} font-semibold rounded-xl ${bg} ${text} inline-flex items-center justify-center gap-2.5 active:scale-[0.97] transition-transform duration-150`;
 
   if (isMobile) {
     if (to) {

@@ -92,13 +92,14 @@ const WhyAutronisSection = () => {
                       <ReasonCard key={r.title} reason={r} index={i} hoveredIndex={hoveredIndex} onHover={() => setHoveredIndex(i)} onLeave={() => setHoveredIndex(null)} canHover={canHover} icon={reasonIcons[i]} />
                     ))}
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="flex flex-col sm:flex-row gap-3 sm:justify-between">
                     <GlowCTA size="default" to="/book">{tx.ctaBook}</GlowCTA>
                     <GlowCTA size="default" variant="dark" to="/team">{tx.ctaTeam}</GlowCTA>
                   </div>
                 </div>
                 <div className="relative min-h-[250px] sm:min-h-[400px] lg:min-h-0 overflow-hidden">
-                  <img src={teamFoto} alt="Autronis team - Sem and Syb" width={800} height={600} className="w-full h-full object-cover object-[70%_center] scale-110" loading="lazy" decoding="async" />
+                  <img src={teamFoto} alt="Autronis team - Sem and Syb" width={800} height={600} className="w-full h-full object-cover object-[70%_center]" loading="lazy" decoding="async" />
+                  <div className="absolute inset-0 pointer-events-none" style={{ boxShadow: "inset 0 0 40px 20px hsl(var(--card))" }} />
                 </div>
               </div>
             </div>

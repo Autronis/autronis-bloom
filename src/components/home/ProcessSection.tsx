@@ -89,26 +89,14 @@ const ProcessSection = () => {
 
         {/* Horizontal step flow */}
         <div className="max-w-4xl mx-auto mb-8">
-          {/* Progress line with glowing dots */}
+          {/* Progress line */}
           <div className="relative h-0.5 bg-border/30 rounded-full mx-6 sm:mx-12 mb-8">
-            {/* Animated fill */}
+            {/* Fill synced to activeStep position */}
             <motion.div
-              className="absolute left-0 top-0 h-full rounded-full"
-              style={{ background: "linear-gradient(90deg, hsl(174 78% 41% / 0.3), hsl(174 78% 41% / 0.7))" }}
-              initial={{ width: "0%" }}
-              animate={{ width: hasScrolled ? "100%" : "0%" }}
-              transition={{ duration: 4.2, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="absolute left-0 top-0 h-full rounded-full bg-primary/50"
+              animate={{ width: activeStep >= 0 ? `${(activeStep / (t.phases.length - 1)) * 100}%` : "0%" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
             />
-            {/* Glow sweep on the line */}
-            {hasScrolled && (
-              <motion.div
-                className="absolute top-1/2 -translate-y-1/2 w-12 h-4 rounded-full blur-md"
-                style={{ background: "hsl(174 78% 50% / 0.4)" }}
-                initial={{ left: "0%" }}
-                animate={{ left: "100%" }}
-                transition={{ duration: 4.2, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-              />
-            )}
             {/* Step dots */}
             {t.phases.map((_, i) => (
               <motion.div
@@ -116,31 +104,22 @@ const ProcessSection = () => {
                 className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2"
                 style={{ left: `${(i / (t.phases.length - 1)) * 100}%` }}
               >
-                {/* Outer glow ring */}
                 <motion.div
-                  className="absolute -inset-1.5 rounded-full"
-                  style={{ background: "hsl(174 78% 41% / 0.15)" }}
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={activeStep >= i ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 12 }}
-                />
-                {/* Main dot */}
-                <motion.div
-                  className="relative rounded-full"
+                  className="rounded-full"
                   initial={{ scale: 0 }}
                   animate={activeStep >= i
-                    ? { scale: activeStep === i ? 1.3 : 1 }
-                    : { scale: 0 }
+                    ? { scale: activeStep === i ? 1.4 : 1 }
+                    : { scale: 0.5 }
                   }
-                  transition={{ type: "spring", stiffness: 250, damping: 12 }}
+                  transition={{ type: "spring", stiffness: 250, damping: 15 }}
                   style={{
-                    width: 10,
-                    height: 10,
+                    width: 8,
+                    height: 8,
                     background: activeStep >= i
-                      ? "radial-gradient(circle, hsl(174 78% 50%), hsl(174 78% 35%))"
+                      ? "hsl(174 78% 41%)"
                       : "hsl(var(--border))",
-                    boxShadow: activeStep >= i
-                      ? "0 0 12px hsl(174 78% 41% / 0.6), 0 0 4px hsl(174 78% 41% / 0.3)"
+                    boxShadow: activeStep === i
+                      ? "0 0 10px hsl(174 78% 41% / 0.5)"
                       : "none",
                   }}
                 />

@@ -52,6 +52,57 @@ const text = {
   },
 };
 
+interface DropdownItem {
+  label: string;
+  href: string;
+  icon: React.ElementType;
+  description: string;
+}
+
+const DropdownNav = ({ label, items, pathname, compact }: { label: string; items: DropdownItem[]; pathname: string; compact: boolean }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="relative" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+      <button
+        className={`group/nav relative px-3 py-2 font-medium rounded-md transition-all duration-300 flex items-center gap-1 ${items.some((c) => pathname === c.href) ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}
+        style={{ fontSize: compact ? "0.82rem" : "0.875rem" }}
+        aria-expanded={open}
+        aria-haspopup="true"
+      >
+        {label}
+        <span className={`absolute bottom-0.5 left-3 right-3 h-px transition-all duration-300 ${items.some((c) => pathname === c.href) ? "bg-primary w-[calc(100%-24px)]" : "bg-primary w-0 group-hover/nav:w-[calc(100%-24px)]"}`} />
+        <ChevronDown size={14} className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
+      </button>
+      <div className="absolute top-full left-0 right-0 h-3" />
+      <div
+        className="absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2 w-[320px] rounded-xl p-2 z-50 transition-all duration-200 ease-out"
+        style={{
+          backgroundColor: "hsl(var(--card))",
+          border: "1px solid hsl(var(--border) / 0.4)",
+          boxShadow: "0 8px 32px hsl(0 0% 0% / 0.18), 0 2px 8px hsl(0 0% 0% / 0.1)",
+          opacity: open ? 1 : 0,
+          transform: open ? "translateY(0) scale(1)" : "translateY(6px) scale(0.98)",
+          pointerEvents: open ? "auto" : "none",
+        }}
+      >
+        {items.map((child) => (
+          <Link key={child.href} to={child.href} className="block group" onClick={() => setOpen(false)}>
+            <div className={`flex items-start gap-3 px-4 py-3 rounded-lg transition-colors duration-200 ${pathname === child.href ? "bg-muted text-foreground" : "text-foreground hover:bg-muted/80"}`}>
+              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 mt-0.5 group-hover:bg-primary/15 transition-colors duration-200">
+                <child.icon size={16} />
+              </div>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold leading-tight">{child.label}</p>
+                <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{child.description}</p>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const Navbar = () => {
   const lang = useLanguage();
   const t = text[lang];
@@ -126,46 +177,7 @@ const Navbar = () => {
         <div className="hidden lg:flex items-center transition-all duration-300 ease-out" style={{ gap: compactNavbar ? "0" : "4px" }}>
           {navLinks.map((link: NavItem) =>
             "children" in link && link.children ? (
-              <div key={link.label} className="relative" onMouseEnter={() => setDropdownOpen(true)} onMouseLeave={() => setDropdownOpen(false)}>
-                <button
-                  className={`group/nav relative px-3 py-2 font-medium rounded-md transition-all duration-300 flex items-center gap-1 ${link.children.some((c) => location.pathname === c.href) ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}
-                  style={{ fontSize: compactNavbar ? "0.82rem" : "0.875rem" }}
-                  onFocus={() => setDropdownOpen(true)}
-                  onKeyDown={(e) => { if (e.key === "Escape") setDropdownOpen(false); }}
-                  aria-expanded={dropdownOpen}
-                  aria-haspopup="true"
-                >
-                  {link.label}
-                  <span className={`absolute bottom-0.5 left-3 right-3 h-px transition-all duration-300 ${link.children.some((c) => location.pathname === c.href) ? "bg-primary w-[calc(100%-24px)]" : "bg-primary w-0 group-hover/nav:w-[calc(100%-24px)]"}`} />
-                  <ChevronDown size={14} className={`transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
-                </button>
-                <div className="absolute top-full left-0 right-0 h-3" />
-                <div
-                  className="absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2 w-[320px] rounded-xl p-2 z-50 transition-all duration-200 ease-out"
-                  style={{
-                    backgroundColor: "hsl(var(--card))",
-                    border: "1px solid hsl(var(--border) / 0.4)",
-                    boxShadow: "0 8px 32px hsl(0 0% 0% / 0.18), 0 2px 8px hsl(0 0% 0% / 0.1)",
-                    opacity: dropdownOpen ? 1 : 0,
-                    transform: dropdownOpen ? "translateY(0) scale(1)" : "translateY(6px) scale(0.98)",
-                    pointerEvents: dropdownOpen ? "auto" : "none",
-                  }}
-                >
-                  {link.children.map((child) => (
-                    <Link key={child.href} to={child.href} className="block group">
-                      <div className={`flex items-start gap-3 px-4 py-3 rounded-lg transition-colors duration-200 ${location.pathname === child.href ? "bg-muted text-foreground" : "text-foreground hover:bg-muted/80"}`}>
-                        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 mt-0.5 group-hover:bg-primary/15 transition-colors duration-200">
-                          <child.icon size={16} />
-                        </div>
-                        <div className="min-w-0">
-                          <p className="text-sm font-semibold leading-tight">{child.label}</p>
-                          <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{child.description}</p>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
+              <DropdownNav key={link.label} label={link.label} items={link.children} pathname={location.pathname} compact={compactNavbar} />
             ) : (
               <Link
                 key={"href" in link ? link.href : link.label}

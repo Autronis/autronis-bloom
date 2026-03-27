@@ -67,13 +67,35 @@ const ProcessSection = () => {
     return () => { done = true; window.removeEventListener("scroll", onScroll); };
   }, []);
 
-  // Stagger step activation
+  const [lineProgress, setLineProgress] = useState(0);
+
+  // Stagger step activation with synced line
   useEffect(() => {
     if (!hasScrolled) return;
+    const totalSteps = t.phases.length;
+    const stepDelay = 700;
+    const startDelay = 600;
+
     const timers = t.phases.map((_, i) =>
-      setTimeout(() => setActiveStep(i), 600 + i * 700)
+      setTimeout(() => setActiveStep(i), startDelay + i * stepDelay)
     );
-    return () => timers.forEach(clearTimeout);
+
+    // Animate line smoothly using requestAnimationFrame
+    const totalDuration = startDelay + (totalSteps - 1) * stepDelay;
+    const startTime = performance.now();
+    let rafId: number;
+
+    const animateLine = (now: number) => {
+      const elapsed = now - startTime;
+      const raw = Math.min(1, Math.max(0, (elapsed - startDelay * 0.5) / (totalDuration - startDelay * 0.3)));
+      // Ease out
+      const eased = 1 - Math.pow(1 - raw, 2);
+      setLineProgress(eased * 100);
+      if (raw < 1) rafId = requestAnimationFrame(animateLine);
+    };
+    rafId = requestAnimationFrame(animateLine);
+
+    return () => { timers.forEach(clearTimeout); cancelAnimationFrame(rafId); };
   }, [hasScrolled, t.phases]);
 
   return (
@@ -93,10 +115,7 @@ const ProcessSection = () => {
           <div className="relative h-0.5 bg-border/30 rounded-full mx-6 sm:mx-12 mb-8">
             <div
               className="absolute left-0 top-0 h-full rounded-full bg-primary/50"
-              style={{
-                width: activeStep >= 0 ? `${(activeStep / (t.phases.length - 1)) * 100}%` : "0%",
-                transition: "width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-              }}
+              style={{ width: `${lineProgress}%` }}
             />
             {/* Step dots */}
             {t.phases.map((_, i) => (

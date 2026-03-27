@@ -125,12 +125,15 @@ const CTAAnimation = () => {
           lastTime = time;
         }
       } else if (time - lastTime >= interval) {
-        const next = frameIndexRef.current + 1;
+        let next = frameIndexRef.current + 1;
+        while (next < TOTAL_FRAMES && !framesRef.current[next]) next++;
         if (next >= TOTAL_FRAMES) {
           holding = true;
           holdStart = time;
-          frameIndexRef.current = TOTAL_FRAMES - 1;
-        } else if (framesRef.current[next]) {
+          let last = TOTAL_FRAMES - 1;
+          while (last > 0 && !framesRef.current[last]) last--;
+          frameIndexRef.current = last;
+        } else {
           frameIndexRef.current = next;
         }
         drawFrame();

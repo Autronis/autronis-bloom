@@ -111,13 +111,17 @@ const HeroAnimation = () => {
           lastTime = time;
         }
       } else if (time - lastTime >= interval) {
-        const next = frameIndex + 1;
-        // Only advance if the next frame is loaded
+        // Find next available frame (skips gaps from frameStep)
+        let next = frameIndex + 1;
+        while (next < TOTAL_FRAMES && !framesRef.current[next]) next++;
         if (next >= TOTAL_FRAMES) {
           holding = true;
           holdStart = time;
-          frameIndex = TOTAL_FRAMES - 1;
-        } else if (framesRef.current[next]) {
+          // Find last loaded frame
+          let last = TOTAL_FRAMES - 1;
+          while (last > 0 && !framesRef.current[last]) last--;
+          frameIndex = last;
+        } else {
           frameIndex = next;
         }
         drawFrame();

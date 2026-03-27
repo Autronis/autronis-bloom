@@ -41,7 +41,7 @@ const LaptopLivePreview = ({ url }: { url: string }) => {
         <div className="w-full h-full overflow-hidden">
           {isVisible && (
             <iframe
-              src={url}
+              src={`${url}${url.includes("?") ? "&" : "?"}embed=1`}
               title="Autronis live preview"
               className="w-[400%] h-[400%] origin-top-left border-0 pointer-events-none"
               style={{ transform: "scale(0.25)" }}
@@ -67,6 +67,11 @@ const LaptopLivePreview = ({ url }: { url: string }) => {
 const ProjectShowcase = () => {
   const lang = useLanguage();
   const t = text[lang];
+
+  // Don't render in embedded iframes (prevents recursive loading)
+  if (typeof window !== "undefined" && new URLSearchParams(window.location.search).has("embed")) {
+    return null;
+  }
 
   return (
     <section className="py-16 sm:py-24 border-t border-border">

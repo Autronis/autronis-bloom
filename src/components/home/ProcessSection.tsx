@@ -71,7 +71,7 @@ const ProcessSection = () => {
   useEffect(() => {
     if (!hasScrolled) return;
     const timers = t.phases.map((_, i) =>
-      setTimeout(() => setActiveStep(i), 300 + i * 400)
+      setTimeout(() => setActiveStep(i), 600 + i * 700)
     );
     return () => timers.forEach(clearTimeout);
   }, [hasScrolled, t.phases]);
@@ -89,24 +89,61 @@ const ProcessSection = () => {
 
         {/* Horizontal step flow */}
         <div className="max-w-4xl mx-auto mb-8">
-          {/* Thin progress line */}
-          <div className="relative h-px bg-border/40 mx-6 sm:mx-12 mb-6">
+          {/* Progress line with glowing dots */}
+          <div className="relative h-0.5 bg-border/30 rounded-full mx-6 sm:mx-12 mb-8">
+            {/* Animated fill */}
             <motion.div
-              className="absolute left-0 top-0 h-full bg-primary/60"
+              className="absolute left-0 top-0 h-full rounded-full"
+              style={{ background: "linear-gradient(90deg, hsl(174 78% 41% / 0.3), hsl(174 78% 41% / 0.7))" }}
               initial={{ width: "0%" }}
               animate={{ width: hasScrolled ? "100%" : "0%" }}
-              transition={{ duration: 2.4, delay: 0.3, ease: "easeOut" }}
+              transition={{ duration: 4.2, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
             />
+            {/* Glow sweep on the line */}
+            {hasScrolled && (
+              <motion.div
+                className="absolute top-1/2 -translate-y-1/2 w-12 h-4 rounded-full blur-md"
+                style={{ background: "hsl(174 78% 50% / 0.4)" }}
+                initial={{ left: "0%" }}
+                animate={{ left: "100%" }}
+                transition={{ duration: 4.2, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+              />
+            )}
+            {/* Step dots */}
             {t.phases.map((_, i) => (
               <motion.div
                 key={i}
                 className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2"
                 style={{ left: `${(i / (t.phases.length - 1)) * 100}%` }}
-                initial={{ scale: 0 }}
-                animate={activeStep >= i ? { scale: 1 } : { scale: 0 }}
-                transition={{ type: "spring", stiffness: 300, damping: 15 }}
               >
-                <div className="w-2 h-2 rounded-full bg-primary/70" />
+                {/* Outer glow ring */}
+                <motion.div
+                  className="absolute -inset-1.5 rounded-full"
+                  style={{ background: "hsl(174 78% 41% / 0.15)" }}
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={activeStep >= i ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 12 }}
+                />
+                {/* Main dot */}
+                <motion.div
+                  className="relative rounded-full"
+                  initial={{ scale: 0 }}
+                  animate={activeStep >= i
+                    ? { scale: activeStep === i ? 1.3 : 1 }
+                    : { scale: 0 }
+                  }
+                  transition={{ type: "spring", stiffness: 250, damping: 12 }}
+                  style={{
+                    width: 10,
+                    height: 10,
+                    background: activeStep >= i
+                      ? "radial-gradient(circle, hsl(174 78% 50%), hsl(174 78% 35%))"
+                      : "hsl(var(--border))",
+                    boxShadow: activeStep >= i
+                      ? "0 0 12px hsl(174 78% 41% / 0.6), 0 0 4px hsl(174 78% 41% / 0.3)"
+                      : "none",
+                  }}
+                />
               </motion.div>
             ))}
           </div>
@@ -127,17 +164,19 @@ const ProcessSection = () => {
                 >
                   {/* Icon */}
                   <motion.div
-                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl mx-auto mb-2 flex items-center justify-center transition-colors duration-300"
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl mx-auto mb-2 flex items-center justify-center"
                     style={{
                       backgroundColor: isActive ? "hsl(174 78% 41% / 0.15)" : "hsl(var(--muted))",
-                      boxShadow: isActive ? "0 0 16px hsl(174 78% 41% / 0.2)" : "none",
+                      boxShadow: activeStep === i ? "0 0 20px hsl(174 78% 41% / 0.35)" : isActive ? "0 0 10px hsl(174 78% 41% / 0.15)" : "none",
                     }}
-                    animate={isActive && activeStep === i ? { scale: [1, 1.15, 1] } : {}}
-                    transition={{ duration: 0.5 }}
+                    animate={activeStep === i
+                      ? { scale: [1, 1.2, 1.1], transition: { duration: 0.6 } }
+                      : { scale: isActive ? 1 : 0.85 }
+                    }
                   >
                     <Icon
-                      size={18}
-                      className="transition-colors duration-300"
+                      size={activeStep === i ? 22 : 18}
+                      className="transition-all duration-300"
                       style={{ color: isActive ? "hsl(174, 78%, 41%)" : "hsl(var(--muted-foreground))" }}
                     />
                   </motion.div>

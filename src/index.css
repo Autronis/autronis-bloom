@@ -30,8 +30,8 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 40 32% 92%;
 
-    --border: 165 18% 76%;
-    --input: 165 18% 76%;
+    --border: 174 22% 76%;
+    --input: 174 22% 76%;
     --ring: 174 78% 33%;
 
     --radius: 0.5rem;
@@ -42,7 +42,7 @@
     --sidebar-primary-foreground: 40 32% 92%;
     --sidebar-accent: 155 18% 82%;
     --sidebar-accent-foreground: 180 12% 16%;
-    --sidebar-border: 165 18% 76%;
+    --sidebar-border: 174 22% 76%;
     --sidebar-ring: 174 78% 33%;
 
     --accent-light: 174 64% 44%;
@@ -73,6 +73,11 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Inter', sans-serif;
+    background-image:
+      radial-gradient(ellipse 60% 50% at 15% 20%, hsl(174 78% 41% / 0.04), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 85% 60%, hsl(174 78% 41% / 0.05), transparent 60%),
+      radial-gradient(ellipse 70% 30% at 50% 90%, hsl(174 78% 41% / 0.03), transparent 50%);
+    background-attachment: fixed;
   }
 }
 

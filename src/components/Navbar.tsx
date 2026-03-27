@@ -20,7 +20,7 @@ const text = {
     ourProcessDesc: "From analysis to go-live. Structured, transparent and scalable.",
     ourTeam: "Our Team",
     ourTeamDesc: "The engineers who design, build and optimize your systems.",
-    work: "Work",
+    work: "Our Work",
     caseStudy: "Lead Generation Automation",
     caseStudyDesc: "How we automated outreach for Jobby.",
     portfolio1: "Autronis.com",
@@ -41,7 +41,7 @@ const text = {
     ourProcessDesc: "Van analyse tot go-live. Gestructureerd, transparant en schaalbaar.",
     ourTeam: "Ons Team",
     ourTeamDesc: "De engineers die jouw systemen ontwerpen, bouwen en optimaliseren.",
-    work: "Werk",
+    work: "Ons Werk",
     caseStudy: "Leadgeneratie Automatisering",
     caseStudyDesc: "Hoe we outreach automatiseerden voor Jobby.",
     portfolio1: "Autronis.com",
@@ -130,10 +130,9 @@ const workPreviews = {
 const WorkDropdownNav = ({ label, compact, lang }: { label: string; compact: boolean; lang: "en" | "nl" }) => {
   const [open, setOpen] = useState(false);
   const data = workPreviews[lang];
-  const location = useLocation();
 
   return (
-    <div className="relative" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+    <div className="static" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
       <button
         className={`group/nav relative px-3 py-2 font-medium rounded-md transition-all duration-300 flex items-center gap-1 text-muted-foreground hover:text-foreground`}
         style={{ fontSize: compact ? "0.82rem" : "0.875rem" }}
@@ -144,46 +143,75 @@ const WorkDropdownNav = ({ label, compact, lang }: { label: string; compact: boo
         <span className="absolute bottom-0.5 left-3 right-3 h-px transition-all duration-300 bg-primary w-0 group-hover/nav:w-[calc(100%-24px)]" />
         <ChevronDown size={14} className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
       </button>
-      <div className="absolute top-full left-0 right-0 h-3" />
+      {/* Full-width mega dropdown */}
       <div
-        className="absolute top-[calc(100%+12px)] right-0 w-[520px] rounded-xl p-4 z-50 transition-all duration-200 ease-out"
+        className="fixed left-0 right-0 z-50 transition-all duration-200 ease-out"
         style={{
-          backgroundColor: "hsl(var(--card))",
-          border: "1px solid hsl(var(--border) / 0.4)",
-          boxShadow: "0 8px 32px hsl(0 0% 0% / 0.18), 0 2px 8px hsl(0 0% 0% / 0.1)",
+          top: compact ? 52 : 64,
           opacity: open ? 1 : 0,
-          transform: open ? "translateY(0) scale(1)" : "translateY(6px) scale(0.98)",
+          transform: open ? "translateY(0)" : "translateY(-8px)",
           pointerEvents: open ? "auto" : "none",
         }}
       >
-        {/* Case Studies */}
-        <p className="text-[10px] font-bold text-primary tracking-widest uppercase mb-2">Case Studies</p>
-        <div className="grid grid-cols-1 gap-2 mb-3">
-          {data.caseStudies.map((item) => (
-            <Link key={item.href} to={item.href} className="group flex gap-3 p-2 rounded-lg hover:bg-muted/80 transition-colors" onClick={() => setOpen(false)}>
-              <div className="w-24 h-14 rounded-md overflow-hidden border border-border/50 shrink-0 bg-gray-900">
-                <img src={item.img} alt={item.title} className="w-full h-full object-cover object-top" loading="lazy" />
+        {/* Hover bridge */}
+        <div className="h-1" />
+        <div
+          className="border-t border-border/40"
+          style={{
+            backgroundColor: "hsl(var(--card) / 0.98)",
+            backdropFilter: "blur(20px)",
+            boxShadow: "0 8px 32px hsl(0 0% 0% / 0.12)",
+          }}
+        >
+          <div className="container mx-auto px-6 py-6">
+            <div className="grid grid-cols-2 gap-8">
+              {/* Case Studies */}
+              <div>
+                <p className="text-[10px] font-bold text-primary tracking-widest uppercase mb-3">Case Studies</p>
+                <div className="space-y-2">
+                  {data.caseStudies.map((item) => (
+                    <Link key={item.href} to={item.href} className="group flex gap-4 p-2 -mx-2 rounded-xl hover:bg-muted/60 transition-colors" onClick={() => setOpen(false)}>
+                      <div className="w-48 rounded-lg overflow-hidden border border-border/50 shrink-0 bg-gray-900 aspect-[16/10]">
+                        <img src={item.img} alt={item.title} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+                      </div>
+                      <div className="flex flex-col justify-center">
+                        <p className="text-base font-bold leading-tight mb-1">{item.title}</p>
+                        <p className="text-sm text-muted-foreground">{item.desc}</p>
+                      </div>
+                    </Link>
+                  ))}
+                  {/* Coming soon placeholders */}
+                  {[1, 2].map((i) => (
+                    <div key={`cs-soon-${i}`} className="flex gap-4 p-2 -mx-2 opacity-40">
+                      <div className="w-48 rounded-lg border border-border/30 shrink-0 bg-muted/30 aspect-[16/10] flex items-center justify-center">
+                        <span className="text-xs text-muted-foreground">Coming soon</span>
+                      </div>
+                      <div className="flex flex-col justify-center">
+                        <div className="h-3 w-32 bg-muted/40 rounded-full mb-2" />
+                        <div className="h-2 w-24 bg-muted/30 rounded-full" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="min-w-0 flex flex-col justify-center">
-                <p className="text-sm font-semibold leading-tight">{item.title}</p>
-                <p className="text-xs text-muted-foreground">{item.desc}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
 
-        {/* Portfolio */}
-        <p className="text-[10px] font-bold text-primary tracking-widest uppercase mb-2">Portfolio</p>
-        <div className="grid grid-cols-3 gap-2">
-          {data.portfolio.map((item) => (
-            <Link key={item.href} to={item.href} className="group rounded-lg p-1.5 hover:bg-muted/80 transition-colors" onClick={() => setOpen(false)}>
-              <div className="rounded-md overflow-hidden border border-border/50 aspect-[16/10] bg-gray-900 mb-1.5">
-                <img src={item.img} alt={item.title} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+              {/* Portfolio */}
+              <div>
+                <p className="text-[10px] font-bold text-primary tracking-widest uppercase mb-3">Portfolio</p>
+                <div className="grid grid-cols-3 gap-3">
+                  {data.portfolio.map((item) => (
+                    <Link key={item.href} to={item.href} className="group" onClick={() => setOpen(false)}>
+                      <div className="rounded-lg overflow-hidden border border-border/50 aspect-[16/10] bg-gray-900 mb-2">
+                        <img src={item.img} alt={item.title} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+                      </div>
+                      <p className="text-sm font-semibold leading-tight">{item.title}</p>
+                      <p className="text-xs text-muted-foreground">{item.desc}</p>
+                    </Link>
+                  ))}
+                </div>
               </div>
-              <p className="text-xs font-semibold leading-tight text-center">{item.title}</p>
-              <p className="text-[10px] text-muted-foreground text-center">{item.desc}</p>
-            </Link>
-          ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -166,7 +166,7 @@ const WorkDropdownNav = ({ label, compact, lang }: { label: string; compact: boo
         >
           <div className="container mx-auto px-6 py-5 max-w-5xl">
             {/* Case Studies */}
-            <Link to="/case-studies" onClick={() => setOpen(false)} className="text-[10px] font-bold text-primary tracking-widest uppercase mb-3 block hover:underline">Case Studies →</Link>
+            <Link to="/case-studies" onClick={() => setOpen(false)} className="text-xs font-bold text-primary tracking-widest uppercase mb-3 inline-block hover:underline">Case Studies →</Link>
             <div className="grid grid-cols-3 gap-4 mb-5">
               {data.caseStudies.map((item) => (
                 <Link key={item.href} to={item.href} className="group" onClick={() => setOpen(false)}>
@@ -190,17 +190,26 @@ const WorkDropdownNav = ({ label, compact, lang }: { label: string; compact: boo
             </div>
 
             {/* Portfolio */}
-            <Link to="/work" onClick={() => setOpen(false)} className="text-[10px] font-bold text-primary tracking-widest uppercase mb-3 block hover:underline">Portfolio →</Link>
+            <Link to="/work" onClick={() => setOpen(false)} className="text-xs font-bold text-primary tracking-widest uppercase mb-3 inline-block hover:underline">Portfolio →</Link>
             <div className="grid grid-cols-3 gap-4">
-              {data.portfolio.map((item) => (
-                <Link key={item.href} to={item.href} className="group" onClick={() => setOpen(false)}>
-                  <div className="relative rounded-t-lg border-[3px] border-gray-800 bg-gray-900 overflow-hidden aspect-[16/10]">
-                    <img src={item.img} alt={item.title} className="w-full h-full object-cover object-top" loading="eager" />
+              {/* First portfolio item — real */}
+              <Link to={data.portfolio[0].href} className="group" onClick={() => setOpen(false)}>
+                <div className="relative rounded-t-lg border-[3px] border-gray-800 bg-gray-900 overflow-hidden aspect-[16/10]">
+                  <img src={data.portfolio[0].img} alt={data.portfolio[0].title} className="w-full h-full object-cover object-top" loading="eager" />
+                </div>
+                <div className="h-1.5 bg-gradient-to-b from-gray-700 to-gray-800 rounded-b-md mx-[-1%]" />
+                <p className="text-sm font-semibold mt-2 leading-tight">{data.portfolio[0].title}</p>
+                <p className="text-xs text-muted-foreground">{data.portfolio[0].desc}</p>
+              </Link>
+              {/* Coming soon */}
+              {[1, 2].map((i) => (
+                <div key={`pf-${i}`}>
+                  <div className="relative rounded-t-lg border-[3px] border-gray-800 bg-gray-900 overflow-hidden aspect-[16/10] flex items-center justify-center">
+                    <span className="text-gray-500 text-xs">Coming soon</span>
                   </div>
                   <div className="h-1.5 bg-gradient-to-b from-gray-700 to-gray-800 rounded-b-md mx-[-1%]" />
-                  <p className="text-sm font-semibold mt-2 leading-tight">{item.title}</p>
-                  <p className="text-xs text-muted-foreground">{item.desc}</p>
-                </Link>
+                  <p className="text-sm font-semibold mt-2 leading-tight text-muted-foreground/40">Coming soon</p>
+                </div>
               ))}
             </div>
           </div>

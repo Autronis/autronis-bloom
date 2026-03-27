@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
 const TOTAL_FRAMES = 121;
-const FPS = 24;
 const HOLD_DURATION = 5000;
 const EXT = "webp";
 const DIR = "/cta-frames-webp";
-const MIN_FRAMES_TO_START = 10;
 
 const CTAAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -13,6 +11,10 @@ const CTAAnimation = () => {
   const loadedCountRef = useRef(0);
   const [ready, setReady] = useState(false);
   const [visible, setVisible] = useState(false);
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const frameStep = isMobile ? 3 : 1;
+  const fps = isMobile ? 12 : 24;
+  const minToStart = isMobile ? 5 : 10;
   const animationRef = useRef<number>(0);
   const frameIndexRef = useRef(0);
 
@@ -33,14 +35,14 @@ const CTAAnimation = () => {
     if (loadedCountRef.current > 0) return; // already loading
 
     let cancelled = false;
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
+    for (let i = 1; i <= TOTAL_FRAMES; i += frameStep) {
       const img = new Image();
       img.src = `${DIR}/frame_${String(i).padStart(4, "0")}.${EXT}`;
       img.onload = () => {
         if (cancelled) return;
         framesRef.current[i - 1] = img;
         loadedCountRef.current++;
-        if (loadedCountRef.current >= MIN_FRAMES_TO_START && !ready) {
+        if (loadedCountRef.current >= minToStart && !ready) {
           setReady(true);
         }
       };
@@ -110,7 +112,7 @@ const CTAAnimation = () => {
     window.addEventListener("resize", resize);
 
     let lastTime = 0;
-    const interval = 1000 / FPS;
+    const interval = 1000 / fps;
     let holding = false;
     let holdStart = 0;
 

@@ -1,31 +1,32 @@
 import { useEffect, useRef, useState } from "react";
 
 const TOTAL_FRAMES = 145;
-const FPS = 24;
 const HOLD_DURATION = 3500;
 const EXT = "webp";
 const DIR = "/hero-frames-webp";
-// Start animating after this many frames are loaded
-const MIN_FRAMES_TO_START = 10;
 
 const HeroAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const framesRef = useRef<(HTMLImageElement | null)[]>(Array(TOTAL_FRAMES).fill(null));
   const loadedCountRef = useRef(0);
   const [ready, setReady] = useState(false);
+  // On mobile: load every 3rd frame (48 frames, ~570KB), lower FPS
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const frameStep = isMobile ? 3 : 1;
+  const fps = isMobile ? 12 : 24;
+  const minToStart = isMobile ? 5 : 10;
 
   useEffect(() => {
     let cancelled = false;
 
-    // Load frames progressively — start animation early
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
+    for (let i = 1; i <= TOTAL_FRAMES; i += frameStep) {
       const img = new Image();
       img.src = `${DIR}/frame_${String(i).padStart(4, "0")}.${EXT}`;
       img.onload = () => {
         if (cancelled) return;
         framesRef.current[i - 1] = img;
         loadedCountRef.current++;
-        if (loadedCountRef.current >= MIN_FRAMES_TO_START && !ready) {
+        if (loadedCountRef.current >= minToStart && !ready) {
           setReady(true);
         }
       };
@@ -97,7 +98,7 @@ const HeroAnimation = () => {
     window.addEventListener("resize", resize);
 
     let lastTime = 0;
-    const interval = 1000 / FPS;
+    const interval = 1000 / fps;
     let holding = false;
     let holdStart = 0;
 

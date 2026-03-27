@@ -45,8 +45,7 @@ const LaptopLivePreview = ({ url }: { url: string }) => {
               title="Autronis live preview"
               className="w-[400%] h-[400%] origin-top-left border-0 pointer-events-none"
               style={{ transform: "scale(0.25)" }}
-              loading="lazy"
-              sandbox="allow-scripts allow-same-origin"
+              loading="eager"
             />
           )}
         </div>

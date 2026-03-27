@@ -88,7 +88,7 @@ const GlowCTA = ({ to, onClick, children, size = "lg", variant = "primary" }: Gl
 
   return (
     <motion.div
-      className="relative inline-block group"
+      className="relative inline-block group isolate"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

@@ -84,7 +84,7 @@ const WhyAutronisSection = () => {
         </ScrollReveal>
         <ScrollReveal>
           <ScrollRevealItem>
-            <div className="rounded-2xl border border-primary/20 bg-card overflow-hidden max-w-6xl mx-auto shadow-sm">
+            <div className="rounded-2xl border-2 border-primary/30 bg-card overflow-hidden max-w-6xl mx-auto shadow-sm">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 <div className="p-4 sm:p-6 md:p-8 flex flex-col">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4">

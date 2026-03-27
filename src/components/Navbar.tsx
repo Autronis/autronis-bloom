@@ -104,6 +104,92 @@ const DropdownNav = ({ label, items, pathname, compact }: { label: string; items
   );
 };
 
+const workPreviews = {
+  en: {
+    caseStudies: [
+      { title: "Lead Generation Automation", desc: "Jobby — outreach automation", href: "/case-studies#case-0", img: "/previews/case-studies.webp" },
+    ],
+    portfolio: [
+      { title: "Autronis.com", desc: "3D animations & architecture", href: "/", img: "/previews/home.webp" },
+      { title: "Services", desc: "Interactive pillars & workflow", href: "/services", img: "/previews/services.webp" },
+      { title: "Impact & ROI", desc: "ROI calculator & data", href: "/impact-roi", img: "/previews/impact-roi.webp" },
+    ],
+  },
+  nl: {
+    caseStudies: [
+      { title: "Leadgeneratie Automatisering", desc: "Jobby — outreach automatisering", href: "/case-studies#case-0", img: "/previews/case-studies.webp" },
+    ],
+    portfolio: [
+      { title: "Autronis.com", desc: "3D animaties & architectuur", href: "/", img: "/previews/home.webp" },
+      { title: "Diensten", desc: "Interactieve diensten & workflow", href: "/services", img: "/previews/services.webp" },
+      { title: "Impact & ROI", desc: "ROI-calculator & data", href: "/impact-roi", img: "/previews/impact-roi.webp" },
+    ],
+  },
+};
+
+const WorkDropdownNav = ({ label, compact, lang }: { label: string; compact: boolean; lang: "en" | "nl" }) => {
+  const [open, setOpen] = useState(false);
+  const data = workPreviews[lang];
+  const location = useLocation();
+
+  return (
+    <div className="relative" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+      <button
+        className={`group/nav relative px-3 py-2 font-medium rounded-md transition-all duration-300 flex items-center gap-1 text-muted-foreground hover:text-foreground`}
+        style={{ fontSize: compact ? "0.82rem" : "0.875rem" }}
+        aria-expanded={open}
+        aria-haspopup="true"
+      >
+        {label}
+        <span className="absolute bottom-0.5 left-3 right-3 h-px transition-all duration-300 bg-primary w-0 group-hover/nav:w-[calc(100%-24px)]" />
+        <ChevronDown size={14} className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
+      </button>
+      <div className="absolute top-full left-0 right-0 h-3" />
+      <div
+        className="absolute top-[calc(100%+12px)] right-0 w-[520px] rounded-xl p-4 z-50 transition-all duration-200 ease-out"
+        style={{
+          backgroundColor: "hsl(var(--card))",
+          border: "1px solid hsl(var(--border) / 0.4)",
+          boxShadow: "0 8px 32px hsl(0 0% 0% / 0.18), 0 2px 8px hsl(0 0% 0% / 0.1)",
+          opacity: open ? 1 : 0,
+          transform: open ? "translateY(0) scale(1)" : "translateY(6px) scale(0.98)",
+          pointerEvents: open ? "auto" : "none",
+        }}
+      >
+        {/* Case Studies */}
+        <p className="text-[10px] font-bold text-primary tracking-widest uppercase mb-2">Case Studies</p>
+        <div className="grid grid-cols-1 gap-2 mb-3">
+          {data.caseStudies.map((item) => (
+            <Link key={item.href} to={item.href} className="group flex gap-3 p-2 rounded-lg hover:bg-muted/80 transition-colors" onClick={() => setOpen(false)}>
+              <div className="w-24 h-14 rounded-md overflow-hidden border border-border/50 shrink-0 bg-gray-900">
+                <img src={item.img} alt={item.title} className="w-full h-full object-cover object-top" loading="lazy" />
+              </div>
+              <div className="min-w-0 flex flex-col justify-center">
+                <p className="text-sm font-semibold leading-tight">{item.title}</p>
+                <p className="text-xs text-muted-foreground">{item.desc}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        {/* Portfolio */}
+        <p className="text-[10px] font-bold text-primary tracking-widest uppercase mb-2">Portfolio</p>
+        <div className="grid grid-cols-3 gap-2">
+          {data.portfolio.map((item) => (
+            <Link key={item.href} to={item.href} className="group rounded-lg p-1.5 hover:bg-muted/80 transition-colors" onClick={() => setOpen(false)}>
+              <div className="rounded-md overflow-hidden border border-border/50 aspect-[16/10] bg-gray-900 mb-1.5">
+                <img src={item.img} alt={item.title} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+              </div>
+              <p className="text-xs font-semibold leading-tight text-center">{item.title}</p>
+              <p className="text-[10px] text-muted-foreground text-center">{item.desc}</p>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Navbar = () => {
   const lang = useLanguage();
   const t = text[lang];
@@ -113,20 +199,15 @@ const Navbar = () => {
     { label: t.ourTeam, href: "/team", icon: Users, description: t.ourTeamDesc },
   ];
 
-  const workDropdown = [
-    { label: t.caseStudy, href: "/case-studies#case-0", icon: Briefcase, description: t.caseStudyDesc },
-    { label: t.portfolio1, href: "/portfolio", icon: Globe, description: t.portfolio1Desc },
-  ];
-
   const navLinks = [
     { label: t.home, href: "/" },
     { label: t.services, href: "/services" },
     { label: t.impactRoi, href: "/impact-roi" },
     { label: t.aboutUs, children: aboutDropdown },
-    { label: t.work, children: workDropdown },
+    { label: t.work, isWorkDropdown: true },
     { label: t.insights, href: "/resources" },
     { label: t.contact, href: "/contact" },
-  ];
+  ] as const;
 
   type NavItem = (typeof navLinks)[number];
 
@@ -176,7 +257,9 @@ const Navbar = () => {
 
         <div className="hidden lg:flex items-center transition-all duration-300 ease-out" style={{ gap: compactNavbar ? "0" : "4px" }}>
           {navLinks.map((link: NavItem) =>
-            "children" in link && link.children ? (
+            "isWorkDropdown" in link && link.isWorkDropdown ? (
+              <WorkDropdownNav key={link.label} label={link.label} compact={compactNavbar} lang={lang} />
+            ) : "children" in link && link.children ? (
               <DropdownNav key={link.label} label={link.label} items={link.children} pathname={location.pathname} compact={compactNavbar} />
             ) : (
               <Link

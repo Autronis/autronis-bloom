@@ -91,11 +91,11 @@ const ProcessSection = () => {
         <div className="max-w-4xl mx-auto mb-8">
           {/* Progress line */}
           <div className="relative h-0.5 bg-border/30 rounded-full mx-6 sm:mx-12 mb-8">
-            {/* Fill synced to activeStep position */}
             <motion.div
               className="absolute left-0 top-0 h-full rounded-full bg-primary/50"
+              initial={{ width: "0%" }}
               animate={{ width: activeStep >= 0 ? `${(activeStep / (t.phases.length - 1)) * 100}%` : "0%" }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+              transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
             />
             {/* Step dots */}
             {t.phases.map((_, i) => (

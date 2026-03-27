@@ -75,8 +75,9 @@ const DropdownNav = ({ label, items, pathname, compact }: { label: string; items
       </button>
       <div className="absolute top-full left-0 right-0 h-3" />
       <div
-        className="absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2 w-[320px] rounded-xl p-2 z-50 transition-all duration-200 ease-out"
+        className="absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2 rounded-xl p-2 z-50 transition-all duration-200 ease-out"
         style={{
+          width: items.length > 2 ? 480 : 320,
           backgroundColor: "hsl(var(--card))",
           border: "1px solid hsl(var(--border) / 0.4)",
           boxShadow: "0 8px 32px hsl(0 0% 0% / 0.18), 0 2px 8px hsl(0 0% 0% / 0.1)",
@@ -114,8 +115,7 @@ const Navbar = () => {
 
   const workDropdown = [
     { label: t.caseStudy, href: "/case-studies#case-0", icon: Briefcase, description: t.caseStudyDesc },
-    { label: t.portfolio1, href: "/", icon: Globe, description: t.portfolio1Desc },
-    { label: t.portfolio2, href: "/services", icon: Globe, description: t.portfolio2Desc },
+    { label: t.portfolio1, href: "/portfolio", icon: Globe, description: t.portfolio1Desc },
   ];
 
   const navLinks = [

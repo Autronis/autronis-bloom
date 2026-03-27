@@ -33,12 +33,16 @@ function makeTransparent(img: HTMLImageElement): HTMLCanvasElement {
 }
 
 const HeroAnimation = () => {
+  const isEmbed = typeof window !== "undefined" && new URLSearchParams(window.location.search).has("embed");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const framesRef = useRef<(HTMLCanvasElement | null)[]>([]);
   const [ready, setReady] = useState(false);
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
   const frameStep = isMobile ? 3 : 1;
   const fps = isMobile ? 10 : FPS;
+
+  // Don't load frames in iframe embeds
+  if (isEmbed) return null;
 
   useEffect(() => {
     let cancelled = false;

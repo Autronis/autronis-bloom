@@ -29,6 +29,7 @@ function makeTransparent(img: HTMLImageElement): HTMLCanvasElement {
 }
 
 const CTAAnimation = () => {
+  if (typeof window !== "undefined" && new URLSearchParams(window.location.search).has("embed")) return null;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const framesRef = useRef<(HTMLCanvasElement | null)[]>([]);
   const [ready, setReady] = useState(false);

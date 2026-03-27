@@ -12,6 +12,7 @@ interface GlowDot {
 }
 
 const HeroBackground = () => {
+  if (typeof window !== "undefined" && new URLSearchParams(window.location.search).has("embed")) return null;
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {

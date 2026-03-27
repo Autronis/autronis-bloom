@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import GlowButton from "@/components/GlowButton";
-import { Menu, X, ChevronDown, Users, Workflow, ChevronRight } from "lucide-react";
+import { Menu, X, ChevronDown, Users, Workflow, ChevronRight, Briefcase, Globe } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useLanguage } from "@/i18n/context";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -21,6 +21,12 @@ const text = {
     ourTeam: "Our Team",
     ourTeamDesc: "The engineers who design, build and optimize your systems.",
     work: "Work",
+    caseStudy: "Lead Generation Automation",
+    caseStudyDesc: "How we automated outreach for Jobby.",
+    portfolio1: "Autronis.com",
+    portfolio1Desc: "3D animations & web architecture",
+    portfolio2: "Services",
+    portfolio2Desc: "Interactive services & workflow builder",
     cta: "Schedule Automation Scan",
   },
   nl: {
@@ -36,6 +42,12 @@ const text = {
     ourTeam: "Ons Team",
     ourTeamDesc: "De engineers die jouw systemen ontwerpen, bouwen en optimaliseren.",
     work: "Werk",
+    caseStudy: "Leadgeneratie Automatisering",
+    caseStudyDesc: "Hoe we outreach automatiseerden voor Jobby.",
+    portfolio1: "Autronis.com",
+    portfolio1Desc: "3D animaties & webarchitectuur",
+    portfolio2: "Diensten",
+    portfolio2Desc: "Interactieve diensten & workflow builder",
     cta: "Plan een Automation Scan",
   },
 };
@@ -44,17 +56,23 @@ const Navbar = () => {
   const lang = useLanguage();
   const t = text[lang];
 
-  const dropdownItems = [
+  const aboutDropdown = [
     { label: t.ourProcess, href: "/process", icon: Workflow, description: t.ourProcessDesc },
     { label: t.ourTeam, href: "/team", icon: Users, description: t.ourTeamDesc },
+  ];
+
+  const workDropdown = [
+    { label: t.caseStudy, href: "/case-studies#case-0", icon: Briefcase, description: t.caseStudyDesc },
+    { label: t.portfolio1, href: "/", icon: Globe, description: t.portfolio1Desc },
+    { label: t.portfolio2, href: "/services", icon: Globe, description: t.portfolio2Desc },
   ];
 
   const navLinks = [
     { label: t.home, href: "/" },
     { label: t.services, href: "/services" },
     { label: t.impactRoi, href: "/impact-roi" },
-    { label: t.aboutUs, children: dropdownItems },
-    { label: t.work, href: "/work" },
+    { label: t.aboutUs, children: aboutDropdown },
+    { label: t.work, children: workDropdown },
     { label: t.insights, href: "/resources" },
     { label: t.contact, href: "/contact" },
   ];

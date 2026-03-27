@@ -163,53 +163,45 @@ const WorkDropdownNav = ({ label, compact, lang }: { label: string; compact: boo
             boxShadow: "0 8px 32px hsl(0 0% 0% / 0.12)",
           }}
         >
-          <div className="container mx-auto px-6 py-6">
-            <div className="grid grid-cols-2 gap-8">
-              {/* Case Studies */}
-              <div>
-                <p className="text-[10px] font-bold text-primary tracking-widest uppercase mb-3">Case Studies</p>
-                <div className="space-y-2">
-                  {data.caseStudies.map((item) => (
-                    <Link key={item.href} to={item.href} className="group flex gap-4 p-2 -mx-2 rounded-xl hover:bg-muted/60 transition-colors" onClick={() => setOpen(false)}>
-                      <div className="w-48 rounded-lg overflow-hidden border border-border/50 shrink-0 bg-gray-900 aspect-[16/10]">
-                        <img src={item.img} alt={item.title} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" loading="lazy" />
-                      </div>
-                      <div className="flex flex-col justify-center">
-                        <p className="text-base font-bold leading-tight mb-1">{item.title}</p>
-                        <p className="text-sm text-muted-foreground">{item.desc}</p>
-                      </div>
-                    </Link>
-                  ))}
-                  {/* Coming soon placeholders */}
-                  {[1, 2].map((i) => (
-                    <div key={`cs-soon-${i}`} className="flex gap-4 p-2 -mx-2 opacity-40">
-                      <div className="w-48 rounded-lg border border-border/30 shrink-0 bg-muted/30 aspect-[16/10] flex items-center justify-center">
-                        <span className="text-xs text-muted-foreground">Coming soon</span>
-                      </div>
-                      <div className="flex flex-col justify-center">
-                        <div className="h-3 w-32 bg-muted/40 rounded-full mb-2" />
-                        <div className="h-2 w-24 bg-muted/30 rounded-full" />
-                      </div>
-                    </div>
-                  ))}
+          <div className="container mx-auto px-6 py-5 max-w-5xl">
+            {/* Case Studies — laptop previews */}
+            <p className="text-[10px] font-bold text-primary tracking-widest uppercase mb-3">Case Studies</p>
+            <div className="grid grid-cols-3 gap-4 mb-5">
+              {data.caseStudies.map((item) => (
+                <Link key={item.href} to={item.href} className="group" onClick={() => setOpen(false)}>
+                  <div className="relative rounded-t-lg border-[4px] border-gray-800 bg-gray-900 overflow-hidden aspect-[16/10]">
+                    <img src={item.img} alt={item.title} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+                  </div>
+                  <div className="h-2 bg-gradient-to-b from-gray-700 to-gray-800 rounded-b-md mx-[-1%]" />
+                  <p className="text-sm font-semibold mt-2 leading-tight">{item.title}</p>
+                  <p className="text-xs text-muted-foreground">{item.desc}</p>
+                </Link>
+              ))}
+              {/* Coming soon */}
+              {[1, 2].map((i) => (
+                <div key={`cs-${i}`}>
+                  <div className="relative rounded-t-lg border-[4px] border-gray-800 bg-gray-900 overflow-hidden aspect-[16/10] flex items-center justify-center">
+                    <span className="text-gray-500 text-xs">Coming soon</span>
+                  </div>
+                  <div className="h-2 bg-gradient-to-b from-gray-700 to-gray-800 rounded-b-md mx-[-1%]" />
+                  <p className="text-sm font-semibold mt-2 leading-tight text-muted-foreground/40">Coming soon</p>
                 </div>
-              </div>
+              ))}
+            </div>
 
-              {/* Portfolio */}
-              <div>
-                <p className="text-[10px] font-bold text-primary tracking-widest uppercase mb-3">Portfolio</p>
-                <div className="grid grid-cols-3 gap-3">
-                  {data.portfolio.map((item) => (
-                    <Link key={item.href} to={item.href} className="group" onClick={() => setOpen(false)}>
-                      <div className="rounded-lg overflow-hidden border border-border/50 aspect-[16/10] bg-gray-900 mb-2">
-                        <img src={item.img} alt={item.title} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" loading="lazy" />
-                      </div>
-                      <p className="text-sm font-semibold leading-tight">{item.title}</p>
-                      <p className="text-xs text-muted-foreground">{item.desc}</p>
-                    </Link>
-                  ))}
-                </div>
-              </div>
+            {/* Portfolio — laptop previews */}
+            <p className="text-[10px] font-bold text-primary tracking-widest uppercase mb-3">Portfolio</p>
+            <div className="grid grid-cols-3 gap-4">
+              {data.portfolio.map((item) => (
+                <Link key={item.href} to={item.href} className="group" onClick={() => setOpen(false)}>
+                  <div className="relative rounded-t-lg border-[4px] border-gray-800 bg-gray-900 overflow-hidden aspect-[16/10]">
+                    <img src={item.img} alt={item.title} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+                  </div>
+                  <div className="h-2 bg-gradient-to-b from-gray-700 to-gray-800 rounded-b-md mx-[-1%]" />
+                  <p className="text-sm font-semibold mt-2 leading-tight">{item.title}</p>
+                  <p className="text-xs text-muted-foreground">{item.desc}</p>
+                </Link>
+              ))}
             </div>
           </div>
         </div>

@@ -62,8 +62,7 @@ const HeroAnimation = () => {
       }
     };
 
-    // Mobile: delay more so page renders first
-    const delay = isMobile ? 2500 : 0;
+    const delay = isMobile ? 500 : 0;
     if (!isMobile && "requestIdleCallback" in window) {
       const id = (window as unknown as { requestIdleCallback: (cb: () => void) => number }).requestIdleCallback(start);
       return () => { cancelled = true; (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(id); };

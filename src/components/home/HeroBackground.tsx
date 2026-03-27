@@ -70,10 +70,10 @@ const HeroBackground = () => {
 
     const getWaveY = (x: number, lineIdx: number, h: number) => {
       const t_pos = (lineIdx + 1) / (lineCount + 1);
-      // Lines concentrated in top area — hero title zone only
+      // Lines in hero zone — mobile: top area, desktop: slightly lower
       const yBase = isMobile
         ? h * (0.05 + t_pos * 0.25)
-        : h * (0.08 + t_pos * 0.30);
+        : h * (0.15 + t_pos * 0.38);
       const freq = 0.004 + (lineIdx % 3) * 0.0006;
       const speed = 0.08 + lineIdx * 0.025;
       const amp = 30 + Math.sin(lineIdx * 1.1) * 16;

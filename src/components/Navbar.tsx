@@ -107,7 +107,7 @@ const DropdownNav = ({ label, items, pathname, compact }: { label: string; items
 const workPreviews = {
   en: {
     caseStudies: [
-      { title: "Lead Generation Automation", desc: "Jobby — outreach automation", href: "/case-studies#case-0", img: "/previews/case-studies.webp" },
+      { title: "Lead Generation Automation", desc: "Jobby — outreach automation", href: "/case-studies#case-0", img: "/previews/case-study-jobby.webp" },
     ],
     portfolio: [
       { title: "Autronis.com", desc: "3D animations & architecture", href: "/", img: "/previews/home.webp" },
@@ -117,7 +117,7 @@ const workPreviews = {
   },
   nl: {
     caseStudies: [
-      { title: "Leadgeneratie Automatisering", desc: "Jobby — outreach automatisering", href: "/case-studies#case-0", img: "/previews/case-studies.webp" },
+      { title: "Leadgeneratie Automatisering", desc: "Jobby — outreach automatisering", href: "/case-studies#case-0", img: "/previews/case-study-jobby.webp" },
     ],
     portfolio: [
       { title: "Autronis.com", desc: "3D animaties & architectuur", href: "/", img: "/previews/home.webp" },
@@ -132,12 +132,13 @@ const WorkDropdownNav = ({ label, compact, lang }: { label: string; compact: boo
   const data = workPreviews[lang];
 
   return (
-    <div className="static" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+    <div className="static">
       <button
         className={`group/nav relative px-3 py-2 font-medium rounded-md transition-all duration-300 flex items-center gap-1 text-muted-foreground hover:text-foreground`}
         style={{ fontSize: compact ? "0.82rem" : "0.875rem" }}
         aria-expanded={open}
         aria-haspopup="true"
+        onMouseEnter={() => setOpen(true)}
       >
         {label}
         <span className="absolute bottom-0.5 left-3 right-3 h-px transition-all duration-300 bg-primary w-0 group-hover/nav:w-[calc(100%-24px)]" />
@@ -146,6 +147,8 @@ const WorkDropdownNav = ({ label, compact, lang }: { label: string; compact: boo
       {/* Full-width mega dropdown */}
       <div
         className="fixed left-0 right-0 z-50 transition-all duration-200 ease-out"
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
         style={{
           top: compact ? 52 : 64,
           opacity: open ? 1 : 0,
@@ -153,8 +156,6 @@ const WorkDropdownNav = ({ label, compact, lang }: { label: string; compact: boo
           pointerEvents: open ? "auto" : "none",
         }}
       >
-        {/* Hover bridge */}
-        <div className="h-1" />
         <div
           className="border-t border-border/40"
           style={{
@@ -164,40 +165,39 @@ const WorkDropdownNav = ({ label, compact, lang }: { label: string; compact: boo
           }}
         >
           <div className="container mx-auto px-6 py-5 max-w-5xl">
-            {/* Case Studies — laptop previews */}
-            <p className="text-[10px] font-bold text-primary tracking-widest uppercase mb-3">Case Studies</p>
+            {/* Case Studies */}
+            <Link to="/case-studies" onClick={() => setOpen(false)} className="text-[10px] font-bold text-primary tracking-widest uppercase mb-3 block hover:underline">Case Studies →</Link>
             <div className="grid grid-cols-3 gap-4 mb-5">
               {data.caseStudies.map((item) => (
                 <Link key={item.href} to={item.href} className="group" onClick={() => setOpen(false)}>
-                  <div className="relative rounded-t-lg border-[4px] border-gray-800 bg-gray-900 overflow-hidden aspect-[16/10]">
-                    <img src={item.img} alt={item.title} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+                  <div className="relative rounded-t-lg border-[3px] border-gray-800 bg-gray-900 overflow-hidden aspect-[16/10]">
+                    <img src={item.img} alt={item.title} className="w-full h-full object-cover object-top" loading="eager" />
                   </div>
-                  <div className="h-2 bg-gradient-to-b from-gray-700 to-gray-800 rounded-b-md mx-[-1%]" />
+                  <div className="h-1.5 bg-gradient-to-b from-gray-700 to-gray-800 rounded-b-md mx-[-1%]" />
                   <p className="text-sm font-semibold mt-2 leading-tight">{item.title}</p>
                   <p className="text-xs text-muted-foreground">{item.desc}</p>
                 </Link>
               ))}
-              {/* Coming soon */}
               {[1, 2].map((i) => (
                 <div key={`cs-${i}`}>
-                  <div className="relative rounded-t-lg border-[4px] border-gray-800 bg-gray-900 overflow-hidden aspect-[16/10] flex items-center justify-center">
+                  <div className="relative rounded-t-lg border-[3px] border-gray-800 bg-gray-900 overflow-hidden aspect-[16/10] flex items-center justify-center">
                     <span className="text-gray-500 text-xs">Coming soon</span>
                   </div>
-                  <div className="h-2 bg-gradient-to-b from-gray-700 to-gray-800 rounded-b-md mx-[-1%]" />
+                  <div className="h-1.5 bg-gradient-to-b from-gray-700 to-gray-800 rounded-b-md mx-[-1%]" />
                   <p className="text-sm font-semibold mt-2 leading-tight text-muted-foreground/40">Coming soon</p>
                 </div>
               ))}
             </div>
 
-            {/* Portfolio — laptop previews */}
-            <p className="text-[10px] font-bold text-primary tracking-widest uppercase mb-3">Portfolio</p>
+            {/* Portfolio */}
+            <Link to="/work" onClick={() => setOpen(false)} className="text-[10px] font-bold text-primary tracking-widest uppercase mb-3 block hover:underline">Portfolio →</Link>
             <div className="grid grid-cols-3 gap-4">
               {data.portfolio.map((item) => (
                 <Link key={item.href} to={item.href} className="group" onClick={() => setOpen(false)}>
-                  <div className="relative rounded-t-lg border-[4px] border-gray-800 bg-gray-900 overflow-hidden aspect-[16/10]">
-                    <img src={item.img} alt={item.title} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+                  <div className="relative rounded-t-lg border-[3px] border-gray-800 bg-gray-900 overflow-hidden aspect-[16/10]">
+                    <img src={item.img} alt={item.title} className="w-full h-full object-cover object-top" loading="eager" />
                   </div>
-                  <div className="h-2 bg-gradient-to-b from-gray-700 to-gray-800 rounded-b-md mx-[-1%]" />
+                  <div className="h-1.5 bg-gradient-to-b from-gray-700 to-gray-800 rounded-b-md mx-[-1%]" />
                   <p className="text-sm font-semibold mt-2 leading-tight">{item.title}</p>
                   <p className="text-xs text-muted-foreground">{item.desc}</p>
                 </Link>

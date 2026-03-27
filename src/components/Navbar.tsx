@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import GlowButton from "@/components/GlowButton";
-import { Menu, X, ChevronDown, Users, Workflow, ChevronRight, FolderOpen, Briefcase } from "lucide-react";
+import { Menu, X, ChevronDown, Users, Workflow, ChevronRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useLanguage } from "@/i18n/context";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -20,9 +20,7 @@ const text = {
     ourProcessDesc: "From analysis to go-live. Structured, transparent and scalable.",
     ourTeam: "Our Team",
     ourTeamDesc: "The engineers who design, build and optimize your systems.",
-    caseStudiesDesc: "Real results from real automation projects.",
-    portfolio: "Portfolio",
-    portfolioDesc: "Websites and systems we've built.",
+    work: "Work",
     cta: "Schedule Automation Scan",
   },
   nl: {
@@ -37,9 +35,7 @@ const text = {
     ourProcessDesc: "Van analyse tot go-live. Gestructureerd, transparant en schaalbaar.",
     ourTeam: "Ons Team",
     ourTeamDesc: "De engineers die jouw systemen ontwerpen, bouwen en optimaliseren.",
-    caseStudiesDesc: "Echte resultaten van echte automatiseringsprojecten.",
-    portfolio: "Portfolio",
-    portfolioDesc: "Websites en systemen die wij gebouwd hebben.",
+    work: "Werk",
     cta: "Plan een Automation Scan",
   },
 };
@@ -51,8 +47,6 @@ const Navbar = () => {
   const dropdownItems = [
     { label: t.ourProcess, href: "/process", icon: Workflow, description: t.ourProcessDesc },
     { label: t.ourTeam, href: "/team", icon: Users, description: t.ourTeamDesc },
-    { label: t.caseStudies, href: "/case-studies", icon: Briefcase, description: t.caseStudiesDesc },
-    { label: t.portfolio, href: "/portfolio", icon: FolderOpen, description: t.portfolioDesc },
   ];
 
   const navLinks = [
@@ -60,6 +54,7 @@ const Navbar = () => {
     { label: t.services, href: "/services" },
     { label: t.impactRoi, href: "/impact-roi" },
     { label: t.aboutUs, children: dropdownItems },
+    { label: t.work, href: "/work" },
     { label: t.insights, href: "/resources" },
     { label: t.contact, href: "/contact" },
   ];

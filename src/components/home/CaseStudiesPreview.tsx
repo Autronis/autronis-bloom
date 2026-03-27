@@ -108,7 +108,7 @@ const CaseStudiesPreview = () => {
         <ScrollReveal className="max-w-2xl mx-auto mb-8">
           <ScrollRevealItem>
             <Link
-              to={`/case-studies#case-${cs.caseIndex}`}
+              to={`/work#case-${cs.caseIndex}`}
               className="group relative block rounded-xl border border-border bg-card p-6 sm:p-8 transition-all duration-300 hover:border-primary/40 hover:shadow-[0_0_24px_hsl(174_78%_41%/0.1)] overflow-hidden"
             >
               <div className="flex items-center gap-2.5 mb-4">
@@ -175,7 +175,7 @@ const CaseStudiesPreview = () => {
           </ScrollRevealItem>
           <ScrollRevealItem>
             <Button asChild size="lg" className="w-full sm:w-auto">
-              <Link to="/case-studies">{t.ctaBtn}<ArrowRight size={18} /></Link>
+              <Link to="/work">{t.ctaBtn}<ArrowRight size={18} /></Link>
             </Button>
           </ScrollRevealItem>
         </ScrollReveal>

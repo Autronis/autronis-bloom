@@ -156,7 +156,7 @@ const ProblemSolutionSection = () => {
   const lang = useLanguage();
   const tx = text[lang];
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.4 });
+  const isInView = useInView(sectionRef, { once: true, amount: 0.6 });
   const [transformedIndices, setTransformedIndices] = useState<Set<number>>(new Set());
 
   useEffect(() => {
@@ -165,7 +165,7 @@ const ProblemSolutionSection = () => {
     const timers = tx.items.map((_, i) =>
       setTimeout(() => {
         setTransformedIndices(prev => new Set([...prev, i]));
-      }, 1000 + i * 1200)
+      }, 400 + i * 1000)
     );
     return () => timers.forEach(clearTimeout);
   }, [isInView, tx.items]);

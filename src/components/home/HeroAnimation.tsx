@@ -4,31 +4,39 @@ const TOTAL_FRAMES = 145;
 const FPS = 24;
 const HOLD_DURATION = 3500;
 
-/** Pre-process a frame: remove white/gray bg by setting alpha to 0.
- *  Done once per frame on load, so the animation loop is fast. */
+/** Fast bg removal — uses squared distance (no sqrt) */
 function makeTransparent(img: HTMLImageElement): HTMLCanvasElement {
   const c = document.createElement("canvas");
   c.width = img.width;
   c.height = img.height;
   const ctx = c.getContext("2d", { willReadFrequently: true })!;
   ctx.drawImage(img, 0, 0);
-
-  // Sample bg color from top-left corner
   const corner = ctx.getImageData(0, 0, 1, 1).data;
   const bgR = corner[0], bgG = corner[1], bgB = corner[2];
-
   const imageData = ctx.getImageData(0, 0, c.width, c.height);
   const data = imageData.data;
+  const innerSq = 45 * 45;
+  const outerSq = 90 * 90;
   for (let i = 0; i < data.length; i += 4) {
     const dr = data[i] - bgR, dg = data[i + 1] - bgG, db = data[i + 2] - bgB;
-    const dist = Math.sqrt(dr * dr + dg * dg + db * db);
-    if (dist < 45) {
+    const distSq = dr * dr + dg * dg + db * db;
+    if (distSq < innerSq) {
       data[i + 3] = 0;
-    } else if (dist < 90) {
-      data[i + 3] = Math.round(255 * ((dist - 45) / 45));
+    } else if (distSq < outerSq) {
+      const t = (Math.sqrt(distSq) - 45) / 45;
+      data[i + 3] = (255 * t) | 0;
     }
   }
   ctx.putImageData(imageData, 0, 0);
+  return c;
+}
+
+/** Quick canvas from image — no pixel processing, just draw */
+function quickCanvas(img: HTMLImageElement): HTMLCanvasElement {
+  const c = document.createElement("canvas");
+  c.width = img.width;
+  c.height = img.height;
+  c.getContext("2d")!.drawImage(img, 0, 0);
   return c;
 }
 
@@ -36,39 +44,62 @@ const HeroAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const framesRef = useRef<(HTMLCanvasElement | null)[]>([]);
   const [ready, setReady] = useState(false);
+  const [blendMode, setBlendMode] = useState<"multiply" | "normal">("multiply");
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
   const frameStep = isMobile ? 3 : 1;
   const fps = isMobile ? 10 : FPS;
-
 
   useEffect(() => {
     let cancelled = false;
     const frames: (HTMLCanvasElement | null)[] = Array(TOTAL_FRAMES).fill(null);
     framesRef.current = frames;
-    let loaded = 0;
 
-    // Load first frame immediately for instant display, rest after
-    const loadFrame = (i: number) => {
+    // Phase 1: Load first batch WITHOUT transparency processing (instant)
+    // Use mix-blend-mode: multiply as fallback for white bg
+    const fastBatch = Math.min(20, TOTAL_FRAMES);
+    let fastLoaded = 0;
+
+    for (let i = 0; i < fastBatch; i += frameStep) {
       const img = new Image();
       img.src = `/hero-frames-webp/frame_${String(i + 1).padStart(4, "0")}.webp`;
       img.onload = () => {
         if (cancelled) return;
-        frames[i] = makeTransparent(img);
-        loaded++;
-        if (loaded >= 1 && !ready) setReady(true);
+        frames[i] = quickCanvas(img);
+        fastLoaded++;
+        if (fastLoaded >= 1 && !ready) setReady(true);
       };
-    };
+    }
 
-    // Load first frame right away
-    loadFrame(0);
-
-    // Load rest with minimal delay so first frame renders fast
+    // Phase 2: After 200ms, load remaining frames WITH transparency
+    // AND re-process the fast batch frames with transparency
     const timer = setTimeout(() => {
       if (cancelled) return;
-      for (let i = frameStep; i < TOTAL_FRAMES; i += frameStep) {
-        loadFrame(i);
+
+      // Re-process fast batch with proper transparency
+      for (let i = 0; i < fastBatch; i += frameStep) {
+        const img = new Image();
+        img.src = `/hero-frames-webp/frame_${String(i + 1).padStart(4, "0")}.webp`;
+        img.onload = () => {
+          if (cancelled) return;
+          frames[i] = makeTransparent(img);
+        };
       }
-    }, 50);
+
+      // Load rest with transparency
+      for (let i = fastBatch; i < TOTAL_FRAMES; i += frameStep) {
+        const img = new Image();
+        img.src = `/hero-frames-webp/frame_${String(i + 1).padStart(4, "0")}.webp`;
+        img.onload = () => {
+          if (cancelled) return;
+          frames[i] = makeTransparent(img);
+        };
+      }
+
+      // Switch to normal blend mode once transparent frames are ready
+      setTimeout(() => {
+        if (!cancelled) setBlendMode("normal");
+      }, 1500);
+    }, 200);
 
     return () => { cancelled = true; clearTimeout(timer); };
   }, []);
@@ -156,7 +187,7 @@ const HeroAnimation = () => {
     <canvas
       ref={canvasRef}
       className="w-full aspect-[16/9]"
-      style={{ contain: "layout" }}
+      style={{ contain: "layout", mixBlendMode: blendMode }}
     />
   );
 };

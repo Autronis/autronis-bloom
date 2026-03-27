@@ -99,9 +99,6 @@ const WhyAutronisSection = () => {
                 </div>
                 <div className="relative min-h-[250px] sm:min-h-[400px] lg:min-h-0 overflow-hidden">
                   <img src={teamFoto} alt="Autronis team - Sem and Syb" width={800} height={600} className="w-full h-full object-cover object-[70%_center] scale-110" loading="lazy" decoding="async" />
-                  <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 55% 65% at 50% 40%, transparent 0%, hsl(0 0% 0% / 0.55) 100%)" }} />
-                  <div className="absolute inset-0 pointer-events-none hidden lg:block" style={{ background: "linear-gradient(to right, hsl(var(--card)) 0%, hsl(var(--card) / 0.15) 6%, transparent 18%)" }} />
-                  <div className="absolute inset-0 pointer-events-none lg:hidden" style={{ background: "linear-gradient(to bottom, hsl(var(--card)) 0%, hsl(var(--card) / 0.3) 8%, transparent 25%)" }} />
                 </div>
               </div>
             </div>

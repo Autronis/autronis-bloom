@@ -4,7 +4,7 @@ const TOTAL_FRAMES = 145;
 const FPS = 24;
 const HOLD_DURATION = 3500;
 
-/** Fast bg removal — uses squared distance (no sqrt) */
+/** Fast bg removal — squared distance, no sqrt in hot path */
 function makeTransparent(img: HTMLImageElement): HTMLCanvasElement {
   const c = document.createElement("canvas");
   c.width = img.width;
@@ -31,20 +31,10 @@ function makeTransparent(img: HTMLImageElement): HTMLCanvasElement {
   return c;
 }
 
-/** Quick canvas from image — no pixel processing, just draw */
-function quickCanvas(img: HTMLImageElement): HTMLCanvasElement {
-  const c = document.createElement("canvas");
-  c.width = img.width;
-  c.height = img.height;
-  c.getContext("2d")!.drawImage(img, 0, 0);
-  return c;
-}
-
 const HeroAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const framesRef = useRef<(HTMLCanvasElement | null)[]>([]);
   const [ready, setReady] = useState(false);
-  const [blendMode, setBlendMode] = useState<"multiply" | "normal">("multiply");
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
   const frameStep = isMobile ? 3 : 1;
   const fps = isMobile ? 10 : FPS;
@@ -54,54 +44,25 @@ const HeroAnimation = () => {
     const frames: (HTMLCanvasElement | null)[] = Array(TOTAL_FRAMES).fill(null);
     framesRef.current = frames;
 
-    // Phase 1: Load first batch WITHOUT transparency processing (instant)
-    // Use mix-blend-mode: multiply as fallback for white bg
-    const fastBatch = Math.min(20, TOTAL_FRAMES);
-    let fastLoaded = 0;
+    // Load ALL frames with transparency from the start
+    // Process first few with priority so animation starts fast
+    const indices: number[] = [];
+    for (let i = 0; i < TOTAL_FRAMES; i += frameStep) indices.push(i);
 
-    for (let i = 0; i < fastBatch; i += frameStep) {
+    let loaded = 0;
+    for (const i of indices) {
       const img = new Image();
       img.src = `/hero-frames-webp/frame_${String(i + 1).padStart(4, "0")}.webp`;
       img.onload = () => {
         if (cancelled) return;
-        frames[i] = quickCanvas(img);
-        fastLoaded++;
-        if (fastLoaded >= 1 && !ready) setReady(true);
+        frames[i] = makeTransparent(img);
+        loaded++;
+        // Start animating after 3 transparent frames are ready
+        if (loaded >= 3 && !ready) setReady(true);
       };
     }
 
-    // Phase 2: After 200ms, load remaining frames WITH transparency
-    // AND re-process the fast batch frames with transparency
-    const timer = setTimeout(() => {
-      if (cancelled) return;
-
-      // Re-process fast batch with proper transparency
-      for (let i = 0; i < fastBatch; i += frameStep) {
-        const img = new Image();
-        img.src = `/hero-frames-webp/frame_${String(i + 1).padStart(4, "0")}.webp`;
-        img.onload = () => {
-          if (cancelled) return;
-          frames[i] = makeTransparent(img);
-        };
-      }
-
-      // Load rest with transparency
-      for (let i = fastBatch; i < TOTAL_FRAMES; i += frameStep) {
-        const img = new Image();
-        img.src = `/hero-frames-webp/frame_${String(i + 1).padStart(4, "0")}.webp`;
-        img.onload = () => {
-          if (cancelled) return;
-          frames[i] = makeTransparent(img);
-        };
-      }
-
-      // Switch to normal blend mode once transparent frames are ready
-      setTimeout(() => {
-        if (!cancelled) setBlendMode("normal");
-      }, 1500);
-    }, 200);
-
-    return () => { cancelled = true; clearTimeout(timer); };
+    return () => { cancelled = true; };
   }, []);
 
   useEffect(() => {
@@ -187,7 +148,7 @@ const HeroAnimation = () => {
     <canvas
       ref={canvasRef}
       className="w-full aspect-[16/9]"
-      style={{ contain: "layout", mixBlendMode: blendMode }}
+      style={{ contain: "layout" }}
     />
   );
 };

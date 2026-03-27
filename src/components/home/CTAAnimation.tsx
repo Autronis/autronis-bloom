@@ -4,15 +4,38 @@ const TOTAL_FRAMES = 121;
 const FPS = 24;
 const HOLD_DURATION = 5000;
 
+/** Pre-process: remove bg by setting alpha to 0, done once per frame */
+function makeTransparent(img: HTMLImageElement): HTMLCanvasElement {
+  const c = document.createElement("canvas");
+  c.width = img.width;
+  c.height = img.height;
+  const ctx = c.getContext("2d", { willReadFrequently: true })!;
+  ctx.drawImage(img, 0, 0);
+  const corner = ctx.getImageData(0, 0, 1, 1).data;
+  const bgR = corner[0], bgG = corner[1], bgB = corner[2];
+  const imageData = ctx.getImageData(0, 0, c.width, c.height);
+  const data = imageData.data;
+  for (let i = 0; i < data.length; i += 4) {
+    const dr = data[i] - bgR, dg = data[i + 1] - bgG, db = data[i + 2] - bgB;
+    const dist = Math.sqrt(dr * dr + dg * dg + db * db);
+    if (dist < 45) {
+      data[i + 3] = 0;
+    } else if (dist < 90) {
+      data[i + 3] = Math.round(255 * ((dist - 45) / 45));
+    }
+  }
+  ctx.putImageData(imageData, 0, 0);
+  return c;
+}
+
 const CTAAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const framesRef = useRef<(HTMLImageElement | null)[]>([]);
+  const framesRef = useRef<(HTMLCanvasElement | null)[]>([]);
   const [ready, setReady] = useState(false);
   const [visible, setVisible] = useState(false);
   const animationRef = useRef<number>(0);
   const frameIndexRef = useRef(0);
 
-  // Only start loading when near viewport
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -27,7 +50,7 @@ const CTAAnimation = () => {
   useEffect(() => {
     if (!visible || framesRef.current.length > 0) return;
     let cancelled = false;
-    const frames: (HTMLImageElement | null)[] = Array(TOTAL_FRAMES).fill(null);
+    const frames: (HTMLCanvasElement | null)[] = Array(TOTAL_FRAMES).fill(null);
     framesRef.current = frames;
     let loaded = 0;
 
@@ -36,7 +59,7 @@ const CTAAnimation = () => {
       img.src = `/cta-frames-webp/frame_${String(i + 1).padStart(4, "0")}.webp`;
       img.onload = () => {
         if (cancelled) return;
-        frames[i] = img;
+        frames[i] = makeTransparent(img);
         loaded++;
         if (loaded >= 8 && !ready) setReady(true);
       };
@@ -65,10 +88,10 @@ const CTAAnimation = () => {
     };
 
     const drawFrame = () => {
-      const img = framesRef.current[frameIndexRef.current];
-      if (!img) return;
+      const frame = framesRef.current[frameIndexRef.current];
+      if (!frame) return;
       ctx.clearRect(0, 0, w, h);
-      const imgAspect = img.width / img.height;
+      const imgAspect = frame.width / frame.height;
       const canvasAspect = w / h;
       let dw: number, dh: number, dx: number, dy: number;
       if (imgAspect > canvasAspect) {
@@ -76,7 +99,7 @@ const CTAAnimation = () => {
       } else {
         dw = w; dh = dw / imgAspect; dx = 0; dy = (h - dh) / 2;
       }
-      ctx.drawImage(img, dx, dy, dw, dh);
+      ctx.drawImage(frame, dx, dy, dw, dh);
     };
 
     resize();
@@ -126,7 +149,7 @@ const CTAAnimation = () => {
     <canvas
       ref={canvasRef}
       className="w-full aspect-[16/9]"
-      style={{ contain: "layout", mixBlendMode: "multiply" }}
+      style={{ contain: "layout" }}
     />
   );
 };

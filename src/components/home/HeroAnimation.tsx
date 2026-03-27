@@ -43,32 +43,33 @@ const HeroAnimation = () => {
 
   useEffect(() => {
     let cancelled = false;
+    const frames: (HTMLCanvasElement | null)[] = Array(TOTAL_FRAMES).fill(null);
+    framesRef.current = frames;
+    let loaded = 0;
 
-    const start = () => {
-      if (cancelled) return;
-      const frames: (HTMLCanvasElement | null)[] = Array(TOTAL_FRAMES).fill(null);
-      framesRef.current = frames;
-      let loaded = 0;
-      const minToStart = isMobile ? 3 : 6;
-
-      for (let i = 0; i < TOTAL_FRAMES; i += frameStep) {
-        const img = new Image();
-        img.src = `/hero-frames-webp/frame_${String(i + 1).padStart(4, "0")}.webp`;
-        img.onload = () => {
-          if (cancelled) return;
-          frames[i] = makeTransparent(img);
-          loaded++;
-          if (loaded >= minToStart && !ready) setReady(true);
-        };
-      }
+    // Load first frame immediately for instant display, rest after
+    const loadFrame = (i: number) => {
+      const img = new Image();
+      img.src = `/hero-frames-webp/frame_${String(i + 1).padStart(4, "0")}.webp`;
+      img.onload = () => {
+        if (cancelled) return;
+        frames[i] = makeTransparent(img);
+        loaded++;
+        if (loaded >= 1 && !ready) setReady(true);
+      };
     };
 
-    const delay = 0;
-    if ("requestIdleCallback" in window) {
-      const id = (window as unknown as { requestIdleCallback: (cb: () => void) => number }).requestIdleCallback(start);
-      return () => { cancelled = true; (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(id); };
-    }
-    const timer = setTimeout(start, delay || 1500);
+    // Load first frame right away
+    loadFrame(0);
+
+    // Load rest with minimal delay so first frame renders fast
+    const timer = setTimeout(() => {
+      if (cancelled) return;
+      for (let i = frameStep; i < TOTAL_FRAMES; i += frameStep) {
+        loadFrame(i);
+      }
+    }, 50);
+
     return () => { cancelled = true; clearTimeout(timer); };
   }, []);
 

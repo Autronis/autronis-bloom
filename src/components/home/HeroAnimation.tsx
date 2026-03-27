@@ -37,7 +37,7 @@ const HeroAnimation = () => {
   const framesRef = useRef<(HTMLCanvasElement | null)[]>([]);
   const [ready, setReady] = useState(false);
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-  const frameStep = isMobile ? 4 : 1;
+  const frameStep = isMobile ? 3 : 1;
   const fps = isMobile ? 10 : FPS;
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const HeroAnimation = () => {
       const frames: (HTMLCanvasElement | null)[] = Array(TOTAL_FRAMES).fill(null);
       framesRef.current = frames;
       let loaded = 0;
-      const minToStart = isMobile ? 4 : 8;
+      const minToStart = isMobile ? 3 : 6;
 
       for (let i = 0; i < TOTAL_FRAMES; i += frameStep) {
         const img = new Image();
@@ -62,8 +62,8 @@ const HeroAnimation = () => {
       }
     };
 
-    const delay = isMobile ? 500 : 0;
-    if (!isMobile && "requestIdleCallback" in window) {
+    const delay = 0;
+    if ("requestIdleCallback" in window) {
       const id = (window as unknown as { requestIdleCallback: (cb: () => void) => number }).requestIdleCallback(start);
       return () => { cancelled = true; (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(id); };
     }

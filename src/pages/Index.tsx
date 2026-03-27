@@ -140,20 +140,18 @@ const Index = () => {
       <section className="hero-section relative flex flex-col justify-start pt-16 sm:pt-20 pb-8 sm:pb-16">
         <Suspense fallback={null}><HeroBackground /></Suspense>
         <div className="container mx-auto px-4 lg:px-32 xl:px-48 relative z-10">
-          {/* Title */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.08] tracking-tight mb-4 sm:mb-6 text-center lg:text-left">
-            {t.heroTitle1}
-            <br className="lg:hidden" />
-            <span className="hidden lg:inline">{" "}</span>
-            {t.heroTitle2}{" "}
-            <span className="relative inline-block align-bottom" style={{ height: "1.15em", minWidth: "4ch" }}>
+          {/* Title — mobile: 2 lines centered, desktop: inline left */}
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight mb-4 sm:mb-6 text-center lg:text-left">
+            <span className="block lg:inline">{t.heroTitle1} {t.heroTitle2}</span>
+            <span className="block lg:inline text-primary relative h-[1.2em] lg:h-auto">
               {rotatingWords.map((word, i) => (
                 <span
                   key={word}
-                  className="absolute left-0 right-0 bottom-0 text-center lg:text-left text-primary transition-all duration-[450ms] whitespace-nowrap"
+                  className="absolute lg:relative left-0 right-0 bottom-0 text-center lg:text-left transition-all duration-[450ms] whitespace-nowrap"
                   style={{
                     opacity: i === wordIndex ? 1 : 0,
                     transform: i === wordIndex ? "translateY(0)" : "translateY(14px)",
+                    position: i === wordIndex ? undefined : "absolute",
                   }}
                 >
                   {word}.

@@ -32,16 +32,14 @@ const text = {
 const problemIcons = [Layers, Users, BarChart3];
 const solutionIcons = [Cog, Link2, PieChart];
 
-const StrikeThroughText = ({ text: strikeText }: { text: string }) => {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
+const StrikeThroughText = ({ text: strikeText, active }: { text: string; active: boolean }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <span ref={ref} className="relative inline-block cursor-default" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-      <span className="transition-all duration-[1200ms]" style={{ opacity: isInView ? 0.4 : 1, color: isHovered ? "hsl(174, 78%, 55%)" : undefined }}>{strikeText}</span>
+    <span className="relative inline-block cursor-default" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+      <span className="transition-all duration-[1200ms]" style={{ opacity: active ? 0.4 : 1, color: isHovered ? "hsl(174, 78%, 55%)" : undefined }}>{strikeText}</span>
       <svg className="absolute left-0 top-1/2 w-full pointer-events-none" style={{ height: "8px", transform: "translateY(-50%)" }} viewBox="0 0 100 8" preserveAspectRatio="none">
-        <line x1="0" y1="4" x2="100" y2="4" stroke={isHovered ? "hsl(174, 78%, 55%)" : "hsl(174, 78%, 41%)"} strokeWidth="3" strokeLinecap="round" strokeDasharray="100" strokeDashoffset={isInView ? "0" : "100"} style={{ transition: "stroke-dashoffset 1500ms cubic-bezier(0.25, 0.46, 0.45, 0.94), stroke 300ms ease-out", filter: isHovered ? "drop-shadow(0 0 8px hsl(174, 78%, 41%))" : isInView ? "drop-shadow(0 0 3px hsl(174, 78%, 41% / 0.4))" : "none" }} />
+        <line x1="0" y1="4" x2="100" y2="4" stroke={isHovered ? "hsl(174, 78%, 55%)" : "hsl(174, 78%, 41%)"} strokeWidth="3" strokeLinecap="round" strokeDasharray="100" strokeDashoffset={active ? "0" : "100"} style={{ transition: "stroke-dashoffset 1500ms cubic-bezier(0.25, 0.46, 0.45, 0.94), stroke 300ms ease-out", filter: isHovered ? "drop-shadow(0 0 8px hsl(174, 78%, 41%))" : active ? "drop-shadow(0 0 3px hsl(174, 78%, 41% / 0.4))" : "none" }} />
       </svg>
     </span>
   );
@@ -201,7 +199,7 @@ const ProblemSolutionSection = () => {
         <ScrollReveal className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
           <ScrollRevealItem>
             <p className="text-xs font-semibold text-primary mb-3 tracking-widest uppercase">{tx.label}</p>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">{tx.title1}<StrikeThroughText text={tx.strikeText} />.</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">{tx.title1}<StrikeThroughText text={tx.strikeText} active={triggered} />.</h2>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-lg mx-auto">{tx.desc}</p>
           </ScrollRevealItem>
         </ScrollReveal>
